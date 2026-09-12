@@ -56,6 +56,18 @@ inferred from defaults and references, followed by broad robustness sampling.
 Inferred types guide generation; they do not become new validation requirements.
 Generation errors and budget exhaustion remain incomplete coverage, not chart bugs.
 
+Add `--fail` to exit **1** on the first lint, render, or property-test failure
+(or execution error). The failing input and available statistics are retained;
+later charts remain pending/N/A, with `scan_status: failed-early`. With `--filter`,
+this also stops failure expansion and skips the deferred phase after a known-input
+failure. Counterexamples are not shrunk. Missing values, blocked dependencies,
+and other incomplete/N/A results do not trigger this flag. Each scan process
+stops independently; it does not cancel scans launched by other workers.
+
+```sh
+helm hypothesis scan ./charts --filter --fail --report
+```
+
 `--values` defaults to `values.yaml`, relative to each chart; an absolute path
 uses the same file for every chart. The selected file replaces the default values
 in an isolated working copy. Missing values fail a single-chart scan. In a tree,

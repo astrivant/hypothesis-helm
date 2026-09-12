@@ -57,7 +57,8 @@ usage: helm hypothesis scan [-h] [--clone-timeout CLONE_TIMEOUT] [--report [PATH
                             [--chart-timeout CHART_TIMEOUT]
                             [--scan-timeout SCAN_TIMEOUT]
                             [--max-examples MAX_EXAMPLES]
-                            [--permutations PERMUTATIONS] [--filter] [--seed SEED]
+                            [--permutations PERMUTATIONS] [--filter] [--fail]
+                            [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
                             [--dump-minimal-values [PATH]]
                             SOURCE
@@ -86,6 +87,8 @@ options:
                         coverage or sampling
   --filter              filter finite charts; otherwise prioritize known inputs and
                         run robustness cases last
+  --fail                stop on the first chart test failure; save partial results and
+                        exit 1
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies

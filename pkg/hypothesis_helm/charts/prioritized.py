@@ -26,6 +26,7 @@ def check_prioritized(
     helm: str,
     timeout: float,
     artifacts: Path,
+    fail_fast: bool = False,
 ) -> dict[str, object]:
     """
     Preserve deferred inputs as a separate final phase with explicit incomplete coverage.
@@ -38,6 +39,7 @@ def check_prioritized(
         helm (str): Helm executable.
         timeout (float): Per-render subprocess bound.
         artifacts (Path): Persistent phase diagnostics and reproducer destination.
+        fail_fast (bool): Stop after a failing phase, without shrinking its counterexample.
 
     Returns:
         dict[str, object]: Both phases, preserved findings, and aggregate attempt counts.
@@ -64,6 +66,7 @@ def check_prioritized(
                 input_strategy=priority.strategy(chart),
                 input_inventory=inventory,
                 artifact_dir=artifacts / "known-inputs",
+                fail_fast=fail_fast,
             )
             phases.append({**primary, "phase": "known-inputs"})
     except TimeLimitReached:
@@ -86,7 +89,21 @@ def check_prioritized(
             }
         )
     remaining = budget - (time.monotonic() - started)
-    if priority is not None and priority.schema == chart.schema:
+    if fail_fast and any(
+        phase["status"] == "failed"
+        and phase.get("failure_type")
+        not in {"Unsatisfiable", "FailedHealthCheck", "SchemaError", "InvalidArgument"}
+        for phase in phases
+    ):
+        phases.append(
+            {
+                "phase": "robustness",
+                "status": "not-started",
+                "attempts": 0,
+                "reason": "--fail stopped testing after a known-input failure",
+            }
+        )
+    elif priority is not None and priority.schema == chart.schema:
         phases.append(
             {
                 "phase": "robustness",
@@ -107,6 +124,7 @@ def check_prioritized(
                     timeout=timeout,
                     time_limit=remaining,
                     artifact_dir=artifacts / "robustness",
+                    fail_fast=fail_fast,
                     input_strategy=priority.deferred_strategy(chart)
                     if priority is not None
                     else None,

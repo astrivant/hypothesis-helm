@@ -176,6 +176,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
             helm=args.helm,
             timeout=args.timeout,
             artifacts=artifacts,
+            fail_fast=args.fail,
         )
         return {
             **result,
@@ -196,6 +197,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         permutations=strength,
         trim_topology=2 if filtering["applied"] else 0,
         expand_failures=bool(filtering["applied"]),
+        fail_fast=args.fail,
         artifact_dir=artifacts,
     )
     return {
@@ -260,6 +262,7 @@ def scan_checkout(
     if source.remote:
         (output / "checkout.txt").write_text(source.diagnostic)
     interrupted = source.status == "interrupted"
+    failed_early = False
     for index, record in enumerate(records):
         if args.scan_deadline is not None and time.monotonic() >= args.scan_deadline:
             timed_out = True
@@ -364,7 +367,13 @@ def scan_checkout(
                 record["status"],
                 len(records) - index - 1,
             )
+        if args.fail and record["status"] in {"baseline-failed", "failed", "error"}:
+            failed_early = True
+            LOGGER.info("Stopping scan after failure in %s (--fail)", record["chart"])
+            break
     for record in records:
+        if failed_early and record["status"] == "pending":
+            record["error"] = "Not started: --fail stopped the scan after a chart failure"
         if timed_out and record["status"] == "pending":
             record["error"] = "Not started: total scan deadline reached"
         record.setdefault(
@@ -394,6 +403,8 @@ def scan_checkout(
         if interrupted
         else "scan-timeout"
         if timed_out
+        else "failed-early"
+        if failed_early
         else "completed",
         "discovery_complete": discovery_complete,
         "unstarted_charts": counts.get("pending", 0),
@@ -403,6 +414,7 @@ def scan_checkout(
         "settings": {
             "max_examples": args.max_examples,
             "filter": args.filter,
+            "fail": args.fail,
             "permutations": args.permutations,
             "chart_timeout_seconds": args.chart_timeout,
             "scan_timeout_seconds": args.scan_timeout,

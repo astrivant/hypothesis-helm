@@ -1,0 +1,80 @@
+[
+  {
+    "parent_job_sequence": 56,
+    "parent_chart": "bitnami/kube-prometheus",
+    "record": {
+      "chart": "charts/kube-prometheus-crds",
+      "status": "failed",
+      "name": "kube-prometheus-crds",
+      "version": "0.1.0",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus_1789252419/0001",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/kube-prometheus/charts/kube-prometheus-crds/values.yaml",
+      "attempts": 2,
+      "phases": [
+        {
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-w5h4d48o/chart",
+          "seed": 0,
+          "attempts": 1,
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "values": {},
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 1,
+            "unique_bundles": 1,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 1
+          },
+          "phase": "known-inputs"
+        },
+        {
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-w5h4d48o/chart",
+          "seed": 0,
+          "attempts": 1,
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "values": {},
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 1,
+            "unique_bundles": 1,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 1
+          },
+          "phase": "robustness"
+        }
+      ],
+      "time_limit_seconds": 300.0,
+      "execution_seconds": 0.16350408410653472,
+      "coverage_complete": false,
+      "proof_of_totality": false,
+      "phase_targets_complete": true,
+      "filtering": {
+        "requested": true,
+        "applied": true,
+        "method": "known-inputs-first",
+        "topology_applied": false,
+        "reason": "Generation order only; original-schema cases run last, not removed",
+        "known_input_budget_fraction": 0.9,
+        "deferred_objects": [
+          []
+        ],
+        "dynamic_objects": [],
+        "diagnostics": []
+      },
+      "error": "known-inputs: chart rendered no resources (use allow_empty explicitly)\n\nrobustness: chart rendered no resources (use allow_empty explicitly)",
+      "coverage": "known inputs, then original-schema robustness sampling",
+      "schema_source": "inferred generation; no values schema",
+      "lint": "passed",
+      "elapsed_seconds": 0.6106525841169059,
+      "result": "FAIL"
+    }
+  }
+]

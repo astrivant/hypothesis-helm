@@ -101,6 +101,65 @@ def reject_error(resources: list[dict[str, object]]) -> None:
     assert mapping(resources[0]["data"])["status"] == "expected"
 
 
+@pytest.mark.parametrize("sampled", [False, True])
+def test_fail_fast_preserves_first_failure(
+    expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch, tmp_path: Path, sampled: bool
+) -> None:
+    """
+    Stop after one faulty render in both sampled and failure-expansion execution.
+
+    Args:
+        expansion_chart (Chart): Two-region chart fixture.
+        monkeypatch (pytest.MonkeyPatch): Replace Helm with the independent output oracle.
+        tmp_path (Path): Failure artifact destination.
+        sampled (bool): Use Hypothesis sampling instead of finite expansion.
+
+    Returns:
+        None: No confirmation, shrinking, or expansion renders follow the first failure.
+    """
+    from hypothesis import strategies as st
+
+    calls: list[dict[str, object]] = []
+
+    def render(
+        chart: Chart, values: dict[str, object], **kwargs: object
+    ) -> list[dict[str, object]]:
+        """
+        Record renders and produce the fixture's independent expected output.
+
+        Args:
+            chart (Chart): Chart under test.
+            values (dict[str, object]): Generated overrides.
+            **kwargs (object): Renderer options.
+
+        Returns:
+            list[dict[str, object]]: Oracle manifests.
+        """
+        calls.append(values)
+        return error_output(values)
+
+    monkeypatch.setattr("hypothesis_helm.charts.runner.render", render)
+    report = check_chart(
+        expansion_chart,
+        permutations=None if sampled else 2,
+        trim_topology=0 if sampled else 2,
+        expand_failures=not sampled,
+        fail_fast=True,
+        input_strategy=st.just({"a": True, "b": False, "c": False}) if sampled else None,
+        properties=(reject_error,),
+        infer_exhaustive_groups=False,
+        artifact_dir=tmp_path / "reports",
+    )
+    assert report["status"] == "failed"
+    assert sum(bool(values.get("a")) for values in calls) == 1
+    assert calls[-1]["a"] is True
+    assert report["attempts"] == len(calls)
+    assert json.loads((tmp_path / "reports/values.json").read_text()) == calls[-1]
+    if not sampled:
+        assert report["failed_iterations"] == 1
+        assert mapping(report["failure_expansion"])["additional_scheduled"] == 0
+
+
 @pytest.mark.parametrize("limited", [False, True])
 @pytest.mark.parametrize("pruning", [False, True])
 def test_expansion_execution(

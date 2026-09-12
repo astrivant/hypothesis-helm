@@ -147,6 +147,94 @@ def test_scan_execution(
     assert argument_parser().parse_args(["scan", str(tmp_path), "--report"]).report == ""
 
 
+@pytest.mark.parametrize("fail_fast", [False, True])
+@pytest.mark.parametrize("outcome", ["failed", "baseline-failed", "error", "time-limit"])
+def test_scan_fail_flag(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    fail_fast: bool,
+    outcome: str,
+) -> None:
+    """
+    Stop failed scans without losing findings or treating unstarted charts as passes.
+
+    Args:
+        tmp_path (Path): Isolated repository and report destination.
+        monkeypatch (pytest.MonkeyPatch): Replace chart execution with recorded outcomes.
+        capsys (pytest.CaptureFixture[str]): Capture the aggregate JSON report.
+        fail_fast (bool): Enable early termination.
+        outcome (str): First tested chart outcome, including incomplete coverage.
+
+    Returns:
+        None: Execution order, exit code, and retained reports agree.
+    """
+    for name in ("a", "b", "c"):
+        chart = tmp_path / name
+        chart.mkdir()
+        (chart / "Chart.yaml").write_text(
+            dedent(f"""
+            apiVersion: v2
+            name: {name}
+            version: '1.0.0'
+            """)
+        )
+        if name != "a":
+            (chart / "values.yaml").write_text("{}\n")
+    calls: list[str] = []
+
+    def exercise(path: Path, args: object, artifacts: Path) -> dict[str, object]:
+        """
+        Record tested charts and retain a representative failure artifact.
+
+        Args:
+            path (Path): Isolated chart copy.
+            args (object): Scan options.
+            artifacts (Path): Reproducer destination.
+
+        Returns:
+            dict[str, object]: Controlled chart outcome.
+        """
+        calls.append((path / "Chart.yaml").read_text())
+        artifacts.mkdir(parents=True)
+        (artifacts / "values.json").write_text('{"flag": true}\n')
+        return {"status": outcome if len(calls) == 1 else "passed", "attempts": 3}
+
+    monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", exercise)
+    options = [
+        "scan",
+        str(tmp_path),
+        "--helm",
+        "/usr/bin/true",
+        "--filter",
+        "--no-build-dependencies",
+        "--artifact-dir",
+        str(tmp_path / "artifacts"),
+        "--report",
+        str(tmp_path / "result"),
+    ]
+    if fail_fast:
+        options.append("--fail")
+    code = main(options)
+    report = json.loads(capsys.readouterr().out)
+    stopped = fail_fast and outcome != "time-limit"
+    assert code == (2 if outcome == "time-limit" else 1)
+    assert len(calls) == (1 if stopped else 2)
+    assert report["scan_status"] == ("failed-early" if stopped else "completed")
+    assert report["settings"]["fail"] is fail_fast
+    assert report["unstarted_charts"] == int(stopped)
+    assert report["charts"][0]["status"] == "missing-values"
+    assert report["charts"][1]["status"] == outcome
+    assert report["charts"][2]["status"] == ("pending" if stopped else "passed")
+    if stopped:
+        assert report["charts"][2]["result"] == "N/A"
+        assert "--fail" in report["charts"][2]["error"]
+    assert (Path(report["charts"][1]["artifacts"]) / "values.json").exists()
+    assert json.loads(next((tmp_path / "artifacts").glob("*/scan.json")).read_text()) == report
+    assert outcome in (tmp_path / "result.md").read_text()
+    assert (tmp_path / "result.pdf").read_bytes().startswith(b"%PDF-")
+
+
 def test_missing_values_single_and_recursive(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:

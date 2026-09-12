@@ -418,6 +418,7 @@ def check_chart(
     trim: int = 0,
     trim_topology: int = 0,
     expand_failures: bool = False,
+    fail_fast: bool = False,
     max_candidates: int = 100000,
     exhaustive_threshold: int = 10000,
     exhaustive_groups: tuple[ExhaustiveGroup, ...] = (),
@@ -453,6 +454,7 @@ def check_chart(
         trim (int): Seeded quarter-retention steps applied after finite permutation planning.
         trim_topology (int): Quarter-retention steps within symbolic topology regions.
         expand_failures (bool): Execute omitted members of failed regions within the same budget.
+        fail_fast (bool): Stop after the first failure without shrinking or region expansion.
         max_candidates (int): Maximum interaction planning inventory and search work.
         exhaustive_threshold (int): Enumerate smaller Cartesian spaces automatically.
         exhaustive_groups (tuple[ExhaustiveGroup, ...]): Explicitly required local groups.
@@ -968,9 +970,13 @@ def check_chart(
                 save_failure(exc)
                 raise
             except Exception as exc:
+                expansion_failures.append({"values": values, "error": str(exc)})
+                if fail_fast:
+                    expansion_checked += 1
+                    expansion_executed += int(position >= initial_count)
+                    return save_failure(exc)
                 if first_error is None:
                     first_error, first_failure = exc, last_failure
-                expansion_failures.append({"values": values, "error": str(exc)})
                 added = expansion.failed(expansion_positions[configuration_key(values)])
                 work.extend(expansion_values[index] for index in added)
                 finite_values.extend(expansion_values[index] for index in added)
@@ -1048,12 +1054,14 @@ def check_chart(
             (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
+    first_sample_failure: Exception | None = None
+
     @seed(random_seed)
     @settings(
         max_examples=max_examples,
         deadline=None,
         database=None,
-        phases=(Phase.generate, Phase.shrink),
+        phases=(Phase.generate,) if fail_fast else (Phase.generate, Phase.shrink),
         report_multiple_bugs=False,
         suppress_health_check=(HealthCheck.too_slow,),
     )
@@ -1068,7 +1076,17 @@ def check_chart(
         Returns:
             None: None. The operation completes through its documented side effects.
         """
-        check(values)
+        nonlocal first_sample_failure
+        # Hypothesis confirms failures even without shrinking; retain the first
+        # counterexample without invoking Helm again in fail-fast mode.
+        if first_sample_failure is not None:
+            raise first_sample_failure
+        try:
+            check(values)
+        except Exception as exc:
+            if fail_fast:
+                first_sample_failure = exc
+            raise
 
     try:
         property_test()

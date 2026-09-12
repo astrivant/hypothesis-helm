@@ -1,0 +1,3319 @@
+{
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/rabbitmq-cluster-operator",
+  "started_epoch": 1789253208,
+  "elapsed_seconds": 84.3331475420855,
+  "scan_status": "completed",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "failed": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "failed",
+      "name": "rabbitmq-cluster-operator",
+      "version": "4.4.40",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq-cluster-operator_1789253208/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/rabbitmq-cluster-operator/values.yaml",
+      "attempts": 173,
+      "phases": [
+        {
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-2x6chvva/chart",
+          "seed": 0,
+          "attempts": 72,
+          "error": "Error: template: rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml:14:13: executing \"rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml\" at <genSignedCert (include \"rmqco.msgTopologyOperator.fullname\" .) nil (list (printf \"%s.%s.svc\" (include \"rmqco.msgTopologyOperator.webhook.fullname\" .) (include \"common.names.namespace\" .)) (printf \"%s.%s.svc.%s\" (include \"rmqco.msgTopologyOperator.webhook.fullname\" .) (include \"common.names.namespace\" .) .Values.clusterDomain)) 365 $ca>: error calling genSignedCert: error creating certificate: x509: \"hypothesis-rabbitmq-messaging-topology-operator-webhook.default.svc.\\u0080\" cannot be encoded as an IA5String\n\nUse --debug flag to render out invalid YAML",
+          "values": {
+            "clusterDomain": "\u0080"
+          },
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 41,
+            "unique_bundles": 41,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 41
+          },
+          "phase": "known-inputs"
+        },
+        {
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 101,
+            "unique_bundles": 101,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 101
+          },
+          "status": "passed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-2x6chvva/chart",
+          "seed": 0,
+          "attempts": 101,
+          "time_limit_seconds": 266.3710884167813,
+          "execution_seconds": 49.61812725011259,
+          "max_examples": 100,
+          "mode": "sampled",
+          "proof_of_totality": false,
+          "phase": "robustness"
+        }
+      ],
+      "time_limit_seconds": 300.0,
+      "execution_seconds": 83.2502977908589,
+      "coverage_complete": false,
+      "proof_of_totality": false,
+      "phase_targets_complete": true,
+      "filtering": {
+        "requested": true,
+        "applied": true,
+        "method": "known-inputs-first",
+        "topology_applied": false,
+        "reason": "Generation order only; original-schema cases run last, not removed",
+        "known_input_budget_fraction": 0.9,
+        "deferred_objects": [
+          [
+            "clusterOperator",
+            "containerSecurityContext",
+            "capabilities"
+          ],
+          [
+            "clusterOperator",
+            "containerSecurityContext",
+            "seccompProfile"
+          ],
+          [
+            "clusterOperator",
+            "containerPorts"
+          ],
+          [
+            "clusterOperator",
+            "networkPolicy"
+          ],
+          [
+            "clusterOperator",
+            "nodeAffinityPreset"
+          ],
+          [
+            "clusterOperator",
+            "pdb"
+          ],
+          [
+            "clusterOperator",
+            "rbac",
+            "clusterRole"
+          ],
+          [
+            "clusterOperator",
+            "rbac"
+          ],
+          [
+            "clusterOperator",
+            "serviceAccount"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "podMonitor"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "service",
+            "nodePorts"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "service",
+            "ports"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "service"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "serviceMonitor"
+          ],
+          [
+            "clusterOperator",
+            "metrics"
+          ],
+          [
+            "clusterOperator",
+            "livenessProbe"
+          ],
+          [
+            "clusterOperator",
+            "readinessProbe"
+          ],
+          [
+            "clusterOperator",
+            "startupProbe"
+          ],
+          [
+            "clusterOperator"
+          ],
+          [
+            "diagnosticMode"
+          ],
+          [
+            "msgTopologyOperator",
+            "containerSecurityContext",
+            "capabilities"
+          ],
+          [
+            "msgTopologyOperator",
+            "containerSecurityContext",
+            "seccompProfile"
+          ],
+          [
+            "msgTopologyOperator",
+            "containerPorts"
+          ],
+          [
+            "msgTopologyOperator",
+            "networkPolicy"
+          ],
+          [
+            "msgTopologyOperator",
+            "nodeAffinityPreset"
+          ],
+          [
+            "msgTopologyOperator",
+            "pdb"
+          ],
+          [
+            "msgTopologyOperator",
+            "rbac",
+            "clusterRole"
+          ],
+          [
+            "msgTopologyOperator",
+            "rbac"
+          ],
+          [
+            "msgTopologyOperator",
+            "service",
+            "nodePorts"
+          ],
+          [
+            "msgTopologyOperator",
+            "service",
+            "ports"
+          ],
+          [
+            "msgTopologyOperator",
+            "service"
+          ],
+          [
+            "msgTopologyOperator",
+            "serviceAccount"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "podMonitor"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "service",
+            "nodePorts"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "service",
+            "ports"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "service"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "serviceMonitor"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics"
+          ],
+          [
+            "msgTopologyOperator",
+            "livenessProbe"
+          ],
+          [
+            "msgTopologyOperator",
+            "readinessProbe"
+          ],
+          [
+            "msgTopologyOperator",
+            "startupProbe"
+          ],
+          [
+            "msgTopologyOperator"
+          ],
+          [
+            "global",
+            "security"
+          ],
+          [
+            "global",
+            "compatibility",
+            "openshift"
+          ],
+          [
+            "global",
+            "compatibility"
+          ],
+          [
+            "global"
+          ],
+          []
+        ],
+        "dynamic_objects": [
+          [
+            "commonAnnotations"
+          ],
+          [
+            "commonLabels"
+          ],
+          [
+            "credentialUpdaterImage"
+          ],
+          [
+            "rabbitmqImage"
+          ],
+          [
+            "clusterOperator",
+            "affinity"
+          ],
+          [
+            "clusterOperator",
+            "containerSecurityContext",
+            "seLinuxOptions"
+          ],
+          [
+            "clusterOperator",
+            "containerSecurityContext"
+          ],
+          [
+            "clusterOperator",
+            "customLivenessProbe"
+          ],
+          [
+            "clusterOperator",
+            "customReadinessProbe"
+          ],
+          [
+            "clusterOperator",
+            "customStartupProbe"
+          ],
+          [
+            "clusterOperator",
+            "image"
+          ],
+          [
+            "clusterOperator",
+            "lifecycleHooks"
+          ],
+          [
+            "clusterOperator",
+            "nodeSelector"
+          ],
+          [
+            "clusterOperator",
+            "podAnnotations"
+          ],
+          [
+            "clusterOperator",
+            "podLabels"
+          ],
+          [
+            "clusterOperator",
+            "podSecurityContext"
+          ],
+          [
+            "clusterOperator",
+            "resources"
+          ],
+          [
+            "clusterOperator",
+            "updateStrategy"
+          ],
+          [
+            "clusterOperator",
+            "networkPolicy",
+            "ingressNSMatchLabels"
+          ],
+          [
+            "clusterOperator",
+            "networkPolicy",
+            "ingressNSPodMatchLabels"
+          ],
+          [
+            "clusterOperator",
+            "serviceAccount",
+            "annotations"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "podMonitor",
+            "additionalLabels"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "podMonitor",
+            "params"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "podMonitor",
+            "selector"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "service",
+            "annotations"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "service",
+            "sessionAffinityConfig"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "serviceMonitor",
+            "labels"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "serviceMonitor",
+            "params"
+          ],
+          [
+            "clusterOperator",
+            "metrics",
+            "serviceMonitor",
+            "selector"
+          ],
+          [
+            "msgTopologyOperator",
+            "affinity"
+          ],
+          [
+            "msgTopologyOperator",
+            "containerSecurityContext",
+            "seLinuxOptions"
+          ],
+          [
+            "msgTopologyOperator",
+            "containerSecurityContext"
+          ],
+          [
+            "msgTopologyOperator",
+            "customLivenessProbe"
+          ],
+          [
+            "msgTopologyOperator",
+            "customReadinessProbe"
+          ],
+          [
+            "msgTopologyOperator",
+            "customStartupProbe"
+          ],
+          [
+            "msgTopologyOperator",
+            "image"
+          ],
+          [
+            "msgTopologyOperator",
+            "lifecycleHooks"
+          ],
+          [
+            "msgTopologyOperator",
+            "nodeSelector"
+          ],
+          [
+            "msgTopologyOperator",
+            "podAnnotations"
+          ],
+          [
+            "msgTopologyOperator",
+            "podLabels"
+          ],
+          [
+            "msgTopologyOperator",
+            "podSecurityContext"
+          ],
+          [
+            "msgTopologyOperator",
+            "resources"
+          ],
+          [
+            "msgTopologyOperator",
+            "updateStrategy"
+          ],
+          [
+            "msgTopologyOperator",
+            "networkPolicy",
+            "ingressNSMatchLabels"
+          ],
+          [
+            "msgTopologyOperator",
+            "networkPolicy",
+            "ingressNSPodMatchLabels"
+          ],
+          [
+            "msgTopologyOperator",
+            "service",
+            "annotations"
+          ],
+          [
+            "msgTopologyOperator",
+            "service",
+            "sessionAffinityConfig"
+          ],
+          [
+            "msgTopologyOperator",
+            "serviceAccount",
+            "annotations"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "podMonitor",
+            "additionalLabels"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "podMonitor",
+            "selector"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "service",
+            "annotations"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "service",
+            "sessionAffinityConfig"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "serviceMonitor",
+            "labels"
+          ],
+          [
+            "msgTopologyOperator",
+            "metrics",
+            "serviceMonitor",
+            "selector"
+          ]
+        ],
+        "diagnostics": [
+          {
+            "file": "templates/NOTES.txt",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 41,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 51,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 52,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 53,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 54,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 55,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 56,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 57,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 11,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 12,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 19,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 20,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 21,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 20,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 22,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 23,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 25,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 32,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 33,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 33,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 40,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 41,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 42,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 41,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 43,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 44,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 46,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 53,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 54,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 54,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 60,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 61,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.existingWebhookCertSecret"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 62,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.existingWebhookCertSecret"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 64,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 64,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 71,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 72,
+            "message": "unresolved dot context: .Values.credentialUpdaterImage"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 72,
+            "message": "unresolved dot context: .Values.global"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 72,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 78,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 79,
+            "message": "unresolved dot context: .Values.clusterOperator.image"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 79,
+            "message": "unresolved dot context: .Values.global"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 79,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 85,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 86,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.image"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 86,
+            "message": "unresolved dot context: .Values.global"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 86,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 92,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 93,
+            "message": "unresolved dot context: .Values.rabbitmqImage"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 93,
+            "message": "unresolved dot context: .Values.global"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 93,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 99,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 100,
+            "message": "unresolved dot context: .Values.clusterOperator.image"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 100,
+            "message": "unresolved dot context: .Values.rabbitmqImage"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 100,
+            "message": "unresolved dot context: .Values.global"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 100,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 106,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 108,
+            "message": "unresolved dot context: .Values.global"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 109,
+            "message": "unresolved dot context: .Values.global.imagePullSecrets"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 110,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 110,
+            "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 113,
+            "message": "unresolved dot context: .Values.clusterOperator.image"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 113,
+            "message": "unresolved dot context: .Values.rabbitmqImage"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 114,
+            "message": "unresolved dot context: .pullSecrets"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 115,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 115,
+            "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 126,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 127,
+            "message": "unresolved dot context: .Values.clusterOperator.serviceAccount.create"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 128,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 128,
+            "message": "unresolved dot context: .Values.clusterOperator.serviceAccount.name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 128,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 130,
+            "message": "unresolved dot context: .Values.clusterOperator.serviceAccount.name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 137,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 138,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.serviceAccount.create"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 139,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 139,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.serviceAccount.name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 139,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 141,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.serviceAccount.name"
+          },
+          {
+            "file": "templates/cluster-operator/aggregate-cluster-roles.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/aggregate-cluster-roles.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/aggregate-cluster-roles.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/aggregate-cluster-roles.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 18,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 25,
+            "message": "unresolved dot context: .Values.clusterOperator.rbac.clusterRole.extraRules"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 26,
+            "message": "unresolved dot context: .Values.clusterOperator.rbac.clusterRole.extraRules"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 27,
+            "message": "unresolved dot context: .apiGroups"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 28,
+            "message": "unresolved dot context: .resources"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrole.yaml",
+            "line": 29,
+            "message": "unresolved dot context: .verbs"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 24,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 31,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 33,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 35,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 39,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 44,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 47,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/clusterrolebinding.yaml",
+            "line": 48,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 6,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 9,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 30,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 32,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 36,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 37,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 43,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 46,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 49,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 52,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 53,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 54,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 57,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 60,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 66,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 73,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 77,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 80,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 83,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 89,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 100,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 105,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 107,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 108,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 110,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 113,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 118,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 122,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 124,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 126,
+            "message": "unresolved dot context: .Values.clusterOperator.resourcesPreset"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 127,
+            "message": "unresolved dot context: .Values.clusterOperator.resourcesPreset"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 127,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 131,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 130,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 132,
+            "message": "unresolved dot context: .Values.clusterOperator.livenessProbe.enabled"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 133,
+            "message": "unresolved dot context: .Values.clusterOperator.livenessProbe"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 133,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 138,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 137,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 139,
+            "message": "unresolved dot context: .Values.clusterOperator.readinessProbe.enabled"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 140,
+            "message": "unresolved dot context: .Values.clusterOperator.readinessProbe"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 140,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 146,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 145,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 147,
+            "message": "unresolved dot context: .Values.clusterOperator.startupProbe.enabled"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 148,
+            "message": "unresolved dot context: .Values.clusterOperator.startupProbe"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 148,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 155,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 158,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 165,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/deployment.yaml",
+            "line": 168,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 37,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 44,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 46,
+            "message": "unresolved dot context: .Values.clusterOperator.metrics.service.type"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 50,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 52,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/metrics-service.yaml",
+            "line": 53,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 48,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 59,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 69,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 73,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/networkpolicy.yaml",
+            "line": 91,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/pdb.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/pdb.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/pdb.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/pdb.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/pdb.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/pdb.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/pdb.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 26,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 28,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 33,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 68,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/podmonitor.yaml",
+            "line": 71,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/role.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/role.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/role.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/role.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/role.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 24,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/rolebinding.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/service-account.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/service-account.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/service-account.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/service-account.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/service-account.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 20,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 28,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 32,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 51,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/cluster-operator/servicemonitor.yaml",
+            "line": 54,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/extra-list.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/issuer.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/issuer.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/issuer.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/aggregate-cluster-roles.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/aggregate-cluster-roles.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/aggregate-cluster-roles.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/aggregate-cluster-roles.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/aggregate-cluster-roles.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/aggregate-cluster-roles.yaml",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 24,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/certificate.yaml",
+            "line": 28,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 20,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 27,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.rbac.clusterRole.extraRules"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 28,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.rbac.clusterRole.extraRules"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 29,
+            "message": "unresolved dot context: .apiGroups"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 30,
+            "message": "unresolved dot context: .resources"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrole.yaml",
+            "line": 31,
+            "message": "unresolved dot context: .verbs"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 24,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 31,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 33,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 35,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 39,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 44,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 47,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/clusterrolebinding.yaml",
+            "line": 48,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 26,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 28,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 33,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 35,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 39,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 40,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 43,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 46,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 52,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 55,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 56,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 57,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 60,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 63,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 69,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 82,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 86,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 89,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 92,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 98,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 110,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 115,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 120,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 124,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 126,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 128,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.resourcesPreset"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 129,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.resourcesPreset"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 129,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 143,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 142,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 144,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.livenessProbe.enabled"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 145,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.livenessProbe"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 145,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 150,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 149,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 151,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.readinessProbe.enabled"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 152,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.readinessProbe"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 152,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 158,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 157,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 159,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.startupProbe.enabled"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 160,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.startupProbe"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 160,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 167,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 174,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 177,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 183,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/deployment.yaml",
+            "line": 185,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 20,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 40,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 47,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 49,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.metrics.service.type"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 53,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 55,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/metrics-service.yaml",
+            "line": 56,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 51,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 62,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 75,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 79,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/networkpolicy.yaml",
+            "line": 96,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/pdb.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/pdb.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/pdb.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/pdb.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/pdb.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/pdb.yaml",
+            "line": 25,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/pdb.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 28,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 30,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/podmonitor.yaml",
+            "line": 35,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/role.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/role.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/role.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/role.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/role.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/role.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/role.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 26,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/rolebinding.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/service-account.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/service-account.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/service-account.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/service-account.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/service-account.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/service-account.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/service-account.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 17,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 26,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 31,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/servicemonitor.yaml",
+            "line": 35,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 7,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 20,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 21,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 27,
+            "message": "unresolved variable context: $cert.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 27,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 28,
+            "message": "unresolved variable context: $cert.Key"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 28,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 29,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 29,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 35,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 40,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 39,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 41,
+            "message": "unresolved dot context: .Values.useCertManager"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 41,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.existingWebhookCertSecret"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 42,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 42,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 45,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 47,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 53,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 53,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 56,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 57,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 77,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 77,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 80,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 81,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 101,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 101,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 104,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 105,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 125,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 126,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 146,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 146,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 149,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 150,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 170,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 170,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 173,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 174,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 194,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 194,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 197,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 198,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 218,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 218,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 221,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 222,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 242,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 242,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 245,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 246,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 266,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 266,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 269,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 270,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 290,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 290,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 293,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 294,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 314,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 314,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 317,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 318,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 338,
+            "message": "unresolved variable context: $ca.Cert"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 338,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 341,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/validating-webhook-configuration.yaml",
+            "line": 342,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 15,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 16,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 18,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 39,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 46,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 48,
+            "message": "unresolved dot context: .Values.msgTopologyOperator.service.type"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 52,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 54,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/messaging-topology-operator/webhook-service.yaml",
+            "line": 55,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "path": [
+              "extraDeploy",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "metrics",
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "message": "no unambiguous default; null placeholder, type from schema if available"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "networkPolicy",
+              "ingressNSMatchLabels",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "networkPolicy",
+              "ingressNSPodMatchLabels",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "networkPolicy",
+              "kubeAPIServerPorts",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "metrics",
+              "podMonitor",
+              "labels"
+            ],
+            "message": "no unambiguous default; null placeholder, type from schema if available"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "metrics",
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "message": "no unambiguous default; null placeholder, type from schema if available"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "networkPolicy",
+              "ingressNSMatchLabels",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "networkPolicy",
+              "ingressNSPodMatchLabels",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "networkPolicy",
+              "kubeAPIServerPorts",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "apiGroups"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "resources"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "verbs"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "apiGroups"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "resources"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "verbs"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "networkPolicy",
+              "ingressNSMatchLabels",
+              "*"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "networkPolicy",
+              "ingressNSPodMatchLabels",
+              "*"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "apiGroups"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "resources"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "clusterOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "verbs"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "networkPolicy",
+              "ingressNSMatchLabels",
+              "*"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "networkPolicy",
+              "ingressNSPodMatchLabels",
+              "*"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "apiGroups"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "resources"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          },
+          {
+            "path": [
+              "msgTopologyOperator",
+              "rbac",
+              "clusterRole",
+              "customRules",
+              "*",
+              "verbs"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          }
+        ]
+      },
+      "error": "known-inputs: Error: template: rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml:14:13: executing \"rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml\" at <genSignedCert (include \"rmqco.msgTopologyOperator.fullname\" .) nil (list (printf \"%s.%s.svc\" (include \"rmqco.msgTopologyOperator.webhook.fullname\" .) (include \"common.names.namespace\" .)) (printf \"%s.%s.svc.%s\" (include \"rmqco.msgTopologyOperator.webhook.fullname\" .) (include \"common.names.namespace\" .) .Values.clusterDomain)) 365 $ca>: error calling genSignedCert: error creating certificate: x509: \"hypothesis-rabbitmq-messaging-topology-operator-webhook.default.svc.\\u0080\" cannot be encoded as an IA5String\n\nUse --debug flag to render out invalid YAML",
+      "coverage": "known inputs, then original-schema robustness sampling",
+      "schema_source": "inferred generation; no values schema",
+      "lint": "passed",
+      "elapsed_seconds": 84.3263193340972,
+      "result": "FAIL"
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "helm": "/tmp/hh-helm4/darwin-arm64/helm",
+    "seed": 0,
+    "build_dependencies": true,
+    "values": "values.yaml"
+  }
+}

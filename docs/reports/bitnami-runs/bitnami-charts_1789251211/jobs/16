@@ -1,0 +1,42 @@
+{
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/common",
+  "started_epoch": 1789251532,
+  "elapsed_seconds": 0.06842899974435568,
+  "scan_status": "completed",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "skipped-library": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "skipped-library",
+      "name": "common",
+      "version": "2.31.10",
+      "kind": "library",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789251211/runs/common_1789251532/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/common/values.yaml",
+      "result": "N/A",
+      "coverage": "not a standalone application",
+      "elapsed_seconds": 0.06480733305215836,
+      "filtering": {
+        "requested": true,
+        "applied": false,
+        "reason": "Chart did not enter finite permutation testing"
+      }
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "helm": "/tmp/hh-helm4/darwin-arm64/helm",
+    "seed": 0,
+    "build_dependencies": true,
+    "values": "values.yaml"
+  }
+}

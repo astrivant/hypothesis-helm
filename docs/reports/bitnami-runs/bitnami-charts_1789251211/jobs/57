@@ -1,0 +1,99 @@
+{
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/kube-prometheus/charts/kube-prometheus-crds",
+  "started_epoch": 1789252451,
+  "elapsed_seconds": 0.4257836667820811,
+  "scan_status": "completed",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "failed": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "failed",
+      "name": "kube-prometheus-crds",
+      "version": "0.1.0",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus-crds_1789252451/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/kube-prometheus/charts/kube-prometheus-crds/values.yaml",
+      "attempts": 2,
+      "phases": [
+        {
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-9b5wqyru/chart",
+          "seed": 0,
+          "attempts": 1,
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "values": {},
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 1,
+            "unique_bundles": 1,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 1
+          },
+          "phase": "known-inputs"
+        },
+        {
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-9b5wqyru/chart",
+          "seed": 0,
+          "attempts": 1,
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "values": {},
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 1,
+            "unique_bundles": 1,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 1
+          },
+          "phase": "robustness"
+        }
+      ],
+      "time_limit_seconds": 300.0,
+      "execution_seconds": 0.1250509168021381,
+      "coverage_complete": false,
+      "proof_of_totality": false,
+      "phase_targets_complete": true,
+      "filtering": {
+        "requested": true,
+        "applied": true,
+        "method": "known-inputs-first",
+        "topology_applied": false,
+        "reason": "Generation order only; original-schema cases run last, not removed",
+        "known_input_budget_fraction": 0.9,
+        "deferred_objects": [
+          []
+        ],
+        "dynamic_objects": [],
+        "diagnostics": []
+      },
+      "error": "known-inputs: chart rendered no resources (use allow_empty explicitly)\n\nrobustness: chart rendered no resources (use allow_empty explicitly)",
+      "coverage": "known inputs, then original-schema robustness sampling",
+      "schema_source": "inferred generation; no values schema",
+      "lint": "passed",
+      "elapsed_seconds": 0.4221022501587868,
+      "result": "FAIL"
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "helm": "/tmp/hh-helm4/darwin-arm64/helm",
+    "seed": 0,
+    "build_dependencies": true,
+    "values": "values.yaml"
+  }
+}

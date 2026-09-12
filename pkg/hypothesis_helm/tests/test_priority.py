@@ -109,15 +109,17 @@ def test_pattern_maps_and_compositions_remain_open(tmp_path: Path) -> None:
         assert mapping(properties[name]).get("additionalProperties") is not False
 
 
+@pytest.mark.parametrize("fail_fast", [False, True])
 def test_phase_order_and_failure_preservation(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, fail_fast: bool
 ) -> None:
     """
-    Run robustness last even after a known-input failure and retain both results.
+    Run robustness after failures unless fail-fast explicitly stops the phase.
 
     Args:
         tmp_path (Path): Chart and artifacts location.
         monkeypatch (pytest.MonkeyPatch): Capture runner arguments without spawning Helm.
+        fail_fast (bool): Stop after the first failing phase.
 
     Returns:
         None: Both phases use the original chart and retain distinct reports.
@@ -155,7 +157,16 @@ def test_phase_order_and_failure_preservation(
         helm="helm",
         timeout=1,
         artifacts=tmp_path / "reports",
+        fail_fast=fail_fast,
     )
+    if fail_fast:
+        assert len(calls) == 1
+        assert calls[0]["fail_fast"] is True
+        assert result["status"] == "failed" and result["attempts"] == 3
+        deferred = json.loads((tmp_path / "reports/robustness/report.json").read_text())
+        assert deferred["status"] == "not-started"
+        assert deferred["attempts"] == 0
+        return
     assert len(calls) == 2
     assert calls[0]["input_strategy"] is not None
     assert calls[1]["input_strategy"] is not None

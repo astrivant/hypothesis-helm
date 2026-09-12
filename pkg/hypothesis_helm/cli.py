@@ -157,6 +157,11 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="filter finite charts; otherwise prioritize known inputs "
         "and run robustness cases last",
     )
+    repository.add_argument(
+        "--fail",
+        action="store_true",
+        help="stop on the first chart test failure; save partial results and exit 1",
+    )
     repository.add_argument("--seed", type=int, default=0)
     repository.add_argument(
         "--build-dependencies",
