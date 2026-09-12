@@ -28,12 +28,13 @@ for title, command in parsers:
 <summary>helm hypothesis</summary>
 
 ~~~text
-usage: helm hypothesis [-h] {scan,generate,audit,run,test,schemas} ...
+usage: helm hypothesis [-h] {merge-reports,scan,generate,audit,run,test,schemas} ...
 
 Audit and property-test Helm chart values.
 
 positional arguments:
-  {scan,generate,audit,run,test,schemas}
+  {merge-reports,scan,generate,audit,run,test,schemas}
+    merge-reports       combine completed shards into one final report
     scan                recursively test charts in a directory or Git repository
     generate            generate one typed Python property test per values path
     audit               discover value references and schema gaps
@@ -43,6 +44,27 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis merge-reports</summary>
+
+~~~text
+usage: helm hypothesis merge-reports [-h] --shards SHARDS --run-id RUN_ID
+                                     [--output-dir OUTPUT_DIR]
+                                     directory
+
+positional arguments:
+  directory             artifact root containing shards/INDEX-of-TOTAL
+
+options:
+  -h, --help            show this help message and exit
+  --shards SHARDS
+  --run-id RUN_ID       identifier shared by this run's shards
+  --output-dir OUTPUT_DIR
+                        new report directory; default: SOURCE/final
 ~~~
 
 </details>
@@ -156,8 +178,9 @@ usage: helm hypothesis run [-h] [--seed SEED] [--match MATCH] [--collect-only]
                            [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
                            [--kubeconform-binary KUBECONFORM_BINARY]
                            [--cache-dir CACHE_DIR] [--disable-schema-caching]
-                           [--progress] [--no-cache] [--rerun {auto,all,failed}]
-                           [--shard SHARD] [--jobs JOBS] [--output {json}] [--strict]
+                           [--progress] [--run-id RUN_ID] [--no-cache]
+                           [--rerun {auto,all,failed}] [--shard SHARD] [--jobs JOBS]
+                           [--output {json}] [--strict]
                            suite
 
 positional arguments:
@@ -185,6 +208,7 @@ options:
                         updating it
   --progress            force a live progress bar on stderr, including redirected
                         output
+  --run-id RUN_ID       common identifier for shards merged into one report
   --no-cache            disable path-result caching
   --rerun {auto,all,failed}
                         auto: rerun failures locally; run all paths in CI
@@ -220,8 +244,9 @@ usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DUR
                             [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
                             [--kubeconform-binary KUBECONFORM_BINARY]
                             [--cache-dir CACHE_DIR] [--disable-schema-caching]
-                            [--progress] [--no-cache] [--rerun {auto,all,failed}]
-                            [--shard SHARD] [--jobs JOBS] [--output {json}] [--strict]
+                            [--progress] [--run-id RUN_ID] [--no-cache]
+                            [--rerun {auto,all,failed}] [--shard SHARD] [--jobs JOBS]
+                            [--output {json}] [--strict]
                             [--export-minimal-values [FILENAME]]
                             [chart]
 
@@ -282,6 +307,7 @@ options:
                         updating it
   --progress            force a live progress bar on stderr, including redirected
                         output
+  --run-id RUN_ID       common identifier for shards merged into one report
   --no-cache            disable path-result caching
   --rerun {auto,all,failed}
                         auto: rerun failures locally; run all paths in CI

@@ -2,12 +2,13 @@
 Persist completed property outcomes and select local retries.
 """
 
+import fcntl
 import hashlib
 import json
 import logging
 import os
 import sys
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
 from importlib.metadata import version
 from pathlib import Path
 from uuid import uuid4
@@ -138,7 +139,36 @@ def read_outcomes(path: Path) -> dict[str, str]:
         return {}
 
 
-def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+def merge_outcomes(path: Path, baseline: dict[str, str], updates: dict[str, str]) -> dict[str, str]:
+    """
+    Merge concurrent cache publications without dropping independent outcomes or failures.
+
+    Args:
+        path (Path): Shared cache entry.
+        baseline (dict[str, str]): Snapshot read before this run.
+        updates (dict[str, str]): Outcomes completed by this run's workers.
+
+    Returns:
+        dict[str, str]: Atomically published union; conflicting concurrent failures win.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.with_suffix(".lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        current = read_outcomes(path)
+        for node, outcome in updates.items():
+            if current.get(node) != baseline.get(node) and current.get(node) == "failed":
+                continue
+            current[node] = outcome
+        temporary = path.with_suffix(f".{uuid4().hex}.tmp")
+        temporary.write_text(json.dumps(current, indent=2) + "\n")
+        temporary.replace(path)
+        return current
+
+
+@pytest.hookimpl(wrapper=True, tryfirst=True)
+def pytest_collection_modifyitems(
+    config: pytest.Config, items: list[pytest.Item]
+) -> Iterator[None]:
     """
     Exclude cached successes while retaining failures and unseen properties.
 
@@ -146,9 +176,10 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
         config (pytest.Config): Active pytest configuration.
         items (list[pytest.Item]): Collected tests.
 
-    Returns:
-        None: Cached successes are deselected.
+    Yields:
+        None: Keyword selection and shard inventory finish before cached successes are removed.
     """
+    yield
     source = os.environ.get("HYPOTHESIS_HELM_CACHE_READ")
     if not source:
         return

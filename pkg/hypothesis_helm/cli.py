@@ -24,6 +24,7 @@ from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_sh
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.reporting.output import MANIFEST_FD
 from hypothesis_helm.reporting.progressive import plot_progression
+from hypothesis_helm.reporting.shards import merge_reports
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, prepare
 from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
@@ -99,6 +100,17 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         prog=prog, description="Audit and property-test Helm chart values."
     )
     commands = parser.add_subparsers(dest="command", required=True)
+    merge = commands.add_parser(
+        "merge-reports", help="combine completed shards into one final report"
+    )
+    merge.add_argument(
+        "directory", type=Path, help="artifact root containing shards/INDEX-of-TOTAL"
+    )
+    merge.add_argument("--shards", type=int, required=True)
+    merge.add_argument("--run-id", required=True, help="identifier shared by this run's shards")
+    merge.add_argument(
+        "--output-dir", type=Path, help="new report directory; default: SOURCE/final"
+    )
     repository = commands.add_parser(
         "scan", help="recursively test charts in a directory or Git repository"
     )
@@ -334,6 +346,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             action="store_true",
             help="force a live progress bar on stderr, including redirected output",
         )
+        command.add_argument("--run-id", help="common identifier for shards merged into one report")
         command.add_argument("--no-cache", action="store_true", help="disable path-result caching")
         command.add_argument(
             "--rerun",
@@ -404,6 +417,8 @@ def main(argv: list[str] | None = None) -> int:
         stack.enter_context(redirect_stdout(sys.stderr))
     previous_conformity = os.environ.pop(ENVIRONMENT, None)
     try:
+        if args.command == "merge-reports":
+            return merge_reports(args.directory, args.shards, args.run_id, args.output_dir)
         if args.command == "scan":
             return scan(args)
         minimal_values = None
@@ -627,6 +642,7 @@ def main(argv: list[str] | None = None) -> int:
                 cache_dir=args.cache_dir,
                 cache=not args.no_cache,
                 disable_schema_caching=args.disable_schema_caching,
+                run_id=args.run_id,
                 progress=args.progress,
                 rerun=args.rerun,
                 artifact_dir=args.artifact_dir,
@@ -671,6 +687,7 @@ def main(argv: list[str] | None = None) -> int:
                 cache_dir=args.cache_dir,
                 cache=not args.no_cache,
                 disable_schema_caching=args.disable_schema_caching,
+                run_id=args.run_id,
                 progress=args.progress,
                 rerun=args.rerun,
                 artifact_dir=args.artifact_dir,
