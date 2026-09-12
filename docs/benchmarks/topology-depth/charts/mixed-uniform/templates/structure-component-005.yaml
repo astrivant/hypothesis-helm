@@ -1,0 +1,17 @@
+{{ if .Values.input004 }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: component-005-state
+data:
+  gate: open
+{{ end }}
+{{ range until (ternary 3 1 .Values.input005) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: component-005-loop-{{ . }}
+data:
+  member: present
+{{ end }}

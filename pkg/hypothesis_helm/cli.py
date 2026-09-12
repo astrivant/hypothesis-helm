@@ -28,6 +28,40 @@ from hypothesis_helm.schemas.finite import NonFiniteSchema
 from hypothesis_helm.schemas.groups import parse_group
 
 
+class FilterAction(argparse.Action):
+    """
+    Keep the filter preset exclusive with individually composable filtering options.
+    """
+
+    def __call__(
+        self,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: object,
+        option_string: str | None = None,
+    ) -> None:
+        """
+        Reject mixed preset and individual options in either argument order.
+
+        Args:
+            parser (argparse.ArgumentParser): Parser reporting usage errors.
+            namespace (argparse.Namespace): Options parsed so far.
+            values (object): Parsed option value.
+            option_string (str | None): Spelling supplied by the user.
+
+        Returns:
+            None: Store the option after checking preset exclusivity.
+        """
+        if self.dest == "filter":
+            if getattr(namespace, "individual_filter", None):
+                parser.error("--filter cannot be combined with individual filtering options")
+        else:
+            if getattr(namespace, "filter", False):
+                parser.error(f"{option_string} cannot be combined with --filter")
+            namespace.individual_filter = option_string
+        setattr(namespace, self.dest, True if self.nargs == 0 else values)
+
+
 def parse_jobs(value: str) -> int | Literal["auto"]:
     """
     Parse automatic throughput tuning or a positive fixed worker count.
@@ -104,6 +138,17 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     modes.add_argument(
         "--permutations", type=int, metavar="N", help="cover every valid N-way finite interaction"
     )
+    filters = test.add_argument_group(
+        "filtering",
+        "Use --filter or the individual methods below; random trimming is independent.",
+    )
+    filters.add_argument(
+        "--filter",
+        action=FilterAction,
+        nargs=0,
+        default=False,
+        help="enable --trim-topology 2 and --expand-failures",
+    )
     test.add_argument(
         "--trim-random",
         "--trim",
@@ -113,17 +158,20 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         metavar="N",
         help="retain a seeded quarter of finite permutation cases per step; default: 0",
     )
-    test.add_argument(
+    filters.add_argument(
         "--trim-topology",
+        action=FilterAction,
         type=int,
         default=0,
         metavar="N",
         help="thin symbolic output/branch regions; retain representatives and unknowns; "
         "combines with --trim-random",
     )
-    test.add_argument(
+    filters.add_argument(
         "--expand-failures",
-        action="store_true",
+        action=FilterAction,
+        nargs=0,
+        default=False,
         help="test omitted members of failed symbolic regions within the execution budget",
     )
     test.add_argument(
@@ -319,6 +367,9 @@ def main(argv: list[str] | None = None) -> int:
                     shard_source,
                 )
         if args.command == "test":
+            if args.filter:
+                args.trim_topology = 2
+                args.expand_failures = True
             if args.trim < 0 or args.trim_topology < 0:
                 raise ValueError("--trim must be nonnegative")
             if args.expand_failures and (

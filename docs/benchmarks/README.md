@@ -2,6 +2,25 @@
 
 [Documentation](../README.md) · [Project](../../README.md)
 
+## Install and run
+
+```sh
+pip install "hypothesis-helm[benchmarking]"
+hypothesis-helm-benchmark generate --output benchmark-chart --input-complexity 10
+hypothesis-helm-benchmark run --chart benchmark-chart --time-limit 9m
+```
+
+The extra installs NumPy and Matplotlib. Helm 4 must be available on `PATH` for
+rendering. All benchmark commands run from the installed package; no checkout is
+needed. Results default to `reports/benchmarks/` under the working directory.
+
+Use `hypothesis-helm-benchmark --help` to list studies, or append `--help` to a
+study such as `hypothesis-helm-benchmark nesting --help`.
+`python -m hypothesis_helm.benchmarking` provides the same interface. The existing
+`scripts/benchmark_*.py` entry points remain available in source checkouts.
+
+## Local shard wrapper
+
 Run saved suites with 1–4 local GNU Parallel shards:
 
 ~~~sh
@@ -18,15 +37,15 @@ worker per shard and caching disabled. Logs and reports go to
 Generate a chart with predictable, rounded normal-distribution outputs:
 
 ~~~sh
-bash scripts/project-python.sh -m scripts.generate_benchmark_chart \
+hypothesis-helm-benchmark generate \
   --output .cache/benchmark-chart \
   --input-complexity 100 --mean 0 --stddev 1 --output-bins 256
 ~~~
 
-Run the [plotting benchmark](../../scripts/benchmark_helm.py):
+Run the [plotting benchmark](../../pkg/hypothesis_helm/benchmarking/benchmark_helm.py):
 
 ~~~sh
-bash scripts/project-python.sh -m scripts.benchmark_helm \
+hypothesis-helm-benchmark run \
   --chart .cache/benchmark-chart --step 50 --time-limit 9m --max-permutations 600000 \
   --shards 1,2,3,4 --shard none --output reports/benchmark
 ~~~
@@ -62,10 +81,10 @@ at the deadline.
 Compare pairs, triples, and higher-order coverage against known chart faults:
 
 ~~~sh
-bash scripts/project-python.sh -m scripts.generate_benchmark_chart \
+hypothesis-helm-benchmark generate \
   --output .cache/faulty-chart --input-complexity 8 \
   --bug-percent 5 --bug-orders 2,3,4,5,6 --bug-seed 2026
-bash scripts/project-python.sh -m scripts.benchmark_discovery \
+hypothesis-helm-benchmark discovery \
   --chart .cache/faulty-chart --max-strength 6 --output reports/discovery
 ~~~
 
@@ -95,7 +114,7 @@ coverage as the number of cases falls.
 Generate the normal-quantile chart with downstream interactions:
 
 ```sh
-bash scripts/project-python.sh -m scripts.generate_benchmark_chart \
+hypothesis-helm-benchmark generate \
   --output .cache/topology-chart --input-complexity 100 --topology
 ```
 
@@ -109,7 +128,7 @@ The [small fixture](../../examples/topology-benchmark) has 1,024 possible inputs
 complete comparisons. See [sampling controls and complexity](../execution/README.md#optional-trimming).
 
 ```sh
-bash scripts/project-python.sh -m scripts.benchmark_sparsity \
+hypothesis-helm-benchmark sparsity \
   --chart examples/topology-benchmark --count 1024 --levels 5 \
   --output reports/topology-sparsity
 ```
@@ -125,7 +144,7 @@ The matrix uses fully enumerable fixtures to measure exact outcome coverage,
 with a nine-minute execution ceiling for each independent run.
 
 ```sh
-bash scripts/project-python.sh -m scripts.benchmark_matrix \
+hypothesis-helm-benchmark matrix \
   --input-complexity 10 --trim-level 2 --seed 2026 --time-limit 9m \
   --output reports/strategy-matrix
 ```
@@ -143,7 +162,7 @@ cases. Each category keeps fixed PCA axes and reports exact error recall and
 output coverage alongside the projection.
 
 ```sh
-bash scripts/project-python.sh -m scripts.benchmark_pca \
+hypothesis-helm-benchmark pca \
   --input-complexity 10 --error-percent 5 --trim-level 2 \
   --time-limit 9m --output reports/pca
 ```
@@ -155,7 +174,20 @@ The paired matrix separates distinct erroneous outputs from erroneous inputs
 exercised, and records the additional physical renders.
 
 ```sh
-bash scripts/project-python.sh -m scripts.benchmark_expansion \
+hypothesis-helm-benchmark expansion \
   --input-complexity 10 --error-percent 5 --trim-level 2 \
   --time-limit 9m --output reports/expansion
 ```
+
+## Topology distributions and trim depth
+
+[Generate mixed topology fixtures](topology-mixtures/README.md) with seeded category
+weights and shared input wiring. [Compare trim depths 0–5](topology-depth/README.md)
+with random trimming disabled and failure expansion enabled.
+
+## Chart nesting at permutation strength eight
+
+[Matrix and shared-frame PCA](nesting/README.md) compare shallow (1), deep (5),
+and seeded random nesting depths (1–5). `--permutations 8` stays fixed; each
+chart retains 12 topology components. Shared PCA axes make depth profiles
+comparable within each topology family.

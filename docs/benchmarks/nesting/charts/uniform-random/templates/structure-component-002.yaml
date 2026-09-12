@@ -1,0 +1,18 @@
+{{ if .Values.input006 }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: component-002-state
+data:
+  base: present
+{{ if .Values.input004 }}{{ if .Values.input002 }}{{ if .Values.input005 }}{{ if .Values.input007 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: component-002-rare
+data:
+  region: rare
+{{ end }}{{ end }}{{ end }}{{ end }}
+
+{{ end }}

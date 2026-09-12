@@ -1,0 +1,9 @@
+{{ if .Values.input006 }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: component-004-state
+data:
+  coupled: "{{ .Values.input003 }}"
+
+{{ end }}

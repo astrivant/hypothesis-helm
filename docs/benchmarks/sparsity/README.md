@@ -6,7 +6,7 @@ This study varies case count, not `--permutations` interaction strength. It meas
 outcome coverage and distribution error; see the main benchmark for bug discovery.
 
 ~~~sh
-bash scripts/project-python.sh -m scripts.benchmark_sparsity \
+hypothesis-helm-benchmark sparsity \
   --count 32768 --retain 0.25 --levels 8 --output reports/sparsity
 ~~~
 

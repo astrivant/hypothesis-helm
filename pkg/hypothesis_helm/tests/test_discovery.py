@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pytest
 
+from hypothesis_helm.benchmarking.benchmark_discovery import Fault, faults, fixture
 from hypothesis_helm.charts.runner import render
 from hypothesis_helm.schemas.combinations import plan_interactions
 from hypothesis_helm.schemas.contracts import mapping
-from scripts.benchmark_discovery import Fault, faults, fixture
 
 
 def test_strength_exposes_higher_order_fault(tmp_path: Path) -> None:
@@ -72,8 +72,8 @@ def test_generator_bug_percentage(tmp_path: Path) -> None:
     Returns:
         None: Injected counts match the documented percentage denominator.
     """
-    from scripts.benchmarking.faults import select_faults
-    from scripts.generate_benchmark_chart import generate
+    from hypothesis_helm.benchmarking.faults import select_faults
+    from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
 
     selected, metadata = select_faults(4, (2, 3), 50, 2026, 100)
     assert len(selected) == 28

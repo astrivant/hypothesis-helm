@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: case-state
+data:
+  replicas: "{{ .Values.input002 }}"
+{{ if ge (int .Values.input002) 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: case-boundary
+data:
+  region: high
+{{ end }}

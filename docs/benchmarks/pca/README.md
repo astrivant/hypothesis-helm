@@ -28,7 +28,7 @@ The complete population is rendered once, with a nine-minute ceiling per categor
 [Raw observations, inputs and PCA bases](results.json) · [CSV statistics](results.csv)
 
 ```sh
-bash scripts/project-python.sh -m scripts.benchmark_pca \
+hypothesis-helm-benchmark pca \
   --input-complexity 10 --error-percent 5 --error-seed 1729 \
   --seed 2026 --trim-level 2 --time-limit 9m --output reports/pca
 ```

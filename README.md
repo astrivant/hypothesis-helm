@@ -16,6 +16,15 @@ PYTHON=python3.13 helm plugin install https://github.com/astrivant/hypothesis-he
 
 For a local checkout, replace the repository URL with `.`.
 
+Install the optional benchmark tools with:
+
+```sh
+pip install "hypothesis-helm[benchmarking]"
+hypothesis-helm-benchmark --help
+```
+
+See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot commands.
+
 ## Quick start
 
 ```sh

@@ -46,7 +46,7 @@ Reference execution plus all added renders share a 540s ceiling per category. Pl
 [Raw references and execution records](results.json) · [CSV](results.csv)
 
 ```sh
-bash scripts/project-python.sh -m scripts.benchmark_expansion \
+hypothesis-helm-benchmark expansion \
   --input-complexity 10 --error-percent 5 --error-seed 1729 \
   --seed 2026 --trim-level 2 --time-limit 9m --output reports/expansion
 ```

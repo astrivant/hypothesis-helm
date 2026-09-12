@@ -11,15 +11,19 @@ from unittest.mock import Mock
 
 import pytest
 
+from hypothesis_helm.benchmarking.benchmark_helm import parser
+from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
+from hypothesis_helm.benchmarking.plots import paired_ratio
+from hypothesis_helm.benchmarking.runner import Job, execute_worker
+from hypothesis_helm.benchmarking.workload import (
+    expected_output,
+    partition_indices,
+    standard_values,
+)
 from hypothesis_helm.charts.runner import Chart
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
-from scripts.benchmark_helm import parser
-from scripts.benchmarking.plots import paired_ratio
-from scripts.benchmarking.runner import Job, execute_worker
-from scripts.benchmarking.workload import expected_output, partition_indices, standard_values
-from scripts.generate_benchmark_chart import generate
 
 
 def test_generated_distribution_and_oracle(tmp_path: Path) -> None:
@@ -144,7 +148,8 @@ def test_wrong_output_fails_instead_of_becoming_a_representative(
     """
     generate(tmp_path, input_complexity=8)
     monkeypatch.setattr(
-        "scripts.benchmarking.runner.render", Mock(return_value=[{"data": {"value": "999"}}])
+        "hypothesis_helm.benchmarking.runner.render",
+        Mock(return_value=[{"data": {"value": "999"}}]),
     )
     result = execute_worker(
         Job(str(tmp_path), [0, 1], 5, 8, True, "helm", time.perf_counter() + 30)
@@ -238,8 +243,8 @@ def test_linear_prefix_checkpoints_commit_only_completed_inputs(
         """
         return [{"data": {"value": expected_output(values, spec)}}]
 
-    monkeypatch.setattr("scripts.benchmarking.runner.render", render)
-    monkeypatch.setattr("scripts.benchmarking.runner.expected_output", oracle)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.render", render)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.expected_output", oracle)
     started = time.perf_counter()
     result = execute_worker(
         Job(

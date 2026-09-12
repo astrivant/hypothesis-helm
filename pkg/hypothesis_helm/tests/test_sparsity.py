@@ -4,7 +4,7 @@ Check exact discrete distribution metrics and reproducible input thinning.
 
 import pytest
 
-from scripts.benchmark_sparsity import quality, samples
+from hypothesis_helm.benchmarking.benchmark_sparsity import quality, samples
 
 
 def test_distribution_quality() -> None:

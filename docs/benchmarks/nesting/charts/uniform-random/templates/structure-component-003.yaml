@@ -1,0 +1,20 @@
+{{ if .Values.input002 }}
+{{ if .Values.input004 }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: component-003-state
+data:
+  replicas: "{{ .Values.input009 }}"
+{{ if ge (int .Values.input009) 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: component-003-boundary
+data:
+  region: high
+{{ end }}
+
+{{ end }}
+{{ end }}

@@ -237,6 +237,15 @@ planning limits still apply before trimming.
 
 ### Expanding observed failures
 
+Use `--filter` as shorthand for `--trim-topology 2 --expand-failures`.
+It cannot be combined with either of those individual options; they can still be
+used together. Random trimming is independent: add `--trim-random N` (or `--trim N`)
+alongside `--filter` if wanted. Its default remains zero.
+
+```sh
+helm hypothesis test ./chart --filter --time-limit 9m
+```
+
 `--expand-failures` is opt-in for finite permutation runs. After a check fails,
 it schedules omitted inputs in the same supported symbolic region, executes each
 at most once, and continues within the existing `--time-limit`. Added inputs are
