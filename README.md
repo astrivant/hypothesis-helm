@@ -528,126 +528,59 @@ its supported subset, exact-equivalence bounds and per-candidate certificates.
 
 ## Benchmarking
 
-The [benchmark harness](scripts/benchmark_helm.py) runs real Helm renders, schema and
-manifest validation, exact-equivalence pruning, and independent output assertions.
-Matplotlib figures below are generated from the retained
-[raw worker measurements](docs/benchmarks/results.json) and
-[aggregate CSV](docs/benchmarks/results.csv). PNG and SVG exports are available in
-[docs/benchmarks](docs/benchmarks).
+Run saved suites with 1–4 local GNU Parallel shards:
 
-Generate a predictable chart with any supported input complexity:
+~~~sh
+brew bundle # macOS; Debian/Ubuntu: sudo apt-get install parallel
+for shards in 1 2 3 4; do
+  bash scripts/benchmark-shards.sh --shards "$shards" examples/generated-workload
+done
+~~~
+
+The [wrapper](scripts/benchmark-shards.sh) launches `helm hypothesis run` with one
+worker per shard and caching disabled. Logs and reports go to
+`reports/local-shards/`. Pass additional run options after `--`.
+
+Generate a chart with predictable, rounded normal-distribution outputs:
 
 ~~~sh
 bash scripts/project-python.sh -m scripts.generate_benchmark_chart \
   --output .cache/benchmark-chart \
-  --input-complexity 100 --mean 0 --stddev 1 \
-  --output-bins 256 --precision 6
+  --input-complexity 100 --mean 0 --stddev 1 --output-bins 256
 ~~~
 
-The [generator](scripts/generate_benchmark_chart.py) creates that many independent,
-required Boolean inputs and maps active bits to rounded normal-distribution
-quantiles in a ConfigMap's `data.value`. Remaining inputs do not affect the output.
-`--output-bins` controls quantile resolution (a power of two, up to 1024);
-`--lower` and `--upper` optionally truncate the underlying distribution.
-Small input spaces automatically use fewer bins when the option is omitted.
-`benchmark.json` records the requested parameters and actual finite distribution
-mean, standard deviation and unique output count. This is a discretized
-approximation, not an exactly continuous Gaussian.
-
-The checked-in [standard chart](examples/benchmark) has 100 inputs: eight active
-quantile-selector bits and 92 output-irrelevant bits. Its 256 emitted values have
-mean 0 and standard deviation approximately 0.9975 for requested parameters 0 and 1.
-The input stream is bijective over its finite domain. By default, groups of eight
-distinct inputs share a live selector; subsequent groups also revisit output
-classes. Only exact equivalence permits a render skip. Proximity within the normal
-distribution never authorizes pruning.
-
-For every completed input, an independent oracle recomputes its quantile from the
-input bits, mean, standard deviation and truncation bounds, then compares it with
-the received Helm scalar. This assertion also runs for reused representatives.
-A mismatch fails the benchmark before committing a successful representative.
+Run the [plotting benchmark](scripts/benchmark_helm.py):
 
 ~~~sh
-# Fresh measurements; the three-minute ceiling applies to each benchmark point.
 bash scripts/project-python.sh -m scripts.benchmark_helm \
-  --chart examples/benchmark --time-limit 3m \
-  --replicas 1,2,4 --shard none --output reports/benchmark
-
-# Custom generated distribution, repeated observations and another output directory.
-bash scripts/project-python.sh -m scripts.benchmark_helm \
-  --chart .cache/benchmark-chart --repeats 3 \
-  --counts 64,256,1024,4096 --scaling-counts 64,256,1024 \
-  --output reports/custom-benchmark --shard none
-
-# Regenerate figures from saved data without executing Helm.
-bash scripts/project-python.sh -m scripts.benchmark_helm \
-  --plot-only --output reports/benchmark --shard none
+  --chart .cache/benchmark-chart --step 50 --time-limit 3m \
+  --shards 1,2,3,4 --shard none --output reports/benchmark
 ~~~
 
-`--counts` specifies increasing **distinct input counts**, not the interaction
-strength selected by the application's `--permutations N` option. These are
-controlled benchmark workloads, not exhaustive coverage claims.
-`--multiplicity` changes the desired consecutive equivalence multiplicity and
-must be a power of two. For another chart, provide `--chart` and a `--values`
-JSONL file containing distinct effective overrides; generic workloads retain schema
-and manifest checks but do not claim the generated chart's distribution oracle.
+Checkpoints increase by **50, 100, 150, …** inputs. Each trajectory or scaling run
+has a three-minute execution budget; the complete study takes longer. Outputs are
+checked against an independent oracle, and exact-equivalent renders are skipped.
+Use each script's `--help` for options.
 
-Each point starts fresh worker processes with independent representative and hash
-caches. Wall time includes worker startup, chart loading, candidate generation,
-validation and cleanup. All workers share one deadline; it is not multiplied by the
-replica count. No measurements are clipped to fabricate a plateau. An **X** marks
-an incomplete, deadline-censored observation. Speedup and efficiency exclude
-censored pairs. The complete study takes longer than three minutes because it
-contains multiple independent points. `--resume` reuses saved points only when
-chart, code, seed, machine, workload and shard metadata match.
+The figures below use local Python workers and the [standard chart](examples/benchmark).
+In one recorded run, pruning completed **49,733 checks with 256 renders**, compared
+with **3,535 checks** without pruning. [Raw measurements](docs/benchmarks/results.json)
+and [CSV](docs/benchmarks/results.csv) include the host and run details.
 
-The progressive benchmark stops a series after two consecutive capped points.
-Increasing the requested count then produces a budget-induced runtime and completed
-work plateau, rather than evidence of an inherent throughput limit.
+Progressive checkpoints share one execution. Dashed tails mark unfinished targets
+at the deadline.
 
 ![Measured permutation runtime and completed-work plateau](docs/benchmarks/progressive.png)
 
-The output histogram compares oracle-checked inputs with actual completed Helm
-renders and the declared normal reference. Fewer renders reflect exact output
-reuse, while every completed input still receives its output assertion.
-
 ![Observed Helm values and expected normal distribution](docs/benchmarks/output-distribution.png)
 
-Strong scaling holds the global input prefix fixed and increases parallel benchmark
-workers. Weak scaling holds inputs **per worker** fixed and increases total inputs
-with workers. The figures show both permutation-count curves and replica-based
-speedup or efficiency, following the
-[standard scaling definitions](https://hpc.llnl.gov/documentation/tutorials/introduction-parallel-computing-tutorial).
-Replicas here are worker processes on one machine, not Kubernetes replicas or
-different CI jobs. This harness partitions deterministic input IDs; it does not
-add parallel `--jobs` support to the application's whole-chart CLI.
+**Strong scaling** keeps total work fixed. **Weak scaling** keeps work per worker fixed.
 
 ![Strong scaling against permutation count and worker replicas](docs/benchmarks/strong-scaling.png)
 
 ![Weak scaling against permutation count and worker replicas](docs/benchmarks/weak-scaling.png)
 
 ![Parallel replica throughput and render skips](docs/benchmarks/replicas.png)
-
-Benchmark sharding uses the same `--shard auto|none|INDEX/TOTAL` interface and CI
-environment detection as the application. Numbered benchmark input IDs use modulo
-assignment across shards, followed by disjoint contiguous local replica blocks.
-Changing replica count cannot change the inputs owned by a shard. Weak-scaling
-counts include the shard total so every local worker receives exactly the stated
-input count. Sharded results go into `shard-INDEX-of-TOTAL` subdirectories:
-
-~~~sh
-bash scripts/project-python.sh -m scripts.benchmark_helm \
-  --shard 2/3 --replicas 1,2,4 --output reports/benchmark
-~~~
-
-Plots describe one fixed shard configuration and reject mixed shard measurements.
-They do not pool unsynchronized CI job durations or claim cross-job speedup.
-Raw results retain global requested counts, shard-assigned counts, per-worker
-assignment fingerprints, completed/remaining work, oracle checks and peak worker
-memory. The README measurements use one repetition per point on the recorded host;
-they are exploratory results, not confidence intervals or cross-platform guarantees.
-Use `--repeats 3` or more to measure variability; plotted error bars show the observed
-minimum and maximum, not statistical confidence intervals.
 
 ## Progressive dry runs
 

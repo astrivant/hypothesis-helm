@@ -13,7 +13,9 @@ import pytest
 
 from hypothesis_helm.charts.runner import Chart
 from hypothesis_helm.integrations.sharding import Shard
+from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
+from scripts.benchmark_helm import parser
 from scripts.benchmarking.plots import paired_ratio
 from scripts.benchmarking.runner import Job, execute_worker
 from scripts.benchmarking.workload import expected_output, partition_indices, standard_values
@@ -185,3 +187,91 @@ def test_generator_adapts_default_quantile_bits(tmp_path: Path, complexity: int)
     spec = generate(tmp_path, input_complexity=complexity)
     assert int(str(spec["active_inputs"])) <= complexity
     assert json.loads((tmp_path / "benchmark.json").read_text()) == spec
+
+
+def test_linear_prefix_checkpoints_commit_only_completed_inputs(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """
+    Record 50-input checkpoints without treating an unfinished target as completed work.
+
+    Args:
+        tmp_path (Path): Small finite predictable chart.
+        monkeypatch (pytest.MonkeyPatch): Provides fast correct renders and a controlled stop.
+
+    Returns:
+        None: Only prefixes 50 and 100 complete before the 121st assertion stops the run.
+    """
+    spec = generate(tmp_path, input_complexity=12, output_bins=16)
+    calls = [0]
+
+    def oracle(values: dict[str, object], config: dict[str, object]) -> str:
+        """
+        Simulate expiration while evaluating a candidate beyond the second checkpoint.
+
+        Args:
+            values (dict[str, object]): Candidate effective values.
+            config (dict[str, object]): Declared distribution.
+
+        Returns:
+            str: Independent expected output until the controlled stop.
+        """
+        calls[0] += 1
+        if calls[0] == 121:
+            raise TimeLimitReached()
+        return expected_output(values, config)
+
+    def render(
+        chart: object, values: dict[str, object], **kwargs: object
+    ) -> list[dict[str, object]]:
+        """
+        Supply a correct scalar without invoking Helm in the checkpoint bookkeeping test.
+
+        Args:
+            chart (object): Chart context.
+            values (dict[str, object]): Complete candidate values.
+            **kwargs (object): Renderer settings.
+
+        Returns:
+            list[dict[str, object]]: Oracle-correct resource.
+        """
+        return [{"data": {"value": expected_output(values, spec)}}]
+
+    monkeypatch.setattr("scripts.benchmarking.runner.render", render)
+    monkeypatch.setattr("scripts.benchmarking.runner.expected_output", oracle)
+    started = time.perf_counter()
+    result = execute_worker(
+        Job(
+            str(tmp_path),
+            list(range(200)),
+            5,
+            8,
+            True,
+            "helm",
+            started + 30,
+            checkpoints=[50, 100, 150, 200],
+            started=started,
+        )
+    )
+    checkpoints = [mapping(item) for item in sequence(result["checkpoints"])]
+    assert result["status"] == "time-limit"
+    assert result["completed"] == result["oracle_checks"] == 120
+    assert [item["requested_permutations"] for item in checkpoints] == [50, 100]
+    assert [item["completed"] for item in checkpoints] == [50, 100]
+    assert [item["rendered"] for item in checkpoints] == [7, 13]
+    assert all(item["remaining"] == 0 for item in checkpoints)
+
+
+def test_default_linear_grid_and_four_worker_shards() -> None:
+    """
+    Use fifty-input increments and all shard counts from one through four.
+
+    Returns:
+        None: Default controls implement the requested linear benchmark grid.
+    """
+    args = parser().parse_args([])
+    assert args.step == 50
+    assert args.counts is None
+    assert args.replicas == [1, 2, 3, 4]
+    assert args.scaling_counts == list(range(50, 501, 50))
