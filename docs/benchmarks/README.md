@@ -55,3 +55,36 @@ at the deadline.
 ![Weak scaling against permutation count and worker replicas](weak-scaling.png)
 
 ![Parallel replica throughput and render skips](replicas.png)
+
+## Bug discovery by permutation strength
+
+Compare pairs, triples, and higher-order coverage against known chart faults:
+
+~~~sh
+bash scripts/project-python.sh -m scripts.generate_benchmark_chart \
+  --output .cache/faulty-chart --input-complexity 8 \
+  --bug-percent 5 --bug-orders 2,3,4,5,6 --bug-seed 2026
+bash scripts/project-python.sh -m scripts.benchmark_discovery \
+  --chart .cache/faulty-chart --max-strength 6 --output reports/discovery
+~~~
+
+`--bug-percent` selects that percentage of path-subset/value-pattern assignments at
+each order, rounded down. The seed fixes their random placement; `benchmark.json`
+records exact counts. Trigger overlap means this is not the percentage of complete
+configurations that fail. `--max-bugs` bounds fixture size.
+
+The x-axis is `--permutations` interaction strength. The chart, its 256 possible
+configurations, and its injected faults stay fixed. Runs use the application's
+planner and real Helm renders, with automatic enumeration and inferred groups
+disabled to isolate strength. [Raw results](bug-density/results.json) retain the
+first failing case for each fault. These discovery rates describe the seeded fixture.
+
+The recorded 5% fixture contains 261 faults: pairs found 136, triples found 208,
+and strength five found all 261.
+
+![Known bugs discovered as permutation strength increases](bug-density/bug-discovery.png)
+
+![Discovery rate by fault interaction order](bug-density/bug-order.png)
+
+The separate [sample-thinning study](sparsity/README.md) measures distribution
+coverage as the number of cases falls.

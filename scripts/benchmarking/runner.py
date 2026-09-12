@@ -159,10 +159,13 @@ def execute_worker(job: Job) -> dict[str, object]:
     pruned = completed - rendered
     render_prefix = [0]
     oracle_prefix = [0]
+    received_counts: dict[str, int] = {}
     for reused, bucket, received, _ in ledger:
         render_prefix.append(render_prefix[-1] + int(not reused))
         oracle_prefix.append(oracle_prefix[-1] + int(bucket is not None))
         if bucket is not None and received is not None:
+            key = str(received)
+            received_counts[key] = received_counts.get(key, 0) + 1
             oracle_checks += 1
             delta = received - received_mean
             received_mean += delta / oracle_checks
@@ -194,6 +197,7 @@ def execute_worker(job: Job) -> dict[str, object]:
         "render_hashes": hashes.snapshot(),
         "compiler_fallback": compiler.disabled if compiler else None,
         "input_histogram": input_histogram,
+        "received_counts": received_counts,
         "render_histogram": render_histogram,
     }
 

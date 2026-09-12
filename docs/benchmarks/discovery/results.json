@@ -1,0 +1,4458 @@
+{
+  "metadata": {
+    "seed": 2026,
+    "input_complexity": 8,
+    "faults": [
+      {
+        "name": "bug000",
+        "terms": {
+          "input000": true,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug001",
+        "terms": {
+          "input001": false,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug002",
+        "terms": {
+          "input002": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug003",
+        "terms": {
+          "input002": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug004",
+        "terms": {
+          "input003": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug005",
+        "terms": {
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug006",
+        "terms": {
+          "input000": true,
+          "input004": false
+        }
+      },
+      {
+        "name": "bug007",
+        "terms": {
+          "input001": false,
+          "input002": false
+        }
+      },
+      {
+        "name": "bug008",
+        "terms": {
+          "input003": false,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug009",
+        "terms": {
+          "input003": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug010",
+        "terms": {
+          "input002": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug011",
+        "terms": {
+          "input002": true,
+          "input003": false
+        }
+      },
+      {
+        "name": "bug012",
+        "terms": {
+          "input003": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug013",
+        "terms": {
+          "input002": true,
+          "input003": false,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug014",
+        "terms": {
+          "input001": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug015",
+        "terms": {
+          "input004": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug016",
+        "terms": {
+          "input003": false,
+          "input004": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug017",
+        "terms": {
+          "input003": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug018",
+        "terms": {
+          "input003": true,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug019",
+        "terms": {
+          "input001": true,
+          "input004": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug020",
+        "terms": {
+          "input003": false,
+          "input004": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug021",
+        "terms": {
+          "input003": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug022",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug023",
+        "terms": {
+          "input001": true,
+          "input003": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug024",
+        "terms": {
+          "input000": true,
+          "input003": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug025",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input003": false
+        }
+      },
+      {
+        "name": "bug026",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input004": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug027",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug028",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input003": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug029",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug030",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input004": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug031",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": true,
+          "input004": false
+        }
+      },
+      {
+        "name": "bug032",
+        "terms": {
+          "input002": false,
+          "input004": false,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug033",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input004": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug034",
+        "terms": {
+          "input000": false,
+          "input003": true,
+          "input004": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug035",
+        "terms": {
+          "input001": true,
+          "input003": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug036",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input004": false,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug037",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug038",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug039",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input004": false,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug040",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": false,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug041",
+        "terms": {
+          "input001": true,
+          "input003": true,
+          "input004": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug042",
+        "terms": {
+          "input000": true,
+          "input003": true,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug043",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug044",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input004": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug045",
+        "terms": {
+          "input001": false,
+          "input003": false,
+          "input004": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug046",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug047",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": true,
+          "input004": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug048",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": true,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug049",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": true,
+          "input004": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug050",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": true,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug051",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input005": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug052",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input004": false,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug053",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": false,
+          "input003": false,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug054",
+        "terms": {
+          "input000": false,
+          "input003": false,
+          "input004": false,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug055",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input003": false,
+          "input004": false,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug056",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug057",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": true,
+          "input005": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug058",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": false,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug059",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input005": true
+        }
+      }
+    ],
+    "chart_sha256": "b73ebaac13d45ff9d37a7c5ba3ef5396db4ccfa980840640cb58cdcad2ca56a0",
+    "code_sha256": "5078c45df4daf6bd927ba529cdf81a8bfa32cc4f3cca7f620cb1fe159ecf59b4",
+    "exhaustive_threshold": 0,
+    "inferred_groups": false,
+    "time_limit_seconds": 180.0,
+    "method": "application interaction planner; render all cases; record injected failures"
+  },
+  "runs": [
+    {
+      "strength": 1,
+      "planned": 9,
+      "completed": 9,
+      "found": {
+        "bug002": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug014": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug020": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug008": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug007": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug001": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug006": {
+          "case": 2,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug027": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug023": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug003": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug040": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug011": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug018": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug012": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug037": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug045": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug022": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug029": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug004": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug053": {
+          "case": 9,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug030": {
+          "case": 9,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug005": {
+          "case": 9,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug039": {
+          "case": 9,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        }
+      },
+      "elapsed_seconds": 0.5759416669607162,
+      "status": "passed"
+    },
+    {
+      "strength": 2,
+      "planned": 37,
+      "completed": 37,
+      "found": {
+        "bug002": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug014": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug020": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug008": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug007": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug001": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug027": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug023": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug003": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug040": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug011": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug018": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug012": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug037": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug045": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug022": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug029": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug004": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug053": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug030": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug005": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug039": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug006": {
+          "case": 9,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug036": {
+          "case": 10,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug025": {
+          "case": 11,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug026": {
+          "case": 13,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug000": {
+          "case": 13,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug033": {
+          "case": 17,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug019": {
+          "case": 19,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug055": {
+          "case": 22,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug013": {
+          "case": 24,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug010": {
+          "case": 27,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug028": {
+          "case": 29,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug009": {
+          "case": 29,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug021": {
+          "case": 29,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug017": {
+          "case": 30,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug016": {
+          "case": 32,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug052": {
+          "case": 36,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug054": {
+          "case": 36,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug032": {
+          "case": 36,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        }
+      },
+      "elapsed_seconds": 1.980776292271912,
+      "status": "passed"
+    },
+    {
+      "strength": 3,
+      "planned": 93,
+      "completed": 93,
+      "found": {
+        "bug002": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug014": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug020": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug008": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug007": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug001": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug003": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug040": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug011": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug018": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug012": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug037": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug045": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug022": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug029": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug004": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug053": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug030": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug005": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug039": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug027": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug023": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug033": {
+          "case": 9,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug019": {
+          "case": 11,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug055": {
+          "case": 14,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug013": {
+          "case": 16,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug010": {
+          "case": 19,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug028": {
+          "case": 21,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug009": {
+          "case": 21,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug021": {
+          "case": 21,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug017": {
+          "case": 22,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug016": {
+          "case": 24,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug052": {
+          "case": 28,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug054": {
+          "case": 28,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug032": {
+          "case": 28,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug006": {
+          "case": 30,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug025": {
+          "case": 31,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug026": {
+          "case": 33,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug000": {
+          "case": 33,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug036": {
+          "case": 37,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug031": {
+          "case": 38,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug051": {
+          "case": 46,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug049": {
+          "case": 49,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug024": {
+          "case": 52,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug046": {
+          "case": 54,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug050": {
+          "case": 62,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug059": {
+          "case": 68,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug035": {
+          "case": 73,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug044": {
+          "case": 78,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug038": {
+          "case": 80,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug043": {
+          "case": 83,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug034": {
+          "case": 85,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug015": {
+          "case": 91,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug058": {
+          "case": 93,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": true,
+            "input007": true
+          }
+        }
+      },
+      "elapsed_seconds": 6.283982416149229,
+      "status": "passed"
+    },
+    {
+      "strength": 4,
+      "planned": 163,
+      "completed": 163,
+      "found": {
+        "bug002": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug014": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug020": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug008": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug007": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug001": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug018": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug012": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug037": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug045": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug022": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug029": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug004": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug053": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug030": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug005": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug039": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug003": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug040": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug011": {
+          "case": 7,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug013": {
+          "case": 9,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug010": {
+          "case": 12,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug028": {
+          "case": 14,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug009": {
+          "case": 14,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug021": {
+          "case": 14,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug017": {
+          "case": 15,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug016": {
+          "case": 17,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug052": {
+          "case": 21,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug054": {
+          "case": 21,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug032": {
+          "case": 21,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug027": {
+          "case": 23,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug023": {
+          "case": 23,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug019": {
+          "case": 25,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug055": {
+          "case": 28,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug033": {
+          "case": 29,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug050": {
+          "case": 33,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug059": {
+          "case": 39,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug035": {
+          "case": 44,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug044": {
+          "case": 49,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug038": {
+          "case": 51,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug043": {
+          "case": 54,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug034": {
+          "case": 56,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug015": {
+          "case": 62,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug058": {
+          "case": 64,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug006": {
+          "case": 65,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug026": {
+          "case": 67,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug000": {
+          "case": 67,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug025": {
+          "case": 71,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug051": {
+          "case": 74,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug049": {
+          "case": 77,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug024": {
+          "case": 80,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug046": {
+          "case": 82,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug036": {
+          "case": 87,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug031": {
+          "case": 93,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug047": {
+          "case": 97,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug042": {
+          "case": 124,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug048": {
+          "case": 124,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug041": {
+          "case": 141,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug057": {
+          "case": 152,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": true,
+            "input007": false
+          }
+        }
+      },
+      "elapsed_seconds": 9.805352583061904,
+      "status": "passed"
+    },
+    {
+      "strength": 5,
+      "planned": 219,
+      "completed": 219,
+      "found": {
+        "bug002": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug014": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug020": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug008": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug007": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug001": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug037": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug045": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug022": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug029": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug004": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug053": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug030": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug005": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug039": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug018": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug012": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug028": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug009": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug021": {
+          "case": 8,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug017": {
+          "case": 9,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug016": {
+          "case": 11,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug052": {
+          "case": 15,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug054": {
+          "case": 15,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug032": {
+          "case": 15,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug003": {
+          "case": 17,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug040": {
+          "case": 17,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug011": {
+          "case": 17,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug013": {
+          "case": 18,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug010": {
+          "case": 21,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug044": {
+          "case": 27,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug038": {
+          "case": 29,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug043": {
+          "case": 32,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug034": {
+          "case": 34,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug015": {
+          "case": 40,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug058": {
+          "case": 42,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug027": {
+          "case": 43,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug023": {
+          "case": 43,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug019": {
+          "case": 44,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug055": {
+          "case": 47,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug059": {
+          "case": 53,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug035": {
+          "case": 58,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug033": {
+          "case": 59,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug050": {
+          "case": 62,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug041": {
+          "case": 77,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug057": {
+          "case": 88,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug006": {
+          "case": 100,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug026": {
+          "case": 101,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug000": {
+          "case": 101,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug049": {
+          "case": 106,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug024": {
+          "case": 109,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug046": {
+          "case": 111,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug025": {
+          "case": 116,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug051": {
+          "case": 118,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug042": {
+          "case": 137,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug048": {
+          "case": 137,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug036": {
+          "case": 142,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug031": {
+          "case": 158,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug047": {
+          "case": 161,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug056": {
+          "case": 206,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        }
+      },
+      "elapsed_seconds": 12.388315833173692,
+      "status": "passed"
+    },
+    {
+      "strength": 6,
+      "planned": 247,
+      "completed": 247,
+      "found": {
+        "bug002": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug014": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug020": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug008": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug007": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug001": {
+          "case": 1,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug045": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug022": {
+          "case": 2,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug029": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug004": {
+          "case": 3,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug053": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug030": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug005": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug039": {
+          "case": 4,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug037": {
+          "case": 5,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug016": {
+          "case": 6,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug052": {
+          "case": 10,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug054": {
+          "case": 10,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug032": {
+          "case": 10,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug018": {
+          "case": 12,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug012": {
+          "case": 12,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug028": {
+          "case": 13,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug009": {
+          "case": 13,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug021": {
+          "case": 13,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug017": {
+          "case": 14,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug034": {
+          "case": 18,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug015": {
+          "case": 24,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug058": {
+          "case": 26,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug003": {
+          "case": 27,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug040": {
+          "case": 27,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug011": {
+          "case": 27,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug010": {
+          "case": 30,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug013": {
+          "case": 31,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug044": {
+          "case": 32,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug038": {
+          "case": 34,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug043": {
+          "case": 37,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug057": {
+          "case": 46,
+          "values": {
+            "input000": false,
+            "input001": false,
+            "input002": true,
+            "input003": true,
+            "input004": false,
+            "input005": true,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug027": {
+          "case": 58,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug023": {
+          "case": 58,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug055": {
+          "case": 61,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug019": {
+          "case": 62,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug059": {
+          "case": 63,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug035": {
+          "case": 68,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug041": {
+          "case": 76,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug033": {
+          "case": 84,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug050": {
+          "case": 86,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug056": {
+          "case": 107,
+          "values": {
+            "input000": false,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": true,
+            "input005": true,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug006": {
+          "case": 121,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug026": {
+          "case": 125,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug000": {
+          "case": 125,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug046": {
+          "case": 127,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": false,
+            "input004": true,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        },
+        "bug024": {
+          "case": 135,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": true
+          }
+        },
+        "bug049": {
+          "case": 136,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": true,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug042": {
+          "case": 142,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug048": {
+          "case": 142,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": false,
+            "input003": true,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": true
+          }
+        },
+        "bug025": {
+          "case": 147,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug051": {
+          "case": 148,
+          "values": {
+            "input000": true,
+            "input001": false,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": true,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug036": {
+          "case": 178,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": false,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug031": {
+          "case": 204,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": false,
+            "input007": false
+          }
+        },
+        "bug047": {
+          "case": 206,
+          "values": {
+            "input000": true,
+            "input001": true,
+            "input002": true,
+            "input003": false,
+            "input004": false,
+            "input005": false,
+            "input006": true,
+            "input007": false
+          }
+        }
+      },
+      "elapsed_seconds": 13.648716500028968,
+      "status": "passed"
+    }
+  ]
+}

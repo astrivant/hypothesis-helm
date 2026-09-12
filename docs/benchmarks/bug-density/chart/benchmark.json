@@ -1,0 +1,2695 @@
+{
+  "format_version": 2,
+  "workload": "normal-quantile-v2",
+  "input_complexity": 8,
+  "active_inputs": 4,
+  "unused_inputs": 4,
+  "possible_inputs": "256",
+  "mean": 0,
+  "stddev": 1,
+  "lower": null,
+  "upper": null,
+  "output_bins": 16,
+  "precision": 6,
+  "output_strings": [
+    "-1.862732",
+    "-1.318011",
+    "-1.009990",
+    "-0.776422",
+    "-0.579132",
+    "-0.402250",
+    "-0.237202",
+    "-0.078412",
+    "0.078412",
+    "0.237202",
+    "0.402250",
+    "0.579132",
+    "0.776422",
+    "1.009990",
+    "1.318011",
+    "1.862732"
+  ],
+  "unique_emitted_values": 16,
+  "discrete_mean": 0.0,
+  "discrete_stddev": 0.961083151228407,
+  "histogram_edges": [
+    -1.862732,
+    -1.74631125,
+    -1.6298905000000001,
+    -1.51346975,
+    -1.397049,
+    -1.28062825,
+    -1.1642075,
+    -1.04778675,
+    -0.931366,
+    -0.8149452500000001,
+    -0.6985245,
+    -0.5821037499999999,
+    -0.46568300000000007,
+    -0.34926225,
+    -0.23284149999999992,
+    -0.11642075000000007,
+    0.0,
+    0.11642075000000007,
+    0.23284149999999992,
+    0.34926225,
+    0.46568300000000007,
+    0.5821037500000001,
+    0.6985245000000002,
+    0.8149452499999998,
+    0.9313659999999999,
+    1.04778675,
+    1.1642075,
+    1.2806282500000001,
+    1.3970490000000002,
+    1.5134697499999998,
+    1.6298905,
+    1.74631125,
+    1.862732
+  ],
+  "interpretation": "midpoint normal quantiles, not a continuous or exactly Gaussian output",
+  "bugs": {
+    "requested_percent": 5.0,
+    "seed": 2026,
+    "definition": "percentage of path-subset / Boolean-pattern pairs per order; rounded down",
+    "orders": [
+      {
+        "order": 2,
+        "population": "112",
+        "injected": 5,
+        "actual_percent": 4.464285714285714
+      },
+      {
+        "order": 3,
+        "population": "448",
+        "injected": 22,
+        "actual_percent": 4.910714285714286
+      },
+      {
+        "order": 4,
+        "population": "1120",
+        "injected": 56,
+        "actual_percent": 5.0
+      },
+      {
+        "order": 5,
+        "population": "1792",
+        "injected": 89,
+        "actual_percent": 4.966517857142857
+      },
+      {
+        "order": 6,
+        "population": "1792",
+        "injected": 89,
+        "actual_percent": 4.966517857142857
+      }
+    ],
+    "total_faults": 261,
+    "faults": [
+      {
+        "name": "bug0000",
+        "terms": {
+          "input000": true,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug0001",
+        "terms": {
+          "input001": false,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0002",
+        "terms": {
+          "input002": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0003",
+        "terms": {
+          "input002": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0004",
+        "terms": {
+          "input003": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0005",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": false
+        }
+      },
+      {
+        "name": "bug0006",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": true
+        }
+      },
+      {
+        "name": "bug0007",
+        "terms": {
+          "input000": false,
+          "input003": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0008",
+        "terms": {
+          "input000": false,
+          "input004": true,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0009",
+        "terms": {
+          "input001": true,
+          "input003": true,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug0010",
+        "terms": {
+          "input001": true,
+          "input003": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0011",
+        "terms": {
+          "input001": true,
+          "input004": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0012",
+        "terms": {
+          "input001": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0013",
+        "terms": {
+          "input001": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0014",
+        "terms": {
+          "input002": true,
+          "input003": false,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug0015",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0016",
+        "terms": {
+          "input002": true,
+          "input003": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0017",
+        "terms": {
+          "input002": false,
+          "input003": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0018",
+        "terms": {
+          "input002": false,
+          "input003": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0019",
+        "terms": {
+          "input003": false,
+          "input004": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0020",
+        "terms": {
+          "input003": false,
+          "input004": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0021",
+        "terms": {
+          "input003": true,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0022",
+        "terms": {
+          "input003": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0023",
+        "terms": {
+          "input003": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0024",
+        "terms": {
+          "input003": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0025",
+        "terms": {
+          "input004": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0026",
+        "terms": {
+          "input005": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0027",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": true,
+          "input004": false
+        }
+      },
+      {
+        "name": "bug0028",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0029",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0030",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input003": true,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0031",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input004": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0032",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input004": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0033",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input004": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0034",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input004": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0035",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0036",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0037",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0038",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0039",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": false,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug0040",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0041",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0042",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input003": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0043",
+        "terms": {
+          "input000": false,
+          "input003": true,
+          "input004": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0044",
+        "terms": {
+          "input000": true,
+          "input003": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0045",
+        "terms": {
+          "input000": false,
+          "input003": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0046",
+        "terms": {
+          "input000": true,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0047",
+        "terms": {
+          "input000": true,
+          "input004": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0048",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input003": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0049",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input003": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0050",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0051",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input004": false,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0052",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input004": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0053",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0054",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0055",
+        "terms": {
+          "input001": false,
+          "input003": true,
+          "input004": false,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0056",
+        "terms": {
+          "input001": false,
+          "input003": false,
+          "input004": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0057",
+        "terms": {
+          "input001": true,
+          "input003": true,
+          "input004": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0058",
+        "terms": {
+          "input001": false,
+          "input003": true,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0059",
+        "terms": {
+          "input001": true,
+          "input003": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0060",
+        "terms": {
+          "input001": true,
+          "input003": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0061",
+        "terms": {
+          "input001": false,
+          "input004": false,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0062",
+        "terms": {
+          "input001": false,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0063",
+        "terms": {
+          "input001": false,
+          "input005": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0064",
+        "terms": {
+          "input001": true,
+          "input005": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0065",
+        "terms": {
+          "input001": true,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0066",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input004": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0067",
+        "terms": {
+          "input002": true,
+          "input003": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0068",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0069",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0070",
+        "terms": {
+          "input002": false,
+          "input003": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0071",
+        "terms": {
+          "input002": true,
+          "input004": false,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0072",
+        "terms": {
+          "input002": true,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0073",
+        "terms": {
+          "input002": false,
+          "input004": false,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0074",
+        "terms": {
+          "input002": true,
+          "input004": false,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0075",
+        "terms": {
+          "input002": false,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0076",
+        "terms": {
+          "input002": true,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0077",
+        "terms": {
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0078",
+        "terms": {
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0079",
+        "terms": {
+          "input003": false,
+          "input004": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0080",
+        "terms": {
+          "input003": true,
+          "input004": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0081",
+        "terms": {
+          "input003": false,
+          "input004": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0082",
+        "terms": {
+          "input003": true,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0083",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": false,
+          "input003": false,
+          "input004": false
+        }
+      },
+      {
+        "name": "bug0084",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input003": false,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug0085",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input004": true
+        }
+      },
+      {
+        "name": "bug0086",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": false,
+          "input003": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0087",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0088",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": false,
+          "input004": false,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0089",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input004": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0090",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input004": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0091",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input004": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0092",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": false,
+          "input004": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0093",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0094",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0095",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0096",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input003": true,
+          "input004": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0097",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input003": true,
+          "input004": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0098",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": true,
+          "input004": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0099",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input003": false,
+          "input004": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0100",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input003": true,
+          "input004": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0101",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0102",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input004": false,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0103",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input004": false,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0104",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0105",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input004": false,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0106",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0107",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input004": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0108",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0109",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0110",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0111",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": false,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0112",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0113",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input003": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0114",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input004": false,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0115",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0116",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input004": true,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0117",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input004": false,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0118",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input004": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0119",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0120",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input004": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0121",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input004": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0122",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0123",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0124",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0125",
+        "terms": {
+          "input000": true,
+          "input003": false,
+          "input004": false,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0126",
+        "terms": {
+          "input000": false,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0127",
+        "terms": {
+          "input000": true,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0128",
+        "terms": {
+          "input000": false,
+          "input003": true,
+          "input004": false,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0129",
+        "terms": {
+          "input000": false,
+          "input003": true,
+          "input004": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0130",
+        "terms": {
+          "input000": false,
+          "input003": true,
+          "input004": false,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0131",
+        "terms": {
+          "input000": false,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0132",
+        "terms": {
+          "input000": true,
+          "input003": true,
+          "input004": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0133",
+        "terms": {
+          "input000": true,
+          "input003": true,
+          "input004": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0134",
+        "terms": {
+          "input000": true,
+          "input003": true,
+          "input004": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0135",
+        "terms": {
+          "input000": false,
+          "input003": true,
+          "input005": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0136",
+        "terms": {
+          "input000": true,
+          "input004": false,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0137",
+        "terms": {
+          "input000": true,
+          "input004": true,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0138",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input004": false,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0139",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input004": false,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0140",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0141",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input003": true,
+          "input004": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0142",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": true,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0143",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input003": false,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0144",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": true,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0145",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input004": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0146",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input004": false,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0147",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input004": true,
+          "input005": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0148",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input004": true,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0149",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input004": false,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0150",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input004": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0151",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input005": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0152",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0153",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0154",
+        "terms": {
+          "input001": true,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0155",
+        "terms": {
+          "input001": true,
+          "input003": true,
+          "input004": false,
+          "input005": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0156",
+        "terms": {
+          "input001": false,
+          "input003": true,
+          "input004": false,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0157",
+        "terms": {
+          "input001": false,
+          "input003": true,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0158",
+        "terms": {
+          "input001": false,
+          "input004": true,
+          "input005": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0159",
+        "terms": {
+          "input002": true,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0160",
+        "terms": {
+          "input002": true,
+          "input003": false,
+          "input004": false,
+          "input005": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0161",
+        "terms": {
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0162",
+        "terms": {
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0163",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input004": false,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0164",
+        "terms": {
+          "input002": false,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0165",
+        "terms": {
+          "input002": false,
+          "input003": true,
+          "input004": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0166",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0167",
+        "terms": {
+          "input002": false,
+          "input003": true,
+          "input005": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0168",
+        "terms": {
+          "input002": true,
+          "input003": true,
+          "input005": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0169",
+        "terms": {
+          "input002": false,
+          "input003": false,
+          "input005": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0170",
+        "terms": {
+          "input002": true,
+          "input003": false,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0171",
+        "terms": {
+          "input002": false,
+          "input004": true,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0172",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input003": true,
+          "input004": false,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0173",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input004": true,
+          "input005": false
+        }
+      },
+      {
+        "name": "bug0174",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input005": true
+        }
+      },
+      {
+        "name": "bug0175",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input004": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0176",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": false,
+          "input003": true,
+          "input004": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0177",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": false,
+          "input003": true,
+          "input004": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0178",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": true,
+          "input003": true,
+          "input004": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0179",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0180",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input004": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0181",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": false,
+          "input003": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0182",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": false,
+          "input003": true,
+          "input005": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0183",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0184",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0185",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0186",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": false,
+          "input003": false,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0187",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": false,
+          "input003": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0188",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input005": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0189",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": true,
+          "input003": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0190",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0191",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": false,
+          "input004": false,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0192",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input004": false,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0193",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": true,
+          "input004": false,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0194",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input002": false,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0195",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input004": true,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0196",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input004": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0197",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input002": false,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0198",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input002": true,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0199",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input002": false,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0200",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input003": false,
+          "input004": false,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0201",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0202",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": true,
+          "input004": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0203",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input003": false,
+          "input004": false,
+          "input005": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0204",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input003": true,
+          "input004": false,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0205",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": false,
+          "input004": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0206",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0207",
+        "terms": {
+          "input000": false,
+          "input001": true,
+          "input003": false,
+          "input004": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0208",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input003": true,
+          "input004": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0209",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": true,
+          "input004": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0210",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input003": false,
+          "input004": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0211",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": false,
+          "input005": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0212",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input003": true,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0213",
+        "terms": {
+          "input000": false,
+          "input001": false,
+          "input003": false,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0214",
+        "terms": {
+          "input000": true,
+          "input001": false,
+          "input004": false,
+          "input005": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0215",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input004": false,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0216",
+        "terms": {
+          "input000": true,
+          "input001": true,
+          "input004": false,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0217",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0218",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0219",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0220",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0221",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0222",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0223",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": true,
+          "input004": false,
+          "input005": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0224",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0225",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0226",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input003": true,
+          "input004": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0227",
+        "terms": {
+          "input000": true,
+          "input002": true,
+          "input003": true,
+          "input004": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0228",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input004": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0229",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": false,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0230",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input005": true,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0231",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": false,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0232",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": false,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0233",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input003": true,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0234",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input003": false,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0235",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input004": false,
+          "input005": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0236",
+        "terms": {
+          "input000": true,
+          "input002": false,
+          "input004": false,
+          "input005": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0237",
+        "terms": {
+          "input000": false,
+          "input002": true,
+          "input004": false,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0238",
+        "terms": {
+          "input000": false,
+          "input002": false,
+          "input004": true,
+          "input005": true,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0239",
+        "terms": {
+          "input000": true,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input006": true,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0240",
+        "terms": {
+          "input000": true,
+          "input003": true,
+          "input004": false,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0241",
+        "terms": {
+          "input000": true,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0242",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input003": false,
+          "input004": false,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0243",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input003": false,
+          "input004": true,
+          "input005": true,
+          "input006": false
+        }
+      },
+      {
+        "name": "bug0244",
+        "terms": {
+          "input001": true,
+          "input002": false,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0245",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input003": true,
+          "input004": false,
+          "input005": true,
+          "input006": true
+        }
+      },
+      {
+        "name": "bug0246",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input003": true,
+          "input004": false,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0247",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input003": false,
+          "input004": true,
+          "input005": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0248",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": true,
+          "input004": true,
+          "input005": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0249",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": false,
+          "input004": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0250",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": false,
+          "input005": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0251",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": true,
+          "input005": true,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0252",
+        "terms": {
+          "input001": true,
+          "input002": true,
+          "input003": true,
+          "input005": false,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0253",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input003": false,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0254",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input004": false,
+          "input005": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0255",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input004": true,
+          "input005": false,
+          "input006": false,
+          "input007": false
+        }
+      },
+      {
+        "name": "bug0256",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input004": false,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0257",
+        "terms": {
+          "input001": false,
+          "input002": false,
+          "input004": true,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0258",
+        "terms": {
+          "input001": false,
+          "input002": true,
+          "input004": true,
+          "input005": false,
+          "input006": true,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0259",
+        "terms": {
+          "input001": true,
+          "input003": true,
+          "input004": false,
+          "input005": true,
+          "input006": false,
+          "input007": true
+        }
+      },
+      {
+        "name": "bug0260",
+        "terms": {
+          "input002": false,
+          "input003": true,
+          "input004": false,
+          "input005": false,
+          "input006": false,
+          "input007": true
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+  value: "{{ if .Values.input000 }}{{ if .Values.input001 }}{{ if .Values.input002 }}{{ if .Values.input003 }}1.862732{{ else }}-0.078412{{ end }}{{ else }}{{ if .Values.input003 }}0.579132{{ else }}-0.776422{{ end }}{{ end }}{{ else }}{{ if .Values.input002 }}{{ if .Values.input003 }}1.009990{{ else }}-0.402250{{ end }}{{ else }}{{ if .Values.input003 }}0.237202{{ else }}-1.318011{{ end }}{{ end }}{{ end }}{{ else }}{{ if .Values.input001 }}{{ if .Values.input002 }}{{ if .Values.input003 }}1.318011{{ else }}-0.237202{{ end }}{{ else }}{{ if .Values.input003 }}0.402250{{ else }}-1.009990{{ end }}{{ end }}{{ else }}{{ if .Values.input002 }}{{ if .Values.input003 }}0.776422{{ else }}-0.579132{{ end }}{{ else }}{{ if .Values.input003 }}0.078412{{ else }}-1.862732{{ end }}{{ end }}{{ end }}{{ end }}"

@@ -9,6 +9,8 @@ import re
 from pathlib import Path
 from statistics import NormalDist, mean, pstdev
 
+from scripts.benchmarking.faults import select_faults, write_faults
+
 
 def generate(
     output: Path,
@@ -20,6 +22,10 @@ def generate(
     precision: int = 6,
     lower: float | None = None,
     upper: float | None = None,
+    bug_percent: float = 0,
+    bug_orders: tuple[int, ...] | None = None,
+    bug_seed: int = 2026,
+    max_bugs: int = 1000,
     force: bool = False,
 ) -> dict[str, object]:
     """
@@ -37,6 +43,10 @@ def generate(
         precision (int): Decimal places in the actual emitted scalar.
         lower (float | None): Optional lower truncation bound.
         upper (float | None): Optional upper truncation bound.
+        bug_percent (float): Percentage of path-interaction assignments to corrupt.
+        bug_orders (tuple[int, ...] | None): Trigger orders; defaults to two through six.
+        bug_seed (int): Reproducible seed for fault placement.
+        max_bugs (int): Maximum injected fault population to materialize.
         force (bool): Explicitly allow replacing generated files in an existing directory.
 
     Returns:
@@ -44,6 +54,15 @@ def generate(
     """
     if not 1 <= input_complexity <= 1024:
         raise ValueError("input complexity must be between 1 and 1024")
+    defects, bug_spec = select_faults(
+        input_complexity,
+        bug_orders
+        if bug_orders is not None
+        else tuple(range(min(2, input_complexity), min(6, input_complexity) + 1)),
+        bug_percent,
+        bug_seed,
+        max_bugs,
+    )
     if not math.isfinite(mean_value) or not math.isfinite(stddev) or stddev <= 0:
         raise ValueError("mean must be finite and stddev must be finite and positive")
     if output_bins is None:
@@ -148,6 +167,12 @@ def generate(
         + branch(0, 0)
         + '"\n'
     )
+    if bug_percent:
+        spec["bugs"] = bug_spec
+    if defects:
+        write_faults(output, defects)
+    elif force:
+        (output / "templates/faults.yaml").unlink(missing_ok=True)
     (output / "benchmark.json").write_text(json.dumps(spec, indent=2) + "\n")
     return spec
 
@@ -176,6 +201,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--precision", type=int, default=6)
     parser.add_argument("--lower", type=float)
     parser.add_argument("--upper", type=float)
+    parser.add_argument(
+        "--bug-percent",
+        type=float,
+        default=0,
+        help="percent of path-interaction assignments seeded with faults",
+    )
+    parser.add_argument("--bug-orders", help="comma-separated trigger orders; default: 2 through 6")
+    parser.add_argument("--bug-seed", type=int, default=2026)
+    parser.add_argument("--max-bugs", type=int, default=1000)
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args(argv)
     spec = generate(
@@ -187,6 +221,12 @@ def main(argv: list[str] | None = None) -> int:
         precision=args.precision,
         lower=args.lower,
         upper=args.upper,
+        bug_percent=args.bug_percent,
+        bug_orders=tuple(int(value) for value in args.bug_orders.split(","))
+        if args.bug_orders
+        else None,
+        bug_seed=args.bug_seed,
+        max_bugs=args.max_bugs,
         force=args.force,
     )
     print(
