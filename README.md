@@ -4,7 +4,7 @@
 
 Property-based testing for Helm charts. Hypothesis generates typed inputs from
 values schemas and template references, renders your chart, and reduces failures
-to reproducible examples.
+from combinations of Helm chart inputs to reproducible examples.
 
 ## Install
 
