@@ -65,6 +65,9 @@ inputs:
   schema-cache-dir:
     description: Sparse schema checkout and immutable snapshot cache.
     default: .cache/hypothesis-helm/schemas
+  schema-memory-dir:
+    description: Optional directory on a Linux tmpfs mount, such as /dev/shm/helm-schemas
+    default: ''
   schema-offline:
     description: Use restored schemas without fetching upstream.
     default: 'false'
@@ -191,6 +194,7 @@ runs:
       shell: bash
       env:
         HELM_PLUGINS: ${{ steps.install.outputs.plugins }}
+        HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: ${{ inputs.schema-memory-dir }}
         SCHEMA_VERSION: ${{ inputs.schema-version }}
         SCHEMA_CACHE_DIR: ${{ inputs.schema-cache-dir }}
         SCHEMA_OFFLINE: ${{ inputs.schema-offline }}
@@ -220,6 +224,7 @@ runs:
         HH_KUBESEC: ${{ inputs.kubesec }}
         HH_KUBESEC_JOBS: ${{ inputs.kubesec-jobs }}
         HH_KUBESEC_BINARY: ${{ inputs.kubesec-binary }}
+        HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: ${{ inputs.schema-memory-dir }}
         HH_SCHEMA_VERSION: ${{ inputs.schema-version }}
         HH_SCHEMA_CACHE_DIR: ${{ inputs.schema-cache-dir }}
         HH_SCHEMA_OFFLINE: 'true'

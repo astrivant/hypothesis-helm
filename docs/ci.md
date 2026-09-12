@@ -227,3 +227,5 @@ When adding a Kubernetes-version matrix, keep shard indices local to each versio
 (e.g. `matrix.shard` and `job-total: '3'`). `strategy.job-total` counts both axes and
 would partition each version's tests incorrectly. Include the version in artifact
 names as well as schema-cache keys.
+
+For optional Linux RAM-backed schema staging, see [memory-backed schemas](ci/README.md#memory-backed-schemas).

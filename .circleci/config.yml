@@ -28,6 +28,9 @@ orbs:
           kubesec-jobs:
             type: string
             default: auto
+          schema-memory-dir:
+            type: string
+            default: ""
           schema-offline:
             type: boolean
             default: false
@@ -48,6 +51,7 @@ orbs:
                 HH_JOBS: << parameters.jobs >>
                 HH_MAX_EXAMPLES: << parameters.max-examples >>
                 HH_SEED: << parameters.seed >>
+                HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: << parameters.schema-memory-dir >>
                 HH_SCHEMA_VERSION: << parameters.schema-version >>
                 HH_SCHEMA_CACHE_DIR: << parameters.schema-cache-dir >>
                 HH_ARTIFACT_DIR: << parameters.artifact-dir >>
@@ -118,6 +122,9 @@ orbs:
           kubesec-jobs:
             type: string
             default: auto
+          schema-memory-dir:
+            type: string
+            default: ""
           schema-offline:
             type: boolean
             default: false
@@ -166,6 +173,7 @@ orbs:
               name: Prepare Kubernetes schemas before testing
               environment:
                 HH_SCHEMA_OFFLINE: "<< parameters.schema-offline >>"
+                HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: << parameters.schema-memory-dir >>
                 HH_SCHEMA_VERSION: << parameters.schema-version >>
                 HH_SCHEMA_CACHE_DIR: << parameters.schema-cache-dir >>
               command: |
@@ -180,6 +188,7 @@ orbs:
           - test:
               kubesec: << parameters.kubesec >>
               kubesec-jobs: << parameters.kubesec-jobs >>
+              schema-memory-dir: << parameters.schema-memory-dir >>
               schema-offline: true
               schema-version: << parameters.schema-version >>
               schema-cache-dir: << parameters.schema-cache-dir >>

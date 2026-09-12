@@ -192,3 +192,44 @@ def test_cli_validation_scope(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -
     assert prepared == ["1.31.0"]
     assert cli.main(["schemas", "--schema-cache-dir", str(tmp_path)]) == 0
     assert prepared == ["1.31.0", "latest"]
+
+
+def test_memory_snapshot(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Verify atomic memory staging, reuse, mount checks, and capacity failures.
+
+    Args:
+        tmp_path (Path): Isolated snapshot and simulated mount.
+        monkeypatch (pytest.MonkeyPatch): Replace Linux mount detection for portability.
+
+    Returns:
+        None: Only complete snapshots are reused and unsuitable mounts are rejected.
+    """
+    snapshot = tmp_path / "disk" / "identity" / "v1.35.0-standalone-strict"
+    snapshot.mkdir(parents=True)
+    (snapshot / "pod.json").write_text('{"type":"object"}')
+    monkeypatch.delenv("HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR", raising=False)
+    assert conformity.memory_snapshot(snapshot) == snapshot
+    root = tmp_path / "memory"
+    monkeypatch.setenv("HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR", str(root))
+    monkeypatch.setattr(
+        subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "ext4\n")
+    )
+    with pytest.raises(ValueError, match="Linux tmpfs"):
+        conformity.memory_snapshot(snapshot)
+    assert not root.exists()
+    monkeypatch.setattr(
+        subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "tmpfs\n")
+    )
+    staged = conformity.memory_snapshot(snapshot)
+    assert staged == root / snapshot.parent.name / snapshot.name
+    assert (staged / "pod.json").read_bytes() == (snapshot / "pod.json").read_bytes()
+    timestamp = (staged / "pod.json").stat().st_mtime_ns
+    assert conformity.memory_snapshot(snapshot) == staged
+    assert (staged / "pod.json").stat().st_mtime_ns == timestamp
+    monkeypatch.setenv("HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR", str(tmp_path / "full"))
+    usage = shutil.disk_usage(tmp_path)
+    monkeypatch.setattr(shutil, "disk_usage", lambda _: usage._replace(free=0))
+    with pytest.raises(ValueError, match="free bytes"):
+        conformity.memory_snapshot(snapshot)
+    assert not (tmp_path / "full" / snapshot.parent.name).exists()

@@ -90,6 +90,7 @@ helm-properties:
     KUBESEC_ENABLED: 'false' # opt in to security scanning
     KUBESEC_VERSION: v2.14.2
     KUBESEC_JOBS: auto
+    HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: "" # Optional: /dev/shm/helm-schemas
     SCHEMA_CACHE_DIR: .cache/hypothesis-helm/schemas
   cache:
     key: "helm-schemas-v1-linux-amd64-${K8S_VERSION}-${SHARD_INDEX}"
@@ -177,3 +178,21 @@ while an existing Helm failure retains its exit code.
 Both validators use the same versioned sparse-checkout snapshot. CI caches persist
 it across pipelines; locally, reuse `.cache/hypothesis-helm/schemas` with
 `--schema-offline` after preparing the desired version once.
+
+### Memory-backed schemas
+
+On Linux, set the GitHub Action input `schema-memory-dir`, the CircleCI job
+parameter of the same name, or `HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR` in GitLab
+and local runs to `/dev/shm/helm-schemas`. Leave it empty to use the disk cache.
+
+The selected snapshot is copied once to tmpfs and shared by local validator
+workers. Both Kubeconform and Kubesec read it through their normal file APIs.
+Persistent CI caches stay on disk; separate CI machines stage their own copy.
+Use a job-specific directory when concurrent jobs share a mount, and remove it
+when a persistent runner finishes the job.
+
+The directory must be on an existing Linux tmpfs mount with enough free space;
+containers may need a larger runner-provided mount than their default `/dev/shm`.
+This avoids disk-backed schema reads, but parsing still costs time and the OS may
+already cache disk reads. Measure before enabling it by default. Tmpfs can swap
+under memory pressure ([Linux documentation](https://docs.kernel.org/filesystems/tmpfs.html)).

@@ -35,6 +35,53 @@ def git(directory: Path, *arguments: str) -> str:
     return result.stdout.strip()
 
 
+def memory_snapshot(snapshot: Path) -> Path:
+    """
+    Stage an immutable schema snapshot on an explicitly configured Linux tmpfs.
+
+    Args:
+        snapshot (Path): Selected persistent schema snapshot.
+
+    Returns:
+        Path: Atomic memory copy, or the original snapshot when staging is disabled.
+    """
+    setting = os.environ.get("HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR", "")
+    if not setting:
+        return snapshot
+    root = Path(setting).expanduser().resolve()
+    ancestor = root
+    while not ancestor.exists():
+        ancestor = ancestor.parent
+    result = subprocess.run(
+        ["stat", "-f", "-c", "%T", str(ancestor)],
+        capture_output=True,
+        text=True,
+        timeout=10,
+    )
+    if result.returncode or result.stdout.strip() != "tmpfs":
+        raise ValueError("HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR must reside on a Linux tmpfs mount")
+    root.mkdir(parents=True, exist_ok=True)
+    with (root / "staging.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        target = root / snapshot.parent.name / snapshot.name
+        if not target.exists():
+            block = os.statvfs(root).f_frsize
+            required = sum(
+                ((path.stat().st_size + block - 1) // block) * block
+                for path in snapshot.rglob("*")
+                if path.is_file()
+            )
+            if required > shutil.disk_usage(root).free:
+                raise ValueError(f"schema tmpfs needs at least {required} free bytes: {root}")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.TemporaryDirectory(dir=target.parent) as temporary:
+                staged = Path(temporary) / snapshot.name
+                shutil.copytree(snapshot, staged)
+                staged.replace(target)
+            LOGGER.info("Staged Kubernetes schemas on tmpfs: %s (%s bytes)", target, required)
+        return target
+
+
 def prepare(
     cache: Path,
     version: str,
@@ -116,6 +163,8 @@ def prepare(
             version,
             identity,
         )
+    if not read_only:
+        snapshot = memory_snapshot(snapshot)
     return json.dumps(
         {
             "version": version,
