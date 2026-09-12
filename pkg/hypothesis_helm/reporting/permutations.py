@@ -32,6 +32,9 @@ class PermutationStatistics:
         attempted (int): Iterations started, including failures and interruptions.
         completed (int): Iterations that passed all checks.
         successful_seconds (float): Total execution time of successful iterations.
+        rendered_successes (int): Successful iterations invoking Helm.
+        render_seconds (float): Measured renderer time for successful iterations.
+        check_seconds (float): Other successful iteration work.
         started (float): Monotonic execution start time.
         previous (dict[str, object]): Last valid run statistics for this chart.
         last_log (float): Monotonic timestamp of the preceding progress message.
@@ -45,6 +48,9 @@ class PermutationStatistics:
     attempted: int = 0
     completed: int = 0
     successful_seconds: float = 0.0
+    rendered_successes: int = 0
+    render_seconds: float = 0.0
+    check_seconds: float = 0.0
     started: float = field(factory=lambda: time.perf_counter())
     previous: dict[str, object] = field(factory=dict)
     last_log: float = 0.0
@@ -143,6 +149,14 @@ class PermutationStatistics:
                 average = float(historical)
                 source = "previous_run"
         return {
+            "cost_profile": {
+                "seconds_per_render": self.render_seconds / self.rendered_successes
+                if self.rendered_successes
+                else None,
+                "seconds_per_check": self.check_seconds / self.completed
+                if self.completed
+                else None,
+            },
             "planned_iterations": total,
             "unique_configurations": total,
             "candidate_cases": self.plan.raw_cases + 1,
@@ -165,13 +179,17 @@ class PermutationStatistics:
             "estimate_source": source,
         }
 
-    def advance(self, passed: bool, seconds: float) -> None:
+    def advance(
+        self, passed: bool, seconds: float, *, rendered: bool = False, render_seconds: float = 0.0
+    ) -> None:
         """
         Count an attempted iteration and periodically emit measured progress.
 
         Args:
             passed (bool): Whether all checks for this iteration succeeded.
             seconds (float): Measured iteration duration.
+            rendered (bool): Whether Helm was invoked.
+            render_seconds (float): Measured renderer duration.
 
         Returns:
             None: Counts and successful timing samples are updated.
@@ -180,6 +198,9 @@ class PermutationStatistics:
         if passed:
             self.completed += 1
             self.successful_seconds += seconds
+            self.rendered_successes += int(rendered)
+            self.render_seconds += render_seconds
+            self.check_seconds += max(0.0, seconds - render_seconds)
         now = time.perf_counter()
         if self.attempted == 1 or not passed or now - self.last_log >= 1:
             self.log_progress(self.snapshot())
@@ -215,14 +236,22 @@ class PermutationStatistics:
         Log the final counts and atomically persist history for the next run.
 
         Args:
-            status (str): Passed, failed or interrupted execution outcome.
+            status (str): Passed, failed, interrupted or time-limit execution outcome.
             error (str | None): Failure detail for the CI test result.
 
         Returns:
             dict[str, object]: Final statistics for the run report.
         """
         stats = self.snapshot()
-        stats["exit_code"] = 0 if status == "passed" else 130 if status == "interrupted" else 1
+        stats["exit_code"] = (
+            0
+            if status == "passed"
+            else 130
+            if status == "interrupted"
+            else 124
+            if status == "time-limit"
+            else 1
+        )
         LOGGER.info("Permutation run %s", status)
         self.log_progress(stats)
         destination = self.history_path()
@@ -235,7 +264,7 @@ class PermutationStatistics:
                     "name": "helm-permutations",
                     "tests": "1",
                     "failures": "1" if status == "failed" else "0",
-                    "errors": "1" if status == "interrupted" else "0",
+                    "errors": "1" if status in ("interrupted", "time-limit") else "0",
                     "time": str(stats["elapsed_seconds"]),
                 },
             )
@@ -251,7 +280,7 @@ class PermutationStatistics:
             if status != "passed":
                 failure = ET.SubElement(
                     case,
-                    "error" if status == "interrupted" else "failure",
+                    "error" if status in ("interrupted", "time-limit") else "failure",
                     {"message": error or f"Permutation run {status}; see report.json"},
                 )
                 failure.text = error or "Coverage is incomplete; see report.json"

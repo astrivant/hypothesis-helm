@@ -19,7 +19,9 @@ from hypothesis_helm.charts.runner import Chart, audit, check_chart
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
+from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.reporting.output import MANIFEST_FD
+from hypothesis_helm.reporting.progressive import plot_progression
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, prepare
 from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
@@ -47,17 +49,19 @@ def parse_jobs(value: str) -> int | Literal["auto"]:
     return count
 
 
-def main(argv: list[str] | None = None) -> int:
+def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     """
-    Dispatch chart auditing, generation, and property checks.
+    Build the CLI parser for execution and generated documentation.
 
     Args:
-        argv (list[str] | None): Command-line arguments, or the process arguments when omitted.
+        prog (str | None): Stable executable name for documentation, or the process default.
 
     Returns:
-        int: Process exit status, zero on success.
+        argparse.ArgumentParser: Complete command tree without executing a command.
     """
-    parser = argparse.ArgumentParser(description="Audit and property-test Helm chart values.")
+    parser = argparse.ArgumentParser(
+        prog=prog, description="Audit and property-test Helm chart values."
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     generate = commands.add_parser(
         "generate", help="generate one typed Python property test per values path"
@@ -85,6 +89,12 @@ def main(argv: list[str] | None = None) -> int:
         help="chart directory (defaults to the current directory)",
     )
     test.add_argument("--max-examples", type=int, default=100)
+    test.add_argument(
+        "--time-limit",
+        type=parse_time_limit,
+        metavar="DURATION",
+        help="whole-chart execution budget, e.g. 30s or 3m (default: 3m); excludes planning",
+    )
     modes = test.add_mutually_exclusive_group()
     modes.add_argument("--paths", action="store_true", help="force generated per-path testing")
     modes.add_argument(
@@ -152,7 +162,7 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument(
             "--dry-run",
             action="store_true",
-            help="estimate work from cache state without running properties",
+            help="plot coverage and forecast filtering or cached property work without execution",
         )
         command.add_argument(
             "--kubeconform", action="store_true", help="validate Kubernetes API schemas"
@@ -214,7 +224,20 @@ def main(argv: list[str] | None = None) -> int:
             action="store_true",
             help="require all configurable fields in source values.yaml and a clean audit",
         )
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    """
+    Dispatch chart auditing, generation, and property checks.
+
+    Args:
+        argv (list[str] | None): Command-line arguments, or the process arguments when omitted.
+
+    Returns:
+        int: Process exit status, zero on success.
+    """
+    args = argument_parser().parse_args(argv)
     logger = logging.getLogger("hypothesis_helm")
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
@@ -316,6 +339,14 @@ def main(argv: list[str] | None = None) -> int:
                         "collection or parallel controls"
                     )
         if (
+            args.command == "test"
+            and args.time_limit is not None
+            and args.permutations is None
+            and not args.whole_chart
+            and not args.exhaustive
+        ):
+            raise ValueError("--time-limit applies to whole-chart testing, not per-path suites")
+        if (
             args.command in ("test", "run")
             and args.dry_run
             and getattr(args, "permutations", None) is None
@@ -404,6 +435,7 @@ def main(argv: list[str] | None = None) -> int:
                     rerun=args.rerun,
                     schema_state=schema_state,
                 )
+            plot_progression(estimate)
             print(json.dumps(estimate, indent=2))
             return 0
         if args.command == "run":
@@ -492,9 +524,18 @@ def main(argv: list[str] | None = None) -> int:
                 infer_exhaustive_groups=not args.no_infer_groups,
                 max_group_cases=args.max_group_cases,
                 dry_run=args.dry_run,
+                time_limit=args.time_limit if args.time_limit is not None else 180.0,
                 prune_equivalent=args.prune_equivalent,
             )
-            status = 0 if report["status"] in ("passed", "dry-run") else 1
+            status = (
+                0
+                if report["status"] in ("passed", "dry-run")
+                else 124
+                if report["status"] == "time-limit"
+                else 1
+            )
+        if getattr(args, "dry_run", False):
+            plot_progression(report)
         print(json.dumps(report, indent=2))
         return status
     except KeyboardInterrupt:

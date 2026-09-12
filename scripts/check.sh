@@ -7,4 +7,5 @@ bash scripts/project-python.sh -m ruff format --check pkg scripts examples/gener
 bash scripts/project-python.sh -m mypy
 bash scripts/project-python.sh -m pydocstyle --config=pyproject.toml pkg scripts
 bash scripts/project-python.sh -m pydoclint.main --config=pyproject.toml pkg scripts
+bash scripts/project-python.sh -m cogapp --check README.md
 bash scripts/project-python.sh -m pytest "$@"

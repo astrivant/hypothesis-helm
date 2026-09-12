@@ -7,6 +7,7 @@ from __future__ import annotations
 import copy
 import json
 import logging
+import math
 import os
 import subprocess
 import tempfile
@@ -25,9 +26,11 @@ from hypothesis_helm.charts.presence import has_path
 from hypothesis_helm.charts.templates import discover
 from hypothesis_helm.compiler.pruning import Pruner
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
+from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.output import emit_manifest
 from hypothesis_helm.reporting.permutations import PermutationStatistics
 from hypothesis_helm.reporting.progress import format_path
+from hypothesis_helm.reporting.progressive import estimate_progression
 from hypothesis_helm.schemas.combinations import plan_interactions
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, validate
 from hypothesis_helm.schemas.contracts import (
@@ -414,6 +417,7 @@ def check_chart(
     infer_exhaustive_groups: bool = True,
     max_group_cases: int = 256,
     dry_run: bool = False,
+    time_limit: float = 180.0,
     prune_equivalent: bool = False,
     properties: tuple[Callable[[list[dict[str, object]]], None], ...] = (),
 ) -> dict[str, object]:
@@ -443,6 +447,7 @@ def check_chart(
         infer_exhaustive_groups (bool): Infer additional groups from schema and templates.
         max_group_cases (int): Maximum candidate size of an automatically inferred group.
         dry_run (bool): Plan permutations without rendering or updating history.
+        time_limit (float): Positive execution budget in seconds, excluding planning.
         prune_equivalent (bool): Skip Helm only with a successful exact-equivalence witness.
         properties (tuple[Callable[[list[dict[str, object]]], None], ...]): Additional assertions
             over rendered resources.
@@ -458,6 +463,8 @@ def check_chart(
         raise ValueError("permutations and exhaustive are mutually exclusive")
     if dry_run and permutations is None:
         raise ValueError("whole-chart dry runs require permutations")
+    if not math.isfinite(time_limit) or time_limit <= 0:
+        raise ValueError("time_limit must be positive and finite")
     planning_started = time.perf_counter()
     hashes = RenderHashes(scope="run-local")
     model = (
@@ -566,9 +573,39 @@ def check_chart(
         for diagnostic in group_diagnostics:
             LOGGER.info("Group inference needs review: %s", diagnostic)
         if dry_run:
+            assert model is not None
+            progression = estimate_progression(
+                chart.path,
+                chart.defaults,
+                model,
+                interaction_plan,
+                lambda strength: plan_interactions(
+                    model,
+                    strength,
+                    max_cases=max_cases,
+                    max_candidates=max_candidates,
+                    accept=lambda values: validator.is_valid(
+                        json_value(merge_values(chart.defaults, values))
+                    ),
+                    exhaustive_threshold=0,
+                    exhaustive_groups=(*exhaustive_groups, *inferred),
+                    max_group_cases=max_group_cases,
+                ),
+                lambda values: merge_values(chart.defaults, values),
+                pruning=prune_equivalent,
+                max_cases=max_cases,
+                max_candidates=max_candidates,
+                history=statistics.previous
+                if statistics.previous.get("context") == statistics.context and not properties
+                else {},
+                fixed_names=bool(release and namespace),
+                time_limit=time_limit,
+            )
             return {
+                "progressive_estimate": progression,
                 **coverage,
                 **statistics.snapshot(),
+                "time_limit_seconds": time_limit,
                 "status": "dry-run",
                 "exit_code": 0,
                 "chart": str(chart.path),
@@ -577,7 +614,60 @@ def check_chart(
                 **({"pruning": pruner.report()} if pruner is not None else {}),
             }
     count = 0
+    completed_count = 0
     last_failure = None
+    execution_started = time.perf_counter()
+    if statistics is not None:
+        statistics.started = execution_started
+
+    def remaining_time() -> float:
+        """
+        Stop scheduling work when the execution budget has expired.
+
+        Returns:
+            float: Remaining seconds available to the next bounded operation.
+        """
+        remaining = time_limit - (time.perf_counter() - execution_started)
+        if remaining <= 0:
+            raise TimeLimitReached()
+        return remaining
+
+    def stopped_report() -> dict[str, object]:
+        """
+        Preserve incomplete coverage and successful measurements on a budget stop.
+
+        Returns:
+            dict[str, object]: Graceful time-limit report without a false counterexample.
+        """
+        total = len(finite_values) + 1 if finite_values is not None else None
+        result: dict[str, object] = {
+            **coverage,
+            "status": "time-limit",
+            "exit_code": 124,
+            "chart": str(chart.path),
+            "seed": random_seed,
+            "attempts": count,
+            "attempted_iterations": count,
+            "completed_iterations": completed_count,
+            "planned_iterations": total,
+            "remaining_iterations": total - completed_count if total is not None else None,
+            "unattempted_iterations": total - count if total is not None else None,
+            "coverage_complete": False,
+            "proof_of_totality": False,
+            "time_limit_seconds": time_limit,
+            "execution_seconds": time.perf_counter() - execution_started,
+            "render_hashes": hashes.snapshot(),
+            **({"pruning": pruner.report()} if pruner is not None else {}),
+        }
+        message = f"Execution stopped at the {time_limit:g}s time limit; coverage is incomplete"
+        LOGGER.info(message)
+        hashes.log_summary()
+        if statistics is not None:
+            result.update(statistics.finish("time-limit", message))
+        if artifact_dir is not None:
+            artifact_dir.mkdir(parents=True, exist_ok=True)
+            (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
+        return result
 
     def check(values: dict[str, object]) -> None:
         """
@@ -589,57 +679,76 @@ def check_chart(
         Returns:
             None: None. The operation completes through its documented side effects.
         """
-        nonlocal count, last_failure
+        nonlocal count, completed_count, last_failure
+        remaining_time()
         count += 1
         iteration_started = time.perf_counter()
         passed = False
+        rendered = False
+        render_seconds = 0.0
         try:
-            effective = merge_values(chart.defaults, values)
-            validators.validator_for(chart.schema)(chart.schema).validate(json_value(effective))
-            witness = None
-            resources = None
-            if pruner is not None:
-                context = configuration_key(
-                    {
-                        "helm": helm,
-                        "release": release,
-                        "namespace": namespace,
-                        "kube_version": kube_version,
-                        "timeout": timeout,
-                        "allow_empty": allow_empty,
-                        "environment": dict(os.environ),
-                    }
-                )
-                witness = pruner.candidate(values, effective, context)
-                resources = pruner.lookup(witness, count)
-            if resources is None:
-                resources = render(
-                    chart,
-                    values,
-                    helm=helm,
-                    timeout=timeout,
-                    release=release,
-                    namespace=namespace,
-                    kube_version=kube_version,
-                    hashes=hashes,
-                )
-            else:
-                for resource in resources:
-                    emit_manifest(resource)
-            pristine = copy.deepcopy(resources) if pruner is not None else []
-            if not resources and not allow_empty:
-                raise RenderFailure("chart rendered no resources (use allow_empty explicitly)")
-            for prop in properties:
-                prop(resources)
-            passed = True
-            if pruner is not None:
-                pruner.remember(witness, count, pristine)
+            with execution_timer(remaining_time()):
+                effective = merge_values(chart.defaults, values)
+                validators.validator_for(chart.schema)(chart.schema).validate(json_value(effective))
+                witness = None
+                resources = None
+                if pruner is not None:
+                    context = configuration_key(
+                        {
+                            "helm": helm,
+                            "release": release,
+                            "namespace": namespace,
+                            "kube_version": kube_version,
+                            "timeout": timeout,
+                            "allow_empty": allow_empty,
+                            "environment": dict(os.environ),
+                        }
+                    )
+                    witness = pruner.candidate(values, effective, context)
+                    resources = pruner.lookup(witness, count)
+                if resources is None:
+                    render_started = time.perf_counter()
+                    rendered = True
+                    resources = render(
+                        chart,
+                        values,
+                        helm=helm,
+                        timeout=min(timeout, remaining_time()),
+                        release=release,
+                        namespace=namespace,
+                        kube_version=kube_version,
+                        hashes=hashes,
+                    )
+                    render_seconds = time.perf_counter() - render_started
+                else:
+                    for resource in resources:
+                        emit_manifest(resource)
+                pristine = copy.deepcopy(resources) if pruner is not None else []
+                if not resources and not allow_empty:
+                    raise RenderFailure("chart rendered no resources (use allow_empty explicitly)")
+                for prop in properties:
+                    remaining_time()
+                    prop(resources)
+                passed = True
+                completed_count += 1
+                if pruner is not None:
+                    pruner.remember(witness, count, pristine)
+        except RenderFailure as exc:
+            if isinstance(exc.__cause__, subprocess.TimeoutExpired):
+                remaining_time()
+            last_failure = (values, str(exc))
+            raise
         except (Exception, KeyboardInterrupt) as exc:
             last_failure = (values, str(exc))
             raise
         finally:
             if statistics is not None:
-                statistics.advance(passed, time.perf_counter() - iteration_started)
+                statistics.advance(
+                    passed,
+                    time.perf_counter() - iteration_started,
+                    rendered=rendered,
+                    render_seconds=render_seconds,
+                )
 
     def save_failure(exc: BaseException) -> dict[str, object]:
         """
@@ -681,6 +790,8 @@ def check_chart(
 
     try:
         check({})
+    except TimeLimitReached:
+        return stopped_report()
     except KeyboardInterrupt as exc:
         if statistics is not None or pruner is not None:
             save_failure(exc)
@@ -692,6 +803,8 @@ def check_chart(
         try:
             for values in finite_values:
                 check(values)
+        except TimeLimitReached:
+            return stopped_report()
         except KeyboardInterrupt as exc:
             if statistics is not None or pruner is not None:
                 save_failure(exc)
@@ -709,6 +822,8 @@ def check_chart(
             "render_hashes": hashes.snapshot(),
             **({"pruning": pruner.report()} if pruner is not None else {}),
             "status": "passed",
+            "time_limit_seconds": time_limit,
+            "execution_seconds": time.perf_counter() - execution_started,
             "chart": str(chart.path),
             "seed": random_seed,
             "attempts": count,
@@ -752,6 +867,8 @@ def check_chart(
 
     try:
         property_test()
+    except TimeLimitReached:
+        return stopped_report()
     except KeyboardInterrupt as exc:
         if pruner is not None:
             save_failure(exc)
@@ -772,6 +889,8 @@ def check_chart(
         "chart": str(chart.path),
         "seed": random_seed,
         "attempts": count,
+        "time_limit_seconds": time_limit,
+        "execution_seconds": time.perf_counter() - execution_started,
         "max_examples": max_examples,
         "mode": "sampled",
         "proof_of_totality": False,

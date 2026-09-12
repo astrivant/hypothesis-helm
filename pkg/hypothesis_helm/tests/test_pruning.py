@@ -436,3 +436,48 @@ def test_case_insensitive_ignore_files_cannot_hide_values(proof_chart: Chart) ->
     )
     assert pruner.disabled is not None
     assert ".helmignore" in pruner.disabled
+
+
+@pytest.mark.parametrize("enabled", [False, True])
+def test_progressive_forecast_is_read_only(
+    proof_chart: Chart, monkeypatch: pytest.MonkeyPatch, enabled: bool
+) -> None:
+    """
+    Forecast known output classes without executing assertions or issuing certificates.
+
+    Args:
+        proof_chart (Chart): Eight-input chart with three supported output classes.
+        monkeypatch (pytest.MonkeyPatch): Prevents accidental renderer execution.
+        enabled (bool): Whether the configured run enables pruning.
+
+    Returns:
+        None: Forecasts distinguish potential savings from configured work.
+    """
+    renderer = Mock(side_effect=AssertionError("dry-run rendered"))
+    prop = Mock(side_effect=AssertionError("dry-run asserted"))
+    monkeypatch.setattr("hypothesis_helm.charts.runner.render", renderer)
+    before = {path: path.read_bytes() for path in proof_chart.path.rglob("*") if path.is_file()}
+    report = check_chart(
+        proof_chart,
+        permutations=2,
+        dry_run=True,
+        prune_equivalent=enabled,
+        artifact_dir=proof_chart.path / "artifacts",
+        properties=(prop,),
+    )
+    forecast = mapping(report["progressive_estimate"])
+    configured = mapping(forecast["configured_run"])
+    assert configured["candidate_inputs"] == 8
+    assert configured["filter_forecast_renders"] == 3
+    assert configured["filter_forecast_removed"] == 5
+    assert configured["configured_renders"] == (3 if enabled else 8)
+    assert configured["estimated_seconds"] is None
+    assert forecast["actual_renders"] == 0
+    assert forecast["pruning_certificates"] == []
+    if enabled:
+        assert mapping(report["pruning"])["certificates"] == []
+    renderer.assert_not_called()
+    prop.assert_not_called()
+    assert before == {
+        path: path.read_bytes() for path in proof_chart.path.rglob("*") if path.is_file()
+    }

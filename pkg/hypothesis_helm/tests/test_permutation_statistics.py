@@ -13,6 +13,7 @@ import pytest
 from hypothesis_helm.charts.runner import Chart, check_chart
 from hypothesis_helm.reporting.permutations import PermutationStatistics
 from hypothesis_helm.schemas.combinations import plan_interactions
+from hypothesis_helm.schemas.contracts import mapping
 
 
 def test_previous_counts_timing_and_remaining_work(
@@ -60,6 +61,30 @@ def test_previous_counts_timing_and_remaining_work(
     assert first["iteration_delta"] is None
     assert first["elapsed_seconds"] == first["estimated_total_seconds"] == 38
     assert first["seconds_per_iteration"] == 2
+    forecast = check_chart(
+        "examples/workload",
+        permutations=2,
+        dry_run=True,
+        artifact_dir=tmp_path,
+        exhaustive_threshold=0,
+    )
+    progression = mapping(forecast["progressive_estimate"])
+    assert mapping(progression["configured_run"])["estimated_seconds"] == 38
+    assert progression["timing_source"] == "compatible_history"
+    limited = check_chart(
+        "examples/workload",
+        permutations=2,
+        dry_run=True,
+        artifact_dir=tmp_path,
+        exhaustive_threshold=0,
+        time_limit=40,
+    )
+    budget = mapping(mapping(limited["progressive_estimate"])["execution_budget"])
+    assert budget["recommended_strength"] == 2
+    assert budget["estimated_seconds"] == 38
+    assert budget["status"] == "estimated-fit"
+
+    assert json.loads((tmp_path / "report.json").read_text()) == first
     assert "19 remaining (0 attempted)" in caplog.text
     assert "ETA unknown (unknown)" in caplog.text
     assert json.loads((tmp_path / "report.json").read_text()) == first

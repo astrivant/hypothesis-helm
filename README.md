@@ -26,6 +26,9 @@ manifest streaming for Kubernetes schema and security validation.
   - [Development](#development)
   - [Documentation](#documentation)
   - [License](#license)
+  - [Benchmarking](#benchmarking)
+  - [Progressive dry runs](#progressive-dry-runs)
+  - [CLI reference](#cli-reference)
 
 ## Install
 
@@ -522,3 +525,416 @@ Use `--prune-equivalent` for conservative pre-render pruning against successfull
 rendered representatives. Unknown behavior still renders, and custom assertions
 run for every input. The [proof compiler contract](docs/safe-pruning.md) describes
 its supported subset, exact-equivalence bounds and per-candidate certificates.
+
+## Benchmarking
+
+The [benchmark harness](scripts/benchmark_helm.py) runs real Helm renders, schema and
+manifest validation, exact-equivalence pruning, and independent output assertions.
+Matplotlib figures below are generated from the retained
+[raw worker measurements](docs/benchmarks/results.json) and
+[aggregate CSV](docs/benchmarks/results.csv). PNG and SVG exports are available in
+[docs/benchmarks](docs/benchmarks).
+
+Generate a predictable chart with any supported input complexity:
+
+~~~sh
+bash scripts/project-python.sh -m scripts.generate_benchmark_chart \
+  --output .cache/benchmark-chart \
+  --input-complexity 100 --mean 0 --stddev 1 \
+  --output-bins 256 --precision 6
+~~~
+
+The [generator](scripts/generate_benchmark_chart.py) creates that many independent,
+required Boolean inputs and maps active bits to rounded normal-distribution
+quantiles in a ConfigMap's `data.value`. Remaining inputs do not affect the output.
+`--output-bins` controls quantile resolution (a power of two, up to 1024);
+`--lower` and `--upper` optionally truncate the underlying distribution.
+Small input spaces automatically use fewer bins when the option is omitted.
+`benchmark.json` records the requested parameters and actual finite distribution
+mean, standard deviation and unique output count. This is a discretized
+approximation, not an exactly continuous Gaussian.
+
+The checked-in [standard chart](examples/benchmark) has 100 inputs: eight active
+quantile-selector bits and 92 output-irrelevant bits. Its 256 emitted values have
+mean 0 and standard deviation approximately 0.9975 for requested parameters 0 and 1.
+The input stream is bijective over its finite domain. By default, groups of eight
+distinct inputs share a live selector; subsequent groups also revisit output
+classes. Only exact equivalence permits a render skip. Proximity within the normal
+distribution never authorizes pruning.
+
+For every completed input, an independent oracle recomputes its quantile from the
+input bits, mean, standard deviation and truncation bounds, then compares it with
+the received Helm scalar. This assertion also runs for reused representatives.
+A mismatch fails the benchmark before committing a successful representative.
+
+~~~sh
+# Fresh measurements; the three-minute ceiling applies to each benchmark point.
+bash scripts/project-python.sh -m scripts.benchmark_helm \
+  --chart examples/benchmark --time-limit 3m \
+  --replicas 1,2,4 --shard none --output reports/benchmark
+
+# Custom generated distribution, repeated observations and another output directory.
+bash scripts/project-python.sh -m scripts.benchmark_helm \
+  --chart .cache/benchmark-chart --repeats 3 \
+  --counts 64,256,1024,4096 --scaling-counts 64,256,1024 \
+  --output reports/custom-benchmark --shard none
+
+# Regenerate figures from saved data without executing Helm.
+bash scripts/project-python.sh -m scripts.benchmark_helm \
+  --plot-only --output reports/benchmark --shard none
+~~~
+
+`--counts` specifies increasing **distinct input counts**, not the interaction
+strength selected by the application's `--permutations N` option. These are
+controlled benchmark workloads, not exhaustive coverage claims.
+`--multiplicity` changes the desired consecutive equivalence multiplicity and
+must be a power of two. For another chart, provide `--chart` and a `--values`
+JSONL file containing distinct effective overrides; generic workloads retain schema
+and manifest checks but do not claim the generated chart's distribution oracle.
+
+Each point starts fresh worker processes with independent representative and hash
+caches. Wall time includes worker startup, chart loading, candidate generation,
+validation and cleanup. All workers share one deadline; it is not multiplied by the
+replica count. No measurements are clipped to fabricate a plateau. An **X** marks
+an incomplete, deadline-censored observation. Speedup and efficiency exclude
+censored pairs. The complete study takes longer than three minutes because it
+contains multiple independent points. `--resume` reuses saved points only when
+chart, code, seed, machine, workload and shard metadata match.
+
+The progressive benchmark stops a series after two consecutive capped points.
+Increasing the requested count then produces a budget-induced runtime and completed
+work plateau, rather than evidence of an inherent throughput limit.
+
+![Measured permutation runtime and completed-work plateau](docs/benchmarks/progressive.png)
+
+The output histogram compares oracle-checked inputs with actual completed Helm
+renders and the declared normal reference. Fewer renders reflect exact output
+reuse, while every completed input still receives its output assertion.
+
+![Observed Helm values and expected normal distribution](docs/benchmarks/output-distribution.png)
+
+Strong scaling holds the global input prefix fixed and increases parallel benchmark
+workers. Weak scaling holds inputs **per worker** fixed and increases total inputs
+with workers. The figures show both permutation-count curves and replica-based
+speedup or efficiency, following the
+[standard scaling definitions](https://hpc.llnl.gov/documentation/tutorials/introduction-parallel-computing-tutorial).
+Replicas here are worker processes on one machine, not Kubernetes replicas or
+different CI jobs. This harness partitions deterministic input IDs; it does not
+add parallel `--jobs` support to the application's whole-chart CLI.
+
+![Strong scaling against permutation count and worker replicas](docs/benchmarks/strong-scaling.png)
+
+![Weak scaling against permutation count and worker replicas](docs/benchmarks/weak-scaling.png)
+
+![Parallel replica throughput and render skips](docs/benchmarks/replicas.png)
+
+Benchmark sharding uses the same `--shard auto|none|INDEX/TOTAL` interface and CI
+environment detection as the application. Numbered benchmark input IDs use modulo
+assignment across shards, followed by disjoint contiguous local replica blocks.
+Changing replica count cannot change the inputs owned by a shard. Weak-scaling
+counts include the shard total so every local worker receives exactly the stated
+input count. Sharded results go into `shard-INDEX-of-TOTAL` subdirectories:
+
+~~~sh
+bash scripts/project-python.sh -m scripts.benchmark_helm \
+  --shard 2/3 --replicas 1,2,4 --output reports/benchmark
+~~~
+
+Plots describe one fixed shard configuration and reject mixed shard measurements.
+They do not pool unsynchronized CI job durations or claim cross-job speedup.
+Raw results retain global requested counts, shard-assigned counts, per-worker
+assignment fingerprints, completed/remaining work, oracle checks and peak worker
+memory. The README measurements use one repetition per point on the recorded host;
+they are exploratory results, not confidence intervals or cross-platform guarantees.
+Use `--repeats 3` or more to measure variability; plotted error bars show the observed
+minimum and maximum, not statistical confidence intervals.
+
+## Progressive dry runs
+
+Run `helm hypothesis test examples/workload --dry-run --prune-equivalent`
+to plot increasing strengths through the finite factor count, additional and cumulative inputs, and
+potential render savings. The plot goes to stderr; stdout remains JSON.
+The configured run retains automatic exhaustive enumeration for small domains.
+Affordable full totals are exact; larger totals show bounds and an explicitly
+heuristic filtering extrapolation. Stages need not be nested, so incremental
+work is calculated using input-set unions.
+
+Dry runs never invoke Helm, run assertions, write history, or authorize pruning.
+Filtering forecasts assume successful representatives and a fixed renderer and
+chart; unsupported templates require rendering. Runtime estimates use compatible
+measured renderer and check costs from prior runs in the artifact directory.
+Without those measurements, time is unknown. Per-path dry runs instead plot
+selected, scheduled and cached properties with their existing filters.
+
+Whole-chart execution has a default three-minute budget. Set another limit with
+`helm hypothesis test examples/workload --time-limit 30s` (bare numbers mean seconds;
+`m` and `h` suffixes are also accepted). Planning and dry-run calculation are excluded
+from this execution budget. Generated per-path suites do not use this option.
+
+At the deadline, the CLI stops the active iteration and returns `status: time-limit`
+with exit code 124. Completed, attempted and remaining iteration counts, elapsed
+time, render hashes, pruning statistics and measured history are retained, along
+with an incomplete JUnit result. A budget stop does not create a chart
+counterexample or claim complete coverage. Starting another run currently starts
+its planned inputs again; retained statistics are not a resume checkpoint.
+
+The dry-run plot recommends the highest completed strength whose predicted
+execution time fits the budget. It evaluates higher strengths where the planning
+limits allow; unavailable stages are reported. Timing remains advisory and an
+unknown estimate never claims to fit. Explicit coverage settings remain unchanged,
+and actual runs enforce the execution limit regardless of the forecast.
+
+CLI execution interrupts active renders and assertions using a temporary timer.
+Library calls from a non-main thread, or applications that already own an alarm,
+instead stop between operations and cap Helm's timeout to the remaining budget;
+an in-flight custom callback in those cases must return before execution can stop.
+
+## CLI reference
+
+Generated from the argument parser with cogapp. After changing CLI arguments, run
+`bash scripts/project-python.sh -m cogapp -r README.md`.
+Checks enforce that this reference stays current.
+
+<!-- [[[cog
+import argparse
+import os
+import cog
+from hypothesis_helm.cli import argument_parser
+
+os.environ["COLUMNS"] = "88"
+parser = argument_parser(prog="helm hypothesis")
+parsers = [("helm hypothesis", parser)]
+for action in parser._actions:
+    if isinstance(action, argparse._SubParsersAction):
+        parsers.extend((f"helm hypothesis {name}", child) for name, child in action.choices.items())
+for title, command in parsers:
+    cog.outl(f"<details>\n<summary>{title}</summary>\n")
+    cog.outl("~~~text")
+    cog.out(command.format_help())
+    cog.outl("~~~\n\n</details>\n")
+]]] -->
+<details>
+<summary>helm hypothesis</summary>
+
+~~~text
+usage: helm hypothesis [-h] {generate,audit,run,test,schemas} ...
+
+Audit and property-test Helm chart values.
+
+positional arguments:
+  {generate,audit,run,test,schemas}
+    generate            generate one typed Python property test per values path
+    audit               discover value references and schema gaps
+    run                 run a saved generated Python suite
+    test                select finite coverage or generate per-path tests
+    schemas             prepare the sparse Kubernetes schema cache
+
+options:
+  -h, --help            show this help message and exit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis generate</summary>
+
+~~~text
+usage: helm hypothesis generate [-h] [--output OUTPUT] [--max-examples MAX_EXAMPLES]
+                                [--strict]
+                                chart
+
+positional arguments:
+  chart
+
+options:
+  -h, --help            show this help message and exit
+  --output OUTPUT
+  --max-examples MAX_EXAMPLES
+  --strict              require all configurable fields in source values.yaml and a
+                        clean audit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis audit</summary>
+
+~~~text
+usage: helm hypothesis audit [-h] [--strict] chart
+
+positional arguments:
+  chart
+
+options:
+  -h, --help  show this help message and exit
+  --strict    fail on any finding or unresolved access
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis run</summary>
+
+~~~text
+usage: helm hypothesis run [-h] [--seed SEED] [--match MATCH] [--collect-only]
+                           [--artifact-dir ARTIFACT_DIR] [--dry-run] [--kubeconform]
+                           [--schema-version SCHEMA_VERSION]
+                           [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
+                           [--kubeconform-binary KUBECONFORM_BINARY]
+                           [--cache-dir CACHE_DIR] [--disable-schema-caching]
+                           [--progress] [--no-cache] [--rerun {auto,all,failed}]
+                           [--shard SHARD] [--jobs JOBS] [--output {json}] [--strict]
+                           suite
+
+positional arguments:
+  suite
+
+options:
+  -h, --help            show this help message and exit
+  --seed SEED
+  --match MATCH         select tests by value-path keyword
+  --collect-only
+  --artifact-dir ARTIFACT_DIR
+                        report directory for a saved suite
+  --dry-run             plot coverage and forecast filtering or cached property work
+                        without execution
+  --kubeconform         validate Kubernetes API schemas
+  --schema-version SCHEMA_VERSION
+                        Kubernetes schema version: latest or X.Y.Z
+  --schema-cache-dir SCHEMA_CACHE_DIR
+  --schema-offline      reuse cached schemas without network access
+  --kubeconform-binary KUBECONFORM_BINARY
+  --cache-dir CACHE_DIR
+                        persistent path-result cache directory
+  --disable-schema-caching
+                        compare values structure against the cached baseline without
+                        updating it
+  --progress            force a live progress bar on stderr, including redirected
+                        output
+  --no-cache            disable path-result caching
+  --rerun {auto,all,failed}
+                        auto: rerun failures locally; run all paths in CI
+  --shard SHARD         auto (default): detect CI node; INDEX/TOTAL: explicit shard;
+                        none: disable
+  --jobs, -j JOBS       auto (default): PID throughput tuning; N: fixed worker count;
+                        1: serial
+  --output, -o {json}   stream one rendered manifest per JSON line on stdout; reports
+                        go to stderr
+  --strict              require all configurable fields in source values.yaml and a
+                        clean audit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis test</summary>
+
+~~~text
+usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DURATION]
+                            [--paths | --exhaustive | --whole-chart |
+                            --permutations N] [--prune-equivalent] [--match MATCH]
+                            [--collect-only] [--max-cases MAX_CASES]
+                            [--max-candidates MAX_CANDIDATES]
+                            [--exhaustive-threshold EXHAUSTIVE_THRESHOLD]
+                            [--exhaustive-group PATH,PATH] [--no-infer-groups]
+                            [--max-group-cases MAX_GROUP_CASES] [--seed SEED]
+                            [--timeout TIMEOUT] [--helm HELM] [--release RELEASE]
+                            [--namespace NAMESPACE] [--kube-version KUBE_VERSION]
+                            [--allow-empty] [--artifact-dir ARTIFACT_DIR] [--dry-run]
+                            [--kubeconform] [--schema-version SCHEMA_VERSION]
+                            [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
+                            [--kubeconform-binary KUBECONFORM_BINARY]
+                            [--cache-dir CACHE_DIR] [--disable-schema-caching]
+                            [--progress] [--no-cache] [--rerun {auto,all,failed}]
+                            [--shard SHARD] [--jobs JOBS] [--output {json}] [--strict]
+                            [chart]
+
+positional arguments:
+  chart                 chart directory (defaults to the current directory)
+
+options:
+  -h, --help            show this help message and exit
+  --max-examples MAX_EXAMPLES
+  --time-limit DURATION
+                        whole-chart execution budget, e.g. 30s or 3m (default: 3m);
+                        excludes planning
+  --paths               force generated per-path testing
+  --exhaustive          enumerate finite whole-chart inputs
+  --whole-chart         sample whole-chart inputs
+  --permutations N      cover every valid N-way finite interaction
+  --prune-equivalent    skip Helm only for proved output equivalence to a successful
+                        render
+  --match MATCH         select generated tests by value-path keyword
+  --collect-only        generate and list tests
+  --max-cases MAX_CASES
+                        bound exhaustive domains or permutation suites and factor
+                        domains
+  --max-candidates MAX_CANDIDATES
+                        bound permutation planning work
+  --exhaustive-threshold EXHAUSTIVE_THRESHOLD
+                        enumerate finite spaces smaller than this count; 0 disables
+                        promotion
+  --exhaustive-group PATH,PATH
+                        require exhaustive coverage of a group of value paths or
+                        containers; repeatable
+  --no-infer-groups     disable inferred exhaustive groups
+  --max-group-cases MAX_GROUP_CASES
+                        bound automatically inferred group domains
+  --seed SEED
+  --timeout TIMEOUT
+  --helm HELM
+  --release RELEASE
+  --namespace NAMESPACE
+  --kube-version KUBE_VERSION
+  --allow-empty
+  --artifact-dir ARTIFACT_DIR
+  --dry-run             plot coverage and forecast filtering or cached property work
+                        without execution
+  --kubeconform         validate Kubernetes API schemas
+  --schema-version SCHEMA_VERSION
+                        Kubernetes schema version: latest or X.Y.Z
+  --schema-cache-dir SCHEMA_CACHE_DIR
+  --schema-offline      reuse cached schemas without network access
+  --kubeconform-binary KUBECONFORM_BINARY
+  --cache-dir CACHE_DIR
+                        persistent path-result cache directory
+  --disable-schema-caching
+                        compare values structure against the cached baseline without
+                        updating it
+  --progress            force a live progress bar on stderr, including redirected
+                        output
+  --no-cache            disable path-result caching
+  --rerun {auto,all,failed}
+                        auto: rerun failures locally; run all paths in CI
+  --shard SHARD         auto (default): detect CI node; INDEX/TOTAL: explicit shard;
+                        none: disable
+  --jobs, -j JOBS       auto (default): PID throughput tuning; N: fixed worker count;
+                        1: serial
+  --output, -o {json}   stream one rendered manifest per JSON line on stdout; reports
+                        go to stderr
+  --strict              require all configurable fields in source values.yaml and a
+                        clean audit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis schemas</summary>
+
+~~~text
+usage: helm hypothesis schemas [-h] [--schema-version SCHEMA_VERSION]
+                               [--schema-cache-dir SCHEMA_CACHE_DIR]
+                               [--schema-offline]
+                               [--kubeconform-binary KUBECONFORM_BINARY]
+
+options:
+  -h, --help            show this help message and exit
+  --schema-version SCHEMA_VERSION
+  --schema-cache-dir SCHEMA_CACHE_DIR
+  --schema-offline
+  --kubeconform-binary KUBECONFORM_BINARY
+~~~
+
+</details>
+
+<!-- [[[end]]] -->
