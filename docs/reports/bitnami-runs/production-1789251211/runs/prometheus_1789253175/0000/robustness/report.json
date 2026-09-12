@@ -1,0 +1,24 @@
+{
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-7y1esyld/chart",
+  "seed": 0,
+  "attempts": 243,
+  "error": "Error: YAML parse error on prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "": [],
+    "extraDeploy": [
+      []
+    ]
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 225,
+    "unique_bundles": 5,
+    "duplicate_bundles": 220,
+    "validation_cache_hits": 220,
+    "validated_entries": 5
+  },
+  "phase": "robustness"
+}

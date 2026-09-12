@@ -1,0 +1,375 @@
+"""
+Discover and exercise independent charts in a repository tree.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+import math
+import os
+import re
+import shutil
+import subprocess
+import tempfile
+import time
+from collections import Counter
+from contextlib import ExitStack
+from pathlib import Path
+
+from hypothesis_helm.charts import yamlio
+from hypothesis_helm.charts.prioritized import check_prioritized
+from hypothesis_helm.charts.runner import Chart, check_chart, render
+from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+from hypothesis_helm.reporting.repository import write_reports
+from hypothesis_helm.schemas.contracts import mapping
+from hypothesis_helm.schemas.factors import factor_space
+from hypothesis_helm.schemas.finite import NonFiniteSchema
+
+LOGGER = logging.getLogger(__name__)
+VERSION = re.compile(
+    r"^v?(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?(?:\.(0|[1-9]\d*))?(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$"
+)
+
+
+def discover_charts(root: Path, *, deadline: float | None = None) -> list[dict[str, object]]:
+    """
+    Discover metadata files without following directory symlinks.
+
+    Args:
+        root (Path): Repository or chart directory to inspect recursively.
+        deadline (float | None): Optional monotonic scan deadline, preserving partial discovery.
+
+    Returns:
+        list[dict[str, object]]: Deterministically ordered valid and invalid candidates.
+    """
+    if not root.is_dir():
+        raise ValueError(f"Not a directory: {root}")
+    results: list[dict[str, object]] = []
+    try:
+        with ExitStack() as scope:
+            if deadline is not None:
+                scope.enter_context(execution_timer(max(0.000001, deadline - time.monotonic())))
+            for directory, children, files in os.walk(root, followlinks=False):
+                if deadline is not None and time.monotonic() >= deadline:
+                    break
+                children[:] = sorted(
+                    name
+                    for name in children
+                    if name not in {".git", ".venv", ".cache", "__pycache__"}
+                )
+                if "Chart.yaml" not in files:
+                    continue
+                path = Path(directory)
+                record: dict[str, object] = {
+                    "chart": str(path.relative_to(root)),
+                    "status": "pending",
+                }
+                try:
+                    metadata = yamlio.load((path / "Chart.yaml").read_text())
+                    if not isinstance(metadata, dict):
+                        raise ValueError("Chart.yaml must contain a mapping")
+                    if metadata.get("apiVersion") not in ("v1", "v2"):
+                        raise ValueError("apiVersion must be v1 or v2")
+                    name = metadata.get("name")
+                    if (
+                        not isinstance(name, str)
+                        or not name.strip()
+                        or name in (".", "..")
+                        or "/" in name
+                        or "\\" in name
+                    ):
+                        raise ValueError("name must be a nonempty chart basename")
+                    version = metadata.get("version")
+                    if not isinstance(version, str) or VERSION.fullmatch(version) is None:
+                        raise ValueError(
+                            "version must be a Helm-compatible semantic version string"
+                        )
+                    kind = metadata.get("type", "application")
+                    if kind not in ("application", "library"):
+                        raise ValueError("type must be application or library")
+                    record.update(name=name, version=version, kind=kind)
+                except Exception as exc:
+                    record.update(status="invalid-metadata", error=str(exc))
+                results.append(record)
+    except TimeLimitReached:
+        pass
+    return sorted(results, key=lambda item: str(item["chart"]))
+
+
+def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dict[str, object]:
+    """
+    Run baseline checks before sampling schema-described values.
+
+    Args:
+        path (Path): Chart directory, optionally an isolated dependency-build copy.
+        args (argparse.Namespace): Scan execution settings.
+        artifacts (Path): Per-chart reproducer and statistics destination.
+
+    Returns:
+        dict[str, object]: Results distinguishing blocked execution and limited coverage.
+    """
+    baseline = subprocess.run(
+        [args.helm, "lint", str(path)], capture_output=True, text=True, timeout=args.timeout
+    )
+    artifacts.mkdir(parents=True, exist_ok=True)
+    diagnostic = baseline.stdout + baseline.stderr
+    (artifacts / "lint.txt").write_text(diagnostic)
+    if baseline.returncode:
+        status = (
+            "missing-dependencies"
+            if "dependencies" in diagnostic.lower()
+            and ("missing" in diagnostic.lower() or "not found" in diagnostic.lower())
+            else "baseline-failed"
+        )
+        return {"status": status, "error": diagnostic, "coverage": "defaults only"}
+    has_schema = (path / "values.schema.json").is_file()
+    if not has_schema and not args.filter:
+        render(Chart(path, {}, {}), {}, helm=args.helm, timeout=args.timeout)
+        return {"status": "baseline-only", "coverage": "defaults only; no values.schema.json"}
+    try:
+        chart = (
+            Chart.load(path)
+            if has_schema
+            else Chart(
+                path,
+                {"type": "object"},
+                mapping(yamlio.load((path / "values.yaml").read_text()) or {}),
+            )
+        )
+    except Exception as exc:
+        return {"status": "unsupported-schema", "error": str(exc), "coverage": "lint only"}
+    filtering: dict[str, object] = {"requested": args.filter, "applied": False}
+    strength = args.permutations
+    try:
+        factor_space(chart.schema, 10000)
+    except NonFiniteSchema as exc:
+        filtering["reason"] = f"Finite filtering unavailable: {exc}"
+        if args.filter:
+            LOGGER.info(
+                "%s; prioritizing known inputs before robustness sampling", filtering["reason"]
+            )
+        if strength is not None:
+            return {"status": "unsupported-schema", "error": str(exc), "coverage": "lint only"}
+    else:
+        strength = strength or 2
+    if args.filter and strength is None:
+        result = check_prioritized(
+            chart,
+            budget=min(args.chart_timeout, max(0.000001, args.scan_deadline - time.monotonic()))
+            if args.scan_deadline is not None
+            else args.chart_timeout,
+            max_examples=args.max_examples,
+            seed=args.seed,
+            helm=args.helm,
+            timeout=args.timeout,
+            artifacts=artifacts,
+        )
+        return {
+            **result,
+            "coverage": "known inputs, then original-schema robustness sampling",
+            "schema_source": "declared" if has_schema else "inferred generation; no values schema",
+            "lint": "passed",
+        }
+    filtering["applied"] = args.filter and strength is not None
+    result = check_chart(
+        chart,
+        max_examples=args.max_examples,
+        random_seed=args.seed,
+        helm=args.helm,
+        timeout=args.timeout,
+        time_limit=min(args.chart_timeout, max(0.000001, args.scan_deadline - time.monotonic()))
+        if args.scan_deadline is not None
+        else args.chart_timeout,
+        permutations=strength,
+        trim_topology=2 if filtering["applied"] else 0,
+        expand_failures=bool(filtering["applied"]),
+        artifact_dir=artifacts,
+    )
+    return {
+        **result,
+        "coverage": "schema-generated values",
+        "lint": "passed",
+        "filtering": filtering,
+    }
+
+
+def scan(args: argparse.Namespace) -> int:
+    """
+    Scan all charts and preserve partial results on interruption.
+
+    Args:
+        args (argparse.Namespace): Parsed scan options.
+
+    Returns:
+        int: Zero for complete property success, one for failures, two for incomplete coverage.
+    """
+    if args.max_examples < 1 or not math.isfinite(args.timeout) or args.timeout <= 0:
+        raise ValueError("max-examples and timeout must be positive and finite")
+    if args.permutations is not None and args.permutations < 1:
+        raise ValueError("permutations must be positive")
+    if shutil.which(args.helm) is None:
+        raise ValueError(f"Helm executable not found: {args.helm}")
+    root = args.directory.resolve()
+    started = time.time()
+    scan_started = time.monotonic()
+    args.scan_deadline = scan_started + args.scan_timeout if args.scan_timeout is not None else None
+    records = discover_charts(root, deadline=args.scan_deadline)
+    discovery_complete = args.scan_deadline is None or time.monotonic() < args.scan_deadline
+    timed_out = not discovery_complete
+    output = args.artifact_dir.resolve() / f"{root.name}_{int(started)}"
+    output.mkdir(parents=True, exist_ok=True)
+    interrupted = False
+    for index, record in enumerate(records):
+        if args.scan_deadline is not None and time.monotonic() >= args.scan_deadline:
+            timed_out = True
+            break
+        if record["status"] != "pending":
+            continue
+        path = root / str(record["chart"])
+        artifacts = output / f"{index:04d}"
+        record["artifacts"] = str(artifacts)
+        tick = time.monotonic()
+        LOGGER.info("Chart %d/%d: %s", index + 1, len(records), record["chart"])
+        try:
+            with ExitStack() as scope:
+                if args.scan_deadline is not None:
+                    remaining = args.scan_deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise TimeLimitReached()
+                    scope.enter_context(execution_timer(remaining))
+                selected = args.values if args.values.is_absolute() else path / args.values
+                if not selected.is_file():
+                    record.update(
+                        status="missing-values",
+                        result="N/A",
+                        error=f"Selected values file not found: {selected}",
+                    )
+                    continue
+                with tempfile.TemporaryDirectory(prefix="hypothesis-helm-scan-") as temporary:
+                    copy = Path(temporary) / "chart"
+                    shutil.copytree(path, copy, symlinks=False)
+                    baseline = selected.read_text()
+                    loaded = yamlio.load(baseline)
+                    if loaded is not None and not isinstance(loaded, dict):
+                        record.update(
+                            status="invalid-values",
+                            result="N/A",
+                            error=f"Selected values must contain a mapping: {selected}",
+                        )
+                        continue
+                    # Unlink copied symlinks before writing to keep the source chart untouched.
+                    (copy / "values.yaml").unlink(missing_ok=True)
+                    (copy / "values.yaml").write_text(baseline)
+                    record["values_file"] = str(selected)
+                    if args.build_dependencies:
+                        built = subprocess.run(
+                            [args.helm, "dependency", "build", str(copy)],
+                            capture_output=True,
+                            text=True,
+                            timeout=args.timeout,
+                        )
+                        artifacts.mkdir(parents=True, exist_ok=True)
+                        (artifacts / "dependencies.txt").write_text(built.stdout + built.stderr)
+                        if built.returncode:
+                            record.update(
+                                status="dependency-build-failed", error=built.stdout + built.stderr
+                            )
+                            continue
+                    if record["kind"] == "library":
+                        record.update(
+                            status="skipped-library",
+                            result="N/A",
+                            coverage="not a standalone application",
+                        )
+                        continue
+                    result = exercise_chart(copy, args, artifacts)
+                    result.pop("chart", None)
+                    record.update(result)
+        except TimeLimitReached:
+            record.update(status="scan-timeout", error="Total scan deadline reached")
+            timed_out = True
+            break
+        except KeyboardInterrupt:
+            record.update(status="interrupted", error="Interrupted by user")
+            interrupted = True
+            break
+        except subprocess.TimeoutExpired as exc:
+            record.update(status="timeout", error=str(exc))
+        except Exception as exc:
+            record.update(status="error", error=str(exc), failure_type=type(exc).__name__)
+        finally:
+            record["elapsed_seconds"] = time.monotonic() - tick
+            if args.scan_deadline is not None and time.monotonic() >= args.scan_deadline:
+                timed_out = True
+                if record["status"] in {"time-limit", "timeout"}:
+                    record.update(status="scan-timeout", error="Total scan deadline reached")
+            LOGGER.info(
+                "%s: %s; %d charts remain",
+                record["chart"],
+                record["status"],
+                len(records) - index - 1,
+            )
+    for record in records:
+        if timed_out and record["status"] == "pending":
+            record["error"] = "Not started: total scan deadline reached"
+        record.setdefault(
+            "filtering",
+            {
+                "requested": args.filter,
+                "applied": False,
+                "reason": "Chart did not enter finite permutation testing",
+            },
+        )
+        record.setdefault(
+            "result",
+            "PASS"
+            if record["status"] == "passed"
+            else "FAIL"
+            if record["status"] in {"baseline-failed", "failed"}
+            else "N/A",
+        )
+    counts = dict(Counter(str(record["status"]) for record in records))
+    report: dict[str, object] = {
+        "directory": str(root),
+        "started_epoch": int(started),
+        "elapsed_seconds": time.monotonic() - scan_started,
+        "scan_status": "interrupted"
+        if interrupted
+        else "scan-timeout"
+        if timed_out
+        else "completed",
+        "discovery_complete": discovery_complete,
+        "unstarted_charts": counts.get("pending", 0),
+        "charts_discovered": len(records),
+        "counts": counts,
+        "charts": records,
+        "settings": {
+            "max_examples": args.max_examples,
+            "filter": args.filter,
+            "permutations": args.permutations,
+            "chart_timeout_seconds": args.chart_timeout,
+            "scan_timeout_seconds": args.scan_timeout,
+            "helm": args.helm,
+            "seed": args.seed,
+            "build_dependencies": args.build_dependencies,
+            "values": str(args.values),
+        },
+    }
+    (output / "scan.json").write_text(json.dumps(report, indent=2) + "\n")
+    if args.report is not None:
+        stem = Path(args.report) if args.report else Path(f"{root.name}_{int(started)}_report")
+        write_reports(report, stem)
+    print(json.dumps(report, indent=2))
+    if interrupted:
+        return 130
+    if timed_out:
+        return 124
+    if len(records) == 1 and records[0]["status"] == "missing-values":
+        return 1
+    if any(
+        status in counts for status in ("invalid-metadata", "baseline-failed", "failed", "error")
+    ):
+        return 1
+    return 0 if records and set(counts) <= {"passed"} else 2

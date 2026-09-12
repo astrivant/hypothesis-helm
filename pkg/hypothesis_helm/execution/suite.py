@@ -85,9 +85,7 @@ def run_suite(
     config = results / "hypothesis-helm.pytest.ini"
     config.write_text("[pytest]\n")
     command = [
-        sys.executable,
-        "-m",
-        "pytest",
+        str(Path(sys.executable).with_name("pytest")),
         "-c",
         str(config),
         "--rootdir",

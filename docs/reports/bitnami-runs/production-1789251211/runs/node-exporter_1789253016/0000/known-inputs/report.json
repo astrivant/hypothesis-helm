@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-z9scwiv5/chart",
+  "seed": 0,
+  "attempts": 89,
+  "error": "Error: YAML parse error on node-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "extraEnvVarsCM": "\u001f"
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 48,
+    "unique_bundles": 22,
+    "duplicate_bundles": 26,
+    "validation_cache_hits": 26,
+    "validated_entries": 22
+  },
+  "phase": "known-inputs"
+}

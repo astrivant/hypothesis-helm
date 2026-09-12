@@ -58,9 +58,9 @@ commands:
                 --schema-offline --shard auto --rerun all \
                 --artifact-dir "$HH_ARTIFACT_DIR" --output json \
                 > "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl" || test_status=$?
-              plugin_python="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/python"
+              kubesec_cli="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/hypothesis-helm-kubesec"
               scan_status=0
-              "$plugin_python" -m hypothesis_helm.integrations.kubesec \
+              "$kubesec_cli" \
                 "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl" \
                 --output "$HH_ARTIFACT_DIR/kubesec" --jobs "$HH_KUBESEC_JOBS" \
                 --shard auto --pre-sharded --validate-rest --schema-version "$HH_SCHEMA_VERSION" \

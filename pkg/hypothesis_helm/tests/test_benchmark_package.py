@@ -47,6 +47,13 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         metadata_name = next(
             name for name in archive.namelist() if name.endswith(".dist-info/METADATA")
         )
+        entry_points = archive.read(metadata_name.replace("METADATA", "entry_points.txt")).decode()
+        for declaration in (
+            "hypothesis-helm-benchmark=hypothesis_helm.benchmarking.cli:main",
+            "hypothesis-helm-kubesec=hypothesis_helm.integrations.kubesec:main",
+            "hypothesis-helm-github-action=hypothesis_helm.integrations.github_action:main",
+        ):
+            assert declaration in entry_points.replace(" ", "")
         metadata = Parser().parsestr(archive.read(metadata_name).decode())
         assert "benchmarking" in metadata.get_all("Provides-Extra", [])
         requirements = metadata.get_all("Requires-Dist", [])
@@ -58,8 +65,8 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         assert not any(name.startswith("scripts/") for name in archive.namelist())
         archive.extractall(tmp_path / "installed")
     bootstrap = (
-        "import runpy,sys; sys.path.insert(0,sys.argv.pop(1)); "
-        "runpy.run_module('hypothesis_helm.benchmarking',run_name='__main__')"
+        "import sys; sys.path.insert(0,sys.argv.pop(1)); "
+        "from hypothesis_helm.benchmarking.cli import main; sys.exit(main())"
     )
     command = [sys.executable, "-I", "-c", bootstrap, str(tmp_path / "installed")]
     for name in (

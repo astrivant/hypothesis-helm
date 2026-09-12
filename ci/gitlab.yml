@@ -64,9 +64,9 @@ helm-properties:
           > "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" || test_status=$?
       fi
       if [ "$KUBESEC_ENABLED" = "true" ]; then
-        plugin_python="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/python"
+        kubesec_cli="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/hypothesis-helm-kubesec"
         scan_status=0
-        "$plugin_python" -m hypothesis_helm.integrations.kubesec \
+        "$kubesec_cli" \
           "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" \
           --output reports/hypothesis-helm/kubesec --jobs "$KUBESEC_JOBS" \
           --shard "$SHARD_INDEX/$SHARD_TOTAL" --pre-sharded --validate-rest \

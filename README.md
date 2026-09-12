@@ -6,6 +6,15 @@ Property-based testing for Helm charts. Hypothesis generates typed inputs from
 values schemas and template references, renders your chart, and reduces failures
 from combinations of Helm chart inputs to reproducible examples.
 
+- Audit template references, values schemas, and missing defaults.
+- Generate typed property tests and shrink failures to reproducible inputs.
+- Choose permutation coverage, with exhaustive testing for small finite spaces.
+- Skip provably equivalent renders or opt into sampling to reduce test volume.
+- Preview coverage and runtime estimates; set execution budgets and shard tests across workers.
+- Scan chart repositories, build dependencies, and export Markdown/PDF reports.
+- Integrate Kubernetes schema validation and optional security checks into CI.
+- Generate benchmark charts and compare coverage, bug discovery, and scaling with plots.
+
 ## Install
 
 Requires Helm 4 and Python 3.13+.
@@ -45,6 +54,14 @@ and generated artifacts go to `reports/hypothesis-helm/`.
 
 See [Getting started](docs/getting-started/README.md) for saved suites, validation,
 and coverage options.
+
+Scan a repository and write Markdown/PDF summaries:
+
+```sh
+helm hypothesis scan ./charts --report
+```
+
+See [Repository scanning](docs/scanning/README.md) for values files and dependency handling.
 
 ## Guides
 

@@ -13,14 +13,18 @@ when upgrading from Python 3.10.
 ```sh
 python3.13 -m venv .venv
 env -u VIRTUAL_ENV -u PYENV_VERSION -u PYENV_VIRTUAL_ENV poetry install
-bash scripts/project-python.sh -m pre_commit install
+bash scripts/project-run.sh pre-commit install
 ```
 
-`scripts/project-python.sh` uses this checkout's interpreter even when another
+`scripts/project-run.sh` uses this checkout's installed commands even when another
 virtual environment is active. Pytest is a runtime dependency because Helm runs
 generated suites inside the plugin environment; linting tools remain development
 dependencies. The Poetry lock pins contributor/CI dependencies. Plugin installation
 resolves the package's runtime constraints.
+
+Register application CLIs in `[tool.poetry.scripts]` in `pyproject.toml` and invoke
+the installed binaries. Use `bash scripts/project-run.sh COMMAND` for commands in
+the checkout environment; avoid Python module-launcher wrappers.
 
 ## Checks
 
@@ -36,7 +40,7 @@ Google-style convention. No type-checking exclusions weaken the source checks.
 After changing CLI arguments, regenerate the [CLI reference](cli/README.md):
 
 ```sh
-bash scripts/project-python.sh -m cogapp -r docs/cli/README.md
+bash scripts/project-run.sh cog -r docs/cli/README.md
 ```
 
 Unit and integration tests live under `pkg/hypothesis_helm/tests`. Helm must be
@@ -126,7 +130,7 @@ cache fingerprints cover implementation modules recursively across all subpackag
 | [`pkg/hypothesis_helm/`](../pkg/hypothesis_helm) | CLI and public API; implementation grouped under charts, schemas, execution, reporting, and integrations. |
 | [`pkg/hypothesis_helm/tests/`](../pkg/hypothesis_helm/tests) | Unit tests and real Helm integration tests. |
 | [`examples/`](../examples) | Small charts and a checked-in generated workload suite. |
-| [`scripts/`](../scripts) | Project interpreter, validation command and Helm plugin hooks. |
+| [`scripts/`](../scripts) | Project command runner, validation command and Helm plugin hooks. |
 | [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
 | [`plugin.yaml`](../plugin.yaml) | Installable Helm plugin manifest. |
 | [`.circleci/`](../.circleci) | Python checks, Helm integration and package build verification. |

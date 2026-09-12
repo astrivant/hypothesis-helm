@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-nffd5r_5/chart",
+  "seed": 0,
+  "attempts": 51,
+  "error": "Error: execution error at (nats/templates/NOTES.txt:176:4): \nVALUES VALIDATION:\nnats: resourceType\n    Invalid resourceType selected. Valid values are \"deployment\" and\n    \"statefulset\". Please set a valid mode (--set resourceType=\"xxxx\")\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "resourceType": ""
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 21,
+    "unique_bundles": 21,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 21
+  },
+  "phase": "known-inputs"
+}

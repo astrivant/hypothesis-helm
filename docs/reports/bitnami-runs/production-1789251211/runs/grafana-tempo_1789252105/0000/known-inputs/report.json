@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-q3e3goru/chart",
+  "seed": 0,
+  "attempts": 37,
+  "error": "Error: YAML parse error on grafana-tempo/templates/tempo-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "tempo": {
+      "configuration": "\u001f"
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 25,
+    "unique_bundles": 13,
+    "duplicate_bundles": 12,
+    "validation_cache_hits": 12,
+    "validated_entries": 13
+  },
+  "phase": "known-inputs"
+}

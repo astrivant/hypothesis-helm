@@ -104,9 +104,7 @@ def estimate_suite(
             environment["HYPOTHESIS_HELM_SHARD"] = f"{shard.index}/{shard.total}"
             environment["HYPOTHESIS_HELM_SHARD_REPORT"] = str(assignment)
         command = [
-            sys.executable,
-            "-m",
-            "pytest",
+            str(Path(sys.executable).with_name("pytest")),
             "-c",
             str(config),
             "--rootdir",

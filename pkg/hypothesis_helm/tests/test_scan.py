@@ -1,0 +1,575 @@
+"""
+Repository discovery, execution boundaries, and portable reports.
+"""
+
+import json
+from pathlib import Path
+from textwrap import dedent
+
+import pytest
+
+from hypothesis_helm.charts.scan import discover_charts
+from hypothesis_helm.cli import argument_parser, main
+from hypothesis_helm.reporting.repository import write_reports
+
+
+def test_discovery(tmp_path: Path) -> None:
+    """
+    Find nested charts, preserve invalid metadata, and avoid symlink cycles.
+
+    Args:
+        tmp_path (Path): Isolated directory tree.
+
+    Returns:
+        None: Assertions verify discovery results.
+    """
+    (tmp_path / "Chart.yaml").write_text(
+        dedent("""
+        apiVersion: v2
+        name: root
+        version: "1.2.3"
+    """)
+    )
+    nested = tmp_path / "nested"
+    nested.mkdir()
+    (nested / "Chart.yaml").write_text("name: incomplete\n")
+    (nested / "loop").symlink_to(tmp_path, target_is_directory=True)
+    found = discover_charts(tmp_path)
+    assert [(chart["chart"], chart["status"]) for chart in found] == [
+        (".", "pending"),
+        ("nested", "invalid-metadata"),
+    ]
+    assert "apiVersion" in str(found[1]["error"])
+
+
+@pytest.mark.parametrize(
+    "metadata",
+    [
+        "[]",
+        "null",
+        "apiVersion: v9",
+        "apiVersion: v2\nname: ../escape\nversion: '1.2.3'",
+        "apiVersion: v2\nname: okay\nversion: banana",
+    ],
+)
+def test_invalid_metadata(tmp_path: Path, metadata: str) -> None:
+    """
+    Reject unusable metadata before invoking Helm.
+
+    Args:
+        tmp_path (Path): Isolated chart directory.
+        metadata (str): Invalid Chart.yaml content.
+
+    Returns:
+        None: Invalid records remain visible in the result.
+    """
+    (tmp_path / "Chart.yaml").write_text(metadata)
+    assert discover_charts(tmp_path)[0]["status"] == "invalid-metadata"
+
+
+def test_report_paths_and_pagination(tmp_path: Path) -> None:
+    """
+    Produce readable paired files for either explicit extension.
+
+    Args:
+        tmp_path (Path): Report destination.
+
+    Returns:
+        None: Both files contain the complete scan summary.
+    """
+    report: dict[str, object] = {
+        "directory": "/charts",
+        "started_epoch": 123,
+        "elapsed_seconds": 1,
+        "charts_discovered": 2,
+        "counts": {"failed": 2},
+        "settings": {},
+        "charts": [{"chart": "demo", "status": "failed", "error": "failure\n" * 2000}],
+    }
+    md, pdf = write_reports(report, tmp_path / "custom.pdf")
+    assert md.name == "custom.md"
+    assert pdf.name == "custom.pdf"
+    assert "failure" in md.read_text()
+    assert pdf.read_bytes().startswith(b"%PDF-")
+    assert pdf.read_bytes().count(b"/Type /Page\n") >= 2
+
+
+def test_scan_execution(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Preserve property results and classify missing schemas without false passes.
+
+    Args:
+        tmp_path (Path): Isolated chart repository.
+        monkeypatch (pytest.MonkeyPatch): Replace only the external execution boundary.
+        capsys (pytest.CaptureFixture[str]): Capture machine-readable summary.
+
+    Returns:
+        None: Status, artifacts, and paired reports agree.
+    """
+    import hypothesis_helm.charts.scan as module
+
+    for name in ("a", "b"):
+        chart = tmp_path / name
+        chart.mkdir()
+        (chart / "values.yaml").write_text("{}\n")
+        (chart / "Chart.yaml").write_text(f"apiVersion: v2\nname: {name}\nversion: '1.0.0'\n")
+    monkeypatch.setattr("hypothesis_helm.charts.scan.shutil.which", lambda name: "/bin/true")
+    monkeypatch.setattr(
+        module,
+        "exercise_chart",
+        lambda path, args, artifacts: {
+            "status": "passed"
+            if "name: a" in (path / "Chart.yaml").read_text()
+            else "baseline-only",
+            "attempts": 5,
+        },
+    )
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--no-build-dependencies",
+                "--report",
+                str(tmp_path / "result"),
+                "--artifact-dir",
+                str(tmp_path / "artifacts"),
+            ]
+        )
+        == 2
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["counts"] == {"passed": 1, "baseline-only": 1}
+    assert (tmp_path / "result.md").exists()
+    assert (tmp_path / "result.pdf").exists()
+    assert argument_parser().parse_args(["scan", str(tmp_path), "--report"]).report == ""
+
+
+def test_missing_values_single_and_recursive(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Fail the sole missing baseline and keep scanning a mixed repository.
+
+    Args:
+        tmp_path (Path): Isolated repository.
+        capsys (pytest.CaptureFixture[str]): JSON output capture.
+
+    Returns:
+        None: Single and recursive exit statuses follow the documented contract.
+    """
+    first = tmp_path / "first"
+    first.mkdir()
+    (first / "Chart.yaml").write_text("apiVersion: v2\nname: first\nversion: '1.0.0'\n")
+    assert (
+        main(
+            ["scan", str(first), "--helm", "/usr/bin/true", "--artifact-dir", str(tmp_path / "out")]
+        )
+        == 1
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["counts"] == {"missing-values": 1}
+    assert report["charts"][0]["result"] == "N/A"
+    second = tmp_path / "second"
+    second.mkdir()
+    (second / "Chart.yaml").write_text("apiVersion: v2\nname: second\nversion: '1.0.0'\n")
+    (second / "values.yaml").write_text("{}\n")
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--helm",
+                "/usr/bin/true",
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 2
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["counts"] == {"missing-values": 1, "baseline-only": 1}
+
+
+def test_values_override_and_dependency_build(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Build before testing and apply the chosen baseline only in the isolated copy.
+
+    Args:
+        tmp_path (Path): Chart and artifact destination.
+        monkeypatch (pytest.MonkeyPatch): Replace external Helm execution.
+        capsys (pytest.CaptureFixture[str]): Capture final summary.
+
+    Returns:
+        None: Ordering and source preservation assertions pass.
+    """
+    import subprocess
+
+    (tmp_path / "Chart.yaml").write_text("apiVersion: v2\nname: demo\nversion: '1.0.0'\n")
+    (tmp_path / "values.yaml").write_text("enabled: false\n")
+    (tmp_path / "custom.yaml").write_text("enabled: true\n")
+    calls: list[list[str]] = []
+
+    def command(argv: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        """
+        Record literal commands without invoking a network-enabled Helm process.
+
+        Args:
+            argv (list[str]): Helm command.
+            **kwargs (object): Subprocess settings.
+
+        Returns:
+            subprocess.CompletedProcess[str]: Successful dependency build.
+        """
+        calls.append(argv)
+        return subprocess.CompletedProcess(argv, 0, "dependencies built", "")
+
+    def exercise(path: Path, args: object, artifacts: Path) -> dict[str, object]:
+        """
+        Check the selected baseline after dependency resolution.
+
+        Args:
+            path (Path): Isolated working chart.
+            args (object): Execution options.
+            artifacts (Path): Output destination.
+
+        Returns:
+            dict[str, object]: Successful test result.
+        """
+        assert calls[0][1:3] == ["dependency", "build"]
+        assert (path / "values.yaml").read_text() == "enabled: true\n"
+        return {"status": "passed", "attempts": 1}
+
+    monkeypatch.setattr("hypothesis_helm.charts.scan.subprocess.run", command)
+    monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", exercise)
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--helm",
+                "/usr/bin/true",
+                "--values",
+                "custom.yaml",
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 0
+    )
+    assert (tmp_path / "values.yaml").read_text() == "enabled: false\n"
+    assert json.loads(capsys.readouterr().out)["counts"] == {"passed": 1}
+
+
+def test_interrupt_preserves_remaining_charts(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Save reports on interruption without claiming unattempted charts passed.
+
+    Args:
+        tmp_path (Path): Two-chart repository.
+        monkeypatch (pytest.MonkeyPatch): Interrupt the chart execution boundary.
+        capsys (pytest.CaptureFixture[str]): Capture partial summary.
+
+    Returns:
+        None: The interrupted and pending charts remain in both reports.
+    """
+    for name in ("a", "b"):
+        path = tmp_path / name
+        path.mkdir()
+        (path / "Chart.yaml").write_text(f"apiVersion: v2\nname: {name}\nversion: '1.0.0'\n")
+        (path / "values.yaml").write_text("{}\n")
+
+    def interrupt(path: Path, args: object, artifacts: Path) -> dict[str, object]:
+        """
+        Simulate an interrupt while the first chart is running.
+
+        Args:
+            path (Path): Chart under test.
+            args (object): Execution options.
+            artifacts (Path): Output destination.
+
+        Returns:
+            dict[str, object]: Never returned because the operation is interrupted.
+        """
+        raise KeyboardInterrupt()
+
+    monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", interrupt)
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--helm",
+                "/usr/bin/true",
+                "--no-build-dependencies",
+                "--report",
+                str(tmp_path / "partial"),
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 130
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["counts"] == {"interrupted": 1, "pending": 1}
+    assert "pending" in (tmp_path / "partial.md").read_text()
+    assert (tmp_path / "partial.pdf").exists()
+
+
+def test_scan_timeout_stops_dependency_process(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Interrupt a dependency subprocess and preserve the unstarted chart and reports.
+
+    Args:
+        tmp_path (Path): Fake Helm executable and two charts.
+        capsys (pytest.CaptureFixture[str]): Capture the partial JSON report.
+
+    Returns:
+        None: Scan deadlines stop active work and return incomplete results.
+    """
+    import os
+    import shlex
+    import time
+
+    pid = tmp_path / "helm.pid"
+    helm = tmp_path / "helm"
+    helm.write_text(f"#!/bin/sh\nprintf '%s' \"$$\" > {shlex.quote(str(pid))}\nexec sleep 10\n")
+    helm.chmod(0o755)
+    for name in ("a", "b"):
+        path = tmp_path / name
+        path.mkdir()
+        (path / "Chart.yaml").write_text(f"apiVersion: v2\nname: {name}\nversion: '1.0.0'\n")
+        (path / "values.yaml").write_text("{}\n")
+    started = time.monotonic()
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--helm",
+                str(helm),
+                "--scan-timeout",
+                "0.3s",
+                "--chart-timeout",
+                "2s",
+                "--report",
+                str(tmp_path / "partial"),
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 124
+    )
+    assert time.monotonic() - started < 3
+    report = json.loads(capsys.readouterr().out)
+    assert report["counts"] == {"scan-timeout": 1, "pending": 1}
+    assert report["unstarted_charts"] == 1
+    assert report["discovery_complete"] is True
+    assert report["settings"]["chart_timeout_seconds"] == 2
+    assert "scan-timeout" in (tmp_path / "partial.md").read_text()
+    assert (tmp_path / "partial.pdf").exists()
+    with pytest.raises(ProcessLookupError):
+        os.kill(int(pid.read_text()), 0)
+
+
+def test_timeout_during_discovery(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Make incomplete discovery explicit instead of claiming an empty successful scan.
+
+    Args:
+        tmp_path (Path): Directory under discovery.
+        monkeypatch (pytest.MonkeyPatch): Simulate slow metadata parsing.
+        capsys (pytest.CaptureFixture[str]): Capture the partial summary.
+
+    Returns:
+        None: Unknown remaining inventory is reported as incomplete discovery.
+    """
+    import time
+
+    (tmp_path / "Chart.yaml").write_text("apiVersion: v2\nname: a\nversion: '1.0.0'\n")
+    monkeypatch.setattr("hypothesis_helm.charts.scan.yamlio.load", lambda text: time.sleep(2))
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--helm",
+                "/usr/bin/true",
+                "--scan-timeout",
+                "0.1s",
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 124
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["discovery_complete"] is False
+    assert report["scan_status"] == "scan-timeout"
+
+
+def test_scan_timeout_arguments() -> None:
+    """
+    Keep per-chart compatibility while validating both duration arguments.
+
+    Returns:
+        None: Defaults and duration parsing remain explicit.
+    """
+    parser = argument_parser()
+    args = parser.parse_args(["scan", "."])
+    assert args.chart_timeout == 180
+    assert args.scan_timeout is None
+    assert parser.parse_args(["scan", ".", "--time-limit", "2m"]).chart_timeout == 120
+    for flag in ("--chart-timeout", "--scan-timeout"):
+        with pytest.raises(SystemExit):
+            parser.parse_args(["scan", ".", flag, "0"])
+
+
+def test_scan_deadline_preserves_runner_statistics(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Retain partial runner counters when it handles the scan alarm internally.
+
+    Args:
+        tmp_path (Path): Chart and output directories.
+        monkeypatch (pytest.MonkeyPatch): Simulate a runner returning partial statistics.
+        capsys (pytest.CaptureFixture[str]): Capture scan statistics.
+
+    Returns:
+        None: Total expiration preserves the available iteration accounting.
+    """
+    import time
+
+    from hypothesis_helm.reporting.budget import TimeLimitReached
+
+    (tmp_path / "Chart.yaml").write_text("apiVersion: v2\nname: a\nversion: '1.0.0'\n")
+    (tmp_path / "values.yaml").write_text("{}\n")
+
+    def exercise(path: Path, args: object, artifacts: Path) -> dict[str, object]:
+        """
+        Return the same partial-counter contract as the property runner.
+
+        Args:
+            path (Path): Chart under test.
+            args (object): Execution configuration.
+            artifacts (Path): Statistics destination.
+
+        Returns:
+            dict[str, object]: Counters preserved after an execution alarm.
+        """
+        try:
+            time.sleep(2)
+        except TimeLimitReached:
+            return {
+                "status": "time-limit",
+                "attempts": 3,
+                "completed_iterations": 2,
+                "remaining_iterations": 7,
+            }
+        raise AssertionError("scan deadline did not interrupt the runner")
+
+    monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", exercise)
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--helm",
+                "/usr/bin/true",
+                "--no-build-dependencies",
+                "--scan-timeout",
+                "0.1s",
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 124
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["charts"][0]["status"] == "scan-timeout"
+    assert report["charts"][0]["attempts"] == 3
+    assert report["charts"][0]["completed_iterations"] == 2
+    assert report["charts"][0]["remaining_iterations"] == 7
+
+
+@pytest.mark.parametrize("finite", [True, False])
+def test_scan_filter_support(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    finite: bool,
+) -> None:
+    """
+    Apply finite filtering or known-input-first sampling according to the chart domain.
+
+    Args:
+        tmp_path (Path): Isolated chart.
+        monkeypatch (pytest.MonkeyPatch): Capture property runner settings.
+        capsys (pytest.CaptureFixture[str]): Capture the final filtering report.
+        finite (bool): Whether the chart input has a finite domain.
+
+    Returns:
+        None: Filtering uses the appropriate strategy without changing the chart contract.
+    """
+    (tmp_path / "Chart.yaml").write_text("apiVersion: v2\nname: sample\nversion: '1.0.0'\n")
+    (tmp_path / "values.yaml").write_text("{}\n")
+    (tmp_path / "values.schema.json").write_text(
+        json.dumps(
+            {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {"input": {"type": "boolean" if finite else "string"}},
+            }
+        )
+    )
+    called: dict[str, object] = {}
+
+    def check(chart: object, **kwargs: object) -> dict[str, object]:
+        """
+        Record settings instead of running the property suite.
+
+        Args:
+            chart (object): Loaded input model.
+            **kwargs (object): Property runner settings.
+
+        Returns:
+            dict[str, object]: Successful synthetic runner result.
+        """
+        called.update(kwargs)
+        return {"status": "passed", "attempts": 1}
+
+    monkeypatch.setattr("hypothesis_helm.charts.scan.check_chart", check)
+    monkeypatch.setattr("hypothesis_helm.charts.prioritized.check_chart", check)
+    assert (
+        main(
+            [
+                "scan",
+                str(tmp_path),
+                "--helm",
+                "/usr/bin/true",
+                "--no-build-dependencies",
+                "--filter",
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 0
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert called.get("trim_topology", 0) == (2 if finite else 0)
+    assert called.get("expand_failures", False) is finite
+    assert report["charts"][0]["filtering"]["applied"] is True
+    if not finite:
+        assert report["charts"][0]["filtering"]["method"] == "known-inputs-first"
+        assert "input_strategy" in called

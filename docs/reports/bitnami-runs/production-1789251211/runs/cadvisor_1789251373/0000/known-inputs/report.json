@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-1h7gjmj6/chart",
+  "seed": 0,
+  "attempts": 25,
+  "error": "Error: execution error at (cadvisor/templates/daemonset.yaml:155:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "resourcesPreset": ""
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 18,
+    "unique_bundles": 2,
+    "duplicate_bundles": 16,
+    "validation_cache_hits": 16,
+    "validated_entries": 2
+  },
+  "phase": "known-inputs"
+}

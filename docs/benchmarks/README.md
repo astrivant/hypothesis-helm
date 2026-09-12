@@ -16,8 +16,6 @@ needed. Results default to `reports/benchmarks/` under the working directory.
 
 Use `hypothesis-helm-benchmark --help` to list studies, or append `--help` to a
 study such as `hypothesis-helm-benchmark nesting --help`.
-`python -m hypothesis_helm.benchmarking` provides the same interface. The existing
-`scripts/benchmark_*.py` entry points remain available in source checkouts.
 
 ## Local shard wrapper
 

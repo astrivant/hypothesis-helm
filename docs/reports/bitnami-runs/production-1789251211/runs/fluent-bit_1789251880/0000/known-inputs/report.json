@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-8ve3gl89/chart",
+  "seed": 0,
+  "attempts": 144,
+  "error": "Error: execution error at (fluent-bit/templates/NOTES.txt:30:4): \n\n\u26a0 ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.\n\nUnrecognized images:\n  - 00/bitnami/fluent-bit:4.0.8-debian-12-r0\n\nIf you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.\nFurther information can be obtained at https://github.com/bitnami/charts/issues/30850\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "00"
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 92,
+    "unique_bundles": 24,
+    "duplicate_bundles": 68,
+    "validation_cache_hits": 68,
+    "validated_entries": 23
+  },
+  "phase": "known-inputs"
+}

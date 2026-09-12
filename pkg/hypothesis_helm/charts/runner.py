@@ -346,7 +346,7 @@ def render(
     """
     with tempfile.TemporaryDirectory(prefix="hypothesis-helm-") as directory:
         value_file = Path(directory) / "values.json"
-        value_file.write_text(json.dumps(values, ensure_ascii=True))
+        value_file.write_text(yamlio.json_for_helm(values), encoding="utf-8")
         command = [
             helm,
             "template",
@@ -425,6 +425,7 @@ def check_chart(
     time_limit: float = 180.0,
     prune_equivalent: bool = False,
     properties: tuple[Callable[[list[dict[str, object]]], None], ...] = (),
+    input_strategy: SearchStrategy[dict[str, object]] | None = None,
 ) -> dict[str, object]:
     """
     Check defaults then generated overrides, shrinking failing inputs.
@@ -460,9 +461,14 @@ def check_chart(
         properties (tuple[Callable[[list[dict[str, object]]], None], ...]): Additional assertions
             over rendered resources.
 
+        input_strategy (SearchStrategy[dict[str, object]] | None): Optional generation-only
+            preference; the original chart schema remains authoritative.
+
     Returns:
         dict[str, object]: Resulting schema, values mapping, or structured report.
     """
+    if input_strategy is not None and (permutations is not None or exhaustive):
+        raise ValueError("input_strategy applies to sampled testing only")
     if not isinstance(chart, Chart):
         chart = Chart.load(chart)
     if max_examples < 1 or timeout <= 0:
@@ -929,7 +935,9 @@ def check_chart(
         expansion_report(result)
         if artifact_dir is not None:
             artifact_dir.mkdir(parents=True, exist_ok=True)
-            (artifact_dir / "values.json").write_text(json.dumps(values, indent=2) + "\n")
+            (artifact_dir / "values.json").write_text(
+                yamlio.json_for_helm(values, indent=2) + "\n", encoding="utf-8"
+            )
             (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
@@ -1037,7 +1045,7 @@ def check_chart(
         report_multiple_bugs=False,
         suppress_health_check=(HealthCheck.too_slow,),
     )
-    @given(chart.strategy())
+    @given(input_strategy if input_strategy is not None else chart.strategy())
     def property_test(values: dict[str, object]) -> None:
         """
         Exercise a schema-generated candidate through the render contract.

@@ -178,7 +178,7 @@ def test_runner_uses_own_interpreter(tmp_path: Path, monkeypatch: pytest.MonkeyP
 
     monkeypatch.setattr(Processes, "run", execute)
     assert run_suite(tmp_path, jobs=1) == 2
-    assert calls[0][:3] == [sys.executable, "-m", "pytest"]
+    assert calls[0][0] == str(Path(sys.executable).with_name("pytest"))
 
 
 def test_missing_suite_is_an_error(tmp_path: Path) -> None:

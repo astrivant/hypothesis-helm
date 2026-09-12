@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-wr8uu9t_/chart",
+  "seed": 0,
+  "attempts": 85,
+  "error": "Error: execution error at (aspnet-core/templates/NOTES.txt:58:4): \nVALUES VALIDATION:\naspnet-core: missing-extra-volume-mounts\n    You specified extra volumes but not mount points for them.\n    Please also set the extraVolumeMounts parameter.\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "extraVolumes": [
+      null
+    ]
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 61,
+    "unique_bundles": 18,
+    "duplicate_bundles": 43,
+    "validation_cache_hits": 43,
+    "validated_entries": 18
+  },
+  "phase": "known-inputs"
+}

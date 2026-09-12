@@ -17,24 +17,24 @@ repos:
     hooks:
       - id: ruff-check
         name: Ruff lint
-        entry: bash scripts/project-python.sh -m ruff check
+        entry: bash scripts/project-run.sh ruff check
         language: system
         types: [python]
       - id: ruff-format
         name: Ruff format
-        entry: bash scripts/project-python.sh -m ruff format --check
+        entry: bash scripts/project-run.sh ruff format --check
         language: system
         types: [python]
       - id: mypy
         name: mypy
-        entry: bash scripts/project-python.sh -m mypy
+        entry: bash scripts/project-run.sh mypy
         language: system
         types: [python]
         pass_filenames: false
         always_run: true
       - id: cli-reference
         name: Generated CLI reference
-        entry: bash scripts/project-python.sh -m cogapp --check docs/cli/README.md
+        entry: bash scripts/project-run.sh cog --check docs/cli/README.md
         language: system
         pass_filenames: false
         always_run: true

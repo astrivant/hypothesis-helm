@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ny821753/chart",
+  "seed": 0,
+  "attempts": 87,
+  "error": "Error: neo4j/templates/networkpolicy.yaml:47:19\n  executing \"neo4j/templates/networkpolicy.yaml\" at <.containerPort>:\n    nil pointer evaluating interface {}.containerPort\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "extraContainerPorts": [
+      null
+    ]
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 63,
+    "unique_bundles": 63,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 63
+  },
+  "phase": "known-inputs"
+}

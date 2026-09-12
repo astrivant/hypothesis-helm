@@ -20,6 +20,7 @@ rich = ">=13,<15"
 cattrs = ">=25.3,<27"
 matplotlib = {version = ">=3.10,<4", optional = true}
 numpy = {version = ">=2,<3", optional = true}
+reportlab = ">=4,<5"
 
 [tool.poetry.extras]
 benchmarking = ["matplotlib", "numpy"]
@@ -38,6 +39,8 @@ numpy = ">=2,<3"
 [tool.poetry.scripts]
 hypothesis-helm = "hypothesis_helm.cli:main"
 hypothesis-helm-benchmark = "hypothesis_helm.benchmarking.cli:main"
+hypothesis-helm-kubesec = "hypothesis_helm.integrations.kubesec:main"
+hypothesis-helm-github-action = "hypothesis_helm.integrations.github_action:main"
 
 [build-system]
 requires = ["poetry-core>=2.0,<3.0"]
@@ -61,7 +64,7 @@ convention = "google"
 [tool.mypy]
 python_version = "3.13"
 strict = true
-files = ["pkg", "scripts"]
+files = ["pkg"]
 disallow_any_explicit = true
 disallow_any_unimported = true
 

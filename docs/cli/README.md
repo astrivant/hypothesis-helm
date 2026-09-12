@@ -3,7 +3,7 @@
 [Documentation](../README.md) · [Project](../../README.md)
 
 Generated from the argument parser with cogapp. After changing CLI arguments, run
-`bash scripts/project-python.sh -m cogapp -r docs/cli/README.md`.
+`bash scripts/project-run.sh cog -r docs/cli/README.md`.
 Checks enforce that this reference stays current.
 
 <!-- [[[cog
@@ -28,12 +28,13 @@ for title, command in parsers:
 <summary>helm hypothesis</summary>
 
 ~~~text
-usage: helm hypothesis [-h] {generate,audit,run,test,schemas} ...
+usage: helm hypothesis [-h] {scan,generate,audit,run,test,schemas} ...
 
 Audit and property-test Helm chart values.
 
 positional arguments:
-  {generate,audit,run,test,schemas}
+  {scan,generate,audit,run,test,schemas}
+    scan                recursively test charts in a directory
     generate            generate one typed Python property test per values path
     audit               discover value references and schema gaps
     run                 run a saved generated Python suite
@@ -42,6 +43,47 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis scan</summary>
+
+~~~text
+usage: helm hypothesis scan [-h] [--report [PATH]] [--artifact-dir ARTIFACT_DIR]
+                            [--helm HELM] [--values VALUES] [--timeout TIMEOUT]
+                            [--chart-timeout CHART_TIMEOUT]
+                            [--scan-timeout SCAN_TIMEOUT]
+                            [--max-examples MAX_EXAMPLES]
+                            [--permutations PERMUTATIONS] [--filter] [--seed SEED]
+                            [--build-dependencies | --no-build-dependencies]
+                            directory
+
+positional arguments:
+  directory
+
+options:
+  -h, --help            show this help message and exit
+  --report [PATH]       write Markdown and PDF; default: <dir>_<epoch>_report
+  --artifact-dir ARTIFACT_DIR
+  --helm HELM
+  --values VALUES       baseline file relative to each chart, or an absolute path
+  --timeout TIMEOUT     seconds per Helm lint, render, or dependency build
+  --chart-timeout, --time-limit CHART_TIMEOUT
+                        property-test execution budget per chart (default: 3m)
+  --scan-timeout SCAN_TIMEOUT
+                        total scan deadline including discovery and preparation;
+                        default: unlimited
+  --max-examples MAX_EXAMPLES
+  --permutations PERMUTATIONS
+                        finite interaction strength; default: automatic finite
+                        coverage or sampling
+  --filter              filter finite charts; otherwise prioritize known inputs and
+                        run robustness cases last
+  --seed SEED
+  --build-dependencies, --no-build-dependencies
+                        build locked dependencies in temporary chart copies
 ~~~
 
 </details>

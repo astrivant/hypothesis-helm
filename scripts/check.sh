@@ -2,10 +2,13 @@
 # Run the same Python checks locally and in CircleCI.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-bash scripts/project-python.sh -m ruff check pkg scripts examples/generated-workload
-bash scripts/project-python.sh -m ruff format --check pkg scripts examples/generated-workload
-bash scripts/project-python.sh -m mypy
-bash scripts/project-python.sh -m pydocstyle --config=pyproject.toml pkg scripts
-bash scripts/project-python.sh -m pydoclint.main --config=pyproject.toml pkg scripts
-bash scripts/project-python.sh -m cogapp --check docs/cli/README.md
-bash scripts/project-python.sh -m pytest "$@"
+for script in scripts/*.sh; do
+  bash -n "$script"
+done
+bash scripts/project-run.sh ruff check pkg examples/generated-workload
+bash scripts/project-run.sh ruff format --check pkg examples/generated-workload
+bash scripts/project-run.sh mypy
+bash scripts/project-run.sh pydocstyle --config=pyproject.toml pkg
+bash scripts/project-run.sh pydoclint --config=pyproject.toml pkg
+bash scripts/project-run.sh cog --check docs/cli/README.md
+bash scripts/project-run.sh pytest "$@"

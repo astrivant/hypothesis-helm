@@ -1,0 +1,1762 @@
+{
+  "status": "failed",
+  "attempts": 120,
+  "phases": [
+    {
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-we70f1wo/chart",
+      "seed": 0,
+      "attempts": 19,
+      "error": "Error: YAML parse error on flink/templates/jobmanager/deployment.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "commonAnnotations": {
+          "": []
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 15,
+        "unique_bundles": 5,
+        "duplicate_bundles": 10,
+        "validation_cache_hits": 10,
+        "validated_entries": 5
+      },
+      "phase": "known-inputs"
+    },
+    {
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 101,
+        "unique_bundles": 1,
+        "duplicate_bundles": 100,
+        "validation_cache_hits": 100,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-we70f1wo/chart",
+      "seed": 0,
+      "attempts": 101,
+      "time_limit_seconds": 294.6487834583968,
+      "execution_seconds": 19.435701500158757,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "robustness"
+    }
+  ],
+  "time_limit_seconds": 300.0,
+  "execution_seconds": 24.790539249777794,
+  "coverage_complete": false,
+  "proof_of_totality": false,
+  "phase_targets_complete": true,
+  "filtering": {
+    "requested": true,
+    "applied": true,
+    "method": "known-inputs-first",
+    "topology_applied": false,
+    "reason": "Generation order only; original-schema cases run last, not removed",
+    "known_input_budget_fraction": 0.9,
+    "deferred_objects": [
+      [
+        "diagnosticMode"
+      ],
+      [
+        "jobmanager",
+        "containerSecurityContext",
+        "capabilities"
+      ],
+      [
+        "jobmanager",
+        "containerSecurityContext",
+        "seccompProfile"
+      ],
+      [
+        "jobmanager",
+        "containerPorts"
+      ],
+      [
+        "jobmanager",
+        "networkPolicy"
+      ],
+      [
+        "jobmanager",
+        "nodeAffinityPreset"
+      ],
+      [
+        "jobmanager",
+        "pdb"
+      ],
+      [
+        "jobmanager",
+        "service",
+        "nodePorts"
+      ],
+      [
+        "jobmanager",
+        "service",
+        "ports"
+      ],
+      [
+        "jobmanager",
+        "service"
+      ],
+      [
+        "jobmanager",
+        "serviceAccount"
+      ],
+      [
+        "jobmanager",
+        "livenessProbe"
+      ],
+      [
+        "jobmanager",
+        "startupProbe"
+      ],
+      [
+        "jobmanager",
+        "readinessProbe"
+      ],
+      [
+        "jobmanager"
+      ],
+      [
+        "taskmanager",
+        "containerSecurityContext",
+        "capabilities"
+      ],
+      [
+        "taskmanager",
+        "containerSecurityContext",
+        "seccompProfile"
+      ],
+      [
+        "taskmanager",
+        "containerPorts"
+      ],
+      [
+        "taskmanager",
+        "networkPolicy"
+      ],
+      [
+        "taskmanager",
+        "nodeAffinityPreset"
+      ],
+      [
+        "taskmanager",
+        "pdb"
+      ],
+      [
+        "taskmanager",
+        "service",
+        "nodePorts"
+      ],
+      [
+        "taskmanager",
+        "service",
+        "ports"
+      ],
+      [
+        "taskmanager",
+        "service"
+      ],
+      [
+        "taskmanager",
+        "serviceAccount"
+      ],
+      [
+        "taskmanager",
+        "livenessProbe"
+      ],
+      [
+        "taskmanager",
+        "startupProbe"
+      ],
+      [
+        "taskmanager",
+        "readinessProbe"
+      ],
+      [
+        "taskmanager"
+      ],
+      [
+        "global",
+        "security"
+      ],
+      [
+        "global",
+        "compatibility",
+        "openshift"
+      ],
+      [
+        "global",
+        "compatibility"
+      ],
+      [
+        "global"
+      ],
+      []
+    ],
+    "dynamic_objects": [
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "image"
+      ],
+      [
+        "jobmanager",
+        "affinity"
+      ],
+      [
+        "jobmanager",
+        "containerSecurityContext",
+        "seLinuxOptions"
+      ],
+      [
+        "jobmanager",
+        "containerSecurityContext"
+      ],
+      [
+        "jobmanager",
+        "customLivenessProbe"
+      ],
+      [
+        "jobmanager",
+        "customReadinessProbe"
+      ],
+      [
+        "jobmanager",
+        "customStartupProbe"
+      ],
+      [
+        "jobmanager",
+        "lifecycleHooks"
+      ],
+      [
+        "jobmanager",
+        "nodeSelector"
+      ],
+      [
+        "jobmanager",
+        "podAnnotations"
+      ],
+      [
+        "jobmanager",
+        "podLabels"
+      ],
+      [
+        "jobmanager",
+        "podSecurityContext"
+      ],
+      [
+        "jobmanager",
+        "resources"
+      ],
+      [
+        "jobmanager",
+        "updateStrategy"
+      ],
+      [
+        "jobmanager",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "jobmanager",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "jobmanager",
+        "service",
+        "annotations"
+      ],
+      [
+        "jobmanager",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "jobmanager",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "taskmanager",
+        "affinity"
+      ],
+      [
+        "taskmanager",
+        "containerSecurityContext",
+        "seLinuxOptions"
+      ],
+      [
+        "taskmanager",
+        "containerSecurityContext"
+      ],
+      [
+        "taskmanager",
+        "customLivenessProbe"
+      ],
+      [
+        "taskmanager",
+        "customReadinessProbe"
+      ],
+      [
+        "taskmanager",
+        "customStartupProbe"
+      ],
+      [
+        "taskmanager",
+        "lifecycleHooks"
+      ],
+      [
+        "taskmanager",
+        "nodeSelector"
+      ],
+      [
+        "taskmanager",
+        "podAnnotations"
+      ],
+      [
+        "taskmanager",
+        "podLabels"
+      ],
+      [
+        "taskmanager",
+        "podSecurityContext"
+      ],
+      [
+        "taskmanager",
+        "resources"
+      ],
+      [
+        "taskmanager",
+        "updateStrategy"
+      ],
+      [
+        "taskmanager",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "taskmanager",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "taskmanager",
+        "service",
+        "annotations"
+      ],
+      [
+        "taskmanager",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "taskmanager",
+        "serviceAccount",
+        "annotations"
+      ]
+    ],
+    "diagnostics": [
+      {
+        "file": "templates/NOTES.txt",
+        "line": 13,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 14,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 10,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 32,
+        "message": "unresolved dot context: .Values.jobmanager.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 33,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 33,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 33,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 34,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 32,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 36,
+        "message": "unresolved dot context: .Values.jobmanager.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 38,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 38,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 38,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 39,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 39,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 40,
+        "message": "unresolved dot context: .Values.jobmanager.service.ports.http"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 41,
+        "message": "unresolved dot context: .Values.jobmanager.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 42,
+        "message": "unresolved dot context: .Values.jobmanager.service.ports.http"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 43,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 43,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 43,
+        "message": "unresolved dot context: .Values.jobmanager.service.ports.http"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 48,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 49,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 50,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 51,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 11,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 12,
+        "message": "unresolved dot context: .Values.image"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 12,
+        "message": "unresolved dot context: .Values.global"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "unresolved dot context: .Values.image"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "unresolved dot context: .Values.global"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 25,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 26,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 26,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 32,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 33,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 33,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 39,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 40,
+        "message": "unresolved dot context: .Values.taskmanager.serviceAccount.create"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 41,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 41,
+        "message": "unresolved dot context: .Values.taskmanager.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 41,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 43,
+        "message": "unresolved dot context: .Values.taskmanager.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 50,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 51,
+        "message": "unresolved dot context: .Values.jobmanager.serviceAccount.create"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 52,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 52,
+        "message": "unresolved dot context: .Values.jobmanager.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 52,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 54,
+        "message": "unresolved dot context: .Values.jobmanager.serviceAccount.name"
+      },
+      {
+        "file": "templates/extra-list.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 15,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 18,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 20,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 29,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 33,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 34,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 37,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 40,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 47,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 50,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 51,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 52,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 55,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 58,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 61,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 64,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 68,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 72,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 75,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 78,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 77,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 79,
+        "message": "unresolved dot context: .Values.jobmanager.command"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 80,
+        "message": "unresolved dot context: .Values.jobmanager.command"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 80,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 83,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 82,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 84,
+        "message": "unresolved dot context: .Values.jobmanager.args"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 85,
+        "message": "unresolved dot context: .Values.jobmanager.args"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 85,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 88,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 101,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 109,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 119,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 132,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 131,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 133,
+        "message": "unresolved dot context: .Values.jobmanager.startupProbe.enabled"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 134,
+        "message": "unresolved dot context: .Values.jobmanager.startupProbe"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 134,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 139,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 138,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 140,
+        "message": "unresolved dot context: .Values.jobmanager.livenessProbe.enabled"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 141,
+        "message": "unresolved dot context: .Values.jobmanager.livenessProbe"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 141,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 149,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 148,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 150,
+        "message": "unresolved dot context: .Values.jobmanager.readinessProbe.enabled"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 151,
+        "message": "unresolved dot context: .Values.jobmanager.readinessProbe"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 151,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 156,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 158,
+        "message": "unresolved dot context: .Values.jobmanager.resourcesPreset"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 159,
+        "message": "unresolved dot context: .Values.jobmanager.resourcesPreset"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 159,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 176,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 179,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/deployment.yaml",
+        "line": 185,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 21,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 45,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 55,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 59,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 70,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 73,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 89,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/networkpolicy.yaml",
+        "line": 93,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/pdb.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/pdb.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/pdb.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/pdb.yaml",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/pdb.yaml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/pdb.yaml",
+        "line": 25,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/pdb.yaml",
+        "line": 27,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 15,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 33,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 42,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 44,
+        "message": "unresolved dot context: .Values.jobmanager.service.type"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 50,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 52,
+        "message": "unresolved dot context: .Values.jobmanager.service.type"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 58,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 60,
+        "message": "unresolved dot context: .Values.jobmanager.service.type"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 64,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 66,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/service.yml",
+        "line": 67,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/serviceaccount.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/serviceaccount.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/serviceaccount.yaml",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/serviceaccount.yaml",
+        "line": 15,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/jobmanager/serviceaccount.yaml",
+        "line": 17,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 15,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 32,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 34,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/headless-service.yml",
+        "line": 35,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 21,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 45,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 55,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 59,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 70,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 73,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 89,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/networkpolicy.yaml",
+        "line": 93,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/pdb.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/pdb.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/pdb.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/pdb.yaml",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/pdb.yaml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/pdb.yaml",
+        "line": 25,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/pdb.yaml",
+        "line": 27,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 15,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 33,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 42,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 44,
+        "message": "unresolved dot context: .Values.taskmanager.service.type"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 50,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 52,
+        "message": "unresolved dot context: .Values.taskmanager.service.type"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 58,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 60,
+        "message": "unresolved dot context: .Values.taskmanager.service.type"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 64,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 66,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/service.yml",
+        "line": 67,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/serviceaccount.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/serviceaccount.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/serviceaccount.yaml",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/serviceaccount.yaml",
+        "line": 15,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/serviceaccount.yaml",
+        "line": 17,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 15,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 21,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 25,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 29,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 33,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 34,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 37,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 40,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 47,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 50,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 51,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 52,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 55,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 58,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 61,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 64,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 68,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 72,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 75,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 78,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 77,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 79,
+        "message": "unresolved dot context: .Values.taskmanager.command"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 80,
+        "message": "unresolved dot context: .Values.taskmanager.command"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 80,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 83,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 82,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 84,
+        "message": "unresolved dot context: .Values.taskmanager.args"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 85,
+        "message": "unresolved dot context: .Values.taskmanager.args"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 85,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 88,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 106,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 117,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 118,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 127,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 140,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 139,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 141,
+        "message": "unresolved dot context: .Values.taskmanager.startupProbe.enabled"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 142,
+        "message": "unresolved dot context: .Values.taskmanager.startupProbe"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 142,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 147,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 146,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 148,
+        "message": "unresolved dot context: .Values.taskmanager.livenessProbe.enabled"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 149,
+        "message": "unresolved dot context: .Values.taskmanager.livenessProbe"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 149,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 157,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 156,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 158,
+        "message": "unresolved dot context: .Values.taskmanager.readinessProbe.enabled"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 159,
+        "message": "unresolved dot context: .Values.taskmanager.readinessProbe"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 159,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 164,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 166,
+        "message": "unresolved dot context: .Values.taskmanager.resourcesPreset"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 167,
+        "message": "unresolved dot context: .Values.taskmanager.resourcesPreset"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 167,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 184,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 187,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/taskmanager/statefulset.yaml",
+        "line": 193,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "path": [
+          "extraDeploy",
+          "*"
+        ],
+        "message": "wildcard resolved by schema/item tests; no invented key or item"
+      },
+      {
+        "path": [
+          "jobmanager",
+          "networkPolicy",
+          "ingressNSMatchLabels",
+          "*"
+        ],
+        "message": "wildcard resolved by schema/item tests; no invented key or item"
+      },
+      {
+        "path": [
+          "jobmanager",
+          "networkPolicy",
+          "ingressNSPodMatchLabels",
+          "*"
+        ],
+        "message": "wildcard resolved by schema/item tests; no invented key or item"
+      },
+      {
+        "path": [
+          "taskmanager",
+          "networkPolicy",
+          "ingressNSMatchLabels",
+          "*"
+        ],
+        "message": "wildcard resolved by schema/item tests; no invented key or item"
+      },
+      {
+        "path": [
+          "taskmanager",
+          "networkPolicy",
+          "ingressNSPodMatchLabels",
+          "*"
+        ],
+        "message": "wildcard resolved by schema/item tests; no invented key or item"
+      },
+      {
+        "path": [
+          "jobmanager",
+          "networkPolicy",
+          "ingressNSMatchLabels",
+          "*"
+        ],
+        "message": "no schema for referenced path; generated unconstrained path test"
+      },
+      {
+        "path": [
+          "jobmanager",
+          "networkPolicy",
+          "ingressNSPodMatchLabels",
+          "*"
+        ],
+        "message": "no schema for referenced path; generated unconstrained path test"
+      },
+      {
+        "path": [
+          "taskmanager",
+          "networkPolicy",
+          "ingressNSMatchLabels",
+          "*"
+        ],
+        "message": "no schema for referenced path; generated unconstrained path test"
+      },
+      {
+        "path": [
+          "taskmanager",
+          "networkPolicy",
+          "ingressNSPodMatchLabels",
+          "*"
+        ],
+        "message": "no schema for referenced path; generated unconstrained path test"
+      }
+    ]
+  },
+  "error": "known-inputs: Error: YAML parse error on flink/templates/jobmanager/deployment.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string\n\nUse --debug flag to render out invalid YAML"
+}

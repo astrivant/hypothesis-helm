@@ -237,7 +237,7 @@ runs:
         HH_DISABLE_SCHEMA_CACHING: ${{ inputs.disable-schema-caching }}
         HH_RERUN: ${{ inputs.rerun }}
         HH_ARTIFACT_DIR: ${{ inputs.artifact-dir }}
-      run: '"$ACTION_PATH/.plugin-venv/bin/python" -m hypothesis_helm.integrations.github_action'
+      run: '"$ACTION_PATH/.plugin-venv/bin/hypothesis-helm-github-action"'
     - name: Save Kubernetes schemas
       if: ${{ always() && (inputs.kubeconform == 'true' || inputs.kubesec == 'true') && inputs.schema-cache == 'true' && steps.schemas.outputs.cache-primary-key != '' && steps.schemas.outputs.cache-hit != 'true' }}
       uses: actions/cache/save@v5

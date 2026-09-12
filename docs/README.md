@@ -5,6 +5,8 @@
 Run repository command examples from the checkout root unless stated otherwise.
 
 - [Getting started](getting-started/README.md): installation, chart testing, and saved suites.
+- [Bitnami scan report](reports/bitnami.md): combined PDF, per-chart findings, and retained data.
+- [Repository scanning](scanning/README.md): recursive discovery and Markdown/PDF reports.
 - [Architecture](architecture/README.md): the testing pipeline and a worked example.
 - [Execution](execution/README.md): parallelism, sharding, dry runs, and execution budgets.
 - [CI examples](ci/README.md): GitHub Action, CircleCI, and GitLab configuration.

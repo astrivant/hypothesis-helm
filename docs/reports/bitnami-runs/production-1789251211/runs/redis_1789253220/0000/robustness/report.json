@@ -1,0 +1,22 @@
+{
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-4budw243/chart",
+  "seed": 0,
+  "attempts": 140,
+  "error": "Error: execution error at (redis/templates/NOTES.txt:202:4): \nVALUES VALIDATION:\nredis: architecture\n    Invalid architecture selected. Valid values are \"standalone\" and\n    \"replication\". Please set a valid architecture (--set architecture=\"xxxx\")\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "": [],
+    "architecture": ""
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 89,
+    "unique_bundles": 89,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 89
+  },
+  "phase": "robustness"
+}

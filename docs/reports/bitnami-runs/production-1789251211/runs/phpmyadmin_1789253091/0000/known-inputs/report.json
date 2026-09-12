@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-y9ki4rm7/chart",
+  "seed": 0,
+  "attempts": 200,
+  "error": "Error: YAML parse error on phpmyadmin/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "extraEnvVarsCM": "\u001f"
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 132,
+    "unique_bundles": 42,
+    "duplicate_bundles": 90,
+    "validation_cache_hits": 90,
+    "validated_entries": 42
+  },
+  "phase": "known-inputs"
+}

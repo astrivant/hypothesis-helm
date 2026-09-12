@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-zgcdu5wu/chart",
+  "seed": 0,
+  "attempts": 29,
+  "error": "Error: YAML parse error on argo-workflows/templates/controller/deployment.yaml: error converting YAML to JSON: yaml: line 30: mapping values are not allowed in this context\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "commonAnnotations": {
+      "": null
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 25,
+    "unique_bundles": 25,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 25
+  },
+  "phase": "known-inputs"
+}

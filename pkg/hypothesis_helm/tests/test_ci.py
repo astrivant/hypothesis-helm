@@ -262,7 +262,7 @@ def test_remote_ci_commands(
         steps = sequence(mapping(mapping(document["commands"])["test"])["steps"])
         script = str(mapping(mapping(steps[0])["run"])["command"])
     plugins = tmp_path / "plugin root"
-    scanner = plugins / "hypothesis/.plugin-venv/bin/python"
+    scanner = plugins / "hypothesis/.plugin-venv/bin/hypothesis-helm-kubesec"
     scanner.parent.mkdir(parents=True)
     binary = tmp_path / "helm"
     stub = dedent(

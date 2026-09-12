@@ -16,6 +16,7 @@ from typing import Literal
 from hypothesis_helm.charts.generate import generate_tests
 from hypothesis_helm.charts.generated import RenderOptions
 from hypothesis_helm.charts.runner import Chart, audit, check_chart
+from hypothesis_helm.charts.scan import scan
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
@@ -97,6 +98,61 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         prog=prog, description="Audit and property-test Helm chart values."
     )
     commands = parser.add_subparsers(dest="command", required=True)
+    repository = commands.add_parser("scan", help="recursively test charts in a directory")
+    repository.add_argument("directory", type=Path)
+    repository.add_argument(
+        "--report",
+        nargs="?",
+        const="",
+        metavar="PATH",
+        help="write Markdown and PDF; default: <dir>_<epoch>_report",
+    )
+    repository.add_argument("--artifact-dir", type=Path, default=Path("reports/scans"))
+    repository.add_argument("--helm", default="helm")
+    repository.add_argument(
+        "--values",
+        type=Path,
+        default=Path("values.yaml"),
+        help="baseline file relative to each chart, or an absolute path",
+    )
+    repository.add_argument(
+        "--timeout",
+        type=float,
+        default=30,
+        help="seconds per Helm lint, render, or dependency build",
+    )
+    repository.add_argument(
+        "--chart-timeout",
+        "--time-limit",
+        dest="chart_timeout",
+        type=parse_time_limit,
+        default=180,
+        help="property-test execution budget per chart (default: 3m)",
+    )
+    repository.add_argument(
+        "--scan-timeout",
+        type=parse_time_limit,
+        help="total scan deadline including discovery and preparation; default: unlimited",
+    )
+    repository.add_argument("--max-examples", type=int, default=100)
+    repository.add_argument(
+        "--permutations",
+        type=int,
+        help="finite interaction strength; default: automatic finite coverage or sampling",
+    )
+    repository.add_argument(
+        "--filter",
+        action="store_true",
+        help="filter finite charts; otherwise prioritize known inputs "
+        "and run robustness cases last",
+    )
+    repository.add_argument("--seed", type=int, default=0)
+    repository.add_argument(
+        "--build-dependencies",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="build locked dependencies in temporary chart copies",
+    )
     generate = commands.add_parser(
         "generate", help="generate one typed Python property test per values path"
     )
@@ -323,6 +379,8 @@ def main(argv: list[str] | None = None) -> int:
         stack.enter_context(redirect_stdout(sys.stderr))
     previous_conformity = os.environ.pop(ENVIRONMENT, None)
     try:
+        if args.command == "scan":
+            return scan(args)
         if args.command == "schemas":
             print(
                 prepare(
