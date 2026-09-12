@@ -27,7 +27,7 @@ Run the [plotting benchmark](../../scripts/benchmark_helm.py):
 
 ~~~sh
 bash scripts/project-python.sh -m scripts.benchmark_helm \
-  --chart .cache/benchmark-chart --step 50 --time-limit 9m \
+  --chart .cache/benchmark-chart --step 50 --time-limit 9m --max-permutations 600000 \
   --shards 1,2,3,4 --shard none --output reports/benchmark
 ~~~
 
@@ -37,8 +37,8 @@ checked against an independent oracle, and exact-equivalent renders are skipped.
 Use each script's `--help` for options.
 
 The figures below use local Python workers and the [standard chart](../../examples/benchmark).
-In one recorded run, pruning completed **49,733 checks with 256 renders**, compared
-with **3,535 checks** without pruning. [Raw measurements](results.json)
+In one recorded run, pruning completed **164,285 checks with 256 renders**, compared
+with **11,682 checks** without pruning. [Raw measurements](results.json)
 and [CSV](results.csv) include the host and run details.
 
 Progressive checkpoints share one execution. Dashed tails mark unfinished targets

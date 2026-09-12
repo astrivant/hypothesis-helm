@@ -405,6 +405,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
             xlabel="Requested global permutation count",
             ylabel="Completed checks / skipped renders",
         )
+        # Keep measured checkpoints prominent rather than stretching to unfinished targets.
+        visible_end = max(key[0] for key in progressive) * 1.1
+        left.set_xlim(0, visible_end)
+        right.set_xlim(0, visible_end)
         left.legend(fontsize=9)
         right.legend(fontsize=9)
         finish(
