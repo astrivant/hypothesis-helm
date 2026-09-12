@@ -62,8 +62,8 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument(
         "--time-limit",
         type=parse_time_limit,
-        default=180.0,
-        help="shared per-point worker deadline; default and ceiling: 3m",
+        default=540.0,
+        help="shared per-point worker deadline; default and ceiling: 9m",
     )
     result.add_argument(
         "--step", type=int, default=50, help="linear progressive checkpoint interval"
@@ -167,13 +167,13 @@ def run(argv: list[str] | None = None) -> int:
     if (
         args.step < 1
         or args.max_permutations < 1
-        or args.time_limit > 180
+        or args.time_limit > 540
         or args.repeats < 1
         or args.multiplicity < 1
         or args.multiplicity & (args.multiplicity - 1)
     ):
         raise ValueError(
-            "limit must be <= 3m; repeats positive; multiplicity a positive power of two"
+            "limit must be <= 9m; repeats positive; multiplicity a positive power of two"
         )
     shard, shard_source = resolve_shard(args.shard, os.environ)
     output = args.output / f"shard-{shard.name}" if shard else args.output

@@ -271,6 +271,7 @@ def test_default_linear_grid_and_four_worker_shards() -> None:
         None: Default controls implement the requested linear benchmark grid.
     """
     args = parser().parse_args([])
+    assert args.time_limit == 540.0
     assert args.step == 50
     assert args.counts is None
     assert args.replicas == [1, 2, 3, 4]

@@ -27,12 +27,12 @@ Run the [plotting benchmark](../../scripts/benchmark_helm.py):
 
 ~~~sh
 bash scripts/project-python.sh -m scripts.benchmark_helm \
-  --chart .cache/benchmark-chart --step 50 --time-limit 3m \
+  --chart .cache/benchmark-chart --step 50 --time-limit 9m \
   --shards 1,2,3,4 --shard none --output reports/benchmark
 ~~~
 
 Checkpoints increase by **50, 100, 150, …** inputs. Each trajectory or scaling run
-has a three-minute execution budget; the complete study takes longer. Outputs are
+has a nine-minute execution budget; the complete study takes longer. Outputs are
 checked against an independent oracle, and exact-equivalent renders are skipped.
 Use each script's `--help` for options.
 

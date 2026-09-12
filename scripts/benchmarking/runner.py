@@ -260,8 +260,8 @@ def measure(
     Returns:
         dict[str, object]: Aggregate real measurements and individual worker evidence.
     """
-    if not math.isfinite(time_limit) or not 0 < time_limit <= 180:
-        raise ValueError("benchmark time limit must be positive and at most 180 seconds")
+    if not math.isfinite(time_limit) or not 0 < time_limit <= 540:
+        raise ValueError("benchmark time limit must be positive and at most 540 seconds")
     if checkpoints and replicas != 1:
         raise ValueError("progressive checkpoints require one local worker")
     assignments = partition_indices(count, shard, replicas)
