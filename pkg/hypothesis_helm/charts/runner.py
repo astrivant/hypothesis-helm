@@ -25,6 +25,7 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.presence import has_path
 from hypothesis_helm.charts.templates import discover
 from hypothesis_helm.compiler.expansion import FailureExpansion
+from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.pruning import Pruner
 from hypothesis_helm.compiler.topology import trim_topology as topology_trim
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
@@ -234,7 +235,7 @@ def audit(chart: Chart) -> dict[str, object]:
 
     from hypothesis_helm.charts.generate import enumerate_paths
 
-    references, diagnostics = discover(chart.path)
+    references, diagnostics = discover(chart.path, prune_literals=True)
     defaults = set(_default_paths(chart.defaults))
     declared = {entry.path: entry.schema for entry in enumerate_paths(chart.schema)}
     paths = defaults | {r.path for r in references if r.path} | declared.keys()
@@ -267,6 +268,7 @@ def audit(chart: Chart) -> dict[str, object]:
         "references": [asdict(r) for r in references],
         "findings": findings,
         "unresolved": [asdict(d) for d in diagnostics],
+        "input_inventory": InputInventory.build(chart).report(),
     }
 
 
@@ -426,6 +428,7 @@ def check_chart(
     prune_equivalent: bool = False,
     properties: tuple[Callable[[list[dict[str, object]]], None], ...] = (),
     input_strategy: SearchStrategy[dict[str, object]] | None = None,
+    input_inventory: InputInventory | None = None,
 ) -> dict[str, object]:
     """
     Check defaults then generated overrides, shrinking failing inputs.
@@ -463,6 +466,7 @@ def check_chart(
 
         input_strategy (SearchStrategy[dict[str, object]] | None): Optional generation-only
             preference; the original chart schema remains authoritative.
+        input_inventory (InputInventory | None): Shared compiler inventory for phase comparisons.
 
     Returns:
         dict[str, object]: Resulting schema, values mapping, or structured report.
@@ -490,6 +494,9 @@ def check_chart(
     ):
         raise ValueError("trim must be nonnegative and requires finite permutation planning")
     planning_started = time.perf_counter()
+    inputs = input_inventory if input_inventory is not None else InputInventory.build(chart)
+    field_coverage = FieldCoverage(inputs, chart.defaults)
+    LOGGER.info("Compiler input baseline: %d statically named fields", len(inputs.known))
     hashes = RenderHashes(scope="run-local")
     model = (
         ValuesModel.from_schema(chart.schema)
@@ -602,11 +609,15 @@ def check_chart(
     expansion_failures: list[dict[str, object]] = []
     expansion_checked = 0
     expansion_executed = 0
-    coverage: dict[str, object] = {}
+    coverage: dict[str, object] = {
+        "input_inventory": inputs.report(),
+        "field_coverage": field_coverage.statistics,
+    }
     statistics = None
     if interaction_plan is not None:
         finite_values = interaction_plan.values
         coverage = {
+            **coverage,
             "mode": "permutations",
             "trim": trim,
             "trim_random": trim,
@@ -857,6 +868,7 @@ def check_chart(
                     witness = pruner.candidate(values, effective, context)
                     resources = pruner.lookup(None if force_render else witness, count)
                 if resources is None:
+                    field_coverage.observe(effective)
                     render_started = time.perf_counter()
                     rendered = True
                     resources = render(
@@ -1076,6 +1088,7 @@ def check_chart(
             len(pruner.certificates),
         )
     result = {
+        **coverage,
         "render_hashes": hashes.snapshot(),
         **({"pruning": pruner.report()} if pruner is not None else {}),
         "status": "passed",

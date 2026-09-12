@@ -17,6 +17,7 @@ from hypothesis_helm.charts.generate import generate_tests
 from hypothesis_helm.charts.generated import RenderOptions
 from hypothesis_helm.charts.runner import Chart, audit, check_chart
 from hypothesis_helm.charts.scan import scan
+from hypothesis_helm.compiler.inputs import InputInventory, load_input_chart
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
@@ -98,8 +99,18 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         prog=prog, description="Audit and property-test Helm chart values."
     )
     commands = parser.add_subparsers(dest="command", required=True)
-    repository = commands.add_parser("scan", help="recursively test charts in a directory")
-    repository.add_argument("directory", type=Path)
+    repository = commands.add_parser(
+        "scan", help="recursively test charts in a directory or Git repository"
+    )
+    repository.add_argument(
+        "directory", metavar="SOURCE", help="local directory, HTTPS repository URL, or Git SSH URL"
+    )
+    repository.add_argument(
+        "--clone-timeout",
+        type=parse_time_limit,
+        default=180,
+        help="repository checkout budget, also bounded by --scan-timeout (default: 3m)",
+    )
     repository.add_argument(
         "--report",
         nargs="?",
@@ -350,6 +361,15 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             action="store_true",
             help="require all configurable fields in source values.yaml and a clean audit",
         )
+    for command in (repository, inspect, generate, test):
+        command.add_argument(
+            "--dump-minimal-values",
+            nargs="?",
+            const="",
+            metavar="PATH",
+            help="write conservative minimal-values.yaml and inventory; "
+            "PATH overrides the YAML file (scan: output directory)",
+        )
     return parser
 
 
@@ -381,6 +401,13 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "scan":
             return scan(args)
+        minimal_values = None
+        if args.command in ("audit", "generate", "test") and args.dump_minimal_values is not None:
+            original = load_input_chart(args.chart)
+            minimal_values = InputInventory.build(original).dump(
+                original, Path(args.dump_minimal_values or "minimal-values.yaml")
+            )
+            logger.info("Minimal input baseline: %s", minimal_values["yaml"])
         if args.command == "schemas":
             print(
                 prepare(
@@ -599,7 +626,7 @@ def main(argv: list[str] | None = None) -> int:
                 rerun=args.rerun,
                 artifact_dir=args.artifact_dir,
             )
-        chart = Chart.load(args.chart)
+        chart = load_input_chart(args.chart) if args.command == "audit" else Chart.load(args.chart)
         if args.command == "generate":
             report = generate_tests(chart, args.output, max_examples=args.max_examples)
             status = 0
@@ -685,6 +712,8 @@ def main(argv: list[str] | None = None) -> int:
             )
         if getattr(args, "dry_run", False):
             plot_progression(report)
+        if minimal_values is not None:
+            report["minimal_values"] = minimal_values
         print(json.dumps(report, indent=2))
         return status
     except KeyboardInterrupt:

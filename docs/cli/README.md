@@ -34,7 +34,7 @@ Audit and property-test Helm chart values.
 
 positional arguments:
   {scan,generate,audit,run,test,schemas}
-    scan                recursively test charts in a directory
+    scan                recursively test charts in a directory or Git repository
     generate            generate one typed Python property test per values path
     audit               discover value references and schema gaps
     run                 run a saved generated Python suite
@@ -51,20 +51,25 @@ options:
 <summary>helm hypothesis scan</summary>
 
 ~~~text
-usage: helm hypothesis scan [-h] [--report [PATH]] [--artifact-dir ARTIFACT_DIR]
-                            [--helm HELM] [--values VALUES] [--timeout TIMEOUT]
+usage: helm hypothesis scan [-h] [--clone-timeout CLONE_TIMEOUT] [--report [PATH]]
+                            [--artifact-dir ARTIFACT_DIR] [--helm HELM]
+                            [--values VALUES] [--timeout TIMEOUT]
                             [--chart-timeout CHART_TIMEOUT]
                             [--scan-timeout SCAN_TIMEOUT]
                             [--max-examples MAX_EXAMPLES]
                             [--permutations PERMUTATIONS] [--filter] [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
-                            directory
+                            [--dump-minimal-values [PATH]]
+                            SOURCE
 
 positional arguments:
-  directory
+  SOURCE                local directory, HTTPS repository URL, or Git SSH URL
 
 options:
   -h, --help            show this help message and exit
+  --clone-timeout CLONE_TIMEOUT
+                        repository checkout budget, also bounded by --scan-timeout
+                        (default: 3m)
   --report [PATH]       write Markdown and PDF; default: <dir>_<epoch>_report
   --artifact-dir ARTIFACT_DIR
   --helm HELM
@@ -84,6 +89,9 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
+  --dump-minimal-values [PATH]
+                        write conservative minimal-values.yaml and inventory; PATH
+                        overrides the YAML file (scan: output directory)
 ~~~
 
 </details>
@@ -93,7 +101,7 @@ options:
 
 ~~~text
 usage: helm hypothesis generate [-h] [--output OUTPUT] [--max-examples MAX_EXAMPLES]
-                                [--strict]
+                                [--strict] [--dump-minimal-values [PATH]]
                                 chart
 
 positional arguments:
@@ -105,6 +113,9 @@ options:
   --max-examples MAX_EXAMPLES
   --strict              require all configurable fields in source values.yaml and a
                         clean audit
+  --dump-minimal-values [PATH]
+                        write conservative minimal-values.yaml and inventory; PATH
+                        overrides the YAML file (scan: output directory)
 ~~~
 
 </details>
@@ -113,14 +124,17 @@ options:
 <summary>helm hypothesis audit</summary>
 
 ~~~text
-usage: helm hypothesis audit [-h] [--strict] chart
+usage: helm hypothesis audit [-h] [--strict] [--dump-minimal-values [PATH]] chart
 
 positional arguments:
   chart
 
 options:
-  -h, --help  show this help message and exit
-  --strict    fail on any finding or unresolved access
+  -h, --help            show this help message and exit
+  --strict              fail on any finding or unresolved access
+  --dump-minimal-values [PATH]
+                        write conservative minimal-values.yaml and inventory; PATH
+                        overrides the YAML file (scan: output directory)
 ~~~
 
 </details>
@@ -201,6 +215,7 @@ usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DUR
                             [--cache-dir CACHE_DIR] [--disable-schema-caching]
                             [--progress] [--no-cache] [--rerun {auto,all,failed}]
                             [--shard SHARD] [--jobs JOBS] [--output {json}] [--strict]
+                            [--dump-minimal-values [PATH]]
                             [chart]
 
 positional arguments:
@@ -271,6 +286,9 @@ options:
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a
                         clean audit
+  --dump-minimal-values [PATH]
+                        write conservative minimal-values.yaml and inventory; PATH
+                        overrides the YAML file (scan: output directory)
 
 filtering:
   Use --filter or the individual methods below; random trimming is independent.

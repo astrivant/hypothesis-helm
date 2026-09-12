@@ -152,12 +152,15 @@ def parse(source: str) -> list[Action]:
     return root
 
 
-def discover(path: Path) -> tuple[list[Reference], list[Diagnostic]]:
+def discover(
+    path: Path, *, prune_literals: bool = False
+) -> tuple[list[Reference], list[Diagnostic]]:
     """
     Resolve direct fields, aliases, with/range scopes, and literal key access.
 
     Args:
         path (Path): Value path or chart location to inspect.
+        prune_literals (bool): Skip branches controlled by literal true/false conditions.
 
     Returns:
         tuple[list[Reference], list[Diagnostic]]: Result of the documented operation.
@@ -200,6 +203,14 @@ def discover(path: Path) -> tuple[list[Reference], list[Diagnostic]]:
             env = dict(env)
             for node in nodes:
                 tokens = node.tokens
+                if prune_literals and tokens in (["if", "true"], ["if", "false"]):
+                    walk(
+                        node.children if tokens[1] == "true" else node.otherwise,
+                        dot,
+                        env,
+                        source_name,
+                    )
+                    continue
                 fallback = any(t in ("default", "coalesce", "dig") for t in tokens)
 
                 def warn(message: str, filename: str = source_name, line: int = node.line) -> None:

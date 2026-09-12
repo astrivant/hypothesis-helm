@@ -7,6 +7,7 @@ values schemas and template references, renders your chart, and reduces failures
 from combinations of Helm chart inputs to reproducible examples.
 
 - Audit template references, values schemas, and missing defaults.
+- Inspect conservative minimal values and measure variation across identified input fields.
 - Generate typed property tests and shrink failures to reproducible inputs.
 - Choose permutation coverage, with exhaustive testing for small finite spaces.
 - Skip provably equivalent renders or opt into sampling to reduce test volume.
@@ -34,6 +35,22 @@ hypothesis-helm-benchmark --help
 
 See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot commands.
 
+## Audit, test, or scan?
+
+| Command | Use it for | What it does |
+| --- | --- | --- |
+| `audit ./chart` | Understanding one chart's input contract. | Statically compares values, schema, and template references. Reports missing defaults, undocumented fields, and unresolved access as JSON. Does not render the chart. |
+| `test ./chart` | Finding failures in one chart. | Generates inputs, renders them with Helm, checks the manifests, and shrinks failures into reproducible examples. Saves test results and failing values. |
+| `scan SOURCE` | Reviewing every chart in a repository. | Recursively discovers charts, builds dependencies in isolated copies, runs Helm lint and chart tests, and records each chart's outcome. `--report` adds combined Markdown/PDF reports. Accepts local directories and HTTPS/SSH Git URLs. |
+
+`test` requires a values schema and dependencies already available in the chart.
+`audit` also works without a schema. For schema-less charts, `scan` runs baseline
+checks; adding `--filter` enables inferred-input testing and deferred robustness
+sampling. Skipped charts and incomplete coverage remain explicit in scan results.
+
+Use `--dump-minimal-values` with any of these commands to inspect the conservative
+input baseline and its [field inventory](docs/inputs/README.md).
+
 ## Quick start
 
 ```sh
@@ -59,6 +76,7 @@ Scan a repository and write Markdown/PDF summaries:
 
 ```sh
 helm hypothesis scan ./charts --report
+helm hypothesis scan https://github.com/bitnami/charts.git --filter --report
 ```
 
 See [Repository scanning](docs/scanning/README.md) for values files and dependency handling.

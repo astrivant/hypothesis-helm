@@ -4,8 +4,27 @@
 
 ```sh
 helm hypothesis scan ./charts --report
+helm hypothesis scan https://github.com/bitnami/charts.git --filter --report
+helm hypothesis scan git@github.com:my-org/charts.git --report
 helm hypothesis scan ./charts --values ci/test-values.yaml --report reports/charts
 ```
+
+The source can be a local directory, an HTTPS Git repository URL, or an SSH URL
+(`git@host:owner/repo.git` or `ssh://git@host/owner/repo.git`). Remote sources
+require Git and use a shallow checkout of the default branch. Reports retain
+the original URL and resolved commit; the temporary checkout is removed after
+the scan, while reports, diagnostics, and failing values remain in the artifact
+directory. Repository submodules are not initialized automatically.
+
+Public HTTPS repositories work without credentials. Private repositories use
+your existing Git credential helper or SSH configuration/agent. Checkout runs
+noninteractively; configure credentials and SSH host trust beforehand. Use clone
+URLs without embedded HTTPS credentials, query strings, or fragments.
+
+`--clone-timeout 3m` bounds checkout, including commit resolution. The total
+`--scan-timeout` also includes this time and takes precedence when shorter.
+Failed clones produce a report with incomplete discovery and exit **1**;
+checkout timeouts exit **124**, and interruption exits **130**.
 
 The scanner finds `Chart.yaml` at the root and in child directories, including
 nested charts. It checks the required `apiVersion`, `name`, and `version` fields
@@ -51,7 +70,7 @@ Configure Helm repositories and registry credentials as for a normal dependency 
 planning and dependency preparation. `--time-limit` remains a compatibility alias.
 `--timeout 30` bounds each Helm command.
 
-Add `--scan-timeout 9m` to cap the entire scan, including discovery, dependency
+Add `--scan-timeout 9m` to cap the entire scan, including cloning, discovery, dependency
 builds, linting, planning, and property tests. The scan deadline takes precedence
 over a longer chart budget. Its default is unlimited. Cleanup and report writing
 finish after testing stops, so total process lifetime can exceed the deadline slightly.
@@ -70,6 +89,11 @@ working directory. An explicit stem or either filename extension overrides both
 paths. Reusing an explicit output path replaces the previous report.
 JSON statistics, lint/dependency logs, and failing values go under
 `reports/scans/`; override that parent with `--artifact-dir`.
+
+Add `--dump-minimal-values` to retain a conservative YAML baseline and compiler
+inventory for each chart. An optional path selects a separate output directory.
+Reports include identified input-field counts and observed variation where
+available. See [Input inventory](../inputs/README.md) for the measurement contract.
 
 Exit codes: **0** means every discovered chart passed property tests; **1** means
 invalid metadata, invalid execution, or test failures (also a sole chart missing

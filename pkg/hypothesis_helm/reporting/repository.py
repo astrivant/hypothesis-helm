@@ -89,6 +89,31 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
                 ]
             )
         phases = chart.get("phases", [])
+        inventory = chart.get("input_inventory")
+        if isinstance(inventory, dict):
+            measured = chart.get("field_coverage", {})
+            varied = (
+                measured.get("varied_count", "not measured")
+                if isinstance(measured, dict)
+                else "not measured"
+            )
+            lines.extend(
+                [
+                    f"Identified input fields (lower bound): {inventory.get('lower_bound_fields')} "
+                    f"| Varied in render attempts: {varied}",
+                    f"Missing values: {len(inventory.get('missing_values', []))} "
+                    "| Undocumented template fields: "
+                    f"{len(inventory.get('undocumented_template_fields', []))}",
+                    f"Unreferenced values: {len(inventory.get('unreferenced_values', []))} "
+                    f"({inventory.get('unreferenced_usage')})",
+                    "Field variation does not prove branch or output coverage.",
+                    "",
+                ]
+            )
+        dumped = chart.get("minimal_values")
+        if isinstance(dumped, dict):
+            destination = str(dumped["yaml"])
+            lines.extend([f"Minimal values: [{destination}](<{destination}>)", ""])
         if isinstance(phases, list):
             for phase in phases:
                 if isinstance(phase, dict):

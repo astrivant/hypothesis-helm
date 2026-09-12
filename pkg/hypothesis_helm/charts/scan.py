@@ -20,7 +20,9 @@ from pathlib import Path
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.prioritized import check_prioritized
+from hypothesis_helm.charts.repository import RepositorySource
 from hypothesis_helm.charts.runner import Chart, check_chart, render
+from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory, load_input_chart
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.repository import write_reports
 from hypothesis_helm.schemas.contracts import mapping
@@ -126,8 +128,17 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         return {"status": status, "error": diagnostic, "coverage": "defaults only"}
     has_schema = (path / "values.schema.json").is_file()
     if not has_schema and not args.filter:
-        render(Chart(path, {}, {}), {}, helm=args.helm, timeout=args.timeout)
-        return {"status": "baseline-only", "coverage": "defaults only; no values.schema.json"}
+        source = load_input_chart(path)
+        inputs = InputInventory.build(source)
+        measured = FieldCoverage(inputs, source.defaults)
+        render(source, {}, helm=args.helm, timeout=args.timeout)
+        measured.observe(source.defaults)
+        return {
+            "status": "baseline-only",
+            "coverage": "defaults only; no values.schema.json",
+            "input_inventory": inputs.report(),
+            "field_coverage": measured.statistics,
+        }
     try:
         chart = (
             Chart.load(path)
@@ -211,16 +222,44 @@ def scan(args: argparse.Namespace) -> int:
         raise ValueError("permutations must be positive")
     if shutil.which(args.helm) is None:
         raise ValueError(f"Helm executable not found: {args.helm}")
-    root = args.directory.resolve()
     started = time.time()
     scan_started = time.monotonic()
     args.scan_deadline = scan_started + args.scan_timeout if args.scan_timeout is not None else None
-    records = discover_charts(root, deadline=args.scan_deadline)
-    discovery_complete = args.scan_deadline is None or time.monotonic() < args.scan_deadline
-    timed_out = not discovery_complete
-    output = args.artifact_dir.resolve() / f"{root.name}_{int(started)}"
+    with ExitStack() as scope:
+        source = RepositorySource.prepare(
+            str(args.directory), scope, args.clone_timeout, args.scan_deadline
+        )
+        return scan_checkout(args, source, started, scan_started)
+
+
+def scan_checkout(
+    args: argparse.Namespace, source: RepositorySource, started: float, scan_started: float
+) -> int:
+    """
+    Exercise a prepared source and write reports before its checkout is released.
+
+    Args:
+        args (argparse.Namespace): Scan execution and reporting options.
+        source (RepositorySource): Local tree and original repository provenance.
+        started (float): Scan start epoch, including checkout time.
+        scan_started (float): Monotonic start for total elapsed time.
+
+    Returns:
+        int: Scan exit status, including checkout failure or timeout.
+    """
+    root = source.root
+    records = discover_charts(root, deadline=args.scan_deadline) if source.status == "ready" else []
+    discovery_complete = source.status == "ready" and (
+        args.scan_deadline is None or time.monotonic() < args.scan_deadline
+    )
+    timed_out = source.status in {"clone-timeout", "scan-timeout"} or (
+        source.status == "ready" and not discovery_complete
+    )
+    output = args.artifact_dir.resolve() / f"{source.name}_{int(started)}"
     output.mkdir(parents=True, exist_ok=True)
-    interrupted = False
+    if source.remote:
+        (output / "checkout.txt").write_text(source.diagnostic)
+    interrupted = source.status == "interrupted"
     for index, record in enumerate(records):
         if args.scan_deadline is not None and time.monotonic() >= args.scan_deadline:
             timed_out = True
@@ -262,7 +301,21 @@ def scan(args: argparse.Namespace) -> int:
                     # Unlink copied symlinks before writing to keep the source chart untouched.
                     (copy / "values.yaml").unlink(missing_ok=True)
                     (copy / "values.yaml").write_text(baseline)
-                    record["values_file"] = str(selected)
+                    if args.dump_minimal_values is not None:
+                        input_chart = load_input_chart(copy)
+                        inputs = InputInventory.build(input_chart)
+                        target = (
+                            Path(args.dump_minimal_values) / str(record["chart"])
+                            if args.dump_minimal_values
+                            else artifacts
+                        ) / "minimal-values.yaml"
+                        record["minimal_values"] = inputs.dump(input_chart, target)
+                        record["input_inventory"] = inputs.report()
+                    record["values_file"] = (
+                        str(selected.relative_to(root))
+                        if source.remote and selected.is_relative_to(root)
+                        else str(selected)
+                    )
                     if args.build_dependencies:
                         built = subprocess.run(
                             [args.helm, "dependency", "build", str(copy)],
@@ -332,10 +385,12 @@ def scan(args: argparse.Namespace) -> int:
         )
     counts = dict(Counter(str(record["status"]) for record in records))
     report: dict[str, object] = {
-        "directory": str(root),
+        "directory": source.location,
         "started_epoch": int(started),
         "elapsed_seconds": time.monotonic() - scan_started,
-        "scan_status": "interrupted"
+        "scan_status": source.status
+        if source.status != "ready"
+        else "interrupted"
         if interrupted
         else "scan-timeout"
         if timed_out
@@ -355,17 +410,33 @@ def scan(args: argparse.Namespace) -> int:
             "seed": args.seed,
             "build_dependencies": args.build_dependencies,
             "values": str(args.values),
+            "clone_timeout_seconds": args.clone_timeout,
         },
     }
+    if source.remote:
+        report["source"] = {
+            "url": source.location,
+            "revision": source.revision,
+            "checkout_status": source.status,
+        }
+        report["summary"] = [f"Repository commit: {source.revision or 'unavailable'}"]
+        if source.status != "ready":
+            report["error"] = source.diagnostic
+            report["summary"] = [
+                "Repository checkout did not complete; chart discovery was not performed.",
+                source.diagnostic,
+            ]
     (output / "scan.json").write_text(json.dumps(report, indent=2) + "\n")
     if args.report is not None:
-        stem = Path(args.report) if args.report else Path(f"{root.name}_{int(started)}_report")
+        stem = Path(args.report) if args.report else Path(f"{source.name}_{int(started)}_report")
         write_reports(report, stem)
     print(json.dumps(report, indent=2))
     if interrupted:
         return 130
     if timed_out:
         return 124
+    if source.status == "clone-failed":
+        return 1
     if len(records) == 1 and records[0]["status"] == "missing-values":
         return 1
     if any(

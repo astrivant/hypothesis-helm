@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 
 from hypothesis_helm.charts.runner import Chart, check_chart
+from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.schemas.priority import PriorityInputs
 
@@ -44,8 +45,10 @@ def check_prioritized(
     started = time.monotonic()
     phases: list[dict[str, object]] = []
     priority: PriorityInputs | None = None
+    inventory: InputInventory | None = None
     try:
         with execution_timer(budget * 0.9):
+            inventory = InputInventory.build(chart)
             priority = PriorityInputs.build(chart)
             remaining = budget * 0.9 - (time.monotonic() - started)
             if remaining <= 0:
@@ -59,6 +62,7 @@ def check_prioritized(
                 timeout=timeout,
                 time_limit=remaining,
                 input_strategy=priority.strategy(chart),
+                input_inventory=inventory,
                 artifact_dir=artifacts / "known-inputs",
             )
             phases.append({**primary, "phase": "known-inputs"})
@@ -106,6 +110,7 @@ def check_prioritized(
                     input_strategy=priority.deferred_strategy(chart)
                     if priority is not None
                     else None,
+                    input_inventory=inventory,
                 )
                 phases.append({**secondary, "phase": "robustness"})
         except TimeLimitReached:
@@ -183,6 +188,15 @@ def check_prioritized(
         result["error"] = "\n\n".join(
             f"{phase['phase']}: {phase.get('error', '')}" for phase in failures
         )
+    if inventory is not None:
+        combined = FieldCoverage(inventory, chart.defaults)
+        for phase in phases:
+            measured = phase.get("field_coverage", {})
+            if isinstance(measured, dict):
+                combined.present.update(tuple(path) for path in measured.get("present_fields", []))
+                combined.varied.update(tuple(path) for path in measured.get("varied_fields", []))
+        combined.refresh()
+        result.update(input_inventory=inventory.report(), field_coverage=combined.statistics)
     artifacts.mkdir(parents=True, exist_ok=True)
     (artifacts / "report.json").write_text(json.dumps(result, indent=2) + "\n")
     return result

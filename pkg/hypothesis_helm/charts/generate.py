@@ -606,6 +606,9 @@ def generate_tests(
     if max_examples < 1:
         raise ValueError("max_examples must be positive")
     model = coalesce(chart)
+    from hypothesis_helm.compiler.inputs import InputInventory
+
+    input_inventory = InputInventory.build(chart)
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=True)
     (output / "values.coalesced.yaml").write_text(yamlio.dump(model.values))
@@ -613,6 +616,12 @@ def generate_tests(
     inventory = {
         "paths": [dict(asdict(p), strategy=strategy_source(p.schema)) for p in model.paths],
         "diagnostics": model.diagnostics,
+        "input_inventory": input_inventory.report(),
+        "planned_known_fields": [
+            list(path)
+            for path in sorted(input_inventory.known)
+            if path in {tuple(str(part) for part in entry.path) for entry in model.paths}
+        ],
     }
     (output / "paths.json").write_text(json.dumps(inventory, indent=2) + "\n")
     relative = os.path.relpath(chart.path, suite_location or output)
