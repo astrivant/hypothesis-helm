@@ -3,9 +3,9 @@
 [Documentation](../README.md) · [Project](../../README.md)
 
 ```sh
-helm hypothesis audit ./chart --dump-minimal-values
-helm hypothesis audit ./chart --dump-minimal-values ./review/minimal.yaml
-helm hypothesis scan https://github.com/bitnami/charts.git --filter --report --dump-minimal-values
+helm hypothesis audit ./chart --export-minimal-values
+helm hypothesis audit ./chart --export-minimal-values ./review/minimal.yaml
+helm hypothesis scan https://github.com/bitnami/charts.git --filter --report --export-minimal-values
 ```
 
 The compiler compares the original `values.yaml`, `values.schema.json` when
@@ -39,23 +39,33 @@ Generated path suites record the inventory and planned known fields in
 
 ## Inspect the baseline
 
-`--dump-minimal-values [PATH]` is available on `audit`, `generate`, `test`, and
-`scan`. Single-chart commands default to `minimal-values.yaml` in the current
-working directory; `PATH` overrides that filename. Scans default to each chart's
-artifact directory. For a scan, `PATH` is an output directory, with separate
-`minimal-values.yaml` files beneath each chart's relative path.
+`--export-minimal-values [FILENAME]` is available on `audit`, `generate`, `test`,
+and `scan`. The default filename is `values-minimal-<checksum>-<epoch>.yaml`:
+`checksum` is the full SHA-256 of the exported YAML bytes, and `epoch` is the Unix
+export time in seconds. Both are recorded in the adjacent inventory file.
 
-Each YAML file has an adjacent `.inventory.json` containing the lower-bound
-field list, source locations, missing fields, and the reason for any retained
-values. `audit` also works without a values schema. During scans, the selected
+Single-chart commands write to the current working directory; an optional filename
+or path overrides the destination. Scans default to each chart's artifact directory.
+For a scan, `--export-minimal-values ./review/minimal.yaml` writes
+`./review/<chart-relative-path>/minimal.yaml`, keeping each chart's export separate.
+
+Each export contains two YAML documents separated by `---`: the first holds the
+baseline values; the second lists `missing_values` with template references and
+`schema_fields_without_values`. No placeholder values are invented. Use the first
+document when supplying values to Helm; the second is diagnostic metadata. The
+filename checksum covers both documents.
+
+An adjacent `.inventory.json` retains the full lower-bound field list, source
+locations, and reasons for retained values. `audit` also works without a values schema.
+During scans, the selected
 `--values` file supplies the original baseline being inspected.
 
-The dump projects existing values onto known references and dynamic subtrees.
+The export projects existing values onto known references and dynamic subtrees.
 Opaque contexts or dependency forwarding retain the original values; if a
 projection violates the declared schema, the original values are retained.
 Missing defaults are listed rather than filled with invented nulls or strings.
 The source values file is never overwritten.
 
 This is a conservative reduction, not a globally smallest valid configuration
-or a certificate of identical rendering. The dump is not automatically applied
+or a certificate of identical rendering. The export is not automatically applied
 to testing; the original validation contract and generation strategy stay in use.

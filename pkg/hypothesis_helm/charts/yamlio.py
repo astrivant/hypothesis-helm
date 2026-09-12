@@ -7,11 +7,12 @@ import re
 from io import StringIO
 
 from ruamel.yaml import YAML
+from ruamel.yaml.constructor import RoundTripConstructor
 
 
 def yaml() -> YAML:
     """
-    Check yaml.
+    Create a round-trip reader with Helm-compatible handling of bare equals signs.
 
     Returns:
         YAML: Result of the documented operation.
@@ -19,6 +20,12 @@ def yaml() -> YAML:
     instance = YAML(typ="rt")
     instance.preserve_quotes = True
     instance.allow_duplicate_keys = False
+    # ruamel tags a bare '=' with YAML's legacy value tag. Helm reads it as
+    # a string. Copy the constructor table so other YAML instances are untouched.
+    instance.constructor.yaml_constructors = {
+        **instance.constructor.yaml_constructors,
+        "tag:yaml.org,2002:value": RoundTripConstructor.construct_yaml_str,
+    }
     return instance
 
 

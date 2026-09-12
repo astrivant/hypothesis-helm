@@ -3,19 +3,99 @@ Verify output identity and successful-validation reuse independently of input co
 """
 
 import json
+import shutil
 import subprocess
 from pathlib import Path
+from textwrap import dedent
 from unittest.mock import Mock
 
 import pytest
+from ruamel.yaml import YAML
+from ruamel.yaml.comments import TaggedScalar
 
-from hypothesis_helm.charts.runner import Chart, check_chart
+from hypothesis_helm.charts import yamlio
+from hypothesis_helm.charts.runner import Chart, check_chart, render
 from hypothesis_helm.execution.render_hashes import (
     ALGORITHM,
     RenderHashes,
     render_digest,
     summarize_process_statistics,
 )
+from hypothesis_helm.reporting.output import MANIFEST_FD
+
+
+def test_bare_equals_preserves_string_identity() -> None:
+    """
+    Read equals signs as strings without changing unrelated tags or other YAML readers.
+
+    Returns:
+        None: Keys, nested values, streaming, and hashing receive JSON-compatible strings.
+    """
+    source = dedent("""
+    =: =
+    nested:
+      - value: =
+    """)
+    expected = {"=": "=", "nested": [{"value": "="}]}
+    assert yamlio.load(source) == expected
+    assert yamlio.load_all(source) == [expected]
+    assert render_digest(yamlio.load_all(source)) == render_digest([expected])
+    assert json.loads(yamlio.json_for_helm(yamlio.load(source))) == expected
+    assert isinstance(YAML(typ="rt").load("value: =")["value"], TaggedScalar)
+    tagged = yamlio.load_all("value: !custom keep")[0]
+    assert isinstance(tagged, dict) and isinstance(tagged["value"], TaggedScalar)
+
+
+@pytest.mark.integration
+@pytest.mark.skipif(not shutil.which("helm"), reason="Helm is required")
+def test_equals_renders_hashes_and_streams(tmp_path: Path) -> None:
+    """
+    Accept bare and quoted equals signs with identical rendered identities under real Helm.
+
+    Args:
+        tmp_path (Path): Chart and manifest stream destination.
+
+    Returns:
+        None: Native Helm conversion agrees with the values accepted and hashed by the runner.
+    """
+    (tmp_path / "templates").mkdir()
+    (tmp_path / "Chart.yaml").write_text(
+        dedent("""
+        apiVersion: v2
+        name: equals
+        version: 0.1.0
+        """)
+    )
+    (tmp_path / "values.yaml").write_text("literal: '='\n")
+    template = tmp_path / "templates/configmap.yaml"
+    template.write_text(
+        dedent("""
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: equals
+        data:
+          literal: {{ .Values.literal }}
+          =: {{ .Values.literal }}
+          native: '{{ fromYaml "value: =" | toJson }}'
+        """)
+    )
+    hashes = RenderHashes()
+    chart = Chart(tmp_path, {"type": "object"}, {"literal": "="})
+    stream_path = tmp_path / "manifests.jsonl"
+    with stream_path.open("w") as stream:
+        token = MANIFEST_FD.set(stream.fileno())
+        try:
+            first = render(chart, {"literal": "="}, hashes=hashes)
+            template.write_text(template.read_text().replace("{{ .Values.literal }}", '"="'))
+            second = render(chart, {"literal": "="}, hashes=hashes)
+        finally:
+            MANIFEST_FD.reset(token)
+    assert first == second
+    assert first[0]["data"] == {"literal": "=", "=": "=", "native": '{"value":"="}'}
+    assert hashes.snapshot()["validation_cache_hits"] == 1
+    assert len(stream_path.read_text().splitlines()) == 2
+    assert json.loads(stream_path.read_text().splitlines()[0]) == first[0]
 
 
 def test_digest_preserves_meaningful_order() -> None:

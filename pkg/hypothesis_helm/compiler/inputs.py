@@ -5,7 +5,9 @@ Inventory known template inputs and measure render-input coverage against them.
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -203,22 +205,20 @@ class InputInventory:
             "unresolved": self.unresolved,
         }
 
-    def dump(self, chart: Chart, target: Path) -> dict[str, object]:
+    def dump(
+        self, chart: Chart, target: Path | None = None, *, directory: Path = Path(".")
+    ) -> dict[str, object]:
         """
-        Write a conservative values projection and its evidence as a JSON sidecar.
+        Export baseline values, a second YAML document of missing fields, and full JSON evidence.
 
         Args:
             chart (Chart): Original values and authoritative validation schema.
-            target (Path): YAML output file; the source values file is never overwritten.
+            target (Path | None): Optional YAML filename; source chart inputs are never overwritten.
+            directory (Path): Destination directory when generating the filename.
 
         Returns:
             dict[str, object]: Dump paths and limits of the reduction.
         """
-        if target.resolve() in {
-            (chart.path / name).resolve()
-            for name in ("values.yaml", "values.schema.json", "Chart.yaml")
-        }:
-            raise ValueError("Minimal-values output must not overwrite source chart inputs")
         retained = {item.reference.path for item in self.fields if item.locations} | self.dynamic
 
         def project(value: object, path: tuple[str, ...]) -> object:
@@ -252,20 +252,43 @@ class InputInventory:
         if not validator.is_valid(json_value(values)):
             values = copy.deepcopy(chart.defaults)
             reason = "Projection violates schema constraints; original values retained"
+        inventory = self.report()
+        missing = {
+            "missing_values": inventory["missing_values"],
+            "schema_fields_without_values": inventory["schema_fields_without_values"],
+        }
+        content = (
+            "# Conservative input baseline; missing fields follow in document 2.\n"
+            "# See the adjacent .inventory.json for full evidence and limits.\n"
+            + yamlio.dump(values)
+            + "---\n"
+            + "# Missing input fields: diagnostic metadata, not chart values.\n"
+            + yamlio.dump(missing)
+        ).encode("utf-8")
+        checksum = hashlib.sha256(content).hexdigest()
+        epoch = int(time.time())
+        if target is None:
+            target = directory / f"values-minimal-{checksum}-{epoch}.yaml"
+        if target.resolve() in {
+            (chart.path / name).resolve()
+            for name in ("values.yaml", "values.schema.json", "Chart.yaml")
+        }:
+            raise ValueError("Minimal-values output must not overwrite source chart inputs")
         result = {
             "yaml": str(target),
             "inventory": str(target.with_suffix(".inventory.json")),
+            "sha256": checksum,
+            "exported_epoch": epoch,
+            "values_document": 1,
+            "missing_fields_document": 2,
             "reason": reason,
             "schema_valid": validator.is_valid(json_value(values)),
             "globally_minimal_proven": False,
             "render_equivalence_proven": False,
-            "input_inventory": self.report(),
+            "input_inventory": inventory,
         }
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(
-            "# Conservative input baseline; see the adjacent .inventory.json "
-            "for missing fields and limits.\n" + yamlio.dump(values)
-        )
+        target.write_bytes(content)
         target.with_suffix(".inventory.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 

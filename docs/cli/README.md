@@ -60,7 +60,7 @@ usage: helm hypothesis scan [-h] [--clone-timeout CLONE_TIMEOUT] [--report [PATH
                             [--permutations PERMUTATIONS] [--filter] [--fail]
                             [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
-                            [--dump-minimal-values [PATH]]
+                            [--export-minimal-values [FILENAME]]
                             SOURCE
 
 positional arguments:
@@ -92,9 +92,10 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
-  --dump-minimal-values [PATH]
-                        write conservative minimal-values.yaml and inventory; PATH
-                        overrides the YAML file (scan: output directory)
+  --export-minimal-values [FILENAME]
+                        export conservative values and inventory; default: values-
+                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
+                        chart)
 ~~~
 
 </details>
@@ -104,7 +105,7 @@ options:
 
 ~~~text
 usage: helm hypothesis generate [-h] [--output OUTPUT] [--max-examples MAX_EXAMPLES]
-                                [--strict] [--dump-minimal-values [PATH]]
+                                [--strict] [--export-minimal-values [FILENAME]]
                                 chart
 
 positional arguments:
@@ -116,9 +117,10 @@ options:
   --max-examples MAX_EXAMPLES
   --strict              require all configurable fields in source values.yaml and a
                         clean audit
-  --dump-minimal-values [PATH]
-                        write conservative minimal-values.yaml and inventory; PATH
-                        overrides the YAML file (scan: output directory)
+  --export-minimal-values [FILENAME]
+                        export conservative values and inventory; default: values-
+                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
+                        chart)
 ~~~
 
 </details>
@@ -127,7 +129,8 @@ options:
 <summary>helm hypothesis audit</summary>
 
 ~~~text
-usage: helm hypothesis audit [-h] [--strict] [--dump-minimal-values [PATH]] chart
+usage: helm hypothesis audit [-h] [--strict] [--export-minimal-values [FILENAME]]
+                             chart
 
 positional arguments:
   chart
@@ -135,9 +138,10 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   --strict              fail on any finding or unresolved access
-  --dump-minimal-values [PATH]
-                        write conservative minimal-values.yaml and inventory; PATH
-                        overrides the YAML file (scan: output directory)
+  --export-minimal-values [FILENAME]
+                        export conservative values and inventory; default: values-
+                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
+                        chart)
 ~~~
 
 </details>
@@ -218,7 +222,7 @@ usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DUR
                             [--cache-dir CACHE_DIR] [--disable-schema-caching]
                             [--progress] [--no-cache] [--rerun {auto,all,failed}]
                             [--shard SHARD] [--jobs JOBS] [--output {json}] [--strict]
-                            [--dump-minimal-values [PATH]]
+                            [--export-minimal-values [FILENAME]]
                             [chart]
 
 positional arguments:
@@ -289,9 +293,10 @@ options:
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a
                         clean audit
-  --dump-minimal-values [PATH]
-                        write conservative minimal-values.yaml and inventory; PATH
-                        overrides the YAML file (scan: output directory)
+  --export-minimal-values [FILENAME]
+                        export conservative values and inventory; default: values-
+                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
+                        chart)
 
 filtering:
   Use --filter or the individual methods below; random trimming is independent.

@@ -102,8 +102,18 @@ paths. Reusing an explicit output path replaces the previous report.
 JSON statistics, lint/dependency logs, and failing values go under
 `reports/scans/`; override that parent with `--artifact-dir`.
 
-Add `--dump-minimal-values` to retain a conservative YAML baseline and compiler
-inventory for each chart. An optional path selects a separate output directory.
+Repeated errors are grouped automatically across charts and dependencies. Reports
+show each diagnostic once, with links to every affected chart and phase. Dependency
+template errors match by chart name, version, template contents, and terminal
+diagnostic; unresolved sources use exact diagnostic matching. Different versions
+and messages remain separate. JSON includes `error_groups`, `error_summary`, and
+per-chart `error_refs`, while retaining original errors and artifacts. Grouping
+does not skip tests or change chart statuses, and a matching diagnostic does not
+prove a shared root cause.
+
+Add `--export-minimal-values` to retain a conservative YAML baseline and compiler
+inventory for each chart. An optional filename overrides the generated name; chart-relative subdirectories
+keep exports separate. The default is `values-minimal-<checksum>-<epoch>.yaml`.
 Reports include identified input-field counts and observed variation where
 available. See [Input inventory](../inputs/README.md) for the measurement contract.
 

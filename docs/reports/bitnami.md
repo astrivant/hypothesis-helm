@@ -66,6 +66,1001 @@ Baseline-only, skipped, blocked, and incomplete charts are not property-test pas
 }
 ```
 
+## Errors
+
+113 distinct diagnostics across 125 occurrences; 12 repeats grouped.
+Matching diagnostics do not establish a shared root cause.
+
+### E001
+
+```text
+Error: YAML parse error on apache/templates/svc.yaml: error converting YAML to JSON: yaml: line 13: mapping values are not allowed in this context
+```
+
+- [bitnami/apache (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/apache_1789251228/0000>)
+
+### E002
+
+```text
+Error: YAML parse error on apisix/templates/control-plane/api-token-secret.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/apisix (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/apisix_1789251228/0000>)
+
+### E003
+
+```text
+Error: YAML parse error on appsmith/templates/backend/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/appsmith (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/appsmith_1789251228/0000>)
+
+### E004
+
+```text
+Error: YAML parse error on argo-cd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/argo-cd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/argo-cd_1789251295/0000>)
+
+### E005
+
+```text
+Error: YAML parse error on argo-workflows/templates/controller/deployment.yaml: error converting YAML to JSON: yaml: line 30: mapping values are not allowed in this context
+```
+
+- [bitnami/argo-workflows (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/argo-workflows_1789251302/0000>)
+
+### E006
+
+```text
+Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/cassandra (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cassandra_1789251382/0000>)
+
+### E007
+
+```text
+Error: YAML parse error on cert-manager/templates/cainjector/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/cert-manager (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cert-manager_1789251391/0000>)
+
+### E008
+
+```text
+Error: YAML parse error on clickhouse/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 178: mapping values are not allowed in this context
+```
+
+- [bitnami/clickhouse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/clickhouse_1789251452/0000>)
+
+### E009
+
+```text
+Error: YAML parse error on cloudnative-pg/templates/operator/clusterrolebinding.yaml: error converting YAML to JSON: yaml: line 4: did not find expected comment or line break
+```
+
+- [bitnami/cloudnative-pg (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cloudnative-pg_1789251513/0000>)
+
+### E010
+
+```text
+Error: YAML parse error on consul/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/consul (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/consul_1789251533/0000>)
+
+### E011
+
+```text
+Error: YAML parse error on contour/templates/certgen/serviceaccount.yaml: error converting YAML to JSON: yaml: line 15: did not find expected key
+```
+
+- [bitnami/contour (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/contour_1789251558/0000>)
+
+### E012
+
+```text
+Error: YAML parse error on deepspeed/templates/client/client-dep-job.yaml: error converting YAML to JSON: yaml: line 31: did not find expected key
+```
+
+- [bitnami/deepspeed (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/deepspeed_1789251584/0000>)
+
+### E013
+
+```text
+Error: YAML parse error on discourse/templates/service.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+- [bitnami/discourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/discourse_1789251597/0000>)
+
+### E014
+
+```text
+Error: YAML parse error on dremio/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/dremio (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/dremio_1789251625/0000>)
+
+### E015
+
+```text
+Error: YAML parse error on drupal/templates/svc.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/drupal (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/drupal_1789251652/0000>)
+
+### E016
+
+```text
+Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/ejbca (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/ejbca_1789251723/0000>)
+
+### E017
+
+```text
+Error: YAML parse error on elasticsearch/templates/coordinating/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/elasticsearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/elasticsearch_1789251725/0000>)
+
+### E018
+
+```text
+Error: YAML parse error on envoy-gateway/templates/deployment.yaml: error converting YAML to JSON: yaml: line 37: did not find expected key
+```
+
+- [bitnami/envoy-gateway (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/envoy-gateway_1789251751/0000>)
+
+### E019
+
+```text
+Error: YAML parse error on external-dns/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/external-dns (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/external-dns_1789251819/0000>)
+
+### E020
+
+```text
+Error: YAML parse error on flink/templates/jobmanager/deployment.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+- [bitnami/flink (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/flink_1789251853/0000>)
+
+### E021
+
+```text
+Error: YAML parse error on fluentd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/fluentd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/fluentd_1789251891/0000>)
+
+### E022
+
+```text
+Error: YAML parse error on flux/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/flux (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/flux_1789251919/0000>)
+
+### E023
+
+```text
+Error: YAML parse error on ghost/templates/svc.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+- [bitnami/ghost (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/ghost_1789251929/0000>)
+
+### E024
+
+```text
+Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/gitea (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/gitea_1789251952/0000>)
+
+### E025
+
+```text
+Error: YAML parse error on gitlab-runner/templates/cluster-role.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/gitlab-runner (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/gitlab-runner_1789251987/0000>)
+
+### E026
+
+```text
+Error: YAML parse error on grafana-alloy/templates/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/grafana-alloy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-alloy_1789252023/0000>)
+
+### E027
+
+```text
+Error: YAML parse error on grafana-loki/templates/gateway/configmap-http.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/grafana-loki (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-loki_1789252062/0000>)
+
+### E028
+
+```text
+Error: YAML parse error on grafana-operator/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/grafana-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-operator_1789252073/0000>)
+
+### E029
+
+```text
+Error: YAML parse error on grafana-tempo/templates/tempo-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/grafana-tempo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-tempo_1789252105/0000>)
+
+### E030
+
+```text
+Error: YAML parse error on haproxy/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/haproxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/haproxy_1789252206/0000>)
+
+### E031
+
+```text
+Error: YAML parse error on harbor/templates/core/core-dpl.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/harbor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/harbor_1789252208/0000>)
+
+### E032
+
+```text
+Error: YAML parse error on influxdb/templates/pdb.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/influxdb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/influxdb_1789252221/0000>)
+
+### E033
+
+```text
+Error: YAML parse error on janusgraph/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/janusgraph (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/janusgraph_1789252257/0000>)
+
+### E034
+
+```text
+Error: YAML parse error on kafka/templates/controller-eligible/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/kafka (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kafka_1789252297/0000>)
+
+### E035
+
+```text
+Error: YAML parse error on kube-arangodb/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/kube-arangodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-arangodb_1789252412/0000>)
+
+### E036
+
+```text
+Error: YAML parse error on kuberay/templates/apiserver/clusterrolebinding.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+- [bitnami/kuberay (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kuberay_1789252452/0000>)
+
+### E037
+
+```text
+Error: YAML parse error on kubernetes-event-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/kubernetes-event-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kubernetes-event-exporter_1789252461/0000>)
+
+### E038
+
+```text
+Error: YAML parse error on logstash/templates/sts.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/logstash (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/logstash_1789252473/0000>)
+
+### E039
+
+```text
+Error: YAML parse error on mariadb-galera/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/mariadb-galera (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb-galera_1789252506/0000>)
+
+### E040
+
+```text
+Error: YAML parse error on mastodon/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/mastodon (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mastodon_1789252506/0000>)
+
+### E041
+
+```text
+Error: YAML parse error on matomo/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/matomo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/matomo_1789252549/0000>)
+
+### E042
+
+```text
+Error: YAML parse error on metrics-server/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/metrics-server (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/metrics-server_1789252645/0000>)
+
+### E043
+
+```text
+Error: YAML parse error on mlflow/templates/run/dep-job.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/mlflow (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mlflow_1789252697/0000>)
+
+### E044
+
+```text
+Error: YAML parse error on mlflow/templates/run/dep-job.yaml: error converting YAML to JSON: yaml: line 29: did not find expected key
+```
+
+- [bitnami/mlflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mlflow_1789252697/0000>)
+
+### E045
+
+```text
+Error: YAML parse error on mongodb-sharded/templates/config-server/config-server-statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/mongodb-sharded (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mongodb-sharded_1789252809/0000>)
+
+### E046
+
+```text
+Error: YAML parse error on mongodb/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/mongodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mongodb_1789252761/0000>)
+
+### E047
+
+```text
+Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/moodle (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/moodle_1789252874/0000>)
+
+### E048
+
+```text
+Error: YAML parse error on multus-cni/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 73: did not find expected comment or line break
+```
+
+- [bitnami/multus-cni (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/multus-cni_1789252902/0000>)
+
+### E049
+
+```text
+Error: YAML parse error on mysql/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/mysql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mysql_1789252935/0000>)
+
+### E050
+
+```text
+Error: YAML parse error on nessie/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/nessie (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nessie_1789252998/0000>)
+
+### E051
+
+```text
+Error: YAML parse error on nginx/templates/context-includes-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/nginx (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nginx_1789253009/0000>)
+
+### E052
+
+```text
+Error: YAML parse error on nginx/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/nginx (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nginx_1789253009/0000>)
+
+### E053
+
+```text
+Error: YAML parse error on node-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/node-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/node-exporter_1789253016/0000>)
+
+### E054
+
+```text
+Error: YAML parse error on parse/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/parse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/parse_1789253081/0000>)
+
+### E055
+
+```text
+Error: YAML parse error on phpmyadmin/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/phpmyadmin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/phpmyadmin_1789253091/0000>)
+
+### E056
+
+```text
+Error: YAML parse error on pinniped/templates/concierge/apiservice-identity.yaml: error converting YAML to JSON: yaml: line 23: found unexpected end of stream
+```
+
+- [bitnami/pinniped (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/pinniped_1789253122/0000>)
+
+### E057
+
+```text
+Error: YAML parse error on prometheus/templates/alertmanager/networkpolicy.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/prometheus_1789253175/0000>)
+
+### E058
+
+```text
+Error: YAML parse error on prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/prometheus (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/prometheus_1789253175/0000>)
+
+### E059
+
+```text
+Error: YAML parse error on rabbitmq/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/rabbitmq (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq_1789253191/0000>)
+
+### E060
+
+```text
+Error: YAML parse error on redmine/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/redmine (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redmine_1789253293/0000>)
+
+### E061
+
+```text
+Error: YAML parse error on seaweedfs/templates/filer/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/seaweedfs (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/seaweedfs_1789253341/0000>)
+
+### E062
+
+```text
+Error: YAML parse error on solr/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 180: did not find expected key
+```
+
+- [bitnami/solr (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/solr_1789253352/0000>)
+
+### E063
+
+```text
+Error: YAML parse error on sonarqube/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/sonarqube (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/sonarqube_1789253377/0000>)
+
+### E064
+
+```text
+Error: YAML parse error on spark/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/spark (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/spark_1789253392/0000>)
+
+### E065
+
+```text
+Error: YAML parse error on superset/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/superset (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/superset_1789253412/0000>)
+
+### E066
+
+```text
+Error: YAML parse error on tensorflow-resnet/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/tensorflow-resnet (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/tensorflow-resnet_1789253441/0000>)
+
+### E067
+
+```text
+Error: YAML parse error on thanos/templates/storegateway/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/thanos (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/thanos_1789253463/0000>)
+
+### E068
+
+```text
+Error: YAML parse error on tomcat/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/tomcat (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/tomcat_1789253463/0000>)
+
+### E069
+
+```text
+Error: YAML parse error on valkey-cluster/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/valkey-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/valkey-cluster_1789253483/0000>)
+
+### E070
+
+```text
+Error: YAML parse error on valkey/templates/replicas/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/valkey (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/valkey_1789253482/0000>)
+
+### E071
+
+```text
+Error: YAML parse error on vault/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/vault (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/vault_1789253486/0000>)
+
+### E072
+
+```text
+Error: YAML parse error on victoriametrics/templates/vmagent/dep-ds.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/victoriametrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/victoriametrics_1789253519/0000>)
+
+### E073
+
+```text
+Error: YAML parse error on wordpress/templates/httpd-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/wordpress (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/wordpress_1789253554/0000>)
+
+### E074
+
+```text
+Error: execution error at (airflow/templates/NOTES.txt:129:3): 
+VALUES VALIDATION:
+
+airflow: executors
+    You need to provide at least one value for the '.executor' parameter.
+```
+
+- [bitnami/airflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/airflow_1789251228/0000>)
+
+### E075
+
+```text
+Error: execution error at (aspnet-core/templates/NOTES.txt:58:4): 
+VALUES VALIDATION:
+aspnet-core: missing-extra-volume-mounts
+    You specified extra volumes but not mount points for them.
+    Please also set the extraVolumeMounts parameter.
+```
+
+- [bitnami/aspnet-core (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/aspnet-core_1789251350/0000>)
+
+### E076
+
+```text
+Error: execution error at (cadvisor/templates/daemonset.yaml:155:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
+```
+
+- [bitnami/cadvisor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cadvisor_1789251373/0000>)
+
+### E077
+
+```text
+Error: execution error at (chainloop/templates/controlplane/secret-jwt-cas-private-key.yaml:14:22): Authentication Private Key "casJWTPrivateKey" required
+```
+
+- [bitnami/chainloop (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/chainloop_1789251406/0000>)
+
+### E078
+
+```text
+Error: execution error at (drupal/charts/mariadb/templates/NOTES.txt:74:4): 
+VALUES VALIDATION:
+mariadb: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/drupal (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/drupal_1789251652/0000>)
+
+### E079
+
+```text
+Error: execution error at (fluent-bit/templates/NOTES.txt:30:4): 
+
+⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Unrecognized images:
+  - 00/bitnami/fluent-bit:4.0.8-debian-12-r0
+
+If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
+Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+- [bitnami/fluent-bit (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/fluent-bit_1789251880/0000>)
+
+### E080
+
+```text
+Error: execution error at (grafana-mimir/charts/memcachedchunks/templates/NOTES.txt:46:4): 
+VALUES VALIDATION:
+memcached: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "high-availability". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/grafana-mimir (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-mimir_1789252066/0000>)
+
+### E081
+
+```text
+Error: execution error at (jaeger/templates/collector/deployment.yaml:199:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
+```
+
+- [bitnami/jaeger (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jaeger_1789252233/0000>)
+
+### E082
+
+```text
+Error: execution error at (jenkins/templates/NOTES.txt:54:4): 
+
+⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Unrecognized images:
+  - 00/bitnami/jenkins:2.516.2-debian-12-r0
+  - 00/bitnami/jenkins-agent:0.3327.0-debian-12-r1
+  - 00/bitnami/os-shell:12-debian-12-r51
+
+If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
+Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+- [bitnami/jenkins (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jenkins_1789252283/0000>)
+
+### E083
+
+```text
+Error: execution error at (jupyterhub/templates/proxy/deployment.yaml:32:32): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+```
+
+- [bitnami/jupyterhub (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jupyterhub_1789252291/0000>)
+
+### E084
+
+```text
+Error: execution error at (kube-state-metrics/templates/deployment.yaml:205:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
+```
+
+- [bitnami/kube-state-metrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-state-metrics_1789252452/0000>)
+
+### E085
+
+```text
+Error: execution error at (mariadb/templates/NOTES.txt:74:4): 
+VALUES VALIDATION:
+mariadb: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/mariadb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb_1789252495/0000>)
+- [bitnami/mariadb (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb_1789252495/0000>)
+
+### E086
+
+```text
+Error: execution error at (memcached/templates/NOTES.txt:46:4): 
+VALUES VALIDATION:
+memcached: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "high-availability". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/memcached (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/memcached_1789252601/0000>)
+
+### E087
+
+```text
+Error: execution error at (nats/templates/NOTES.txt:176:4): 
+VALUES VALIDATION:
+nats: resourceType
+    Invalid resourceType selected. Valid values are "deployment" and
+    "statefulset". Please set a valid mode (--set resourceType="xxxx")
+```
+
+- [bitnami/nats (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nats_1789252944/0000>)
+
+### E088
+
+```text
+Error: execution error at (oauth2-proxy/charts/redis/templates/NOTES.txt:202:4): 
+VALUES VALIDATION:
+redis: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/oauth2-proxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/oauth2-proxy_1789253043/0000>)
+
+### E089
+
+```text
+Error: execution error at (odoo/templates/deployment.yaml:270:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
+```
+
+- [bitnami/odoo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/odoo_1789253062/0000>)
+
+### E090
+
+```text
+Error: execution error at (opensearch/templates/ingest/statefulset.yaml:90:12): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+```
+
+- [bitnami/opensearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/opensearch_1789253064/0000>)
+
+### E091
+
+```text
+Error: execution error at (postgresql/templates/NOTES.txt:118:4): 
+VALUES VALIDATION:
+postgresql: psp.create, rbac.create
+    RBAC should be enabled if PSP is enabled in order for PSP to work.
+    More info at https://kubernetes.io/docs/concepts/policy/pod-security-policy/#authorizing-policies
+```
+
+- [bitnami/postgresql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/postgresql_1789253136/0000>)
+
+### E092
+
+```text
+Error: execution error at (pytorch/templates/NOTES.txt:69:3): 
+VALUES VALIDATION:
+pytorch: architecture
+    Invalid architecture selected. Valid values are "distributed" and
+    "standalone". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/pytorch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/pytorch_1789253187/0000>)
+
+### E093
+
+```text
+Error: execution error at (redis/templates/NOTES.txt:202:4): 
+VALUES VALIDATION:
+redis: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/redis (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redis_1789253220/0000>)
+- [bitnami/redis (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redis_1789253220/0000>)
+
+### E094
+
+```text
+Error: execution error at (sealed-secrets/templates/deployment.yaml:172:25): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+```
+
+- [bitnami/sealed-secrets (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/sealed-secrets_1789253315/0000>)
+
+### E095
+
+```text
+Error: execution error at (whereabouts/templates/daemonset.yaml:164:25): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+```
+
+- [bitnami/whereabouts (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/whereabouts_1789253539/0000>)
+
+### E096
+
+```text
+Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-aswf0y7m/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+```
+
+- [bitnami/jenkins (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jenkins_1789252283/0000>)
+
+### E097
+
+```text
+Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-i22elfg5/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+```
+
+- [bitnami/redmine (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redmine_1789253293/0000>)
+
+### E098
+
+```text
+Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-if0kaa5a/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+```
+
+- [bitnami/ghost (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/ghost_1789251929/0000>)
+
+### E099
+
+```text
+Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-rtvpkvk8/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+```
+
+- [bitnami/rabbitmq (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq_1789253191/0000>)
+
+### E100
+
+```text
+Error: grafana/templates/application.yaml:225:72
+  executing "grafana/templates/application.yaml" at <.configMapName>:
+    nil pointer evaluating interface {}.configMapName
+```
+
+- [bitnami/grafana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana_1789252005/0000>)
+
+### E101
+
+```text
+Error: kibana/templates/ingress.yaml:33:64
+  executing "kibana/templates/ingress.yaml" at <.name>:
+    nil pointer evaluating interface {}.name
+```
+
+- [bitnami/kibana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kibana_1789252366/0000>)
+
+### E102
+
+```text
+Error: neo4j/templates/networkpolicy.yaml:47:19
+  executing "neo4j/templates/networkpolicy.yaml" at <.containerPort>:
+    nil pointer evaluating interface {}.containerPort
+```
+
+- [bitnami/neo4j (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/neo4j_1789252975/0000>)
+
+### E103
+
+```text
+Error: schema-registry/templates/http-route.yaml:7:13
+  executing "schema-registry/templates/http-route.yaml" at <$route.enabled>:
+    nil pointer evaluating interface {}.enabled
+```
+
+- [bitnami/schema-registry (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/schema-registry_1789253309/0000>)
+
+### E104
+
+```text
+Error: template: cilium/templates/agent/daemonset.yaml:30:15: executing "cilium/templates/agent/daemonset.yaml" at <semverCompare "<1.30-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
+```
+
+- [bitnami/cilium (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cilium_1789251449/0000>)
+
+### E105
+
+```text
+Error: template: concourse/templates/worker/rolebinding.yaml:27:22: executing "concourse/templates/worker/rolebinding.yaml" at <semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
+```
+
+- [bitnami/concourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/concourse_1789251532/0000>)
+
+### E106
+
+```text
+Error: template: metallb/templates/speaker/rbac.yaml:44:14: executing "metallb/templates/speaker/rbac.yaml" at <include "common.capabilities.psp.supported" .>: error calling include: template: metallb/charts/common/templates/_capabilities.tpl:131:32: executing "common.capabilities.psp.supported" at <semverCompare "<1.25-0" $kubeVersion>: error calling semverCompare: invalid semantic version
+```
+
+- [bitnami/metallb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/metallb_1789252639/0000>)
+
+### E107
+
+```text
+Error: template: rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml:14:13: executing "rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml" at <genSignedCert (include "rmqco.msgTopologyOperator.fullname" .) nil (list (printf "%s.%s.svc" (include "rmqco.msgTopologyOperator.webhook.fullname" .) (include "common.names.namespace" .)) (printf "%s.%s.svc.%s" (include "rmqco.msgTopologyOperator.webhook.fullname" .) (include "common.names.namespace" .) .Values.clusterDomain)) 365 $ca>: error calling genSignedCert: error creating certificate: x509: "hypothesis-rabbitmq-messaging-topology-operator-webhook.default.svc.\u0080" cannot be encoded as an IA5String
+```
+
+- [bitnami/rabbitmq-cluster-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq-cluster-operator_1789253208/0000>)
+
+### E108
+
+```text
+chart rendered no resources (use allow_empty explicitly)
+```
+
+- [bitnami/kube-prometheus/charts/kube-prometheus-crds (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus-crds_1789252451/0000>)
+- [bitnami/kube-prometheus/charts/kube-prometheus-crds (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus-crds_1789252451/0000>)
+
+### E109
+
+```text
+duplicate resource: ('rbac.authorization.k8s.io/v1', 'Role', None, 'hypothesis-clickhouse-operator')
+```
+
+- [bitnami/clickhouse-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/clickhouse-operator_1789251497/0000>)
+
+### E110
+
+```text
+invalid rendered YAML: more indented follow up line than first in a block scalar
+  in "<unicode string>", line 474, column 15:
+                  set -o errexit
+                  ^ (line: 474)
+```
+
+- [bitnami/zipkin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/zipkin_1789253576/0000>)
+- [bitnami/zipkin (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/zipkin_1789253576/0000>)
+
+### E111
+
+```text
+The test tool could not convert a YAML-tagged value to JSON. See this chart's reproducing values. This diagnostic alone does not establish a chart defect.
+```
+
+- [bitnami/apache (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/apache_1789251228/0000>)
+- [bitnami/grafana-k6-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-k6-operator_1789252042/0000>)
+- [bitnami/kong (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kong_1789252404/0000>)
+- [bitnami/redis-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redis-cluster_1789253276/0000>)
+- [bitnami/scylladb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/scylladb_1789253311/0000>)
+- [bitnami/zookeeper (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/zookeeper_1789253580/0000>)
+
+### E112
+
+```text
+level=INFO msg="warning: destination for kube-state-metrics.rbac.rules is a table. Ignoring non-table value ([])"
+Error: YAML parse error on kube-prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/kube-prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus_1789252419/0000>)
+
+### E113
+
+```text
+resource has no metadata.name
+```
+
+- [bitnami/keycloak (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/keycloak_1789252350/0000>)
+- [bitnami/keydb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/keydb_1789252362/0000>)
+- [bitnami/postgresql-ha (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/postgresql-ha_1789253152/0000>)
+- [bitnami/wildfly (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/wildfly_1789253553/0000>)
+
 ## Charts
 
 ### bitnami/airflow
@@ -82,14 +1077,14 @@ Phase known-inputs: failed | Attempts: 44
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (airflow/templates/NOTES.txt:129:3): 
-VALUES VALIDATION:
+Errors: [E074](#e074)
 
-airflow: executors
-    You need to provide at least one value for the '.executor' parameter.
+Reproducing values (known-inputs):
 
-Use --debug flag to render out invalid YAML
+```json
+{
+  "executor": ""
+}
 ```
 
 ### bitnami/apache
@@ -106,12 +1101,25 @@ Phase known-inputs: failed | Attempts: 119
 
 Phase robustness: failed | Attempts: 292
 
-```text
-known-inputs: invalid rendered manifest: Object of type TaggedScalar is not JSON serializable
+Errors: [E111](#e111), [E001](#e001)
 
-robustness: Error: YAML parse error on apache/templates/svc.yaml: error converting YAML to JSON: yaml: line 13: mapping values are not allowed in this context
+Reproducing values (known-inputs):
 
-Use --debug flag to render out invalid YAML
+```json
+{
+  "extraEnvVarsCM": "="
+}
+```
+
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "service": {
+    "type": ":"
+  }
+}
 ```
 
 ### bitnami/apisix
@@ -128,10 +1136,14 @@ Phase known-inputs: failed | Attempts: 52
 
 Phase robustness: time-limit | Attempts: 31
 
-```text
-known-inputs: Error: YAML parse error on apisix/templates/control-plane/api-token-secret.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E002](#e002)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "nameOverride": "\u001f"
+}
 ```
 
 ### bitnami/appsmith
@@ -148,10 +1160,14 @@ Phase known-inputs: failed | Attempts: 35
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on appsmith/templates/backend/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E003](#e003)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "nameOverride": "\u001f"
+}
 ```
 
 ### bitnami/argo-cd
@@ -168,10 +1184,16 @@ Phase known-inputs: failed | Attempts: 61
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on argo-cd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E004](#e004)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/argo-workflows
@@ -188,10 +1210,16 @@ Phase known-inputs: failed | Attempts: 29
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on argo-workflows/templates/controller/deployment.yaml: error converting YAML to JSON: yaml: line 30: mapping values are not allowed in this context
+Errors: [E005](#e005)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "commonAnnotations": {
+    "": null
+  }
+}
 ```
 
 ### bitnami/aspnet-core
@@ -208,14 +1236,16 @@ Phase known-inputs: failed | Attempts: 85
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (aspnet-core/templates/NOTES.txt:58:4): 
-VALUES VALIDATION:
-aspnet-core: missing-extra-volume-mounts
-    You specified extra volumes but not mount points for them.
-    Please also set the extraVolumeMounts parameter.
+Errors: [E075](#e075)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraVolumes": [
+    null
+  ]
+}
 ```
 
 ### bitnami/cadvisor
@@ -232,10 +1262,14 @@ Phase known-inputs: failed | Attempts: 25
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (cadvisor/templates/daemonset.yaml:155:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
+Errors: [E076](#e076)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "resourcesPreset": ""
+}
 ```
 
 ### bitnami/cassandra
@@ -252,10 +1286,14 @@ Phase known-inputs: failed | Attempts: 34
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E006](#e006)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
 ```
 
 ### bitnami/cert-manager
@@ -272,10 +1310,16 @@ Phase known-inputs: failed | Attempts: 69
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on cert-manager/templates/cainjector/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E007](#e007)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "leaderElection": {
+    "namespace": "\u001f"
+  }
+}
 ```
 
 ### bitnami/chainloop
@@ -292,10 +1336,14 @@ Phase known-inputs: failed | Attempts: 64
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (chainloop/templates/controlplane/secret-jwt-cas-private-key.yaml:14:22): Authentication Private Key "casJWTPrivateKey" required
+Errors: [E077](#e077)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "development": false
+}
 ```
 
 ### bitnami/cilium
@@ -312,10 +1360,14 @@ Phase known-inputs: failed | Attempts: 86
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: template: cilium/templates/agent/daemonset.yaml:30:15: executing "cilium/templates/agent/daemonset.yaml" at <semverCompare "<1.30-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
+Errors: [E104](#e104)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "kubeVersion": ":"
+}
 ```
 
 ### bitnami/clickhouse
@@ -332,10 +1384,14 @@ Phase known-inputs: failed | Attempts: 92
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on clickhouse/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 178: mapping values are not allowed in this context
+Errors: [E008](#e008)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "startdbScriptsSecret": ":"
+}
 ```
 
 ### bitnami/clickhouse-operator
@@ -352,8 +1408,17 @@ Phase known-inputs: failed | Attempts: 56
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: duplicate resource: ('rbac.authorization.k8s.io/v1', 'Role', None, 'hypothesis-clickhouse-operator')
+Errors: [E109](#e109)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "watchNamespaces": [
+    null,
+    null
+  ]
+}
 ```
 
 ### bitnami/cloudnative-pg
@@ -370,10 +1435,14 @@ Phase known-inputs: failed | Attempts: 51
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on cloudnative-pg/templates/operator/clusterrolebinding.yaml: error converting YAML to JSON: yaml: line 4: did not find expected comment or line break
+Errors: [E009](#e009)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "fullnameOverride": ">"
+}
 ```
 
 ### bitnami/common
@@ -400,10 +1469,14 @@ Phase known-inputs: failed | Attempts: 57
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: template: concourse/templates/worker/rolebinding.yaml:27:22: executing "concourse/templates/worker/rolebinding.yaml" at <semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
+Errors: [E105](#e105)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "kubeVersion": ":"
+}
 ```
 
 ### bitnami/consul
@@ -420,10 +1493,14 @@ Phase known-inputs: failed | Attempts: 39
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on consul/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E010](#e010)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "existingConfigmap": "\u001f"
+}
 ```
 
 ### bitnami/contour
@@ -440,10 +1517,16 @@ Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on contour/templates/certgen/serviceaccount.yaml: error converting YAML to JSON: yaml: line 15: did not find expected key
+Errors: [E011](#e011)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "commonAnnotations": {
+    "": null
+  }
+}
 ```
 
 ### bitnami/deepspeed
@@ -460,10 +1543,16 @@ Phase known-inputs: failed | Attempts: 12
 
 Phase robustness: time-limit | Attempts: 89
 
-```text
-known-inputs: Error: YAML parse error on deepspeed/templates/client/client-dep-job.yaml: error converting YAML to JSON: yaml: line 31: did not find expected key
+Errors: [E012](#e012)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "commonAnnotations": {
+    "": null
+  }
+}
 ```
 
 ### bitnami/discourse
@@ -480,10 +1569,18 @@ Phase known-inputs: failed | Attempts: 61
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on discourse/templates/service.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+Errors: [E013](#e013)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "service": {
+    "annotations": {
+      "": []
+    }
+  }
+}
 ```
 
 ### bitnami/dremio
@@ -500,10 +1597,16 @@ Phase known-inputs: failed | Attempts: 32
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on dremio/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E014](#e014)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/drupal
@@ -520,18 +1623,27 @@ Phase known-inputs: failed | Attempts: 29
 
 Phase robustness: failed | Attempts: 223
 
-```text
-known-inputs: Error: execution error at (drupal/charts/mariadb/templates/NOTES.txt:74:4): 
-VALUES VALIDATION:
-mariadb: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
+Errors: [E078](#e078), [E015](#e015)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: YAML parse error on drupal/templates/svc.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```json
+{
+  "mariadb": {
+    "architecture": ""
+  }
+}
+```
 
-Use --debug flag to render out invalid YAML
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "service": {
+    "type": "\u001f"
+  }
+}
 ```
 
 ### bitnami/ejbca
@@ -548,10 +1660,14 @@ Phase known-inputs: failed | Attempts: 46
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E016](#e016)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "ejbcaKeystoreExistingSecret": "\u001f"
+}
 ```
 
 ### bitnami/elasticsearch
@@ -568,10 +1684,14 @@ Phase known-inputs: failed | Attempts: 79
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on elasticsearch/templates/coordinating/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E017](#e017)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "clusterDomain": "\u001f"
+}
 ```
 
 ### bitnami/envoy-gateway
@@ -588,10 +1708,16 @@ Phase known-inputs: failed | Attempts: 56
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on envoy-gateway/templates/deployment.yaml: error converting YAML to JSON: yaml: line 37: did not find expected key
+Errors: [E018](#e018)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "commonAnnotations": {
+    "": null
+  }
+}
 ```
 
 ### bitnami/etcd
@@ -622,10 +1748,14 @@ Phase known-inputs: failed | Attempts: 47
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on external-dns/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E019](#e019)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "interval": "\u001f"
+}
 ```
 
 ### bitnami/flink
@@ -642,10 +1772,16 @@ Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on flink/templates/jobmanager/deployment.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+Errors: [E020](#e020)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "commonAnnotations": {
+    "": []
+  }
+}
 ```
 
 ### bitnami/fluent-bit
@@ -662,18 +1798,16 @@ Phase known-inputs: failed | Attempts: 144
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (fluent-bit/templates/NOTES.txt:30:4): 
+Errors: [E079](#e079)
 
-⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+Reproducing values (known-inputs):
 
-Unrecognized images:
-  - 00/bitnami/fluent-bit:4.0.8-debian-12-r0
-
-If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
-Further information can be obtained at https://github.com/bitnami/charts/issues/30850
-
-Use --debug flag to render out invalid YAML
+```json
+{
+  "global": {
+    "imageRegistry": "00"
+  }
+}
 ```
 
 ### bitnami/fluentd
@@ -690,10 +1824,16 @@ Phase known-inputs: failed | Attempts: 28
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on fluentd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E021](#e021)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/flux
@@ -710,10 +1850,16 @@ Phase known-inputs: failed | Attempts: 18
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on flux/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E022](#e022)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/ghost
@@ -730,12 +1876,28 @@ Phase known-inputs: failed | Attempts: 154
 
 Phase robustness: failed | Attempts: 242
 
-```text
-known-inputs: Error: YAML parse error on ghost/templates/svc.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+Errors: [E023](#e023), [E098](#e098)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-if0kaa5a/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+```json
+{
+  "service": {
+    "annotations": {
+      "": []
+    }
+  }
+}
+```
+
+Reproducing values (robustness):
+
+```json
+{
+  "": {
+    "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
+  }
+}
 ```
 
 ### bitnami/gitea
@@ -752,10 +1914,14 @@ Phase known-inputs: failed | Attempts: 46
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E024](#e024)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "smtpExistingSecret": "\u001f"
+}
 ```
 
 ### bitnami/gitlab-runner
@@ -772,10 +1938,14 @@ Phase known-inputs: failed | Attempts: 112
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on gitlab-runner/templates/cluster-role.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E025](#e025)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "nameOverride": "\u001f"
+}
 ```
 
 ### bitnami/grafana
@@ -792,12 +1962,16 @@ Phase known-inputs: failed | Attempts: 96
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: grafana/templates/application.yaml:225:72
-  executing "grafana/templates/application.yaml" at <.configMapName>:
-    nil pointer evaluating interface {}.configMapName
+Errors: [E100](#e100)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "dashboardsConfigMaps": [
+    null
+  ]
+}
 ```
 
 ### bitnami/grafana-alloy
@@ -814,10 +1988,14 @@ Phase known-inputs: failed | Attempts: 138
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on grafana-alloy/templates/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E026](#e026)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "nameOverride": "\u001f"
+}
 ```
 
 ### bitnami/grafana-k6-operator
@@ -834,8 +2012,14 @@ Phase known-inputs: failed | Attempts: 86
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: invalid rendered manifest: Object of type TaggedScalar is not JSON serializable
+Errors: [E111](#e111)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "="
+}
 ```
 
 ### bitnami/grafana-loki
@@ -852,10 +2036,14 @@ Phase known-inputs: failed | Attempts: 48
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on grafana-loki/templates/gateway/configmap-http.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E027](#e027)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "clusterDomain": "\u001f"
+}
 ```
 
 ### bitnami/grafana-mimir
@@ -872,14 +2060,16 @@ Phase known-inputs: failed | Attempts: 24
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (grafana-mimir/charts/memcachedchunks/templates/NOTES.txt:46:4): 
-VALUES VALIDATION:
-memcached: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "high-availability". Please set a valid architecture (--set architecture="xxxx")
+Errors: [E080](#e080)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "memcachedchunks": {
+    "architecture": ""
+  }
+}
 ```
 
 ### bitnami/grafana-operator
@@ -896,10 +2086,16 @@ Phase known-inputs: failed | Attempts: 61
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on grafana-operator/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E028](#e028)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/grafana-tempo
@@ -916,10 +2112,16 @@ Phase known-inputs: failed | Attempts: 37
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on grafana-tempo/templates/tempo-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E029](#e029)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "tempo": {
+    "configuration": "\u001f"
+  }
+}
 ```
 
 ### bitnami/haproxy
@@ -936,10 +2138,16 @@ Phase known-inputs: failed | Attempts: 92
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on haproxy/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E030](#e030)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/harbor
@@ -956,10 +2164,14 @@ Phase known-inputs: failed | Attempts: 36
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on harbor/templates/core/core-dpl.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E031](#e031)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "existingSecret": "\u001f"
+}
 ```
 
 ### bitnami/influxdb
@@ -976,10 +2188,16 @@ Phase known-inputs: failed | Attempts: 243
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on influxdb/templates/pdb.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E032](#e032)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "pdb": {
+    "maxUnavailable": "\u001f"
+  }
+}
 ```
 
 ### bitnami/jaeger
@@ -996,10 +2214,16 @@ Phase known-inputs: failed | Attempts: 106
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (jaeger/templates/collector/deployment.yaml:199:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
+Errors: [E081](#e081)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "collector": {
+    "resourcesPreset": ""
+  }
+}
 ```
 
 ### bitnami/janusgraph
@@ -1016,10 +2240,14 @@ Phase known-inputs: failed | Attempts: 38
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on janusgraph/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E033](#e033)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "existingConfigmap": "\u001f"
+}
 ```
 
 ### bitnami/jenkins
@@ -1036,22 +2264,26 @@ Phase known-inputs: failed | Attempts: 136
 
 Phase robustness: failed | Attempts: 269
 
-```text
-known-inputs: Error: execution error at (jenkins/templates/NOTES.txt:54:4): 
+Errors: [E082](#e082), [E096](#e096)
 
-⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+Reproducing values (known-inputs):
 
-Unrecognized images:
-  - 00/bitnami/jenkins:2.516.2-debian-12-r0
-  - 00/bitnami/jenkins-agent:0.3327.0-debian-12-r1
-  - 00/bitnami/os-shell:12-debian-12-r51
+```json
+{
+  "global": {
+    "imageRegistry": "00"
+  }
+}
+```
 
-If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
-Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+Reproducing values (robustness):
 
-Use --debug flag to render out invalid YAML
-
-robustness: Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-aswf0y7m/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+```json
+{
+  "": {
+    "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
+  }
+}
 ```
 
 ### bitnami/jupyterhub
@@ -1068,10 +2300,16 @@ Phase known-inputs: failed | Attempts: 25
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (jupyterhub/templates/proxy/deployment.yaml:32:32): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+Errors: [E083](#e083)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "singleuser": {
+    "resourcesPreset": ""
+  }
+}
 ```
 
 ### bitnami/kafka
@@ -1088,10 +2326,14 @@ Phase known-inputs: failed | Attempts: 40
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on kafka/templates/controller-eligible/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E034](#e034)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "dnsPolicy": "\u001f"
+}
 ```
 
 ### bitnami/keycloak
@@ -1108,8 +2350,14 @@ Phase known-inputs: failed | Attempts: 139
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: resource has no metadata.name
+Errors: [E113](#e113)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "fullnameOverride": "0"
+}
 ```
 
 ### bitnami/keydb
@@ -1126,8 +2374,14 @@ Phase known-inputs: failed | Attempts: 26
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: resource has no metadata.name
+Errors: [E113](#e113)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "fullnameOverride": "0"
+}
 ```
 
 ### bitnami/kibana
@@ -1144,12 +2398,19 @@ Phase known-inputs: failed | Attempts: 216
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: kibana/templates/ingress.yaml:33:64
-  executing "kibana/templates/ingress.yaml" at <.name>:
-    nil pointer evaluating interface {}.name
+Errors: [E101](#e101)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "ingress": {
+    "enabled": true,
+    "extraHosts": [
+      null
+    ]
+  }
+}
 ```
 
 ### bitnami/kong
@@ -1166,8 +2427,14 @@ Phase known-inputs: failed | Attempts: 41
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: invalid rendered manifest: Object of type TaggedScalar is not JSON serializable
+Errors: [E111](#e111)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "terminationGracePeriodSeconds": "="
+}
 ```
 
 ### bitnami/kube-arangodb
@@ -1184,10 +2451,14 @@ Phase known-inputs: failed | Attempts: 62
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on kube-arangodb/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E035](#e035)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "nameOverride": "\u001f"
+}
 ```
 
 ### bitnami/kube-prometheus
@@ -1204,11 +2475,16 @@ Phase known-inputs: failed | Attempts: 18
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: level=INFO msg="warning: destination for kube-state-metrics.rbac.rules is a table. Ignoring non-table value ([])"
-Error: YAML parse error on kube-prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E112](#e112)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/kube-prometheus/charts/kube-prometheus-crds
@@ -1225,10 +2501,18 @@ Phase known-inputs: failed | Attempts: 1
 
 Phase robustness: failed | Attempts: 1
 
-```text
-known-inputs: chart rendered no resources (use allow_empty explicitly)
+Errors: [E108](#e108)
 
-robustness: chart rendered no resources (use allow_empty explicitly)
+Reproducing values (known-inputs):
+
+```json
+{}
+```
+
+Reproducing values (robustness):
+
+```json
+{}
 ```
 
 ### bitnami/kube-state-metrics
@@ -1245,10 +2529,14 @@ Phase known-inputs: failed | Attempts: 17
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (kube-state-metrics/templates/deployment.yaml:205:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
+Errors: [E084](#e084)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "resourcesPreset": ""
+}
 ```
 
 ### bitnami/kuberay
@@ -1265,10 +2553,16 @@ Phase known-inputs: failed | Attempts: 31
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on kuberay/templates/apiserver/clusterrolebinding.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+Errors: [E036](#e036)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "commonAnnotations": {
+    "": []
+  }
+}
 ```
 
 ### bitnami/kubernetes-event-exporter
@@ -1285,10 +2579,16 @@ Phase known-inputs: failed | Attempts: 230
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on kubernetes-event-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E037](#e037)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "image": {
+    "digest": "\u001f"
+  }
+}
 ```
 
 ### bitnami/logstash
@@ -1305,10 +2605,14 @@ Phase known-inputs: failed | Attempts: 40
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on logstash/templates/sts.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E038](#e038)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "existingConfiguration": "\u001f"
+}
 ```
 
 ### bitnami/mariadb
@@ -1325,22 +2629,23 @@ Phase known-inputs: failed | Attempts: 5
 
 Phase robustness: failed | Attempts: 122
 
-```text
-known-inputs: Error: execution error at (mariadb/templates/NOTES.txt:74:4): 
-VALUES VALIDATION:
-mariadb: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
+Errors: [E085](#e085)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: execution error at (mariadb/templates/NOTES.txt:74:4): 
-VALUES VALIDATION:
-mariadb: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
+```json
+{
+  "architecture": ""
+}
+```
 
-Use --debug flag to render out invalid YAML
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "architecture": ""
+}
 ```
 
 ### bitnami/mariadb-galera
@@ -1357,10 +2662,16 @@ Phase known-inputs: failed | Attempts: 68
 
 Phase robustness: time-limit | Attempts: 22
 
-```text
-known-inputs: Error: YAML parse error on mariadb-galera/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E039](#e039)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/mastodon
@@ -1377,10 +2688,16 @@ Phase known-inputs: failed | Attempts: 99
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on mastodon/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E040](#e040)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/matomo
@@ -1397,10 +2714,14 @@ Phase known-inputs: failed | Attempts: 33
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on matomo/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E041](#e041)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
 ```
 
 ### bitnami/memcached
@@ -1417,14 +2738,14 @@ Phase known-inputs: failed | Attempts: 60
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (memcached/templates/NOTES.txt:46:4): 
-VALUES VALIDATION:
-memcached: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "high-availability". Please set a valid architecture (--set architecture="xxxx")
+Errors: [E086](#e086)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "architecture": ""
+}
 ```
 
 ### bitnami/metallb
@@ -1441,10 +2762,14 @@ Phase known-inputs: failed | Attempts: 124
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: template: metallb/templates/speaker/rbac.yaml:44:14: executing "metallb/templates/speaker/rbac.yaml" at <include "common.capabilities.psp.supported" .>: error calling include: template: metallb/charts/common/templates/_capabilities.tpl:131:32: executing "common.capabilities.psp.supported" at <semverCompare "<1.25-0" $kubeVersion>: error calling semverCompare: invalid semantic version
+Errors: [E106](#e106)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "kubeVersion": ":"
+}
 ```
 
 ### bitnami/metrics-server
@@ -1461,10 +2786,14 @@ Phase known-inputs: failed | Attempts: 147
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on metrics-server/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E042](#e042)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "terminationGracePeriodSeconds": "\u001f"
+}
 ```
 
 ### bitnami/milvus
@@ -1495,14 +2824,25 @@ Phase known-inputs: failed | Attempts: 66
 
 Phase robustness: failed | Attempts: 127
 
-```text
-known-inputs: Error: YAML parse error on mlflow/templates/run/dep-job.yaml: error converting YAML to JSON: yaml: line 29: did not find expected key
+Errors: [E044](#e044), [E043](#e043)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: YAML parse error on mlflow/templates/run/dep-job.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```json
+{
+  "commonAnnotations": {
+    "": null
+  }
+}
+```
 
-Use --debug flag to render out invalid YAML
+Reproducing values (robustness):
+
+```json
+{
+  "nameOverride": "\u001f",
+  "": []
+}
 ```
 
 ### bitnami/mongodb
@@ -1519,10 +2859,14 @@ Phase known-inputs: failed | Attempts: 43
 
 Phase robustness: time-limit | Attempts: 44
 
-```text
-known-inputs: Error: YAML parse error on mongodb/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E046](#e046)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "configuration": "\u001f"
+}
 ```
 
 ### bitnami/mongodb-sharded
@@ -1539,10 +2883,14 @@ Phase known-inputs: failed | Attempts: 44
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on mongodb-sharded/templates/config-server/config-server-statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E045](#e045)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "clusterDomain": "\u001f"
+}
 ```
 
 ### bitnami/moodle
@@ -1559,10 +2907,14 @@ Phase known-inputs: failed | Attempts: 83
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E047](#e047)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "existingSecret": "\u001f"
+}
 ```
 
 ### bitnami/multus-cni
@@ -1579,10 +2931,14 @@ Phase known-inputs: failed | Attempts: 34
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on multus-cni/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 73: did not find expected comment or line break
+Errors: [E048](#e048)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "CNIMountPath": ">"
+}
 ```
 
 ### bitnami/mysql
@@ -1599,10 +2955,16 @@ Phase known-inputs: failed | Attempts: 133
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on mysql/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E049](#e049)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/nats
@@ -1619,14 +2981,14 @@ Phase known-inputs: failed | Attempts: 51
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (nats/templates/NOTES.txt:176:4): 
-VALUES VALIDATION:
-nats: resourceType
-    Invalid resourceType selected. Valid values are "deployment" and
-    "statefulset". Please set a valid mode (--set resourceType="xxxx")
+Errors: [E087](#e087)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "resourceType": ""
+}
 ```
 
 ### bitnami/neo4j
@@ -1643,12 +3005,16 @@ Phase known-inputs: failed | Attempts: 87
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: neo4j/templates/networkpolicy.yaml:47:19
-  executing "neo4j/templates/networkpolicy.yaml" at <.containerPort>:
-    nil pointer evaluating interface {}.containerPort
+Errors: [E102](#e102)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraContainerPorts": [
+    null
+  ]
+}
 ```
 
 ### bitnami/nessie
@@ -1665,10 +3031,14 @@ Phase known-inputs: failed | Attempts: 151
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on nessie/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E050](#e050)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "existingConfigmap": "\u001f"
+}
 ```
 
 ### bitnami/nginx
@@ -1685,14 +3055,27 @@ Phase known-inputs: failed | Attempts: 81
 
 Phase robustness: failed | Attempts: 244
 
-```text
-known-inputs: Error: YAML parse error on nginx/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E052](#e052), [E051](#e051)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: YAML parse error on nginx/templates/context-includes-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```json
+{
+  "existingContextEventsConfigmaps": [
+    "\u001f"
+  ]
+}
+```
 
-Use --debug flag to render out invalid YAML
+Reproducing values (robustness):
+
+```json
+{
+  "contextIncludes": {
+    "events": "\u001f",
+    "": []
+  }
+}
 ```
 
 ### bitnami/node-exporter
@@ -1709,10 +3092,14 @@ Phase known-inputs: failed | Attempts: 89
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on node-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E053](#e053)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
 ```
 
 ### bitnami/oauth2-proxy
@@ -1729,14 +3116,16 @@ Phase known-inputs: failed | Attempts: 29
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (oauth2-proxy/charts/redis/templates/NOTES.txt:202:4): 
-VALUES VALIDATION:
-redis: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
+Errors: [E088](#e088)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "redis": {
+    "architecture": ""
+  }
+}
 ```
 
 ### bitnami/odoo
@@ -1753,10 +3142,14 @@ Phase known-inputs: failed | Attempts: 27
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (odoo/templates/deployment.yaml:270:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
+Errors: [E089](#e089)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "resourcesPreset": ""
+}
 ```
 
 ### bitnami/opensearch
@@ -1773,10 +3166,16 @@ Phase known-inputs: failed | Attempts: 82
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (opensearch/templates/ingest/statefulset.yaml:90:12): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+Errors: [E090](#e090)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "ingest": {
+    "resourcesPreset": ""
+  }
+}
 ```
 
 ### bitnami/parse
@@ -1793,10 +3192,16 @@ Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on parse/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E054](#e054)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/phpmyadmin
@@ -1813,10 +3218,14 @@ Phase known-inputs: failed | Attempts: 200
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on phpmyadmin/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E055](#e055)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
 ```
 
 ### bitnami/pinniped
@@ -1833,10 +3242,14 @@ Phase known-inputs: failed | Attempts: 59
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on pinniped/templates/concierge/apiservice-identity.yaml: error converting YAML to JSON: yaml: line 23: found unexpected end of stream
+Errors: [E056](#e056)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "fullnameOverride": "'"
+}
 ```
 
 ### bitnami/postgresql
@@ -1853,14 +3266,16 @@ Phase known-inputs: failed | Attempts: 15
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (postgresql/templates/NOTES.txt:118:4): 
-VALUES VALIDATION:
-postgresql: psp.create, rbac.create
-    RBAC should be enabled if PSP is enabled in order for PSP to work.
-    More info at https://kubernetes.io/docs/concepts/policy/pod-security-policy/#authorizing-policies
+Errors: [E091](#e091)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "psp": {
+    "create": true
+  }
+}
 ```
 
 ### bitnami/postgresql-ha
@@ -1877,8 +3292,14 @@ Phase known-inputs: failed | Attempts: 55
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: resource has no metadata.name
+Errors: [E113](#e113)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "fullnameOverride": "0"
+}
 ```
 
 ### bitnami/prometheus
@@ -1895,14 +3316,25 @@ Phase known-inputs: failed | Attempts: 75
 
 Phase robustness: failed | Attempts: 243
 
-```text
-known-inputs: Error: YAML parse error on prometheus/templates/alertmanager/networkpolicy.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E057](#e057), [E058](#e058)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: YAML parse error on prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```json
+{
+  "nameOverride": "\u001f"
+}
+```
 
-Use --debug flag to render out invalid YAML
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/pytorch
@@ -1919,14 +3351,14 @@ Phase known-inputs: failed | Attempts: 42
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (pytorch/templates/NOTES.txt:69:3): 
-VALUES VALIDATION:
-pytorch: architecture
-    Invalid architecture selected. Valid values are "distributed" and
-    "standalone". Please set a valid architecture (--set architecture="xxxx")
+Errors: [E092](#e092)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "architecture": ""
+}
 ```
 
 ### bitnami/rabbitmq
@@ -1943,12 +3375,29 @@ Phase known-inputs: failed | Attempts: 274
 
 Phase robustness: failed | Attempts: 265
 
-```text
-known-inputs: Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-rtvpkvk8/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+Errors: [E099](#e099), [E059](#e059)
 
-robustness: Error: YAML parse error on rabbitmq/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Reproducing values (known-inputs):
 
-Use --debug flag to render out invalid YAML
+```json
+{
+  "args": [
+    {
+      "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
+    }
+  ]
+}
+```
+
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "auth": {
+    "username": "\u001f"
+  }
+}
 ```
 
 ### bitnami/rabbitmq-cluster-operator
@@ -1965,10 +3414,14 @@ Phase known-inputs: failed | Attempts: 72
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: template: rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml:14:13: executing "rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml" at <genSignedCert (include "rmqco.msgTopologyOperator.fullname" .) nil (list (printf "%s.%s.svc" (include "rmqco.msgTopologyOperator.webhook.fullname" .) (include "common.names.namespace" .)) (printf "%s.%s.svc.%s" (include "rmqco.msgTopologyOperator.webhook.fullname" .) (include "common.names.namespace" .) .Values.clusterDomain)) 365 $ca>: error calling genSignedCert: error creating certificate: x509: "hypothesis-rabbitmq-messaging-topology-operator-webhook.default.svc.\u0080" cannot be encoded as an IA5String
+Errors: [E107](#e107)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "clusterDomain": "\u0080"
+}
 ```
 
 ### bitnami/redis
@@ -1985,22 +3438,23 @@ Phase known-inputs: failed | Attempts: 5
 
 Phase robustness: failed | Attempts: 140
 
-```text
-known-inputs: Error: execution error at (redis/templates/NOTES.txt:202:4): 
-VALUES VALIDATION:
-redis: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
+Errors: [E093](#e093)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: execution error at (redis/templates/NOTES.txt:202:4): 
-VALUES VALIDATION:
-redis: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
+```json
+{
+  "architecture": ""
+}
+```
 
-Use --debug flag to render out invalid YAML
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "architecture": ""
+}
 ```
 
 ### bitnami/redis-cluster
@@ -2017,8 +3471,14 @@ Phase known-inputs: failed | Attempts: 49
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: invalid rendered manifest: Object of type TaggedScalar is not JSON serializable
+Errors: [E111](#e111)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "existingSecret": "="
+}
 ```
 
 ### bitnami/redmine
@@ -2035,12 +3495,23 @@ Phase known-inputs: failed | Attempts: 62
 
 Phase robustness: failed | Attempts: 242
 
-```text
-known-inputs: Error: YAML parse error on redmine/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E060](#e060), [E097](#e097)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
 
-robustness: Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-i22elfg5/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
+```
+
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
+}
 ```
 
 ### bitnami/schema-registry
@@ -2057,12 +3528,16 @@ Phase known-inputs: failed | Attempts: 71
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: schema-registry/templates/http-route.yaml:7:13
-  executing "schema-registry/templates/http-route.yaml" at <$route.enabled>:
-    nil pointer evaluating interface {}.enabled
+Errors: [E103](#e103)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "httpRoutes": [
+    null
+  ]
+}
 ```
 
 ### bitnami/scylladb
@@ -2079,8 +3554,14 @@ Phase known-inputs: failed | Attempts: 146
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: invalid rendered manifest: Object of type TaggedScalar is not JSON serializable
+Errors: [E111](#e111)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "initDBConfigMap": "="
+}
 ```
 
 ### bitnami/sealed-secrets
@@ -2097,10 +3578,14 @@ Phase known-inputs: failed | Attempts: 63
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (sealed-secrets/templates/deployment.yaml:172:25): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+Errors: [E094](#e094)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "resourcesPreset": ""
+}
 ```
 
 ### bitnami/seaweedfs
@@ -2117,10 +3602,14 @@ Phase known-inputs: failed | Attempts: 34
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on seaweedfs/templates/filer/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E061](#e061)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "clusterDomain": "\u001f"
+}
 ```
 
 ### bitnami/solr
@@ -2137,10 +3626,14 @@ Phase known-inputs: failed | Attempts: 65
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on solr/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 180: did not find expected key
+Errors: [E062](#e062)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "'"
+}
 ```
 
 ### bitnami/sonarqube
@@ -2157,10 +3650,16 @@ Phase known-inputs: failed | Attempts: 27
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on sonarqube/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E063](#e063)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/spark
@@ -2177,10 +3676,16 @@ Phase known-inputs: failed | Attempts: 119
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on spark/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E064](#e064)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/superset
@@ -2197,10 +3702,16 @@ Phase known-inputs: failed | Attempts: 36
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on superset/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E065](#e065)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/tensorflow-resnet
@@ -2217,10 +3728,14 @@ Phase known-inputs: failed | Attempts: 78
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on tensorflow-resnet/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E066](#e066)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
 ```
 
 ### bitnami/thanos
@@ -2237,10 +3752,14 @@ Phase known-inputs: failed | Attempts: 31
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on thanos/templates/storegateway/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E067](#e067)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "bucketCacheConfig": "\u001f"
+}
 ```
 
 ### bitnami/tomcat
@@ -2257,10 +3776,14 @@ Phase known-inputs: failed | Attempts: 43
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on tomcat/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E068](#e068)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
 ```
 
 ### bitnami/valkey
@@ -2277,10 +3800,14 @@ Phase known-inputs: failed | Attempts: 39
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on valkey/templates/replicas/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E070](#e070)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "clusterDomain": "\u001f"
+}
 ```
 
 ### bitnami/valkey-cluster
@@ -2297,10 +3824,16 @@ Phase known-inputs: failed | Attempts: 33
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on valkey-cluster/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E069](#e069)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/vault
@@ -2317,10 +3850,16 @@ Phase known-inputs: failed | Attempts: 66
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on vault/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+Errors: [E071](#e071)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
 ```
 
 ### bitnami/victoriametrics
@@ -2337,10 +3876,14 @@ Phase known-inputs: failed | Attempts: 70
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on victoriametrics/templates/vmagent/dep-ds.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E072](#e072)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "loggerFormat": "\u001f"
+}
 ```
 
 ### bitnami/whereabouts
@@ -2357,10 +3900,14 @@ Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: execution error at (whereabouts/templates/daemonset.yaml:164:25): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+Errors: [E095](#e095)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "resourcesPreset": ""
+}
 ```
 
 ### bitnami/wildfly
@@ -2377,8 +3924,14 @@ Phase known-inputs: failed | Attempts: 44
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: resource has no metadata.name
+Errors: [E113](#e113)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "fullnameOverride": "0"
+}
 ```
 
 ### bitnami/wordpress
@@ -2395,10 +3948,14 @@ Phase known-inputs: failed | Attempts: 112
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: Error: YAML parse error on wordpress/templates/httpd-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Errors: [E073](#e073)
 
-Use --debug flag to render out invalid YAML
+Reproducing values (known-inputs):
+
+```json
+{
+  "apacheConfiguration": "\u001f"
+}
 ```
 
 ### bitnami/zipkin
@@ -2415,16 +3972,18 @@ Phase known-inputs: failed | Attempts: 1
 
 Phase robustness: failed | Attempts: 1
 
-```text
-known-inputs: invalid rendered YAML: more indented follow up line than first in a block scalar
-  in "<unicode string>", line 474, column 15:
-                  set -o errexit
-                  ^ (line: 474)
+Errors: [E110](#e110)
 
-robustness: invalid rendered YAML: more indented follow up line than first in a block scalar
-  in "<unicode string>", line 474, column 15:
-                  set -o errexit
-                  ^ (line: 474)
+Reproducing values (known-inputs):
+
+```json
+{}
+```
+
+Reproducing values (robustness):
+
+```json
+{}
 ```
 
 ### bitnami/zookeeper
@@ -2441,7 +4000,13 @@ Phase known-inputs: failed | Attempts: 32
 
 Phase robustness: passed | Attempts: 101
 
-```text
-known-inputs: invalid rendered manifest: Object of type TaggedScalar is not JSON serializable
+Errors: [E111](#e111)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "dataLogDir": "="
+}
 ```
 

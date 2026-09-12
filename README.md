@@ -16,6 +16,16 @@ from combinations of Helm chart inputs to reproducible examples.
 - Integrate Kubernetes schema validation and optional security checks into CI.
 - Generate benchmark charts and compare coverage, bug discovery, and scaling with plots.
 
+## Use case: Bitnami charts
+
+We scanned **115 Bitnami charts**, recording **19,846 test attempts** with filtering
+and a five-minute budget per chart. The results include render failures, chart
+validation rejections, and tooling limitations; confirmed chart bugs require triage.
+
+Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
+reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
+the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789251211/README.md).
+
 ## Install
 
 Requires Helm 4 and Python 3.13+.
@@ -48,7 +58,7 @@ See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot comm
 checks; adding `--filter` enables inferred-input testing and deferred robustness
 sampling. Skipped charts and incomplete coverage remain explicit in scan results.
 
-Use `--dump-minimal-values` with any of these commands to inspect the conservative
+Use `--export-minimal-values` with any of these commands to inspect the conservative
 input baseline and its [field inventory](docs/inputs/README.md).
 
 ## Quick start

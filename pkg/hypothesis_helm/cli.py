@@ -368,12 +368,12 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         )
     for command in (repository, inspect, generate, test):
         command.add_argument(
-            "--dump-minimal-values",
+            "--export-minimal-values",
             nargs="?",
             const="",
-            metavar="PATH",
-            help="write conservative minimal-values.yaml and inventory; "
-            "PATH overrides the YAML file (scan: output directory)",
+            metavar="FILENAME",
+            help="export conservative values and inventory; default: "
+            "values-minimal-<checksum>-<epoch>.yaml (scan: separate files per chart)",
         )
     return parser
 
@@ -407,10 +407,10 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "scan":
             return scan(args)
         minimal_values = None
-        if args.command in ("audit", "generate", "test") and args.dump_minimal_values is not None:
+        if args.command in ("audit", "generate", "test") and args.export_minimal_values is not None:
             original = load_input_chart(args.chart)
             minimal_values = InputInventory.build(original).dump(
-                original, Path(args.dump_minimal_values or "minimal-values.yaml")
+                original, Path(args.export_minimal_values) if args.export_minimal_values else None
             )
             logger.info("Minimal input baseline: %s", minimal_values["yaml"])
         if args.command == "schemas":

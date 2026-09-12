@@ -11,6 +11,33 @@ from pathlib import Path
 
 from reportlab.pdfgen.canvas import Canvas  # type: ignore[import-untyped]
 
+from hypothesis_helm.reporting.errors import deduplicate_errors
+from hypothesis_helm.schemas.contracts import mapping, sequence
+
+HELM_DEBUG_HINT = re.compile(r"(?m)^[ \t]*Use --debug flag to render out invalid YAML[ \t]*\r?$\n?")
+
+
+def display_error(error: object) -> str:
+    """
+    Present useful diagnostics while leaving raw errors in the JSON artifacts.
+
+    Args:
+        error (object): Recorded error, including historical tooling failures.
+
+    Returns:
+        str: Human-readable diagnostic without Helm's redundant debug suggestion.
+    """
+    return (
+        HELM_DEBUG_HINT.sub("", str(error))
+        .rstrip()
+        .replace(
+            "invalid rendered manifest: Object of type TaggedScalar is not JSON serializable",
+            "The test tool could not convert a YAML-tagged value to JSON. "
+            "See this chart's reproducing values. "
+            "This diagnostic alone does not establish a chart defect.",
+        )
+    )
+
 
 def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
     """
@@ -23,6 +50,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
     Returns:
         tuple[Path, Path]: Markdown and PDF output paths.
     """
+    deduplicate_errors(report)
     if stem.suffix.lower() in (".md", ".pdf"):
         stem = stem.with_suffix("")
     markdown, pdf = Path(f"{stem}.md"), Path(f"{stem}.pdf")
@@ -53,12 +81,44 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         json.dumps(report["settings"], indent=2),
         "```",
         "",
-        "## Charts",
-        "",
     ]
     summary = report.get("summary", [])
     if isinstance(summary, list):
         lines[2:2] = [str(line) for line in summary] + [""]
+    errors = sequence(report["error_groups"])
+    if errors:
+        counts = mapping(report["error_summary"])
+        lines.extend(
+            [
+                "## Errors",
+                "",
+                f"{counts['unique_errors']} distinct diagnostics across "
+                f"{counts['occurrences']} occurrences; {counts['duplicates']} repeats grouped.",
+                "Matching diagnostics do not establish a shared root cause.",
+                "",
+            ]
+        )
+        for entry in errors:
+            group = mapping(entry)
+            lines.extend([f"### {group['id']}", ""])
+            source = group.get("source")
+            if isinstance(source, dict):
+                lines.extend(
+                    [
+                        f"Source: {source['name']} {source['version']} / {source['template']}",
+                        "",
+                    ]
+                )
+            content = display_error(group["error"])
+            fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
+            lines.extend([f"{fence}text", content, fence, ""])
+            for occurrence in sequence(group["occurrences"]):
+                item = mapping(occurrence)
+                label = f"{item['chart']} ({item['phase']}; {item['status']})"
+                artifacts = item.get("artifacts")
+                lines.append(f"- [{label}](<{artifacts}>)" if artifacts else f"- {label}")
+            lines.append("")
+    lines.extend(["## Charts", ""])
     charts = report["charts"]
     assert isinstance(charts, list)
     for chart in charts:
@@ -124,10 +184,34 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
                             "",
                         ]
                     )
-        if chart.get("error"):
-            content = str(chart["error"])
+        references = sequence(chart.get("error_refs", []))
+        if references:
+            lines.extend(
+                [
+                    "Errors: "
+                    + ", ".join(
+                        f"[{reference}](#{str(reference).lower()})" for reference in references
+                    ),
+                    "",
+                ]
+            )
+        elif chart.get("error"):
+            content = display_error(chart["error"])
             fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
             lines.extend([f"{fence}text", content, fence, ""])
+        counterexamples = [
+            (str(phase.get("phase", "chart")), phase["values"])
+            for phase in sequence(phases)
+            if isinstance(phase, dict) and isinstance(phase.get("values"), dict)
+        ]
+        if isinstance(chart.get("values"), dict):
+            counterexamples.append(("chart", chart["values"]))
+        for phase_name, values in counterexamples:
+            content = json.dumps(values, indent=2, ensure_ascii=True)
+            fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
+            lines.extend(
+                [f"Reproducing values ({phase_name}):", "", f"{fence}json", content, fence, ""]
+            )
     markdown.write_text("\n".join(lines) + "\n")
     canvas = Canvas(str(pdf), pagesize=(612, 792))
     canvas.setTitle(str(report.get("title", "Helm chart scan")))

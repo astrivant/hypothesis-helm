@@ -2,6 +2,7 @@
 Conservative input inventories, inspectable projections, and honest field coverage.
 """
 
+import hashlib
 import json
 from pathlib import Path
 from textwrap import dedent
@@ -86,7 +87,16 @@ def test_input_discrepancies_and_projection(chart: Chart, tmp_path: Path) -> Non
     original = (chart.path / "values.yaml").read_bytes()
     target = tmp_path / "minimal.yaml"
     result = inventory.dump(chart, target)
-    assert yamlio.load(target.read_text()) == {"used": False}
+    assert yamlio.load_all(target.read_text())[0] == {"used": False}
+    documents = yamlio.load_all(target.read_text())
+    assert len(documents) == 2
+    assert "\n---\n" in target.read_text()
+    assert documents[1] == {
+        "missing_values": report["missing_values"],
+        "schema_fields_without_values": report["schema_fields_without_values"],
+    }
+    assert result["values_document"] == 1
+    assert result["missing_fields_document"] == 2
     assert result["schema_valid"] is True
     assert result["render_equivalence_proven"] is False
     assert result["globally_minimal_proven"] is False
@@ -116,13 +126,13 @@ def test_schema_and_opaque_context_prevent_unsafe_reduction(chart: Chart, tmp_pa
     inventory = InputInventory.build(chart)
     result = inventory.dump(chart, tmp_path / "required.yaml")
     assert "schema constraints" in str(result["reason"])
-    assert yamlio.load((tmp_path / "required.yaml").read_text()) == chart.defaults
+    assert yamlio.load_all((tmp_path / "required.yaml").read_text())[0] == chart.defaults
     (chart.path / "templates/config.yaml").write_text('{{ include "opaque" . }}\n')
     inventory = InputInventory.build(chart)
     assert inventory.report()["unreferenced_usage"] == "unknown"
     result = inventory.dump(chart, tmp_path / "opaque.yaml")
     assert "Unresolved" in str(result["reason"])
-    assert yamlio.load((tmp_path / "opaque.yaml").read_text()) == chart.defaults
+    assert yamlio.load_all((tmp_path / "opaque.yaml").read_text())[0] == chart.defaults
 
 
 def test_dynamic_map_and_array_inventory(chart: Chart) -> None:
@@ -195,27 +205,61 @@ def test_audit_dump_without_schema(
     """
     (chart.path / "values.schema.json").unlink()
     target = tmp_path / "dump.yaml"
-    assert main(["audit", str(chart.path), "--dump-minimal-values", str(target)]) == 0
+    assert main(["audit", str(chart.path), "--export-minimal-values", str(target)]) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["input_inventory"]["lower_bound_fields"] == 2
     assert report["minimal_values"]["yaml"] == str(target)
-    assert yamlio.load(target.read_text()) == {"used": False}
+    assert yamlio.load_all(target.read_text())[0] == {"used": False}
 
 
-def test_scan_dumps_each_chart(
+def test_export_default_filename(
     chart: Chart,
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
 ) -> None:
     """
-    Put per-chart projections under the requested scan dump directory.
+    Name CLI exports from their actual bytes and Unix export time.
+
+    Args:
+        chart (Chart): Original chart fixture.
+        tmp_path (Path): Current export directory.
+        monkeypatch (pytest.MonkeyPatch): Fix the export clock and working directory.
+        capsys (pytest.CaptureFixture[str]): Capture audit output.
+
+    Returns:
+        None: Filenames and sidecar metadata agree with the exported YAML checksum.
+    """
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr("hypothesis_helm.compiler.inputs.time.time", lambda: 1234567890)
+    assert main(["audit", str(chart.path), "--export-minimal-values"]) == 0
+    exported = json.loads(capsys.readouterr().out)["minimal_values"]
+    target = Path(exported["yaml"])
+    digest = hashlib.sha256(target.read_bytes()).hexdigest()
+    assert target.name == f"values-minimal-{digest}-1234567890.yaml"
+    assert exported["sha256"] == digest
+    assert exported["exported_epoch"] == 1234567890
+    assert json.loads(Path(exported["inventory"]).read_text()) == exported
+    assert yamlio.load_all(target.read_text())[0] == {"used": False}
+
+
+@pytest.mark.parametrize("override", [False, True])
+def test_scan_exports_each_chart(
+    chart: Chart,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    override: bool,
+) -> None:
+    """
+    Keep recursive exports separate with either generated or explicitly chosen filenames.
 
     Args:
         chart (Chart): Root chart and one nested chart.
         tmp_path (Path): Scan and report output locations.
         monkeypatch (pytest.MonkeyPatch): Replace chart execution only.
         capsys (pytest.CaptureFixture[str]): Capture the scan report.
+        override (bool): Supply an explicit filename instead of using generated names.
 
     Returns:
         None: Both chart dumps remain independently inspectable.
@@ -236,8 +280,8 @@ def test_scan_dumps_each_chart(
                 "--helm",
                 "/usr/bin/true",
                 "--no-build-dependencies",
-                "--dump-minimal-values",
-                str(output),
+                "--export-minimal-values",
+                *([str(output / "minimal.yaml")] if override else []),
                 "--artifact-dir",
                 str(tmp_path / "out"),
                 "--report",
@@ -248,9 +292,55 @@ def test_scan_dumps_each_chart(
     )
     report = json.loads(capsys.readouterr().out)
     assert len(report["charts"]) == 2
-    assert (output / "minimal-values.yaml").exists()
-    assert (output / "child/minimal-values.yaml").exists()
+    if override:
+        assert (output / "minimal.yaml").exists()
+        assert (output / "child/minimal.yaml").exists()
+    for item in report["charts"]:
+        exported = item["minimal_values"]
+        target = Path(exported["yaml"])
+        digest = hashlib.sha256(target.read_bytes()).hexdigest()
+        assert exported["sha256"] == digest
+        if not override:
+            assert target.parent == Path(item["artifacts"])
+            assert target.name == f"values-minimal-{digest}-{exported['exported_epoch']}.yaml"
     assert "Identified input fields" in (tmp_path / "scan.md").read_text()
+
+
+def test_scan_export_cannot_overwrite_original_values(
+    chart: Chart, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """
+    Protect original inputs even though scan exports are computed from isolated copies.
+
+    Args:
+        chart (Chart): Source chart.
+        tmp_path (Path): Artifact destination.
+        capsys (pytest.CaptureFixture[str]): Capture the recorded export failure.
+
+    Returns:
+        None: An explicit source filename fails without modifying the input file.
+    """
+    source = chart.path / "values.yaml"
+    original = source.read_bytes()
+    assert (
+        main(
+            [
+                "scan",
+                str(chart.path),
+                "--helm",
+                "/usr/bin/true",
+                "--no-build-dependencies",
+                "--export-minimal-values",
+                str(source),
+                "--artifact-dir",
+                str(tmp_path / "out"),
+            ]
+        )
+        == 1
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert "must not overwrite source chart inputs" in report["charts"][0]["error"]
+    assert source.read_bytes() == original
 
 
 def test_phase_coverage_unions_field_identities(
