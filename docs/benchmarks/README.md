@@ -86,5 +86,5 @@ and strength five found all 261.
 
 ![Discovery rate by fault interaction order](bug-density/bug-order.png)
 
-The separate [sample-thinning study](sparsity/README.md) measures distribution
+The separate [Sparsity and Stochasticity study](sparsity/README.md) measures distribution
 coverage as the number of cases falls.

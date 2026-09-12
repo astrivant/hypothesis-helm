@@ -1,4 +1,4 @@
-# Sample thinning
+# Sparsity and Stochasticity
 
 [Benchmarking](../README.md)
 
