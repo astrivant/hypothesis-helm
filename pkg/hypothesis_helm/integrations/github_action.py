@@ -76,7 +76,8 @@ def main() -> int:
             "--output",
             "json",
         ]
-        command += ["--rerun", os.environ.get("HH_RERUN", "auto")]
+        security = os.environ.get("HH_KUBESEC", "false").lower() == "true"
+        command += ["--rerun", "all" if security else os.environ.get("HH_RERUN", "auto")]
         cache_dir = os.environ.get("HH_CACHE_DIR")
         if cache_dir:
             command += ["--cache-dir", cache_dir]
@@ -84,7 +85,7 @@ def main() -> int:
             command.append("--disable-schema-caching")
         if os.environ.get("HH_CACHE", "true").lower() == "false":
             command.append("--no-cache")
-        if os.environ.get("HH_KUBECONFORM", "true").lower() == "true":
+        if not security and os.environ.get("HH_KUBECONFORM", "true").lower() == "true":
             command += [
                 "--kubeconform",
                 "--schema-version",
@@ -105,7 +106,7 @@ def main() -> int:
                 command, cwd=Path.cwd(), env=dict(os.environ), stdout=stream
             )
         status = result.returncode if result.returncode >= 0 else 130
-        if os.environ.get("HH_KUBESEC", "false").lower() == "true" and status != 130:
+        if security and status != 130:
             configuration = prepare(
                 Path(os.environ.get("HH_SCHEMA_CACHE_DIR", ".cache/hypothesis-helm/schemas")),
                 os.environ.get("HH_SCHEMA_VERSION", "latest"),
@@ -120,6 +121,7 @@ def main() -> int:
                 executable=os.environ.get("HH_KUBESEC_BINARY", "kubesec"),
                 shard=shard,
                 pre_sharded=True,
+                validate_rest=True,
             )
             security_dir = root / "kubesec"
             if shard:

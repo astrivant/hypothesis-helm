@@ -122,10 +122,12 @@ helm-properties:
   script:
     - mkdir -p reports/hypothesis-helm
     - |
+      validation_option=--kubeconform
+      if [ "$KUBESEC_ENABLED" = "true" ]; then validation_option=; fi
       test_status=0
       helm hypothesis test "$HELM_CHART" \
         --shard "$SHARD_INDEX/3" --jobs auto --max-examples 50 --seed 0 --rerun all \
-        --kubeconform --schema-version "$K8S_VERSION" \
+        ${validation_option:+"$validation_option"} --schema-version "$K8S_VERSION" \
         --schema-cache-dir "$SCHEMA_CACHE_DIR" --schema-offline \
         --artifact-dir reports/hypothesis-helm --output json \
         > "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" || test_status=$?
@@ -135,7 +137,7 @@ helm-properties:
         "$plugin_python" -m hypothesis_helm.integrations.kubesec \
           "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" \
           --output reports/hypothesis-helm/kubesec --jobs "$KUBESEC_JOBS" \
-          --shard "$SHARD_INDEX/3" --pre-sharded \
+          --shard "$SHARD_INDEX/3" --pre-sharded --validate-rest \
           --schema-version "$K8S_VERSION" --schema-cache-dir "$SCHEMA_CACHE_DIR" \
           --schema-offline || scan_status=$?
         if [ "$test_status" -eq 0 ]; then test_status=$scan_status; fi
@@ -170,7 +172,7 @@ available to each runner; set `kubesec-jobs` (GitHub/CircleCI) or `KUBESEC_JOBS`
 
 Only the shard's emitted manifests are scanned. `--pre-sharded` prevents a second
 partition; standalone scans of a shared stream can use `--shard INDEX/TOTAL`
-without that flag. Reports include job timings, scan output, and skipped-kind counts.
+without that flag. Reports include job timings, scan output, and resource counts for each validator.
 Kubesec supports Pod, Deployment, StatefulSet, and DaemonSet in the pinned release;
 Kubeconform validates the other resource kinds. Kubesec's nonzero exit fails the job,
 while an existing Helm failure retains its exit code.
@@ -196,3 +198,9 @@ containers may need a larger runner-provided mount than their default `/dev/shm`
 This avoids disk-backed schema reads, but parsing still costs time and the OS may
 already cache disk reads. Measure before enabling it by default. Tmpfs can swap
 under memory pressure ([Linux documentation](https://docs.kernel.org/filesystems/tmpfs.html)).
+
+With Kubesec enabled, CI routes its supported workload kinds to Kubesec and all
+other resources to Kubeconform. Each resource receives schema validation once.
+GitHub security runs use `--rerun all` so cached test results cannot hide manifests
+from the downstream validators. Validation reports live in the Kubesec artifact
+directory; downstream validation failures fail the job, outside the Helm JUnit report.

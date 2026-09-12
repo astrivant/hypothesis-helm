@@ -174,6 +174,7 @@ def test_action_preserves_arguments_outputs_and_status(
     assert github_action.main() == expected_status
     if security:
         assert scan_calls[0]["pre_sharded"] is True
+        assert scan_calls[0]["validate_rest"] is True
         assert scan_calls[0]["shard"] == Shard(2, 3)
     command = calls[0]
     assert command[:3] == ["helm", "hypothesis", "test"]
@@ -181,11 +182,13 @@ def test_action_preserves_arguments_outputs_and_status(
     assert command[command.index("--shard") + 1] == "2/3"
     assert command[command.index("--match") + 1] == "replicas or image"
     assert command[command.index("--cache-dir") + 1] == str(tmp_path / "cache")
-    assert command[command.index("--rerun") + 1] == "failed"
+    assert command[command.index("--rerun") + 1] == ("all" if security else "failed")
     assert "--disable-schema-caching" in command
     assert "--no-cache" in command
-    assert "--kubeconform" in command and "--schema-offline" in command
-    assert command[command.index("--schema-version") + 1] == "1.35.0"
+    assert ("--kubeconform" in command) is (not security)
+    if not security:
+        assert "--schema-offline" in command
+        assert command[command.index("--schema-version") + 1] == "1.35.0"
     assert (tmp_path / "reports/shards/2-of-3/manifests.jsonl").is_file()
     values = output.read_text()
     assert "exit-code<<" in values

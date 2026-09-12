@@ -39,10 +39,10 @@ inputs:
     description: Optional pytest keyword expression applied before sharding.
     default: ''
   kubeconform:
-    description: Enable strict API validation and automatic kubeconform installation.
+    description: Enable strict API validation when Kubesec routing is disabled.
     default: 'true'
   kubesec:
-    description: Enable parallel security scanning of this shard's rendered workloads.
+    description: Route workloads to Kubesec and other resources to Kubeconform; rerun all selected tests.
     default: 'false'
   kubesec-version:
     description: Kubesec release to install.

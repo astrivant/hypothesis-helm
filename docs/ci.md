@@ -215,7 +215,7 @@ without generating or running tests.
 Set `kubesec: 'true'` to install Kubesec v2.14.2 and GNU Parallel. `kubesec-jobs: auto`
 uses the logical CPUs available to the job; set a positive integer to override it.
 Scans consume the current shard's manifest stream and retain separate job logs,
-security reports, and skipped-kind counts. The action exposes `kubesec-report-dir`
+security reports, and resource counts for each validator. The action exposes `kubesec-report-dir`
 and `kubesec-exit-code`; either test or scanner failure fails the action.
 
 Kubesec and Kubeconform share the prepared local schema snapshot. Schema cache
@@ -229,3 +229,9 @@ would partition each version's tests incorrectly. Include the version in artifac
 names as well as schema-cache keys.
 
 For optional Linux RAM-backed schema staging, see [memory-backed schemas](ci/README.md#memory-backed-schemas).
+
+With `kubesec: true`, supported workloads receive schema and security validation
+through Kubesec; remaining resources go to Kubeconform. This routing also applies
+when the separate `kubeconform` input is false. Security runs force `--rerun all`
+to produce the manifests needed for validation. Validator failures fail the job
+and appear in scan artifacts rather than the Helm JUnit report.

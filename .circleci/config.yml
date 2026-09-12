@@ -59,12 +59,14 @@ orbs:
                 mkdir -p "$HH_ARTIFACT_DIR"
                 schema_options=()
                 if [[ "$HH_SCHEMA_OFFLINE" == "true" ]]; then schema_options+=(--schema-offline); fi
+                validation_options=(--kubeconform)
+                if [[ "$HH_KUBESEC" == "true" ]]; then validation_options=(); fi
                 test_status=0
                 helm hypothesis test "$HH_CHART" \
                   --jobs "$HH_JOBS" \
                   --max-examples "$HH_MAX_EXAMPLES" \
                   --seed "$HH_SEED" \
-                  --kubeconform \
+                  "${validation_options[@]}" \
                   --schema-version "$HH_SCHEMA_VERSION" \
                   --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" "${schema_options[@]}" \
                   --shard auto \
@@ -77,7 +79,7 @@ orbs:
                   "$plugin_python" -m hypothesis_helm.integrations.kubesec \
                     "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl" \
                     --output "$HH_ARTIFACT_DIR/kubesec" --jobs "$HH_KUBESEC_JOBS" \
-                    --shard auto --pre-sharded --schema-version "$HH_SCHEMA_VERSION" \
+                    --shard auto --pre-sharded --validate-rest --schema-version "$HH_SCHEMA_VERSION" \
                     --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" "${schema_options[@]}" || scan_status=$?
                   if ((test_status == 0)); then test_status=$scan_status; fi
                 fi
