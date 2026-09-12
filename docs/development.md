@@ -30,8 +30,14 @@ poetry build
 ```
 
 The validation command runs Ruff lint/format, strict mypy, pydocstyle, pydoclint,
-and the package's pytest suite. Source and test docstrings follow Astrivant's
+the generated CLI reference check, and the package's pytest suite. Source and test docstrings follow Astrivant's
 Google-style convention. No type-checking exclusions weaken the source checks.
+
+After changing CLI arguments, regenerate the [CLI reference](cli/README.md):
+
+```sh
+bash scripts/project-python.sh -m cogapp -r docs/cli/README.md
+```
 
 Unit and integration tests live under `pkg/hypothesis_helm/tests`. Helm must be
 available for render tests; the neighboring Astrivant audit skips when absent.
@@ -112,3 +118,17 @@ Regenerate previously saved suites with `helm hypothesis generate` after upgradi
 from the flat module layout, or update that import in a manually maintained suite.
 Helm commands and the public package exports retain their existing names. Result
 cache fingerprints cover implementation modules recursively across all subpackages.
+
+## Repository map
+
+| Location | Responsibility |
+| --- | --- |
+| [`pkg/hypothesis_helm/`](../pkg/hypothesis_helm) | CLI and public API; implementation grouped under charts, schemas, execution, reporting, and integrations. |
+| [`pkg/hypothesis_helm/tests/`](../pkg/hypothesis_helm/tests) | Unit tests and real Helm integration tests. |
+| [`examples/`](../examples) | Small charts and a checked-in generated workload suite. |
+| [`scripts/`](../scripts) | Project interpreter, validation command and Helm plugin hooks. |
+| [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
+| [`plugin.yaml`](../plugin.yaml) | Installable Helm plugin manifest. |
+| [`.circleci/`](../.circleci) | Python checks, Helm integration and package build verification. |
+| [`.github/settings.yml`](../.github/settings.yml) | Declarative repository settings. |
+| [`docs/`](.) | Development setup, CLI behavior and testing limitations. |
