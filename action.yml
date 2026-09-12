@@ -41,6 +41,18 @@ inputs:
   kubeconform:
     description: Enable strict API validation and automatic kubeconform installation.
     default: 'true'
+  kubesec:
+    description: Enable parallel security scanning of this shard's rendered workloads.
+    default: 'false'
+  kubesec-version:
+    description: Kubesec release to install.
+    default: v2.14.2
+  kubesec-jobs:
+    description: 'auto uses this runner process CPU count; a positive integer overrides it.'
+    default: auto
+  kubesec-binary:
+    description: Path or name of a preinstalled Kubesec executable.
+    default: kubesec
   kubeconform-version:
     description: Kubeconform release to install when using the default binary.
     default: v0.7.0
@@ -93,8 +105,14 @@ outputs:
   shard:
     description: Resolved one-based shard coordinates, or none.
     value: ${{ steps.test.outputs.shard }}
+  kubesec-report-dir:
+    description: This shard's Kubesec report directory.
+    value: ${{ steps.test.outputs.kubesec-report-dir }}
+  kubesec-exit-code:
+    description: Kubesec scan exit code when enabled.
+    value: ${{ steps.test.outputs.kubesec-exit-code }}
   exit-code:
-    description: Helm test exit code.
+    description: Combined Helm and optional Kubesec status; Helm failures take precedence.
     value: ${{ steps.test.outputs.exit-code }}
 runs:
   using: composite
@@ -122,7 +140,7 @@ runs:
         HELM_PLUGINS="$plugin_root" PYTHON=python helm plugin install "$ACTION_PATH"
         echo "plugins=$plugin_root" >> "$GITHUB_OUTPUT"
     - name: Install kubeconform
-      if: ${{ inputs.kubeconform == 'true' && inputs.kubeconform-binary == 'kubeconform' }}
+      if: ${{ (inputs.kubeconform == 'true' || inputs.kubesec == 'true') && inputs.kubeconform-binary == 'kubeconform' }}
       shell: bash
       env:
         KUBECONFORM_VERSION: ${{ inputs.kubeconform-version }}
@@ -135,15 +153,54 @@ runs:
         tar -xzf "$install_dir/kubeconform.tar.gz" -C "$install_dir" kubeconform
         chmod +x "$install_dir/kubeconform"
         echo "$install_dir" >> "$GITHUB_PATH"
+    - name: Install GNU Parallel
+      if: ${{ inputs.kubesec == 'true' }}
+      shell: bash
+      run: |
+        if [[ "$RUNNER_OS" == "Linux" ]]; then
+          sudo apt-get update
+          sudo apt-get install -y parallel
+        else
+          brew install parallel
+        fi
+    - name: Install Kubesec
+      if: ${{ inputs.kubesec == 'true' && inputs.kubesec-binary == 'kubesec' }}
+      shell: bash
+      env:
+        KUBESEC_VERSION: ${{ inputs.kubesec-version }}
+      run: |
+        case "$RUNNER_OS" in Linux) platform=linux ;; macOS) platform=darwin ;; esac
+        case "$RUNNER_ARCH" in X64) architecture=amd64 ;; ARM64) architecture=arm64 ;; *) exit 1 ;; esac
+        install_dir="$(mktemp -d "$RUNNER_TEMP/kubesec.XXXXXX")"
+        curl -fsSL "https://github.com/controlplaneio/kubesec/releases/download/${KUBESEC_VERSION}/kubesec_${platform}_${architecture}.tar.gz" \
+          -o "$install_dir/kubesec.tar.gz"
+        tar -xzf "$install_dir/kubesec.tar.gz" -C "$install_dir" kubesec
+        chmod +x "$install_dir/kubesec"
+        echo "$install_dir" >> "$GITHUB_PATH"
     - name: Restore Kubernetes schemas
       id: schemas
-      if: ${{ inputs.kubeconform == 'true' && inputs.schema-cache == 'true' }}
+      if: ${{ (inputs.kubeconform == 'true' || inputs.kubesec == 'true') && inputs.schema-cache == 'true' }}
       uses: actions/cache/restore@v5
       with:
         path: ${{ inputs.schema-cache-dir }}
         key: helm-schemas-v1-${{ runner.os }}-${{ runner.arch }}-${{ inputs.schema-version }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ inputs.job-index }}
         restore-keys: |
           helm-schemas-v1-${{ runner.os }}-${{ runner.arch }}-${{ inputs.schema-version }}-
+    - name: Prepare local Kubernetes schemas
+      if: ${{ inputs.kubeconform == 'true' || inputs.kubesec == 'true' }}
+      shell: bash
+      env:
+        HELM_PLUGINS: ${{ steps.install.outputs.plugins }}
+        SCHEMA_VERSION: ${{ inputs.schema-version }}
+        SCHEMA_CACHE_DIR: ${{ inputs.schema-cache-dir }}
+        SCHEMA_OFFLINE: ${{ inputs.schema-offline }}
+        KUBECONFORM_BINARY: ${{ inputs.kubeconform-binary }}
+      run: |
+        options=()
+        if [[ "$SCHEMA_OFFLINE" == "true" ]]; then options+=(--schema-offline); fi
+        helm hypothesis schemas --schema-version "$SCHEMA_VERSION" \
+          --schema-cache-dir "$SCHEMA_CACHE_DIR" --kubeconform-binary "$KUBECONFORM_BINARY" \
+          "${options[@]}"
     - name: Test chart values
       id: test
       shell: bash
@@ -160,9 +217,12 @@ runs:
         HH_TIMEOUT: ${{ inputs.timeout }}
         HH_MATCH: ${{ inputs.match }}
         HH_KUBECONFORM: ${{ inputs.kubeconform }}
+        HH_KUBESEC: ${{ inputs.kubesec }}
+        HH_KUBESEC_JOBS: ${{ inputs.kubesec-jobs }}
+        HH_KUBESEC_BINARY: ${{ inputs.kubesec-binary }}
         HH_SCHEMA_VERSION: ${{ inputs.schema-version }}
         HH_SCHEMA_CACHE_DIR: ${{ inputs.schema-cache-dir }}
-        HH_SCHEMA_OFFLINE: ${{ inputs.schema-offline }}
+        HH_SCHEMA_OFFLINE: 'true'
         HH_KUBECONFORM_BINARY: ${{ inputs.kubeconform-binary }}
         HH_CACHE_DIR: ${{ inputs.cache-dir }}
         HH_CACHE: ${{ inputs.cache }}
@@ -171,7 +231,7 @@ runs:
         HH_ARTIFACT_DIR: ${{ inputs.artifact-dir }}
       run: '"$ACTION_PATH/.plugin-venv/bin/python" -m hypothesis_helm.integrations.github_action'
     - name: Save Kubernetes schemas
-      if: ${{ always() && inputs.kubeconform == 'true' && inputs.schema-cache == 'true' && steps.schemas.outputs.cache-primary-key != '' && steps.schemas.outputs.cache-hit != 'true' }}
+      if: ${{ always() && (inputs.kubeconform == 'true' || inputs.kubesec == 'true') && inputs.schema-cache == 'true' && steps.schemas.outputs.cache-primary-key != '' && steps.schemas.outputs.cache-hit != 'true' }}
       uses: actions/cache/save@v5
       with:
         path: ${{ inputs.schema-cache-dir }}
@@ -181,5 +241,7 @@ runs:
       uses: actions/upload-artifact@v7
       with:
         name: ${{ inputs.artifact-name }}-${{ github.job }}-${{ steps.test.outputs.shard-id }}
-        path: ${{ steps.test.outputs.report-dir }}
+        path: |
+          ${{ steps.test.outputs.report-dir }}
+          ${{ steps.test.outputs.kubesec-report-dir }}
         if-no-files-found: warn

@@ -99,8 +99,9 @@ def test_cli_defaults_to_ci_detection(tmp_path: Path, monkeypatch: pytest.Monkey
 
 
 @pytest.mark.parametrize("exit_code", [0, 1])
+@pytest.mark.parametrize("security", [False, True])
 def test_action_preserves_arguments_outputs_and_status(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, exit_code: int
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, exit_code: int, security: bool
 ) -> None:
     """
     Pass untrusted-looking input literally and export artifacts even on test failure.
@@ -109,6 +110,7 @@ def test_action_preserves_arguments_outputs_and_status(
         tmp_path (Path): Workspace containing action output files.
         monkeypatch (pytest.MonkeyPatch): Fixture replacing the Helm process boundary.
         exit_code (int): Simulated successful or failed Helm result.
+        security (bool): Whether the optional scanner reports a security failure.
 
     Returns:
         None: The action uses an argument vector, preserves status, and exports shard paths.
@@ -149,7 +151,30 @@ def test_action_preserves_arguments_outputs_and_status(
         return subprocess.CompletedProcess(command, exit_code)
 
     monkeypatch.setattr(Processes, "run", execute)
-    assert github_action.main() == exit_code
+    monkeypatch.setenv("HH_KUBESEC", str(security).lower())
+    monkeypatch.setattr(github_action, "prepare", lambda *args, **kwargs: "{}")
+    scan_calls: list[dict[str, object]] = []
+
+    def scan(*args: object, **kwargs: object) -> int:
+        """
+        Record scanner ownership and simulate a security failure.
+
+        Args:
+            *args (object): Input manifest and schema configuration.
+            **kwargs (object): Shard and worker options.
+
+        Returns:
+            int: A nonzero security scan result.
+        """
+        scan_calls.append(kwargs)
+        return 1
+
+    monkeypatch.setattr(github_action, "scan", scan)
+    expected_status = exit_code or int(security)
+    assert github_action.main() == expected_status
+    if security:
+        assert scan_calls[0]["pre_sharded"] is True
+        assert scan_calls[0]["shard"] == Shard(2, 3)
     command = calls[0]
     assert command[:3] == ["helm", "hypothesis", "test"]
     assert "$(touch unexpected); chart" in command[3]
@@ -164,7 +189,7 @@ def test_action_preserves_arguments_outputs_and_status(
     assert (tmp_path / "reports/shards/2-of-3/manifests.jsonl").is_file()
     values = output.read_text()
     assert "exit-code<<" in values
-    assert f"\n{exit_code}\n" in values
+    assert f"\n{expected_status}\n" in values
     assert "shard<<" in values
     assert "\n2/3\n" in values
     assert "report-dir<<" in values

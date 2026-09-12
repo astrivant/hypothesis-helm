@@ -12,12 +12,14 @@ kubeconform, validates against cached Kubernetes schemas by default, and uploads
 per-shard reports and manifests. `schema-version` defaults to `latest`, and
 `schema-cache-dir` defaults to `.cache/hypothesis-helm/schemas`, outside `reports/`.
 The action restores schemas before testing and saves updates even when tests fail;
-set `schema-cache: 'false'` to disable remote cache persistence or
+set `kubesec: 'true'` for core-sized GNU Parallel security scans (`kubesec-jobs`
+overrides the worker count), `schema-cache: 'false'` to disable remote cache persistence or
 `kubeconform: 'false'` to disable API validation. A supplied `kubeconform-binary`
-path uses that executable instead of installing one. For a GitHub
+path uses that executable instead of installing one. For a shard-only GitHub
 matrix, pass `strategy.job-index` and `strategy.job-total` through the action's
 `job-index` and `job-total` inputs; GitHub does not export these automatically
-as environment variables.
+as environment variables. For a version/shard matrix, pass `matrix.shard` and the
+fixed shard total for each version, as in the local workflow.
 
 See [CI integration](../ci.md) for provider examples, action inputs and outputs,
 and publishing steps. The [local action workflow](../../.github/workflows/action.yml)
@@ -49,7 +51,9 @@ workflows:
           max-examples: 50
           seed: 0
           artifact-dir: reports/hypothesis-helm
-          schema-version: latest
+          schema-version: '1.35.0'
+          kubesec: true
+          kubesec-jobs: auto
           schema-cache-dir: .cache/hypothesis-helm/schemas
 ```
 
@@ -68,21 +72,27 @@ live in `schema-cache-dir`, separate from reports.
 
 Add this job to `.gitlab-ci.yml` for a Linux amd64 Docker runner. Adjust
 `HELM_CHART` to the chart in your repository. GitLab's [`parallel` jobs](https://docs.gitlab.com/ci/yaml/#parallel)
-provide `CI_NODE_INDEX` and `CI_NODE_TOTAL`, which the tool detects automatically.
+form a version/shard matrix. Explicit shard indices ensure every Kubernetes version
+runs the full suite across its three shards.
 
 ```yaml
 helm-properties:
   image: python:3.13-slim
   stage: test
-  parallel: 3
+  parallel:
+    matrix:
+      - K8S_VERSION: ['1.34.0', '1.35.0']
+        SHARD_INDEX: ['1', '2', '3']
   variables:
     HELM_VERSION: v3.19.0
     HELM_CHART: ./chart
     KUBECONFORM_VERSION: v0.7.0
-    K8S_VERSION: latest
+    KUBESEC_ENABLED: 'false' # opt in to security scanning
+    KUBESEC_VERSION: v2.14.2
+    KUBESEC_JOBS: auto
     SCHEMA_CACHE_DIR: .cache/hypothesis-helm/schemas
   cache:
-    key: "helm-schemas-v1-linux-amd64-${K8S_VERSION}-${CI_NODE_INDEX}"
+    key: "helm-schemas-v1-linux-amd64-${K8S_VERSION}-${SHARD_INDEX}"
     paths:
       - .cache/hypothesis-helm/schemas/
     policy: pull-push
@@ -99,32 +109,71 @@ helm-properties:
         -o /tmp/kubeconform.tar.gz
       tar -xzf /tmp/kubeconform.tar.gz -C /tmp kubeconform
       install /tmp/kubeconform /usr/local/bin/kubeconform
+      if [ "$KUBESEC_ENABLED" = "true" ]; then
+        apt-get install -y --no-install-recommends parallel
+        curl -fsSL "https://github.com/controlplaneio/kubesec/releases/download/${KUBESEC_VERSION}/kubesec_linux_amd64.tar.gz" \
+          -o /tmp/kubesec.tar.gz
+        tar -xzf /tmp/kubesec.tar.gz -C /tmp kubesec
+        install /tmp/kubesec /usr/local/bin/kubesec
+      fi
     - PYTHON=python3.13 helm plugin install https://github.com/astrivant/hypothesis-helm
+    - helm hypothesis schemas --schema-version "$K8S_VERSION" --schema-cache-dir "$SCHEMA_CACHE_DIR"
   script:
     - mkdir -p reports/hypothesis-helm
     - |
+      test_status=0
       helm hypothesis test "$HELM_CHART" \
-        --shard auto --jobs auto --max-examples 50 --seed 0 --rerun all \
+        --shard "$SHARD_INDEX/3" --jobs auto --max-examples 50 --seed 0 --rerun all \
         --kubeconform --schema-version "$K8S_VERSION" \
-        --schema-cache-dir "$SCHEMA_CACHE_DIR" \
+        --schema-cache-dir "$SCHEMA_CACHE_DIR" --schema-offline \
         --artifact-dir reports/hypothesis-helm --output json \
-        > "reports/hypothesis-helm/manifests-${CI_NODE_INDEX}.jsonl"
+        > "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" || test_status=$?
+      if [ "$KUBESEC_ENABLED" = "true" ]; then
+        plugin_python="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/python"
+        scan_status=0
+        "$plugin_python" -m hypothesis_helm.integrations.kubesec \
+          "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" \
+          --output reports/hypothesis-helm/kubesec --jobs "$KUBESEC_JOBS" \
+          --shard "$SHARD_INDEX/3" --pre-sharded \
+          --schema-version "$K8S_VERSION" --schema-cache-dir "$SCHEMA_CACHE_DIR" \
+          --schema-offline || scan_status=$?
+        if [ "$test_status" -eq 0 ]; then test_status=$scan_status; fi
+      fi
+      exit "$test_status"
   artifacts:
     when: always
-    name: "helm-properties-${CI_NODE_INDEX}"
+    name: "helm-properties-${K8S_VERSION}-${SHARD_INDEX}"
     paths:
       - reports/hypothesis-helm/
     reports:
       junit: reports/hypothesis-helm/shards/*/junit.xml
 ```
 
-Set `K8S_VERSION` to an exact release or leave it at `latest`. If changing
+Set the `K8S_VERSION` matrix to the releases you support. If changing
 `SCHEMA_CACHE_DIR`, change `cache.paths` to match. The example restores and saves
 schemas on both successful and failed runs, with independent cache keys per shard.
 A cache miss downloads the selected schemas from GitHub through sparse checkout;
-a hit still refreshes the catalog so `latest` can advance.
+a hit refreshes the catalog once before testing. Both validators then use the local
+snapshot offline; individual resources do not fetch API specifications.
 
 Each node runs its own adaptive worker pool and reports its own exit status.
 JUnit reports live under `shards/INDEX-of-TOTAL/`; the example also preserves
 manifests and diagnostics when tests fail. Pin the plugin installation with
 `--version <git-tag-or-commit>` when adopting the example in a release pipeline.
+
+## Security scan scope
+
+Kubesec is optional and installs alongside GNU Parallel. `auto` uses the CPU count
+available to each runner; set `kubesec-jobs` (GitHub/CircleCI) or `KUBESEC_JOBS`
+(GitLab) to limit it. Each Kubesec process uses one Go execution thread.
+
+Only the shard's emitted manifests are scanned. `--pre-sharded` prevents a second
+partition; standalone scans of a shared stream can use `--shard INDEX/TOTAL`
+without that flag. Reports include job timings, scan output, and skipped-kind counts.
+Kubesec supports Pod, Deployment, StatefulSet, and DaemonSet in the pinned release;
+Kubeconform validates the other resource kinds. Kubesec's nonzero exit fails the job,
+while an existing Helm failure retains its exit code.
+
+Both validators use the same versioned sparse-checkout snapshot. CI caches persist
+it across pipelines; locally, reuse `.cache/hypothesis-helm/schemas` with
+`--schema-offline` after preparing the desired version once.

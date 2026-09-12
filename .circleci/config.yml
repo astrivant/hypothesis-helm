@@ -22,6 +22,15 @@ orbs:
           schema-version:
             type: string
             default: latest
+          kubesec:
+            type: boolean
+            default: false
+          kubesec-jobs:
+            type: string
+            default: auto
+          schema-offline:
+            type: boolean
+            default: false
           schema-cache-dir:
             type: string
             default: .cache/hypothesis-helm/schemas
@@ -32,6 +41,9 @@ orbs:
           - run:
               name: Test Helm chart values
               environment:
+                HH_KUBESEC: "<< parameters.kubesec >>"
+                HH_KUBESEC_JOBS: << parameters.kubesec-jobs >>
+                HH_SCHEMA_OFFLINE: "<< parameters.schema-offline >>"
                 HH_CHART: << parameters.chart >>
                 HH_JOBS: << parameters.jobs >>
                 HH_MAX_EXAMPLES: << parameters.max-examples >>
@@ -41,17 +53,31 @@ orbs:
                 HH_ARTIFACT_DIR: << parameters.artifact-dir >>
               command: |
                 mkdir -p "$HH_ARTIFACT_DIR"
+                schema_options=()
+                if [[ "$HH_SCHEMA_OFFLINE" == "true" ]]; then schema_options+=(--schema-offline); fi
+                test_status=0
                 helm hypothesis test "$HH_CHART" \
                   --jobs "$HH_JOBS" \
                   --max-examples "$HH_MAX_EXAMPLES" \
                   --seed "$HH_SEED" \
                   --kubeconform \
                   --schema-version "$HH_SCHEMA_VERSION" \
-                  --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
+                  --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" "${schema_options[@]}" \
                   --shard auto \
                   --rerun all \
                   --artifact-dir "$HH_ARTIFACT_DIR" \
-                  --output json > "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl"
+                  --output json > "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl" || test_status=$?
+                if [[ "$HH_KUBESEC" == "true" ]]; then
+                  plugin_python="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/python"
+                  scan_status=0
+                  "$plugin_python" -m hypothesis_helm.integrations.kubesec \
+                    "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl" \
+                    --output "$HH_ARTIFACT_DIR/kubesec" --jobs "$HH_KUBESEC_JOBS" \
+                    --shard auto --pre-sharded --schema-version "$HH_SCHEMA_VERSION" \
+                    --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" "${schema_options[@]}" || scan_status=$?
+                  if ((test_status == 0)); then test_status=$scan_status; fi
+                fi
+                exit "$test_status"
     jobs:
       test-chart:
         description: Install the local plugin and test a chart; reference job, not scheduled.
@@ -62,6 +88,9 @@ orbs:
           plugin-path:
             type: string
             default: .
+          kubesec-version:
+            type: string
+            default: v2.14.2
           kubeconform-version:
             type: string
             default: v0.7.0
@@ -83,6 +112,15 @@ orbs:
           schema-version:
             type: string
             default: latest
+          kubesec:
+            type: boolean
+            default: false
+          kubesec-jobs:
+            type: string
+            default: auto
+          schema-offline:
+            type: boolean
+            default: false
           schema-cache-dir:
             type: string
             default: .cache/hypothesis-helm/schemas
@@ -100,6 +138,8 @@ orbs:
           - run:
               name: Install Helm and the local Hypothesis plugin
               environment:
+                HH_KUBESEC: "<< parameters.kubesec >>"
+                HH_KUBESEC_VERSION: << parameters.kubesec-version >>
                 HH_KUBECONFORM_VERSION: << parameters.kubeconform-version >>
                 HH_HELM_VERSION: << parameters.helm-version >>
                 HH_PLUGIN_PATH: << parameters.plugin-path >>
@@ -113,20 +153,34 @@ orbs:
                   -o "$install_dir/kubeconform.tar.gz"
                 tar -xzf "$install_dir/kubeconform.tar.gz" -C "$install_dir" kubeconform
                 sudo install "$install_dir/kubeconform" /usr/local/bin/kubeconform
+                if [[ "$HH_KUBESEC" == "true" ]]; then
+                  sudo apt-get update
+                  sudo apt-get install -y parallel
+                  curl -fsSL "https://github.com/controlplaneio/kubesec/releases/download/${HH_KUBESEC_VERSION}/kubesec_linux_amd64.tar.gz" \
+                    -o "$install_dir/kubesec.tar.gz"
+                  tar -xzf "$install_dir/kubesec.tar.gz" -C "$install_dir" kubesec
+                  sudo install "$install_dir/kubesec" /usr/local/bin/kubesec
+                fi
                 PYTHON=python3.13 helm plugin install "$HH_PLUGIN_PATH"
           - run:
               name: Prepare Kubernetes schemas before testing
               environment:
+                HH_SCHEMA_OFFLINE: "<< parameters.schema-offline >>"
                 HH_SCHEMA_VERSION: << parameters.schema-version >>
                 HH_SCHEMA_CACHE_DIR: << parameters.schema-cache-dir >>
               command: |
+                schema_options=()
+                if [[ "$HH_SCHEMA_OFFLINE" == "true" ]]; then schema_options+=(--schema-offline); fi
                 helm hypothesis schemas --schema-version "$HH_SCHEMA_VERSION" \
-                  --schema-cache-dir "$HH_SCHEMA_CACHE_DIR"
+                  --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" "${schema_options[@]}"
           - save_cache:
               key: helm-schemas-v1-{{ arch }}-<< parameters.schema-version >>-{{ epoch }}-{{ .Environment.CIRCLE_NODE_INDEX }}
               paths:
                 - << parameters.schema-cache-dir >>
           - test:
+              kubesec: << parameters.kubesec >>
+              kubesec-jobs: << parameters.kubesec-jobs >>
+              schema-offline: true
               schema-version: << parameters.schema-version >>
               schema-cache-dir: << parameters.schema-cache-dir >>
               chart: << parameters.chart >>
