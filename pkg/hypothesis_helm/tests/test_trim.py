@@ -110,7 +110,7 @@ def test_topology_sampling(tmp_path: Path) -> None:
     from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
     from hypothesis_helm.charts.runner import Chart
     from hypothesis_helm.cli import argument_parser
-    from hypothesis_helm.compiler.topology import trim_topology
+    from hypothesis_helm.compiler.passes.topology import trim_topology
     from hypothesis_helm.schemas.finite import enumerate_values
 
     generate(tmp_path, input_complexity=10, output_bins=4, topology=True)

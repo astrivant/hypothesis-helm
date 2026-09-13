@@ -1,0 +1,204 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.annotations
+[INFO] Coalescing path $.command
+[INFO] Coalescing path $.containerSecurityContext
+[INFO] Coalescing path $.deploymentAnnotations
+[INFO] Coalescing path $.deploymentLabels
+[INFO] Coalescing path $.env
+[INFO] Coalescing path $.extraArgs
+[INFO] Coalescing path $.extraManifests
+[INFO] Coalescing path $.hostAliases
+[INFO] Coalescing path $.imagePullSecrets
+[INFO] Coalescing path $.kafkaBrokerVersion
+[INFO] Coalescing path $.kafkaLabels
+[INFO] Coalescing path $.kafkaServer
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.podLabels
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.securityContext
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.verbosity
+[INFO] Coalescing path $.extraArgs[*]
+[INFO] Coalescing path $.global.imagePullSecrets
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.kafkaServer[*]
+[INFO] Coalescing path $.liveness.enabled
+[INFO] Coalescing path $.liveness.probe
+[INFO] Coalescing path $.rbac.create
+[INFO] Coalescing path $.readiness.enabled
+[INFO] Coalescing path $.readiness.probe
+[INFO] Coalescing path $.sarama.logEnabled
+[INFO] Coalescing path $.sasl.enabled
+[INFO] Coalescing path $.sasl.handshake
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.labels
+[INFO] Coalescing path $.service.loadBalancerIP
+[INFO] Coalescing path $.service.nodePort
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.startup.enabled
+[INFO] Coalescing path $.startup.probe
+[INFO] Coalescing path $.tls.caFile
+[INFO] Coalescing path $.tls.certFile
+[INFO] Coalescing path $.tls.enabled
+[INFO] Coalescing path $.tls.insecureSkipVerify
+[INFO] Coalescing path $.tls.keyFile
+[INFO] Coalescing path $.tls.mountPath
+[INFO] Coalescing path $.tls.secretName
+[INFO] Coalescing path $.prometheus.serviceMonitor.additionalLabels
+[INFO] Coalescing path $.prometheus.serviceMonitor.apiVersion
+[INFO] Coalescing path $.prometheus.serviceMonitor.enabled
+[INFO] Coalescing path $.prometheus.serviceMonitor.interval
+[INFO] Coalescing path $.prometheus.serviceMonitor.metricRelabelings
+[INFO] Coalescing path $.prometheus.serviceMonitor.namespace
+[INFO] Coalescing path $.prometheus.serviceMonitor.relabelings
+[INFO] Coalescing path $.prometheus.serviceMonitor.scrapeTimeout
+[INFO] Coalescing path $.prometheus.serviceMonitor.targetLabels
+[INFO] Coalescing path $.sasl.awsiam.awsRegion
+[INFO] Coalescing path $.sasl.awsiam.enabled
+[INFO] Coalescing path $.sasl.awsiam.mechanism
+[INFO] Coalescing path $.sasl.kerberos.enabled
+[INFO] Coalescing path $.sasl.kerberos.kerberosAuthType
+[INFO] Coalescing path $.sasl.kerberos.mountPath
+[INFO] Coalescing path $.sasl.kerberos.realm
+[INFO] Coalescing path $.sasl.kerberos.secretName
+[INFO] Coalescing path $.sasl.kerberos.serviceName
+[INFO] Coalescing path $.sasl.scram.enabled
+[INFO] Coalescing path $.sasl.scram.mechanism
+[INFO] Coalescing path $.sasl.scram.password
+[INFO] Coalescing path $.sasl.scram.secretName
+[INFO] Coalescing path $.sasl.scram.username
+[INFO] Coalescing path $.server.tls.caFile
+[INFO] Coalescing path $.server.tls.certFile
+[INFO] Coalescing path $.server.tls.enabled
+[INFO] Coalescing path $.server.tls.keyFile
+[INFO] Coalescing path $.server.tls.mountPath
+[INFO] Coalescing path $.server.tls.mutualAuthEnabled
+[INFO] Coalescing path $.server.tls.secretName
+[INFO] Coalescing path $.prometheus.serviceMonitor.targetLabels[*]
+[INFO] Discovered 118 unique value paths; random traversal, seed 0
+[INFO] Testing path $.liveness (1/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 24 unique, 76 duplicate bundles; 76 successful validations reused
+[INFO] Testing path $.kafkaServer[*] (2/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 15 observed, 15 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.sasl.scram.mechanism (3/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.sasl.scram.password (4/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.sasl.awsiam.enabled (5/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 1 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.image (6/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 17 observed, 15 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.server.tls.certFile (7/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.extraManifests (8/118)
+[INFO] Compiler input baseline: 80 statically named fields
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 42 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 127 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+[INFO] Render hashes (run-local): 25 observed, 2 unique, 23 duplicate bundles; 19 successful validations reused
+[INFO] Testing path $.nodeSelector (9/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.service.port (10/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.imagePullSecrets (11/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 38 observed, 26 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.securityContext (12/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.liveness.probe (13/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.sasl.kerberos.secretName (14/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.global.imagePullSecrets (15/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 38 observed, 26 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.readiness.enabled (16/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.service.type (17/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.prometheus.serviceMonitor.targetLabels (18/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.deploymentLabels (19/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.startup.enabled (20/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.prometheus.serviceMonitor.relabelings (21/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.prometheus.serviceMonitor.namespace (22/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.prometheus.serviceMonitor.scrapeTimeout (23/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.sarama.logEnabled (24/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.prometheus.serviceMonitor.enabled (25/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceAccount.annotations (26/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 3 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.image.repository (27/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.resources (28/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.startup.probe.httpGet (29/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.startup (30/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 24 unique, 76 duplicate bundles; 76 successful validations reused
+[INFO] Testing path $.sasl.kerberos.mountPath (31/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 20 observed, 7 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.prometheus.serviceMonitor.interval (32/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.tolerations[*] (33/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.tolerations (34/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.sasl.kerberos (35/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 78 observed, 15 unique, 63 duplicate bundles; 25 successful validations reused
+[INFO] Testing path $.server (36/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 24 unique, 52 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.readiness (37/118)
+[INFO] Compiler input baseline: 80 statically named fields
+[INFO] Execution stopped at the 8.75434s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 65 observed, 19 unique, 46 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.20s; dependency preparation 0.04s; 0 charts remain

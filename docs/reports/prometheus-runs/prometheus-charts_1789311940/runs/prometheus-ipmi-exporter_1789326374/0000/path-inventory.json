@@ -1,0 +1,973 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "image"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "modules",
+      "advanced",
+      "collector_cmd",
+      "ipmi"
+    ],
+    [
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "service",
+      "port"
+    ],
+    [
+      "modules",
+      "advanced",
+      "user"
+    ],
+    [
+      "modules",
+      "dcmi"
+    ],
+    [
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "service",
+      "type"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "custom_args",
+      "ipmi",
+      "*"
+    ],
+    [
+      "additionalAnnotations"
+    ],
+    [
+      "modules",
+      "default",
+      "collectors"
+    ],
+    [
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "modules",
+      "advanced"
+    ],
+    [
+      "serviceMonitor",
+      "telemetryPath"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "modules",
+      "advanced",
+      "custom_args",
+      "sel"
+    ],
+    [
+      "resources"
+    ],
+    [
+      "scrapeConfig",
+      "scrapeTimeout"
+    ],
+    [
+      "modules",
+      "advanced",
+      "privilege"
+    ],
+    [
+      "modules",
+      "thatspecialhost"
+    ],
+    [
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "modules",
+      "advanced",
+      "pass"
+    ],
+    [
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "modules",
+      "default"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "modules",
+      "default",
+      "exclude_sensor_ids"
+    ],
+    [
+      "configSecret"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "custom_args",
+      "ipmi"
+    ],
+    [
+      "scrapeConfig",
+      "metricRelabelings"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "resources",
+      "requests",
+      "memory"
+    ],
+    [
+      "resources",
+      "requests",
+      "cpu"
+    ],
+    [
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "scrapeConfig",
+      "modules"
+    ],
+    [
+      "service",
+      "annotations"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "user"
+    ],
+    [
+      "modules",
+      "advanced",
+      "collector_cmd",
+      "sel"
+    ],
+    [
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "scrapeConfig",
+      "fileSDConfigs"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "collectors",
+      "*"
+    ],
+    [
+      "scrapeConfig",
+      "scrapeInterval"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "driver"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "extraArgs"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "scheme"
+    ],
+    [
+      "nativeIPMI",
+      "enabled"
+    ],
+    [
+      "serviceMonitor"
+    ],
+    [
+      "modules",
+      "default",
+      "collectors",
+      "*"
+    ],
+    [
+      "scrapeConfig",
+      "staticConfigs"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "privilege"
+    ],
+    [
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "workaround_flags"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "pass"
+    ],
+    [
+      "modules",
+      "advanced",
+      "driver"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "extraArgs",
+      "*"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "resources",
+      "limits"
+    ],
+    [
+      "modules",
+      "advanced",
+      "collectors"
+    ],
+    [
+      "modules",
+      "default",
+      "timeout"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "collectors"
+    ],
+    [
+      "scrapeConfig",
+      "staticConfigs",
+      "*"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "modules",
+      "advanced",
+      "collector_cmd"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "custom_args"
+    ],
+    [
+      "modules",
+      "dcmi",
+      "driver"
+    ],
+    [
+      "modules",
+      "advanced",
+      "custom_args",
+      "ipmi",
+      "*"
+    ],
+    [
+      "modules",
+      "advanced",
+      "custom_args"
+    ],
+    [
+      "scrapeConfig",
+      "modules",
+      "*"
+    ],
+    [
+      "nativeIPMI"
+    ],
+    [
+      "scrapeConfig",
+      "labels"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "configSecret",
+      "name"
+    ],
+    [
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "scrapeConfig",
+      "fileSDConfigs",
+      "*"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "serviceMonitor",
+      "timeout"
+    ],
+    [
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "livenessProbe",
+      "httpGet"
+    ],
+    [
+      "serviceMonitor",
+      "targetLabels"
+    ],
+    [
+      "modules",
+      "dcmi",
+      "user"
+    ],
+    [
+      "modules",
+      "dcmi",
+      "privilege"
+    ],
+    [
+      "scrapeConfig",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "scheme"
+    ],
+    [
+      "scrapeConfig",
+      "enabled"
+    ],
+    [
+      "scrapeConfig",
+      "relabelings"
+    ],
+    [
+      "modules",
+      "advanced",
+      "custom_args",
+      "sel",
+      "*"
+    ],
+    [
+      "scrapeConfig",
+      "scheme"
+    ],
+    [
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "readinessProbe"
+    ],
+    [
+      "modules",
+      "advanced",
+      "custom_args",
+      "ipmi"
+    ],
+    [
+      "scrapeConfig",
+      "mode"
+    ],
+    [
+      "resources",
+      "limits",
+      "cpu"
+    ],
+    [
+      "resources",
+      "requests"
+    ],
+    [
+      "scrapeConfig",
+      "jobName"
+    ],
+    [
+      "configSecret",
+      "enabled"
+    ],
+    [
+      "livenessProbe"
+    ],
+    [
+      "serviceMonitor",
+      "labels"
+    ],
+    [
+      "modules",
+      "thatspecialhost",
+      "workaround_flags",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "targetLabels",
+      "*"
+    ],
+    [
+      "replicaCount"
+    ],
+    [
+      "scrapeConfig"
+    ],
+    [
+      "modules",
+      "default",
+      "driver"
+    ],
+    [
+      "scrapeConfig",
+      "metricsPath"
+    ],
+    [
+      "modules"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "modules",
+      "default",
+      "user"
+    ],
+    [
+      "modules",
+      "default",
+      "exclude_sensor_ids",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "scrapeConfig",
+      "relabelings",
+      "*"
+    ],
+    [
+      "resources",
+      "limits",
+      "memory"
+    ],
+    [
+      "readinessProbe",
+      "httpGet"
+    ],
+    [
+      "modules",
+      "advanced",
+      "collectors",
+      "*"
+    ],
+    [
+      "modules",
+      "default",
+      "privilege"
+    ],
+    [
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "modules",
+      "default",
+      "pass"
+    ],
+    [
+      "scrapeConfig",
+      "namespace"
+    ],
+    [
+      "configSecret",
+      "key"
+    ],
+    [
+      "clusterDomain"
+    ],
+    [
+      "modules",
+      "dcmi",
+      "pass"
+    ],
+    [
+      "service"
+    ],
+    [
+      "modules",
+      "dcmi",
+      "collectors"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "containerSecurityContext"
+    ],
+    [
+      "modules",
+      "dcmi",
+      "collectors",
+      "*"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 5,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 6,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 6,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 14,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 15,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 16,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 18,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 18,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 19,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 22,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Chart.Version"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 38,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 40,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 41,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 43,
+      "message": "unresolved dot context: .Release.Service"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 51,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 57,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 58,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 61,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 68,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 69,
+      "message": "unresolved dot context: .Capabilities.APIVersions.Has"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 79,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 80,
+      "message": "unresolved dot context: .Values.existingSecret.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 81,
+      "message": "unresolved dot context: .Values.existingSecret.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 83,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 83,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 2,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 1,
+      "message": "unmatched end at line 48"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 25,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 36,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 52,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 64,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 64,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 64,
+      "message": "unresolved dot context: .Values.clusterDomain"
+    },
+    {
+      "file": "templates/scrapeconfig.yaml",
+      "line": 64,
+      "message": "unresolved dot context: .Values.service.port"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 4,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "fileSDConfigs"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "labels"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "metricRelabelings"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "metricsPath"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "modules"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "namespace"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "relabelings"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "scrapeConfig",
+        "staticConfigs"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "interval"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "labels"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "namespace"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "timeout"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targetLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    }
+  ]
+}

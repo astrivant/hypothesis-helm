@@ -1,0 +1,117 @@
+{
+  "rbac": {
+    "create": true
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": null
+  },
+  "replicaCount": 1,
+  "image": {
+    "repository": "oliver006/redis_exporter",
+    "pullPolicy": "IfNotPresent",
+    "tag": "",
+    "pullSecrets": []
+  },
+  "command": [],
+  "extraArgs": {},
+  "customLabels": {},
+  "securityContext": {},
+  "env": {},
+  "service": {
+    "type": "ClusterIP",
+    "port": 9121,
+    "portName": "redis-exporter",
+    "annotations": {},
+    "labels": {}
+  },
+  "resources": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "priorityClassName": "",
+  "extraManifests": [
+    []
+  ],
+  "redisAddress": "redis://myredis:6379",
+  "annotations": {},
+  "labels": {},
+  "redisAddressConfig": {
+    "enabled": false,
+    "isSecret": false,
+    "source": {
+      "name": "",
+      "key": ""
+    }
+  },
+  "redisTlsConfig": {
+    "enabled": false,
+    "skipTlsVerification": false,
+    "mountPath": "/tls",
+    "caCertFile": {
+      "secret": {
+        "name": "",
+        "key": ""
+      }
+    },
+    "clientKeyFile": {
+      "secret": {
+        "name": "",
+        "key": ""
+      }
+    },
+    "clientCertFile": {
+      "secret": {
+        "name": "",
+        "key": ""
+      }
+    },
+    "serverKeyFile": {
+      "secret": {
+        "name": "",
+        "key": ""
+      }
+    },
+    "serverCertFile": {
+      "secret": {
+        "name": "",
+        "key": ""
+      }
+    }
+  },
+  "serviceMonitor": {
+    "enabled": false,
+    "apiVersion": "monitoring.coreos.com/v1",
+    "multipleTarget": false,
+    "targets": [],
+    "additionalMetricsRelabels": {},
+    "additionalRelabeling": []
+  },
+  "prometheusRule": {
+    "enabled": false,
+    "additionalLabels": {},
+    "namespace": "",
+    "rules": []
+  },
+  "auth": {
+    "enabled": false,
+    "secret": {
+      "name": "",
+      "key": ""
+    },
+    "redisPassword": "",
+    "redisUser": "",
+    "redisPasswordFile": {
+      "mountPath": "/auth",
+      "secret": {
+        "name": "",
+        "key": ""
+      }
+    }
+  },
+  "networkPolicy": {
+    "enabled": false,
+    "ingressFrom": []
+  },
+  "podSecurityContext": {}
+}

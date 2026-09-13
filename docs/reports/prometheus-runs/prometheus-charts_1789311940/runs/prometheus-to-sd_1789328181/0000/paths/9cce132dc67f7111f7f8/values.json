@@ -1,0 +1,16 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "gcr.io/google-containers/prometheus-to-sd",
+    "tag": "",
+    "pullPolicy": "IfNotPresent"
+  },
+  "resources": {},
+  "port": 6060,
+  "metricsSources": {
+    "kube-state-metrics": "\n0"
+  },
+  "monitoredResourceTypes": "gke_container",
+  "nodeSelector": {},
+  "tolerations": []
+}

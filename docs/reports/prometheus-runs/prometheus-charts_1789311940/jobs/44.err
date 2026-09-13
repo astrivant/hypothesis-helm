@@ -1,0 +1,55 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.metricsSources
+[INFO] Coalescing path $.monitoredResourceTypes
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.port
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.metricsSources[*]
+[INFO] Discovered 13 unique value paths; random traversal, seed 0
+[INFO] Testing path $.image (1/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 17 observed, 15 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.nodeSelector (2/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.monitoredResourceTypes (3/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 22 observed, 20 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.image.repository (4/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.resources (5/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.tolerations[*] (6/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.tolerations (7/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.metricsSources (8/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 53 observed, 51 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.image.tag (9/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.image.pullPolicy (10/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.port (11/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.replicaCount (12/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.metricsSources["kube-state-metrics"] (13/13)
+[INFO] Compiler input baseline: 10 statically named fields
+[INFO] Render hashes (run-local): 22 observed, 19 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] .: failed; testing 70.55s; dependency preparation 0.04s; 0 charts remain

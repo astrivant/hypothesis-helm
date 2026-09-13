@@ -1,0 +1,102 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "quay.io/prometheuscommunity/pgbouncer-exporter",
+    "tag": "",
+    "pullPolicy": "IfNotPresent"
+  },
+  "service": {
+    "type": "ClusterIP",
+    "port": 80,
+    "targetPort": 9127,
+    "name": "http",
+    "labels": {},
+    "annotations": {}
+  },
+  "serviceMonitor": {
+    "enabled": false
+  },
+  "prometheusRule": {
+    "enabled": false,
+    "additionalLabels": {},
+    "namespace": "",
+    "rules": []
+  },
+  "resources": {},
+  "rbac": {
+    "create": true
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": null,
+    "annotations": {}
+  },
+  "networkPolicy": {
+    "enabled": false,
+    "labels": {}
+  },
+  "podSecurityContext": {
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "securityContext": {
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "readOnlyRootFilesystem": true,
+    "runAsNonRoot": true,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "hostAliases": [],
+  "config": {
+    "datasource": {
+      "host": null,
+      "user": "postgres",
+      "password": null,
+      "passwordFile": "",
+      "passwordSecret": {},
+      "port": "5432",
+      "database": "pgbouncer",
+      "sslmode": "\"",
+      "extraParams": ""
+    },
+    "datasourceSecret": {},
+    "constantLabels": {},
+    "logLevel": "",
+    "logFormat": "json",
+    "extraArgs": []
+  },
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "annotations": {},
+  "podLabels": {},
+  "livenessProbe": {
+    "initialDelaySeconds": 3,
+    "timeoutSeconds": 3
+  },
+  "readinessProbe": {
+    "initialDelaySeconds": 5,
+    "timeoutSeconds": 10
+  },
+  "extraEnvs": [],
+  "initContainers": [],
+  "extraContainers": [],
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "podDisruptionBudget": {
+    "enabled": false,
+    "maxUnavailable": 1
+  }
+}

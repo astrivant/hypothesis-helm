@@ -1,0 +1,514 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 50,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "env"
+      ],
+      [
+        "existingSecret",
+        "key"
+      ],
+      [
+        "existingSecret",
+        "name"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "mongodb",
+        "uri"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "port"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicas"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "password",
+        "existingSecret",
+        "key"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "password",
+        "existingSecret",
+        "name"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "password",
+        "value"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "targets"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "username"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "volumeMounts"
+      ],
+      [
+        "volumes"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "existingSecret",
+        "key"
+      ],
+      [
+        "existingSecret",
+        "name"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "env"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "mongodb",
+        "uri"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "port"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicas"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "password",
+        "existingSecret",
+        "key"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "password",
+        "existingSecret",
+        "name"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "password",
+        "value"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "targets"
+      ],
+      [
+        "serviceMonitor",
+        "multiTarget",
+        "username"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "volumeMounts"
+      ],
+      [
+        "volumes"
+      ]
+    ],
+    "present_count": 49,
+    "varied_count": 3,
+    "varied_fraction": 0.06,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-r90d27ra/chart",
+  "seed": 0,
+  "attempts": 32,
+  "error": "Error: YAML parse error on prometheus-mongodb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 35: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "affinity": {},
+    "annotations": {},
+    "customLabels": {},
+    "dnsConfig": {},
+    "hostAliases": [],
+    "env": {},
+    "extraArgs": [
+      "--collect-all"
+    ],
+    "fullnameOverride": "",
+    "image": {
+      "pullPolicy": "IfNotPresent",
+      "repository": "percona/mongodb_exporter",
+      "tag": ""
+    },
+    "imagePullSecrets": [],
+    "livenessProbe": {
+      "httpGet": {
+        "path": "/",
+        "port": "metrics"
+      },
+      "initialDelaySeconds": 10
+    },
+    "mongodb": {
+      "uri": "mongodb://mongodb:27017"
+    },
+    "existingSecret": {
+      "key": ">0"
+    },
+    "nameOverride": "",
+    "nodeSelector": {},
+    "podAnnotations": {},
+    "podLabels": {},
+    "port": "9216",
+    "priorityClassName": "",
+    "readinessProbe": {
+      "httpGet": {
+        "path": "/",
+        "port": "metrics"
+      },
+      "initialDelaySeconds": 10
+    },
+    "replicas": 1,
+    "resources": {},
+    "podSecurityContext": {},
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "readOnlyRootFilesystem": true,
+      "runAsGroup": 10000,
+      "runAsNonRoot": true,
+      "runAsUser": 10000
+    },
+    "service": {
+      "labels": {},
+      "annotations": {},
+      "port": 9216,
+      "type": "ClusterIP",
+      "portName": "metrics"
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": null
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "apiVersion": "monitoring.coreos.com/v1",
+      "multiTarget": {
+        "enabled": false,
+        "username": "",
+        "password": {
+          "existingSecret": {
+            "name": "",
+            "key": "password"
+          },
+          "value": ""
+        },
+        "targets": []
+      },
+      "interval": "30s",
+      "scrapeTimeout": "10s",
+      "namespace": null,
+      "additionalLabels": {},
+      "targetLabels": [],
+      "metricRelabelings": [],
+      "scheme": "",
+      "tlsConfig": {},
+      "telemetryPath": "/metrics"
+    },
+    "tolerations": [],
+    "volumes": [],
+    "volumeMounts": []
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 21,
+    "unique_bundles": 18,
+    "duplicate_bundles": 3,
+    "validation_cache_hits": 3,
+    "validated_entries": 18
+  },
+  "phase": "$.existingSecret",
+  "kind": "value-path",
+  "path": [
+    "existingSecret"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-mongodb-exporter_1789326721/0000/paths/bf7372b3862550c529f3"
+}

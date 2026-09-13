@@ -164,16 +164,21 @@ def render_profiles(source: Path, output: Path, *, max_depth: int = 30, min_perc
     files = sorted([*source.glob("coordinator-*.json"), *source.glob("worker-*.json")])
     truncated = 0
     incomplete = 0
+    worker_identities = set()
     for path in files:
         document = mapping(json.loads(path.read_text()))
         role = document["role"]
         if role not in {"coordinator", "worker"}:
             raise ValueError(f"Unknown profile role in {path}")
-        groups.setdefault(f"{role}-{document['pid']}", []).append(document)
+        pid = int(str(document["pid"]))
+        identity = str(document.get("process_id", path.stem))
+        suffix = hashlib.sha256(identity.encode()).hexdigest()[:32]
+        groups.setdefault(f"{role}-{pid}-{suffix}", []).append(document)
         truncated += int(str(document["truncated_events"]))
         incomplete += int(document.get("capture_complete") is not True)
         if role == "worker":
             workers.append(document)
+            worker_identities.add(identity)
     if not groups:
         raise ValueError(f"No completed profile captures in {source}")
     if workers:
@@ -181,7 +186,7 @@ def render_profiles(source: Path, output: Path, *, max_depth: int = 30, min_perc
     output.mkdir(parents=True, exist_ok=True)
     figures = []
     for name, profiles in groups.items():
-        title = "All benchmark workers (coordinator excluded)" if name == "workers-combined" else name
+        title = "All benchmark workers (coordinator excluded)" if name == "workers-combined" else "-".join(name.split("-")[:2])
         if any(profile.get("capture_complete") is not True for profile in profiles):
             title += " (includes partial capture)"
         if any(int(str(profile["truncated_events"])) for profile in profiles):
@@ -191,7 +196,7 @@ def render_profiles(source: Path, output: Path, *, max_depth: int = 30, min_perc
     summary: dict[str, object] = {
         "source": str(source.resolve()),
         "captures": len(files),
-        "worker_processes": len({str(profile["pid"]) for profile in workers}),
+        "worker_processes": len(worker_identities),
         "truncated_events": truncated,
         "incomplete_captures": incomplete,
         "scope": "Completed captures only; worker time is summed across overlapping processes, not elapsed runtime",

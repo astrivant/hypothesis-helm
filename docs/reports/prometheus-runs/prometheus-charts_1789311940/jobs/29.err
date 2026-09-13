@@ -1,0 +1,21 @@
+[INFO] Chart 1/2: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Discovered 22 unique value paths; random traversal, seed 0
+[INFO] Testing path $.crds.prometheusagents (1/22)
+[INFO] Compiler input baseline: 0 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 2 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.crds (2/22)
+[INFO] Compiler input baseline: 0 statically named fields
+Exception ignored in: <function gc_cumulative_time.<locals>.gc_callback at 0x107865580>
+Traceback (most recent call last):
+  File "/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/internal/conjecture/junkdrawer.py", line 492, in gc_callback
+    def gc_callback(
+  File "/Users/emmadoyle/projects/personal/hypothesis-helm/.cache/benchmark-refresh-1789311940/frozen-source/pkg/hypothesis_helm/reporting/budget.py", line 72, in expired
+    raise TimeLimitReached()
+hypothesis_helm.reporting.budget.TimeLimitReached: 
+[INFO] Execution stopped at the 259.932s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 21 observed, 5 unique, 16 duplicate bundles; 15 successful validations reused
+[INFO] .: time-limit; testing 300.36s; dependency preparation 0.11s; 1 charts remain
+[INFO] Chart 2/2: charts/crds
+[INFO] charts/crds: missing-values; testing 0.00s; dependency preparation 0.00s; 0 charts remain

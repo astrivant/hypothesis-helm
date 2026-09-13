@@ -23,9 +23,9 @@ from hypothesis_helm.charts.paths import check_paths
 from hypothesis_helm.charts.registry import prepare_helm_source
 from hypothesis_helm.charts.repository import RepositorySource, remote_name
 from hypothesis_helm.charts.runner import Chart, audit, check_chart
-from hypothesis_helm.compiler.graph import export_graph
-from hypothesis_helm.compiler.inputs import load_input_chart
-from hypothesis_helm.compiler.minimum import export_minimal
+from hypothesis_helm.compiler.passes.graph import export_graph
+from hypothesis_helm.compiler.passes.inputs import load_input_chart
+from hypothesis_helm.compiler.passes.minimum import export_minimal
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.errors import chart_errors, deduplicate_errors
 from hypothesis_helm.reporting.repository import write_reports
@@ -185,6 +185,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         trim_topology=2 if filtering["applied"] else getattr(args, "trim_topology", 0),
         expand_failures=bool(filtering["applied"]) or getattr(args, "expand_failures", False),
         prune_equivalent=getattr(args, "prune_equivalent", False),
+        filter_rejections=bool(args.filter),
         max_cases=getattr(args, "max_cases", 10000),
         max_candidates=getattr(args, "max_candidates", 100000),
         exhaustive_threshold=getattr(args, "exhaustive_threshold", 10000),

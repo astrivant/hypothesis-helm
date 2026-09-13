@@ -12,8 +12,8 @@ import pytest
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.runner import Chart, render
 from hypothesis_helm.cli import main
-from hypothesis_helm.compiler.graph import export_graph
-from hypothesis_helm.compiler.minimum import export_minimal
+from hypothesis_helm.compiler.passes.graph import export_graph
+from hypothesis_helm.compiler.passes.minimum import export_minimal
 from hypothesis_helm.schemas.contracts import mapping
 
 pytestmark = [
@@ -199,7 +199,7 @@ def test_budget_retains_only_verified_candidate(chart: Chart, tmp_path: Path, mo
     """
     import time
 
-    from hypothesis_helm.compiler import minimum
+    from hypothesis_helm.compiler.passes import minimum
 
     original_render = render
     calls = 0
@@ -377,7 +377,7 @@ def test_proof_cannot_overwrite_symlinks_or_values(chart: Chart, tmp_path: Path)
     Returns:
         None: Existing source and output bytes remain intact on validation errors.
     """
-    from hypothesis_helm.compiler.inputs import InputInventory
+    from hypothesis_helm.compiler.passes.inputs import InputInventory
 
     inventory = InputInventory.build(chart)
     target = tmp_path / "values-minimal.yaml"

@@ -7,10 +7,13 @@ flowchart LR
     Values[values.yaml] --> Coalesce[Round-trip YAML coalescing]
     Templates[Helm templates] --> AST[Template action AST]
     AST --> Coalesce
+    AST --> Contracts[Explicit rejection contracts]
     Schema[values.schema.json] --> Paths[Schema path enumeration]
     Coalesce --> Paths
     Paths --> Strategies[Typed Hypothesis strategies]
     Strategies --> Tests[Generated Python tests]
+    Contracts --> Guidance[Dependent-field generation and rejection witness checks]
+    Guidance --> Helm
     Tests --> Helm[Temporary chart rendering]
     Helm --> Assertions[Resource assertions and counterexamples]
 ```
@@ -32,6 +35,40 @@ the failing input while preserving the failure.
 A property can test multiple inputs and render multiple manifests. JUnit records
 the property's result; execution reports retain the input and render counts.
 Selection, caching, traversal, and sharding determine which properties execute.
+
+## Syntax trees and compiler passes
+
+`pkg/hypothesis_helm/compiler/asts/` holds template nodes, expression trees, helper
+definitions, and conservative evaluators. Template syntax forms a tree; named
+helper calls connect those trees into a graph. Source filenames and line numbers
+connect analysis results back to chart code.
+
+`pkg/hypothesis_helm/compiler/passes/` holds input discovery, topology analysis,
+equivalence pruning, rejection-guided generation, and export passes. Constants
+remain at the compiler root. Rejection analysis navigates parsed nodes rather than searching
+comments or message strings for words such as `fail`.
+
+With `--filter`, local tests and repository scans evaluate supported branches
+leading to explicit `fail` and `required` calls, including statically named helper
+calls. The first two distinct rejected inputs for each requirement are checked
+against Helm. A different native outcome disables that requirement's filtering;
+an unexpected rendering failure remains a failure.
+
+Automatic exclusions apply to inferred input domains. When an authored
+`values.schema.json` admits an input that a template rejects, the tool retains the
+failure and reports the requirement as a schema/validation conflict. Template
+guards do not silently narrow the declared contract.
+
+Sampled path tests try at most 32 single-field adjustments using supplied defaults,
+Boolean alternatives, and adjacent integers. They preserve the selected path and
+the original schema, then render and test any replacement. Finite permutation
+assignments are preserved; rejected assignments are counted separately. Supplied
+defaults always receive normal validation.
+
+Unknown expressions, dynamic helper contexts, unsupported scope mutation, and
+recursive helper calls beyond the bounded evaluator remain ordinary test inputs.
+These contracts describe chart-authored validation, not proof that its rules are
+correct. This generation policy is separate from proved output equivalence.
 
 ## Finite permutation planning
 

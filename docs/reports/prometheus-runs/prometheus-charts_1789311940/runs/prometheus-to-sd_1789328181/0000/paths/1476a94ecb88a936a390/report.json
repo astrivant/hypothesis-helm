@@ -1,0 +1,109 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 10,
+    "present_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "metricsSources"
+      ],
+      [
+        "monitoredResourceTypes"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "port"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "port"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "metricsSources"
+      ],
+      [
+        "monitoredResourceTypes"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 10,
+    "varied_count": 1,
+    "varied_fraction": 0.1,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 100,
+    "unique_bundles": 100,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 100
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-o1s3lixg/chart",
+  "seed": 0,
+  "attempts": 100,
+  "time_limit_seconds": 245.89975250000134,
+  "execution_seconds": 6.68625425035134,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.port",
+  "kind": "value-path",
+  "path": [
+    "port"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-to-sd_1789328181/0000/paths/1476a94ecb88a936a390"
+}

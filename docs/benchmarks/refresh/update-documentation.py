@@ -8,6 +8,9 @@ import re
 import sys
 from pathlib import Path
 
+from hypothesis_helm.reporting.links import Publication
+from hypothesis_helm.reporting.repository import write_reports
+
 root = Path(sys.argv[1])
 provenance = json.loads((root / "provenance.json").read_text())
 performance = json.loads((root / "outputs/performance/results.json").read_text())
@@ -30,6 +33,12 @@ for name, title in (("bitnami", "Bitnami"), ("prometheus", "Prometheus Community
     verified = json.loads((run / "verification.json").read_text())
     assert verified["all_workers_finished"] and not verified["systemic_execution_failure"]
     report = json.loads(gzip.decompress((run / "scan.json.gz").read_bytes()))
+    # Refresh presentation from retained evidence without changing measured results.
+    write_reports(
+        report,
+        Path("docs/reports") / name,
+        publication=Publication(Path.cwd(), "https://github.com/astrivant/hypothesis-helm", "main"),
+    )
     attempts = sum(chart.get("attempts", 0) for chart in report["charts"])
     content, matches = re.subn(
         rf"We scanned \*\*[\d,]+ {title} charts\*\*, recording \*\*[\d,]+ test attempts\*\*",

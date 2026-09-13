@@ -1,0 +1,571 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 62,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config",
+        "datasource",
+        "database"
+      ],
+      [
+        "config",
+        "datasource",
+        "passwordFile"
+      ],
+      [
+        "config",
+        "datasource",
+        "passwordSecret"
+      ],
+      [
+        "config",
+        "datasource",
+        "port"
+      ],
+      [
+        "config",
+        "datasource",
+        "sslmode"
+      ],
+      [
+        "config",
+        "datasource",
+        "user"
+      ],
+      [
+        "config",
+        "logFormat"
+      ],
+      [
+        "config",
+        "logLevel"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnvs"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "labels"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podDisruptionBudget",
+        "enabled"
+      ],
+      [
+        "podDisruptionBudget",
+        "maxUnavailable"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "name"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "config",
+        "datasource",
+        "host"
+      ],
+      [
+        "config",
+        "datasource",
+        "password"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config",
+        "datasource",
+        "database"
+      ],
+      [
+        "config",
+        "datasource",
+        "passwordFile"
+      ],
+      [
+        "config",
+        "datasource",
+        "passwordSecret"
+      ],
+      [
+        "config",
+        "datasource",
+        "port"
+      ],
+      [
+        "config",
+        "datasource",
+        "sslmode"
+      ],
+      [
+        "config",
+        "datasource",
+        "user"
+      ],
+      [
+        "config",
+        "datasourceSecret",
+        "key"
+      ],
+      [
+        "config",
+        "datasourceSecret",
+        "name"
+      ],
+      [
+        "config",
+        "logFormat"
+      ],
+      [
+        "config",
+        "logLevel"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnvs"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "pullSecrets"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "labels"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podDisruptionBudget",
+        "enabled"
+      ],
+      [
+        "podDisruptionBudget",
+        "maxUnavailable"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "name"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 48,
+    "varied_count": 3,
+    "varied_fraction": 0.04838709677419355,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-_9wy9wb7/chart",
+  "seed": 0,
+  "attempts": 23,
+  "error": "Error: YAML parse error on prometheus-pgbouncer-exporter/templates/serviceaccount.yaml: error converting YAML to JSON: yaml: line 12: did not find expected key\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "replicaCount": 1,
+    "image": {
+      "repository": "quay.io/prometheuscommunity/pgbouncer-exporter",
+      "tag": "",
+      "pullPolicy": "IfNotPresent"
+    },
+    "service": {
+      "type": "ClusterIP",
+      "port": 80,
+      "targetPort": 9127,
+      "name": "http",
+      "labels": {},
+      "annotations": {}
+    },
+    "serviceMonitor": {
+      "enabled": false
+    },
+    "prometheusRule": {
+      "enabled": false,
+      "additionalLabels": {},
+      "namespace": "",
+      "rules": []
+    },
+    "resources": {},
+    "rbac": {
+      "create": true
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": null,
+      "annotations": {
+        "\n": null
+      }
+    },
+    "networkPolicy": {
+      "enabled": false,
+      "labels": {}
+    },
+    "podSecurityContext": {
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "securityContext": {
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "readOnlyRootFilesystem": true,
+      "runAsNonRoot": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "hostAliases": [],
+    "config": {
+      "datasource": {
+        "host": null,
+        "user": "postgres",
+        "password": null,
+        "passwordFile": "",
+        "passwordSecret": {},
+        "port": "5432",
+        "database": "pgbouncer",
+        "sslmode": "disable",
+        "extraParams": ""
+      },
+      "datasourceSecret": {},
+      "constantLabels": {},
+      "logLevel": "",
+      "logFormat": "json",
+      "extraArgs": []
+    },
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "annotations": {},
+    "podLabels": {},
+    "livenessProbe": {
+      "initialDelaySeconds": 3,
+      "timeoutSeconds": 3
+    },
+    "readinessProbe": {
+      "initialDelaySeconds": 5,
+      "timeoutSeconds": 10
+    },
+    "extraEnvs": [],
+    "initContainers": [],
+    "extraContainers": [],
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "podDisruptionBudget": {
+      "enabled": false,
+      "maxUnavailable": 1
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 12,
+    "unique_bundles": 11,
+    "duplicate_bundles": 1,
+    "validation_cache_hits": 1,
+    "validated_entries": 11
+  },
+  "phase": "$.serviceAccount.annotations",
+  "kind": "value-path",
+  "path": [
+    "serviceAccount",
+    "annotations"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-pgbouncer-exporter_1789327277/0000/paths/840a8a2bc50327388c2a"
+}

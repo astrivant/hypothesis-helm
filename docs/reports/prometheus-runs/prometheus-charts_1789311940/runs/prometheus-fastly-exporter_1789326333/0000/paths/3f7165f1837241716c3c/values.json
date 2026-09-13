@@ -1,0 +1,84 @@
+{
+  "replicaCount": 1,
+  "serviceAccount": {
+    "create": true,
+    "name": null
+  },
+  "imagePullSecrets": [],
+  "image": {
+    "repository": "\"",
+    "tag": "",
+    "pullPolicy": "IfNotPresent"
+  },
+  "fastly": {
+    "token": "token"
+  },
+  "existingSecret": {
+    "name": "",
+    "key": "fastly-api-token"
+  },
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "extraManifests": [],
+  "options": {},
+  "service": {
+    "type": "ClusterIP",
+    "port": 8080,
+    "annotations": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "annotations": {},
+    "hosts": [
+      {
+        "host": "chart-example.local",
+        "paths": [
+          {
+            "path": "/",
+            "pathType": "ImplementationSpecific"
+          }
+        ]
+      }
+    ],
+    "tls": []
+  },
+  "resources": {},
+  "serviceMonitor": {
+    "enabled": false
+  },
+  "podSecurityContext": {},
+  "securityContext": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "extraEnv": [],
+  "podAnnotations": {},
+  "podLabels": {},
+  "initContainers": [],
+  "extraContainers": [],
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "route": {
+    "main": {
+      "enabled": false,
+      "apiVersion": "",
+      "kind": "",
+      "name": "",
+      "annotations": {},
+      "labels": {},
+      "parentRefs": [],
+      "hostnames": [],
+      "additionalRules": [],
+      "filters": [],
+      "matches": [
+        {
+          "path": {
+            "type": "PathPrefix",
+            "value": "/"
+          }
+        }
+      ],
+      "httpsRedirect": false
+    }
+  }
+}

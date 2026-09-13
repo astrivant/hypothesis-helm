@@ -1,0 +1,592 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 69,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "aws",
+        "secret",
+        "includesSessionToken"
+      ],
+      [
+        "aws",
+        "secret",
+        "name"
+      ],
+      [
+        "command"
+      ],
+      [
+        "config"
+      ],
+      [
+        "containerPort"
+      ],
+      [
+        "containerSecurityContext"
+      ],
+      [
+        "deployment",
+        "annotations"
+      ],
+      [
+        "deployment",
+        "labels"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "livenessProbe",
+        "failureThreshold"
+      ],
+      [
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "livenessProbe",
+        "path"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "livenessProbe",
+        "successThreshold"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pod",
+        "annotations"
+      ],
+      [
+        "pod",
+        "labels"
+      ],
+      [
+        "podDisruptionBudget",
+        "enabled"
+      ],
+      [
+        "podDisruptionBudget",
+        "maxUnavailable"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "readinessProbe",
+        "failureThreshold"
+      ],
+      [
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "readinessProbe",
+        "path"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "successThreshold"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "aws",
+        "aws_access_key_id"
+      ],
+      [
+        "aws",
+        "aws_secret_access_key"
+      ],
+      [
+        "aws",
+        "role"
+      ],
+      [
+        "aws",
+        "secret",
+        "includesSessionToken"
+      ],
+      [
+        "aws",
+        "secret",
+        "name"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "image",
+        "pullSecrets"
+      ],
+      [
+        "image",
+        "tag"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "command"
+      ],
+      [
+        "config"
+      ],
+      [
+        "containerPort"
+      ],
+      [
+        "containerSecurityContext"
+      ],
+      [
+        "deployment",
+        "annotations"
+      ],
+      [
+        "deployment",
+        "labels"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "livenessProbe",
+        "failureThreshold"
+      ],
+      [
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "livenessProbe",
+        "path"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "livenessProbe",
+        "successThreshold"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pod",
+        "annotations"
+      ],
+      [
+        "pod",
+        "labels"
+      ],
+      [
+        "podDisruptionBudget",
+        "enabled"
+      ],
+      [
+        "podDisruptionBudget",
+        "maxUnavailable"
+      ],
+      [
+        "podDisruptionBudget",
+        "minAvailable"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "labels"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "readinessProbe",
+        "failureThreshold"
+      ],
+      [
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "readinessProbe",
+        "path"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "successThreshold"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 50,
+    "varied_count": 8,
+    "varied_fraction": 0.11594202898550725,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-1laoqkwl/chart",
+  "seed": 0,
+  "attempts": 67,
+  "error": "Error: YAML parse error on prometheus-cloudwatch-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 40: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "replicaCount": 1,
+    "image": {
+      "repository": "prom/cloudwatch-exporter",
+      "tag": null,
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": null
+    },
+    "command": [],
+    "containerPort": 9106,
+    "service": {
+      "type": "ClusterIP",
+      "port": 9106,
+      "portName": "http",
+      "annotations": {},
+      "labels": {}
+    },
+    "pod": {
+      "labels": {},
+      "annotations": {}
+    },
+    "deployment": {
+      "labels": {},
+      "annotations": {}
+    },
+    "extraEnv": null,
+    "resources": {},
+    "aws": {
+      "role": null,
+      "stsRegional": {
+        "enabled": false
+      },
+      "secret": {
+        "name": "\r0"
+      },
+      "aws_access_key_id": null,
+      "aws_secret_access_key": null
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": null,
+      "automountServiceAccountToken": true
+    },
+    "rbac": {
+      "create": true
+    },
+    "config": "# This is the default configuration for prometheus-cloudwatch-exporter\nregion: eu-west-1\nperiod_seconds: 240\nmetrics:\n- aws_namespace: AWS/ELB\n  aws_metric_name: HealthyHostCount\n  aws_dimensions: [AvailabilityZone, LoadBalancerName]\n  aws_statistics: [Average]\n\n- aws_namespace: AWS/ELB\n  aws_metric_name: UnHealthyHostCount\n  aws_dimensions: [AvailabilityZone, LoadBalancerName]\n  aws_statistics: [Average]\n\n- aws_namespace: AWS/ELB\n  aws_metric_name: RequestCount\n  aws_dimensions: [AvailabilityZone, LoadBalancerName]\n  aws_statistics: [Sum]\n\n- aws_namespace: AWS/ELB\n  aws_metric_name: Latency\n  aws_dimensions: [AvailabilityZone, LoadBalancerName]\n  aws_statistics: [Average]\n\n- aws_namespace: AWS/ELB\n  aws_metric_name: SurgeQueueLength\n  aws_dimensions: [AvailabilityZone, LoadBalancerName]\n  aws_statistics: [Maximum, Sum]",
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "livenessProbe": {
+      "path": "/-/healthy",
+      "initialDelaySeconds": 30,
+      "periodSeconds": 5,
+      "timeoutSeconds": 5,
+      "successThreshold": 1,
+      "failureThreshold": 3
+    },
+    "readinessProbe": {
+      "path": "/-/ready",
+      "initialDelaySeconds": 30,
+      "periodSeconds": 5,
+      "timeoutSeconds": 5,
+      "successThreshold": 1,
+      "failureThreshold": 3
+    },
+    "serviceMonitor": {
+      "enabled": false
+    },
+    "prometheusRule": {
+      "enabled": false
+    },
+    "ingress": {
+      "enabled": false,
+      "annotations": {},
+      "labels": {},
+      "path": "/",
+      "hosts": [
+        "chart-example.local"
+      ],
+      "tls": [],
+      "pathType": "Prefix"
+    },
+    "securityContext": {
+      "runAsUser": 65534,
+      "fsGroup": 65534
+    },
+    "containerSecurityContext": {},
+    "priorityClassName": "",
+    "podDisruptionBudget": {
+      "enabled": false,
+      "maxUnavailable": 1
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 43,
+    "unique_bundles": 21,
+    "duplicate_bundles": 22,
+    "validation_cache_hits": 22,
+    "validated_entries": 21
+  },
+  "phase": "$.aws.secret",
+  "kind": "value-path",
+  "path": [
+    "aws",
+    "secret"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-cloudwatch-exporter_1789325826/0000/paths/0b35a16c8f7c5b24fdc1"
+}

@@ -1,0 +1,125 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "quay.io/prometheuscommunity/json-exporter",
+    "pullPolicy": "IfNotPresent",
+    "tag": ""
+  },
+  "imagePullSecrets": [],
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "serviceAccount": {
+    "create": true,
+    "annotations": {},
+    "name": ""
+  },
+  "commonLabels": {},
+  "deploymentAnnotations": {},
+  "deploymentLabels": {},
+  "podAnnotations": {},
+  "podSecurityContext": {},
+  "podLabels": {},
+  "securityContext": {},
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/metrics",
+      "port": "http"
+    }
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/metrics",
+      "port": "http"
+    }
+  },
+  "service": {
+    "type": "ClusterIP",
+    "port": 7979,
+    "targetPort": "http",
+    "name": "http",
+    "labels": {},
+    "annotations": {}
+  },
+  "serviceMonitor": {
+    "enabled": false,
+    "namespace": "",
+    "scheme": "http",
+    "defaults": {
+      "additionalMetricsRelabels": {},
+      "additionalRelabels": [],
+      "interval": "10s",
+      "labels": {},
+      "scrapeTimeout": "8s"
+    },
+    "targets": null
+  },
+  "ingress": {
+    "enabled": false,
+    "className": "",
+    "labels": {},
+    "annotations": {},
+    "hosts": [
+      {
+        "host": "chart-example.local",
+        "paths": [
+          {
+            "path": "/",
+            "pathType": "ImplementationSpecific"
+          }
+        ]
+      }
+    ],
+    "tls": []
+  },
+  "route": {
+    "main": {
+      "enabled": false,
+      "apiVersion": "",
+      "kind": "",
+      "name": "",
+      "annotations": {},
+      "labels": {},
+      "parentRefs": [],
+      "hostnames": [],
+      "additionalRules": [],
+      "filters": [],
+      "matches": [
+        {
+          "path": {
+            "type": "PathPrefix",
+            "value": "/"
+          }
+        }
+      ],
+      "httpsRedirect": false
+    }
+  },
+  "resources": {},
+  "revisionHistoryLimit": 10,
+  "environmentVariables": [],
+  "autoscaling": {
+    "enabled": false,
+    "minReplicas": 1,
+    "maxReplicas": 100,
+    "targetCPUUtilizationPercentage": 80
+  },
+  "nodeSelector": [],
+  "tolerations": [],
+  "affinity": [],
+  "configuration": {
+    "config": "\r0",
+    "structuredConfig": {}
+  },
+  "prometheusRule": {
+    "enabled": false,
+    "additionalLabels": {},
+    "namespace": "",
+    "rules": []
+  },
+  "additionalVolumes": [],
+  "additionalVolumeMounts": [],
+  "extraInitContainers": [],
+  "extraArgs": [],
+  "extraContainers": [],
+  "extraManifests": []
+}

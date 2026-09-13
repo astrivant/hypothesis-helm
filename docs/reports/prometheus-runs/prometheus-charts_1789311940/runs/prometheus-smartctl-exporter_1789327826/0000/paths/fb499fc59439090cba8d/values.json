@@ -1,0 +1,77 @@
+{
+  "config": {},
+  "extraInstances": [],
+  "common": {
+    "config": {
+      "bind_to": "0.0.0.0:9633",
+      "url_path": "/metrics",
+      "smartctl_location": "/usr/sbin/smartctl",
+      "collect_not_more_than_period": "120s"
+    }
+  },
+  "extraArgs": {},
+  "serviceMonitor": {
+    "enabled": false,
+    "extraLabels": {},
+    "interval": "60s",
+    "scrapeTimeout": "30s",
+    "relabelings": [],
+    "metricRelabelings": [],
+    "attachMetadata": {
+      "node": false
+    }
+  },
+  "prometheusRules": {
+    "enabled": true,
+    "rules": {
+      "": null
+    }
+  },
+  "image": {
+    "repository": "quay.io/prometheuscommunity/smartctl-exporter",
+    "tag": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "updateStrategy": {
+    "rollingUpdate": {
+      "maxUnavailable": 1
+    },
+    "type": "RollingUpdate"
+  },
+  "serviceAccount": {
+    "create": true,
+    "annotations": {},
+    "name": ""
+  },
+  "rbac": {
+    "create": true,
+    "podSecurityPolicy": "unrestricted-psp"
+  },
+  "resources": {},
+  "hostNetwork": false,
+  "priorityClassName": "",
+  "annotations": {},
+  "podAnnotations": {},
+  "podLabels": {},
+  "nodeSelector": {},
+  "tolerations": [
+    {
+      "effect": "NoSchedule",
+      "operator": "Exists"
+    }
+  ],
+  "affinity": {},
+  "service": {
+    "type": "ClusterIP",
+    "port": 80,
+    "ipDualStack": {
+      "enabled": false,
+      "ipFamilies": [
+        "IPv6",
+        "IPv4"
+      ],
+      "ipFamilyPolicy": "PreferDualStack"
+    }
+  }
+}

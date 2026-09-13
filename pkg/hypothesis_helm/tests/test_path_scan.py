@@ -75,6 +75,7 @@ def test_scan_visits_each_path_once(chart: Chart, tmp_path: Path, monkeypatch: p
             dict[str, object]: Successful bounded property outcome.
         """
         assert source is chart and kwargs["check_defaults"] is False
+        assert kwargs["baseline_resources"] == [{"kind": "ConfigMap"}]
         calls.append(kwargs)
         return {"status": "passed", "attempts": 3}
 

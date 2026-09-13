@@ -1,0 +1,193 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.extraConfigmapMounts
+[INFO] Coalescing path $.extraSecretMounts
+[INFO] Coalescing path $.imagePullSecrets
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.podAnnotations
+[INFO] Coalescing path $.podSecurityContext
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.route
+[INFO] Coalescing path $.securityContext
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.autoscaling.enabled
+[INFO] Coalescing path $.autoscaling.maxReplicas
+[INFO] Coalescing path $.autoscaling.minReplicas
+[INFO] Coalescing path $.autoscaling.targetCPUUtilizationPercentage
+[INFO] Coalescing path $.autoscaling.targetMemoryUtilizationPercentage
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.ingress.annotations
+[INFO] Coalescing path $.ingress.className
+[INFO] Coalescing path $.ingress.enabled
+[INFO] Coalescing path $.ingress.hosts
+[INFO] Coalescing path $.ingress.tls
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.serviceMonitor.enabled
+[INFO] Coalescing path $.serviceMonitor.interval
+[INFO] Coalescing path $.serviceMonitor.labels
+[INFO] Coalescing path $.serviceMonitor.metricRelabelings
+[INFO] Coalescing path $.serviceMonitor.namespace
+[INFO] Coalescing path $.serviceMonitor.relabelings
+[INFO] Coalescing path $.serviceMonitor.targetLabels
+[INFO] Coalescing path $.serviceMonitor.telemetryPath
+[INFO] Coalescing path $.serviceMonitor.timeout
+[INFO] Coalescing path $.snmpNotifier.extraArgs
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationPassword
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationPasswordSecret
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationUsername
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationUsernameSecret
+[INFO] Coalescing path $.snmpNotifier.snmpCommunity
+[INFO] Coalescing path $.snmpNotifier.snmpCommunitySecret
+[INFO] Coalescing path $.snmpNotifier.snmpDestinations
+[INFO] Coalescing path $.snmpNotifier.snmpPrivatePassword
+[INFO] Coalescing path $.snmpNotifier.snmpPrivatePasswordSecret
+[INFO] Coalescing path $.snmpNotifier.trapTemplates
+[INFO] Coalescing path $.extraConfigmapMounts[*].configMap
+[INFO] Coalescing path $.extraConfigmapMounts[*].defaultMode
+[INFO] Coalescing path $.extraConfigmapMounts[*].mountPath
+[INFO] Coalescing path $.extraConfigmapMounts[*].name
+[INFO] Coalescing path $.extraConfigmapMounts[*].readOnly
+[INFO] Coalescing path $.extraConfigmapMounts[*].subPath
+[INFO] Coalescing path $.extraSecretMounts[*].defaultMode
+[INFO] Coalescing path $.extraSecretMounts[*].mountPath
+[INFO] Coalescing path $.extraSecretMounts[*].name
+[INFO] Coalescing path $.extraSecretMounts[*].readOnly
+[INFO] Coalescing path $.extraSecretMounts[*].secretName
+[INFO] Coalescing path $.extraSecretMounts[*].subPath
+[INFO] Coalescing path $.route[*].additionalRules
+[INFO] Coalescing path $.route[*].annotations
+[INFO] Coalescing path $.route[*].apiVersion
+[INFO] Coalescing path $.route[*].enabled
+[INFO] Coalescing path $.route[*].filters
+[INFO] Coalescing path $.route[*].hostnames
+[INFO] Coalescing path $.route[*].httpsRedirect
+[INFO] Coalescing path $.route[*].kind
+[INFO] Coalescing path $.route[*].labels
+[INFO] Coalescing path $.route[*].matches
+[INFO] Coalescing path $.route[*].name
+[INFO] Coalescing path $.route[*].parentRefs
+[INFO] Coalescing path $.service.ipDualStack.enabled
+[INFO] Coalescing path $.service.ipDualStack.ipFamilies
+[INFO] Coalescing path $.service.ipDualStack.ipFamilyPolicy
+[INFO] Coalescing path $.serviceMonitor.targetLabels[*]
+[INFO] Coalescing path $.snmpNotifier.extraArgs[*]
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationPasswordSecret.key
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationPasswordSecret.name
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationUsernameSecret.key
+[INFO] Coalescing path $.snmpNotifier.snmpAuthenticationUsernameSecret.name
+[INFO] Coalescing path $.snmpNotifier.snmpCommunitySecret.key
+[INFO] Coalescing path $.snmpNotifier.snmpCommunitySecret.name
+[INFO] Coalescing path $.snmpNotifier.snmpDestinations[*]
+[INFO] Coalescing path $.snmpNotifier.snmpPrivatePasswordSecret.key
+[INFO] Coalescing path $.snmpNotifier.snmpPrivatePasswordSecret.name
+[INFO] Coalescing path $.snmpNotifier.trapTemplates.description
+[INFO] Coalescing path $.snmpNotifier.trapTemplates.userObjects
+[INFO] Coalescing path $.ingress.hosts[*].host
+[INFO] Coalescing path $.ingress.hosts[*].paths
+[INFO] Coalescing path $.ingress.tls[*].hosts
+[INFO] Coalescing path $.ingress.tls[*].secretName
+[INFO] Coalescing path $.ingress.tls[*].hosts[*]
+[INFO] Coalescing path $.snmpNotifier.trapTemplates.userObjects[*].subOid
+[INFO] Coalescing path $.snmpNotifier.trapTemplates.userObjects[*].template
+[INFO] Coalescing path $.ingress.hosts[*].paths[*].path
+[INFO] Coalescing path $.ingress.hosts[*].paths[*].pathType
+[INFO] Discovered 133 unique value paths; random traversal, seed 0
+[INFO] Testing path $.route.main.name (1/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.snmpNotifier.snmpCommunity (2/133)
+[INFO] Compiler input baseline: 58 statically named fields
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 42 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 127 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+[INFO] Render hashes (run-local): 5 observed, 1 unique, 4 duplicate bundles; 4 successful validations reused
+[INFO] Testing path $.image (3/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 94 observed, 87 unique, 7 duplicate bundles; 7 successful validations reused
+[INFO] Testing path $.service.ipDualStack.ipFamilies[*] (4/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.nodeSelector (5/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.service.port (6/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.imagePullSecrets (7/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.route.main.httpsRedirect (8/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 1 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.securityContext (9/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 96 unique, 4 duplicate bundles; 4 successful validations reused
+[INFO] Testing path $.autoscaling.targetCPUUtilizationPercentage (10/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.podSecurityContext (11/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 99 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.route.main (12/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 84 observed, 9 unique, 75 duplicate bundles; 65 successful validations reused
+[INFO] Testing path $.route.main.hostnames[*] (13/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.route.main.filters (14/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.snmpNotifier.snmpAuthenticationPasswordSecret (15/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 129 observed, 21 unique, 108 duplicate bundles; 108 successful validations reused
+[INFO] Testing path $.service.type (16/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.securityContext.runAsNonRoot (17/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext.capabilities.drop (18/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 94 unique, 6 duplicate bundles; 6 successful validations reused
+[INFO] Testing path $.serviceMonitor.relabelings (19/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.ingress.tls[*].hosts[*] (20/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 0 observed, 0 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.ingress.tls[*].hosts (21/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.route.main.parentRefs[*] (22/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.snmpNotifier.trapTemplates (23/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 165 observed, 22 unique, 143 duplicate bundles; 143 successful validations reused
+[INFO] Testing path $.podSecurityContext.fsGroup (24/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.imagePullSecrets[*].name (25/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 67 unique, 33 duplicate bundles; 33 successful validations reused
+[INFO] Testing path $.route.main.parentRefs (26/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 88 successful validations reused
+[INFO] Testing path $.snmpNotifier.snmpPrivatePasswordSecret (27/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Render hashes (run-local): 129 observed, 21 unique, 108 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.telemetryPath (28/133)
+[INFO] Compiler input baseline: 58 statically named fields
+[INFO] Execution stopped at the 9.01509s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 89 observed, 1 unique, 88 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.38s; dependency preparation 0.15s; 0 charts remain

@@ -1,0 +1,238 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 21,
+    "present_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "podMonitor",
+        "labels"
+      ],
+      [
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "podMonitor",
+        "selectorOverride"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "podMonitor",
+        "labels"
+      ],
+      [
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "podMonitor",
+        "selectorOverride"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 21,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-e2e4hqt6/chart",
+  "seed": 0,
+  "attempts": 36,
+  "error": "Error: YAML parse error on prometheus-conntrack-stats-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 7: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "fullnameOverride": "",
+    "image": {
+      "repository": "jwkohnen/conntrack-stats-exporter",
+      "pullPolicy": "IfNotPresent",
+      "tag": ""
+    },
+    "imagePullSecrets": [],
+    "nameOverride": ">0",
+    "nodeSelector": {},
+    "podAnnotations": {
+      "prometheus.io/scrape": "true",
+      "prometheus.io/port": "9371"
+    },
+    "commonLabels": {},
+    "podLabels": {},
+    "podMonitor": {
+      "enabled": false,
+      "honorLabels": true,
+      "interval": "10s",
+      "labels": {},
+      "metricRelabelings": [],
+      "relabelings": [],
+      "selectorOverride": {},
+      "scrapeTimeout": "10s"
+    },
+    "podSecurityContext": {},
+    "resources": {},
+    "securityContext": {
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "privileged": true,
+      "readOnlyRootFilesystem": true,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "serviceAccount": {
+      "create": true,
+      "annotations": {},
+      "name": ""
+    },
+    "tolerations": []
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 24,
+    "unique_bundles": 23,
+    "duplicate_bundles": 1,
+    "validation_cache_hits": 1,
+    "validated_entries": 23
+  },
+  "phase": "$.nameOverride",
+  "kind": "value-path",
+  "path": [
+    "nameOverride"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-conntrack-stats-exporter_1789326118/0000/paths/0ce120cfa523ba37df61"
+}

@@ -1,0 +1,327 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 41,
+    "present_fields": [
+      [
+        "additionalAnnotations"
+      ],
+      [
+        "affinity"
+      ],
+      [
+        "deployment",
+        "labels"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nginxServer"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "options"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "path"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "updateStrategy"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "readinessProbe"
+      ],
+      [
+        "service",
+        "nodePort"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "additionalAnnotations"
+      ],
+      [
+        "affinity"
+      ],
+      [
+        "deployment",
+        "labels"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nginxServer"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "options"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "path"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "updateStrategy"
+      ]
+    ],
+    "present_count": 39,
+    "varied_count": 2,
+    "varied_fraction": 0.04878048780487805,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 100,
+    "unique_bundles": 97,
+    "duplicate_bundles": 3,
+    "validation_cache_hits": 3,
+    "validated_entries": 97
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ikw1hhpv/chart",
+  "seed": 0,
+  "attempts": 100,
+  "time_limit_seconds": 274.8969523748383,
+  "execution_seconds": 10.052181249950081,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.readinessProbe.httpGet.path",
+  "kind": "value-path",
+  "path": [
+    "readinessProbe",
+    "httpGet",
+    "path"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-nginx-exporter_1789326976/0000/paths/a4433106ca2996c801fe"
+}

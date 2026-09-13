@@ -1,0 +1,78 @@
+{
+  "additionalLabels": {},
+  "additionalAnnotations": {
+    "": []
+  },
+  "replicaCount": 1,
+  "rbac": {
+    "create": true
+  },
+  "serviceAccount": {
+    "create": false,
+    "name": null
+  },
+  "image": {
+    "repository": "nginx/nginx-prometheus-exporter",
+    "pullPolicy": "IfNotPresent",
+    "tag": ""
+  },
+  "imagePullSecrets": [],
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "nginxServer": "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:8080/stub_status",
+  "options": {},
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/",
+      "port": "http"
+    },
+    "initialDelaySeconds": 30,
+    "timeoutSeconds": 10
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/",
+      "port": "http"
+    },
+    "initialDelaySeconds": 30,
+    "timeoutSeconds": 10
+  },
+  "service": {
+    "type": "ClusterIP",
+    "port": 9113,
+    "nodePort": null,
+    "annotations": {},
+    "externalTrafficPolicy": ""
+  },
+  "podAnnotations": {},
+  "resources": {},
+  "serviceMonitor": {
+    "enabled": false,
+    "namespace": "",
+    "apiVersion": "monitoring.coreos.com/v1",
+    "interval": "30s",
+    "path": "/metrics",
+    "additionalLabels": {},
+    "scrapeTimeout": "10s",
+    "targetLabels": [],
+    "metricRelabelings": [],
+    "relabelings": []
+  },
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "deployment": {
+    "annotations": {},
+    "labels": {}
+  },
+  "extraEnv": [],
+  "initContainers": [],
+  "extraContainers": [],
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "priorityClassName": "",
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  }
+}

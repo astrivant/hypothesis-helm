@@ -13,6 +13,7 @@ from pathlib import Path, PurePosixPath
 from ruamel.yaml.error import YAMLError
 
 from hypothesis_helm.charts import yamlio
+from hypothesis_helm.reporting.reproductions import failing_input
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 TEMPLATE_FRAME = re.compile(r"(?:template: |execution error at \()(?P<path>[^\s\"():]+/templates/[^\s\"():]+):\d+(?::\d+)?")
@@ -87,13 +88,40 @@ def chart_errors(record: dict[str, object], chart: Path | None = None) -> list[d
     Returns:
         list[dict[str, object]]: Diagnostic signatures and optional verified template identities.
     """
-    phases = [mapping(phase) for phase in sequence(record.get("phases", [])) if isinstance(phase, dict) and phase.get("error")]
-    aggregate = "\n\n".join(f"{phase.get('phase')}: {phase['error']}" for phase in phases if phase.get("status") == "failed")
+    phases = [
+        mapping(phase)
+        for phase in sequence(record.get("phases", []))
+        if isinstance(phase, dict) and (phase.get("error") or phase.get("failure_expansion"))
+    ]
+    aggregate = "\n\n".join(
+        f"{phase.get('phase')}: {phase['error']}" for phase in phases if phase.get("status") == "failed" and phase.get("error")
+    )
     sources = list(phases)
-    if record.get("error") and record["error"] != aggregate:
+    if (record.get("error") and record["error"] != aggregate) or record.get("failure_expansion"):
         sources.append(record)
-    errors: list[dict[str, object]] = []
+    expanded_sources = []
     for source in sources:
+        expansion = source.get("failure_expansion")
+        failures = sequence(expansion.get("failures", [])) if isinstance(expansion, dict) else []
+        matching_primary = False
+        for index, failure in enumerate(failures, 1):
+            case = mapping(failure)
+            if not case.get("error"):
+                continue
+            expanded_sources.append(
+                {
+                    **source,
+                    **case,
+                    "phase": f"{source.get('phase', 'chart')} / case {index}",
+                    "status": "failed",
+                    "failure_type": case.get("failure_type"),
+                }
+            )
+            matching_primary |= case.get("values") == source.get("values") and case["error"] == source.get("error")
+        if source.get("error") and not matching_primary:
+            expanded_sources.append(source)
+    errors: list[dict[str, object]] = []
+    for source in expanded_sources:
         if source.get("status") in {"pending", "not-started", "not-needed"}:
             continue
         diagnostic = str(source["error"]).strip()
@@ -112,6 +140,8 @@ def chart_errors(record: dict[str, object], chart: Path | None = None) -> list[d
                 "failure_type": source.get("failure_type"),
                 "error": diagnostic,
                 "source": identity,
+                "input": failing_input(source),
+                "artifacts": source.get("artifacts", record.get("artifacts")),
             }
         )
     return errors
@@ -136,15 +166,21 @@ def deduplicate_errors(report: dict[str, object]) -> None:
             diagnostics = chart_errors(chart)
         for diagnostic in sequence(diagnostics):
             error = mapping(diagnostic)
-            signature = {key: value for key, value in error.items() if key != "phase"}
+            signature = {key: value for key, value in error.items() if key not in {"phase", "input", "artifacts"}}
             key = json.dumps(signature, sort_keys=True)
             if key not in groups:
                 groups[key] = {**signature, "occurrences": []}
+            source = chart
+            for phase in sequence(chart.get("phases", [])):
+                if isinstance(phase, dict) and phase.get("phase") == error["phase"]:
+                    source = phase
+                    break
             occurrence = {
                 "chart": chart["chart"],
                 "phase": error["phase"],
                 "status": error["status"],
-                "artifacts": chart.get("artifacts"),
+                "artifacts": error.get("artifacts") or source.get("artifacts") or chart.get("artifacts"),
+                "input": error.get("input", failing_input(source)),
             }
             sequence(groups[key]["occurrences"]).append(occurrence)
             if key not in references:

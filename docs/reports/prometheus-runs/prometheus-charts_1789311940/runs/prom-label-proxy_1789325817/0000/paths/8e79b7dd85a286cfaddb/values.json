@@ -1,0 +1,160 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "pullPolicy": "-"
+  },
+  "imagePullSecrets": [],
+  "nameOverride": "",
+  "namespaceOverride": "",
+  "fullnameOverride": "",
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "annotations": {}
+  },
+  "podAnnotations": {},
+  "podLabels": {},
+  "podSecurityContext": {},
+  "securityContext": {
+    "runAsUser": 65534,
+    "runAsGroup": 65534,
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true
+  },
+  "service": {
+    "port": 8080,
+    "type": "ClusterIP",
+    "annotations": {}
+  },
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/healthz",
+      "port": "http"
+    }
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/healthz",
+      "port": "http"
+    }
+  },
+  "resources": {
+    "limits": {
+      "cpu": "200m",
+      "memory": "128Mi"
+    },
+    "requests": {
+      "cpu": "100m",
+      "memory": "64Mi"
+    }
+  },
+  "autoscaling": {
+    "enabled": false,
+    "minReplicas": 1,
+    "maxReplicas": 2,
+    "targetCPUUtilizationPercentage": 80
+  },
+  "podDisruptionBudget": {},
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "ingress": {
+    "enabled": false,
+    "className": "",
+    "labels": {},
+    "annotations": {},
+    "hosts": [
+      {
+        "host": "chart-example.local",
+        "paths": [
+          {
+            "path": "/",
+            "pathType": "ImplementationSpecific"
+          }
+        ]
+      }
+    ],
+    "tls": []
+  },
+  "config": {
+    "listenAddress": "0.0.0.0:8080",
+    "upstream": "http://prometheus:9090",
+    "label": "namespace",
+    "extraArgs": [
+      "--enable-label-apis=true",
+      "--error-on-replace=true"
+    ]
+  },
+  "metrics": {
+    "enabled": false,
+    "listenAddress": "0.0.0.0:9090",
+    "serviceMonitor": {
+      "enabled": false,
+      "port": 9090,
+      "additionalLabels": {},
+      "jobLabel": "",
+      "targetLabels": [],
+      "podTargetLabels": [],
+      "sampleLimit": 0,
+      "targetLimit": 0,
+      "labelLimit": 0,
+      "labelNameLengthLimit": 0,
+      "labelValueLengthLimit": 0,
+      "attachMetadata": {},
+      "additionalConfigs": {},
+      "honorLabels": false,
+      "honorTimestamps": null,
+      "interval": "",
+      "scrapeTimeout": "",
+      "relabelings": [],
+      "metricRelabelings": [],
+      "additionalEndpointConfigs": {}
+    }
+  },
+  "kubeRBACProxy": {
+    "enabled": false,
+    "config": {},
+    "image": {
+      "repository": "quay.io/brancz/kube-rbac-proxy",
+      "tag": "v0.22.0",
+      "pullPolicy": "IfNotPresent"
+    },
+    "extraArgs": [],
+    "port": 8100,
+    "containerSecurityContext": {
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      }
+    },
+    "resources": {},
+    "volumeMounts": []
+  },
+  "extraManifests": null,
+  "route": {
+    "main": {
+      "enabled": false,
+      "apiVersion": "",
+      "kind": "",
+      "name": "",
+      "annotations": {},
+      "labels": {},
+      "parentRefs": [],
+      "hostnames": [],
+      "additionalRules": [],
+      "filters": [],
+      "matches": [
+        {
+          "path": {
+            "type": "PathPrefix",
+            "value": "/"
+          }
+        }
+      ],
+      "httpsRedirect": false
+    }
+  }
+}

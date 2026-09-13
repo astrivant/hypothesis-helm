@@ -1,0 +1,196 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.annotations
+[INFO] Coalescing path $.extraVolumes
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.image.imagePullSecrets
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.livenessProbe.periodSeconds
+[INFO] Coalescing path $.livenessProbe.timeoutSeconds
+[INFO] Coalescing path $.readinessProbe.periodSeconds
+[INFO] Coalescing path $.readinessProbe.timeoutSeconds
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.labels
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.targetPort
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceMonitor.additionalLabels
+[INFO] Coalescing path $.serviceMonitor.enabled
+[INFO] Coalescing path $.serviceMonitor.interval
+[INFO] Coalescing path $.serviceMonitor.namespace
+[INFO] Coalescing path $.serviceMonitor.scrapeTimeout
+[INFO] Coalescing path $.serviceMonitor.targetLabels
+[INFO] Coalescing path $.config.metrics.accstatz
+[INFO] Coalescing path $.config.metrics.connz
+[INFO] Coalescing path $.config.metrics.connz_detailed
+[INFO] Coalescing path $.config.metrics.gatewayz
+[INFO] Coalescing path $.config.metrics.healthz
+[INFO] Coalescing path $.config.metrics.jsz
+[INFO] Coalescing path $.config.metrics.leafz
+[INFO] Coalescing path $.config.metrics.routez
+[INFO] Coalescing path $.config.metrics.subz
+[INFO] Coalescing path $.config.metrics.varz
+[INFO] Coalescing path $.config.nats.namespace
+[INFO] Coalescing path $.config.nats.port
+[INFO] Coalescing path $.config.nats.service
+[INFO] Coalescing path $.serviceMonitor.targetLabels[*]
+[INFO] Discovered 51 unique value paths; random traversal, seed 0
+[INFO] Testing path $.serviceMonitor.additionalLabels (1/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.image (2/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 72 observed, 58 unique, 14 duplicate bundles; 14 successful validations reused
+[INFO] Testing path $.livenessProbe.periodSeconds (3/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.nodeSelector (4/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.service.port (5/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config (6/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 59 observed, 41 unique, 18 duplicate bundles; 18 successful validations reused
+[INFO] Testing path $.service.type (7/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.image.repository (8/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.image.imagePullSecrets[*] (9/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.resources (10/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.config.metrics.routez (11/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.readinessProbe.timeoutSeconds (12/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.namespace (13/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.config.metrics.healthz (14/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config.nats.port (15/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.tolerations[*] (16/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.tolerations (17/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.config.metrics.gatewayz (18/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config.metrics.accstatz (19/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.enabled (20/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 1 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.service.annotations (21/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 3 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config.metrics.varz (22/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor (23/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.extraContainers (24/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.config.metrics.jsz (25/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.livenessProbe.timeoutSeconds (26/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.extraVolumes (27/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 1 observed, 1 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.affinity (28/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.config.metrics.connz (29/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.service.labels (30/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.config.nats.service (31/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.annotations (32/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.image.tag (33/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.image.pullPolicy (34/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.service.targetPort (35/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.scrapeTimeout (36/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.serviceMonitor.targetLabels (37/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.readinessProbe.periodSeconds (38/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.readinessProbe (39/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 99 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.config.metrics (40/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 64 unique, 36 duplicate bundles; 36 successful validations reused
+[INFO] Testing path $.livenessProbe (41/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 99 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.serviceMonitor.targetLabels[*] (42/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.replicaCount (43/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.image.imagePullSecrets (44/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 10 successful validations reused
+[INFO] Testing path $.config.nats.namespace (45/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config.nats (46/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 82 observed, 78 unique, 4 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.interval (47/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config.metrics.leafz (48/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config.metrics.connz_detailed (49/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.service (50/51)
+[INFO] Compiler input baseline: 39 statically named fields
+[INFO] Execution stopped at the 0.101779s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 1 observed, 1 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.15s; dependency preparation 0.05s; 0 charts remain

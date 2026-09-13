@@ -13,8 +13,8 @@ import pytest
 from hypothesis_helm import Chart, check_chart
 from hypothesis_helm.charts.runner import render
 from hypothesis_helm.cli import main
-from hypothesis_helm.compiler.ir import fold, lex, lower, specialize
-from hypothesis_helm.compiler.pruning import DistanceBounds, Pruner
+from hypothesis_helm.compiler.asts.templates import fold, lex, lower, specialize
+from hypothesis_helm.compiler.passes.pruning import DistanceBounds, Pruner
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 from hypothesis_helm.schemas.model import ValuesModel
 

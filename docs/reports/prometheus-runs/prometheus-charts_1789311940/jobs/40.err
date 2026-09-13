@@ -1,0 +1,175 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.annotations
+[INFO] Coalescing path $.config
+[INFO] Coalescing path $.containerCommand
+[INFO] Coalescing path $.extraContainers
+[INFO] Coalescing path $.extraEnvs
+[INFO] Coalescing path $.extraManifests
+[INFO] Coalescing path $.extraVolumeMounts
+[INFO] Coalescing path $.extraVolumes
+[INFO] Coalescing path $.hostAliases
+[INFO] Coalescing path $.initContainers
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.podLabels
+[INFO] Coalescing path $.podSecurityContext
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.securityContext
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.containerCommand[*]
+[INFO] Coalescing path $.deployment.annotations
+[INFO] Coalescing path $.deployment.labels
+[INFO] Coalescing path $.extraEnvs[*]
+[INFO] Coalescing path $.extraManifests[*]
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.pullSecrets
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.livenessProbe.initialDelaySeconds
+[INFO] Coalescing path $.livenessProbe.timeoutSeconds
+[INFO] Coalescing path $.networkPolicy.enabled
+[INFO] Coalescing path $.networkPolicy.labels
+[INFO] Coalescing path $.podDisruptionBudget.enabled
+[INFO] Coalescing path $.podDisruptionBudget.maxUnavailable
+[INFO] Coalescing path $.prometheusRule.additionalLabels
+[INFO] Coalescing path $.prometheusRule.enabled
+[INFO] Coalescing path $.prometheusRule.namespace
+[INFO] Coalescing path $.prometheusRule.rules
+[INFO] Coalescing path $.readinessProbe.initialDelaySeconds
+[INFO] Coalescing path $.readinessProbe.timeoutSeconds
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.labels
+[INFO] Coalescing path $.service.name
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.targetPort
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.serviceMonitor.enabled
+[INFO] Coalescing path $.serviceMonitor.interval
+[INFO] Coalescing path $.serviceMonitor.labels
+[INFO] Coalescing path $.serviceMonitor.metricRelabelings
+[INFO] Coalescing path $.serviceMonitor.namespace
+[INFO] Coalescing path $.serviceMonitor.relabelings
+[INFO] Coalescing path $.serviceMonitor.targetLabels
+[INFO] Coalescing path $.serviceMonitor.telemetryPath
+[INFO] Coalescing path $.serviceMonitor.timeout
+[INFO] Coalescing path $.image.pullSecrets[*]
+[INFO] Coalescing path $.serviceMonitor.targetLabels[*]
+[INFO] Discovered 100 unique value paths; random traversal, seed 0
+[INFO] Testing path $.initContainers (1/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.image (2/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 77 observed, 60 unique, 17 duplicate bundles; 17 successful validations reused
+[INFO] Testing path $.containerCommand (3/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.extraManifests (4/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 6 observed, 3 unique, 3 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.image.pullSecrets (5/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 32 observed, 31 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.nodeSelector (6/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.service.port (7/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.podSecurityContext.runAsNonRoot (8/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext (9/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 95 unique, 5 duplicate bundles; 5 successful validations reused
+[INFO] Testing path $.extraEnvs[*] (10/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 1 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.deployment.annotations (11/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 3 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.config (12/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.podSecurityContext (13/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 93 unique, 7 duplicate bundles; 7 successful validations reused
+[INFO] Testing path $.image.pullSecrets[*] (14/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 23 observed, 16 unique, 7 duplicate bundles; 7 successful validations reused
+[INFO] Testing path $.podDisruptionBudget.enabled (15/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.service.name (16/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.service.type (17/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 4 observed, 4 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext.runAsNonRoot (18/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext.capabilities.drop (19/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.prometheusRule (20/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 38 observed, 14 unique, 24 duplicate bundles; 24 successful validations reused
+[INFO] Testing path $.serviceMonitor.relabelings (21/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.livenessProbe.initialDelaySeconds (22/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.prometheusRule.additionalLabels (23/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.podSecurityContext.seccompProfile (24/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.serviceMonitor.telemetryPath (25/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.serviceAccount.annotations (26/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 12 observed, 11 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.extraEnvs[*].valueFrom (27/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 0 observed, 0 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext.capabilities (28/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.image.repository (29/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.resources (30/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.prometheusRule.rules[*] (31/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.podDisruptionBudget.maxUnavailable (32/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.podSecurityContext.seccompProfile.type (33/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.readinessProbe.timeoutSeconds (34/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.namespace (35/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.podDisruptionBudget (36/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 38 unique, 62 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.tolerations (37/100)
+[INFO] Compiler input baseline: 53 statically named fields
+[INFO] Execution stopped at the 3.63721s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 32 observed, 22 unique, 10 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.25s; dependency preparation 0.05s; 0 charts remain

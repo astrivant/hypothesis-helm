@@ -17,15 +17,16 @@ from hypothesis_helm.charts.generate import generate_tests
 from hypothesis_helm.charts.generated import RenderOptions
 from hypothesis_helm.charts.runner import Chart, audit, check_chart
 from hypothesis_helm.charts.scan import discover_charts, scan
-from hypothesis_helm.compiler.exports import export_repository
-from hypothesis_helm.compiler.graph import export_graph
-from hypothesis_helm.compiler.inputs import load_input_chart
-from hypothesis_helm.compiler.minimum import export_minimal
+from hypothesis_helm.compiler.passes.exports import export_repository
+from hypothesis_helm.compiler.passes.graph import export_graph
+from hypothesis_helm.compiler.passes.inputs import load_input_chart
+from hypothesis_helm.compiler.passes.minimum import export_minimal
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.execution.traversal import STRATEGIES
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 from hypothesis_helm.reporting.budget import parse_time_limit
+from hypothesis_helm.reporting.changes import replay_file
 from hypothesis_helm.reporting.output import MANIFEST_FD
 from hypothesis_helm.reporting.progressive import plot_progression
 from hypothesis_helm.reporting.shards import aggregate
@@ -102,6 +103,11 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(prog=prog, description="Audit and property-test Helm chart values.")
     commands = parser.add_subparsers(dest="command", required=True)
+    replay = commands.add_parser("replay-changes", help="verify and replay saved values or manifest changes")
+    replay.add_argument("record", type=Path, help="changes.json from a failing case")
+    replay.add_argument("--section", choices=("overrides", "values", "manifests"), default="overrides")
+    replay.add_argument("--baseline", type=Path, help="baseline JSON file; overrides default to an empty map")
+    replay.add_argument("--output", type=Path, help="write reconstructed JSON to this file; default: stdout")
     merge = commands.add_parser("aggregate", help="verify piped shard reports and write one final report")
     merge.add_argument("reports", nargs="*", type=Path, help="JSON files or artifact roots; default: stdin")
     merge.add_argument("--shards", type=int, required=True)
@@ -488,6 +494,9 @@ def main(argv: list[str] | None = None) -> int:
         stack.enter_context(redirect_stdout(sys.stderr))
     previous_conformity = os.environ.pop(ENVIRONMENT, None)
     try:
+        if args.command == "replay-changes":
+            replay_file(args.record, args.baseline, args.section, args.output)
+            return 0
         if args.command == "aggregate":
             return aggregate(args.reports, args.shards, args.run_id, args.output_dir)
         if args.command == "export-minimal-values":
@@ -792,6 +801,7 @@ def main(argv: list[str] | None = None) -> int:
                 dry_run=args.dry_run,
                 time_limit=args.time_limit if args.time_limit is not None else 180.0,
                 prune_equivalent=args.prune_equivalent,
+                filter_rejections=args.filter,
             )
             status = 0 if report["status"] in ("passed", "dry-run") else 124 if report["status"] == "time-limit" else 1
         if getattr(args, "dry_run", False):

@@ -1,0 +1,235 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 53,
+    "present_fields": [],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config"
+      ],
+      [
+        "containerCommand"
+      ],
+      [
+        "deployment",
+        "annotations"
+      ],
+      [
+        "deployment",
+        "labels"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnvs"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "pullSecrets"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "labels"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podDisruptionBudget",
+        "enabled"
+      ],
+      [
+        "podDisruptionBudget",
+        "maxUnavailable"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "name"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 0,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "generation-error",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-11_xuclq/chart",
+  "seed": 0,
+  "attempts": 0,
+  "error": "It looks like this test is filtering out a lot of inputs. 0 inputs were generated successfully, while 50 inputs were filtered out. \n\nAn input might be filtered out by calls to assume(), strategy.filter(...), or occasionally by Hypothesis internals.\n\nApplying this much filtering makes input generation slow, since Hypothesis must discard inputs which are filtered out and try generating it again. It is also possible that applying this much filtering will distort the domain and/or distribution of the test, leaving your testing less rigorous than expected.\n\nIf you expect this many inputs to be filtered out during generation, you can disable this health check with @settings(suppress_health_check=[HealthCheck.filter_too_much]). See https://hypothesis.readthedocs.io/en/latest/reference/api.html#hypothesis.HealthCheck for details.",
+  "values": {},
+  "failure_type": "FailedHealthCheck",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 0,
+    "unique_bundles": 0,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 0
+  },
+  "phase": "$.extraEnvs[*].valueFrom",
+  "kind": "value-path",
+  "path": [
+    "extraEnvs",
+    "*",
+    "valueFrom"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-sql-exporter_1789327879/0000/paths/7fad271bf60e338792f2"
+}

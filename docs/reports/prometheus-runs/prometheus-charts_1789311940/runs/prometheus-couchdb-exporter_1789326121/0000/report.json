@@ -1,0 +1,8637 @@
+{
+  "status": "failed",
+  "mode": "paths",
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal": {
+    "discovered_paths": 31,
+    "selected_paths": 31,
+    "visited_paths": 31,
+    "completed_paths": 31,
+    "incomplete_paths": 0,
+    "remaining_paths": 0,
+    "visited_order": [
+      [
+        "image"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "ingress",
+        "tls",
+        "*"
+      ],
+      [
+        "tolerations",
+        "*"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "couchdb"
+      ],
+      [
+        "affinity"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "couchdb",
+        "password"
+      ],
+      [
+        "rbac"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "serviceAccount",
+        "name"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "username"
+      ],
+      [
+        "ingress"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "serviceAccount"
+      ],
+      [
+        "service"
+      ]
+    ],
+    "remaining_order": [],
+    "path_targets_complete": true
+  },
+  "baseline": {
+    "status": "passed",
+    "attempts": 1
+  },
+  "phases": [
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 4,
+        "varied_fraction": 0.18181818181818182,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 33,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 27: did not find expected key\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "pullPolicy": "\""
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 26,
+        "unique_bundles": 25,
+        "duplicate_bundles": 1,
+        "validation_cache_hits": 1,
+        "validated_entries": 25
+      },
+      "phase": "$.image",
+      "kind": "value-path",
+      "path": [
+        "image"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/8e79b7dd85a286cfaddb"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "nodeSelector"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 98,
+        "duplicate_bundles": 2,
+        "validation_cache_hits": 2,
+        "validated_entries": 98
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 297.02348899981007,
+      "execution_seconds": 9.11494966596365,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.nodeSelector",
+      "kind": "value-path",
+      "path": [
+        "nodeSelector"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/ffcef10fe8128610dd7a"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "service",
+            "port"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 100,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 100
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 287.9059968329966,
+      "execution_seconds": 7.5846190000884235,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.service.port",
+      "kind": "value-path",
+      "path": [
+        "service",
+        "port"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/8519a498beb325a2a1ea"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 90,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 30: did not find expected '-' indicator\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "\"",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 76,
+        "unique_bundles": 76,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 76
+      },
+      "phase": "$.couchdb.uri",
+      "kind": "value-path",
+      "path": [
+        "couchdb",
+        "uri"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/8b786262570e7f3dc202"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "service",
+            "type"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 36,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/service.yaml: error converting YAML to JSON: yaml: line 11: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": ">0",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 24,
+        "unique_bundles": 21,
+        "duplicate_bundles": 3,
+        "validation_cache_hits": 3,
+        "validated_entries": 21
+      },
+      "phase": "$.service.type",
+      "kind": "value-path",
+      "path": [
+        "service",
+        "type"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/6e931799d09f8182f34b"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 90,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 24: did not find expected key\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "\"",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 76,
+        "unique_bundles": 76,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 76
+      },
+      "phase": "$.image.repository",
+      "kind": "value-path",
+      "path": [
+        "image",
+        "repository"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/3f7165f1837241716c3c"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "resources"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 98,
+        "duplicate_bundles": 2,
+        "validation_cache_hits": 2,
+        "validated_entries": 98
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 265.53514437470585,
+      "execution_seconds": 10.054473207797855,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.resources",
+      "kind": "value-path",
+      "path": [
+        "resources"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/a18831338ac3673804ff"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "ingress",
+            "tls"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 1,
+        "duplicate_bundles": 99,
+        "validation_cache_hits": 99,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 255.47931029181927,
+      "execution_seconds": 8.101908249780536,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.ingress.tls[*]",
+      "kind": "value-path",
+      "path": [
+        "ingress",
+        "tls",
+        "*"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/3ccea9bc6f9d55bf371b"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 87,
+        "duplicate_bundles": 13,
+        "validation_cache_hits": 13,
+        "validated_entries": 87
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 247.3761822078377,
+      "execution_seconds": 10.798906874842942,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.tolerations[*]",
+      "kind": "value-path",
+      "path": [
+        "tolerations",
+        "*"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/78d6d472d6edd4ed6e15"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 88,
+        "duplicate_bundles": 12,
+        "validation_cache_hits": 12,
+        "validated_entries": 88
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 236.5742910830304,
+      "execution_seconds": 8.481801291927695,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.tolerations",
+      "kind": "value-path",
+      "path": [
+        "tolerations"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/55957e51dd82905d47db"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 1,
+        "duplicate_bundles": 99,
+        "validation_cache_hits": 99,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 228.07367141684517,
+      "execution_seconds": 9.156176790595055,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.ingress.annotations",
+      "kind": "value-path",
+      "path": [
+        "ingress",
+        "annotations"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/4889fdcc7c4f771f9198"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "rbac",
+            "create"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 2,
+        "unique_bundles": 2,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 2
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 2,
+      "time_limit_seconds": 218.91592737473547,
+      "execution_seconds": 0.1679004579782486,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.rbac.create",
+      "kind": "value-path",
+      "path": [
+        "rbac",
+        "create"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/49e4003a8b549e1dbf46"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 21,
+        "varied_count": 5,
+        "varied_fraction": 0.22727272727272727,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 62,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 48: found unexpected end of stream\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "databases": "\""
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 47,
+        "unique_bundles": 38,
+        "duplicate_bundles": 9,
+        "validation_cache_hits": 9,
+        "validated_entries": 38
+      },
+      "phase": "$.couchdb",
+      "kind": "value-path",
+      "path": [
+        "couchdb"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/5303eea7d1d40abe5463"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 98,
+        "duplicate_bundles": 2,
+        "validation_cache_hits": 2,
+        "validated_entries": 98
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 213.55480754189193,
+      "execution_seconds": 9.31704158289358,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.affinity",
+      "kind": "value-path",
+      "path": [
+        "affinity"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/f777bb180050b4a672ef"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "ingress",
+            "path"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 1,
+        "duplicate_bundles": 99,
+        "validation_cache_hits": 99,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 204.2346892496571,
+      "execution_seconds": 7.666184333153069,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.ingress.path",
+      "kind": "value-path",
+      "path": [
+        "ingress",
+        "path"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/5d304e912f91601535ec"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "ingress",
+            "tls"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 1,
+        "duplicate_bundles": 99,
+        "validation_cache_hits": 99,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 196.5661758747883,
+      "execution_seconds": 8.545959874987602,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.ingress.tls",
+      "kind": "value-path",
+      "path": [
+        "ingress",
+        "tls"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/3f3867e05bb75741c113"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 20,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 106,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 32: did not find expected '-' indicator\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs",
+          "password": {
+            "\"": null
+          }
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 88,
+        "unique_bundles": 55,
+        "duplicate_bundles": 33,
+        "validation_cache_hits": 33,
+        "validated_entries": 55
+      },
+      "phase": "$.couchdb.password",
+      "kind": "value-path",
+      "path": [
+        "couchdb",
+        "password"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/9dfd6b29ae49b3b8c573"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 3,
+        "varied_fraction": 0.13636363636363635,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 37,
+        "unique_bundles": 3,
+        "duplicate_bundles": 34,
+        "validation_cache_hits": 34,
+        "validated_entries": 3
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 37,
+      "time_limit_seconds": 179.63299845764413,
+      "execution_seconds": 3.07576191611588,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.rbac",
+      "kind": "value-path",
+      "path": [
+        "rbac"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/9f1bc96f9d3ae2a1d01f"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 2,
+        "unique_bundles": 2,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 2
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 2,
+      "time_limit_seconds": 176.55421345774084,
+      "execution_seconds": 0.13238325016573071,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.serviceAccount.create",
+      "kind": "value-path",
+      "path": [
+        "serviceAccount",
+        "create"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/821b15e207f3f188e259"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 100,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 100
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 176.42049304163083,
+      "execution_seconds": 8.466657374985516,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.image.tag",
+      "kind": "value-path",
+      "path": [
+        "image",
+        "tag"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/7e365cc9986c8fb6c4ad"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 36,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 26: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": ">0"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 24,
+        "unique_bundles": 21,
+        "duplicate_bundles": 3,
+        "validation_cache_hits": 3,
+        "validated_entries": 21
+      },
+      "phase": "$.image.pullPolicy",
+      "kind": "value-path",
+      "path": [
+        "image",
+        "pullPolicy"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/eb979f1d0345157961ea"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 20,
+        "varied_count": 1,
+        "varied_fraction": 0.045454545454545456,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 1,
+        "duplicate_bundles": 99,
+        "validation_cache_hits": 99,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 165.23008987493813,
+      "execution_seconds": 9.107470291666687,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.ingress.hosts",
+      "kind": "value-path",
+      "path": [
+        "ingress",
+        "hosts"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/b0dce2a7a1db2ecc110f"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "replicaCount"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 100,
+        "unique_bundles": 100,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 100
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "time_limit_seconds": 156.12124320771545,
+      "execution_seconds": 8.162346499972045,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.replicaCount",
+      "kind": "value-path",
+      "path": [
+        "replicaCount"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/2fc729398ad8da25e389"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 1,
+        "varied_fraction": 0.045454545454545456,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 10,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/serviceaccount.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.name of type string\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": [
+            null
+          ]
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 5,
+        "unique_bundles": 1,
+        "duplicate_bundles": 4,
+        "validation_cache_hits": 4,
+        "validated_entries": 1
+      },
+      "phase": "$.serviceAccount.name",
+      "kind": "value-path",
+      "path": [
+        "serviceAccount",
+        "name"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/815bf9b751b356e044f0"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 2,
+        "unique_bundles": 1,
+        "duplicate_bundles": 1,
+        "validation_cache_hits": 1,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 2,
+      "time_limit_seconds": 147.14371783286333,
+      "execution_seconds": 0.1498502497561276,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.ingress.enabled",
+      "kind": "value-path",
+      "path": [
+        "ingress",
+        "enabled"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/aea92bcb2916a17fed7d"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 90,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 48: found unexpected end of stream\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "\""
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 76,
+        "unique_bundles": 76,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 76
+      },
+      "phase": "$.couchdb.databases",
+      "kind": "value-path",
+      "path": [
+        "couchdb",
+        "databases"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/6c0f1c8e092a3a1c0c33"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 20,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 106,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 32: did not find expected '-' indicator\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs",
+          "username": {
+            "\"": null
+          }
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 88,
+        "unique_bundles": 55,
+        "duplicate_bundles": 33,
+        "validation_cache_hits": 33,
+        "validated_entries": 55
+      },
+      "phase": "$.couchdb.username",
+      "kind": "value-path",
+      "path": [
+        "couchdb",
+        "username"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/988bae84451493337ebe"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 20,
+        "varied_count": 5,
+        "varied_fraction": 0.22727272727272727,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 177,
+      "error": "Error: prometheus-couchdb-exporter/templates/NOTES.txt:3:17\n  executing \"prometheus-couchdb-exporter/templates/NOTES.txt\" at <.Values.ingress.hosts>:\n    range can't iterate over false\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": true,
+          "hosts": false
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 149,
+        "unique_bundles": 1,
+        "duplicate_bundles": 148,
+        "validation_cache_hits": 148,
+        "validated_entries": 1
+      },
+      "phase": "$.ingress",
+      "kind": "value-path",
+      "path": [
+        "ingress"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/94ed38bb417a953196c3"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 2,
+        "unique_bundles": 2,
+        "duplicate_bundles": 0,
+        "validation_cache_hits": 0,
+        "validated_entries": 2
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 2,
+      "time_limit_seconds": 114.66130033275113,
+      "execution_seconds": 0.19298974983394146,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "$.rbac.pspEnabled",
+      "kind": "value-path",
+      "path": [
+        "rbac",
+        "pspEnabled"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/139db5f23cd21a516c64"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 2,
+        "varied_fraction": 0.09090909090909091,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 45,
+      "error": "resource has no metadata.name",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "name": "0"
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "ClusterIP",
+          "port": 9984
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 38,
+        "unique_bundles": 10,
+        "duplicate_bundles": 28,
+        "validation_cache_hits": 16,
+        "validated_entries": 9
+      },
+      "phase": "$.serviceAccount",
+      "kind": "value-path",
+      "path": [
+        "serviceAccount"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/7a010717afb4691aaeb8"
+    },
+    {
+      "field_coverage": {
+        "lower_bound_fields": 22,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "ingress",
+            "hosts"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "couchdb",
+            "databases"
+          ],
+          [
+            "couchdb",
+            "password"
+          ],
+          [
+            "couchdb",
+            "uri"
+          ],
+          [
+            "couchdb",
+            "username"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "ingress",
+            "annotations"
+          ],
+          [
+            "ingress",
+            "enabled"
+          ],
+          [
+            "ingress",
+            "path"
+          ],
+          [
+            "ingress",
+            "tls"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "rbac",
+            "create"
+          ],
+          [
+            "rbac",
+            "pspEnabled"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "serviceAccount",
+            "create"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 19,
+        "varied_count": 3,
+        "varied_fraction": 0.13636363636363635,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "traversal_strategy": "random",
+      "traversal_algorithm": "seeded-path-priority-v1",
+      "traversal_unit": "Hypothesis samples",
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+      "seed": 0,
+      "attempts": 100,
+      "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/service.yaml: error converting YAML to JSON: yaml: line 13: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "rbac": {
+          "create": true,
+          "pspEnabled": true
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": null
+        },
+        "replicaCount": 1,
+        "image": {
+          "repository": "gesellix/couchdb-prometheus-exporter",
+          "tag": 16,
+          "pullPolicy": "IfNotPresent"
+        },
+        "service": {
+          "type": "\r0"
+        },
+        "ingress": {
+          "enabled": false,
+          "annotations": {},
+          "path": "/",
+          "hosts": null,
+          "tls": []
+        },
+        "resources": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "affinity": {},
+        "couchdb": {
+          "uri": "http://couchdb.default.svc:5984",
+          "databases": "_all_dbs"
+        }
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 79,
+        "unique_bundles": 73,
+        "duplicate_bundles": 6,
+        "validation_cache_hits": 6,
+        "validated_entries": 73
+      },
+      "phase": "$.service",
+      "kind": "value-path",
+      "path": [
+        "service"
+      ],
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/da628aa79e50e022e4ff"
+    }
+  ],
+  "attempts": 2327,
+  "time_limit_seconds": 300.0,
+  "planning_seconds": 0.041192584205418825,
+  "execution_seconds": 197.36380679206923,
+  "coverage_complete": false,
+  "proof_of_totality": false,
+  "input_inventory": {
+    "fields": [
+      {
+        "path": [
+          "affinity"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 58,
+            "fallback": false
+          },
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 60,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "couchdb",
+          "databases"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "databases"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 32,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "password"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 36,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 37,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "uri"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "uri"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 31,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "username"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 33,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 34,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "image",
+          "pullPolicy"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 26,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "repository"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 25,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "tag"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 25,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "ingress",
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "annotations"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 13,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "annotations"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 15,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "enabled"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 2,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "enabled"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 26,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "enabled"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "hosts"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "hosts"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 3,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "hosts"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 29,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "path"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "path"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 4,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "path"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 3,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "path"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 33,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "tls"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "tls"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 4,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "tls"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 18,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "tls"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 20,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "nodeSelector"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 54,
+            "fallback": false
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 56,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "rbac"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "rbac",
+          "create"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "rbac",
+              "create"
+            ],
+            "file": "templates/role.yaml",
+            "line": 1,
+            "fallback": false
+          },
+          {
+            "path": [
+              "rbac",
+              "create"
+            ],
+            "file": "templates/rolebinding.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "rbac",
+          "pspEnabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "rbac",
+              "pspEnabled"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 20,
+            "fallback": false
+          },
+          {
+            "path": [
+              "rbac",
+              "pspEnabled"
+            ],
+            "file": "templates/podsecuritypolicy.yaml",
+            "line": 1,
+            "fallback": false
+          },
+          {
+            "path": [
+              "rbac",
+              "pspEnabled"
+            ],
+            "file": "templates/role.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "replicaCount"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "resources"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 53,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "service",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "file": "templates/service.yaml",
+            "line": 13,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "type"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "file": "templates/service.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceAccount"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "create"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceAccount",
+              "create"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "name"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "tolerations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 62,
+            "fallback": false
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 64,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "known_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "password"
+      ],
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "couchdb",
+        "username"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "lower_bound_fields": 22,
+    "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+    "inventory_complete": false,
+    "output_influence_proven": false,
+    "missing_values": [
+      {
+        "path": [
+          "couchdb",
+          "password"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 36,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 37,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "username"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 33,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 34,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "undocumented_template_fields": [
+      {
+        "path": [
+          "affinity"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 58,
+            "fallback": false
+          },
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 60,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "databases"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "databases"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 32,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "password"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 36,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 37,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "uri"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "uri"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 31,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "username"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 33,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 34,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "pullPolicy"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 26,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "repository"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 25,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "tag"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 25,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "annotations"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 13,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "annotations"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 15,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "enabled"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 2,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "enabled"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 26,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "enabled"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "hosts"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "hosts"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 3,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "hosts"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 29,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "path"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "path"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 4,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "path"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 3,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "path"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 33,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "ingress",
+          "tls"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "ingress",
+              "tls"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 4,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "tls"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 18,
+            "fallback": false
+          },
+          {
+            "path": [
+              "ingress",
+              "tls"
+            ],
+            "file": "templates/ingress.yaml",
+            "line": 20,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "nodeSelector"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 54,
+            "fallback": false
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 56,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "rbac",
+          "create"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "rbac",
+              "create"
+            ],
+            "file": "templates/role.yaml",
+            "line": 1,
+            "fallback": false
+          },
+          {
+            "path": [
+              "rbac",
+              "create"
+            ],
+            "file": "templates/rolebinding.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "rbac",
+          "pspEnabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "rbac",
+              "pspEnabled"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 20,
+            "fallback": false
+          },
+          {
+            "path": [
+              "rbac",
+              "pspEnabled"
+            ],
+            "file": "templates/podsecuritypolicy.yaml",
+            "line": 1,
+            "fallback": false
+          },
+          {
+            "path": [
+              "rbac",
+              "pspEnabled"
+            ],
+            "file": "templates/role.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "replicaCount"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "resources"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 53,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "file": "templates/service.yaml",
+            "line": 13,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "type"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "file": "templates/service.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "create"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceAccount",
+              "create"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "tolerations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 62,
+            "fallback": false
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 64,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "template_only_fields": [
+      {
+        "path": [
+          "couchdb",
+          "password"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 36,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "password"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 37,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "couchdb",
+          "username"
+        ],
+        "in_values": false,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 33,
+            "fallback": false
+          },
+          {
+            "path": [
+              "couchdb",
+              "username"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 34,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "schema_fields_without_values": [],
+    "unreferenced_values": [
+      [
+        "serviceAccount",
+        "name"
+      ]
+    ],
+    "unreferenced_usage": "unknown",
+    "dynamic_regions": [
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ]
+    ],
+    "unresolved": [
+      {
+        "file": "templates/NOTES.txt",
+        "line": 2,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 6,
+        "message": "unresolved dot context: .Values.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 7,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 7,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 8,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 10,
+        "message": "unresolved dot context: .Values.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 13,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 13,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 13,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 14,
+        "message": "unresolved dot context: .Values.service.port"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 15,
+        "message": "unresolved dot context: .Values.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 16,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 16,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 16,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 5,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 14,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 15,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 16,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 20,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 22,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 30,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Version"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 37,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 38,
+        "message": "unresolved dot context: .Values.serviceAccount.create"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 39,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 39,
+        "message": "unresolved dot context: .Values.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 39,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 41,
+        "message": "unresolved dot context: .Values.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 48,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 49,
+        "message": "unresolved dot context: .Capabilities.APIVersions.Has"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 4,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 14,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 22,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/ingress.yaml",
+        "line": 2,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/ingress.yaml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/ingress.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/podsecuritypolicy.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/podsecuritypolicy.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/podsecuritypolicy.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/role.yaml",
+        "line": 2,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/role.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/role.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/role.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/role.yaml",
+        "line": 16,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/rolebinding.yaml",
+        "line": 2,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/rolebinding.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/rolebinding.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/rolebinding.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/rolebinding.yaml",
+        "line": 14,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/rolebinding.yaml",
+        "line": 17,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 4,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 18,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/serviceaccount.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/serviceaccount.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/serviceaccount.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: template"
+      }
+    ]
+  },
+  "field_coverage": {
+    "lower_bound_fields": 22,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "password"
+      ],
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "couchdb",
+        "username"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "password"
+      ],
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "couchdb",
+        "username"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "unvaried_fields": [],
+    "present_count": 22,
+    "varied_count": 22,
+    "varied_fraction": 1.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "filtering": {
+    "requested": true,
+    "applied": true,
+    "method": "known-path-generation",
+    "order": "discover, filter, traverse, execute",
+    "generated_text_policy": "C0/C1 controls excluded, except LF and CR; supplied defaults are unchanged"
+  },
+  "scope": "One property per discovered path; multiple values and shrinking within a property; joint input coverage is incomplete",
+  "error": "$.image: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 27: did not find expected key\n\nUse --debug flag to render out invalid YAML\n\n$.couchdb.uri: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 30: did not find expected '-' indicator\n\nUse --debug flag to render out invalid YAML\n\n$.service.type: Error: YAML parse error on prometheus-couchdb-exporter/templates/service.yaml: error converting YAML to JSON: yaml: line 11: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML\n\n$.image.repository: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 24: did not find expected key\n\nUse --debug flag to render out invalid YAML\n\n$.couchdb: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 48: found unexpected end of stream\n\nUse --debug flag to render out invalid YAML\n\n$.couchdb.password: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 32: did not find expected '-' indicator\n\nUse --debug flag to render out invalid YAML\n\n$.image.pullPolicy: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 26: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML\n\n$.serviceAccount.name: Error: YAML parse error on prometheus-couchdb-exporter/templates/serviceaccount.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.name of type string\n\nUse --debug flag to render out invalid YAML\n\n$.couchdb.databases: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 48: found unexpected end of stream\n\nUse --debug flag to render out invalid YAML\n\n$.couchdb.username: Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 32: did not find expected '-' indicator\n\nUse --debug flag to render out invalid YAML\n\n$.ingress: Error: prometheus-couchdb-exporter/templates/NOTES.txt:3:17\n  executing \"prometheus-couchdb-exporter/templates/NOTES.txt\" at <.Values.ingress.hosts>:\n    range can't iterate over false\n\nUse --debug flag to render out invalid YAML\n\n$.serviceAccount: resource has no metadata.name\n\n$.service: Error: YAML parse error on prometheus-couchdb-exporter/templates/service.yaml: error converting YAML to JSON: yaml: line 13: could not find expected ':'\n\nUse --debug flag to render out invalid YAML"
+}

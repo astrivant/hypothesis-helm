@@ -1,0 +1,88 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "registry": "quay.io",
+    "repository": "prometheuscommunity/yet-another-cloudwatch-exporter",
+    "pullPolicy": "IfNotPresent",
+    "tag": ""
+  },
+  "imagePullSecrets": [],
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "serviceAccount": {
+    "create": true,
+    "labels": {},
+    "annotations": {},
+    "name": "",
+    "automountServiceAccountToken": true
+  },
+  "podAnnotations": {},
+  "podLabels": {},
+  "deployment": {
+    "labels": {}
+  },
+  "portName": "http",
+  "containerPort": 5000,
+  "podSecurityContext": {},
+  "securityContext": {},
+  "service": {
+    "type": "ClusterIP",
+    "port": 80,
+    "annotations": {}
+  },
+  "testConnection": true,
+  "ingress": {
+    "enabled": false,
+    "className": "",
+    "annotations": {},
+    "hosts": [
+      {
+        "host": "chart-example.local",
+        "paths": [
+          {
+            "path": "/",
+            "pathType": "ImplementationSpecific"
+          }
+        ]
+      }
+    ],
+    "tls": []
+  },
+  "resources": {},
+  "nodeSelector": {},
+  "priorityClassName": null,
+  "tolerations": [],
+  "affinity": {},
+  "podDisruptionBudget": {
+    "enabled": false,
+    "minAvailable": 1,
+    "unhealthyPodEvictionPolicy": "AlwaysAllow"
+  },
+  "extraEnv": [],
+  "extraEnvFrom": [],
+  "extraArgs": {
+    "\n": null
+  },
+  "extraVolumeMounts": [],
+  "extraVolumes": [],
+  "lifecycle": {},
+  "aws": {
+    "role": null,
+    "secret": {
+      "name": null,
+      "includesSessionToken": false
+    },
+    "aws_access_key_id": null,
+    "aws_secret_access_key": null
+  },
+  "serviceMonitor": {
+    "enabled": false
+  },
+  "prometheusRule": {
+    "enabled": false
+  },
+  "configMap": {
+    "enabled": true
+  },
+  "config": "apiVersion: v1alpha1\nsts-region: eu-west-1\ndiscovery:\n  exportedTagsOnMetrics:\n    AWS/ES:\n      - Name\n  jobs:\n  - type: AWS/ES\n    regions:\n      - eu-west-1\n    searchTags:\n      - key: type\n        value: ^(easteregg|k8s)$\n    metrics:\n      - name: FreeStorageSpace\n        statistics:\n        - Sum\n        period: 60\n        length: 600\n      - name: ClusterStatus.green\n        statistics:\n        - Minimum\n        period: 60\n        length: 600\n      - name: ClusterStatus.yellow\n        statistics:\n        - Maximum\n        period: 60\n        length: 600\n      - name: ClusterStatus.red\n        statistics:\n        - Maximum\n        period: 60\n        length: 600"
+}

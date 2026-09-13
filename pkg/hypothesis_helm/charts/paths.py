@@ -14,7 +14,9 @@ from hypothesis import strategies as st
 from hypothesis_helm.charts.generate import Model, ValuePath, coalesce, enumerate_paths
 from hypothesis_helm.charts.generated import path_values
 from hypothesis_helm.charts.runner import Chart, RenderFailure, _default_paths, check_chart, render
-from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
+from hypothesis_helm.compiler.asts.contracts import Contracts
+from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
+from hypothesis_helm.compiler.passes.rejections import RejectionPolicy
 from hypothesis_helm.execution.traversal import ALGORITHM, STRATEGIES, order_paths
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.progress import format_path
@@ -104,6 +106,9 @@ def check_paths(
         raise ValueError("budget, max_examples, and timeout must be positive")
     planning_started = time.monotonic()
     inventory = InputInventory.build(chart)
+    rejections = (
+        RejectionPolicy(Contracts.build(chart.path), chart.defaults, (chart.path / "values.schema.json").is_file()) if filtering else None
+    )
     if filtering:
         priority = PriorityInputs.build(chart)
         model = Model(chart.defaults, priority.schema, enumerate_paths(priority.schema), priority.diagnostics)
@@ -170,6 +175,9 @@ def check_paths(
                     namespace=namespace,
                     kube_version=kube_version,
                     allow_empty=allow_empty,
+                    rejection_policy=rejections,
+                    protected_paths=(entry.path,),
+                    baseline_resources=resources,
                 )
                 phase.pop("input_inventory", None)
                 phase.update(phase=format_path(entry.path), kind="value-path", path=list(entry.path), artifacts=str(directory))
@@ -201,7 +209,7 @@ def check_paths(
             raise
     measured.refresh()
     failures = [phase for phase in phases if phase["status"] == "failed"]
-    completed = sum(phase["status"] in {"passed", "failed"} for phase in phases)
+    completed = sum(phase["status"] in {"passed", "failed", "configuration-rejected"} for phase in phases)
     generation_errors = any(phase["status"] == "generation-error" for phase in phases)
     status = (
         "failed"
@@ -210,6 +218,8 @@ def check_paths(
         if stopped
         else "generation-error"
         if generation_errors
+        else "configuration-rejected"
+        if phases and all(phase["status"] == "configuration-rejected" for phase in phases)
         else "passed"
     )
     result: dict[str, object] = {
@@ -252,5 +262,7 @@ def check_paths(
         result["error"] = "\n\n".join(f"{phase['phase']}: {phase.get('error', '')}" for phase in failures)
     elif baseline.get("error"):
         result["error"] = baseline["error"]
+    if rejections is not None:
+        result["configuration_rejections"] = rejections.snapshot()
     (artifacts / "report.json").write_text(json.dumps(result, indent=2) + "\n")
     return result

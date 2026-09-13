@@ -1,0 +1,98 @@
+{
+  "affinity": {},
+  "annotations": {},
+  "customLabels": {},
+  "dnsConfig": {},
+  "hostAliases": [],
+  "env": {},
+  "extraArgs": [
+    "--collect-all"
+  ],
+  "fullnameOverride": "",
+  "image": {
+    "pullPolicy": "IfNotPresent",
+    "repository": "percona/mongodb_exporter",
+    "tag": ""
+  },
+  "imagePullSecrets": [],
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/",
+      "port": "metrics"
+    },
+    "initialDelaySeconds": 10
+  },
+  "mongodb": {
+    "uri": "mongodb://mongodb:27017"
+  },
+  "existingSecret": {
+    "key": ">0"
+  },
+  "nameOverride": "",
+  "nodeSelector": {},
+  "podAnnotations": {},
+  "podLabels": {},
+  "port": "9216",
+  "priorityClassName": "",
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/",
+      "port": "metrics"
+    },
+    "initialDelaySeconds": 10
+  },
+  "replicas": 1,
+  "resources": {},
+  "podSecurityContext": {},
+  "securityContext": {
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "readOnlyRootFilesystem": true,
+    "runAsGroup": 10000,
+    "runAsNonRoot": true,
+    "runAsUser": 10000
+  },
+  "service": {
+    "labels": {},
+    "annotations": {},
+    "port": 9216,
+    "type": "ClusterIP",
+    "portName": "metrics"
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": null
+  },
+  "serviceMonitor": {
+    "enabled": false,
+    "apiVersion": "monitoring.coreos.com/v1",
+    "multiTarget": {
+      "enabled": false,
+      "username": "",
+      "password": {
+        "existingSecret": {
+          "name": "",
+          "key": "password"
+        },
+        "value": ""
+      },
+      "targets": []
+    },
+    "interval": "30s",
+    "scrapeTimeout": "10s",
+    "namespace": null,
+    "additionalLabels": {},
+    "targetLabels": [],
+    "metricRelabelings": [],
+    "scheme": "",
+    "tlsConfig": {},
+    "telemetryPath": "/metrics"
+  },
+  "tolerations": [],
+  "volumes": [],
+  "volumeMounts": []
+}

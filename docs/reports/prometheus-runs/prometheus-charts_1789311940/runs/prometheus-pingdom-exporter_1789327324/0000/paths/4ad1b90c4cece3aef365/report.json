@@ -1,0 +1,241 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 28,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "config",
+        "defaultUptimeSLO"
+      ],
+      [
+        "config",
+        "outageCheckPeriodInDays"
+      ],
+      [
+        "config",
+        "parserTags"
+      ],
+      [
+        "config",
+        "tagExtraLabels"
+      ],
+      [
+        "config",
+        "tags"
+      ],
+      [
+        "existingSecret",
+        "name"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pingdom",
+        "apiToken"
+      ],
+      [
+        "pod",
+        "annotations"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "secret",
+        "annotations"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "enabled"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "config",
+        "tagFormat"
+      ],
+      [
+        "service",
+        "enabled"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations.prometheus.io/scrape"
+      ],
+      [
+        "config",
+        "defaultUptimeSLO"
+      ],
+      [
+        "config",
+        "outageCheckPeriodInDays"
+      ],
+      [
+        "config",
+        "parserTags"
+      ],
+      [
+        "config",
+        "tagExtraLabels"
+      ],
+      [
+        "config",
+        "tags"
+      ],
+      [
+        "existingSecret",
+        "name"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pingdom",
+        "apiToken"
+      ],
+      [
+        "pingdom",
+        "wait"
+      ],
+      [
+        "pod",
+        "annotations"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "secret",
+        "annotations"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 25,
+    "varied_count": 2,
+    "varied_fraction": 0.07142857142857142,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 2,
+    "unique_bundles": 2,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 2
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-16fjz3lu/chart",
+  "seed": 0,
+  "attempts": 2,
+  "time_limit_seconds": 120.97434558393434,
+  "execution_seconds": 0.14925158303231,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.service.enabled",
+  "kind": "value-path",
+  "path": [
+    "service",
+    "enabled"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-pingdom-exporter_1789327324/0000/paths/4ad1b90c4cece3aef365"
+}

@@ -124,7 +124,7 @@ def test_report_paths_and_pagination(tmp_path: Path) -> None:
         tmp_path (Path): Report destination.
 
     Returns:
-        None: Both files contain the complete scan summary.
+        None: Long diagnostics are summarized; many distinct charts still paginate.
     """
     report: dict[str, object] = {
         "directory": "/charts",
@@ -142,6 +142,12 @@ def test_report_paths_and_pagination(tmp_path: Path) -> None:
     assert "failure" in md.read_text()
     assert all(len(line) <= 140 for line in md.read_text().splitlines())
     assert pdf.read_bytes().startswith(b"%PDF-")
+    assert pdf.read_bytes().count(b"/Type /Page\n") == 1
+    assert "Diagnostic shortened" in md.read_text()
+    report["charts"] = [{"chart": f"demo-{index}", "status": "failed", "error": "failure"} for index in range(40)]
+    report["charts_discovered"] = 40
+    report["counts"] = {"failed": 40}
+    _, pdf = write_reports(report, tmp_path / "many")
     assert pdf.read_bytes().count(b"/Type /Page\n") >= 2
 
 

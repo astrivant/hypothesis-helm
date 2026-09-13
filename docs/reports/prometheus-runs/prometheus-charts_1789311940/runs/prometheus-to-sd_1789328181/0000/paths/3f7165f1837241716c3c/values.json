@@ -1,0 +1,16 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "\"",
+    "tag": "",
+    "pullPolicy": "IfNotPresent"
+  },
+  "resources": {},
+  "port": 6060,
+  "metricsSources": {
+    "kube-state-metrics": "http://kube-state-metrics:8080"
+  },
+  "monitoredResourceTypes": "gke_container",
+  "nodeSelector": {},
+  "tolerations": []
+}

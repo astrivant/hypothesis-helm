@@ -1,0 +1,95 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "prom/cloudwatch-exporter",
+    "tag": null,
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": null
+  },
+  "command": [],
+  "containerPort": 9106,
+  "service": {
+    "type": "ClusterIP",
+    "port": 9106,
+    "portName": "http",
+    "annotations": {},
+    "labels": {}
+  },
+  "pod": {
+    "labels": {},
+    "annotations": {}
+  },
+  "deployment": {
+    "labels": {},
+    "annotations": {}
+  },
+  "extraEnv": null,
+  "resources": {},
+  "aws": {
+    "role": null,
+    "stsRegional": {
+      "enabled": false
+    },
+    "secret": {
+      "name": null,
+      "includesSessionToken": false
+    },
+    "aws_access_key_id": null,
+    "aws_secret_access_key": null
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": null,
+    "automountServiceAccountToken": true
+  },
+  "rbac": {
+    "create": true
+  },
+  "config": "\r0",
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "livenessProbe": {
+    "path": "/-/healthy",
+    "initialDelaySeconds": 30,
+    "periodSeconds": 5,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "path": "/-/ready",
+    "initialDelaySeconds": 30,
+    "periodSeconds": 5,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "serviceMonitor": {
+    "enabled": false
+  },
+  "prometheusRule": {
+    "enabled": false
+  },
+  "ingress": {
+    "enabled": false,
+    "annotations": {},
+    "labels": {},
+    "path": "/",
+    "hosts": [
+      "chart-example.local"
+    ],
+    "tls": [],
+    "pathType": "Prefix"
+  },
+  "securityContext": {
+    "runAsUser": 65534,
+    "fsGroup": 65534
+  },
+  "containerSecurityContext": {},
+  "priorityClassName": "",
+  "podDisruptionBudget": {
+    "enabled": false,
+    "maxUnavailable": 1
+  }
+}

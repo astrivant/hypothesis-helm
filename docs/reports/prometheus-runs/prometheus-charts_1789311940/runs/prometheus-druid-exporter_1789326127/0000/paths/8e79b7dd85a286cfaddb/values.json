@@ -1,0 +1,31 @@
+{
+  "name": "druid-exporter",
+  "image": {
+    "pullPolicy": ">0"
+  },
+  "imagePullSecrets": [],
+  "annotations": {},
+  "podAnnotations": {},
+  "extraEnv": [],
+  "druidURL": "http://druid.opstreelabs.in",
+  "logLevel": "info",
+  "logFormat": "json",
+  "exporterPort": 8080,
+  "serviceAccount": {
+    "create": true
+  },
+  "serviceType": "ClusterIP",
+  "serviceMonitor": {
+    "enabled": false,
+    "namespace": "monitoring",
+    "interval": "30s",
+    "scrapeTimeout": "10s",
+    "additionalLabels": {},
+    "targetLabels": []
+  },
+  "securityContext": {},
+  "containerSecurityContext": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {}
+}

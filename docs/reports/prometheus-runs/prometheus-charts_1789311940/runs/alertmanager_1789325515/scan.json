@@ -1,0 +1,81 @@
+{
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/prometheus-community-helm-charts/charts/alertmanager",
+  "started_epoch": 1789325515,
+  "elapsed_seconds": 0.6862427499145269,
+  "dependency_preparation_seconds": 0.15422979090362787,
+  "testing_seconds": 0.4656112496741116,
+  "scan_status": "completed",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "error": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "error",
+      "name": "alertmanager",
+      "version": "1.43.1",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/alertmanager_1789325515/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/prometheus-community-helm-charts/charts/alertmanager/values.yaml",
+      "dependency_preparation_seconds": 0.15422979090362787,
+      "testing_seconds": 0.4656112496741116,
+      "error": "recursive schema at ('config', 'route', 'routes', '*')",
+      "failure_type": "ValueError",
+      "elapsed_seconds": 0.6792726670391858,
+      "filtering": {
+        "requested": true,
+        "applied": false,
+        "reason": "Chart did not enter finite permutation testing"
+      },
+      "result": "N/A",
+      "error_refs": [
+        "E001"
+      ]
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "fail": false,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "scan_timeout_excludes_dependency_preparation": true,
+    "helm": "/tmp/hh-helm4/darwin-arm64/helm",
+    "seed": 0,
+    "traversal_strategy": "random",
+    "build_dependencies": true,
+    "values": "values.yaml",
+    "clone_timeout_seconds": 180,
+    "chart_version": null
+  },
+  "error_groups": [
+    {
+      "status": "error",
+      "failure_type": "ValueError",
+      "error": "recursive schema at ('config', 'route', 'routes', '*')",
+      "source": null,
+      "occurrences": [
+        {
+          "chart": ".",
+          "phase": "chart",
+          "status": "error",
+          "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/alertmanager_1789325515/0000"
+        }
+      ],
+      "id": "E001",
+      "occurrence_count": 1,
+      "affected_charts": [
+        "."
+      ]
+    }
+  ],
+  "error_summary": {
+    "unique_errors": 1,
+    "occurrences": 1,
+    "duplicates": 0
+  }
+}

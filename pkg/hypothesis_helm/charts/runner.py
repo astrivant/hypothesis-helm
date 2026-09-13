@@ -16,7 +16,8 @@ from collections.abc import Callable, Iterator, Sequence
 from pathlib import Path
 
 from attrs import define
-from hypothesis import HealthCheck, Phase, given, seed, settings
+from hypothesis import HealthCheck, Phase, assume, given, seed, settings
+from hypothesis.errors import Unsatisfiable
 from hypothesis.strategies import SearchStrategy
 from jsonschema import validators
 from ruamel.yaml.error import YAMLError
@@ -24,17 +25,21 @@ from ruamel.yaml.error import YAMLError
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.presence import has_path
 from hypothesis_helm.charts.templates import discover
-from hypothesis_helm.compiler.expansion import FailureExpansion
-from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
-from hypothesis_helm.compiler.pruning import Pruner
-from hypothesis_helm.compiler.topology import trim_topology as topology_trim
+from hypothesis_helm.compiler.asts.contracts import Contracts
+from hypothesis_helm.compiler.passes.expansion import FailureExpansion
+from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
+from hypothesis_helm.compiler.passes.pruning import Pruner
+from hypothesis_helm.compiler.passes.rejections import RejectionPolicy, matches_rejection
+from hypothesis_helm.compiler.passes.topology import trim_topology as topology_trim
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
 from hypothesis_helm.execution.traversal import ALGORITHM, STRATEGIES, order_configurations
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+from hypothesis_helm.reporting.changes import compare
 from hypothesis_helm.reporting.output import emit_manifest
 from hypothesis_helm.reporting.permutations import PermutationStatistics
 from hypothesis_helm.reporting.progress import format_path
 from hypothesis_helm.reporting.progressive import estimate_progression
+from hypothesis_helm.reporting.reproductions import changed_values
 from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, validate
 from hypothesis_helm.schemas.contracts import (
@@ -274,7 +279,12 @@ def audit(chart: Chart) -> dict[str, object]:
 class RenderFailure(AssertionError):
     """
     A reproducible values input failed the rendering contract.
+
+    Attributes:
+        resources (list[object] | None): Parsed output available before a manifest validation failure.
     """
+
+    resources: list[object] | None = None
 
 
 def validate_resources(resources: Sequence[object]) -> None:
@@ -391,8 +401,13 @@ def render(
     )
     try:
         (hashes if hashes is not None else process_hashes()).check(resources, context, validate_bundle)
+    except RenderFailure as exc:
+        exc.resources = resources
+        raise
     except (TypeError, ValueError) as exc:
-        raise RenderFailure(f"invalid rendered manifest: {exc}") from exc
+        failure = RenderFailure(f"invalid rendered manifest: {exc}")
+        failure.resources = resources
+        raise failure from exc
     return [mapping(resource) for resource in resources]
 
 
@@ -428,6 +443,10 @@ def check_chart(
     input_strategy: SearchStrategy[dict[str, object]] | None = None,
     input_inventory: InputInventory | None = None,
     check_defaults: bool = True,
+    filter_rejections: bool = False,
+    rejection_policy: RejectionPolicy | None = None,
+    protected_paths: tuple[tuple[str | int, ...], ...] = (),
+    baseline_resources: Sequence[object] | None = None,
 ) -> dict[str, object]:
     """
     Check defaults then generated overrides, shrinking failing inputs.
@@ -469,6 +488,10 @@ def check_chart(
             preference; the original chart schema remains authoritative.
         input_inventory (InputInventory | None): Shared compiler inventory for phase comparisons.
         check_defaults (bool): Render the baseline first; path schedulers may skip an already verified baseline.
+        filter_rejections (bool): Guide generated inputs using supported explicit rejection contracts.
+        rejection_policy (RejectionPolicy | None): Shared per-chart contract verification and counters.
+        protected_paths (tuple[tuple[str | int, ...], ...]): Selected paths that dependent-field adjustments must preserve.
+        baseline_resources (Sequence[object] | None): Already rendered defaults for comparison across path tests.
 
     Returns:
         dict[str, object]: Resulting schema, values mapping, or structured report.
@@ -500,6 +523,14 @@ def check_chart(
     ):
         raise ValueError("trim must be nonnegative and requires finite permutation planning")
     planning_started = time.perf_counter()
+    policy = (
+        rejection_policy
+        if rejection_policy is not None
+        else RejectionPolicy(Contracts.build(chart.path), chart.defaults, (chart.path / "values.schema.json").is_file())
+        if filter_rejections
+        else None
+    )
+    initial_rejections = policy.snapshot() if policy is not None else {}
     inputs = input_inventory if input_inventory is not None else InputInventory.build(chart)
     field_coverage = FieldCoverage(inputs, chart.defaults)
     LOGGER.info("Compiler input baseline: %d statically named fields", len(inputs.known))
@@ -674,6 +705,7 @@ def check_chart(
                 "conformity": os.environ.get(ENVIRONMENT),
                 "custom_properties": bool(properties),
                 "prune_equivalent": prune_equivalent,
+                "filter_rejections": policy is not None,
             },
         )
         LOGGER.info("Coverage strategy: %s", coverage["coverage_strategy"])
@@ -746,6 +778,7 @@ def check_chart(
     count = 0
     completed_count = 0
     last_failure = None
+    baseline_documents = copy.deepcopy(list(baseline_resources)) if baseline_resources is not None else None
     execution_started = time.perf_counter()
     if statistics is not None:
         statistics.started = execution_started
@@ -772,6 +805,26 @@ def check_chart(
         Returns:
             None: In-place additions preserve successful and failed execution counts separately.
         """
+        if policy is not None:
+            evidence = policy.snapshot()
+            for key in (
+                "rejected_candidates",
+                "filtered_candidates",
+                "adjusted_candidates",
+                "verification_renders",
+                "classifier_disagreements",
+                "schema_conflicts",
+            ):
+                evidence[key] = int(str(evidence[key])) - int(str(initial_rejections.get(key, 0)))
+            result["configuration_rejections"] = evidence
+            if evidence["rejected_candidates"]:
+                result["coverage_complete"] = False
+                result["scope"] = "Sample of inputs accepted by analyzed chart validation; rejected configurations are reported separately"
+                if result["status"] == "passed" and completed_count <= int(check_defaults):
+                    result["status"] = "configuration-rejected"
+            if finite_values is not None:
+                result["remaining_iterations"] = max(0, len(finite_values) + 1 - count - int(str(evidence["filtered_candidates"])))
+                result["unattempted_iterations"] = result["remaining_iterations"]
         if expansion is None:
             return
         total = len(finite_values or []) + 1
@@ -791,7 +844,9 @@ def check_chart(
                 "failed_iterations": len(expansion_failures),
                 "planned_iterations": total,
                 "remaining_iterations": total - expansion_checked,
-                "unattempted_iterations": total - count,
+                "unattempted_iterations": total
+                - count
+                - (policy.filtered - int(str(initial_rejections.get("filtered_candidates", 0))) if policy is not None else 0),
             }
         )
 
@@ -833,28 +888,77 @@ def check_chart(
             (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
-    def check(values: dict[str, object], *, force_render: bool = False) -> None:
+    def check(values: dict[str, object], *, force_render: bool = False, baseline: bool = False) -> bool:
         """
         Render one candidate and retain failure details for replay.
 
         Args:
             values (dict[str, object]): Values document used as the rendering baseline.
             force_render (bool): Execute Helm for an explicitly expanded input.
+            baseline (bool): Always test supplied defaults without excluding or changing them.
 
         Returns:
-            None: None. The operation completes through its documented side effects.
+            bool: Whether this candidate reached manifest testing rather than configuration exclusion.
         """
-        nonlocal count, completed_count, last_failure
+        nonlocal count, completed_count, last_failure, baseline_documents
         remaining_time()
-        count += 1
+        attempted = False
         iteration_started = time.perf_counter()
         passed = False
         rendered = False
         render_seconds = 0.0
+        observed: list[object] | None = None
         try:
             with execution_timer(remaining_time()):
                 effective = merge_values(chart.defaults, values)
                 validators.validator_for(chart.schema)(chart.schema).validate(json_value(effective))
+                rejection = policy.predict(effective) if policy is not None and not baseline and not policy.declared_schema else None
+                if rejection is not None and policy is not None:
+                    if policy.needs_probe(rejection, effective):
+                        policy.probes += 1
+                        try:
+                            render(
+                                chart,
+                                values,
+                                helm=helm,
+                                timeout=min(timeout, remaining_time()),
+                                release=release,
+                                namespace=namespace,
+                                kube_version=kube_version,
+                            )
+                        except RenderFailure as exc:
+                            if not matches_rejection(str(exc), rejection):
+                                policy.disabled.add(rejection.key)
+                                policy.contradictions += 1
+                                raise
+                            policy.verified(rejection, effective)
+                        else:
+                            policy.disabled.add(rejection.key)
+                            policy.contradictions += 1
+                            rejection = None
+                    if rejection is not None:
+                        policy.candidates += 1
+                        record = policy.records[rejection.key]
+                        record["occurrences"] = int(str(record["occurrences"])) + 1
+                        replacement = policy.repair(
+                            values,
+                            rejection,
+                            protected_paths if finite_values is None else ((),),
+                            lambda candidate: (
+                                validators.validator_for(chart.schema)(chart.schema).is_valid(
+                                    json_value(merge_values(chart.defaults, candidate))
+                                )
+                                and policy.predict(merge_values(chart.defaults, candidate)) is None
+                            ),
+                        )
+                        if replacement is None:
+                            policy.filtered += 1
+                            return False
+                        policy.adjusted += 1
+                        values = replacement
+                        effective = merge_values(chart.defaults, values)
+                count += 1
+                attempted = True
                 witness = None
                 resources = None
                 if pruner is not None:
@@ -889,32 +993,75 @@ def check_chart(
                 else:
                     for resource in resources:
                         emit_manifest(resource)
-                pristine = copy.deepcopy(resources) if pruner is not None else []
+                pristine = copy.deepcopy(resources) if pruner is not None or properties else resources
+                observed = list(pristine)
                 if not resources and not allow_empty:
                     raise RenderFailure("chart rendered no resources (use allow_empty explicitly)")
                 for prop in properties:
                     remaining_time()
                     prop(resources)
                 passed = True
+                if baseline:
+                    baseline_documents = copy.deepcopy(observed)
                 completed_count += 1
                 if pruner is not None:
                     pruner.remember(witness, count, pristine)
+                return True
         except RenderFailure as exc:
+            if not attempted:
+                count += 1
+                attempted = True
             if isinstance(exc.__cause__, subprocess.TimeoutExpired):
                 remaining_time()
-            last_failure = (values, str(exc))
+            if policy is not None and policy.declared_schema:
+                declared_rejection = policy.predict(merge_values(chart.defaults, values))
+                if declared_rejection is not None and matches_rejection(str(exc), declared_rejection):
+                    policy.schema_conflicts += 1
+                    policy.verified(declared_rejection, merge_values(chart.defaults, values))
+                    conflict_record = policy.records[declared_rejection.key]
+                    conflict_record["occurrences"] = int(str(conflict_record["occurrences"])) + 1
+            last_failure = (values, str(exc), observed if observed is not None else exc.resources)
             raise
         except (Exception, KeyboardInterrupt) as exc:
-            last_failure = (values, str(exc))
+            if not attempted:
+                count += 1
+                attempted = True
+            last_failure = (values, str(exc), observed)
             raise
         finally:
-            if statistics is not None:
+            if statistics is not None and attempted:
                 statistics.advance(
                     passed,
                     time.perf_counter() - iteration_started,
                     rendered=rendered,
                     render_seconds=render_seconds,
                 )
+
+    def comparisons(values: dict[str, object], documents: list[object] | None) -> dict[str, object]:
+        """
+        Compare observed inputs and outputs without rendering extra cases or masking failures.
+
+        Args:
+            values (dict[str, object]): Exact overrides that failed.
+            documents (list[object] | None): Parsed output, if rendering reached that stage.
+
+        Returns:
+            dict[str, object]: Replay records or explicit reasons a comparison is unavailable.
+        """
+        records: dict[str, object] = {}
+        for name, before, after in (
+            ("overrides", {}, values),
+            ("values", chart.defaults, merge_values(chart.defaults, values)),
+            ("manifests", baseline_documents, documents),
+        ):
+            if before is None or after is None:
+                records[name] = {"unavailable": "No parsed failing output or successful baseline is available."}
+                continue
+            try:
+                records[name] = compare(before, after)
+            except Exception as error:
+                records[name] = {"unavailable": f"Comparison could not be recorded: {error}"}
+        return records
 
     def save_failure(exc: BaseException) -> dict[str, object]:
         """
@@ -933,7 +1080,7 @@ def check_chart(
                 pruner.rendered,
                 len(pruner.certificates),
             )
-        values, message = last_failure or ({}, str(exc))
+        values, message, documents = last_failure or ({}, str(exc), None)
         result = {
             **coverage,
             "status": "interrupted" if isinstance(exc, KeyboardInterrupt) else "failed",
@@ -942,6 +1089,8 @@ def check_chart(
             "attempts": count,
             "error": message,
             "values": values,
+            "input_changes": changed_values(values, chart.defaults),
+            "comparisons": comparisons(values, documents),
             "failure_type": type(exc).__name__,
             "render_hashes": hashes.snapshot(),
             **({"pruning": pruner.report()} if pruner is not None else {}),
@@ -952,6 +1101,13 @@ def check_chart(
         if artifact_dir is not None:
             artifact_dir.mkdir(parents=True, exist_ok=True)
             (artifact_dir / "values.json").write_text(yamlio.json_for_helm(values, indent=2) + "\n", encoding="utf-8")
+            (artifact_dir / "changes.json").write_text(json.dumps(result["comparisons"], indent=2) + "\n")
+            # Write only serializable baselines; an unavailable comparison retains its reason.
+            records = mapping(result["comparisons"])
+            if "unavailable" not in mapping(records["values"]):
+                (artifact_dir / "values-baseline.json").write_text(json.dumps(chart.defaults, indent=2) + "\n")
+            if "unavailable" not in mapping(records["manifests"]):
+                (artifact_dir / "manifests-baseline.json").write_text(json.dumps(baseline_documents, indent=2) + "\n")
             (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
@@ -963,14 +1119,22 @@ def check_chart(
         initial_count = len(work)
         for position, values in enumerate(work):
             try:
-                check(values, force_render=position >= initial_count)
+                check(values, force_render=position >= initial_count, baseline=position == 0)
             except TimeLimitReached:
                 return stopped_report()
             except KeyboardInterrupt as exc:
                 save_failure(exc)
                 raise
             except Exception as exc:
-                expansion_failures.append({"values": values, "error": str(exc)})
+                failed_values, message, documents = last_failure or (values, str(exc), None)
+                expansion_failures.append(
+                    {
+                        "values": failed_values,
+                        "input_changes": changed_values(failed_values, chart.defaults),
+                        "error": message,
+                        "comparisons": comparisons(failed_values, documents),
+                    }
+                )
                 if fail_fast:
                     expansion_checked += 1
                     expansion_executed += int(position >= initial_count)
@@ -1001,7 +1165,7 @@ def check_chart(
 
     try:
         if expansion is None and check_defaults:
-            check({})
+            check({}, baseline=True)
     except TimeLimitReached:
         return stopped_report()
     except KeyboardInterrupt as exc:
@@ -1066,7 +1230,7 @@ def check_chart(
         database=None,
         phases=(Phase.generate,) if fail_fast else (Phase.generate, Phase.shrink),
         report_multiple_bugs=False,
-        suppress_health_check=(HealthCheck.too_slow,),
+        suppress_health_check=(HealthCheck.too_slow, HealthCheck.filter_too_much) if policy is not None else (HealthCheck.too_slow,),
     )
     @given(input_strategy if input_strategy is not None else chart.strategy())
     def property_test(values: dict[str, object]) -> None:
@@ -1085,11 +1249,12 @@ def check_chart(
         if first_sample_failure is not None:
             raise first_sample_failure
         try:
-            check(values)
+            accepted = check(values)
         except Exception as exc:
             if fail_fast:
                 first_sample_failure = exc
             raise
+        assume(accepted)
 
     try:
         property_test()
@@ -1099,6 +1264,27 @@ def check_chart(
         if pruner is not None:
             save_failure(exc)
         raise
+    except Unsatisfiable as exc:
+        if (
+            policy is None
+            or policy.filtered == int(str(initial_rejections.get("filtered_candidates", 0)))
+            or completed_count > int(check_defaults)
+        ):
+            return save_failure(exc)
+        result = {
+            **coverage,
+            "status": "configuration-rejected",
+            "chart": str(chart.path),
+            "attempts": count,
+            "seed": random_seed,
+            "coverage_complete": False,
+            "proof_of_totality": False,
+        }
+        expansion_report(result)
+        if artifact_dir is not None:
+            artifact_dir.mkdir(parents=True, exist_ok=True)
+            (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
+        return result
     except Exception as exc:
         return save_failure(exc)
     hashes.log_summary()
@@ -1123,7 +1309,8 @@ def check_chart(
         "proof_of_totality": False,
     }
 
-    if pruner is not None and artifact_dir is not None:
+    expansion_report(result)
+    if (pruner is not None or policy is not None) and artifact_dir is not None:
         artifact_dir.mkdir(parents=True, exist_ok=True)
         (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
     return result

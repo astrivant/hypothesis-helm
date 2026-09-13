@@ -15,7 +15,7 @@ from hypothesis_helm.benchmarking.benchmark_pca import run_case
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES
 from hypothesis_helm.charts.runner import Chart, render
-from hypothesis_helm.compiler.expansion import FailureExpansion
+from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 

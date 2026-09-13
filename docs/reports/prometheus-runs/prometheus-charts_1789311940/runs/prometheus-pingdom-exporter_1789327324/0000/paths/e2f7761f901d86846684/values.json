@@ -1,0 +1,47 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "ghcr.io/kokuwaio/pingdom-exporter",
+    "tag": "",
+    "pullPolicy": "IfNotPresent"
+  },
+  "nameOverride": "",
+  "fullnameOverride": "0",
+  "service": {
+    "enabled": true,
+    "type": "ClusterIP",
+    "port": 9158,
+    "annotations": {}
+  },
+  "resources": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "pingdom": {
+    "apiToken": "YourPingdomApiToken"
+  },
+  "config": {
+    "defaultUptimeSLO": 99,
+    "outageCheckPeriodInDays": 7,
+    "tags": [],
+    "parserTags": false,
+    "tagFormat": null,
+    "tagExtraLabels": []
+  },
+  "pod": {
+    "annotations": {}
+  },
+  "existingSecret": {
+    "name": ""
+  },
+  "secret": {
+    "annotations": {}
+  },
+  "serviceAccount": {
+    "create": false,
+    "name": "",
+    "annotations": {}
+  },
+  "extraVolumeMounts": [],
+  "extraVolumes": []
+}

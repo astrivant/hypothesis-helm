@@ -1,0 +1,137 @@
+{
+  "global": {
+    "imagePullSecrets": [],
+    "imageRegistry": ""
+  },
+  "namespaceOverride": "",
+  "replicaCount": 1,
+  "revisionHistoryLimit": 10,
+  "restartPolicy": "Always",
+  "image": {
+    "registry": "",
+    "repository": "quay.io/prometheuscommunity/elasticsearch-exporter",
+    "tag": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecret": ""
+  },
+  "podSecurityContext": {
+    "runAsNonRoot": true,
+    "runAsUser": 1000,
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "securityContext": {
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "readOnlyRootFilesystem": true
+  },
+  "dnsConfig": {},
+  "log": {
+    "format": "logfmt",
+    "level": "info"
+  },
+  "resources": {},
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/healthz",
+      "port": "http"
+    },
+    "initialDelaySeconds": 5,
+    "timeoutSeconds": 5,
+    "periodSeconds": 5
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/healthz",
+      "port": "http"
+    },
+    "initialDelaySeconds": 1,
+    "timeoutSeconds": 5,
+    "periodSeconds": 5
+  },
+  "priorityClassName": "",
+  "nodeSelector": {},
+  "tolerations": [],
+  "podAnnotations": {},
+  "podLabels": {},
+  "commonLabels": {},
+  "affinity": {},
+  "topologySpreadConstraints": [],
+  "initContainers": [],
+  "service": {
+    "enabled": true,
+    "type": "ClusterIP",
+    "httpPort": 9108,
+    "metricsPort": {
+      "name": "http"
+    },
+    "annotations": {},
+    "labels": {}
+  },
+  "deployment": {
+    "annotations": {},
+    "labels": {},
+    "metricsPort": {
+      "name": "http"
+    }
+  },
+  "env": {},
+  "extraArgs": [],
+  "extraManifests": [],
+  "envFromSecret": "",
+  "extraEnvSecrets": {},
+  "secretMounts": [],
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "es": {
+    "ssl": {
+      "enabled": true
+    }
+  },
+  "web": {
+    "path": "/metrics"
+  },
+  "serviceMonitor": {
+    "enabled": false,
+    "apiVersion": "monitoring.coreos.com/v1",
+    "namespace": "",
+    "labels": {},
+    "interval": "10s",
+    "jobLabel": "",
+    "scrapeTimeout": "10s",
+    "scheme": "http",
+    "relabelings": [],
+    "targetLabels": [],
+    "metricRelabelings": [],
+    "sampleLimit": 0
+  },
+  "podMonitor": {
+    "enabled": false,
+    "apiVersion": "monitoring.coreos.com/v1",
+    "namespace": "",
+    "labels": {},
+    "interval": "60s",
+    "scrapeTimeout": "10s",
+    "honorLabels": true,
+    "scheme": "http",
+    "relabelings": [],
+    "metricRelabelings": []
+  },
+  "prometheusRule": {
+    "enabled": false,
+    "namespace": "",
+    "labels": {},
+    "rules": []
+  },
+  "serviceAccount": {
+    "create": false,
+    "name": "default",
+    "automountServiceAccountToken": true,
+    "annotations": {}
+  }
+}

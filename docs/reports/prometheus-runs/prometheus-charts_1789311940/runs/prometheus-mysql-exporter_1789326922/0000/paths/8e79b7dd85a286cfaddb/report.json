@@ -1,0 +1,687 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 74,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "cloudsqlproxy",
+        "credentials"
+      ],
+      [
+        "cloudsqlproxy",
+        "credentialsSecret"
+      ],
+      [
+        "cloudsqlproxy",
+        "enabled"
+      ],
+      [
+        "cloudsqlproxy",
+        "extraArgs"
+      ],
+      [
+        "cloudsqlproxy",
+        "image",
+        "repo"
+      ],
+      [
+        "cloudsqlproxy",
+        "image",
+        "tag"
+      ],
+      [
+        "cloudsqlproxy",
+        "instanceConnectionName"
+      ],
+      [
+        "cloudsqlproxy",
+        "port"
+      ],
+      [
+        "cloudsqlproxy",
+        "privateIp"
+      ],
+      [
+        "cloudsqlproxy",
+        "workloadIdentity",
+        "enabled"
+      ],
+      [
+        "collectors"
+      ],
+      [
+        "config",
+        "extraArgs"
+      ],
+      [
+        "extraEnvs"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "registry"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "mysql",
+        "db"
+      ],
+      [
+        "mysql",
+        "existingConfigSecret",
+        "name"
+      ],
+      [
+        "mysql",
+        "existingPasswordSecret",
+        "key"
+      ],
+      [
+        "mysql",
+        "existingPasswordSecret",
+        "name"
+      ],
+      [
+        "mysql",
+        "host"
+      ],
+      [
+        "mysql",
+        "pass"
+      ],
+      [
+        "mysql",
+        "port"
+      ],
+      [
+        "mysql",
+        "protocol"
+      ],
+      [
+        "mysql",
+        "user"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "externalPort"
+      ],
+      [
+        "service",
+        "internalPort"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "name"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "sharedSecret",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "sharedSecret",
+        "name"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "targets"
+      ],
+      [
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "hostUsers"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "registry"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "mysql",
+        "additionalConfig"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "cloudsqlproxy",
+        "credentials"
+      ],
+      [
+        "cloudsqlproxy",
+        "credentialsSecret"
+      ],
+      [
+        "cloudsqlproxy",
+        "enabled"
+      ],
+      [
+        "cloudsqlproxy",
+        "extraArgs"
+      ],
+      [
+        "cloudsqlproxy",
+        "image",
+        "PullPolicy"
+      ],
+      [
+        "cloudsqlproxy",
+        "image",
+        "repo"
+      ],
+      [
+        "cloudsqlproxy",
+        "image",
+        "tag"
+      ],
+      [
+        "cloudsqlproxy",
+        "instanceConnectionName"
+      ],
+      [
+        "cloudsqlproxy",
+        "port"
+      ],
+      [
+        "cloudsqlproxy",
+        "privateIp"
+      ],
+      [
+        "cloudsqlproxy",
+        "workloadIdentity",
+        "enabled"
+      ],
+      [
+        "collectors"
+      ],
+      [
+        "config",
+        "extraArgs"
+      ],
+      [
+        "config",
+        "logFormat"
+      ],
+      [
+        "config",
+        "logLevel"
+      ],
+      [
+        "extraEnvs"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "mysql",
+        "db"
+      ],
+      [
+        "mysql",
+        "existingConfigSecret",
+        "name"
+      ],
+      [
+        "mysql",
+        "existingPasswordSecret",
+        "key"
+      ],
+      [
+        "mysql",
+        "existingPasswordSecret",
+        "name"
+      ],
+      [
+        "mysql",
+        "host"
+      ],
+      [
+        "mysql",
+        "pass"
+      ],
+      [
+        "mysql",
+        "port"
+      ],
+      [
+        "mysql",
+        "protocol"
+      ],
+      [
+        "mysql",
+        "user"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources",
+        "limits",
+        "cpu"
+      ],
+      [
+        "resources",
+        "limits",
+        "memory"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "externalPort"
+      ],
+      [
+        "service",
+        "internalPort"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "name"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "sharedSecret",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "sharedSecret",
+        "name"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget",
+        "targets"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "namespaceSelector"
+      ],
+      [
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 63,
+    "varied_count": 6,
+    "varied_fraction": 0.08108108108108109,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0jmpwyhh/chart",
+  "seed": 0,
+  "attempts": 37,
+  "error": "Error: YAML parse error on prometheus-mysql-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 35: did not find expected key\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "namespaceOverride": "",
+    "fullnameOverride": "",
+    "replicaCount": 1,
+    "image": {
+      "registry": "\""
+    },
+    "imagePullSecrets": [],
+    "service": {
+      "labels": {},
+      "annotations": {},
+      "name": "mysql-exporter",
+      "type": "ClusterIP",
+      "externalPort": 9104,
+      "internalPort": 9104
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "apiVersion": "monitoring.coreos.com/v1",
+      "additionalLabels": {},
+      "jobLabel": "",
+      "targetLabels": [],
+      "podTargetLabels": [],
+      "metricRelabelings": [],
+      "relabelings": [],
+      "multipleTarget": {
+        "enabled": false,
+        "targets": [],
+        "sharedSecret": {
+          "enabled": false,
+          "name": ""
+        }
+      }
+    },
+    "serviceAccount": {
+      "create": false,
+      "name": null,
+      "annotations": {}
+    },
+    "resources": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "podLabels": {},
+    "priorityClassName": "",
+    "extraVolumeMounts": [],
+    "extraVolumes": [],
+    "extraEnvs": [],
+    "podSecurityContext": {},
+    "securityContext": {},
+    "hostUsers": null,
+    "annotations": {
+      "prometheus.io/scrape": "true",
+      "prometheus.io/path": "/metrics",
+      "prometheus.io/port": "9104"
+    },
+    "config": {
+      "extraArgs": []
+    },
+    "collectors": {},
+    "mysql": {
+      "db": "",
+      "host": "localhost",
+      "additionalConfig": null,
+      "pass": "password",
+      "port": 3306,
+      "protocol": "",
+      "user": "exporter",
+      "existingConfigSecret": {
+        "name": "",
+        "key": ""
+      },
+      "existingPasswordSecret": {
+        "name": "",
+        "key": ""
+      }
+    },
+    "cloudsqlproxy": {
+      "enabled": false,
+      "image": {
+        "repo": "gcr.io/cloud-sql-connectors/cloud-sql-proxy",
+        "tag": "2.14.0",
+        "pullPolicy": "IfNotPresent"
+      },
+      "instanceConnectionName": "project:us-central1:dbname",
+      "privateIp": false,
+      "port": "3306",
+      "credentialsSecret": "",
+      "credentials": "",
+      "workloadIdentity": {
+        "enabled": false,
+        "serviceAccountEmail": ""
+      },
+      "extraArgs": ""
+    },
+    "prometheusRule": {
+      "enabled": false,
+      "additionalLabels": {},
+      "namespace": "",
+      "rules": []
+    },
+    "extraManifests": []
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 28,
+    "unique_bundles": 25,
+    "duplicate_bundles": 3,
+    "validation_cache_hits": 3,
+    "validated_entries": 25
+  },
+  "phase": "$.image",
+  "kind": "value-path",
+  "path": [
+    "image"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-mysql-exporter_1789326922/0000/paths/8e79b7dd85a286cfaddb"
+}

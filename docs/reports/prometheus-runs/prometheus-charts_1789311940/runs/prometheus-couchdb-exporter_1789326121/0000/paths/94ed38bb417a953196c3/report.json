@@ -1,0 +1,230 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 22,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "password"
+      ],
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "couchdb",
+        "username"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 20,
+    "varied_count": 5,
+    "varied_fraction": 0.22727272727272727,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+  "seed": 0,
+  "attempts": 177,
+  "error": "Error: prometheus-couchdb-exporter/templates/NOTES.txt:3:17\n  executing \"prometheus-couchdb-exporter/templates/NOTES.txt\" at <.Values.ingress.hosts>:\n    range can't iterate over false\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "rbac": {
+      "create": true,
+      "pspEnabled": true
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": null
+    },
+    "replicaCount": 1,
+    "image": {
+      "repository": "gesellix/couchdb-prometheus-exporter",
+      "tag": 16,
+      "pullPolicy": "IfNotPresent"
+    },
+    "service": {
+      "type": "ClusterIP",
+      "port": 9984
+    },
+    "ingress": {
+      "enabled": true,
+      "hosts": false
+    },
+    "resources": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "couchdb": {
+      "uri": "http://couchdb.default.svc:5984",
+      "databases": "_all_dbs"
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 149,
+    "unique_bundles": 1,
+    "duplicate_bundles": 148,
+    "validation_cache_hits": 148,
+    "validated_entries": 1
+  },
+  "phase": "$.ingress",
+  "kind": "value-path",
+  "path": [
+    "ingress"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/94ed38bb417a953196c3"
+}

@@ -1,0 +1,186 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.annotations
+[INFO] Coalescing path $.collectors
+[INFO] Coalescing path $.config
+[INFO] Coalescing path $.extraEnvs
+[INFO] Coalescing path $.extraManifests
+[INFO] Coalescing path $.extraVolumeMounts
+[INFO] Coalescing path $.extraVolumes
+[INFO] Coalescing path $.hostUsers
+[INFO] Coalescing path $.imagePullSecrets
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.podLabels
+[INFO] Coalescing path $.podSecurityContext
+[INFO] Coalescing path $.priorityClassName
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.securityContext
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.cloudsqlproxy.credentials
+[INFO] Coalescing path $.cloudsqlproxy.credentialsSecret
+[INFO] Coalescing path $.cloudsqlproxy.enabled
+[INFO] Coalescing path $.cloudsqlproxy.extraArgs
+[INFO] Coalescing path $.cloudsqlproxy.instanceConnectionName
+[INFO] Coalescing path $.cloudsqlproxy.port
+[INFO] Coalescing path $.cloudsqlproxy.privateIp
+[INFO] Coalescing path $.collectors[*]
+[INFO] Coalescing path $.config.extraArgs
+[INFO] Coalescing path $.config.logFormat
+[INFO] Coalescing path $.config.logLevel
+[INFO] Coalescing path $.extraEnvs[*]
+[INFO] Coalescing path $.extraManifests[*]
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.registry
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.mysql.additionalConfig
+[INFO] Coalescing path $.mysql.db
+[INFO] Coalescing path $.mysql.host
+[INFO] Coalescing path $.mysql.pass
+[INFO] Coalescing path $.mysql.port
+[INFO] Coalescing path $.mysql.protocol
+[INFO] Coalescing path $.mysql.user
+[INFO] Coalescing path $.prometheusRule.additionalLabels
+[INFO] Coalescing path $.prometheusRule.enabled
+[INFO] Coalescing path $.prometheusRule.namespace
+[INFO] Coalescing path $.prometheusRule.rules
+[INFO] Coalescing path $.resources.limits
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.externalPort
+[INFO] Coalescing path $.service.internalPort
+[INFO] Coalescing path $.service.labels
+[INFO] Coalescing path $.service.name
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.serviceMonitor.additionalLabels
+[INFO] Coalescing path $.serviceMonitor.apiVersion
+[INFO] Coalescing path $.serviceMonitor.enabled
+[INFO] Coalescing path $.serviceMonitor.interval
+[INFO] Coalescing path $.serviceMonitor.jobLabel
+[INFO] Coalescing path $.serviceMonitor.metricRelabelings
+[INFO] Coalescing path $.serviceMonitor.namespace
+[INFO] Coalescing path $.serviceMonitor.namespaceSelector
+[INFO] Coalescing path $.serviceMonitor.podTargetLabels
+[INFO] Coalescing path $.serviceMonitor.relabelings
+[INFO] Coalescing path $.serviceMonitor.scrapeTimeout
+[INFO] Coalescing path $.serviceMonitor.targetLabels
+[INFO] Coalescing path $.cloudsqlproxy.image.PullPolicy
+[INFO] Coalescing path $.cloudsqlproxy.image.repo
+[INFO] Coalescing path $.cloudsqlproxy.image.tag
+[INFO] Coalescing path $.cloudsqlproxy.workloadIdentity.enabled
+[INFO] Coalescing path $.mysql.additionalConfig[*]
+[INFO] Coalescing path $.mysql.existingConfigSecret.name
+[INFO] Coalescing path $.mysql.existingPasswordSecret.key
+[INFO] Coalescing path $.mysql.existingPasswordSecret.name
+[INFO] Coalescing path $.resources.limits.cpu
+[INFO] Coalescing path $.resources.limits.memory
+[INFO] Coalescing path $.serviceMonitor.multipleTarget.enabled
+[INFO] Coalescing path $.serviceMonitor.multipleTarget.targets
+[INFO] Coalescing path $.serviceMonitor.multipleTarget.sharedSecret.enabled
+[INFO] Coalescing path $.serviceMonitor.multipleTarget.sharedSecret.name
+[INFO] Coalescing path $.serviceMonitor.multipleTarget.targets[*].endpoint
+[INFO] Coalescing path $.serviceMonitor.multipleTarget.targets[*].name
+[INFO] Coalescing path $.serviceMonitor.multipleTarget.targets[*].port
+[INFO] Discovered 122 unique value paths; random traversal, seed 0
+[INFO] Testing path $.serviceMonitor.additionalLabels (1/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.image (2/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 28 observed, 25 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.serviceMonitor.multipleTarget.sharedSecret (3/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.annotations["prometheus.io/path"] (4/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.extraManifests (5/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 6 observed, 2 unique, 4 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.nodeSelector (6/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.imagePullSecrets (7/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.mysql.port (8/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext (9/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.extraEnvs[*] (10/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 1 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.serviceMonitor.multipleTarget.targets[*].password (11/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.config (12/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 32 unique, 68 duplicate bundles; 68 successful validations reused
+[INFO] Testing path $.podSecurityContext (13/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.cloudsqlproxy.privateIp (14/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 1 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.service.name (15/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.mysql.host (16/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 22 observed, 21 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.service.type (17/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 4 observed, 4 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.prometheusRule (18/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 38 observed, 14 unique, 24 duplicate bundles; 24 successful validations reused
+[INFO] Testing path $.config.logLevel (19/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.relabelings (20/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.serviceMonitor.multipleTarget.sharedSecret.name (21/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.prometheusRule.additionalLabels (22/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.mysql.existingPasswordSecret.key (23/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.cloudsqlproxy.workloadIdentity.serviceAccountEmail (24/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.serviceAccount.annotations (25/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.extraEnvs[*].valueFrom (26/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 0 observed, 0 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.multipleTarget.targets[*] (27/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.image.repository (28/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.resources (29/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.prometheusRule.rules[*] (30/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.cloudsqlproxy.credentials (31/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.cloudsqlproxy.image.repo (32/122)
+[INFO] Compiler input baseline: 74 statically named fields
+[INFO] Execution stopped at the 0.757774s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 6 observed, 1 unique, 5 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.27s; dependency preparation 0.04s; 0 charts remain

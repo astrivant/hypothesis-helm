@@ -1,0 +1,372 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 51,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config"
+      ],
+      [
+        "env"
+      ],
+      [
+        "envFrom"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global",
+        "imagePullSecrets"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "issueTemplate"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccount",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "strategy"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "tplConfig"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "existingConfigSecret"
+      ],
+      [
+        "route"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config"
+      ],
+      [
+        "configString",
+        ""
+      ],
+      [
+        "env"
+      ],
+      [
+        "envFrom"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global",
+        "imagePullSecrets"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "issueTemplate"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccount",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "bearerTokenFile"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "strategy"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "tplConfig"
+      ]
+    ],
+    "present_count": 43,
+    "varied_count": 2,
+    "varied_fraction": 0.0392156862745098,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 100,
+    "unique_bundles": 1,
+    "duplicate_bundles": 99,
+    "validation_cache_hits": 99,
+    "validated_entries": 1
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-1750tp8u/chart",
+  "seed": 0,
+  "attempts": 100,
+  "time_limit_seconds": 56.50656483275816,
+  "execution_seconds": 12.250266042072326,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.route.main.parentRefs",
+  "kind": "value-path",
+  "path": [
+    "route",
+    "main",
+    "parentRefs"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/jiralert_1789325515/0000/paths/a3f77ea9d7e034d0fa76"
+}

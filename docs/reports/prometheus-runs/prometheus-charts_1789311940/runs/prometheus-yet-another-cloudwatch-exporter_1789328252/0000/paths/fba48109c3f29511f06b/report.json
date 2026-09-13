@@ -1,0 +1,426 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 56,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "aws",
+        "secret",
+        "includesSessionToken"
+      ],
+      [
+        "config"
+      ],
+      [
+        "configMap",
+        "enabled"
+      ],
+      [
+        "containerPort"
+      ],
+      [
+        "deployment",
+        "labels"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraEnvFrom"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "lifecycle"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget",
+        "enabled"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "portName"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccount",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "honorTimestamps"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "testConnection"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "aws",
+        "aws_access_key_id"
+      ],
+      [
+        "aws",
+        "aws_secret_access_key"
+      ],
+      [
+        "aws",
+        "role"
+      ],
+      [
+        "aws",
+        "secret",
+        "name"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "honorTimestamps"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "aws",
+        "secret",
+        "includesSessionToken"
+      ],
+      [
+        "config"
+      ],
+      [
+        "configMap",
+        "enabled"
+      ],
+      [
+        "containerPort"
+      ],
+      [
+        "deployment",
+        "labels"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraEnvFrom"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "lifecycle"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget",
+        "enabled"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "portName"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "labels"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccount",
+        "labels"
+      ],
+      [
+        "testConnection"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 48,
+    "varied_count": 14,
+    "varied_fraction": 0.25,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "time-limit",
+  "exit_code": 124,
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-1vmd4oon/chart",
+  "seed": 0,
+  "attempts": 115,
+  "attempted_iterations": 115,
+  "completed_iterations": 97,
+  "planned_iterations": null,
+  "remaining_iterations": null,
+  "unattempted_iterations": null,
+  "coverage_complete": false,
+  "proof_of_totality": false,
+  "time_limit_seconds": 10.937321375124156,
+  "execution_seconds": 10.947487291879952,
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 97,
+    "unique_bundles": 18,
+    "duplicate_bundles": 79,
+    "validation_cache_hits": 0,
+    "validated_entries": 97
+  },
+  "phase": "$.serviceMonitor",
+  "kind": "value-path",
+  "path": [
+    "serviceMonitor"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-yet-another-cloudwatch-exporter_1789328252/0000/paths/fba48109c3f29511f06b"
+}

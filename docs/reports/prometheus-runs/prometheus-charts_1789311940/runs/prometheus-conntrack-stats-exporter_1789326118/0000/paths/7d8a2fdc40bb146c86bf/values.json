@@ -1,0 +1,41 @@
+{
+  "fullnameOverride": "",
+  "image": {
+    "repository": "jwkohnen/conntrack-stats-exporter",
+    "pullPolicy": "IfNotPresent",
+    "tag": ""
+  },
+  "imagePullSecrets": [],
+  "nameOverride": "",
+  "nodeSelector": {},
+  "podAnnotations": {
+    "prometheus.io/scrape": "true",
+    "prometheus.io/port": "9371"
+  },
+  "commonLabels": {},
+  "podLabels": {},
+  "podMonitor": {
+    "enabled": true,
+    "interval": "-"
+  },
+  "podSecurityContext": {},
+  "resources": {},
+  "securityContext": {
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "privileged": true,
+    "readOnlyRootFilesystem": true,
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "serviceAccount": {
+    "create": true,
+    "annotations": {},
+    "name": ""
+  },
+  "tolerations": []
+}

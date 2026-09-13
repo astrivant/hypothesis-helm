@@ -29,12 +29,13 @@ for title, command in parsers:
 
 ~~~text
 usage: helm hypothesis [-h]
-                       {aggregate,export-minimal-values,scan,generate,audit,run,test,schemas} ...
+                       {replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas} ...
 
 Audit and property-test Helm chart values.
 
 positional arguments:
-  {aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
+  {replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
+    replay-changes      verify and replay saved values or manifest changes
     aggregate           verify piped shard reports and write one final report
     export-minimal-values
                         write example values beside each discovered chart
@@ -47,6 +48,26 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis replay-changes</summary>
+
+~~~text
+usage: helm hypothesis replay-changes [-h] [--section {overrides,values,manifests}]
+                                      [--baseline BASELINE] [--output OUTPUT]
+                                      record
+
+positional arguments:
+  record                changes.json from a failing case
+
+options:
+  -h, --help            show this help message and exit
+  --section {overrides,values,manifests}
+  --baseline BASELINE   baseline JSON file; overrides default to an empty map
+  --output OUTPUT       write reconstructed JSON to this file; default: stdout
 ~~~
 
 </details>

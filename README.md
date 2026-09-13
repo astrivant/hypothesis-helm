@@ -15,6 +15,8 @@ time budget.
 - Choose permutation coverage, with exhaustive testing for small finite spaces.
 - Traverse unique value paths randomly with a reproducible seed, or choose linear, shallow, or deep order.
 - Skip provably equivalent renders or opt into sampling to reduce test volume.
+- Recognize explicit configuration requirements with `--filter`, test dependent settings together, and report rejections separately.
+- Show changed values and manifest fields in failure reports, with verified JSON replay of saved changes.
 - Preview coverage and runtime estimates; set execution budgets and shard tests across workers.
 - Test local chart trees or scan remote Git and authenticated Helm repositories; build dependencies and export Markdown/PDF reports.
 - Integrate Kubernetes schema validation and optional security checks into CI with [kubesec](https://github.com/controlplaneio/kubesec) and [kubeconform](https://github.com/yannh/kubeconform).
@@ -139,25 +141,25 @@ See [Repository scanning](docs/scanning/README.md) for authentication, public in
 
 ## Test case: Bitnami charts
 
-We scanned **115 Bitnami charts**, recording **19,612 test attempts** with filtering
+We scanned **115 Bitnami charts**, recording **101,799 test attempts** with filtering
 and a five-minute budget per chart. The results include render failures, chart
 validation rejections, and tooling limitations; confirmed chart bugs require triage.
 
 Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
 reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
-the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789260948/README.md).
+the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789311940/README.md).
 The [chart topology catalog](docs/benchmarks/chart-topologies/README.md) includes
 directed dependency graphs and their mathematical measurements.
 
 ## Test case: Prometheus Community charts
 
-We scanned **46 Prometheus Community charts**, recording **6,515 test attempts**
-with the same filtering and five-minute budget per chart. Results include input-test
-failures, a baseline configuration failure, missing values, and incomplete coverage.
+We scanned **46 Prometheus Community charts**, recording **94,833 test attempts**
+with the same filtering and five-minute budget per chart. The report distinguishes
+observed input failures, blocked checks, and incomplete coverage.
 
 Read the [scan results](docs/reports/prometheus.md), download the
 [combined PDF](docs/reports/prometheus.pdf), or inspect the
-[retained logs and data](docs/reports/prometheus-runs/prometheus-charts_1789260855/README.md).
+[retained logs and data](docs/reports/prometheus-runs/prometheus-charts_1789311940/README.md).
 Its dependency graphs are also in the [topology catalog](docs/benchmarks/chart-topologies/README.md).
 
 ## Development

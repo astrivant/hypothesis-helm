@@ -1,0 +1,500 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 44,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "config",
+        "log",
+        "level"
+      ],
+      [
+        "config",
+        "systemd",
+        "collector",
+        "unitInclude"
+      ],
+      [
+        "containerSecurityContext"
+      ],
+      [
+        "daemonsetAnnotations"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraInitContainers"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global",
+        "imagePullSecrets"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "hostPID"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "additionalLabels"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "enabled"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "interval"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "metricRelabelings"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "relabelings"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "scrapeTimeout"
+      ],
+      [
+        "prometheus",
+        "rules",
+        "additionalLabels"
+      ],
+      [
+        "prometheus",
+        "rules",
+        "enabled"
+      ],
+      [
+        "prometheus",
+        "rules",
+        "namespace"
+      ],
+      [
+        "prometheus",
+        "rules",
+        "rules"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "enabled"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "updateStrategy"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "prometheus",
+        "rules",
+        "enabled"
+      ],
+      [
+        "prometheus",
+        "rules",
+        "namespace"
+      ],
+      [
+        "prometheus",
+        "rules",
+        "rules"
+      ],
+      [
+        "service",
+        "nodePort"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "config",
+        "log",
+        "level"
+      ],
+      [
+        "config",
+        "systemd",
+        "collector",
+        "unitInclude"
+      ],
+      [
+        "containerSecurityContext"
+      ],
+      [
+        "daemonsetAnnotations"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraInitContainers"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global",
+        "imagePullSecrets"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "hostPID"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "additionalLabels"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "enabled"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "interval"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "metricRelabelings"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "relabelings"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "scrapeTimeout"
+      ],
+      [
+        "prometheus",
+        "rules",
+        "additionalLabels"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "enabled"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "updateStrategy"
+      ]
+    ],
+    "present_count": 42,
+    "varied_count": 4,
+    "varied_fraction": 0.09090909090909091,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-gpetxqhm/chart",
+  "seed": 0,
+  "attempts": 51,
+  "error": "Error: YAML parse error on prometheus-systemd-exporter/templates/prometheusrule.yaml: error converting YAML to JSON: yaml: line 5: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "image": {
+      "registry": "quay.io",
+      "repository": "prometheuscommunity/systemd-exporter",
+      "tag": "",
+      "pullPolicy": "IfNotPresent",
+      "digest": ""
+    },
+    "imagePullSecrets": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "revisionHistoryLimit": 10,
+    "global": {
+      "imagePullSecrets": [],
+      "imageRegistry": ""
+    },
+    "service": {
+      "enabled": true,
+      "type": "ClusterIP",
+      "port": 9558,
+      "targetPort": 9558,
+      "nodePort": null,
+      "portName": "metrics",
+      "annotations": {
+        "prometheus.io/scrape": "true"
+      }
+    },
+    "env": {},
+    "config": {
+      "log": {
+        "level": "info"
+      },
+      "systemd": {
+        "collector": {
+          "unitInclude": [
+            "kubelet.service",
+            "docker.service"
+          ]
+        }
+      }
+    },
+    "extraArgs": [],
+    "prometheus": {
+      "monitor": {
+        "enabled": false,
+        "additionalLabels": {},
+        "relabelings": [],
+        "metricRelabelings": [],
+        "interval": "",
+        "scrapeTimeout": "10s"
+      },
+      "rules": {
+        "enabled": true,
+        "namespace": ">0"
+      }
+    },
+    "updateStrategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {
+        "maxUnavailable": 1
+      }
+    },
+    "resources": {},
+    "serviceAccount": {
+      "create": false,
+      "name": "",
+      "annotations": {},
+      "imagePullSecrets": [],
+      "automountServiceAccountToken": false
+    },
+    "securityContext": {
+      "fsGroup": 65534,
+      "runAsGroup": 65534,
+      "runAsNonRoot": true,
+      "runAsUser": 65534
+    },
+    "containerSecurityContext": {
+      "readOnlyRootFilesystem": true
+    },
+    "hostNetwork": true,
+    "hostPID": true,
+    "affinity": {},
+    "podAnnotations": {
+      "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+    },
+    "podLabels": {},
+    "daemonsetAnnotations": {},
+    "releaseLabel": false,
+    "nodeSelector": {
+      "kubernetes.io/os": "linux"
+    },
+    "tolerations": [
+      {
+        "effect": "NoSchedule",
+        "operator": "Exists"
+      }
+    ],
+    "namespaceOverride": "",
+    "extraInitContainers": [],
+    "livenessProbe": {
+      "failureThreshold": 10,
+      "httpGet": {
+        "httpHeaders": [],
+        "scheme": "HTTP",
+        "port": 9558,
+        "path": "/"
+      },
+      "initialDelaySeconds": 0,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "readinessProbe": {
+      "failureThreshold": 3,
+      "httpGet": {
+        "httpHeaders": [],
+        "scheme": "HTTP",
+        "port": 9558,
+        "path": "/"
+      },
+      "initialDelaySeconds": 0,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "extraVolumes": [],
+    "extraVolumeMounts": []
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 38,
+    "unique_bundles": 14,
+    "duplicate_bundles": 24,
+    "validation_cache_hits": 24,
+    "validated_entries": 14
+  },
+  "phase": "$.prometheus.rules",
+  "kind": "value-path",
+  "path": [
+    "prometheus",
+    "rules"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-systemd-exporter_1789328140/0000/paths/06032f977468f2151a0d"
+}

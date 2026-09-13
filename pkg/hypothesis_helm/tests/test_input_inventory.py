@@ -13,7 +13,7 @@ from hypothesis import strategies as st
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.runner import Chart, check_chart
 from hypothesis_helm.cli import main
-from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
+from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 
 
 @pytest.fixture
@@ -218,7 +218,7 @@ def test_export_default_filename(
         None: Filenames and sidecar metadata agree with the exported YAML checksum.
     """
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr("hypothesis_helm.compiler.inputs.time.time", lambda: 1234567890)
+    monkeypatch.setattr("hypothesis_helm.compiler.passes.inputs.time.time", lambda: 1234567890)
     assert main(["audit", str(chart.path), "--export-minimal-values"]) == 0
     exported = json.loads(capsys.readouterr().out)["minimal_values"]
     target = Path(exported["yaml"])
@@ -299,8 +299,8 @@ def test_scan_exports_each_chart(
         if not override:
             assert target.parent == Path(item["artifacts"])
             assert target.name == f"values-minimal-{digest}-{exported['exported_epoch']}.yaml"
-    assert "Identified input fields" in (tmp_path / "scan.md").read_text()
-    assert "Verification record:" in (tmp_path / "scan.md").read_text()
+    assert "[Minimal values]" in (tmp_path / "scan.md").read_text()
+    assert "[Verification record]" in (tmp_path / "scan.md").read_text()
 
 
 def test_scan_export_cannot_overwrite_original_values(chart: Chart, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:

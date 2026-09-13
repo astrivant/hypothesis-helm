@@ -1,0 +1,276 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 58,
+    "present_fields": [],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "targetMemoryUtilizationPercentage"
+      ],
+      [
+        "extraConfigmapMounts"
+      ],
+      [
+        "extraSecretMounts"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "enabled"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilies"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilyPolicy"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "snmpNotifier",
+        "extraArgs"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationPassword"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationPasswordSecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationPasswordSecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationUsername"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationUsernameSecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationUsernameSecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "snmpCommunity"
+      ],
+      [
+        "snmpNotifier",
+        "snmpCommunitySecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpCommunitySecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "snmpDestinations"
+      ],
+      [
+        "snmpNotifier",
+        "snmpPrivatePassword"
+      ],
+      [
+        "snmpNotifier",
+        "snmpPrivatePasswordSecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpPrivatePasswordSecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "trapTemplates",
+        "description"
+      ],
+      [
+        "snmpNotifier",
+        "trapTemplates",
+        "userObjects"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 0,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "generation-error",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-38p03yij/chart",
+  "seed": 0,
+  "attempts": 0,
+  "error": "It looks like this test is filtering out a lot of inputs. 0 inputs were generated successfully, while 50 inputs were filtered out. \n\nAn input might be filtered out by calls to assume(), strategy.filter(...), or occasionally by Hypothesis internals.\n\nApplying this much filtering makes input generation slow, since Hypothesis must discard inputs which are filtered out and try generating it again. It is also possible that applying this much filtering will distort the domain and/or distribution of the test, leaving your testing less rigorous than expected.\n\nIf you expect this many inputs to be filtered out during generation, you can disable this health check with @settings(suppress_health_check=[HealthCheck.filter_too_much]). See https://hypothesis.readthedocs.io/en/latest/reference/api.html#hypothesis.HealthCheck for details.",
+  "values": {},
+  "failure_type": "FailedHealthCheck",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 0,
+    "unique_bundles": 0,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 0
+  },
+  "phase": "$.ingress.tls[*].hosts[*]",
+  "kind": "value-path",
+  "path": [
+    "ingress",
+    "tls",
+    "*",
+    "hosts",
+    "*"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/alertmanager-snmp-notifier_1789325516/0000/paths/ae968bea05135d8fcb71"
+}

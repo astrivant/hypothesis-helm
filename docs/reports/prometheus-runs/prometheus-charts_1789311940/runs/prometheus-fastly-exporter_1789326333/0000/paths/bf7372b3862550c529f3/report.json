@@ -1,0 +1,387 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 42,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "existingSecret",
+        "key"
+      ],
+      [
+        "existingSecret",
+        "name"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "fastly",
+        "token"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "options"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "existingSecret",
+        "key"
+      ],
+      [
+        "existingSecret",
+        "name"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "fastly",
+        "token"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "options"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 33,
+    "varied_count": 2,
+    "varied_fraction": 0.047619047619047616,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-q4o5gi9f/chart",
+  "seed": 0,
+  "attempts": 32,
+  "error": "Error: YAML parse error on prometheus-fastly-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 34: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "replicaCount": 1,
+    "serviceAccount": {
+      "create": true,
+      "name": null
+    },
+    "imagePullSecrets": [],
+    "image": {
+      "repository": "ghcr.io/fastly/fastly-exporter",
+      "tag": "",
+      "pullPolicy": "IfNotPresent"
+    },
+    "fastly": {
+      "token": "token"
+    },
+    "existingSecret": {
+      "key": ">0"
+    },
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "extraManifests": [],
+    "options": {},
+    "service": {
+      "type": "ClusterIP",
+      "port": 8080,
+      "annotations": {}
+    },
+    "ingress": {
+      "enabled": false,
+      "annotations": {},
+      "hosts": [
+        {
+          "host": "chart-example.local",
+          "paths": [
+            {
+              "path": "/",
+              "pathType": "ImplementationSpecific"
+            }
+          ]
+        }
+      ],
+      "tls": []
+    },
+    "resources": {},
+    "serviceMonitor": {
+      "enabled": false
+    },
+    "podSecurityContext": {},
+    "securityContext": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "extraEnv": [],
+    "podAnnotations": {},
+    "podLabels": {},
+    "initContainers": [],
+    "extraContainers": [],
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "route": {
+      "main": {
+        "enabled": false,
+        "apiVersion": "",
+        "kind": "",
+        "name": "",
+        "annotations": {},
+        "labels": {},
+        "parentRefs": [],
+        "hostnames": [],
+        "additionalRules": [],
+        "filters": [],
+        "matches": [
+          {
+            "path": {
+              "type": "PathPrefix",
+              "value": "/"
+            }
+          }
+        ],
+        "httpsRedirect": false
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 21,
+    "unique_bundles": 18,
+    "duplicate_bundles": 3,
+    "validation_cache_hits": 3,
+    "validated_entries": 18
+  },
+  "phase": "$.existingSecret",
+  "kind": "value-path",
+  "path": [
+    "existingSecret"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-fastly-exporter_1789326333/0000/paths/bf7372b3862550c529f3"
+}

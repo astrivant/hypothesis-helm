@@ -1,0 +1,580 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 55,
+    "present_fields": [
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "deploymentAnnotations"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "persistentVolume",
+        "accessModes"
+      ],
+      [
+        "persistentVolume",
+        "annotations"
+      ],
+      [
+        "persistentVolume",
+        "enabled"
+      ],
+      [
+        "persistentVolume",
+        "existingClaim"
+      ],
+      [
+        "persistentVolume",
+        "size"
+      ],
+      [
+        "persistentVolumeLabels"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "route"
+      ],
+      [
+        "runAsStatefulSet"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "enabled"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilies"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilyPolicy"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccountLabels"
+      ],
+      [
+        "serviceAnnotations"
+      ],
+      [
+        "serviceLabels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "basicAuth"
+      ],
+      [
+        "serviceMonitor",
+        "bearerTokenFile"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "strategy"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "deploymentAnnotations"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "networkPolicy",
+        "customSelectors"
+      ],
+      [
+        "persistentVolume",
+        "accessModes"
+      ],
+      [
+        "persistentVolume",
+        "annotations"
+      ],
+      [
+        "persistentVolume",
+        "enabled"
+      ],
+      [
+        "persistentVolume",
+        "existingClaim"
+      ],
+      [
+        "persistentVolume",
+        "size"
+      ],
+      [
+        "persistentVolume",
+        "storageClass"
+      ],
+      [
+        "persistentVolumeLabels"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "route"
+      ],
+      [
+        "runAsStatefulSet"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "enabled"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilies"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilyPolicy"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePort"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccountLabels"
+      ],
+      [
+        "serviceAnnotations"
+      ],
+      [
+        "serviceLabels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "basicAuth"
+      ],
+      [
+        "serviceMonitor",
+        "bearerTokenFile"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "strategy"
+      ],
+      [
+        "webConfiguration",
+        "basicAuthUsers"
+      ]
+    ],
+    "present_count": 47,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ra2ya7rq/chart",
+  "seed": 0,
+  "attempts": 34,
+  "error": "Error: YAML parse error on prometheus-pushgateway/templates/deployment.yaml: error converting YAML to JSON: yaml: line 34: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": []
+    },
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "image": {
+      "pullPolicy": ">0"
+    },
+    "imagePullSecrets": [],
+    "service": {
+      "type": "ClusterIP",
+      "port": 9091,
+      "targetPort": 9091,
+      "portName": "http",
+      "clusterIP": "",
+      "ipDualStack": {
+        "enabled": false,
+        "ipFamilies": [
+          "IPv6",
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "PreferDualStack"
+      },
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": []
+    },
+    "automountServiceAccountToken": true,
+    "deploymentAnnotations": {},
+    "podAnnotations": {},
+    "podLabels": {},
+    "serviceAnnotations": {},
+    "serviceLabels": {},
+    "serviceAccountLabels": {},
+    "persistentVolumeLabels": {},
+    "extraVars": [],
+    "extraArgs": [],
+    "extraInitContainers": [],
+    "extraContainers": [],
+    "resources": {},
+    "webConfiguration": {},
+    "liveness": {
+      "enabled": true,
+      "probe": {
+        "httpGet": {
+          "path": "/-/healthy",
+          "port": 9091,
+          "scheme": "HTTP"
+        },
+        "initialDelaySeconds": 10,
+        "timeoutSeconds": 10
+      }
+    },
+    "readiness": {
+      "enabled": true,
+      "probe": {
+        "httpGet": {
+          "path": "/-/ready",
+          "port": 9091,
+          "scheme": "HTTP"
+        },
+        "initialDelaySeconds": 10,
+        "timeoutSeconds": 10
+      }
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": null
+    },
+    "ingress": {
+      "enabled": false,
+      "className": "",
+      "path": "/",
+      "pathType": "ImplementationSpecific",
+      "extraPaths": []
+    },
+    "route": {
+      "main": {
+        "enabled": false,
+        "apiVersion": "",
+        "kind": "",
+        "annotations": {},
+        "labels": {},
+        "parentRefs": [],
+        "hostnames": [],
+        "additionalRules": [],
+        "filters": [],
+        "matches": [
+          {
+            "path": {
+              "type": "PathPrefix",
+              "value": "/"
+            }
+          }
+        ],
+        "httpsRedirect": false
+      }
+    },
+    "tolerations": [],
+    "nodeSelector": {},
+    "replicaCount": 1,
+    "hostAliases": [],
+    "runAsStatefulSet": false,
+    "securityContext": {
+      "fsGroup": 65534,
+      "runAsUser": 65534,
+      "runAsNonRoot": true
+    },
+    "containerSecurityContext": {},
+    "affinity": {},
+    "podAntiAffinity": "",
+    "podAntiAffinityTopologyKey": "kubernetes.io/hostname",
+    "topologySpreadConstraints": [],
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "monitoring",
+      "telemetryPath": "/metrics",
+      "interval": "",
+      "scheme": "",
+      "basicAuth": {},
+      "bearerTokenFile": "",
+      "tlsConfig": {},
+      "scrapeTimeout": "",
+      "additionalLabels": {},
+      "honorLabels": true,
+      "metricRelabelings": [],
+      "relabelings": []
+    },
+    "podDisruptionBudget": {},
+    "priorityClassName": null,
+    "strategy": {
+      "type": "Recreate"
+    },
+    "persistentVolume": {
+      "enabled": false,
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "annotations": {},
+      "existingClaim": "",
+      "mountPath": "/data",
+      "size": "2Gi",
+      "subPath": "",
+      "emptyDir": {}
+    },
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "networkPolicy": {},
+    "extraManifests": [],
+    "lifecycle": {}
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 21,
+    "unique_bundles": 17,
+    "duplicate_bundles": 4,
+    "validation_cache_hits": 4,
+    "validated_entries": 17
+  },
+  "phase": "$.image",
+  "kind": "value-path",
+  "path": [
+    "image"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-pushgateway_1789327538/0000/paths/8e79b7dd85a286cfaddb"
+}

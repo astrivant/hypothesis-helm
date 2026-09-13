@@ -1,0 +1,1702 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 166,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "auth",
+        "client",
+        "clientUser"
+      ],
+      [
+        "auth",
+        "client",
+        "enabled"
+      ],
+      [
+        "auth",
+        "client",
+        "serverUsers"
+      ],
+      [
+        "auth",
+        "quorum",
+        "enabled"
+      ],
+      [
+        "auth",
+        "quorum",
+        "learnerUser"
+      ],
+      [
+        "auth",
+        "quorum",
+        "serverUsers"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autopurge",
+        "purgeInterval"
+      ],
+      [
+        "autopurge",
+        "snapRetainCount"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configuration"
+      ],
+      [
+        "containerPorts",
+        "adminServer"
+      ],
+      [
+        "containerPorts",
+        "client"
+      ],
+      [
+        "containerPorts",
+        "election"
+      ],
+      [
+        "containerPorts",
+        "follower"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerPorts",
+        "tls"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "dataLogDir"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "dnsPolicy"
+      ],
+      [
+        "enableServiceLinks"
+      ],
+      [
+        "existingConfigmap"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "fourlwCommandsWhitelist"
+      ],
+      [
+        "global"
+      ],
+      [
+        "heapSize"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "initLimit"
+      ],
+      [
+        "jvmFlags"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "listenOnAllIPs"
+      ],
+      [
+        "logLevel"
+      ],
+      [
+        "maxClientCnxns"
+      ],
+      [
+        "maxSessionTimeout"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "metrics",
+        "service",
+        "type"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "minServerId"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataLogDir",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "dataLogDir",
+        "selector"
+      ],
+      [
+        "persistence",
+        "dataLogDir",
+        "size"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "labels"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "preAllocSize"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "disableBaseClientPort"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "headless",
+        "publishNotReadyAddresses"
+      ],
+      [
+        "service",
+        "headless",
+        "servicenameOverride"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "client"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "tls"
+      ],
+      [
+        "service",
+        "ports",
+        "client"
+      ],
+      [
+        "service",
+        "ports",
+        "election"
+      ],
+      [
+        "service",
+        "ports",
+        "follower"
+      ],
+      [
+        "service",
+        "ports",
+        "tls"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "snapCount"
+      ],
+      [
+        "syncLimit"
+      ],
+      [
+        "tickTime"
+      ],
+      [
+        "tls",
+        "client",
+        "auth"
+      ],
+      [
+        "tls",
+        "client",
+        "autoGenerated"
+      ],
+      [
+        "tls",
+        "client",
+        "enabled"
+      ],
+      [
+        "tls",
+        "client",
+        "keystorePassword"
+      ],
+      [
+        "tls",
+        "client",
+        "keystorePath"
+      ],
+      [
+        "tls",
+        "client",
+        "passwordsSecretName"
+      ],
+      [
+        "tls",
+        "client",
+        "truststorePassword"
+      ],
+      [
+        "tls",
+        "client",
+        "truststorePath"
+      ],
+      [
+        "tls",
+        "quorum",
+        "auth"
+      ],
+      [
+        "tls",
+        "quorum",
+        "autoGenerated"
+      ],
+      [
+        "tls",
+        "quorum",
+        "enabled"
+      ],
+      [
+        "tls",
+        "quorum",
+        "keystorePassword"
+      ],
+      [
+        "tls",
+        "quorum",
+        "keystorePath"
+      ],
+      [
+        "tls",
+        "quorum",
+        "passwordsSecretName"
+      ],
+      [
+        "tls",
+        "quorum",
+        "truststorePassword"
+      ],
+      [
+        "tls",
+        "quorum",
+        "truststorePath"
+      ],
+      [
+        "tls",
+        "resources"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy",
+        "rollingUpdate"
+      ],
+      [
+        "updateStrategy",
+        "type"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "zooServers"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "auth",
+        "client",
+        "clientUser"
+      ],
+      [
+        "auth",
+        "client",
+        "enabled"
+      ],
+      [
+        "auth",
+        "client",
+        "serverUsers"
+      ],
+      [
+        "auth",
+        "quorum",
+        "enabled"
+      ],
+      [
+        "auth",
+        "quorum",
+        "learnerUser"
+      ],
+      [
+        "auth",
+        "quorum",
+        "serverUsers"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autopurge",
+        "purgeInterval"
+      ],
+      [
+        "autopurge",
+        "snapRetainCount"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configuration"
+      ],
+      [
+        "containerPorts",
+        "adminServer"
+      ],
+      [
+        "containerPorts",
+        "client"
+      ],
+      [
+        "containerPorts",
+        "election"
+      ],
+      [
+        "containerPorts",
+        "follower"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerPorts",
+        "tls"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "dataLogDir"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "dnsPolicy"
+      ],
+      [
+        "enableServiceLinks"
+      ],
+      [
+        "existingConfigmap"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "fourlwCommandsWhitelist"
+      ],
+      [
+        "global"
+      ],
+      [
+        "heapSize"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "initLimit"
+      ],
+      [
+        "jvmFlags"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "listenOnAllIPs"
+      ],
+      [
+        "logLevel"
+      ],
+      [
+        "maxClientCnxns"
+      ],
+      [
+        "maxSessionTimeout"
+      ],
+      [
+        "metrics",
+        "containerPort"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "metrics",
+        "service",
+        "type"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "minServerId"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataLogDir",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "dataLogDir",
+        "selector"
+      ],
+      [
+        "persistence",
+        "dataLogDir",
+        "size"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "labels"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "preAllocSize"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "rts",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "disableBaseClientPort"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "headless",
+        "publishNotReadyAddresses"
+      ],
+      [
+        "service",
+        "headless",
+        "servicenameOverride"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "client"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "tls"
+      ],
+      [
+        "service",
+        "ports",
+        "client"
+      ],
+      [
+        "service",
+        "ports",
+        "election"
+      ],
+      [
+        "service",
+        "ports",
+        "follower"
+      ],
+      [
+        "service",
+        "ports",
+        "tls"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "snapCount"
+      ],
+      [
+        "syncLimit"
+      ],
+      [
+        "tickTime"
+      ],
+      [
+        "tls",
+        "client",
+        "auth"
+      ],
+      [
+        "tls",
+        "client",
+        "autoGenerated"
+      ],
+      [
+        "tls",
+        "client",
+        "enabled"
+      ],
+      [
+        "tls",
+        "client",
+        "keystorePassword"
+      ],
+      [
+        "tls",
+        "client",
+        "keystorePath"
+      ],
+      [
+        "tls",
+        "client",
+        "passwordsSecretName"
+      ],
+      [
+        "tls",
+        "client",
+        "truststorePassword"
+      ],
+      [
+        "tls",
+        "client",
+        "truststorePath"
+      ],
+      [
+        "tls",
+        "quorum",
+        "auth"
+      ],
+      [
+        "tls",
+        "quorum",
+        "autoGenerated"
+      ],
+      [
+        "tls",
+        "quorum",
+        "enabled"
+      ],
+      [
+        "tls",
+        "quorum",
+        "keystorePassword"
+      ],
+      [
+        "tls",
+        "quorum",
+        "keystorePath"
+      ],
+      [
+        "tls",
+        "quorum",
+        "passwordsSecretName"
+      ],
+      [
+        "tls",
+        "quorum",
+        "truststorePassword"
+      ],
+      [
+        "tls",
+        "quorum",
+        "truststorePath"
+      ],
+      [
+        "tls",
+        "resources"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy",
+        "rollingUpdate"
+      ],
+      [
+        "updateStrategy",
+        "type"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "zooServers"
+      ]
+    ],
+    "present_count": 164,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-i3_bnawu/chart",
+  "seed": 0,
+  "attempts": 67,
+  "error": "Error: YAML parse error on zookeeper/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 39: did not find expected ',' or ']'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "namespaceOverride": "",
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/zookeeper",
+      "tag": "3.9.3-debian-12-r21",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [
+        [
+          {}
+        ]
+      ],
+      "debug": false
+    },
+    "auth": {
+      "client": {
+        "enabled": false,
+        "clientUser": "",
+        "clientPassword": "",
+        "serverUsers": "",
+        "serverPasswords": "",
+        "existingSecret": ""
+      },
+      "quorum": {
+        "enabled": false,
+        "learnerUser": "",
+        "learnerPassword": "",
+        "serverUsers": "",
+        "serverPasswords": "",
+        "existingSecret": ""
+      }
+    },
+    "tickTime": 2000,
+    "initLimit": 10,
+    "syncLimit": 5,
+    "preAllocSize": 65536,
+    "snapCount": 100000,
+    "maxClientCnxns": 60,
+    "maxSessionTimeout": 40000,
+    "heapSize": 1024,
+    "fourlwCommandsWhitelist": "srvr, mntr, ruok",
+    "minServerId": 1,
+    "listenOnAllIPs": false,
+    "zooServers": "",
+    "autopurge": {
+      "snapRetainCount": 10,
+      "purgeInterval": 1
+    },
+    "logLevel": "ERROR",
+    "jvmFlags": "",
+    "dataLogDir": "",
+    "configuration": "",
+    "existingConfigmap": "",
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "command": [
+      "/scripts/setup.sh"
+    ],
+    "args": [],
+    "replicaCount": 1,
+    "revisionHistoryLimit": 10,
+    "containerPorts": {
+      "client": 2181,
+      "tls": 3181,
+      "follower": 2888,
+      "election": 3888,
+      "adminServer": 8080,
+      "metrics": 9141
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1,
+      "probeCommandTimeout": 3
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1,
+      "probeCommandTimeout": 2
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 1,
+      "failureThreshold": 15,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "lifecycleHooks": {},
+    "resourcesPreset": "micro",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "topologySpreadConstraints": [],
+    "podManagementPolicy": "Parallel",
+    "priorityClassName": "",
+    "schedulerName": "",
+    "updateStrategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {}
+    },
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "enableServiceLinks": true,
+    "dnsPolicy": "",
+    "dnsConfig": {},
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "client": 2181,
+        "tls": 3181,
+        "follower": 2888,
+        "election": 3888
+      },
+      "nodePorts": {
+        "client": "",
+        "tls": ""
+      },
+      "disableBaseClientPort": false,
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "headless": {
+        "publishNotReadyAddresses": true,
+        "annotations": {},
+        "servicenameOverride": ""
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    },
+    "persistence": {
+      "enabled": true,
+      "existingClaim": "",
+      "storageClass": "",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "annotations": {},
+      "labels": {},
+      "selector": {},
+      "dataLogDir": {
+        "size": "8Gi",
+        "existingClaim": "",
+        "selector": {}
+      }
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 0
+      }
+    },
+    "metrics": {
+      "enabled": false,
+      "service": {
+        "type": "ClusterIP",
+        "port": 9141,
+        "annotations": {
+          "prometheus.io/scrape": "true",
+          "prometheus.io/port": "{{ .Values.metrics.service.port }}",
+          "prometheus.io/path": "/metrics"
+        }
+      },
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "interval": "",
+        "scrapeTimeout": "",
+        "additionalLabels": {},
+        "selector": {},
+        "relabelings": [],
+        "metricRelabelings": [],
+        "honorLabels": false,
+        "jobLabel": "",
+        "scheme": "",
+        "tlsConfig": {}
+      },
+      "prometheusRule": {
+        "enabled": false,
+        "namespace": "",
+        "additionalLabels": {},
+        "rules": []
+      }
+    },
+    "tls": {
+      "client": {
+        "enabled": false,
+        "auth": "none",
+        "autoGenerated": false,
+        "existingSecret": "",
+        "existingSecretKeystoreKey": "",
+        "existingSecretTruststoreKey": "",
+        "keystorePath": "/opt/bitnami/zookeeper/config/certs/client/zookeeper.keystore.jks",
+        "truststorePath": "/opt/bitnami/zookeeper/config/certs/client/zookeeper.truststore.jks",
+        "passwordsSecretName": "",
+        "passwordsSecretKeystoreKey": "",
+        "passwordsSecretTruststoreKey": "",
+        "keystorePassword": "",
+        "truststorePassword": ""
+      },
+      "quorum": {
+        "enabled": false,
+        "auth": "none",
+        "autoGenerated": false,
+        "existingSecret": "",
+        "existingSecretKeystoreKey": "",
+        "existingSecretTruststoreKey": "",
+        "keystorePath": "/opt/bitnami/zookeeper/config/certs/quorum/zookeeper.keystore.jks",
+        "truststorePath": "/opt/bitnami/zookeeper/config/certs/quorum/zookeeper.truststore.jks",
+        "passwordsSecretName": "",
+        "passwordsSecretKeystoreKey": "",
+        "passwordsSecretTruststoreKey": "",
+        "keystorePassword": "",
+        "truststorePassword": ""
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 50,
+    "unique_bundles": 18,
+    "duplicate_bundles": 32,
+    "validation_cache_hits": 0,
+    "validated_entries": 50
+  },
+  "phase": "$.image.pullSecrets",
+  "kind": "value-path",
+  "path": [
+    "image",
+    "pullSecrets"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zookeeper_1789325176/0000/paths/a4a0ea6ab697189bb963"
+}

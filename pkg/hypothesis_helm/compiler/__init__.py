@@ -1,3 +1,3 @@
 """
-Conservative proof-oriented compilation for exact output-equivalence pruning.
+Syntax trees, input analysis, and conservative Helm chart filtering passes.
 """

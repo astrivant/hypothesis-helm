@@ -1,0 +1,834 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "initContainers"
+    ],
+    [
+      "serviceMonitor",
+      "additionalLabels"
+    ],
+    [
+      "image"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "service",
+      "port"
+    ],
+    [
+      "imagePullSecrets"
+    ],
+    [
+      "updateStrategy"
+    ],
+    [
+      "deployment",
+      "annotations"
+    ],
+    [
+      "service",
+      "type"
+    ],
+    [
+      "serviceMonitor",
+      "relabelings"
+    ],
+    [
+      "additionalAnnotations"
+    ],
+    [
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "extraEnv"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "resources"
+    ],
+    [
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "honorLabels"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "extraEnv",
+      "*"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "nginxServer"
+    ],
+    [
+      "rbac",
+      "create"
+    ],
+    [
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "service",
+      "annotations"
+    ],
+    [
+      "namespaceOverride"
+    ],
+    [
+      "serviceMonitor",
+      "relabelings",
+      "*"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "serviceMonitor"
+    ],
+    [
+      "extraContainers"
+    ],
+    [
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "initContainers",
+      "*"
+    ],
+    [
+      "options"
+    ],
+    [
+      "extraContainers",
+      "*"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "additionalLabels"
+    ],
+    [
+      "serviceMonitor",
+      "path"
+    ],
+    [
+      "rbac"
+    ],
+    [
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "livenessProbe",
+      "httpGet"
+    ],
+    [
+      "serviceMonitor",
+      "targetLabels"
+    ],
+    [
+      "readinessProbe"
+    ],
+    [
+      "service",
+      "nodePort"
+    ],
+    [
+      "podAnnotations"
+    ],
+    [
+      "livenessProbe"
+    ],
+    [
+      "serviceMonitor",
+      "targetLabels",
+      "*"
+    ],
+    [
+      "replicaCount"
+    ],
+    [
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "fullnameOverride"
+    ],
+    [
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "readinessProbe",
+      "httpGet"
+    ],
+    [
+      "serviceMonitor",
+      "apiVersion"
+    ],
+    [
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "serviceAccount"
+    ],
+    [
+      "service"
+    ],
+    [
+      "nameOverride"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "deployment"
+    ],
+    [
+      "deployment",
+      "labels"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 3,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 3,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 4,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 2,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 6,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 8,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 9,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 10,
+      "message": "unresolved dot context: .Values.service.port"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 11,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 13,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 15,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 5,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 6,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 6,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 14,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 15,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 16,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 18,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 18,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 19,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 22,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Values.namespaceOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 32,
+      "message": "unresolved dot context: .Values.namespaceOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 34,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 41,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 42,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 42,
+      "message": "unresolved dot context: .Chart.Version"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 48,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 52,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 60,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 61,
+      "message": "unresolved dot context: .Release.Service"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 63,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 65,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 65,
+      "message": "unresolved dot context: .Values.image.tag"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 66,
+      "message": "unresolved dot context: .Values.additionalLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 67,
+      "message": "unresolved dot context: .Values.additionalLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 74,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 76,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 83,
+      "message": "unresolved dot context: .Values.additionalAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 84,
+      "message": "unresolved dot context: .Values.additionalAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 86,
+      "message": "unresolved dot context: .Values.deployment.annotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 87,
+      "message": "unresolved dot context: .Values.deployment.annotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 94,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 95,
+      "message": "unresolved dot context: .Values.additionalAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 96,
+      "message": "unresolved dot context: .Values.additionalAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 98,
+      "message": "unresolved dot context: .Values.podAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 99,
+      "message": "unresolved dot context: .Values.podAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 106,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 107,
+      "message": "unresolved dot context: .Values.additionalAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 108,
+      "message": "unresolved dot context: .Values.additionalAnnotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 110,
+      "message": "unresolved dot context: .Values.service.annotations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 111,
+      "message": "unresolved dot context: .Values.service.annotations"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/role.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/role.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/role.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "path": [
+        "options",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "options",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}

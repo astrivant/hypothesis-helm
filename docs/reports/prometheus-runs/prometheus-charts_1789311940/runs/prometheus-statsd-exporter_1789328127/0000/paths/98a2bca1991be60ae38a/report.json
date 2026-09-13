@@ -1,0 +1,603 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 62,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "lifecycle"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "additionalLabels"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "apiVersion"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "enabled"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "endpoint"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "interval"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "kind"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "namespace"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "path"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "endpoint"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "kind"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "statsd",
+        "cacheSize"
+      ],
+      [
+        "statsd",
+        "eventFlushInterval"
+      ],
+      [
+        "statsd",
+        "eventFlushThreshold"
+      ],
+      [
+        "statsd",
+        "eventQueueSize"
+      ],
+      [
+        "statsd",
+        "tcpPort"
+      ],
+      [
+        "statsd",
+        "udpPort"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "service",
+        "annotations"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "targetMemoryUtilizationPercentage"
+      ],
+      [
+        "deploymentRevisionHistoryLimit"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "lifecycle"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "additionalLabels"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "apiVersion"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "enabled"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "endpoint"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "interval"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "kind"
+      ],
+      [
+        "prometheus",
+        "monitor",
+        "namespace"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "path"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "endpoint"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "kind"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "statsd",
+        "cacheSize"
+      ],
+      [
+        "statsd",
+        "eventFlushInterval"
+      ],
+      [
+        "statsd",
+        "eventFlushThreshold"
+      ],
+      [
+        "statsd",
+        "eventQueueSize"
+      ],
+      [
+        "statsd",
+        "mappingConfig"
+      ],
+      [
+        "statsd",
+        "mappingConfigMapKey"
+      ],
+      [
+        "statsd",
+        "mappingConfigMapName"
+      ],
+      [
+        "statsd",
+        "tcpPort"
+      ],
+      [
+        "statsd",
+        "udpPort"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ]
+    ],
+    "present_count": 57,
+    "varied_count": 1,
+    "varied_fraction": 0.016129032258064516,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ifhpbkb5/chart",
+  "seed": 0,
+  "attempts": 9,
+  "error": "Error: YAML parse error on prometheus-statsd-exporter/templates/service.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "replicaCount": 1,
+    "image": {
+      "repository": "prom/statsd-exporter",
+      "pullPolicy": "IfNotPresent",
+      "tag": ""
+    },
+    "imagePullSecrets": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "extraEnv": {},
+    "extraArgs": [],
+    "statsd": {
+      "udpPort": 9125,
+      "tcpPort": 9125,
+      "cacheSize": 1000,
+      "eventQueueSize": 10000,
+      "eventFlushThreshold": 1000,
+      "eventFlushInterval": "200ms"
+    },
+    "livenessProbe": {
+      "httpGet": {
+        "path": "/health",
+        "port": "http"
+      }
+    },
+    "readinessProbe": {
+      "httpGet": {
+        "path": "/health",
+        "port": "http"
+      }
+    },
+    "prometheus": {
+      "monitor": {
+        "enabled": false,
+        "additionalLabels": {},
+        "namespace": "",
+        "interval": "30s",
+        "apiVersion": "",
+        "kind": "",
+        "endpoint": "/metrics"
+      }
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "interval": "30s",
+      "scrapeTimeout": "10s",
+      "namespace": "monitoring",
+      "honorLabels": false,
+      "additionalLabels": {},
+      "kind": "",
+      "metricRelabelings": [],
+      "relabelings": [],
+      "apiVersion": "",
+      "endpoint": "/metrics"
+    },
+    "serviceAccount": {
+      "create": true,
+      "annotations": {},
+      "name": ""
+    },
+    "podAnnotations": {},
+    "podLabels": {},
+    "podSecurityContext": {},
+    "securityContext": {},
+    "service": {
+      "type": "ClusterIP",
+      "port": 9102,
+      "path": "/metrics",
+      "annotations": {
+        "": []
+      }
+    },
+    "ingress": {
+      "enabled": false,
+      "className": "",
+      "annotations": {},
+      "hosts": [
+        {
+          "host": "chart-example.local",
+          "paths": [
+            {
+              "path": "/",
+              "pathType": "ImplementationSpecific"
+            }
+          ]
+        }
+      ],
+      "tls": []
+    },
+    "resources": {},
+    "autoscaling": {
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 100,
+      "targetCPUUtilizationPercentage": 80
+    },
+    "lifecycle": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "topologySpreadConstraints": []
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 3,
+    "unique_bundles": 3,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 3
+  },
+  "phase": "$.service.annotations",
+  "kind": "value-path",
+  "path": [
+    "service",
+    "annotations"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-statsd-exporter_1789328127/0000/paths/98a2bca1991be60ae38a"
+}

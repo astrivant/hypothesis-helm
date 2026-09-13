@@ -13,7 +13,7 @@ from hypothesis_helm.benchmarking.benchmark_expansion import compare
 from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key
 from hypothesis_helm.benchmarking.structures import configmap
 from hypothesis_helm.charts.runner import Chart, check_chart
-from hypothesis_helm.compiler.expansion import FailureExpansion
+from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
 

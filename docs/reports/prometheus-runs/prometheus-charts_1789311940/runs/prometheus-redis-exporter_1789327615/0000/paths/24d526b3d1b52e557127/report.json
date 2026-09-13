@@ -1,0 +1,729 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 75,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "auth",
+        "enabled"
+      ],
+      [
+        "auth",
+        "redisPasswordFile",
+        "mountPath"
+      ],
+      [
+        "auth",
+        "redisPasswordFile",
+        "secret",
+        "key"
+      ],
+      [
+        "auth",
+        "redisPasswordFile",
+        "secret",
+        "name"
+      ],
+      [
+        "command"
+      ],
+      [
+        "env"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "pullSecrets"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "labels"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "ingressFrom"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "redisAddress"
+      ],
+      [
+        "redisAddressConfig",
+        "enabled"
+      ],
+      [
+        "redisAddressConfig",
+        "isSecret"
+      ],
+      [
+        "redisAddressConfig",
+        "source",
+        "key"
+      ],
+      [
+        "redisAddressConfig",
+        "source",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "caCertFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "caCertFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "clientCertFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "clientCertFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "clientKeyFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "clientKeyFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "enabled"
+      ],
+      [
+        "redisTlsConfig",
+        "mountPath"
+      ],
+      [
+        "redisTlsConfig",
+        "serverCertFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "serverCertFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "serverKeyFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "serverKeyFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "skipTlsVerification"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "script",
+        "configmap"
+      ],
+      [
+        "script",
+        "keyname"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalMetricsRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalRelabeling"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget"
+      ],
+      [
+        "serviceMonitor",
+        "targets"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "script",
+        "configmap"
+      ],
+      [
+        "script",
+        "keyname"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "auth",
+        "enabled"
+      ],
+      [
+        "auth",
+        "redisPasswordFile",
+        "mountPath"
+      ],
+      [
+        "auth",
+        "redisPasswordFile",
+        "secret",
+        "key"
+      ],
+      [
+        "auth",
+        "redisPasswordFile",
+        "secret",
+        "name"
+      ],
+      [
+        "command"
+      ],
+      [
+        "env"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "pullSecrets"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "labels"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "ingressFrom"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "redisAddress"
+      ],
+      [
+        "redisAddressConfig",
+        "enabled"
+      ],
+      [
+        "redisAddressConfig",
+        "isSecret"
+      ],
+      [
+        "redisAddressConfig",
+        "source",
+        "key"
+      ],
+      [
+        "redisAddressConfig",
+        "source",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "caCertFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "caCertFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "clientCertFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "clientCertFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "clientKeyFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "clientKeyFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "enabled"
+      ],
+      [
+        "redisTlsConfig",
+        "mountPath"
+      ],
+      [
+        "redisTlsConfig",
+        "serverCertFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "serverCertFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "serverKeyFile",
+        "secret",
+        "key"
+      ],
+      [
+        "redisTlsConfig",
+        "serverKeyFile",
+        "secret",
+        "name"
+      ],
+      [
+        "redisTlsConfig",
+        "skipTlsVerification"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "portName"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalMetricsRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalRelabeling"
+      ],
+      [
+        "serviceMonitor",
+        "apiVersion"
+      ],
+      [
+        "serviceMonitor",
+        "bearerTokenFile"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "multipleTarget"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "targets"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 61,
+    "varied_count": 2,
+    "varied_fraction": 0.02666666666666667,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-6_y_r97v/chart",
+  "seed": 0,
+  "attempts": 226,
+  "error": "Error: YAML parse error on prometheus-redis-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 59: did not find expected ',' or ']'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "rbac": {
+      "create": true
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": null
+    },
+    "replicaCount": 1,
+    "image": {
+      "repository": "oliver006/redis_exporter",
+      "pullPolicy": "IfNotPresent",
+      "tag": "",
+      "pullSecrets": []
+    },
+    "command": [],
+    "extraArgs": {},
+    "customLabels": {},
+    "securityContext": {},
+    "env": {},
+    "service": {
+      "type": "ClusterIP",
+      "port": 9121,
+      "portName": "redis-exporter",
+      "annotations": {},
+      "labels": {}
+    },
+    "resources": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "priorityClassName": "",
+    "extraManifests": [],
+    "redisAddress": "redis://myredis:6379",
+    "annotations": {},
+    "labels": {},
+    "redisAddressConfig": {
+      "enabled": false,
+      "isSecret": false,
+      "source": {
+        "name": "",
+        "key": ""
+      }
+    },
+    "redisTlsConfig": {
+      "enabled": false,
+      "skipTlsVerification": false,
+      "mountPath": "/tls",
+      "caCertFile": {
+        "secret": {
+          "name": "",
+          "key": ""
+        }
+      },
+      "clientKeyFile": {
+        "secret": {
+          "name": "",
+          "key": ""
+        }
+      },
+      "clientCertFile": {
+        "secret": {
+          "name": "",
+          "key": ""
+        }
+      },
+      "serverKeyFile": {
+        "secret": {
+          "name": "",
+          "key": ""
+        }
+      },
+      "serverCertFile": {
+        "secret": {
+          "name": "",
+          "key": ""
+        }
+      }
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "apiVersion": "monitoring.coreos.com/v1",
+      "multipleTarget": false,
+      "targets": [],
+      "additionalMetricsRelabels": {},
+      "additionalRelabeling": []
+    },
+    "prometheusRule": {
+      "enabled": false,
+      "additionalLabels": {},
+      "namespace": "",
+      "rules": []
+    },
+    "auth": {
+      "enabled": false,
+      "secret": {
+        "name": "",
+        "key": ""
+      },
+      "redisPassword": "",
+      "redisUser": "",
+      "redisPasswordFile": {
+        "mountPath": "/auth",
+        "secret": {
+          "name": "",
+          "key": ""
+        }
+      }
+    },
+    "networkPolicy": {
+      "enabled": false,
+      "ingressFrom": []
+    },
+    "podSecurityContext": {},
+    "script": {
+      "configmap": [
+        null,
+        []
+      ]
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 187,
+    "unique_bundles": 21,
+    "duplicate_bundles": 166,
+    "validation_cache_hits": 166,
+    "validated_entries": 21
+  },
+  "phase": "$.script",
+  "kind": "value-path",
+  "path": [
+    "script"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-redis-exporter_1789327615/0000/paths/24d526b3d1b52e557127"
+}

@@ -1,0 +1,282 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 32,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "configReloaderSidecar",
+        "image",
+        "registry"
+      ],
+      [
+        "configReloaderSidecar",
+        "image",
+        "repository"
+      ],
+      [
+        "configReloaderSidecar",
+        "image",
+        "tag"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "registry"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "log",
+        "format"
+      ],
+      [
+        "log",
+        "level"
+      ],
+      [
+        "modules"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "endpointsCommonConfig"
+      ],
+      [
+        "serviceMonitor",
+        "endpointsConfig"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitorExporterItself",
+        "annotations"
+      ],
+      [
+        "serviceMonitorExporterItself",
+        "enabled"
+      ],
+      [
+        "serviceMonitorExporterItself",
+        "labels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "modules"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "configMapFile"
+      ],
+      [
+        "configReloaderSidecar",
+        "enable"
+      ],
+      [
+        "configReloaderSidecar",
+        "image",
+        "registry"
+      ],
+      [
+        "configReloaderSidecar",
+        "image",
+        "repository"
+      ],
+      [
+        "configReloaderSidecar",
+        "image",
+        "tag"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "registry"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "log",
+        "format"
+      ],
+      [
+        "log",
+        "level"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "endpointsCommonConfig"
+      ],
+      [
+        "serviceMonitor",
+        "endpointsConfig"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitorExporterItself",
+        "annotations"
+      ],
+      [
+        "serviceMonitorExporterItself",
+        "enabled"
+      ],
+      [
+        "serviceMonitorExporterItself",
+        "labels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 30,
+    "varied_count": 1,
+    "varied_fraction": 0.03125,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 100,
+    "unique_bundles": 100,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 100
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-pl46oe96/chart",
+  "seed": 0,
+  "attempts": 100,
+  "time_limit_seconds": 268.0385145000182,
+  "execution_seconds": 10.283485792111605,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.modules[*].metrics[*].address",
+  "kind": "value-path",
+  "path": [
+    "modules",
+    "*",
+    "metrics",
+    "*",
+    "address"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-modbus-exporter_1789326675/0000/paths/71292769a1273d90c951"
+}

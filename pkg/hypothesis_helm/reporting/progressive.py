@@ -12,8 +12,8 @@ from pathlib import Path
 
 from rich.console import Console
 
-from hypothesis_helm.compiler.ir import specialize
-from hypothesis_helm.compiler.pruning import Pruner, safe_values
+from hypothesis_helm.compiler.asts.templates import specialize
+from hypothesis_helm.compiler.passes.pruning import Pruner, safe_values
 from hypothesis_helm.schemas.combinations import InteractionPlan, trim_values
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
 from hypothesis_helm.schemas.finite import NonFiniteSchema

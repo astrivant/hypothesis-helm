@@ -1,0 +1,226 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 31,
+    "present_fields": [
+      [
+        "configSecret",
+        "enabled"
+      ],
+      [
+        "modules"
+      ],
+      [
+        "resources",
+        "limits",
+        "cpu"
+      ],
+      [
+        "resources",
+        "limits",
+        "memory"
+      ],
+      [
+        "resources",
+        "requests",
+        "cpu"
+      ],
+      [
+        "resources",
+        "requests",
+        "memory"
+      ],
+      [
+        "scrapeConfig",
+        "enabled"
+      ],
+      [
+        "scrapeConfig",
+        "mode"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeTimeout"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "scrapeConfig",
+        "scrapeTimeout"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "configSecret",
+        "enabled"
+      ],
+      [
+        "modules"
+      ],
+      [
+        "resources",
+        "limits",
+        "cpu"
+      ],
+      [
+        "resources",
+        "limits",
+        "memory"
+      ],
+      [
+        "resources",
+        "requests",
+        "cpu"
+      ],
+      [
+        "resources",
+        "requests",
+        "memory"
+      ],
+      [
+        "scrapeConfig",
+        "enabled"
+      ],
+      [
+        "scrapeConfig",
+        "fileSDConfigs"
+      ],
+      [
+        "scrapeConfig",
+        "jobName"
+      ],
+      [
+        "scrapeConfig",
+        "labels"
+      ],
+      [
+        "scrapeConfig",
+        "metricRelabelings"
+      ],
+      [
+        "scrapeConfig",
+        "metricsPath"
+      ],
+      [
+        "scrapeConfig",
+        "mode"
+      ],
+      [
+        "scrapeConfig",
+        "modules"
+      ],
+      [
+        "scrapeConfig",
+        "namespace"
+      ],
+      [
+        "scrapeConfig",
+        "relabelings"
+      ],
+      [
+        "scrapeConfig",
+        "scheme"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeInterval"
+      ],
+      [
+        "scrapeConfig",
+        "staticConfigs"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ]
+    ],
+    "present_count": 13,
+    "varied_count": 1,
+    "varied_fraction": 0.03225806451612903,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 100,
+    "unique_bundles": 1,
+    "duplicate_bundles": 99,
+    "validation_cache_hits": 99,
+    "validated_entries": 1
+  },
+  "status": "passed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-vqw58un5/chart",
+  "seed": 0,
+  "attempts": 100,
+  "time_limit_seconds": 87.12144375033677,
+  "execution_seconds": 10.947412916924804,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.scrapeConfig.scrapeTimeout",
+  "kind": "value-path",
+  "path": [
+    "scrapeConfig",
+    "scrapeTimeout"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-ipmi-exporter_1789326374/0000/paths/3373c4c8446184763234"
+}

@@ -562,7 +562,7 @@ def generate_tests(
     if max_examples < 1:
         raise ValueError("max_examples must be positive")
     model = coalesce(chart)
-    from hypothesis_helm.compiler.inputs import InputInventory
+    from hypothesis_helm.compiler.passes.inputs import InputInventory
 
     input_inventory = InputInventory.build(chart)
     output = Path(output).resolve()

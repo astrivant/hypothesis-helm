@@ -85,7 +85,7 @@ def test_shared_error_groups(tmp_path: Path, packaged: bool) -> None:
         packaged (bool): Resolve the second parent's dependency from an aliased archive.
 
     Returns:
-        None: One displayed error retains all affected charts and phase artifacts.
+        None: One diagnostic identity is displayed once per chart with every phase occurrence.
     """
     first = tmp_path / "first"
     second = tmp_path / "second"
@@ -131,7 +131,7 @@ def test_shared_error_groups(tmp_path: Path, packaged: bool) -> None:
     deduplicate_errors(report)
     assert report["error_summary"] == {"unique_errors": 1, "occurrences": 5, "duplicates": 4}
     md, pdf = write_reports(report, tmp_path / "summary")
-    assert md.read_text().count("port must exceed 100") == 1
+    assert md.read_text().count("port must exceed 100") == 3
     assert pdf.read_bytes().startswith(b"%PDF-")
     groups = report["error_groups"]
     assert isinstance(groups, list)
@@ -230,7 +230,7 @@ def test_scan_dependency_deduplication(tmp_path: Path, monkeypatch: pytest.Monke
     assert calls == ["first", "second"]
     assert report["counts"] == {"failed": 2, "skipped-library": 2}
     assert report["error_summary"] == {"unique_errors": 1, "occurrences": 2, "duplicates": 1}
-    assert (tmp_path / "summary.md").read_text().count("port must exceed 100") == 1
+    assert (tmp_path / "summary.md").read_text().count("port must exceed 100") == 2
     saved = next((tmp_path / "artifacts").glob("*/scan.json"))
     assert json.loads(saved.read_text()) == report
 
@@ -295,8 +295,9 @@ def test_report_explains_tooling_failure_and_shows_input(tmp_path: Path) -> None
     text = md.read_text()
     assert "TaggedScalar" not in text
     assert "test tool could not convert a YAML-tagged value" in text
-    assert "Reproducing values (known-inputs)" in text
-    assert '"extraEnvVarsCM": "="' in text
+    assert "Recorded input (used together)" in text
+    assert "Phase: known-inputs" in text
+    assert '$.extraEnvVarsCM = "="' in text
     assert phase["error"] == error
     assert phase["status"] == "failed"
 

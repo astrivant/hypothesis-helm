@@ -1,0 +1,180 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.annotations
+[INFO] Coalescing path $.containerSecurityContext
+[INFO] Coalescing path $.extraArgs
+[INFO] Coalescing path $.extraContainers
+[INFO] Coalescing path $.extraEnv
+[INFO] Coalescing path $.extraVolumeMounts
+[INFO] Coalescing path $.extraVolumes
+[INFO] Coalescing path $.livenessProbe
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.priorityClassName
+[INFO] Coalescing path $.readinessProbe
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.restartPolicy
+[INFO] Coalescing path $.securityContext
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.extraArgs[*]
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.pullSecrets
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.prometheusRule.additionalLabels
+[INFO] Coalescing path $.prometheusRule.enabled
+[INFO] Coalescing path $.prometheusRule.namespace
+[INFO] Coalescing path $.prometheusRule.rules
+[INFO] Coalescing path $.secret.labels
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.httpPort
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.serviceMonitor.additionalLabels
+[INFO] Coalescing path $.serviceMonitor.enabled
+[INFO] Coalescing path $.serviceMonitor.honorLabels
+[INFO] Coalescing path $.serviceMonitor.honorTimestamps
+[INFO] Coalescing path $.serviceMonitor.interval
+[INFO] Coalescing path $.serviceMonitor.metricRelabelings
+[INFO] Coalescing path $.serviceMonitor.namespace
+[INFO] Coalescing path $.serviceMonitor.relabelings
+[INFO] Coalescing path $.serviceMonitor.scrapeClass
+[INFO] Coalescing path $.serviceMonitor.scrapeTimeout
+[INFO] Coalescing path $.stackdriver.backoffJitter
+[INFO] Coalescing path $.stackdriver.dropDelegatedProjects
+[INFO] Coalescing path $.stackdriver.httpTimeout
+[INFO] Coalescing path $.stackdriver.maxBackoff
+[INFO] Coalescing path $.stackdriver.maxRetries
+[INFO] Coalescing path $.stackdriver.projectFilters
+[INFO] Coalescing path $.stackdriver.projectId
+[INFO] Coalescing path $.stackdriver.projectIds
+[INFO] Coalescing path $.stackdriver.retryStatuses
+[INFO] Coalescing path $.stackdriver.serviceAccountKey
+[INFO] Coalescing path $.stackdriver.serviceAccountSecret
+[INFO] Coalescing path $.stackdriver.serviceAccountSecretKey
+[INFO] Coalescing path $.stackdriver.universeDomain
+[INFO] Coalescing path $.web.listenAddress
+[INFO] Coalescing path $.web.path
+[INFO] Coalescing path $.web.stackdriverTelemetryPath
+[INFO] Coalescing path $.web.telemetryPath
+[INFO] Coalescing path $.image.pullSecrets[*]
+[INFO] Coalescing path $.stackdriver.metrics.aggregateDeltas
+[INFO] Coalescing path $.stackdriver.metrics.aggregateDeltasTTL
+[INFO] Coalescing path $.stackdriver.metrics.descriptorCacheTTL
+[INFO] Coalescing path $.stackdriver.metrics.filters
+[INFO] Coalescing path $.stackdriver.metrics.ingestDelay
+[INFO] Coalescing path $.stackdriver.metrics.interval
+[INFO] Coalescing path $.stackdriver.metrics.offset
+[INFO] Coalescing path $.stackdriver.metrics.prefixes
+[INFO] Coalescing path $.stackdriver.projectIds[*]
+[INFO] Coalescing path $.stackdriver.metrics.filters[*]
+[INFO] Coalescing path $.stackdriver.metrics.prefixes[*]
+[INFO] Discovered 103 unique value paths; random traversal, seed 0
+[INFO] Testing path $.stackdriver.metrics.filters (1/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 65 observed, 52 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.serviceMonitor.additionalLabels (2/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.customLabels (3/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.image (4/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 36 observed, 29 unique, 7 duplicate bundles; 7 successful validations reused
+[INFO] Testing path $.readinessProbe.httpGet.path (5/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.image.pullSecrets (6/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 37 observed, 15 unique, 22 duplicate bundles; 22 successful validations reused
+[INFO] Testing path $.nodeSelector (7/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.securityContext (8/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.service.httpPort (9/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.service.type (10/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.prometheusRule (11/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 38 observed, 14 unique, 24 duplicate bundles; 24 successful validations reused
+[INFO] Testing path $.stackdriver.dropDelegatedProjects (12/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.relabelings (13/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.livenessProbe.initialDelaySeconds (14/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.extraEnv (15/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.prometheusRule.additionalLabels (16/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.serviceAccount.annotations (17/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.stackdriver.projectFilters (18/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 18 observed, 16 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.image.repository (19/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 76 observed, 76 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.stackdriver.backoffJitter (20/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 22 observed, 19 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.resources (21/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.prometheusRule.rules[*] (22/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.stackdriver.projectIds[*] (23/103)
+[INFO] Compiler input baseline: 66 statically named fields
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 42 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 127 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+[INFO] Render hashes (run-local): 127 observed, 93 unique, 34 duplicate bundles; 34 successful validations reused
+[INFO] Testing path $.readinessProbe.timeoutSeconds (24/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.namespace (25/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.tolerations[*] (26/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.serviceMonitor.honorLabels (27/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 1 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.tolerations (28/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.extraEnv[*] (29/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 11 successful validations reused
+[INFO] Testing path $.livenessProbe.httpGet.path (30/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.web (31/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 18 observed, 15 unique, 3 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.stackdriver.universeDomain (32/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Render hashes (run-local): 22 observed, 20 unique, 2 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.stackdriver.retryStatuses (33/103)
+[INFO] Compiler input baseline: 66 statically named fields
+[INFO] Execution stopped at the 9.58096s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 89 observed, 89 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.23s; dependency preparation 0.05s; 0 charts remain

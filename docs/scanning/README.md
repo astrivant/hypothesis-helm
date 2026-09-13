@@ -182,8 +182,57 @@ JSON statistics, lint/dependency logs, and failing values go under
 `reports/hypothesis-helm/` for local `test` and `reports/scans/` for remote `scan`;
 override that parent with `--artifact-dir`.
 
-Repeated errors are grouped automatically across charts and dependencies. Reports
-show each diagnostic once, with links to every affected chart and phase. Dependency
+Reports group failures by Helm chart. Each diagnostic appears once per chart,
+followed by up to two failing examples, with up to six paths and values per example.
+New runs show overrides that differ from the chart defaults, including dependent
+fields. Older path-based results show the selected fields and link to the full context.
+Long values and diagnostics are shortened explicitly. These previews do not establish
+an independent or minimal cause. Complete inputs, diagnostics, and additional cases
+remain in JSON and linked artifacts; the Markdown and PDF are brief summaries.
+Missing reproducing values are reported explicitly.
+
+New failure artifacts include `changes.json`: DeepDiff comparisons of effective
+values and parsed manifests against the defaults, plus a replayable record of the
+exact overrides. Summaries show previous values and up to six manifest changes.
+Document order, list order, and scalar types remain significant. A template error
+or invalid YAML may prevent a manifest comparison; the JSON records that limitation.
+Comparisons use observed renders and do not run extra Helm commands.
+
+Reconstruct the failing overrides, including explicit `null` deletions:
+
+```bash
+helm hypothesis replay-changes reports/example/changes.json --output values-replayed.json
+```
+
+Use `--section values --baseline reports/example/values-baseline.json` to reconstruct
+effective values, or `--section manifests --baseline reports/example/manifests-baseline.json`
+for parsed output. Effective values describe the merged input; use the default
+`overrides` section to reproduce a Helm invocation, since omitted keys inherit chart defaults.
+Replay verifies the complete baseline and result checksums before writing output.
+Records use JSON, with a fixed set of scalar and container types, rather than pickle.
+If a field delta cannot reproduce the exact JSON, the record explicitly stores a
+whole-document replacement. This handles signed zero and unusual quoted keys.
+These comparisons describe observed changes; they do not establish causality or
+authorize equivalence pruning. Existing render hashes and compiler proofs still govern reuse.
+
+`--filter` also recognizes supported explicit configuration rejections in templates.
+Reports list their requirements and related values separately from manifest errors.
+Counters distinguish excluded candidates, adjusted candidates, and real Helm
+verification renders; exclusions never count as passing tests. A property with no
+accepted generated inputs is `configuration-rejected`, not a pass. Unknown guards
+remain testable. Automatic exclusions apply to inferred inputs; rejections of
+inputs admitted by an authored values schema remain visible failures, with their
+recovered requirements. See [compiler passes](../architecture/README.md#syntax-trees-and-compiler-passes).
+The first two distinct witnesses for each recognized requirement are checked with
+Helm. If Helm accepts one or returns a different error, that requirement is disabled
+for automatic exclusion. Later exclusions use the supported compiler analysis;
+the witness checks are supporting evidence, not a proof about all inputs.
+
+Published Bitnami and Prometheus reports use absolute GitHub links targeting `main`.
+PDF links are blue, underlined, and clickable, including links within paragraphs.
+Their destinations become available when the reports and retained artifacts are on `main`.
+
+Repeated errors share diagnostic IDs across charts and dependencies. Dependency
 template errors match by chart name, version, template contents, and terminal
 diagnostic; unresolved sources use exact diagnostic matching. Different versions
 and messages remain separate. JSON includes `error_groups`, `error_summary`, and

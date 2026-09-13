@@ -1,0 +1,534 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 58,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "enabled"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilies"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilyPolicy"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "snmpNotifier",
+        "extraArgs"
+      ],
+      [
+        "snmpNotifier",
+        "snmpCommunity"
+      ],
+      [
+        "snmpNotifier",
+        "snmpDestinations"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "snmpNotifier",
+        "snmpCommunity"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "targetMemoryUtilizationPercentage"
+      ],
+      [
+        "extraConfigmapMounts"
+      ],
+      [
+        "extraSecretMounts"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "enabled"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilies"
+      ],
+      [
+        "service",
+        "ipDualStack",
+        "ipFamilyPolicy"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ],
+      [
+        "snmpNotifier",
+        "extraArgs"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationPassword"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationPasswordSecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationPasswordSecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationUsername"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationUsernameSecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpAuthenticationUsernameSecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "snmpCommunitySecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpCommunitySecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "snmpDestinations"
+      ],
+      [
+        "snmpNotifier",
+        "snmpPrivatePassword"
+      ],
+      [
+        "snmpNotifier",
+        "snmpPrivatePasswordSecret",
+        "key"
+      ],
+      [
+        "snmpNotifier",
+        "snmpPrivatePasswordSecret",
+        "name"
+      ],
+      [
+        "snmpNotifier",
+        "trapTemplates",
+        "description"
+      ],
+      [
+        "snmpNotifier",
+        "trapTemplates",
+        "userObjects"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 41,
+    "varied_count": 1,
+    "varied_fraction": 0.017241379310344827,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-38p03yij/chart",
+  "seed": 0,
+  "attempts": 10,
+  "error": "Error: alertmanager-snmp-notifier/templates/secrets.yaml:18:53\n  executing \"alertmanager-snmp-notifier/templates/secrets.yaml\" at <b64enc>:\n    wrong type for value; expected string; got []interface {}\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "image": {
+      "repository": "maxwo/snmp-notifier",
+      "pullPolicy": "IfNotPresent",
+      "tag": ""
+    },
+    "imagePullSecrets": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "snmpNotifier": {
+      "extraArgs": [],
+      "snmpDestinations": [
+        "snmp-server:162"
+      ],
+      "trapTemplates": {},
+      "snmpCommunity": [
+        null
+      ]
+    },
+    "serviceAccount": {
+      "create": true,
+      "annotations": {},
+      "name": ""
+    },
+    "podAnnotations": {},
+    "podSecurityContext": {},
+    "replicaCount": 1,
+    "securityContext": {},
+    "namespaceOverride": "",
+    "service": {
+      "type": "ClusterIP",
+      "port": 9464,
+      "ipDualStack": {
+        "enabled": false,
+        "ipFamilies": [
+          "IPv6",
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "PreferDualStack"
+      }
+    },
+    "ingress": {
+      "enabled": false,
+      "className": "",
+      "annotations": {},
+      "hosts": [
+        {
+          "host": "snmp-notifier.local",
+          "paths": [
+            {
+              "path": "/",
+              "pathType": "ImplementationSpecific"
+            }
+          ]
+        }
+      ],
+      "tls": []
+    },
+    "route": {
+      "main": {
+        "enabled": false,
+        "apiVersion": "",
+        "kind": "",
+        "name": "",
+        "annotations": {},
+        "labels": {},
+        "parentRefs": [],
+        "hostnames": [],
+        "additionalRules": [],
+        "filters": [],
+        "matches": [
+          {
+            "path": {
+              "type": "PathPrefix",
+              "value": "/"
+            }
+          }
+        ],
+        "httpsRedirect": false
+      }
+    },
+    "resources": {},
+    "autoscaling": {
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 100,
+      "targetCPUUtilizationPercentage": 80
+    },
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "monitoring",
+      "interval": "30s",
+      "telemetryPath": "/metrics",
+      "labels": {},
+      "timeout": "10s",
+      "targetLabels": [],
+      "metricRelabelings": [],
+      "relabelings": []
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 5,
+    "unique_bundles": 1,
+    "duplicate_bundles": 4,
+    "validation_cache_hits": 4,
+    "validated_entries": 1
+  },
+  "phase": "$.snmpNotifier.snmpCommunity",
+  "kind": "value-path",
+  "path": [
+    "snmpNotifier",
+    "snmpCommunity"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/alertmanager-snmp-notifier_1789325516/0000/paths/b739e43dd14f4d2948d2"
+}

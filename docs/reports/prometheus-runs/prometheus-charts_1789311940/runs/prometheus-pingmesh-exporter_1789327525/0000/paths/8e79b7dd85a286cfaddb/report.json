@@ -1,0 +1,993 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 78,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "config"
+      ],
+      [
+        "configExistingSecretName"
+      ],
+      [
+        "containerPort"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "dnsPolicy"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraConfigmapMounts"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraInitContainers"
+      ],
+      [
+        "extraSecretMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "pullSecrets"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "kind"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "networkPolicy",
+        "allowMonitoringNamespace"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pinglistConfig"
+      ],
+      [
+        "pod",
+        "labels"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicas"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "restartPolicy"
+      ],
+      [
+        "route"
+      ],
+      [
+        "secretConfig"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "ipFamilies"
+      ],
+      [
+        "service",
+        "ipFamilyPolicy"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalMetricsRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalRelabeling"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "module"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "additionalRelabeling"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targets"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "strategy"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "pullSecrets"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "serviceMonitor",
+        "bearerTokenFile"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "config"
+      ],
+      [
+        "configExistingSecretName"
+      ],
+      [
+        "configPath"
+      ],
+      [
+        "containerPort"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "dnsPolicy"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraConfigmapMounts"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraEnv"
+      ],
+      [
+        "extraInitContainers"
+      ],
+      [
+        "extraSecretMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "kind"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "networkPolicy",
+        "allowMonitoringNamespace"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pinglistConfig"
+      ],
+      [
+        "pod",
+        "labels"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicas"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "restartPolicy"
+      ],
+      [
+        "route"
+      ],
+      [
+        "secretConfig"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "externalIPs"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "ipFamilies"
+      ],
+      [
+        "service",
+        "ipFamilyPolicy"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalMetricsRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalRelabeling"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "module"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "additionalRelabeling"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "selfMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targets"
+      ],
+      [
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "strategy"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 74,
+    "varied_count": 6,
+    "varied_fraction": 0.07692307692307693,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-r473jj8o/chart",
+  "seed": 0,
+  "attempts": 56,
+  "error": "Error: YAML parse error on prometheus-pingmesh-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 74: did not find expected key\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "restartPolicy": "Always",
+    "kind": "DaemonSet",
+    "namespaceOverride": "default",
+    "podDisruptionBudget": {},
+    "automountServiceAccountToken": false,
+    "extraEnv": {},
+    "extraVolumes": [],
+    "extraVolumeMounts": null,
+    "extraInitContainers": [],
+    "extraContainers": [],
+    "hostNetwork": false,
+    "strategy": {
+      "rollingUpdate": {
+        "maxSurge": 1,
+        "maxUnavailable": 0
+      },
+      "type": "RollingUpdate"
+    },
+    "image": {
+      "pullPolicy": "\""
+    },
+    "podSecurityContext": {},
+    "securityContext": {
+      "runAsUser": 1000,
+      "runAsGroup": 1000,
+      "readOnlyRootFilesystem": true,
+      "runAsNonRoot": true,
+      "allowPrivilegeEscalation": true,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "privileged": true,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "livenessProbe": {
+      "httpGet": {
+        "path": "/health",
+        "port": "http"
+      }
+    },
+    "readinessProbe": {
+      "httpGet": {
+        "path": "/ready",
+        "port": "http"
+      }
+    },
+    "nodeSelector": {},
+    "tolerations": [
+      {
+        "operator": "Exists",
+        "effect": "NoSchedule"
+      },
+      {
+        "key": "CriticalAddonsOnly",
+        "operator": "Exists"
+      },
+      {
+        "operator": "Exists",
+        "effect": "NoExecute"
+      },
+      {
+        "key": "node.kubernetes.io/not-ready",
+        "operator": "Exists",
+        "effect": "NoExecute"
+      },
+      {
+        "key": "node.kubernetes.io/unreachable",
+        "operator": "Exists",
+        "effect": "NoExecute"
+      },
+      {
+        "key": "node.kubernetes.io/disk-pressure",
+        "operator": "Exists",
+        "effect": "NoSchedule"
+      },
+      {
+        "key": "node.kubernetes.io/memory-pressure",
+        "operator": "Exists",
+        "effect": "NoSchedule"
+      },
+      {
+        "key": "node.kubernetes.io/pid-pressure",
+        "operator": "Exists",
+        "effect": "NoSchedule"
+      },
+      {
+        "key": "node.kubernetes.io/unschedulable",
+        "operator": "Exists",
+        "effect": "NoSchedule"
+      }
+    ],
+    "affinity": {},
+    "configExistingSecretName": "",
+    "secretConfig": false,
+    "config": {
+      "modules": {
+        "http_2xx": {
+          "prober": "http",
+          "timeout": "10s",
+          "http": {
+            "valid_http_versions": [
+              "HTTP/1.1",
+              "HTTP/2"
+            ],
+            "valid_status_codes": [
+              200,
+              201,
+              204,
+              304,
+              312
+            ],
+            "method": "GET",
+            "preferred_ip_protocol": "ip4"
+          }
+        },
+        "http_2xx_ipv6": {
+          "prober": "http",
+          "timeout": "10s",
+          "http": {
+            "valid_http_versions": [
+              "HTTP/1.1",
+              "HTTP/2"
+            ],
+            "valid_status_codes": [
+              200,
+              201,
+              204,
+              304,
+              312
+            ],
+            "method": "GET",
+            "preferred_ip_protocol": "ip6"
+          }
+        },
+        "http_post_2xx": {
+          "prober": "http",
+          "timeout": "10s",
+          "http": {
+            "valid_http_versions": [
+              "HTTP/1.1",
+              "HTTP/2"
+            ],
+            "valid_status_codes": [
+              200,
+              201,
+              204,
+              304,
+              312
+            ],
+            "method": "POST",
+            "preferred_ip_protocol": "ip4"
+          }
+        },
+        "http_post_2xx_ipv6": {
+          "prober": "http",
+          "timeout": "10s",
+          "http": {
+            "valid_http_versions": [
+              "HTTP/1.1",
+              "HTTP/2"
+            ],
+            "valid_status_codes": [
+              200,
+              201,
+              204,
+              304,
+              312
+            ],
+            "method": "POST",
+            "preferred_ip_protocol": "ip6"
+          }
+        },
+        "tcp_connect": {
+          "prober": "tcp",
+          "timeout": "2s"
+        },
+        "ping": {
+          "prober": "icmp",
+          "timeout": "5s",
+          "icmp": {
+            "preferred_ip_protocol": "ip4"
+          }
+        },
+        "ping_ipv6": {
+          "prober": "icmp",
+          "timeout": "5s",
+          "icmp": {
+            "preferred_ip_protocol": "ip6"
+          }
+        },
+        "dns": {
+          "prober": "dns",
+          "dns": {
+            "transport_protocol": "tcp",
+            "preferred_ip_protocol": "ip4",
+            "query_name": "kubernetes.default.svc.cluster.local"
+          }
+        },
+        "dns_ipv6": {
+          "prober": "dns",
+          "dns": {
+            "transport_protocol": "tcp",
+            "preferred_ip_protocol": "ip6",
+            "query_name": "kubernetes.default.svc.cluster.local"
+          }
+        }
+      }
+    },
+    "pinglistConfig": {
+      "setting": {
+        "concurrent_limit": 20,
+        "interval": 60.0,
+        "delay": 200,
+        "timeout": 2.0,
+        "source_ip_addr": "0.0.0.0",
+        "ip_protocol": "ip6"
+      },
+      "mesh": {
+        "add-ping-public": {
+          "name": "ping-public-demo",
+          "type": "OtherIP",
+          "ips": [
+            "127.0.0.1",
+            "8.8.8.8",
+            "kubernetes.default.svc.cluster.local"
+          ]
+        }
+      }
+    },
+    "extraConfigmapMounts": [],
+    "extraSecretMounts": [],
+    "resources": {},
+    "priorityClassName": "",
+    "service": {
+      "annotations": {},
+      "labels": {},
+      "type": "ClusterIP",
+      "port": 9115,
+      "ipFamilies": [
+        "IPv4"
+      ],
+      "ipFamilyPolicy": "SingleStack",
+      "externalTrafficPolicy": ""
+    },
+    "containerPort": 9115,
+    "serviceAccount": {
+      "create": true,
+      "name": null,
+      "annotations": {}
+    },
+    "ingress": {
+      "enabled": false,
+      "className": "",
+      "labels": {},
+      "annotations": {},
+      "hosts": [
+        {
+          "host": "chart-example.local",
+          "paths": [
+            {
+              "path": "/",
+              "pathType": "ImplementationSpecific"
+            }
+          ]
+        }
+      ],
+      "tls": []
+    },
+    "podAnnotations": {},
+    "hostAliases": [],
+    "pod": {
+      "labels": {}
+    },
+    "extraArgs": [],
+    "replicas": 1,
+    "serviceMonitor": {
+      "selfMonitor": {
+        "enabled": false,
+        "additionalMetricsRelabels": {},
+        "additionalRelabeling": [],
+        "labels": {},
+        "interval": "30s",
+        "scrapeTimeout": "30s"
+      },
+      "enabled": false,
+      "defaults": {
+        "additionalMetricsRelabels": {},
+        "additionalRelabeling": [],
+        "labels": {},
+        "interval": "30s",
+        "scrapeTimeout": "30s",
+        "module": "dns"
+      },
+      "scheme": "http",
+      "tlsConfig": {},
+      "bearerTokenFile": null,
+      "targets": [
+        {
+          "name": "google.com",
+          "url": "https://www.google.com",
+          "labels": {},
+          "interval": "60s",
+          "scrapeTimeout": "60s",
+          "module": "http_2xx",
+          "additionalMetricsRelabels": {},
+          "additionalRelabeling": []
+        },
+        {
+          "name": "docker.io",
+          "url": "https://docker.io",
+          "labels": {},
+          "interval": "60s",
+          "scrapeTimeout": "60s",
+          "module": "http_2xx",
+          "additionalMetricsRelabels": {},
+          "additionalRelabeling": []
+        }
+      ]
+    },
+    "prometheusRule": {
+      "enabled": false,
+      "additionalLabels": {},
+      "namespace": "",
+      "rules": [
+        {
+          "alert": "web site usability",
+          "expr": "probe_success == 0",
+          "for": "1m",
+          "labels": {
+            "alertype": "domain",
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "web site usability\uff1a {{ $labels.instance }}"
+          }
+        }
+      ]
+    },
+    "networkPolicy": {
+      "enabled": false,
+      "allowMonitoringNamespace": false
+    },
+    "dnsPolicy": "ClusterFirst",
+    "dnsConfig": {
+      "options": [
+        {
+          "name": "single-request-reopen"
+        },
+        {
+          "name": "timeout",
+          "value": "1"
+        },
+        {
+          "name": "attempts",
+          "value": "3"
+        },
+        {
+          "name": "ndots",
+          "value": "3"
+        }
+      ]
+    },
+    "route": {
+      "main": {
+        "enabled": false,
+        "apiVersion": "",
+        "kind": "",
+        "name": "",
+        "annotations": {},
+        "labels": {},
+        "parentRefs": [],
+        "hostnames": [],
+        "additionalRules": [],
+        "filters": [],
+        "matches": [
+          {
+            "path": {
+              "type": "PathPrefix",
+              "value": "/"
+            }
+          }
+        ],
+        "httpsRedirect": false
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 36,
+    "unique_bundles": 29,
+    "duplicate_bundles": 7,
+    "validation_cache_hits": 7,
+    "validated_entries": 29
+  },
+  "phase": "$.image",
+  "kind": "value-path",
+  "path": [
+    "image"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-pingmesh-exporter_1789327525/0000/paths/8e79b7dd85a286cfaddb"
+}

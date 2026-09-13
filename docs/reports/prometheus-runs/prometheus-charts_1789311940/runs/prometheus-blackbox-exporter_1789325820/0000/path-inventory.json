@@ -1,0 +1,3044 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "configReloader",
+      "securityContext",
+      "runAsGroup"
+    ],
+    [
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "route",
+      "main",
+      "name"
+    ],
+    [
+      "configReloader",
+      "readinessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "image"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "controlledValues"
+    ],
+    [
+      "service",
+      "ipDualStack",
+      "ipFamilies",
+      "*"
+    ],
+    [
+      "podMonitoring",
+      "enabled"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "strategy",
+      "type"
+    ],
+    [
+      "verticalPodAutoscaler"
+    ],
+    [
+      "extraManifests"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "service",
+      "port"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "tlsConfig"
+    ],
+    [
+      "extraEnvFrom"
+    ],
+    [
+      "releaseLabel"
+    ],
+    [
+      "route",
+      "main",
+      "httpsRedirect"
+    ],
+    [
+      "securityContext"
+    ],
+    [
+      "configReloader",
+      "resources",
+      "limits",
+      "memory"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor"
+    ],
+    [
+      "config"
+    ],
+    [
+      "podSecurityContext"
+    ],
+    [
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "podMonitoring",
+      "selfMonitor"
+    ],
+    [
+      "route",
+      "main"
+    ],
+    [
+      "route",
+      "main",
+      "hostnames",
+      "*"
+    ],
+    [
+      "route",
+      "main",
+      "filters"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "updatePolicy"
+    ],
+    [
+      "configReloader",
+      "config",
+      "watchInterval"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "configReloader",
+      "resources",
+      "requests"
+    ],
+    [
+      "service",
+      "type"
+    ],
+    [
+      "hostNetwork"
+    ],
+    [
+      "securityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "securityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "prometheusRule"
+    ],
+    [
+      "serviceMonitor",
+      "bearerTokenFile"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "scheme"
+    ],
+    [
+      "extraEnv"
+    ],
+    [
+      "route",
+      "main",
+      "parentRefs",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "valid_http_versions"
+    ],
+    [
+      "prometheusRule",
+      "additionalLabels"
+    ],
+    [
+      "ingress",
+      "labels"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "additionalRelabeling",
+      "*"
+    ],
+    [
+      "automountServiceAccountToken"
+    ],
+    [
+      "route",
+      "main",
+      "parentRefs"
+    ],
+    [
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "host"
+    ],
+    [
+      "extraSecretMounts"
+    ],
+    [
+      "securityContext",
+      "capabilities"
+    ],
+    [
+      "secretAnnotations"
+    ],
+    [
+      "configReloader",
+      "securityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "configReloader",
+      "livenessProbe"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "resources"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*"
+    ],
+    [
+      "service",
+      "ipDualStack",
+      "ipFamilyPolicy"
+    ],
+    [
+      "revisionHistoryLimit"
+    ],
+    [
+      "podMonitoring",
+      "selfMonitor",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "ingress",
+      "tls",
+      "*"
+    ],
+    [
+      "strategy",
+      "rollingUpdate",
+      "maxUnavailable"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths",
+      "*",
+      "path"
+    ],
+    [
+      "configReloader",
+      "image"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "labels"
+    ],
+    [
+      "configReloader",
+      "readinessProbe"
+    ],
+    [
+      "configReloader",
+      "livenessProbe",
+      "httpGet",
+      "scheme"
+    ],
+    [
+      "podDisruptionBudget"
+    ],
+    [
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "configReloader",
+      "livenessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "follow_redirects"
+    ],
+    [
+      "extraConfigmapMounts"
+    ],
+    [
+      "route",
+      "main",
+      "matches"
+    ],
+    [
+      "route",
+      "main",
+      "apiVersion"
+    ],
+    [
+      "extraEnv",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "defaults"
+    ],
+    [
+      "ingress",
+      "annotations"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "replicas"
+    ],
+    [
+      "podMonitoring",
+      "selfMonitor",
+      "labels"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "enabled"
+    ],
+    [
+      "strategy"
+    ],
+    [
+      "configReloader",
+      "enabled"
+    ],
+    [
+      "route",
+      "main",
+      "hostnames"
+    ],
+    [
+      "configReloader",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "extraEnvFrom",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "labels"
+    ],
+    [
+      "networkPolicy"
+    ],
+    [
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "service",
+      "annotations"
+    ],
+    [
+      "configReloader",
+      "securityContext",
+      "runAsUser"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "tlsConfig"
+    ],
+    [
+      "podMonitoring",
+      "selfMonitor",
+      "path"
+    ],
+    [
+      "route",
+      "main",
+      "enabled"
+    ],
+    [
+      "namespaceOverride"
+    ],
+    [
+      "route",
+      "main",
+      "additionalRules"
+    ],
+    [
+      "deploymentAnnotations"
+    ],
+    [
+      "extraInitContainers",
+      "*"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "extraArgs"
+    ],
+    [
+      "service",
+      "ipDualStack"
+    ],
+    [
+      "serviceMonitor"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*"
+    ],
+    [
+      "extraContainers"
+    ],
+    [
+      "podMonitoring",
+      "targets"
+    ],
+    [
+      "podMonitoring",
+      "selfMonitor",
+      "interval"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "port"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "prober"
+    ],
+    [
+      "configReloader",
+      "readinessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "podMonitoring",
+      "tlsConfig"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "enabled"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "interval"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "extraArgs",
+      "*"
+    ],
+    [
+      "securityContext",
+      "runAsGroup"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths",
+      "*",
+      "pathType"
+    ],
+    [
+      "extraManifests",
+      "*"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "configReloader",
+      "securityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path"
+    ],
+    [
+      "strategy",
+      "rollingUpdate"
+    ],
+    [
+      "configReloader",
+      "readinessProbe",
+      "httpGet",
+      "scheme"
+    ],
+    [
+      "securityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "configReloader",
+      "resources",
+      "requests",
+      "memory"
+    ],
+    [
+      "secretConfig"
+    ],
+    [
+      "configReloader",
+      "config"
+    ],
+    [
+      "config",
+      "modules"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "recommenders"
+    ],
+    [
+      "podMonitoring",
+      "defaults",
+      "module"
+    ],
+    [
+      "configExistingSecretName"
+    ],
+    [
+      "route",
+      "main",
+      "additionalRules",
+      "*"
+    ],
+    [
+      "ingress",
+      "tls"
+    ],
+    [
+      "extraContainers",
+      "*"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path",
+      "type"
+    ],
+    [
+      "configReloader",
+      "resources",
+      "requests",
+      "cpu"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "path"
+    ],
+    [
+      "configReloader",
+      "securityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "extraConfigmapMounts",
+      "*"
+    ],
+    [
+      "service",
+      "labels"
+    ],
+    [
+      "configReloader",
+      "containerPort"
+    ],
+    [
+      "podMonitoring",
+      "selfMonitor",
+      "enabled"
+    ],
+    [
+      "serviceMonitor",
+      "path"
+    ],
+    [
+      "serviceMonitor",
+      "scheme"
+    ],
+    [
+      "route",
+      "main",
+      "annotations"
+    ],
+    [
+      "commonLabels"
+    ],
+    [
+      "podMonitoring"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "image",
+      "digest"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "module"
+    ],
+    [
+      "configReloader",
+      "config",
+      "logFormat"
+    ],
+    [
+      "podMonitoring",
+      "scheme"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor"
+    ],
+    [
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "configReloader"
+    ],
+    [
+      "configReloader",
+      "config",
+      "logLevel"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "minAllowed"
+    ],
+    [
+      "hostAliases",
+      "*"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "route",
+      "main",
+      "labels"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor"
+    ],
+    [
+      "podMonitoring",
+      "path"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "configReloader",
+      "resources",
+      "limits"
+    ],
+    [
+      "livenessProbe",
+      "httpGet"
+    ],
+    [
+      "hostAliases"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "interval"
+    ],
+    [
+      "podMonitoring",
+      "selfMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "configReloader",
+      "securityContext"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "valid_http_versions",
+      "*"
+    ],
+    [
+      "configReloader",
+      "livenessProbe",
+      "httpGet"
+    ],
+    [
+      "prometheusRule",
+      "namespace"
+    ],
+    [
+      "dnsPolicy"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalRelabeling"
+    ],
+    [
+      "strategy",
+      "rollingUpdate",
+      "maxSurge"
+    ],
+    [
+      "configReloader",
+      "image",
+      "digest"
+    ],
+    [
+      "podMonitoring",
+      "defaults"
+    ],
+    [
+      "ingress",
+      "className"
+    ],
+    [
+      "readinessProbe"
+    ],
+    [
+      "route",
+      "main",
+      "filters",
+      "*"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "scheme"
+    ],
+    [
+      "podAnnotations"
+    ],
+    [
+      "networkPolicy",
+      "allowMonitoringNamespace"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "scrapeTimeout"
+    ],
+    [
+      "ingress",
+      "hosts"
+    ],
+    [
+      "podMonitoring",
+      "defaults",
+      "interval"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "livenessProbe"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "path"
+    ],
+    [
+      "prometheusRule",
+      "rules"
+    ],
+    [
+      "extraInitContainers"
+    ],
+    [
+      "networkPolicy",
+      "monitoringNamespaceName"
+    ],
+    [
+      "route",
+      "main",
+      "kind"
+    ],
+    [
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalRelabeling",
+      "*"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "maxAllowed"
+    ],
+    [
+      "configReloader",
+      "service",
+      "port"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "ingress",
+      "enabled"
+    ],
+    [
+      "pod"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths",
+      "*"
+    ],
+    [
+      "securityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "dnsConfig"
+    ],
+    [
+      "configReloader",
+      "image",
+      "tag"
+    ],
+    [
+      "service",
+      "ipDualStack",
+      "enabled"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "timeout"
+    ],
+    [
+      "podMonitoring",
+      "defaults",
+      "labels"
+    ],
+    [
+      "podMonitoring",
+      "defaults",
+      "scrapeTimeout"
+    ],
+    [
+      "prometheusRule",
+      "enabled"
+    ],
+    [
+      "serviceMonitor",
+      "targets"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "global"
+    ],
+    [
+      "securityContext",
+      "runAsUser"
+    ],
+    [
+      "containerPort"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path",
+      "value"
+    ],
+    [
+      "configReloader",
+      "livenessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "configReloader",
+      "image",
+      "registry"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "preferred_ip_protocol"
+    ],
+    [
+      "kind"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "honorTimestamps"
+    ],
+    [
+      "service",
+      "externalIPs"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalRelabeling"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "interval"
+    ],
+    [
+      "readinessProbe",
+      "httpGet"
+    ],
+    [
+      "podMonitoring",
+      "defaults",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "verticalPodAutoscaler",
+      "controlledResources"
+    ],
+    [
+      "configReloader",
+      "image",
+      "repository"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*"
+    ],
+    [
+      "configReloader",
+      "securityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "serviceMonitor",
+      "apiVersion"
+    ],
+    [
+      "ingress"
+    ],
+    [
+      "configReloader",
+      "service"
+    ],
+    [
+      "restartPolicy"
+    ],
+    [
+      "topologySpreadConstraints"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "pod",
+      "labels"
+    ],
+    [
+      "extraSecretMounts",
+      "*"
+    ],
+    [
+      "hostPort"
+    ],
+    [
+      "configReloader",
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalRelabeling",
+      "*"
+    ],
+    [
+      "securityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "additionalRelabeling"
+    ],
+    [
+      "configReloader",
+      "securityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "kubeVersionOverride"
+    ],
+    [
+      "serviceAccount"
+    ],
+    [
+      "route"
+    ],
+    [
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "configReloader",
+      "resources"
+    ],
+    [
+      "image",
+      "registry"
+    ],
+    [
+      "service"
+    ],
+    [
+      "configReloader",
+      "securityContext",
+      "capabilities"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "service",
+      "ipDualStack",
+      "ipFamilies"
+    ],
+    [
+      "configReloader",
+      "readinessProbe",
+      "httpGet"
+    ],
+    [
+      "serviceMonitor",
+      "tlsConfig"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 4,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 11,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 13,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 15,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 18,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 19,
+      "message": "unresolved dot context: .Values.service.port"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 20,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 21,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 21,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 24,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 4,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 5,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 5,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 13,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 14,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 15,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 18,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 19,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 21,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 29,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "unresolved dot context: .Chart.Version"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 36,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 38,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 40,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 42,
+      "message": "unresolved dot context: .Release.Service"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 43,
+      "message": "unresolved dot context: .Values.releaseLabel"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 44,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 46,
+      "message": "unresolved dot context: .Values.commonLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 47,
+      "message": "unresolved dot context: .Values.commonLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 54,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 55,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 56,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 62,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 63,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 66,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 70,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 71,
+      "message": "unresolved dot context: .Values.namespaceOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 72,
+      "message": "unresolved dot context: .Values.namespaceOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 74,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 81,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "unresolved dot context: .Values.global.imageRegistry"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "unresolved dot context: .Values.image.registry"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 83,
+      "message": "unresolved dot context: .Values.image.repository"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 83,
+      "message": "unresolved dot context: .Values.image.tag"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 83,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 84,
+      "message": "unresolved dot context: .Values.image.digest"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 84,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 90,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 91,
+      "message": "unresolved dot context: .Values.global.imageRegistry"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 91,
+      "message": "unresolved dot context: .Values.configReloader.image.registry"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 91,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 92,
+      "message": "unresolved dot context: .Values.configReloader.image.repository"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 92,
+      "message": "unresolved dot context: .Values.configReloader.image.tag"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 93,
+      "message": "unresolved dot context: .Values.configReloader.image.digest"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 93,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 99,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 100,
+      "message": "unresolved dot context: .Values.automountServiceAccountToken"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 101,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 101,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 102,
+      "message": "unresolved dot context: .Values.topologySpreadConstraints"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 104,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 106,
+      "message": "unresolved dot context: .Values.nodeSelector"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 108,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 110,
+      "message": "unresolved dot context: .Values.affinity"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 112,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 114,
+      "message": "unresolved dot context: .Values.tolerations"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 116,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 118,
+      "message": "unresolved dot context: .Values.image.pullSecrets"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 120,
+      "message": "unresolved dot context: .Values.image.pullSecrets"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 121,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 124,
+      "message": "unresolved dot context: .Values.hostAliases"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 126,
+      "message": "unresolved dot context: .Values.hostAliases"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 127,
+      "message": "unresolved dot context: .ip"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 129,
+      "message": "unresolved dot context: .hostNames"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 130,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 134,
+      "message": "unresolved dot context: .Values.restartPolicy"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 135,
+      "message": "unresolved dot context: .Values.priorityClassName"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 136,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 138,
+      "message": "unresolved dot context: .Values.podSecurityContext"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 140,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 142,
+      "message": "unresolved dot context: .Values.extraInitContainers"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 144,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 145,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 145,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 147,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 152,
+      "message": "unresolved dot context: .Values.extraContainers"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 153,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 154,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 154,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 156,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 160,
+      "message": "unresolved dot context: .Values.configReloader.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 162,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 162,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 163,
+      "message": "unresolved dot context: .Values.configReloader.image.pullPolicy"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 165,
+      "message": "unresolved dot context: .Values.configPath"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 166,
+      "message": "unresolved dot context: .Values.configReloader.config.watchInterval"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 167,
+      "message": "unresolved dot context: .Values.containerPort"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 168,
+      "message": "unresolved dot context: .Values.configReloader.containerPort"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 169,
+      "message": "unresolved dot context: .Values.configReloader.config.logFormat"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 170,
+      "message": "unresolved dot context: .Values.configReloader.config.logLevel"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 171,
+      "message": "unresolved dot context: .Values.configReloader.resources"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 173,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 177,
+      "message": "unresolved dot context: .Values.configReloader.containerPort"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 180,
+      "message": "unresolved dot context: .Values.configReloader.livenessProbe"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 182,
+      "message": "unresolved dot context: .Values.configReloader.readinessProbe"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 186,
+      "message": "unresolved dot context: .Values.configReloader.securityContext"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 188,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 192,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 192,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 193,
+      "message": "unresolved dot context: .Values.image.pullPolicy"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 194,
+      "message": "unresolved dot context: .Values.securityContext"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 196,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 198,
+      "message": "unresolved dot context: .Values.extraEnv"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 200,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 202,
+      "message": "unresolved dot context: .Values.extraEnvFrom"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 204,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 207,
+      "message": "unresolved dot context: .Values.config"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 208,
+      "message": "unresolved dot context: .Values.configPath"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 209,
+      "message": "unresolved dot context: .Values.configPath"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 216,
+      "message": "unresolved dot context: .Values.extraArgs"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 217,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 217,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 219,
+      "message": "unresolved dot context: .Values.resources"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 221,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 224,
+      "message": "unresolved dot context: .Values.containerPort"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 226,
+      "message": "unresolved dot context: .Values.hostPort"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 227,
+      "message": "unresolved dot context: .Values.hostPort"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 230,
+      "message": "unresolved dot context: .Values.livenessProbe"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 232,
+      "message": "unresolved dot context: .Values.readinessProbe"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 236,
+      "message": "unresolved dot context: .Values.extraConfigmapMounts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 237,
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 238,
+      "message": "unresolved dot context: .mountPath"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 239,
+      "message": "unresolved dot context: .subPath"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 240,
+      "message": "unresolved dot context: .readOnly"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 242,
+      "message": "unresolved dot context: .Values.extraSecretMounts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 243,
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 244,
+      "message": "unresolved dot context: .mountPath"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 245,
+      "message": "unresolved dot context: .subPath"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 246,
+      "message": "unresolved dot context: .readOnly"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 248,
+      "message": "unresolved dot context: .Values.extraVolumeMounts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 249,
+      "message": "unresolved dot context: .Values.extraVolumeMounts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 251,
+      "message": "unresolved dot context: .Values.dnsPolicy"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 252,
+      "message": "unresolved dot context: .Values.dnsPolicy"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 254,
+      "message": "unresolved dot context: .Values.hostNetwork"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 255,
+      "message": "unresolved dot context: .Values.dnsConfig"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 257,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 260,
+      "message": "unresolved dot context: .Values.extraVolumes"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 261,
+      "message": "unresolved dot context: .Values.extraVolumes"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 264,
+      "message": "unresolved dot context: .Values.secretConfig"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 266,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 266,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 264,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 267,
+      "message": "unresolved dot context: .Values.configExistingSecretName"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 269,
+      "message": "unresolved dot context: .Values.configExistingSecretName"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 272,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 272,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 274,
+      "message": "unresolved dot context: .Values.extraConfigmapMounts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 275,
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 277,
+      "message": "unresolved dot context: .configMap"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 278,
+      "message": "unresolved dot context: .defaultMode"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 280,
+      "message": "unresolved dot context: .Values.extraSecretMounts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 281,
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 283,
+      "message": "unresolved dot context: .secretName"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 284,
+      "message": "unresolved dot context: .defaultMode"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/extra-manifests.yaml",
+      "line": 3,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 2,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 25,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 32,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/podmonitoring.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/podmonitoring.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/podmonitoring.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/podmonitoring.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 22,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 26,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfpodmonitoring.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/selfpodmonitoring.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/selfpodmonitoring.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfpodmonitoring.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 3,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 8,
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 12,
+      "message": "unresolved dot context: .labels"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 13,
+      "message": "unresolved dot context: .labels"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 25,
+      "message": "unresolved dot context: .path"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 26,
+      "message": "unresolved dot context: .interval"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 27,
+      "message": "unresolved dot context: .scrapeTimeout"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 28,
+      "message": "unresolved dot context: .honorTimestamps"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 31,
+      "message": "unresolved dot context: .module"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 33,
+      "message": "unresolved dot context: .url"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 33,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 34,
+      "message": "unresolved dot context: .hostname"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 36,
+      "message": "unresolved dot context: .hostname"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 41,
+      "message": "unresolved dot context: .url"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 41,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 45,
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 47,
+      "message": "unresolved dot context: .additionalMetricsRelabels"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 52,
+      "message": "unresolved dot context: .additionalRelabeling"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 54,
+      "message": "unresolved dot context: .additionalRelabeling"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 62,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/verticalpodautoscaler.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/verticalpodautoscaler.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/verticalpodautoscaler.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/verticalpodautoscaler.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "path": [
+        "extraManifests",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "service",
+        "externalIPs"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "verticalPodAutoscaler",
+        "controlledValues"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "verticalPodAutoscaler",
+        "recommenders"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "additionalRules"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "annotations"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "apiVersion"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "enabled"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "filters"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "hostnames"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "httpsRedirect"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "kind"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "labels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "matches"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "parentRefs"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "selfMonitor",
+        "port"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "host"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "paths"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "secretName"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "additionalMetricsRelabels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "hostname"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "interval"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "labels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "module"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "scrapeTimeout"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "url"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "paths",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "paths",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "secretName"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "additionalMetricsRelabels"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "hostname"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "interval"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "labels"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "module"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "scrapeTimeout"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "podMonitoring",
+        "targets",
+        "*",
+        "url"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "additionalRules"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "annotations"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "apiVersion"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "enabled"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "filters"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "hostnames"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "httpsRedirect"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "kind"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "labels"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "matches"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "parentRefs"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}

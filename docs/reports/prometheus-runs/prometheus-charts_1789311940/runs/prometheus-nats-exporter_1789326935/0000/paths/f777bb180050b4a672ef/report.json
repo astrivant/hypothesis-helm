@@ -1,0 +1,355 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 39,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config",
+        "metrics",
+        "accstatz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz_detailed"
+      ],
+      [
+        "config",
+        "metrics",
+        "gatewayz"
+      ],
+      [
+        "config",
+        "metrics",
+        "healthz"
+      ],
+      [
+        "config",
+        "metrics",
+        "jsz"
+      ],
+      [
+        "config",
+        "metrics",
+        "leafz"
+      ],
+      [
+        "config",
+        "metrics",
+        "routez"
+      ],
+      [
+        "config",
+        "metrics",
+        "subz"
+      ],
+      [
+        "config",
+        "metrics",
+        "varz"
+      ],
+      [
+        "config",
+        "nats",
+        "namespace"
+      ],
+      [
+        "config",
+        "nats",
+        "port"
+      ],
+      [
+        "config",
+        "nats",
+        "service"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "imagePullSecrets"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "annotations"
+      ],
+      [
+        "config",
+        "metrics",
+        "accstatz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz_detailed"
+      ],
+      [
+        "config",
+        "metrics",
+        "gatewayz"
+      ],
+      [
+        "config",
+        "metrics",
+        "healthz"
+      ],
+      [
+        "config",
+        "metrics",
+        "jsz"
+      ],
+      [
+        "config",
+        "metrics",
+        "leafz"
+      ],
+      [
+        "config",
+        "metrics",
+        "routez"
+      ],
+      [
+        "config",
+        "metrics",
+        "subz"
+      ],
+      [
+        "config",
+        "metrics",
+        "varz"
+      ],
+      [
+        "config",
+        "nats",
+        "namespace"
+      ],
+      [
+        "config",
+        "nats",
+        "port"
+      ],
+      [
+        "config",
+        "nats",
+        "service"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "imagePullSecrets"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 36,
+    "varied_count": 4,
+    "varied_fraction": 0.10256410256410256,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 100,
+    "unique_bundles": 98,
+    "duplicate_bundles": 2,
+    "validation_cache_hits": 2,
+    "validated_entries": 98
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-7o73ln9z/chart",
+  "seed": 0,
+  "attempts": 100,
+  "time_limit_seconds": 154.49549891706556,
+  "execution_seconds": 9.006058000028133,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.affinity",
+  "kind": "value-path",
+  "path": [
+    "affinity"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-nats-exporter_1789326935/0000/paths/f777bb180050b4a672ef"
+}

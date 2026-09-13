@@ -1,0 +1,195 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 21,
+    "present_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "podMonitor",
+        "labels"
+      ],
+      [
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "podMonitor",
+        "selectorOverride"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "tolerations"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "podMonitor",
+        "labels"
+      ],
+      [
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "podMonitor",
+        "selectorOverride"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ]
+    ],
+    "present_count": 21,
+    "varied_count": 1,
+    "varied_fraction": 0.047619047619047616,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 100,
+    "unique_bundles": 88,
+    "duplicate_bundles": 12,
+    "validation_cache_hits": 12,
+    "validated_entries": 88
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-e2e4hqt6/chart",
+  "seed": 0,
+  "attempts": 100,
+  "time_limit_seconds": 204.6774228750728,
+  "execution_seconds": 8.446703124791384,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "$.tolerations",
+  "kind": "value-path",
+  "path": [
+    "tolerations"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-conntrack-stats-exporter_1789326118/0000/paths/55957e51dd82905d47db"
+}

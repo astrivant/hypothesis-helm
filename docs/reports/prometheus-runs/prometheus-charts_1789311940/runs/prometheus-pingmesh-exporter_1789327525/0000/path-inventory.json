@@ -1,0 +1,2591 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "config",
+      "modules",
+      "ping",
+      "timeout"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "method"
+    ],
+    [
+      "route",
+      "main",
+      "name"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "alert"
+    ],
+    [
+      "image"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "http",
+      "valid_status_codes"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "interval"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "http",
+      "method"
+    ],
+    [
+      "strategy",
+      "type"
+    ],
+    [
+      "config",
+      "modules",
+      "ping"
+    ],
+    [
+      "pinglistConfig",
+      "setting"
+    ],
+    [
+      "config",
+      "modules",
+      "dns_ipv6",
+      "dns"
+    ],
+    [
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "http"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "timeout"
+    ],
+    [
+      "service",
+      "port"
+    ],
+    [
+      "route",
+      "main",
+      "httpsRedirect"
+    ],
+    [
+      "securityContext"
+    ],
+    [
+      "config"
+    ],
+    [
+      "podSecurityContext"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "annotations"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "http",
+      "valid_http_versions",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "http",
+      "preferred_ip_protocol"
+    ],
+    [
+      "route",
+      "main"
+    ],
+    [
+      "route",
+      "main",
+      "hostnames",
+      "*"
+    ],
+    [
+      "route",
+      "main",
+      "filters"
+    ],
+    [
+      "pinglistConfig",
+      "setting",
+      "delay"
+    ],
+    [
+      "pinglistConfig",
+      "mesh",
+      "add-ping-public",
+      "type"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "timeout"
+    ],
+    [
+      "service",
+      "type"
+    ],
+    [
+      "hostNetwork"
+    ],
+    [
+      "securityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "securityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "prometheusRule"
+    ],
+    [
+      "config",
+      "modules",
+      "dns_ipv6"
+    ],
+    [
+      "serviceMonitor",
+      "bearerTokenFile"
+    ],
+    [
+      "extraEnv"
+    ],
+    [
+      "route",
+      "main",
+      "parentRefs",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "valid_http_versions"
+    ],
+    [
+      "prometheusRule",
+      "additionalLabels"
+    ],
+    [
+      "ingress",
+      "labels"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "additionalRelabeling",
+      "*"
+    ],
+    [
+      "pinglistConfig",
+      "setting",
+      "concurrent_limit"
+    ],
+    [
+      "automountServiceAccountToken"
+    ],
+    [
+      "route",
+      "main",
+      "parentRefs"
+    ],
+    [
+      "config",
+      "modules",
+      "ping_ipv6",
+      "icmp"
+    ],
+    [
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "config",
+      "modules",
+      "ping",
+      "icmp"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "host"
+    ],
+    [
+      "extraSecretMounts"
+    ],
+    [
+      "securityContext",
+      "capabilities"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "resources"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*"
+    ],
+    [
+      "pinglistConfig",
+      "mesh",
+      "add-ping-public",
+      "name"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "http",
+      "valid_status_codes",
+      "*"
+    ],
+    [
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "http",
+      "method"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "labels",
+      "alertype"
+    ],
+    [
+      "config",
+      "modules",
+      "dns",
+      "dns",
+      "transport_protocol"
+    ],
+    [
+      "ingress",
+      "tls",
+      "*"
+    ],
+    [
+      "strategy",
+      "rollingUpdate",
+      "maxUnavailable"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths",
+      "*",
+      "path"
+    ],
+    [
+      "config",
+      "modules",
+      "tcp_connect",
+      "prober"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "labels"
+    ],
+    [
+      "tolerations",
+      "*",
+      "effect"
+    ],
+    [
+      "config",
+      "modules",
+      "ping_ipv6"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "prober"
+    ],
+    [
+      "pinglistConfig",
+      "mesh"
+    ],
+    [
+      "podDisruptionBudget"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "http"
+    ],
+    [
+      "config",
+      "modules",
+      "ping",
+      "prober"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "valid_status_codes"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "config",
+      "modules",
+      "dns",
+      "dns"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "http",
+      "preferred_ip_protocol"
+    ],
+    [
+      "extraConfigmapMounts"
+    ],
+    [
+      "route",
+      "main",
+      "matches"
+    ],
+    [
+      "route",
+      "main",
+      "apiVersion"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "labels",
+      "severity"
+    ],
+    [
+      "serviceMonitor",
+      "defaults"
+    ],
+    [
+      "ingress",
+      "annotations"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "replicas"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "for"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "http",
+      "valid_http_versions"
+    ],
+    [
+      "strategy"
+    ],
+    [
+      "route",
+      "main",
+      "hostnames"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "labels"
+    ],
+    [
+      "config",
+      "modules",
+      "dns"
+    ],
+    [
+      "networkPolicy"
+    ],
+    [
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "service",
+      "annotations"
+    ],
+    [
+      "route",
+      "main",
+      "enabled"
+    ],
+    [
+      "service",
+      "ipFamilies"
+    ],
+    [
+      "namespaceOverride"
+    ],
+    [
+      "route",
+      "main",
+      "additionalRules"
+    ],
+    [
+      "extraInitContainers",
+      "*"
+    ],
+    [
+      "readinessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "extraArgs"
+    ],
+    [
+      "serviceMonitor"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "ping_ipv6",
+      "prober"
+    ],
+    [
+      "extraContainers"
+    ],
+    [
+      "pinglistConfig",
+      "setting",
+      "interval"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "prober"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "http",
+      "valid_http_versions"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "enabled"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "interval"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "extraArgs",
+      "*"
+    ],
+    [
+      "securityContext",
+      "runAsGroup"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths",
+      "*",
+      "pathType"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "url"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path"
+    ],
+    [
+      "strategy",
+      "rollingUpdate"
+    ],
+    [
+      "dnsConfig",
+      "options",
+      "*"
+    ],
+    [
+      "securityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "secretConfig"
+    ],
+    [
+      "pinglistConfig",
+      "setting",
+      "source_ip_addr"
+    ],
+    [
+      "config",
+      "modules"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "http",
+      "valid_http_versions"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "labels"
+    ],
+    [
+      "configExistingSecretName"
+    ],
+    [
+      "dnsConfig",
+      "options",
+      "*",
+      "value"
+    ],
+    [
+      "route",
+      "main",
+      "additionalRules",
+      "*"
+    ],
+    [
+      "ingress",
+      "tls"
+    ],
+    [
+      "extraContainers",
+      "*"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path",
+      "type"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6"
+    ],
+    [
+      "config",
+      "modules",
+      "tcp_connect",
+      "timeout"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "dns_ipv6",
+      "prober"
+    ],
+    [
+      "extraConfigmapMounts",
+      "*"
+    ],
+    [
+      "service",
+      "labels"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "additionalRelabeling",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "scheme"
+    ],
+    [
+      "route",
+      "main",
+      "annotations"
+    ],
+    [
+      "pinglistConfig",
+      "mesh",
+      "add-ping-public",
+      "ips",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "module"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "module"
+    ],
+    [
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "valid_status_codes",
+      "*"
+    ],
+    [
+      "hostAliases",
+      "*"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "route",
+      "main",
+      "labels"
+    ],
+    [
+      "config",
+      "modules",
+      "dns_ipv6",
+      "dns",
+      "preferred_ip_protocol"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "pinglistConfig"
+    ],
+    [
+      "service",
+      "ipFamilies",
+      "*"
+    ],
+    [
+      "livenessProbe",
+      "httpGet"
+    ],
+    [
+      "config",
+      "modules",
+      "dns_ipv6",
+      "dns",
+      "query_name"
+    ],
+    [
+      "hostAliases"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "interval"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "valid_http_versions",
+      "*"
+    ],
+    [
+      "dnsConfig",
+      "options",
+      "*",
+      "name"
+    ],
+    [
+      "config",
+      "modules",
+      "dns",
+      "dns",
+      "preferred_ip_protocol"
+    ],
+    [
+      "prometheusRule",
+      "namespace"
+    ],
+    [
+      "securityContext",
+      "seccompProfile"
+    ],
+    [
+      "dnsPolicy"
+    ],
+    [
+      "config",
+      "modules",
+      "dns",
+      "prober"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "http",
+      "valid_http_versions",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "http",
+      "valid_status_codes"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalRelabeling"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "scrapeTimeout"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "strategy",
+      "rollingUpdate",
+      "maxSurge"
+    ],
+    [
+      "ingress",
+      "className"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "prober"
+    ],
+    [
+      "readinessProbe"
+    ],
+    [
+      "securityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "route",
+      "main",
+      "filters",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "http",
+      "preferred_ip_protocol"
+    ],
+    [
+      "podAnnotations"
+    ],
+    [
+      "networkPolicy",
+      "allowMonitoringNamespace"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "scrapeTimeout"
+    ],
+    [
+      "ingress",
+      "hosts"
+    ],
+    [
+      "livenessProbe"
+    ],
+    [
+      "config",
+      "modules",
+      "ping_ipv6",
+      "timeout"
+    ],
+    [
+      "pinglistConfig",
+      "setting",
+      "timeout"
+    ],
+    [
+      "prometheusRule",
+      "rules"
+    ],
+    [
+      "extraInitContainers"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "name"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "prober"
+    ],
+    [
+      "route",
+      "main",
+      "kind"
+    ],
+    [
+      "config",
+      "modules",
+      "dns",
+      "dns",
+      "query_name"
+    ],
+    [
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "configPath"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalRelabeling",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "http",
+      "method"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "annotations",
+      "description"
+    ],
+    [
+      "livenessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "ingress",
+      "enabled"
+    ],
+    [
+      "pod"
+    ],
+    [
+      "config",
+      "modules",
+      "ping",
+      "icmp",
+      "preferred_ip_protocol"
+    ],
+    [
+      "serviceMonitor",
+      "targets",
+      "*",
+      "additionalRelabeling"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx",
+      "http",
+      "valid_status_codes",
+      "*"
+    ],
+    [
+      "service",
+      "ipFamilyPolicy"
+    ],
+    [
+      "ingress",
+      "hosts",
+      "*",
+      "paths",
+      "*"
+    ],
+    [
+      "securityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "ping_ipv6",
+      "icmp",
+      "preferred_ip_protocol"
+    ],
+    [
+      "dnsConfig"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "http",
+      "valid_status_codes"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "labels"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "timeout"
+    ],
+    [
+      "prometheusRule",
+      "enabled"
+    ],
+    [
+      "serviceMonitor",
+      "targets"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "securityContext",
+      "runAsUser"
+    ],
+    [
+      "containerPort"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path",
+      "value"
+    ],
+    [
+      "prometheusRule",
+      "rules",
+      "*",
+      "expr"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx",
+      "http",
+      "preferred_ip_protocol"
+    ],
+    [
+      "kind"
+    ],
+    [
+      "service",
+      "externalIPs"
+    ],
+    [
+      "readinessProbe",
+      "httpGet"
+    ],
+    [
+      "pinglistConfig",
+      "mesh",
+      "add-ping-public",
+      "ips"
+    ],
+    [
+      "config",
+      "modules",
+      "dns_ipv6",
+      "dns",
+      "transport_protocol"
+    ],
+    [
+      "route",
+      "main",
+      "matches",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "tcp_connect"
+    ],
+    [
+      "pinglistConfig",
+      "setting",
+      "ip_protocol"
+    ],
+    [
+      "tolerations",
+      "*",
+      "operator"
+    ],
+    [
+      "ingress"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "http",
+      "valid_status_codes",
+      "*"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "http"
+    ],
+    [
+      "restartPolicy"
+    ],
+    [
+      "serviceMonitor",
+      "selfMonitor",
+      "additionalMetricsRelabels"
+    ],
+    [
+      "dnsConfig",
+      "options"
+    ],
+    [
+      "pod",
+      "labels"
+    ],
+    [
+      "extraSecretMounts",
+      "*"
+    ],
+    [
+      "securityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "serviceMonitor",
+      "defaults",
+      "additionalRelabeling"
+    ],
+    [
+      "serviceAccount"
+    ],
+    [
+      "securityContext",
+      "privileged"
+    ],
+    [
+      "route"
+    ],
+    [
+      "config",
+      "modules",
+      "http_2xx_ipv6",
+      "timeout"
+    ],
+    [
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "service"
+    ],
+    [
+      "tolerations",
+      "*",
+      "key"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "pinglistConfig",
+      "mesh",
+      "add-ping-public"
+    ],
+    [
+      "config",
+      "modules",
+      "http_post_2xx_ipv6",
+      "http",
+      "valid_http_versions",
+      "*"
+    ],
+    [
+      "serviceMonitor",
+      "tlsConfig"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 4,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 16,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 18,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 20,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 23,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 24,
+      "message": "unresolved dot context: .Values.service.port"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 25,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 26,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 26,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 27,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 29,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 4,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 5,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 5,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 13,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 14,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 15,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 18,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 19,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 21,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 29,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "unresolved dot context: .Chart.Version"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 36,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 40,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 41,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 43,
+      "message": "unresolved dot context: .Release.Service"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 51,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 57,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 58,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 61,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 68,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 69,
+      "message": "unresolved dot context: .Capabilities.APIVersions.Has"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 77,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 78,
+      "message": "unresolved dot context: .Values.namespaceOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 79,
+      "message": "unresolved dot context: .Values.namespaceOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 81,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 132,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 130,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 133,
+      "message": "unresolved dot context: .Values.configExistingSecretName"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 135,
+      "message": "unresolved dot context: .Values.configExistingSecretName"
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 138,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/daemonset.yaml",
+      "line": 138,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 145,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 143,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 146,
+      "message": "unresolved dot context: .Values.configExistingSecretName"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 148,
+      "message": "unresolved dot context: .Values.configExistingSecretName"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 151,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 151,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 2,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: set"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 9,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 11,
+      "message": "unresolved dot context: .Capabilities.KubeVersion.GitVersion"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/poddisruptionbudget.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 22,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 26,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/route.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/selfservicemonitor.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "path": [
+        "configPath"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "extraEnv",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "service",
+        "externalIPs"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "configMap"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "defaultMode"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "defaultMode"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "secretName"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "hostAliases",
+        "*",
+        "hostNames"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "hostAliases",
+        "*",
+        "ip"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "image",
+        "pullSecrets",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "additionalRules"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "annotations"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "apiVersion"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "enabled"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "filters"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "hostnames"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "httpsRedirect"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "kind"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "labels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "matches"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "parentRefs"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "hostAliases",
+        "*",
+        "hostNames",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "host"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "paths"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "secretName"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "additionalMetricsRelabels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "additionalRelabeling"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "interval"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "labels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "module"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "scrapeTimeout"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serviceMonitor",
+        "targets",
+        "*",
+        "url"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "paths",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "hosts",
+        "*",
+        "paths",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "configMap"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "defaultMode"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraConfigmapMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraEnv",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "defaultMode"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "secretName"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraSecretMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "hostAliases",
+        "*",
+        "hostNames"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "hostAliases",
+        "*",
+        "hostNames",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "hostAliases",
+        "*",
+        "ip"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "image",
+        "pullSecrets",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "hosts",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "tls",
+        "*",
+        "secretName"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "additionalRules"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "annotations"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "apiVersion"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "enabled"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "filters"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "hostnames"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "httpsRedirect"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "kind"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "labels"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "matches"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "route",
+        "*",
+        "parentRefs"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}

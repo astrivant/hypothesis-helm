@@ -1,0 +1,155 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.automountServiceAccountToken
+[INFO] Coalescing path $.deploymentAnnotations
+[INFO] Coalescing path $.extraManifests
+[INFO] Coalescing path $.networkPolicy
+[INFO] Coalescing path $.persistentVolumeLabels
+[INFO] Coalescing path $.podAnnotations
+[INFO] Coalescing path $.podDisruptionBudget
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.route
+[INFO] Coalescing path $.runAsStatefulSet
+[INFO] Coalescing path $.serviceAccountLabels
+[INFO] Coalescing path $.serviceAnnotations
+[INFO] Coalescing path $.serviceLabels
+[INFO] Coalescing path $.strategy
+[INFO] Coalescing path $.webConfiguration
+[INFO] Coalescing path $.extraManifests[*]
+[INFO] Coalescing path $.ingress.annotations
+[INFO] Coalescing path $.ingress.className
+[INFO] Coalescing path $.ingress.enabled
+[INFO] Coalescing path $.ingress.extraPaths
+[INFO] Coalescing path $.ingress.hosts
+[INFO] Coalescing path $.ingress.path
+[INFO] Coalescing path $.ingress.pathType
+[INFO] Coalescing path $.ingress.tls
+[INFO] Coalescing path $.networkPolicy.customSelectors
+[INFO] Coalescing path $.persistentVolume.accessModes
+[INFO] Coalescing path $.persistentVolume.annotations
+[INFO] Coalescing path $.persistentVolume.enabled
+[INFO] Coalescing path $.persistentVolume.existingClaim
+[INFO] Coalescing path $.persistentVolume.size
+[INFO] Coalescing path $.persistentVolume.storageClass
+[INFO] Coalescing path $.service.clusterIP
+[INFO] Coalescing path $.service.loadBalancerIP
+[INFO] Coalescing path $.service.loadBalancerSourceRanges
+[INFO] Coalescing path $.service.nodePort
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.portName
+[INFO] Coalescing path $.service.targetPort
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.serviceMonitor.additionalLabels
+[INFO] Coalescing path $.serviceMonitor.basicAuth
+[INFO] Coalescing path $.serviceMonitor.bearerTokenFile
+[INFO] Coalescing path $.serviceMonitor.enabled
+[INFO] Coalescing path $.serviceMonitor.honorLabels
+[INFO] Coalescing path $.serviceMonitor.interval
+[INFO] Coalescing path $.serviceMonitor.metricRelabelings
+[INFO] Coalescing path $.serviceMonitor.namespace
+[INFO] Coalescing path $.serviceMonitor.relabelings
+[INFO] Coalescing path $.serviceMonitor.scheme
+[INFO] Coalescing path $.serviceMonitor.scrapeTimeout
+[INFO] Coalescing path $.serviceMonitor.telemetryPath
+[INFO] Coalescing path $.serviceMonitor.tlsConfig
+[INFO] Coalescing path $.webConfiguration.basicAuthUsers
+[INFO] Coalescing path $.ingress.hosts[*]
+[INFO] Coalescing path $.route[*].additionalRules
+[INFO] Coalescing path $.route[*].annotations
+[INFO] Coalescing path $.route[*].apiVersion
+[INFO] Coalescing path $.route[*].enabled
+[INFO] Coalescing path $.route[*].filters
+[INFO] Coalescing path $.route[*].hostnames
+[INFO] Coalescing path $.route[*].httpsRedirect
+[INFO] Coalescing path $.route[*].kind
+[INFO] Coalescing path $.route[*].labels
+[INFO] Coalescing path $.route[*].matches
+[INFO] Coalescing path $.route[*].parentRefs
+[INFO] Coalescing path $.service.ipDualStack.enabled
+[INFO] Coalescing path $.service.ipDualStack.ipFamilies
+[INFO] Coalescing path $.service.ipDualStack.ipFamilyPolicy
+[INFO] Coalescing path $.service.loadBalancerSourceRanges[*]
+[INFO] Discovered 158 unique value paths; random traversal, seed 0
+[INFO] Testing path $.liveness (1/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 140 observed, 73 unique, 67 duplicate bundles; 67 successful validations reused
+[INFO] Testing path $.topologySpreadConstraints[*] (2/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.serviceMonitor.additionalLabels (3/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.image (4/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 21 observed, 17 unique, 4 duplicate bundles; 4 successful validations reused
+[INFO] Testing path $.service.ipDualStack.ipFamilies[*] (5/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.serviceAnnotations (6/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 3 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.strategy.type (7/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.extraManifests (8/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 4 observed, 2 unique, 2 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.nodeSelector (9/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.service.port (10/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.imagePullSecrets (11/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.route.main.httpsRedirect (12/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 1 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.securityContext (13/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.liveness.probe (14/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 74 observed, 62 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.global.imagePullSecrets (15/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.route.main (16/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 208 observed, 12 unique, 196 duplicate bundles; 196 successful validations reused
+[INFO] Testing path $.route.main.hostnames[*] (17/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.readiness.enabled (18/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.extraVars[*] (19/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.route.main.filters (20/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.liveness.probe.timeoutSeconds (21/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.readiness.probe.initialDelaySeconds (22/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.service.type (23/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext.runAsNonRoot (24/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.extraVars (25/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.serviceMonitor.relabelings (26/158)
+[INFO] Compiler input baseline: 55 statically named fields
+[INFO] Execution stopped at the 5.26888s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 36 observed, 1 unique, 35 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.24s; dependency preparation 0.04s; 0 charts remain

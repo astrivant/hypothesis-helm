@@ -1,0 +1,164 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.automountServiceAccountToken
+[INFO] Coalescing path $.customAnnotations
+[INFO] Coalescing path $.deploymentAnnotations
+[INFO] Coalescing path $.dnsConfig
+[INFO] Coalescing path $.dnsPolicy
+[INFO] Coalescing path $.env
+[INFO] Coalescing path $.extraArguments
+[INFO] Coalescing path $.extraContainers
+[INFO] Coalescing path $.extraManifests
+[INFO] Coalescing path $.extraVolumeMounts
+[INFO] Coalescing path $.extraVolumes
+[INFO] Coalescing path $.listenPort
+[INFO] Coalescing path $.livenessProbe
+[INFO] Coalescing path $.logLevel
+[INFO] Coalescing path $.metricsRelistInterval
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.podAnnotations
+[INFO] Coalescing path $.podDisruptionBudget
+[INFO] Coalescing path $.podLabels
+[INFO] Coalescing path $.podSecurityContext
+[INFO] Coalescing path $.priorityClassName
+[INFO] Coalescing path $.readinessProbe
+[INFO] Coalescing path $.replicas
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.revisionHistoryLimit
+[INFO] Coalescing path $.securityContext
+[INFO] Coalescing path $.startupProbe
+[INFO] Coalescing path $.strategy
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.topologySpreadConstraints
+[INFO] Coalescing path $.certManager.caCertDuration
+[INFO] Coalescing path $.certManager.caCertRevisionHistoryLimit
+[INFO] Coalescing path $.certManager.certDuration
+[INFO] Coalescing path $.certManager.certRevisionHistoryLimit
+[INFO] Coalescing path $.certManager.enabled
+[INFO] Coalescing path $.extraManifests[*]
+[INFO] Coalescing path $.hostNetwork.enabled
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.pullSecrets
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.podDisruptionBudget.enabled
+[INFO] Coalescing path $.podDisruptionBudget.maxUnavailable
+[INFO] Coalescing path $.podDisruptionBudget.minAvailable
+[INFO] Coalescing path $.podDisruptionBudget.unhealthyPodEvictionPolicy
+[INFO] Coalescing path $.prometheus.path
+[INFO] Coalescing path $.prometheus.port
+[INFO] Coalescing path $.prometheus.url
+[INFO] Coalescing path $.rbac.create
+[INFO] Coalescing path $.rbac.useAuthReaderClusterRole
+[INFO] Coalescing path $.rules.custom
+[INFO] Coalescing path $.rules.default
+[INFO] Coalescing path $.rules.existing
+[INFO] Coalescing path $.rules.external
+[INFO] Coalescing path $.rules.resource
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.clusterIP
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.automountServiceAccountToken
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.tls.ca
+[INFO] Coalescing path $.tls.certificate
+[INFO] Coalescing path $.tls.enable
+[INFO] Coalescing path $.tls.key
+[INFO] Coalescing path $.image.pullSecrets[*]
+[INFO] Coalescing path $.rbac.customMetrics.resources
+[INFO] Coalescing path $.rbac.externalMetrics.resources
+[INFO] Coalescing path $.service.ipDualStack.enabled
+[INFO] Coalescing path $.service.ipDualStack.ipFamilies
+[INFO] Coalescing path $.service.ipDualStack.ipFamilyPolicy
+[INFO] Discovered 128 unique value paths; random traversal, seed 0
+[INFO] Testing path $.topologySpreadConstraints[*] (1/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.customLabels (2/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.image (3/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 22 observed, 19 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.service.ipDualStack.ipFamilies[*] (4/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.tls.ca (5/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.readinessProbe.httpGet.path (6/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.extraArguments[*] (7/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.strategy.type (8/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 97 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.extraManifests (9/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 4 observed, 2 unique, 2 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.image.pullSecrets (10/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 56 observed, 35 unique, 21 duplicate bundles; 21 successful validations reused
+[INFO] Testing path $.rules.external[*] (11/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.nodeSelector (12/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.extraArguments (13/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 88 unique, 12 duplicate bundles; 12 successful validations reused
+[INFO] Testing path $.service.port (14/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.rules.existing (15/128)
+[INFO] Compiler input baseline: 70 statically named fields
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 42 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/strategies/_internal/lazy.py:180: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 127 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  self.__representation = repr_call(
+[INFO] Render hashes (run-local): 20 observed, 7 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.securityContext (16/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 90 unique, 10 duplicate bundles; 10 successful validations reused
+[INFO] Testing path $.certManager.certRevisionHistoryLimit (17/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.podSecurityContext (18/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 92 unique, 8 duplicate bundles; 8 successful validations reused
+[INFO] Testing path $.image.pullSecrets[*] (19/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 20 observed, 9 unique, 11 duplicate bundles; 11 successful validations reused
+[INFO] Testing path $.podDisruptionBudget.enabled (20/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.service.type (21/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.hostNetwork (22/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 3 observed, 2 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.securityContext.runAsNonRoot (23/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.securityContext.capabilities.drop (24/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.livenessProbe.initialDelaySeconds (25/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 100 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.rbac.customMetrics (26/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Render hashes (run-local): 1 observed, 1 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.tls.key (27/128)
+[INFO] Compiler input baseline: 70 statically named fields
+[INFO] Execution stopped at the 2.45601s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 18 observed, 1 unique, 17 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 300.21s; dependency preparation 0.05s; 0 charts remain

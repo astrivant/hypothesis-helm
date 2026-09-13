@@ -1,0 +1,230 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 22,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "couchdb",
+        "uri"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "couchdb",
+        "databases"
+      ],
+      [
+        "couchdb",
+        "password"
+      ],
+      [
+        "couchdb",
+        "username"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 19,
+    "varied_count": 2,
+    "varied_fraction": 0.09090909090909091,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-0wkyjmbn/chart",
+  "seed": 0,
+  "attempts": 90,
+  "error": "Error: YAML parse error on prometheus-couchdb-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 30: did not find expected '-' indicator\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "rbac": {
+      "create": true,
+      "pspEnabled": true
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": null
+    },
+    "replicaCount": 1,
+    "image": {
+      "repository": "gesellix/couchdb-prometheus-exporter",
+      "tag": 16,
+      "pullPolicy": "IfNotPresent"
+    },
+    "service": {
+      "type": "ClusterIP",
+      "port": 9984
+    },
+    "ingress": {
+      "enabled": false,
+      "annotations": {},
+      "path": "/",
+      "hosts": null,
+      "tls": []
+    },
+    "resources": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "couchdb": {
+      "uri": "\"",
+      "databases": "_all_dbs"
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 76,
+    "unique_bundles": 76,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 76
+  },
+  "phase": "$.couchdb.uri",
+  "kind": "value-path",
+  "path": [
+    "couchdb",
+    "uri"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-couchdb-exporter_1789326121/0000/paths/8b786262570e7f3dc202"
+}

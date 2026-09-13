@@ -4,17 +4,40 @@ Portable Markdown and paginated PDF summaries for repository scans.
 
 from __future__ import annotations
 
-import json
+import os
 import re
 import textwrap
 from pathlib import Path
+from urllib.parse import quote
 
+from reportlab.lib.styles import ParagraphStyle  # type: ignore[import-untyped]
 from reportlab.pdfgen.canvas import Canvas  # type: ignore[import-untyped]
+from reportlab.platypus import Paragraph  # type: ignore[import-untyped]
 
 from hypothesis_helm.reporting.errors import deduplicate_errors
+from hypothesis_helm.reporting.links import LINK, Publication, linked_prose, publish_links
+from hypothesis_helm.reporting.reproductions import input_summary
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 HELM_DEBUG_HINT = re.compile(r"(?m)^[ \t]*Use --debug flag to render out invalid YAML[ \t]*\r?$\n?")
+
+
+def artifact_link(label: str, destination: object, report: Path) -> str:
+    """
+    Link artifacts relative to the report location rather than the working directory.
+
+    Args:
+        label (str): Short human-readable link text.
+        destination (object): Recorded filesystem artifact path.
+        report (Path): Markdown report destination.
+
+    Returns:
+        str: Portable Markdown link with an escaped relative target.
+    """
+    path = Path(str(destination))
+    # Finalized scan archives already store paths relative to the human report.
+    target = os.path.relpath(path, report.parent) if path.is_absolute() or path.exists() else str(path)
+    return f"[{label}](<{quote(target, safe='/._-')}>)"
 
 
 def wrap_markdown(content: str) -> str:
@@ -83,13 +106,14 @@ def display_error(error: object) -> str:
     )
 
 
-def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
+def write_reports(report: dict[str, object], stem: Path, *, publication: Publication | None = None) -> tuple[Path, Path]:
     """
     Write both report formats, accepting an explicit stem or either extension.
 
     Args:
         report (dict[str, object]): Scan summary including chart diagnostics.
         stem (Path): Output stem, Markdown filename, or PDF filename.
+        publication (Publication | None): Public repository destination for shareable artifact links.
 
     Returns:
         tuple[Path, Path]: Markdown and PDF output paths.
@@ -99,6 +123,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         stem = stem.with_suffix("")
     markdown, pdf = Path(f"{stem}.md"), Path(f"{stem}.pdf")
     markdown.parent.mkdir(parents=True, exist_ok=True)
+    settings = mapping(report["settings"])
     lines = [
         f"# {report.get('title', 'Helm chart scan')}",
         "",
@@ -115,15 +140,15 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         "",
         "## Status counts",
         "",
-        "```json",
-        json.dumps(report["counts"], indent=2),
-        "```",
+        "; ".join(f"{count} {status}" for status, count in mapping(report["counts"]).items()) + ".",
         "",
         "## Settings",
         "",
-        "```json",
-        json.dumps(report["settings"], indent=2),
-        "```",
+        f"Filtering: {settings.get('filter', 'not recorded')} | Seed: {settings.get('seed', 'not recorded')} | "
+        f"Traversal: {settings.get('traversal_strategy', 'not recorded')}",
+        f"Chart timeout: {settings.get('chart_timeout_seconds', 'not recorded')} seconds | "
+        f"Workers: {settings.get('workers', 'not recorded')}",
+        "Complete settings are retained in the JSON report.",
         "",
     ]
     if "testing_seconds" in report:
@@ -143,30 +168,13 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
                 "",
                 f"{counts['unique_errors']} distinct diagnostics across "
                 f"{counts['occurrences']} occurrences; {counts['duplicates']} repeats grouped.",
-                "Matching diagnostics do not establish a shared root cause.",
+                "Diagnostics and their triggering inputs are grouped under each chart below.",
+                "Up to two examples per diagnostic and six fields per example are shown. Long values and diagnostics are shortened.",
+                "Full inputs, diagnostics, and remaining cases are retained in JSON and linked artifacts.",
+                "Selected fields identify what the test varied, not an independently proven cause.",
                 "",
             ]
         )
-        for entry in errors:
-            group = mapping(entry)
-            lines.extend([f"### {group['id']}", ""])
-            source = group.get("source")
-            if isinstance(source, dict):
-                lines.extend(
-                    [
-                        f"Source: {source['name']} {source['version']} / {source['template']}",
-                        "",
-                    ]
-                )
-            content = display_error(group["error"])
-            fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
-            lines.extend([f"{fence}text", content, fence, ""])
-            for occurrence in sequence(group["occurrences"]):
-                item = mapping(occurrence)
-                label = f"{item['chart']} ({item['phase']}; {item['status']})"
-                artifacts = item.get("artifacts")
-                lines.append(f"- [{label}](<{artifacts}>)" if artifacts else f"- {label}")
-            lines.append("")
     lines.extend(["## Charts", ""])
     charts = report["charts"]
     assert isinstance(charts, list)
@@ -183,105 +191,109 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
                     "",
                 ]
             )
-        remaining = chart.get("remaining_iterations")
-        artifacts = str(chart.get("artifacts", "none"))
         lines.extend(
             [
-                f"Result: {chart.get('result', 'N/A')} | Status: {chart['status']}",
-                f"Attempts: {chart.get('attempts', 'N/A')} | Remaining iterations: {remaining if remaining is not None else 'unknown'}",
-                f"Coverage: {chart.get('coverage', 'not exercised')}",
-                f"Artifacts: [{artifacts}](<{artifacts}>)" if artifacts != "none" else "Artifacts: none",
+                f"Status: {chart['status']} | Attempts: {chart.get('attempts', 'N/A')}",
                 "",
             ]
         )
-        if "testing_seconds" in chart:
+        rejections = chart.get("configuration_rejections")
+        if isinstance(rejections, dict) and (rejections.get("rejected_candidates") or rejections.get("schema_conflicts")):
             lines.extend(
                 [
-                    f"Chart testing: {float(str(chart['testing_seconds'])):.2f} seconds | "
-                    f"Dependency preparation: {float(str(chart.get('dependency_preparation_seconds', 0))):.2f} seconds | "
-                    f"Wall clock: {float(str(chart.get('elapsed_seconds', 0))):.2f} seconds",
+                    f"Configuration rejections: {rejections['filtered_candidates']} excluded; "
+                    f"{rejections['adjusted_candidates']} adjusted and tested; "
+                    f"{rejections['verification_renders']} Helm verification renders (separate from manifest-test attempts).",
                     "",
                 ]
             )
-        filtering = chart.get("filtering")
-        if isinstance(filtering, dict) and filtering.get("requested"):
-            lines.extend(
-                [
-                    f"Filtering applied: {filtering.get('applied', False)}",
-                    str(filtering.get("reason", "Topology trimming and failure expansion")),
-                    "",
-                ]
-            )
-        phases = chart.get("phases", [])
-        inventory = chart.get("input_inventory")
-        if isinstance(inventory, dict):
-            measured = chart.get("field_coverage", {})
-            varied = measured.get("varied_count", "not measured") if isinstance(measured, dict) else "not measured"
-            lines.extend(
-                [
-                    f"Identified input fields (lower bound): {inventory.get('lower_bound_fields')} | Varied in render attempts: {varied}",
-                    f"Missing values: {len(inventory.get('missing_values', []))} "
-                    "| Undocumented template fields: "
-                    f"{len(inventory.get('undocumented_template_fields', []))}",
-                    f"Unreferenced values: {len(inventory.get('unreferenced_values', []))} ({inventory.get('unreferenced_usage')})",
-                    "Field variation does not prove branch or output coverage.",
-                    "",
-                ]
-            )
+            requirements = sequence(rejections.get("requirements", []))
+            if rejections.get("schema_conflicts"):
+                lines.extend(["The template rejected inputs admitted by the declared values schema; these remain reported failures.", ""])
+            for requirement in requirements[:3]:
+                record = mapping(requirement)
+                message = " ".join(str(record["requirement"]).split())
+                lines.extend([f"Requirement ({record['source']}:{record['line']}): {message[:500]}", ""])
+                lines.extend(input_summary({"recorded": True, "paths": record["inputs"]}))
+                lines.append("")
+            if len(requirements) > 3:
+                lines.extend([f"{len(requirements) - 3} more requirements are retained in chart artifacts.", ""])
         dumped = chart.get("minimal_values")
         if isinstance(dumped, dict):
             destination = str(dumped["yaml"])
-            lines.extend([f"Minimal values: [{destination}](<{destination}>)", ""])
+            lines.extend([artifact_link("Minimal values", destination, markdown), ""])
             if dumped.get("proof"):
                 proof = str(dumped["proof"])
-                lines.extend([f"Verification record: [{proof}](<{proof}>)", ""])
-        if isinstance(phases, list):
-            for phase in phases:
-                if isinstance(phase, dict):
-                    lines.extend(
-                        [
-                            f"Phase {phase.get('phase')}: {phase.get('status')} | Attempts: {phase.get('attempts', 'unknown')}",
-                            "",
-                        ]
-                    )
-        references = sequence(chart.get("error_refs", []))
-        if references:
-            lines.extend(
-                [
-                    "Errors: " + ", ".join(f"[{reference}](#{str(reference).lower()})" for reference in references),
-                    "",
-                ]
-            )
-        elif chart.get("error"):
-            content = display_error(chart["error"])
+                lines.extend([artifact_link("Verification record", proof, markdown), ""])
+        for entry in errors:
+            group = mapping(entry)
+            occurrences = [mapping(item) for item in sequence(group["occurrences"]) if mapping(item)["chart"] == chart["chart"]]
+            if not occurrences:
+                continue
+            lines.extend([f"#### {group['id']}", ""])
+            source = group.get("source")
+            if isinstance(source, dict):
+                lines.extend([f"Source: {source['name']} {source['version']} / {source['template']}", ""])
+            content = display_error(group["error"])
+            # Keep the terminal diagnostic, omitting long include stacks and subprocess logs.
+            content = " ".join(content.split())
+            if len(content) > 500:
+                content = "[Diagnostic shortened; full text in artifacts] ... " + content[-450:]
             fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
-            lines.extend([f"{fence}text", content, fence, ""])
-        counterexamples = [
-            (str(phase.get("phase", "chart")), phase["values"])
-            for phase in sequence(phases)
-            if isinstance(phase, dict) and isinstance(phase.get("values"), dict)
-        ]
-        if isinstance(chart.get("values"), dict):
-            counterexamples.append(("chart", chart["values"]))
-        for phase_name, values in counterexamples:
-            content = json.dumps(values, indent=2, ensure_ascii=True)
-            fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
-            lines.extend([f"Reproducing values ({phase_name}):", "", f"{fence}json", content, fence, ""])
+            lines.extend([fence + "text", *textwrap.wrap(content, width=140, break_long_words=False, break_on_hyphens=False), fence, ""])
+            for occurrence in occurrences[:2]:
+                lines.extend([f"Phase: {occurrence['phase']} | Status: {occurrence['status']}", ""])
+                lines.extend(input_summary(mapping(occurrence["input"])))
+                lines.append("")
+                occurrence_artifacts = occurrence.get("artifacts")
+                if occurrence_artifacts:
+                    lines.extend([artifact_link("Full input and diagnostic", occurrence_artifacts, markdown), ""])
+            if len(occurrences) > 2:
+                lines.extend([f"{len(occurrences) - 2} additional occurrences are retained in the JSON report and chart artifacts.", ""])
+        artifacts = chart.get("artifacts")
+        if artifacts:
+            lines.extend([artifact_link("Chart artifacts", artifacts, markdown), ""])
+    if publication is not None:
+        fence = ""
+        for index, line in enumerate(lines):
+            marker = re.match(r"^(`{3,})", line)
+            if marker and not fence:
+                fence = marker[1]
+            elif fence and re.fullmatch(re.escape(fence) + r"`*\s*", line):
+                fence = ""
+            elif not fence:
+                lines[index] = publish_links(line, markdown, publication)
     markdown.write_text(wrap_markdown("\n".join(lines)))
     canvas = Canvas(str(pdf), pagesize=(612, 792))
     canvas.setTitle(str(report.get("title", "Helm chart scan")))
     y = 750
     canvas.setFont("Courier", 8)
-    in_code = False
+    code_fence = ""
     for line in "\n".join(lines).splitlines():
-        if line.startswith("```"):
-            in_code = not in_code
+        if not line.strip():
+            y -= 4
             continue
-        if not in_code:
+        marker = re.match(r"^(`{3,})(.*)$", line)
+        if not code_fence and marker:
+            code_fence = marker[1]
+            continue
+        if code_fence and re.fullmatch(re.escape(code_fence) + r"`*\s*", line):
+            code_fence = ""
+            continue
+        if not code_fence and LINK.search(line):
+            paragraph = Paragraph(linked_prose(line), ParagraphStyle("links", fontName="Courier", fontSize=8, leading=12))
+            _, height = paragraph.wrap(540, 708)
+            if y - height < 42:
+                canvas.showPage()
+                y = 750
+            paragraph.drawOn(canvas, 36, y + 8 - height)
+            y -= height
+            continue
+        if not code_fence:
             line = re.sub(r"\[([^\]]+)\]\(<\1>\)", r"\1", line)
             line = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", line)
             line = line.replace("**", "").replace("`", "")
-        heading = line.startswith("#")
+        heading = not code_fence and line.startswith("#")
         if heading and y < 120:
             canvas.showPage()
             y = 750

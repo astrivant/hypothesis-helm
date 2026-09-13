@@ -19,7 +19,7 @@ from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES, configmap, expected_manifests
 from hypothesis_helm.benchmarking.workload import source_digest
 from hypothesis_helm.charts.runner import Chart, render
-from hypothesis_helm.compiler.topology import trim_topology
+from hypothesis_helm.compiler.passes.topology import trim_topology
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.contracts import configuration_key, mapping

@@ -1,0 +1,737 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 70,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "config",
+        "extraArgs"
+      ],
+      [
+        "config",
+        "label"
+      ],
+      [
+        "config",
+        "listenAddress"
+      ],
+      [
+        "config",
+        "upstream"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "kubeRBACProxy",
+        "config"
+      ],
+      [
+        "kubeRBACProxy",
+        "containerSecurityContext"
+      ],
+      [
+        "kubeRBACProxy",
+        "enabled"
+      ],
+      [
+        "kubeRBACProxy",
+        "extraArgs"
+      ],
+      [
+        "kubeRBACProxy",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "kubeRBACProxy",
+        "port"
+      ],
+      [
+        "kubeRBACProxy",
+        "resources"
+      ],
+      [
+        "kubeRBACProxy",
+        "volumeMounts"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "listenAddress"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalConfigs"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalEndpointConfigs"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "attachMetadata"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labelLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labelNameLengthLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labelValueLengthLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "port"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "sampleLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLimit"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "extraManifests"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorTimestamps"
+      ],
+      [
+        "route"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "targetMemoryUtilizationPercentage"
+      ],
+      [
+        "config",
+        "extraArgs"
+      ],
+      [
+        "config",
+        "label"
+      ],
+      [
+        "config",
+        "listenAddress"
+      ],
+      [
+        "config",
+        "upstream"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "kubeRBACProxy",
+        "config"
+      ],
+      [
+        "kubeRBACProxy",
+        "containerSecurityContext"
+      ],
+      [
+        "kubeRBACProxy",
+        "enabled"
+      ],
+      [
+        "kubeRBACProxy",
+        "extraArgs"
+      ],
+      [
+        "kubeRBACProxy",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "kubeRBACProxy",
+        "port"
+      ],
+      [
+        "kubeRBACProxy",
+        "resources"
+      ],
+      [
+        "kubeRBACProxy",
+        "volumeMounts"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "listenAddress"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalConfigs"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalEndpointConfigs"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "attachMetadata"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labelLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labelNameLengthLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labelValueLengthLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "port"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "sampleLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLimit"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "nodePort"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 65,
+    "varied_count": 3,
+    "varied_fraction": 0.04285714285714286,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-lhs_go5t/chart",
+  "seed": 0,
+  "attempts": 97,
+  "error": "resource has no nonempty apiVersion",
+  "values": {
+    "replicaCount": 1,
+    "image": {
+      "pullPolicy": "IfNotPresent",
+      "repository": "quay.io/prometheuscommunity/prom-label-proxy",
+      "tag": ""
+    },
+    "imagePullSecrets": [],
+    "nameOverride": "",
+    "namespaceOverride": "",
+    "fullnameOverride": "",
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {}
+    },
+    "podAnnotations": {},
+    "podLabels": {},
+    "podSecurityContext": {},
+    "securityContext": {
+      "runAsUser": 65534,
+      "runAsGroup": 65534,
+      "runAsNonRoot": true,
+      "readOnlyRootFilesystem": true
+    },
+    "service": {
+      "port": 8080,
+      "type": "ClusterIP",
+      "annotations": {}
+    },
+    "livenessProbe": {
+      "httpGet": {
+        "path": "/healthz",
+        "port": "http"
+      }
+    },
+    "readinessProbe": {
+      "httpGet": {
+        "path": "/healthz",
+        "port": "http"
+      }
+    },
+    "resources": {
+      "limits": {
+        "cpu": "200m",
+        "memory": "128Mi"
+      },
+      "requests": {
+        "cpu": "100m",
+        "memory": "64Mi"
+      }
+    },
+    "autoscaling": {
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 2,
+      "targetCPUUtilizationPercentage": 80
+    },
+    "podDisruptionBudget": {},
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "ingress": {
+      "enabled": false,
+      "className": "",
+      "labels": {},
+      "annotations": {},
+      "hosts": [
+        {
+          "host": "chart-example.local",
+          "paths": [
+            {
+              "path": "/",
+              "pathType": "ImplementationSpecific"
+            }
+          ]
+        }
+      ],
+      "tls": []
+    },
+    "config": {
+      "listenAddress": "0.0.0.0:8080",
+      "upstream": "http://prometheus:9090",
+      "label": "namespace",
+      "extraArgs": [
+        "--enable-label-apis=true",
+        "--error-on-replace=true"
+      ]
+    },
+    "metrics": {
+      "enabled": false,
+      "listenAddress": "0.0.0.0:9090",
+      "serviceMonitor": {
+        "enabled": false,
+        "port": 9090,
+        "additionalLabels": {},
+        "jobLabel": "",
+        "targetLabels": [],
+        "podTargetLabels": [],
+        "sampleLimit": 0,
+        "targetLimit": 0,
+        "labelLimit": 0,
+        "labelNameLengthLimit": 0,
+        "labelValueLengthLimit": 0,
+        "attachMetadata": {},
+        "additionalConfigs": {},
+        "honorLabels": false,
+        "honorTimestamps": null,
+        "interval": "",
+        "scrapeTimeout": "",
+        "relabelings": [],
+        "metricRelabelings": [],
+        "additionalEndpointConfigs": {}
+      }
+    },
+    "kubeRBACProxy": {
+      "enabled": false,
+      "config": {},
+      "image": {
+        "repository": "quay.io/brancz/kube-rbac-proxy",
+        "tag": "v0.22.0",
+        "pullPolicy": "IfNotPresent"
+      },
+      "extraArgs": [],
+      "port": 8100,
+      "containerSecurityContext": {
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        }
+      },
+      "resources": {},
+      "volumeMounts": []
+    },
+    "extraManifests": null,
+    "route": {
+      "main": {
+        "apiVersion": "0",
+        "enabled": true
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 84,
+    "unique_bundles": 9,
+    "duplicate_bundles": 75,
+    "validation_cache_hits": 65,
+    "validated_entries": 5
+  },
+  "phase": "$.route.main",
+  "kind": "value-path",
+  "path": [
+    "route",
+    "main"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prom-label-proxy_1789325817/0000/paths/4040b7d9468c882f9251"
+}

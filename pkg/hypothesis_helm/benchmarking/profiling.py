@@ -17,6 +17,7 @@ from typing import TypeVar
 from attrs import asdict, define
 
 PROFILE_DIRECTORY = "HYPOTHESIS_HELM_BENCHMARK_PROFILE_DIR"
+_PROCESS_ID = uuid.uuid4().hex
 T = TypeVar("T")
 
 
@@ -63,12 +64,14 @@ class StackProfiler:
         """
         if max_nodes < 1 or max_depth < 1:
             raise ValueError("Profile node and depth limits must be positive")
-        self.boundary = boundary
         self.timer = timer
         self.max_nodes = max_nodes
         self.max_depth = max_depth
         self.frames = [Frame("profiled entry", -1)]
         self.children: dict[tuple[int, str], int] = {}
+        self.contexts: dict[int, int] = {id(boundary): 0}
+        self.collapsed: set[int] = set()
+        self.depths = [0]
         self.active = 0
         self.truncated_events = 0
         self.started = self.last = timer()
@@ -89,33 +92,32 @@ class StackProfiler:
             return
         now = self.timer()
         self.frames[self.active].self_seconds += max(0.0, now - self.last)
-        current = frame if event == "call" else frame.f_back
-        stack = []
-        while current is not None and current is not self.boundary:
-            code = current.f_code
-            stack.append(f"{code.co_filename}:{code.co_firstlineno} ({code.co_qualname})")
-            current = current.f_back
-        # Calls outside the requested entry are charged to the root, not invented callers.
-        if current is None:
-            stack = []
-        stack.reverse()
-        parent = 0
-        truncated = len(stack) > self.max_depth
-        for label in stack[: self.max_depth]:
+        parent = self.contexts.get(id(frame.f_back), 0)
+        if event == "call":
+            code = frame.f_code
+            label = f"{code.co_filename}:{code.co_firstlineno} ({code.co_qualname})"
             key = (parent, label)
             child = self.children.get(key)
-            if child is None:
-                if len(self.frames) >= self.max_nodes:
-                    truncated = True
-                    break
+            if (
+                id(frame.f_back) in self.collapsed
+                or self.depths[parent] >= self.max_depth
+                or (child is None and len(self.frames) >= self.max_nodes)
+            ):
+                self.truncated_events += 1
+                self.collapsed.add(id(frame))
+                child = parent
+            elif child is None:
                 child = len(self.frames)
                 self.frames.append(Frame(label, parent))
                 self.children[key] = child
-            parent = child
-        self.active = parent
-        if event == "call":
-            self.frames[parent].calls += 1
-        self.truncated_events += int(truncated)
+                self.depths.append(self.depths[parent] + 1)
+            self.contexts[id(frame)] = child
+            self.active = child
+            self.frames[child].calls += 1
+        else:
+            self.contexts.pop(id(frame), None)
+            self.collapsed.discard(id(frame))
+            self.active = parent
         self.last = self.timer()
 
     def finish(self, *, include_tail: bool = True) -> dict[str, object]:
@@ -178,6 +180,7 @@ def capture(  # noqa: UP047 - pinned pydocstyle 6 cannot parse PEP 695 function 
             "scope": "Executing Python thread; native calls and subprocess waits charged to their Python caller",
             "role": role,
             "pid": os.getpid(),
+            "process_id": f"{os.getpid()}-{_PROCESS_ID}",
             "status": status,
             "capture_complete": complete,
             "metadata": metadata or {},

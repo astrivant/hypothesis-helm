@@ -1,0 +1,133 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "kbudde/rabbitmq-exporter",
+    "tag": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "service": {
+    "type": "ClusterIP",
+    "externalPort": 9419,
+    "internalPort": 9419,
+    "labels": {}
+  },
+  "resources": {},
+  "priorityClassName": "",
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "loglevel": "info",
+  "rabbitmq": {
+    "url": "http://myrabbit:15672",
+    "user": "guest",
+    "password": "guest",
+    "existingUserSecret": null,
+    "existingUserSecretKey": "username",
+    "existingPasswordSecret": {
+      "\"": null
+    },
+    "existingPasswordSecretKey": "password",
+    "capabilities": "bert,no_sort",
+    "include_queues": ".*",
+    "include_vhost": ".*",
+    "skip_queues": "^$",
+    "skip_verify": "false",
+    "skip_vhost": "^$",
+    "exporters": "exchange,node,overview,queue",
+    "output_format": "TTY",
+    "timeout": 30,
+    "max_queues": 0,
+    "excludeMetrics": "",
+    "connection": "direct",
+    "configMapOverrideReference": ""
+  },
+  "additionalAnnotations": {},
+  "additionalLabels": {},
+  "podLabels": {},
+  "annotations": {},
+  "env": [],
+  "prometheus": {
+    "monitor": {
+      "enabled": false,
+      "additionalLabels": {},
+      "interval": "15s",
+      "namespace": [],
+      "metricRelabelings": [],
+      "relabelings": [],
+      "targetLabels": []
+    },
+    "rules": {
+      "enabled": false,
+      "additionalLabels": {},
+      "namespace": "",
+      "additionalRules": [
+        {
+          "alert": "RabbitmqNodeDown",
+          "expr": "rabbitmq_running{service=\"{{ template \"prometheus-rabbitmq-exporter.fullname\" . }}\"} == 0",
+          "for": "5m",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "A Rabbitmq node is down",
+            "description": "The Rabbitmq node {{ \"{{ $labels.node }}\" }} of\n  the cluster tracked by {{ \"{{ $labels.service }}\" }} was not running during the last 5m.\n"
+          }
+        },
+        {
+          "alert": "RabbitmqClusterDown",
+          "expr": "rabbitmq_up{service=\"{{ template \"prometheus-rabbitmq-exporter.fullname\" . }}\"} == 0\n",
+          "for": "5m",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "The Rabbitmq cluster {{ \"{{ $labels.service }}\" }} is maybe down.",
+            "description": "The Rabbitmq exporter couldn't scrape any Rabbitmq node of the\ncluster tracked by {{ \"{{ $labels.service }}\" }} during the last 5m, the cluster is maybe down.\n"
+          }
+        },
+        {
+          "alert": "RabbitMQClusterPartition",
+          "expr": "rabbitmq_partitions{service=\"{{ template \"prometheus-rabbitmq-exporter.fullname\" . }}\"} > 0",
+          "for": "5m",
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "summary": "A cluster partition was detected",
+            "description": "Cluster partition in Rabbitmq cluster tracked by {{ \"{{ $labels.service }}\" }} was detected\nby the node {{ \"{{ $labels.node }}\" }}\n"
+          }
+        },
+        {
+          "alert": "RabbitmqOutOfMemory",
+          "expr": "rabbitmq_node_mem_used{service=\"{{ template \"prometheus-rabbitmq-exporter.fullname\" . }}\"}\n/ rabbitmq_node_mem_limit{service=\"{{ template \"prometheus-rabbitmq-exporter.fullname\" . }}\"}\n* 100 > 90\n",
+          "for": "5m",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "The Rabbitmq node {{ \"{{ $labels.node }}\" }} is Out of memory",
+            "description": "Memory available for Rabbmitmq node {{ \"{{ $labels.node }}\" }} is lower than 10%\n"
+          }
+        },
+        {
+          "alert": "RabbitmqTooManyConnections",
+          "expr": "rabbitmq_connectionsTotal{service=\"{{ template \"prometheus-rabbitmq-exporter.fullname\" . }}\"} > 1000",
+          "for": "5m",
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "Too many connections to the Rabbitmq cluster",
+            "description": "The Rabbitmq cluster tracked by {{ \"{{ $labels.service }}\" }} has too many connections {{ \"{{ $value }}\" }} (> 1000)\n"
+          }
+        }
+      ]
+    }
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": null,
+    "annotations": {}
+  }
+}

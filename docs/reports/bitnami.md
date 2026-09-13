@@ -3,14 +3,12 @@
 Visited all **115 discovered charts** with **--filter**, four workers, and a **five-minute test budget per chart**. No scan-wide deadline
 was imposed.
 
-Recorded **19,612 test attempts** in **42.3 minutes**. Attempts include shrinking and repeated inputs; they are not counts of unique inputs
-or confirmed bugs.
+Recorded **101,799 test attempts** in **144.8 minutes**. Attempts include shrinking and repeated inputs; they are not counts of unique
+inputs or confirmed bugs.
 
-**Findings:** 113 failed; 1 skipped-library; 1 time-limit.
+**Findings:** 92 failed; 1 skipped-library; 22 time-limit.
 
-**known-inputs:** 113 failed; 1 time-limit.
-
-**robustness:** 12 failed; 96 passed; 6 time-limit.
+**value-path:** 272 failed; 1022 passed; 111 time-limit.
 
 Observed failures include chart validation rejections, rendering failures, and possible tooling limitations. Inferred inputs are not an
 authoritative chart contract. Findings need triage before being called chart defects; time-limited coverage remains incomplete.
@@ -21,12 +19,19 @@ kubeconform/kubesec validation was not configured.
 Source: `third_party/bitnami-charts` at `6a8cccf3c29a1faabf0c34c8276a09ed14f3c5b3`; Helm 4.3.0. Per-worker dependency caches are isolated.
 Each primary chart has one dedicated job; nested results from parent jobs are retained separately and excluded from totals.
 
-[Combined PDF](bitnami.pdf) · [Aggregate data](bitnami-runs/bitnami-charts_1789260948/scan.json.gz) ·
-[Raw logs and provenance](bitnami-runs/bitnami-charts_1789260948/README.md)
+[Combined PDF](<https://github.com/astrivant/hypothesis-helm/blob/main/docs/reports/bitnami.pdf>) ·
+[Aggregate data](<https://github.com/astrivant/hypothesis-helm/blob/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/scan.json.gz>)
+·
+[Raw logs and provenance](<https://github.com/astrivant/hypothesis-helm/blob/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/README.md>)
+
+Generated C0/C1 controls are excluded except LF and CR. Other Unicode text remains eligible; explicit finite domains are unchanged.
+Dependency preparation is excluded from chart testing budgets.
 
 Directory: third_party/bitnami-charts
-Started (Unix epoch): 1789260967
-Elapsed: 2539.00 seconds
+Started (Unix epoch): 1789316790
+Elapsed (wall clock): 8687.00 seconds
+Chart testing: 33730.96 seconds
+Dependency preparation: 93.28 seconds (excluded from testing budgets)
 Charts discovered: 115
 Scan status: completed
 Discovery complete: True
@@ -37,4724 +42,4397 @@ Baseline-only, skipped, blocked, and incomplete charts are not property-test pas
 
 ## Status counts
 
-```json
-{
-  "failed": 113,
-  "skipped-library": 1,
-  "time-limit": 1
-}
-```
+92 failed; 1 skipped-library; 22 time-limit.
 
 ## Settings
 
-```json
-{
-  "max_examples": 100,
-  "filter": true,
-  "fail": false,
-  "permutations": null,
-  "chart_timeout_seconds": 300.0,
-  "scan_timeout_seconds": null,
-  "helm": "Helm 4.3.0",
-  "seed": 0,
-  "build_dependencies": true,
-  "values": "values.yaml",
-  "clone_timeout_seconds": 180,
-  "workers": 4,
-  "external_conformity": false
-}
-```
+Filtering: True | Seed: 0 | Traversal: random
+Chart timeout: 300.0 seconds | Workers: 4
+Complete settings are retained in the JSON report.
 
 ## Errors
 
-115 distinct diagnostics across 125 occurrences; 10 repeats grouped.
-Matching diagnostics do not establish a shared root cause.
-
-### E001
-
-```text
-Error: YAML parse error on apache/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/apache (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000>)
-
-### E002
-
-```text
-Error: YAML parse error on apache/templates/svc.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/apache (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000>)
-
-### E003
-
-```text
-Error: YAML parse error on apisix/templates/control-plane/api-token-secret.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/apisix (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/apisix_1789260968/0000>)
-
-### E004
-
-```text
-Error: YAML parse error on appsmith/templates/backend/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/appsmith (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/appsmith_1789260968/0000>)
-
-### E005
-
-```text
-Error: YAML parse error on argo-cd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/argo-cd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/argo-cd_1789261025/0000>)
-
-### E006
-
-```text
-Error: YAML parse error on argo-workflows/templates/controller/deployment.yaml: error converting YAML to JSON: yaml: line 30: mapping values are not allowed in this context
-```
-
-- [bitnami/argo-workflows (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/argo-workflows_1789261054/0000>)
-
-### E007
-
-```text
-Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/cassandra (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cassandra_1789261132/0000>)
-
-### E008
-
-```text
-Error: YAML parse error on cert-manager/templates/cainjector/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/cert-manager (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cert-manager_1789261145/0000>)
-
-### E009
-
-```text
-Error: YAML parse error on clickhouse/templates/configd-configmap.yaml: error converting YAML to JSON: yaml: line 14: did not find expected key
-```
-
-- [bitnami/clickhouse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse_1789261201/0000>)
-
-### E010
-
-```text
-Error: YAML parse error on cloudnative-pg/templates/operator/clusterrolebinding.yaml: error converting YAML to JSON: yaml: line 4: did not find expected comment or line break
-```
-
-- [bitnami/cloudnative-pg (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cloudnative-pg_1789261278/0000>)
-
-### E011
-
-```text
-Error: YAML parse error on consul/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/consul (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/consul_1789261319/0000>)
-
-### E012
-
-```text
-Error: YAML parse error on contour/templates/certgen/serviceaccount.yaml: error converting YAML to JSON: yaml: line 15: did not find expected key
-```
-
-- [bitnami/contour (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/contour_1789261328/0000>)
-
-### E013
-
-```text
-Error: YAML parse error on deepspeed/templates/client/client-dep-job.yaml: error converting YAML to JSON: yaml: line 31: did not find expected key
-```
-
-- [bitnami/deepspeed (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/deepspeed_1789261342/0000>)
-
-### E014
-
-```text
-Error: YAML parse error on discourse/templates/service.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
-```
-
-- [bitnami/discourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/discourse_1789261349/0000>)
-
-### E015
-
-```text
-Error: YAML parse error on dremio/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/dremio (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/dremio_1789261357/0000>)
-
-### E016
-
-```text
-Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/ejbca (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/ejbca_1789261434/0000>)
-
-### E017
-
-```text
-Error: YAML parse error on elasticsearch/templates/coordinating/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/elasticsearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/elasticsearch_1789261468/0000>)
-
-### E018
-
-```text
-Error: YAML parse error on envoy-gateway/templates/deployment.yaml: error converting YAML to JSON: yaml: line 37: did not find expected key
-```
-
-- [bitnami/envoy-gateway (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/envoy-gateway_1789261488/0000>)
-
-### E019
-
-```text
-Error: YAML parse error on etcd/templates/svc-headless.yaml: error converting YAML to JSON: yaml: line 14: did not find expected key
-```
-
-- [bitnami/etcd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/etcd_1789261495/0000>)
-
-### E020
-
-```text
-Error: YAML parse error on external-dns/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/external-dns (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/external-dns_1789261550/0000>)
-
-### E021
-
-```text
-Error: YAML parse error on flink/templates/taskmanager/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/flink (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/flink_1789261585/0000>)
-
-### E022
-
-```text
-Error: YAML parse error on fluent-bit/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/fluent-bit (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/fluent-bit_1789261621/0000>)
-
-### E023
-
-```text
-Error: YAML parse error on fluentd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/fluentd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/fluentd_1789261647/0000>)
-
-### E024
-
-```text
-Error: YAML parse error on flux/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/flux (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/flux_1789261654/0000>)
-
-### E025
-
-```text
-Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/gitea (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/gitea_1789261682/0000>)
-
-### E026
-
-```text
-Error: YAML parse error on gitlab-runner/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/gitlab-runner (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/gitlab-runner_1789261710/0000>)
-
-### E027
-
-```text
-Error: YAML parse error on grafana-k6-operator/templates/deployment.yaml: error converting YAML to JSON: yaml: line 85: mapping keys are not allowed in this context
-```
-
-- [bitnami/grafana-k6-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-k6-operator_1789261748/0000>)
-
-### E028
-
-```text
-Error: YAML parse error on grafana-loki/templates/gateway/configmap-http.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/grafana-loki (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-loki_1789261775/0000>)
-
-### E029
-
-```text
-Error: YAML parse error on grafana-operator/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/grafana-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-operator_1789261806/0000>)
-
-### E030
-
-```text
-Error: YAML parse error on grafana-tempo/templates/tempo-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/grafana-tempo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-tempo_1789261832/0000>)
-
-### E031
-
-```text
-Error: YAML parse error on grafana/templates/application.yaml: error converting YAML to JSON: yaml: line 138: mapping keys are not allowed in this context
-```
-
-- [bitnami/grafana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana_1789261713/0000>)
-
-### E032
-
-```text
-Error: YAML parse error on haproxy/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/haproxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/haproxy_1789261927/0000>)
-
-### E033
-
-```text
-Error: YAML parse error on harbor/templates/core/core-dpl.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/harbor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/harbor_1789261928/0000>)
-
-### E034
-
-```text
-Error: YAML parse error on jaeger/templates/collector/configmap.yaml: error converting YAML to JSON: yaml: line 86: found unexpected end of stream
-```
-
-- [bitnami/jaeger (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jaeger_1789261953/0000>)
-
-### E035
-
-```text
-Error: YAML parse error on janusgraph/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/janusgraph (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/janusgraph_1789261985/0000>)
-
-### E036
-
-```text
-Error: YAML parse error on jenkins/templates/controller-svc.yaml: error converting YAML to JSON: yaml: line 13: mapping values are not allowed in this context
-```
-
-- [bitnami/jenkins (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000>)
-
-### E037
-
-```text
-Error: YAML parse error on kafka/templates/controller-eligible/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/kafka (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kafka_1789262019/0000>)
-
-### E038
-
-```text
-Error: YAML parse error on kibana/templates/ingress.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/kibana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kibana_1789262084/0000>)
-
-### E039
-
-```text
-Error: YAML parse error on kong/templates/dep-ds.yaml: error converting YAML to JSON: yaml: line 58: block sequence entries are not allowed in this context
-```
-
-- [bitnami/kong (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kong_1789262120/0000>)
-
-### E040
-
-```text
-Error: YAML parse error on kube-arangodb/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/kube-arangodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-arangodb_1789262121/0000>)
-
-### E041
-
-```text
-Error: YAML parse error on kuberay/templates/apiserver/clusterrolebinding.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
-```
-
-- [bitnami/kuberay (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kuberay_1789262165/0000>)
-
-### E042
-
-```text
-Error: YAML parse error on kubernetes-event-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 27: did not find expected key
-```
-
-- [bitnami/kubernetes-event-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kubernetes-event-exporter_1789262168/0000>)
-
-### E043
-
-```text
-Error: YAML parse error on logstash/templates/sts.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/logstash (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/logstash_1789262184/0000>)
-
-### E044
-
-```text
-Error: YAML parse error on matomo/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/matomo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/matomo_1789262257/0000>)
-
-### E045
-
-```text
-Error: YAML parse error on metallb/templates/controller/configmap.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
-```
-
-- [bitnami/metallb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/metallb_1789262350/0000>)
-
-### E046
-
-```text
-Error: YAML parse error on metrics-server/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/metrics-server (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/metrics-server_1789262363/0000>)
-
-### E047
-
-```text
-Error: YAML parse error on mlflow/templates/run/dep-job.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/mlflow (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000>)
-
-### E048
-
-```text
-Error: YAML parse error on mongodb-sharded/templates/config-server/config-server-statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/mongodb-sharded (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb-sharded_1789262509/0000>)
-
-### E049
-
-```text
-Error: YAML parse error on mongodb/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/mongodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb_1789262443/0000>)
-
-### E050
-
-```text
-Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/moodle (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/moodle_1789262603/0000>)
-
-### E051
-
-```text
-Error: YAML parse error on multus-cni/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 73: did not find expected comment or line break
-```
-
-- [bitnami/multus-cni (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/multus-cni_1789262612/0000>)
-
-### E052
-
-```text
-Error: YAML parse error on mysql/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/mysql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mysql_1789262639/0000>)
-
-### E053
-
-```text
-Error: YAML parse error on nats/templates/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/nats (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nats_1789262668/0000>)
-
-### E054
-
-```text
-Error: YAML parse error on nessie/templates/networkpolicy.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
-```
-
-- [bitnami/nessie (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nessie_1789262730/0000>)
-
-### E055
-
-```text
-Error: YAML parse error on nginx/templates/context-includes-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/nginx (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000>)
-
-### E056
-
-```text
-Error: YAML parse error on nginx/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/nginx (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000>)
-
-### E057
-
-```text
-Error: YAML parse error on opensearch/templates/coordinating/statefulset.yaml: error converting YAML to JSON: yaml: line 184: mapping values are not allowed in this context
-```
-
-- [bitnami/opensearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/opensearch_1789262840/0000>)
-
-### E058
-
-```text
-Error: YAML parse error on parse/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/parse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/parse_1789262841/0000>)
-
-### E059
-
-```text
-Error: YAML parse error on pinniped/templates/concierge/apiservice-identity.yaml: error converting YAML to JSON: yaml: line 23: found unexpected end of stream
-```
-
-- [bitnami/pinniped (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/pinniped_1789262910/0000>)
-
-### E060
-
-```text
-Error: YAML parse error on postgresql-ha/templates/pgpool/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/postgresql-ha (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql-ha_1789262929/0000>)
-
-### E061
-
-```text
-Error: YAML parse error on postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/postgresql (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000>)
-
-### E062
-
-```text
-Error: YAML parse error on prometheus/templates/alertmanager/networkpolicy.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000>)
-
-### E063
-
-```text
-Error: YAML parse error on prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/prometheus (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000>)
-
-### E064
-
-```text
-Error: YAML parse error on rabbitmq-cluster-operator/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/rabbitmq-cluster-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq-cluster-operator_1789263004/0000>)
-
-### E065
-
-```text
-Error: YAML parse error on rabbitmq/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/rabbitmq (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq_1789262993/0000>)
-
-### E066
-
-```text
-Error: YAML parse error on redis-cluster/templates/redis-statefulset.yaml: error converting YAML to JSON: yaml: line 177: block sequence entries are not allowed in this context
-```
-
-- [bitnami/redis-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redis-cluster_1789263038/0000>)
-
-### E067
-
-```text
-Error: YAML parse error on redmine/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/redmine (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000>)
-
-### E068
-
-```text
-Error: YAML parse error on redmine/templates/svc.yaml: error converting YAML to JSON: yaml: line 14: block sequence entries are not allowed in this context
-```
-
-- [bitnami/redmine (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000>)
-
-### E069
-
-```text
-Error: YAML parse error on seaweedfs/templates/filer/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/seaweedfs (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/seaweedfs_1789263116/0000>)
-
-### E070
-
-```text
-Error: YAML parse error on solr/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/solr (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/solr_1789263147/0000>)
-
-### E071
-
-```text
-Error: YAML parse error on sonarqube/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/sonarqube (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/sonarqube_1789263200/0000>)
-
-### E072
-
-```text
-Error: YAML parse error on superset/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/superset (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/superset_1789263238/0000>)
-
-### E073
-
-```text
-Error: YAML parse error on tensorflow-resnet/templates/service.yaml: error converting YAML to JSON: yaml: line 15: mapping values are not allowed in this context
-```
-
-- [bitnami/tensorflow-resnet (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/tensorflow-resnet_1789263255/0000>)
-
-### E074
-
-```text
-Error: YAML parse error on thanos/templates/storegateway/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/thanos (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/thanos_1789263263/0000>)
-
-### E075
-
-```text
-Error: YAML parse error on tomcat/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/tomcat (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/tomcat_1789263266/0000>)
-
-### E076
-
-```text
-Error: YAML parse error on valkey-cluster/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/valkey-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/valkey-cluster_1789263288/0000>)
-
-### E077
-
-```text
-Error: YAML parse error on valkey/templates/replicas/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/valkey (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/valkey_1789263282/0000>)
-
-### E078
-
-```text
-Error: YAML parse error on vault/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/vault (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/vault_1789263307/0000>)
-
-### E079
-
-```text
-Error: YAML parse error on victoriametrics/templates/vmagent/dep-ds.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/victoriametrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/victoriametrics_1789263322/0000>)
-
-### E080
-
-```text
-Error: YAML parse error on wordpress/templates/httpd-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/wordpress (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000>)
-
-### E081
-
-```text
-Error: YAML parse error on wordpress/templates/svc.yaml: error converting YAML to JSON: yaml: line 13: mapping keys are not allowed in this context
-```
-
-- [bitnami/wordpress (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000>)
-
-### E082
-
-```text
-Error: YAML parse error on zookeeper/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 181: block sequence entries are not allowed in this context
-```
-
-- [bitnami/zookeeper (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/zookeeper_1789263392/0000>)
-
-### E083
-
-```text
-Error: mlflow/templates/tracking/deployment.yaml:105:12
-  executing "mlflow/templates/tracking/deployment.yaml" at <include "mlflow.v0.volumePermissionsInitContainer" .>:
-    error calling include:
-mlflow/templates/_helpers.tpl:553:12
-  executing "mlflow.v0.volumePermissionsInitContainer" at <include>:
-    wrong number of args for include: want 2 got 1
-```
-
-- [bitnami/mlflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000>)
-
-### E084
-
-```text
-Error: schema-registry/templates/http-route.yaml:7:13
-  executing "schema-registry/templates/http-route.yaml" at <$route.enabled>:
-    nil pointer evaluating interface {}.enabled
-```
-
-- [bitnami/schema-registry (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/schema-registry_1789263074/0000>)
-
-### E085
-
-```text
-Error: scylladb/templates/networkpolicy.yaml:62:19
-  executing "scylladb/templates/networkpolicy.yaml" at <.containerPort>:
-    nil pointer evaluating interface {}.containerPort
-```
-
-- [bitnami/scylladb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/scylladb_1789263109/0000>)
-
-### E086
-
-```text
-Error: values don't meet the specifications of the schema(s) in the following chart(s):
-mysql:
-- at '/architecture': value must be one of 'standalone', 'replication'
-```
-
-- [bitnami/ghost (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/ghost_1789261679/0000>)
-
-### E087
-
-```text
-chart rendered no resources (use allow_empty explicitly)
-```
-
-- [bitnami/kube-prometheus/charts/kube-prometheus-crds (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000>)
-- [bitnami/kube-prometheus/charts/kube-prometheus-crds (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000>)
-
-### E088
-
-```text
-duplicate resource: ('rbac.authorization.k8s.io/v1', 'Role', None, 'hypothesis-clickhouse-operator')
-```
-
-- [bitnami/clickhouse-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse-operator_1789261238/0000>)
-
-### E089
-
-Source: airflow 25.1.0 / templates/NOTES.txt
-
-```text
-execution error at (airflow/templates/NOTES.txt:129:3):
-VALUES VALIDATION:
-
-airflow: executors
-    You need to provide at least one value for the '.executor' parameter.
-```
-
-- [bitnami/airflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/airflow_1789260968/0000>)
-
-### E090
-
-Source: aspnet-core 8.0.0 / templates/NOTES.txt
-
-```text
-execution error at (aspnet-core/templates/NOTES.txt:58:4):
-VALUES VALIDATION:
-aspnet-core: missing-extra-volume-mounts
-    You specified extra volumes but not mount points for them.
-    Please also set the extraVolumeMounts parameter.
-```
-
-- [bitnami/aspnet-core (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/aspnet-core_1789261101/0000>)
-
-### E091
-
-Source: cadvisor 0.1.14 / templates/daemonset.yaml
-
-```text
-execution error at (cadvisor/templates/daemonset.yaml:155:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
-```
-
-- [bitnami/cadvisor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cadvisor_1789261127/0000>)
-
-### E092
-
-Source: chainloop 4.0.76 / templates/controlplane/secret-jwt-cas-private-key.yaml
-
-```text
-execution error at (chainloop/templates/controlplane/secret-jwt-cas-private-key.yaml:14:22): Authentication Private Key "casJWTPrivateKey" required
-```
-
-- [bitnami/chainloop (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/chainloop_1789261157/0000>)
-
-### E093
-
-Source: grafana-alloy 1.0.8 / templates/NOTES.txt
-
-```text
-execution error at (grafana-alloy/templates/NOTES.txt:71:4):
-
-⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
-
-Unrecognized images:
-  - 00/bitnami/grafana-alloy:1.10.2-debian-12-r0
-  - 00/bitnami/configmap-reload:0.15.0-debian-12-r12
-
-If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
-Further information can be obtained at https://github.com/bitnami/charts/issues/30850
-```
-
-- [bitnami/grafana-alloy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-alloy_1789261741/0000>)
-
-### E094
-
-Source: influxdb 7.1.21 / templates/NOTES.txt
-
-```text
-execution error at (influxdb/templates/NOTES.txt:146:4):
-
-⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
-
-Unrecognized images:
-  - 00/bitnami/influxdb:3.4.1-debian-12-r0
-  - 00/bitnami/os-shell:12-debian-12-r51
-  - 00/bitnami/kubectl:1.33.4-debian-12-r0
-
-If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
-Further information can be obtained at https://github.com/bitnami/charts/issues/30850
-```
-
-- [bitnami/influxdb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/influxdb_1789261931/0000>)
-
-### E095
-
-Source: jupyterhub 10.0.6 / templates/proxy/deployment.yaml
-
-```text
-execution error at (jupyterhub/templates/proxy/deployment.yaml:32:32): ERROR: Preset key '' invalid. Allowed values are medium,large,xlarge,2xlarge,nano,micro,small
-```
-
-- [bitnami/jupyterhub (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jupyterhub_1789262019/0000>)
-
-### E096
-
-Source: kube-state-metrics 5.1.1 / templates/deployment.yaml
-
-```text
-execution error at (kube-state-metrics/templates/deployment.yaml:205:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
-```
-
-- [bitnami/kube-state-metrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-state-metrics_1789262164/0000>)
-
-### E097
-
-Source: mariadb-galera 16.0.2 / templates/statefulset.yaml
-
-```text
-execution error at (mariadb-galera/templates/statefulset.yaml:78:25): ERROR: Preset key '' invalid. Allowed values are nano,micro,small,medium,large,xlarge,2xlarge
-```
-
-- [bitnami/mariadb-galera (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb-galera_1789262206/0000>)
-
-### E098
-
-Source: mariadb 22.0.0 / templates/NOTES.txt
-
-```text
-execution error at (mariadb/templates/NOTES.txt:74:4):
-VALUES VALIDATION:
-mariadb: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/drupal (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/drupal_1789261399/0000>)
-
-### E099
-
-Source: mariadb 23.0.1 / templates/NOTES.txt
-
-```text
-execution error at (mariadb/templates/NOTES.txt:74:4):
-VALUES VALIDATION:
-mariadb: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/mariadb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000>)
-- [bitnami/mariadb (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000>)
-
-### E100
-
-Source: memcached 7.9.7 / templates/NOTES.txt
-
-```text
-execution error at (memcached/templates/NOTES.txt:46:4):
-VALUES VALIDATION:
-memcached: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "high-availability". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/grafana-mimir (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-mimir_1789261802/0000>)
-
-### E101
-
-Source: memcached 8.0.0 / templates/NOTES.txt
-
-```text
-execution error at (memcached/templates/NOTES.txt:46:4):
-VALUES VALIDATION:
-memcached: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "high-availability". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/memcached (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/memcached_1789262312/0000>)
-
-### E102
-
-Source: odoo 28.2.11 / templates/deployment.yaml
-
-```text
-execution error at (odoo/templates/deployment.yaml:270:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
-```
-
-- [bitnami/odoo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/odoo_1789262798/0000>)
-
-### E103
-
-Source: postgresql 17.1.2 / templates/NOTES.txt
-
-```text
-execution error at (postgresql/templates/NOTES.txt:118:4):
-VALUES VALIDATION:
-postgresql: psp.create, rbac.create
-    RBAC should be enabled if PSP is enabled in order for PSP to work.
-    More info at https://kubernetes.io/docs/concepts/policy/pod-security-policy/#authorizing-policies
-```
-
-- [bitnami/postgresql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000>)
-
-### E104
-
-Source: pytorch 5.0.0 / templates/NOTES.txt
-
-```text
-execution error at (pytorch/templates/NOTES.txt:69:3):
-VALUES VALIDATION:
-pytorch: architecture
-    Invalid architecture selected. Valid values are "distributed" and
-    "standalone". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/pytorch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/pytorch_1789262979/0000>)
-
-### E105
-
-Source: redis 22.0.4 / templates/NOTES.txt
-
-```text
-execution error at (redis/templates/NOTES.txt:202:4):
-VALUES VALIDATION:
-redis: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/oauth2-proxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/oauth2-proxy_1789262793/0000>)
-
-### E106
-
-Source: redis 23.1.1 / templates/NOTES.txt
-
-```text
-execution error at (redis/templates/NOTES.txt:202:4):
-VALUES VALIDATION:
-redis: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/redis (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000>)
-- [bitnami/redis (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000>)
-
-### E107
-
-Source: sealed-secrets 2.5.20 / templates/deployment.yaml
-
-```text
-execution error at (sealed-secrets/templates/deployment.yaml:172:25): ERROR: Preset key '' invalid. Allowed values are nano,micro,small,medium,large,xlarge,2xlarge
-```
-
-- [bitnami/sealed-secrets (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/sealed-secrets_1789263115/0000>)
-
-### E108
-
-Source: whereabouts 1.2.20 / templates/daemonset.yaml
-
-```text
-execution error at (whereabouts/templates/daemonset.yaml:164:25): ERROR: Preset key '' invalid. Allowed values are nano,micro,small,medium,large,xlarge,2xlarge
-```
-
-- [bitnami/whereabouts (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/whereabouts_1789263358/0000>)
-
-### E109
-
-```text
-invalid rendered YAML: more indented follow up line than first in a block scalar
-  in "<unicode string>", line 474, column 15:
-                  set -o errexit
-                  ^ (line: 474)
-```
-
-- [bitnami/zipkin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000>)
-- [bitnami/zipkin (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000>)
-
-### E110
-
-```text
-level=INFO msg="warning: destination for kube-state-metrics.rbac.rules is a table. Ignoring non-table value ([])"
-Error: YAML parse error on kube-prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/kube-prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus_1789262132/0000>)
-
-### E111
-
-```text
-level=INFO msg="warning: destination for postgresql.tls.autoGenerated is a table. Ignoring non-table value (false)"
-Error: YAML parse error on keycloak/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/keycloak (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/keycloak_1789262075/0000>)
-
-### E112
-
-```text
-resource has no metadata.name
-```
-
-- [bitnami/jenkins (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000>)
-- [bitnami/keydb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/keydb_1789262081/0000>)
-- [bitnami/mastodon (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mastodon_1789262219/0000>)
-- [bitnami/neo4j (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/neo4j_1789262693/0000>)
-- [bitnami/phpmyadmin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/phpmyadmin_1789262890/0000>)
-- [bitnami/spark (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/spark_1789263236/0000>)
-- [bitnami/wildfly (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/wildfly_1789263365/0000>)
-
-### E113
-
-Source: cilium 3.1.10 / templates/agent/daemonset.yaml
-
-```text
-template: cilium/templates/agent/daemonset.yaml:30:15: executing "cilium/templates/agent/daemonset.yaml" at <semverCompare "<1.30-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
-```
-
-- [bitnami/cilium (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cilium_1789261173/0000>)
-
-### E114
-
-Source: common 2.31.4 / templates/_capabilities.tpl
-
-```text
-template: common/templates/_capabilities.tpl:131:32: executing "common.capabilities.psp.supported" at <semverCompare "<1.25-0" $kubeVersion>: error calling semverCompare: invalid semantic version
-```
-
-- [bitnami/node-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/node-exporter_1789262746/0000>)
-
-### E115
-
-Source: concourse 5.1.47 / templates/worker/rolebinding.yaml
-
-```text
-template: concourse/templates/worker/rolebinding.yaml:27:22: executing "concourse/templates/worker/rolebinding.yaml" at <semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
-```
-
-- [bitnami/concourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/concourse_1789261279/0000>)
+244 distinct diagnostics across 274 occurrences; 30 repeats grouped.
+Diagnostics and their triggering inputs are grouped under each chart below.
+Up to two examples per diagnostic and six fields per example are shown. Long values and diagnostics are shortened.
+Full inputs, diagnostics, and remaining cases are retained in JSON and linked artifacts.
+Selected fields identify what the test varied, not an independently proven cause.
 
 ## Charts
 
 ### bitnami/airflow
 
-Result: FAIL | Status: failed
-Attempts: 145 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/airflow_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/airflow_1789260968/0000>)
+Status: time-limit | Attempts: 264
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 506 | Varied in render attempts: 3
-Missing values: 6 | Undocumented template fields: 534
-Unreferenced values: 280 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 44
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E089](#e089)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "executor": ""
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/airflow_1789316791/0000>)
 
 ### bitnami/apache
 
-Result: FAIL | Status: failed
-Attempts: 212 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000>)
+Status: failed | Attempts: 1425
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E001
 
-Identified input fields (lower bound): 116 | Varied in render attempts: 30
-Missing values: 2 | Undocumented template fields: 116
-Unreferenced values: 41 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 115
-
-Phase robustness: failed | Attempts: 97
-
-Errors: [E001](#e001), [E002](#e002)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
+```text
+Error: YAML parse error on apache/templates/deployment.yaml: error converting YAML to JSON: yaml: line 178: found an indentation indicator
+equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.htdocsConfigMap | Status: failed
 
-```json
-{
-  "service": {
-    "": [],
-    "type": "\u001f"
-  }
-}
+Selected fields (full context in artifacts):
+- `$.htdocsConfigMap = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apache_1789316791/0000/paths/a84b1abe3a11000d364a>)
+
+#### E002
+
+```text
+Error: YAML parse error on apache/templates/deployment.yaml: error converting YAML to JSON: yaml: line 31: did not find expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apache_1789316791/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E003
+
+```text
+Error: YAML parse error on apache/templates/deployment.yaml: error converting YAML to JSON: yaml: line 62: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apache_1789316791/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E004
+
+```text
+Error: YAML parse error on apache/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal to
+0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apache_1789316791/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apache_1789316791/0000>)
 
 ### bitnami/apisix
 
-Result: FAIL | Status: failed
-Attempts: 85 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/apisix_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/apisix_1789260968/0000>)
+Status: failed | Attempts: 77
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E005
 
-Identified input fields (lower bound): 369 | Varied in render attempts: 17
-Missing values: 0 | Undocumented template fields: 37
-Unreferenced values: 114 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 52
-
-Phase robustness: time-limit | Attempts: 33
-
-Errors: [E003](#e003)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
+```text
+Error: YAML parse error on apisix/templates/control-plane/dep-ds.yaml: error converting YAML to JSON: yaml: line 329: found an indentation
+indicator equal to 0
 ```
+
+Phase: $.controlPlane.extraConfigExistingConfigMap | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.controlPlane.extraConfigExistingConfigMap = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apisix_1789316791/0000/paths/98c9de7170b4f8fa32cd>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apisix_1789316791/0000>)
 
 ### bitnami/appsmith
 
-Result: FAIL | Status: failed
-Attempts: 136 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/appsmith_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/appsmith_1789260968/0000>)
+Status: failed | Attempts: 415
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E006
 
-Identified input fields (lower bound): 229 | Varied in render attempts: 2
-Missing values: 0 | Undocumented template fields: 240
-Unreferenced values: 120 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 35
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E004](#e004)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
+```text
+Error: YAML parse error on appsmith/templates/backend/pdb.yaml: error converting YAML to JSON: yaml: line 14: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.backend.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.backend.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/appsmith_1789316791/0000/paths/e5a7721b8b6a3e96d7c0>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/appsmith_1789316791/0000>)
 
 ### bitnami/argo-cd
 
-Result: FAIL | Status: failed
-Attempts: 162 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/argo-cd_1789261025/0000](<bitnami-runs/bitnami-charts_1789260948/runs/argo-cd_1789261025/0000>)
+Status: failed | Attempts: 254
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E215
 
-Identified input fields (lower bound): 631 | Varied in render attempts: 7
-Missing values: 26 | Undocumented template fields: 647
-Unreferenced values: 240 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 61
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E005](#e005)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: argo-cd/templates/server/ingress-grcp.yaml:41:15 executing "argo-cd/templates/server/ingress-grcp.yaml" at <.name>: nil pointer
+evaluating interface {}.name
 ```
+
+Phase: $.server.ingressGrpc | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.server.ingressGrpc = {"enabled": true, "extraHosts": [null]}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/argo-cd_1789317093/0000/paths/13e1a098996e33c7f121>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/argo-cd_1789317093/0000>)
 
 ### bitnami/argo-workflows
 
-Result: FAIL | Status: failed
-Attempts: 131 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/argo-workflows_1789261054/0000](<bitnami-runs/bitnami-charts_1789260948/runs/argo-workflows_1789261054/0000>)
+Status: failed | Attempts: 609
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E007
 
-Identified input fields (lower bound): 176 | Varied in render attempts: 0
-Missing values: 0 | Undocumented template fields: 184
-Unreferenced values: 91 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 30
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E006](#e006)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": null
-  }
-}
+```text
+Error: YAML parse error on argo-workflows/templates/controller/clusterrolebinding.yaml: error converting YAML to JSON: yaml: line 23: did
+not find expected node content
 ```
+
+Phase: $.controller.workflowNamespaces[*] | Status: failed
+
+Selected fields (full context in artifacts):
+- No supplied value at the selected paths.
+Absent from overrides: $.controller.workflowNamespaces["*"]. Defaults may still apply.
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/argo-workflows_1789317094/0000/paths/d21976126c873fdee7bc>)
+
+#### E008
+
+```text
+Error: YAML parse error on argo-workflows/templates/controller/workflow-serviceaccount.yaml: error unmarshaling JSON: while decoding JSON:
+json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+Phase: $.workflows.serviceAccount | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.workflows.serviceAccount = {"annotations": {"": []}}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/argo-workflows_1789317094/0000/paths/c246ccf3c22f11e34d43>)
+
+#### E222
+
+Source: argo-workflows 13.0.7 / templates/NOTES.txt
+
+```text
+[Diagnostic shortened; full text in artifacts] ... kely to cause degraded security and performance, broken chart features, and missing
+environment variables. Unrecognized images: - 0/bitnami/argo-workflow-exec:3.7.1-debian-12-r1 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+Phase: $.executor.image.registry | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.executor.image.registry = "0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/argo-workflows_1789317094/0000/paths/07b681bcf5ce22fbc17d>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/argo-workflows_1789317094/0000>)
 
 ### bitnami/aspnet-core
 
-Result: FAIL | Status: failed
-Attempts: 206 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/aspnet-core_1789261101/0000](<bitnami-runs/bitnami-charts_1789260948/runs/aspnet-core_1789261101/0000>)
+Status: failed | Attempts: 1420
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E009
 
-Identified input fields (lower bound): 111 | Varied in render attempts: 38
-Missing values: 5 | Undocumented template fields: 116
-Unreferenced values: 33 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 105
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E090](#e090)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraVolumes": [
-    null
-  ]
-}
+```text
+Error: YAML parse error on aspnet-core/templates/deployment.yaml: error converting YAML to JSON: yaml: line 29: did not find expected ',' or
+']'
 ```
+
+Phase: $.appFromExternalRepo.clone.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.appFromExternalRepo.clone.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/aspnet-core_1789317096/0000/paths/5a7bb70f23ca77d7dde5>)
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/aspnet-core_1789317096/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E010
+
+```text
+Error: YAML parse error on aspnet-core/templates/deployment.yaml: error converting YAML to JSON: yaml: line 66: mapping values are not
+allowed in this context
+```
+
+Phase: $.appFromExternalRepo.publish.image.tag | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.appFromExternalRepo.publish.image.tag = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/aspnet-core_1789317096/0000/paths/6f16a3fce30f040bbbba>)
+
+#### E011
+
+```text
+Error: YAML parse error on aspnet-core/templates/deployment.yaml: error converting YAML to JSON: yaml: line 83: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/aspnet-core_1789317096/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E012
+
+```text
+Error: YAML parse error on aspnet-core/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator
+equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/aspnet-core_1789317096/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/aspnet-core_1789317096/0000>)
 
 ### bitnami/cadvisor
 
-Result: FAIL | Status: failed
-Attempts: 126 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/cadvisor_1789261127/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cadvisor_1789261127/0000>)
+Status: failed | Attempts: 1614
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E013
 
-Identified input fields (lower bound): 98 | Varied in render attempts: 2
-Missing values: 3 | Undocumented template fields: 102
-Unreferenced values: 34 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 25
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E091](#e091)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "resourcesPreset": ""
-}
+```text
+Error: YAML parse error on cadvisor/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 35: did not find expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cadvisor_1789317099/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cadvisor_1789317099/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E014
+
+```text
+Error: YAML parse error on cadvisor/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cadvisor_1789317099/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cadvisor_1789317099/0000>)
 
 ### bitnami/cassandra
 
-Result: FAIL | Status: failed
-Attempts: 135 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/cassandra_1789261132/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cassandra_1789261132/0000>)
+Status: failed | Attempts: 1261
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E015
 
-Identified input fields (lower bound): 131 | Varied in render attempts: 1
-Missing values: 1 | Undocumented template fields: 137
-Unreferenced values: 53 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 34
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E007](#e007)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "\u001f"
-}
+```text
+Error: YAML parse error on cassandra/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal
+to 0
 ```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cassandra_1789317398/0000/paths/d6baed3b8998a068f471>)
+
+#### E016
+
+```text
+Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 203: found an indentation
+indicator equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cassandra_1789317398/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E017
+
+```text
+Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 205: found an indentation
+indicator equal to 0
+```
+
+Phase: $.initDBSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.initDBSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cassandra_1789317398/0000/paths/54a61259d47f0b2947b0>)
+
+#### E018
+
+```text
+Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 31: did not find expected ',' or
+']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cassandra_1789317398/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E019
+
+```text
+Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 68: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cassandra_1789317398/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E223
+
+Source: cassandra 12.3.13 / templates/NOTES.txt
+
+```text
+execution error at (cassandra/templates/NOTES.txt:95:4): VALUES VALIDATION: cassandra: tls.enabled In order to enable TLS, you also need to
+provide an existing secret containing the Keystore and Truststore or enable auto-generated certificates.
+```
+
+Phase: $.tls.internodeEncryption | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.tls.internodeEncryption = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cassandra_1789317398/0000/paths/6304a8bdd493268fe082>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cassandra_1789317398/0000>)
 
 ### bitnami/cert-manager
 
-Result: FAIL | Status: failed
-Attempts: 168 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/cert-manager_1789261145/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cert-manager_1789261145/0000>)
+Status: failed | Attempts: 620
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E020
 
-Identified input fields (lower bound): 186 | Varied in render attempts: 51
-Missing values: 4 | Undocumented template fields: 195
-Unreferenced values: 66 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 67
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E008](#e008)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "leaderElection": {
-    "namespace": "\u001f"
-  }
-}
+```text
+Error: YAML parse error on cert-manager/templates/cainjector/deployment.yaml: error converting YAML to JSON: yaml: line 86: found an
+indentation indicator equal to 0
 ```
+
+Phase: $.cainjector.extraEnvVarsSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.cainjector.extraEnvVarsSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cert-manager_1789317398/0000/paths/a191661e18fe43471e4f>)
+
+#### E021
+
+```text
+Error: YAML parse error on cert-manager/templates/controller/deployment.yaml: error converting YAML to JSON: yaml: line 43: found an
+indentation indicator equal to 0
+```
+
+Phase: $.controller.runtimeClassName | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.controller.runtimeClassName = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cert-manager_1789317398/0000/paths/f82d28e2c30ee5985d85>)
+
+#### E224
+
+Source: cert-manager 1.5.15 / templates/NOTES.txt
+
+```text
+[Diagnostic shortened; full text in artifacts] ... containers is likely to cause degraded security and performance, broken chart features,
+and missing environment variables. Unrecognized images: - docker.io/0:1.18.2-debian-12-r5 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+Phase: $.webhook.image.repository | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.webhook.image.repository = "0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cert-manager_1789317398/0000/paths/029ae7dbec2e908f49af>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cert-manager_1789317398/0000>)
 
 ### bitnami/chainloop
 
-Result: FAIL | Status: failed
-Attempts: 147 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/chainloop_1789261157/0000](<bitnami-runs/bitnami-charts_1789260948/runs/chainloop_1789261157/0000>)
+Status: failed | Attempts: 385
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E022
 
-Identified input fields (lower bound): 331 | Varied in render attempts: 6
-Missing values: 6 | Undocumented template fields: 346
-Unreferenced values: 81 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 46
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E092](#e092)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "development": false
-}
+```text
+Error: YAML parse error on chainloop/templates/controlplane/deployment.yaml: error converting YAML to JSON: yaml: line 60: found an
+indentation indicator equal to 0
 ```
+
+Phase: $.controlplane.terminationGracePeriodSeconds | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.controlplane.terminationGracePeriodSeconds = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/chainloop_1789317399/0000/paths/94d51abc8b5003c3268d>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/chainloop_1789317399/0000>)
 
 ### bitnami/cilium
 
-Result: FAIL | Status: failed
-Attempts: 187 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/cilium_1789261173/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cilium_1789261173/0000>)
+Status: time-limit | Attempts: 209
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 456 | Varied in render attempts: 11
-Missing values: 0 | Undocumented template fields: 478
-Unreferenced values: 310 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 86
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E113](#e113)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "kubeVersion": ":"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cilium_1789317401/0000>)
 
 ### bitnami/clickhouse
 
-Result: FAIL | Status: failed
-Attempts: 181 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/clickhouse_1789261201/0000](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse_1789261201/0000>)
+Status: failed | Attempts: 710
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E026
 
-Identified input fields (lower bound): 243 | Varied in render attempts: 24
-Missing values: 0 | Undocumented template fields: 255
-Unreferenced values: 84 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 80
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E009](#e009)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "configdFiles": {
-    "": null
-  }
-}
+```text
+Error: YAML parse error on clickhouse/templates/usersd-configmap.yaml: error converting YAML to JSON: yaml: line 14: did not find expected
+key
 ```
+
+Phase: $.usersdFiles | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.usersdFiles = {"": null}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/clickhouse_1789317700/0000/paths/638458d117473394e4a1>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/clickhouse_1789317700/0000>)
 
 ### bitnami/clickhouse-operator
 
-Result: FAIL | Status: failed
-Attempts: 172 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/clickhouse-operator_1789261238/0000](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse-operator_1789261238/0000>)
+Status: failed | Attempts: 1176
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E023
 
-Identified input fields (lower bound): 117 | Varied in render attempts: 10
-Missing values: 0 | Undocumented template fields: 124
-Unreferenced values: 56 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 71
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E088](#e088)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "watchNamespaces": [
-    null,
-    null
-  ]
-}
+```text
+Error: YAML parse error on clickhouse-operator/templates/deployment.yaml: error converting YAML to JSON: yaml: line 44: block sequence
+entries are not allowed in this context
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/clickhouse-operator_1789317700/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E024
+
+```text
+Error: YAML parse error on clickhouse-operator/templates/deployment.yaml: error converting YAML to JSON: yaml: line 68: mapping values are
+not allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/clickhouse-operator_1789317700/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E025
+
+```text
+Error: YAML parse error on clickhouse-operator/templates/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an indentation
+indicator equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/clickhouse-operator_1789317700/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/clickhouse-operator_1789317700/0000>)
 
 ### bitnami/cloudnative-pg
 
-Result: FAIL | Status: failed
-Attempts: 152 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/cloudnative-pg_1789261278/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cloudnative-pg_1789261278/0000>)
+Status: failed | Attempts: 442
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E027
 
-Identified input fields (lower bound): 227 | Varied in render attempts: 1
-Missing values: 0 | Undocumented template fields: 235
-Unreferenced values: 50 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 51
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E010](#e010)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": ">"
-}
+```text
+Error: YAML parse error on cloudnative-pg/templates/plugin-barman-cloud/deployment.yaml: error converting YAML to JSON: yaml: line 138:
+could not find expected ':'
 ```
+
+Phase: $.pluginBarmanCloud.tls | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pluginBarmanCloud.tls = {"client": {"existingSecret": "\r0"}}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cloudnative-pg_1789317702/0000/paths/42dca26bb7a7f8513cb0>)
+
+#### E028
+
+```text
+Error: YAML parse error on cloudnative-pg/templates/plugin-barman-cloud/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an
+indentation indicator equal to 0
+```
+
+Phase: $.pluginBarmanCloud.pdb.minAvailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pluginBarmanCloud.pdb.minAvailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cloudnative-pg_1789317702/0000/paths/c1ae5beb143c567fc7e6>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/cloudnative-pg_1789317702/0000>)
 
 ### bitnami/common
 
-Result: N/A | Status: skipped-library
-Attempts: N/A | Remaining iterations: unknown
-Coverage: not a standalone application
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/common_1789261278/0000](<bitnami-runs/bitnami-charts_1789260948/runs/common_1789261278/0000>)
+Status: skipped-library | Attempts: N/A
 
-Filtering applied: False
-Chart did not enter finite permutation testing
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/common_1789317705/0000>)
 
 ### bitnami/concourse
 
-Result: FAIL | Status: failed
-Attempts: 158 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/concourse_1789261279/0000](<bitnami-runs/bitnami-charts_1789260948/runs/concourse_1789261279/0000>)
+Status: failed | Attempts: 728
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E029
 
-Identified input fields (lower bound): 229 | Varied in render attempts: 1
-Missing values: 5 | Undocumented template fields: 236
-Unreferenced values: 76 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 57
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E115](#e115)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "kubeVersion": ":"
-}
+```text
+Error: YAML parse error on concourse/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 171:
+found an indentation indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/concourse_1789317706/0000/paths/a0cdb2ba618083d9a8df>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/concourse_1789317706/0000>)
 
 ### bitnami/consul
 
-Result: FAIL | Status: failed
-Attempts: 140 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/consul_1789261319/0000](<bitnami-runs/bitnami-charts_1789260948/runs/consul_1789261319/0000>)
+Status: failed | Attempts: 1456
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E030
 
-Identified input fields (lower bound): 123 | Varied in render attempts: 3
-Missing values: 2 | Undocumented template fields: 129
-Unreferenced values: 38 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 39
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E011](#e011)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "existingConfigmap": "\u001f"
-}
+```text
+Error: YAML parse error on consul/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal to
+0
 ```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/consul_1789318003/0000/paths/d6baed3b8998a068f471>)
+
+#### E031
+
+```text
+Error: YAML parse error on consul/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 31: did not find expected ',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/consul_1789318003/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E032
+
+```text
+Error: YAML parse error on consul/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 55: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/consul_1789318003/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/consul_1789318003/0000>)
 
 ### bitnami/contour
 
-Result: FAIL | Status: failed
-Attempts: 120 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/contour_1789261328/0000](<bitnami-runs/bitnami-charts_1789260948/runs/contour_1789261328/0000>)
+Status: time-limit | Attempts: 199
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 262 | Varied in render attempts: 3
-Missing values: 3 | Undocumented template fields: 274
-Unreferenced values: 141 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 19
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E012](#e012)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": null
-  }
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/contour_1789318003/0000>)
 
 ### bitnami/deepspeed
 
-Result: FAIL | Status: failed
-Attempts: 107 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/deepspeed_1789261342/0000](<bitnami-runs/bitnami-charts_1789260948/runs/deepspeed_1789261342/0000>)
+Status: failed | Attempts: 95
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E033
 
-Identified input fields (lower bound): 145 | Varied in render attempts: 9
-Missing values: 1 | Undocumented template fields: 13
-Unreferenced values: 71 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 12
-
-Phase robustness: time-limit | Attempts: 95
-
-Errors: [E013](#e013)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": null
-  }
-}
+```text
+Error: YAML parse error on deepspeed/templates/worker/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.worker.pdb | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.worker.pdb = {"maxUnavailable": ">0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/deepspeed_1789318005/0000/paths/7b3233b72c7ae2177a76>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/deepspeed_1789318005/0000>)
 
 ### bitnami/discourse
 
-Result: FAIL | Status: failed
-Attempts: 162 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/discourse_1789261349/0000](<bitnami-runs/bitnami-charts_1789260948/runs/discourse_1789261349/0000>)
+Status: failed | Attempts: 793
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E034
 
-Identified input fields (lower bound): 129 | Varied in render attempts: 12
-Missing values: 1 | Undocumented template fields: 136
-Unreferenced values: 74 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 61
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E014](#e014)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "service": {
-    "annotations": {
-      "": []
-    }
-  }
-}
+```text
+Error: YAML parse error on discourse/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173:
+found an indentation indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/discourse_1789318008/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E035
+
+```text
+Error: YAML parse error on discourse/templates/deployment.yaml: error converting YAML to JSON: yaml: line 231: found an indentation
+indicator equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/discourse_1789318008/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E036
+
+```text
+Error: YAML parse error on discourse/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/discourse_1789318008/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/discourse_1789318008/0000>)
 
 ### bitnami/dremio
 
-Result: FAIL | Status: failed
-Attempts: 147 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/dremio_1789261357/0000](<bitnami-runs/bitnami-charts_1789260948/runs/dremio_1789261357/0000>)
+Status: failed | Attempts: 288
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E037
 
-Identified input fields (lower bound): 304 | Varied in render attempts: 28
-Missing values: 7 | Undocumented template fields: 326
-Unreferenced values: 137 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 46
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E015](#e015)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on dremio/templates/bootstrap-user/job.yaml: error converting YAML to JSON: yaml: line 121: did not find expected
+key
 ```
+
+Phase: $.dremio.auth.username | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.dremio.auth.username = "\n"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/dremio_1789318305/0000/paths/7e3ba2e9db7688fe1f85>)
+
+#### E038
+
+```text
+Error: YAML parse error on dremio/templates/bootstrap-user/job.yaml: error converting YAML to JSON: yaml: line 143: found an indentation
+indicator equal to 0
+```
+
+Phase: $.bootstrapUserJob.extraEnvVarsCM | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.bootstrapUserJob.extraEnvVarsCM = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/dremio_1789318305/0000/paths/5e487f511969b2a6049b>)
+
+#### E225
+
+Source: dremio 3.1.0 / templates/NOTES.txt
+
+```text
+[Diagnostic shortened; full text in artifacts] ... ners is likely to cause degraded security and performance, broken chart features, and
+missing environment variables. Unrecognized images: - 00/bitnami/dremio:26.0.0-debian-12-r5 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+Phase: $.dremio.image.registry | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.dremio.image.registry = "00"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/dremio_1789318305/0000/paths/c5408860d7e66fba867d>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/dremio_1789318305/0000>)
 
 ### bitnami/drupal
 
-Result: FAIL | Status: failed
-Attempts: 131 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/drupal_1789261399/0000](<bitnami-runs/bitnami-charts_1789260948/runs/drupal_1789261399/0000>)
+Status: failed | Attempts: 1009
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E039
 
-Identified input fields (lower bound): 149 | Varied in render attempts: 21
-Missing values: 6 | Undocumented template fields: 143
-Unreferenced values: 48 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 30
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E098](#e098)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "mariadb": {
-    "architecture": ""
-  }
-}
+```text
+Error: YAML parse error on drupal/templates/deployment.yaml: error converting YAML to JSON: yaml: line 227: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/drupal_1789318305/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E040
+
+```text
+Error: YAML parse error on drupal/templates/deployment.yaml: error converting YAML to JSON: yaml: line 29: did not find expected ',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/drupal_1789318305/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E041
+
+```text
+Error: YAML parse error on drupal/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/drupal_1789318305/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E231
+
+Source: mariadb 22.0.0 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4): VALUES VALIDATION: mariadb: architecture Invalid architecture selected. Valid values
+are "standalone" and "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+Phase: $.mariadb.architecture | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mariadb.architecture = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/drupal_1789318305/0000/paths/1ff74c0fd3bc5bc52c04>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/drupal_1789318305/0000>)
 
 ### bitnami/ejbca
 
-Result: FAIL | Status: failed
-Attempts: 147 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/ejbca_1789261434/0000](<bitnami-runs/bitnami-charts_1789260948/runs/ejbca_1789261434/0000>)
+Status: failed | Attempts: 1165
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E042
 
-Identified input fields (lower bound): 100 | Varied in render attempts: 4
-Missing values: 4 | Undocumented template fields: 103
-Unreferenced values: 52 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 46
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E016](#e016)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "ejbcaKeystoreExistingSecret": "\u001f"
-}
+```text
+Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAML to JSON: yaml: line 206: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/ejbca_1789318311/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E043
+
+```text
+Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAML to JSON: yaml: line 31: did not find expected ',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/ejbca_1789318311/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E044
+
+```text
+Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAML to JSON: yaml: line 69: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/ejbca_1789318311/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E231
+
+Source: mariadb 22.0.0 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4): VALUES VALIDATION: mariadb: architecture Invalid architecture selected. Valid values
+are "standalone" and "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+Phase: $.mariadb.architecture | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mariadb.architecture = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/ejbca_1789318311/0000/paths/1ff74c0fd3bc5bc52c04>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/ejbca_1789318311/0000>)
 
 ### bitnami/elasticsearch
 
-Result: FAIL | Status: failed
-Attempts: 143 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/elasticsearch_1789261468/0000](<bitnami-runs/bitnami-charts_1789260948/runs/elasticsearch_1789261468/0000>)
+Status: time-limit | Attempts: 480
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 382 | Varied in render attempts: 5
-Missing values: 0 | Undocumented template fields: 396
-Unreferenced values: 180 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 42
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E017](#e017)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "clusterDomain": "\u001f"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/elasticsearch_1789318311/0000>)
 
 ### bitnami/envoy-gateway
 
-Result: FAIL | Status: failed
-Attempts: 156 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/envoy-gateway_1789261488/0000](<bitnami-runs/bitnami-charts_1789260948/runs/envoy-gateway_1789261488/0000>)
+Status: failed | Attempts: 217
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E244
 
-Identified input fields (lower bound): 147 | Varied in render attempts: 9
-Missing values: 0 | Undocumented template fields: 153
-Unreferenced values: 55 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 55
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E018](#e018)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": null
-  }
-}
+```text
+resource has no metadata.name
 ```
+
+Phase: $.certgen.serviceAccount.name | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.certgen.serviceAccount.name = "0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/envoy-gateway_1789318608/0000/paths/3bafd983ae0b309b29cf>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/envoy-gateway_1789318608/0000>)
 
 ### bitnami/etcd
 
-Result: FAIL | Status: failed
-Attempts: 108 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/etcd_1789261495/0000](<bitnami-runs/bitnami-charts_1789260948/runs/etcd_1789261495/0000>)
+Status: time-limit | Attempts: 94
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 190 | Varied in render attempts: 26
-Missing values: 1 | Undocumented template fields: 199
-Unreferenced values: 58 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 62
-
-Phase robustness: time-limit | Attempts: 46
-
-Errors: [E019](#e019)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": null
-  }
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/etcd_1789318609/0000>)
 
 ### bitnami/external-dns
 
-Result: FAIL | Status: failed
-Attempts: 148 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/external-dns_1789261550/0000](<bitnami-runs/bitnami-charts_1789260948/runs/external-dns_1789261550/0000>)
+Status: failed | Attempts: 1102
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E045
 
-Identified input fields (lower bound): 235 | Varied in render attempts: 9
-Missing values: 10 | Undocumented template fields: 238
-Unreferenced values: 58 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 47
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E020](#e020)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "interval": "\u001f"
-}
+```text
+Error: YAML parse error on external-dns/templates/deployment.yaml: error converting YAML to JSON: yaml: line 52: mapping values are not
+allowed in this context
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/external-dns_1789318613/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/external-dns_1789318613/0000>)
 
 ### bitnami/flink
 
-Result: FAIL | Status: failed
-Attempts: 188 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/flink_1789261585/0000](<bitnami-runs/bitnami-charts_1789260948/runs/flink_1789261585/0000>)
+Status: failed | Attempts: 1081
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E046
 
-Identified input fields (lower bound): 134 | Varied in render attempts: 35
-Missing values: 0 | Undocumented template fields: 139
-Unreferenced values: 53 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 87
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E021](#e021)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "clusterDomain": "\b"
-}
+```text
+Error: YAML parse error on flink/templates/jobmanager/deployment.yaml: error converting YAML to JSON: yaml: line 62: mapping values are not
+allowed in this context
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/flink_1789318615/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E047
+
+```text
+Error: YAML parse error on flink/templates/taskmanager/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an indentation
+indicator equal to 0
+```
+
+Phase: $.taskmanager.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.taskmanager.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/flink_1789318615/0000/paths/3caeb4e538f52bc2b5ff>)
+
+#### E048
+
+```text
+Error: YAML parse error on flink/templates/taskmanager/serviceaccount.yaml: error unmarshaling JSON: while decoding JSON: json: cannot
+unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+Phase: $.taskmanager.serviceAccount | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.taskmanager.serviceAccount = {"annotations": {"": []}}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/flink_1789318615/0000/paths/067a3a5b55160a73e780>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/flink_1789318615/0000>)
 
 ### bitnami/fluent-bit
 
-Result: FAIL | Status: failed
-Attempts: 217 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/fluent-bit_1789261621/0000](<bitnami-runs/bitnami-charts_1789260948/runs/fluent-bit_1789261621/0000>)
+Status: failed | Attempts: 1292
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E049
 
-Identified input fields (lower bound): 121 | Varied in render attempts: 39
-Missing values: 0 | Undocumented template fields: 126
-Unreferenced values: 35 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 116
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E022](#e022)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
+```text
+Error: YAML parse error on fluent-bit/templates/configmap.yaml: error converting YAML to JSON: yaml: line 17: could not find expected ':'
 ```
+
+Phase: $.config.customParsers | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.config.customParsers = "\r0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/fluent-bit_1789318911/0000/paths/895be26e57dfa94767ec>)
+
+#### E050
+
+```text
+Error: YAML parse error on fluent-bit/templates/deployment.yaml: error converting YAML to JSON: yaml: line 35: block sequence entries are
+not allowed in this context
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/fluent-bit_1789318911/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E051
+
+```text
+Error: YAML parse error on fluent-bit/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/fluent-bit_1789318911/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E052
+
+```text
+Error: YAML parse error on fluent-bit/templates/pdb.yaml: error converting YAML to JSON: yaml: line 14: found an indentation indicator equal
+to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/fluent-bit_1789318911/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/fluent-bit_1789318911/0000>)
 
 ### bitnami/fluentd
 
-Result: FAIL | Status: failed
-Attempts: 128 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/fluentd_1789261647/0000](<bitnami-runs/bitnami-charts_1789260948/runs/fluentd_1789261647/0000>)
+Status: failed | Attempts: 645
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E053
 
-Identified input fields (lower bound): 208 | Varied in render attempts: 16
-Missing values: 7 | Undocumented template fields: 217
-Unreferenced values: 64 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 27
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E023](#e023)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on fluentd/templates/forwarder-daemonset.yaml: error converting YAML to JSON: yaml: line 125: found an indentation
+indicator equal to 0
 ```
+
+Phase: $.forwarder.livenessProbe.tcpSocket.port | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.forwarder.livenessProbe.tcpSocket.port = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/fluentd_1789318914/0000/paths/25b567cc42066c51ab36>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/fluentd_1789318914/0000>)
 
 ### bitnami/flux
 
-Result: FAIL | Status: failed
-Attempts: 120 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/flux_1789261654/0000](<bitnami-runs/bitnami-charts_1789260948/runs/flux_1789261654/0000>)
+Status: time-limit | Attempts: 107
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 543 | Varied in render attempts: 20
-Missing values: 9 | Undocumented template fields: 565
-Unreferenced values: 163 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 19
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E024](#e024)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/flux_1789318915/0000>)
 
 ### bitnami/ghost
 
-Result: FAIL | Status: failed
-Attempts: 152 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/ghost_1789261679/0000](<bitnami-runs/bitnami-charts_1789260948/runs/ghost_1789261679/0000>)
+Status: failed | Attempts: 1103
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E226
 
-Identified input fields (lower bound): 121 | Varied in render attempts: 25
-Missing values: 4 | Undocumented template fields: 114
-Unreferenced values: 43 (unknown)
-Field variation does not prove branch or output coverage.
+Source: ghost 25.0.5 / templates/NOTES.txt
 
-Phase known-inputs: failed | Attempts: 51
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E086](#e086)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "mysql": {
-    "architecture": ""
-  }
-}
+```text
+[Diagnostic shortened; full text in artifacts] ... ainers is likely to cause degraded security and performance, broken chart features, and
+missing environment variables. Unrecognized images: - 00/bitnami/ghost:6.0.5-debian-12-r0 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"registry": "00"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/ghost_1789318917/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/ghost_1789318917/0000>)
 
 ### bitnami/gitea
 
-Result: FAIL | Status: failed
-Attempts: 147 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/gitea_1789261682/0000](<bitnami-runs/bitnami-charts_1789260948/runs/gitea_1789261682/0000>)
+Status: failed | Attempts: 1163
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E054
 
-Identified input fields (lower bound): 113 | Varied in render attempts: 5
-Missing values: 0 | Undocumented template fields: 118
-Unreferenced values: 40 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 46
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E025](#e025)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "smtpExistingSecret": "\u001f"
-}
+```text
+Error: YAML parse error on gitea/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173: found
+an indentation indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitea_1789319420/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E055
+
+```text
+Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: line 201: found an indentation indicator
+equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitea_1789319420/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E056
+
+```text
+Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: line 202: found an indentation indicator
+equal to 0
+```
+
+Phase: $.smtpExistingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.smtpExistingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitea_1789319420/0000/paths/5787f0eface5fec9a681>)
+
+#### E057
+
+```text
+Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: line 29: did not find expected ',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitea_1789319420/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E058
+
+```text
+Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: line 54: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitea_1789319420/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E059
+
+```text
+Error: YAML parse error on gitea/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitea_1789319420/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitea_1789319420/0000>)
 
 ### bitnami/gitlab-runner
 
-Result: FAIL | Status: failed
-Attempts: 248 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/gitlab-runner_1789261710/0000](<bitnami-runs/bitnami-charts_1789260948/runs/gitlab-runner_1789261710/0000>)
+Status: failed | Attempts: 1310
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E060
 
-Identified input fields (lower bound): 142 | Varied in render attempts: 44
-Missing values: 0 | Undocumented template fields: 145
-Unreferenced values: 48 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 147
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E026](#e026)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "helperImage": {
-    "digest": "\u001f"
-  }
-}
+```text
+Error: YAML parse error on gitlab-runner/templates/configmap.yaml: error converting YAML to JSON: yaml: line 29: could not find expected ':'
 ```
+
+Phase: $.runners | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.runners = {"config": "\r0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitlab-runner_1789319420/0000/paths/b17636844fb2d0412107>)
+
+#### E061
+
+```text
+Error: YAML parse error on gitlab-runner/templates/configmap.yaml: error converting YAML to JSON: yaml: line 35: could not find expected ':'
+```
+
+Phase: $.helperImage.repository | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.helperImage.repository = "\r"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitlab-runner_1789319420/0000/paths/1009129d047c87cec347>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/gitlab-runner_1789319420/0000>)
 
 ### bitnami/grafana
 
-Result: FAIL | Status: failed
-Attempts: 164 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/grafana_1789261713/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana_1789261713/0000>)
+Status: failed | Attempts: 1213
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E071
 
-Identified input fields (lower bound): 151 | Varied in render attempts: 15
-Missing values: 5 | Undocumented template fields: 156
-Unreferenced values: 52 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 63
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E031](#e031)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "admin": {
-    "existingSecret": "?"
-  }
-}
+```text
+Error: YAML parse error on grafana/templates/application.yaml: error converting YAML to JSON: yaml: line 142: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana_1789319420/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E072
+
+```text
+Error: YAML parse error on grafana/templates/application.yaml: error converting YAML to JSON: yaml: line 37: block sequence entries are not
+allowed in this context
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana_1789319420/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E073
+
+```text
+Error: YAML parse error on grafana/templates/application.yaml: error converting YAML to JSON: yaml: line 63: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana_1789319420/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E074
+
+```text
+Error: YAML parse error on grafana/templates/pdb.yaml: error converting YAML to JSON: yaml: line 14: found an indentation indicator equal to
+0
+```
+
+Phase: $.grafana.pdb | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.grafana.pdb = {"maxUnavailable": ">0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana_1789319420/0000/paths/ba207baecff7b9d3f583>)
+
+#### E227
+
+Source: grafana 12.1.9 / templates/NOTES.txt
+
+```text
+execution error at (grafana/templates/NOTES.txt:36:3): VALUES VALIDATION: grafana: imageRenderer.enabled imageRenderer.serverURL and
+imageRenderer.callbackURL You must provide the serverURL and callbackURL for Grafana Image Renderer when enabling it. (--set
+imageRenderer.serverURL="http://image-renderer-url/render" --set imageRenderer.callbackURL="http://grafana-url:3000/")
+```
+
+Phase: $.imageRenderer | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.imageRenderer = {"enabled": true}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana_1789319420/0000/paths/593ca6e46c6e401d5fac>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana_1789319420/0000>)
 
 ### bitnami/grafana-alloy
 
-Result: FAIL | Status: failed
-Attempts: 368 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/grafana-alloy_1789261741/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-alloy_1789261741/0000>)
+Status: failed | Attempts: 1174
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E062
 
-Identified input fields (lower bound): 132 | Varied in render attempts: 88
-Missing values: 3 | Undocumented template fields: 138
-Unreferenced values: 61 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 267
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E093](#e093)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "global": {
-    "imageRegistry": "00"
-  }
-}
+```text
+Error: YAML parse error on grafana-alloy/templates/application.yaml: error converting YAML to JSON: yaml: line 85: could not find expected
+':'
 ```
+
+Phase: $.alloy | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.alloy = {"listenAddr": "\n"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-alloy_1789319420/0000/paths/678d8b0a3b6455a8e45c>)
+
+#### E063
+
+```text
+Error: YAML parse error on grafana-alloy/templates/application.yaml: error converting YAML to JSON: yaml: line 93: found an indentation
+indicator equal to 0
+```
+
+Phase: $.alloy.extraEnvVarsSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.alloy.extraEnvVarsSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-alloy_1789319420/0000/paths/c633d878cac5631aa773>)
+
+#### E216
+
+```text
+Error: grafana-alloy/templates/networkpolicy.yaml:53:19 executing "grafana-alloy/templates/networkpolicy.yaml" at <.containerPort>: nil
+pointer evaluating interface {}.containerPort
+```
+
+Phase: $.configReloader.extraContainerPorts | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.configReloader.extraContainerPorts = [null]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-alloy_1789319420/0000/paths/e4fbbfd6a02f60fba8aa>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-alloy_1789319420/0000>)
 
 ### bitnami/grafana-k6-operator
 
-Result: FAIL | Status: failed
-Attempts: 173 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/grafana-k6-operator_1789261748/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-k6-operator_1789261748/0000>)
+Status: failed | Attempts: 1395
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E064
 
-Identified input fields (lower bound): 91 | Varied in render attempts: 5
-Missing values: 0 | Undocumented template fields: 95
-Unreferenced values: 32 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 72
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E027](#e027)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "?"
-}
+```text
+Error: YAML parse error on grafana-k6-operator/templates/deployment.yaml: error converting YAML to JSON: yaml: line 36: did not find
+expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-k6-operator_1789319722/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-k6-operator_1789319722/0000/paths/097f6358a00dddbcdd83>)
+
+#### E065
+
+```text
+Error: YAML parse error on grafana-k6-operator/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are
+not allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-k6-operator_1789319722/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E066
+
+```text
+Error: YAML parse error on grafana-k6-operator/templates/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an indentation
+indicator equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-k6-operator_1789319722/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-k6-operator_1789319722/0000>)
 
 ### bitnami/grafana-loki
 
-Result: FAIL | Status: failed
-Attempts: 148 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/grafana-loki_1789261775/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-loki_1789261775/0000>)
+Status: time-limit | Attempts: 251
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 671 | Varied in render attempts: 7
-Missing values: 6 | Undocumented template fields: 696
-Unreferenced values: 287 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 47
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E028](#e028)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "clusterDomain": "\u001f"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-loki_1789319722/0000>)
 
 ### bitnami/grafana-mimir
 
-Result: FAIL | Status: failed
-Attempts: 125 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/grafana-mimir_1789261802/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-mimir_1789261802/0000>)
+Status: time-limit | Attempts: 212
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 703 | Varied in render attempts: 1
-Missing values: 6 | Undocumented template fields: 729
-Unreferenced values: 335 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 24
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E100](#e100)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "memcachedchunks": {
-    "architecture": ""
-  }
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-mimir_1789319723/0000>)
 
 ### bitnami/grafana-operator
 
-Result: FAIL | Status: failed
-Attempts: 143 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/grafana-operator_1789261806/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-operator_1789261806/0000>)
+Status: failed | Attempts: 1060
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E067
 
-Identified input fields (lower bound): 120 | Varied in render attempts: 25
-Missing values: 1 | Undocumented template fields: 127
-Unreferenced values: 44 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 42
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E029](#e029)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on grafana-operator/templates/grafana-pdb.yaml: error converting YAML to JSON: yaml: line 15: could not find
+expected ':'
 ```
+
+Phase: $.grafana.pdb | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.grafana.pdb = {"create": true, "maxUnavailable": "\r0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-operator_1789319723/0000/paths/ba207baecff7b9d3f583>)
+
+#### E068
+
+```text
+Error: YAML parse error on grafana-operator/templates/grafana.yaml: error converting YAML to JSON: yaml: line 37: did not find expected ','
+or ']'
+```
+
+Phase: $.grafana.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.grafana.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-operator_1789319723/0000/paths/df306bacd6eea5dbd3fd>)
+
+#### E069
+
+```text
+Error: YAML parse error on grafana-operator/templates/grafana.yaml: error converting YAML to JSON: yaml: line 58: did not find expected key
+```
+
+Phase: $.grafana.secrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.grafana.secrets = [{"'": null}]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-operator_1789319723/0000/paths/c195ba00c143b0340a3b>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-operator_1789319723/0000>)
 
 ### bitnami/grafana-tempo
 
-Result: FAIL | Status: failed
-Attempts: 138 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/grafana-tempo_1789261832/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-tempo_1789261832/0000>)
+Status: failed | Attempts: 359
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E070
 
-Identified input fields (lower bound): 469 | Varied in render attempts: 3
-Missing values: 2 | Undocumented template fields: 489
-Unreferenced values: 204 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 37
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E030](#e030)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "tempo": {
-    "configuration": "\u001f"
-  }
-}
+```text
+Error: YAML parse error on grafana-tempo/templates/distributor/service.yaml: error converting YAML to JSON: yaml: line 15: found an
+indentation indicator equal to 0
 ```
+
+Phase: $.distributor.service.sessionAffinity | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.distributor.service.sessionAffinity = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-tempo_1789320024/0000/paths/9aef6208a1e363e5cf41>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-tempo_1789320024/0000>)
 
 ### bitnami/haproxy
 
-Result: FAIL | Status: failed
-Attempts: 192 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/haproxy_1789261927/0000](<bitnami-runs/bitnami-charts_1789260948/runs/haproxy_1789261927/0000>)
+Status: failed | Attempts: 1768
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E075
 
-Identified input fields (lower bound): 87 | Varied in render attempts: 56
-Missing values: 0 | Undocumented template fields: 91
-Unreferenced values: 34 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 91
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E032](#e032)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on haproxy/templates/deployment.yaml: error converting YAML to JSON: yaml: line 35: did not find expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/haproxy_1789320025/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/haproxy_1789320025/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E076
+
+```text
+Error: YAML parse error on haproxy/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/haproxy_1789320025/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E077
+
+```text
+Error: YAML parse error on haproxy/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal to
+0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/haproxy_1789320025/0000/paths/d6baed3b8998a068f471>)
+
+#### E078
+
+```text
+Error: YAML parse error on haproxy/templates/service.yaml: error converting YAML to JSON: yaml: line 14: found an indentation indicator
+equal to 0
+```
+
+Phase: $.service.type | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.type = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/haproxy_1789320025/0000/paths/6e931799d09f8182f34b>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/haproxy_1789320025/0000>)
 
 ### bitnami/harbor
 
-Result: FAIL | Status: failed
-Attempts: 137 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/harbor_1789261928/0000](<bitnami-runs/bitnami-charts_1789260948/runs/harbor_1789261928/0000>)
+Status: time-limit | Attempts: 170
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 554 | Varied in render attempts: 2
-Missing values: 4 | Undocumented template fields: 586
-Unreferenced values: 294 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 36
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E033](#e033)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "existingSecret": "\u001f"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/harbor_1789320028/0000>)
 
 ### bitnami/influxdb
 
-Result: FAIL | Status: failed
-Attempts: 380 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/influxdb_1789261931/0000](<bitnami-runs/bitnami-charts_1789260948/runs/influxdb_1789261931/0000>)
+Status: failed | Attempts: 1203
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E079
 
-Identified input fields (lower bound): 167 | Varied in render attempts: 119
-Missing values: 0 | Undocumented template fields: 174
-Unreferenced values: 51 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 279
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E094](#e094)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "global": {
-    "imageRegistry": "00"
-  }
-}
+```text
+Error: YAML parse error on influxdb/templates/deployment.yaml: error converting YAML to JSON: yaml: line 62: mapping values are not allowed
+in this context
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/influxdb_1789320028/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/influxdb_1789320028/0000>)
 
 ### bitnami/jaeger
 
-Result: FAIL | Status: failed
-Attempts: 220 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/jaeger_1789261953/0000](<bitnami-runs/bitnami-charts_1789260948/runs/jaeger_1789261953/0000>)
+Status: time-limit | Attempts: 674
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 155 | Varied in render attempts: 7
-Missing values: 0 | Undocumented template fields: 160
-Unreferenced values: 101 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 119
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E034](#e034)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": "'"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jaeger_1789320327/0000>)
 
 ### bitnami/janusgraph
 
-Result: FAIL | Status: failed
-Attempts: 139 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/janusgraph_1789261985/0000](<bitnami-runs/bitnami-charts_1789260948/runs/janusgraph_1789261985/0000>)
+Status: failed | Attempts: 968
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E080
 
-Identified input fields (lower bound): 125 | Varied in render attempts: 2
-Missing values: 6 | Undocumented template fields: 134
-Unreferenced values: 52 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 38
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E035](#e035)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "existingConfigmap": "\u001f"
-}
+```text
+Error: YAML parse error on janusgraph/templates/deployment.yaml: error converting YAML to JSON: yaml: line 62: mapping values are not
+allowed in this context
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/janusgraph_1789320328/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/janusgraph_1789320328/0000>)
 
 ### bitnami/jenkins
 
-Result: FAIL | Status: failed
-Attempts: 426 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000](<bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000>)
+Status: failed | Attempts: 1169
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E081
 
-Identified input fields (lower bound): 172 | Varied in render attempts: 15
-Missing values: 0 | Undocumented template fields: 171
-Unreferenced values: 43 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 118
-
-Phase robustness: failed | Attempts: 308
-
-Errors: [E112](#e112), [E036](#e036)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": "0"
-}
+```text
+Error: YAML parse error on jenkins/templates/deployment.yaml: error converting YAML to JSON: yaml: line 161: found an indentation indicator
+equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.persistence.existingClaim | Status: failed
 
-```json
-{
-  "": [],
-  "service": {
-    "type": ":"
-  }
-}
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jenkins_1789320330/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E082
+
+```text
+Error: YAML parse error on jenkins/templates/deployment.yaml: error converting YAML to JSON: yaml: line 34: block sequence entries are not
+allowed in this context
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jenkins_1789320330/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E083
+
+```text
+Error: YAML parse error on jenkins/templates/deployment.yaml: error converting YAML to JSON: yaml: line 57: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jenkins_1789320330/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jenkins_1789320330/0000>)
 
 ### bitnami/jupyterhub
 
-Result: FAIL | Status: failed
-Attempts: 125 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/jupyterhub_1789262019/0000](<bitnami-runs/bitnami-charts_1789260948/runs/jupyterhub_1789262019/0000>)
+Status: failed | Attempts: 521
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E084
 
-Identified input fields (lower bound): 252 | Varied in render attempts: 1
-Missing values: 4 | Undocumented template fields: 262
-Unreferenced values: 102 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 24
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E095](#e095)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "singleuser": {
-    "resourcesPreset": ""
-  }
-}
+```text
+Error: YAML parse error on jupyterhub/templates/hub/servicemonitor.yaml: error converting YAML to JSON: yaml: line 19: could not find
+expected ':'
 ```
+
+Phase: $.hub.metrics.serviceMonitor | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.hub.metrics.serviceMonitor = {"enabled": true, "interval": "\r0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jupyterhub_1789320333/0000/paths/373db267daac756f7747>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jupyterhub_1789320333/0000>)
 
 ### bitnami/kafka
 
-Result: FAIL | Status: failed
-Attempts: 141 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kafka_1789262019/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kafka_1789262019/0000>)
+Status: time-limit | Attempts: 533
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 356 | Varied in render attempts: 2
-Missing values: 3 | Undocumented template fields: 372
-Unreferenced values: 154 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 40
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E037](#e037)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "dnsPolicy": "\u001f"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kafka_1789320629/0000>)
 
 ### bitnami/keycloak
 
-Result: FAIL | Status: failed
-Attempts: 214 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/keycloak_1789262075/0000](<bitnami-runs/bitnami-charts_1789260948/runs/keycloak_1789262075/0000>)
+Status: failed | Attempts: 790
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E242
 
-Identified input fields (lower bound): 232 | Varied in render attempts: 93
-Missing values: 0 | Undocumented template fields: 239
-Unreferenced values: 64 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 113
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E111](#e111)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "dnsPolicy": "\u001f"
-}
+```text
+level=INFO msg="warning: destination for postgresql.tls.autoGenerated is a table. Ignoring non-table value (false)" Error: YAML parse error
+on keycloak/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173: found an indentation
+indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/keycloak_1789320630/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E243
+
+```text
+level=INFO msg="warning: destination for postgresql.tls.autoGenerated is a table. Ignoring non-table value (false)" Error: YAML parse error
+on keycloak/templates/keycloak-config-cli-job.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go
+struct field .metadata.annotations. of type string
+```
+
+Phase: $.keycloakConfigCli | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.keycloakConfigCli = {"annotations": {"": []}, "enabled": true}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/keycloak_1789320630/0000/paths/833e1ce85b0d7e5a8ef8>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/keycloak_1789320630/0000>)
 
 ### bitnami/keydb
 
-Result: FAIL | Status: failed
-Attempts: 127 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/keydb_1789262081/0000](<bitnami-runs/bitnami-charts_1789260948/runs/keydb_1789262081/0000>)
+Status: time-limit | Attempts: 735
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 207 | Varied in render attempts: 4
-Missing values: 3 | Undocumented template fields: 218
-Unreferenced values: 119 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 26
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E112](#e112)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": "0"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/keydb_1789320632/0000>)
 
 ### bitnami/kibana
 
-Result: FAIL | Status: failed
-Attempts: 254 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kibana_1789262084/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kibana_1789262084/0000>)
+Status: failed | Attempts: 1503
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E085
 
-Identified input fields (lower bound): 139 | Varied in render attempts: 42
-Missing values: 1 | Undocumented template fields: 144
-Unreferenced values: 30 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 153
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E038](#e038)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "ingress": {
-    "enabled": true,
-    "hostname": "\u001f"
-  }
-}
+```text
+Error: YAML parse error on kibana/templates/saved-objects-configmap.yaml: error converting YAML to JSON: yaml: line 23: could not find
+expected ':'
 ```
+
+Phase: $.savedObjects.urls | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.savedObjects.urls = [{"\r": null}]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kibana_1789320637/0000/paths/7353f861890968cecbe7>)
+
+#### E228
+
+Source: kibana 12.1.11 / templates/NOTES.txt
+
+```text
+[Diagnostic shortened; full text in artifacts] ... iners is likely to cause degraded security and performance, broken chart features, and
+missing environment variables. Unrecognized images: - 00/bitnami/kibana:9.1.2-debian-12-r0 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"registry": "00"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kibana_1789320637/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kibana_1789320637/0000>)
 
 ### bitnami/kong
 
-Result: FAIL | Status: failed
-Attempts: 140 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kong_1789262120/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kong_1789262120/0000>)
+Status: failed | Attempts: 818
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E086
 
-Identified input fields (lower bound): 156 | Varied in render attempts: 1
-Missing values: 9 | Undocumented template fields: 160
-Unreferenced values: 84 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 39
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E039](#e039)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "terminationGracePeriodSeconds": "-"
-}
+```text
+Error: YAML parse error on kong/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173: found
+an indentation indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kong_1789320932/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E087
+
+```text
+Error: YAML parse error on kong/templates/dep-ds.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not allowed in this
+context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kong_1789320932/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kong_1789320932/0000>)
 
 ### bitnami/kube-arangodb
 
-Result: FAIL | Status: failed
-Attempts: 163 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kube-arangodb_1789262121/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-arangodb_1789262121/0000>)
+Status: failed | Attempts: 880
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E088
 
-Identified input fields (lower bound): 153 | Varied in render attempts: 4
-Missing values: 0 | Undocumented template fields: 158
-Unreferenced values: 61 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 62
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E040](#e040)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
+```text
+Error: YAML parse error on kube-arangodb/templates/deployment.yaml: error converting YAML to JSON: yaml: line 62: mapping values are not
+allowed in this context
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-arangodb_1789320933/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E089
+
+```text
+Error: YAML parse error on kube-arangodb/templates/service.yaml: error converting YAML to JSON: yaml: line 33: found an indentation
+indicator equal to 0
+```
+
+Phase: $.service.nodePorts.apiGrpc | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.nodePorts.apiGrpc = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-arangodb_1789320933/0000/paths/5e977ce661c5834a77a0>)
+
+#### E090
+
+```text
+Error: YAML parse error on kube-arangodb/templates/webhook/service.yaml: error unmarshaling JSON: while decoding JSON: json: cannot
+unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+Phase: $.webhooks.service.annotations | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.webhooks.service.annotations = {"": []}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-arangodb_1789320933/0000/paths/076c619c7ae02788c2ae>)
+
+#### E244
+
+```text
+resource has no metadata.name
+```
+
+Phase: $.serviceAccount.operator.name | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.serviceAccount.operator.name = "0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-arangodb_1789320933/0000/paths/95bc8b2087be846a7d07>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-arangodb_1789320933/0000>)
 
 ### bitnami/kube-prometheus
 
-Result: FAIL | Status: failed
-Attempts: 120 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus_1789262132/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus_1789262132/0000>)
+Status: time-limit | Attempts: 224
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 691 | Varied in render attempts: 18
-Missing values: 6 | Undocumented template fields: 711
-Unreferenced values: 83 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 19
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E110](#e110)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-prometheus_1789320934/0000>)
 
 ### bitnami/kube-prometheus/charts/kube-prometheus-crds
 
-Result: FAIL | Status: failed
-Attempts: 2 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000>)
+Status: failed | Attempts: 1
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E221
 
-Identified input fields (lower bound): 0 | Varied in render attempts: 0
-Missing values: 0 | Undocumented template fields: 0
-Unreferenced values: 1 (possibly unused; not proven)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 1
-
-Phase robustness: failed | Attempts: 1
-
-Errors: [E087](#e087)
-
-Reproducing values (known-inputs):
-
-```json
-{}
+```text
+chart rendered no resources
 ```
 
-Reproducing values (robustness):
+Phase: chart | Status: failed
 
-```json
-{}
-```
+No triggering values were recorded for this diagnostic.
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-prometheus-crds_1789320938/0000>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-prometheus-crds_1789320938/0000>)
 
 ### bitnami/kube-state-metrics
 
-Result: FAIL | Status: failed
-Attempts: 118 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kube-state-metrics_1789262164/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-state-metrics_1789262164/0000>)
+Status: failed | Attempts: 1584
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E091
 
-Identified input fields (lower bound): 117 | Varied in render attempts: 2
-Missing values: 1 | Undocumented template fields: 120
-Unreferenced values: 32 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 17
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E096](#e096)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "resourcesPreset": ""
-}
+```text
+Error: YAML parse error on kube-state-metrics/templates/deployment.yaml: error converting YAML to JSON: yaml: line 31: block sequence
+entries are not allowed in this context
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E092
+
+```text
+Error: YAML parse error on kube-state-metrics/templates/deployment.yaml: error converting YAML to JSON: yaml: line 55: mapping values are
+not allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E093
+
+```text
+Error: YAML parse error on kube-state-metrics/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation
+indicator equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000/paths/d6baed3b8998a068f471>)
+
+#### E094
+
+```text
+Error: YAML parse error on kube-state-metrics/templates/service.yaml: error converting YAML to JSON: yaml: line 16: found an indentation
+indicator equal to 0
+```
+
+Phase: $.service.type | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.type = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000/paths/6e931799d09f8182f34b>)
+
+#### E095
+
+```text
+Error: YAML parse error on kube-state-metrics/templates/service.yaml: error converting YAML to JSON: yaml: line 27: block sequence entries
+are not allowed in this context
+```
+
+Phase: $.selfMonitor | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.selfMonitor = {"enabled": true, "telemetryNodePort": "-"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000/paths/280d62af7078b21d80d1>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000>)
 
 ### bitnami/kuberay
 
-Result: FAIL | Status: failed
-Attempts: 134 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kuberay_1789262165/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kuberay_1789262165/0000>)
+Status: failed | Attempts: 560
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E096
 
-Identified input fields (lower bound): 283 | Varied in render attempts: 2
-Missing values: 0 | Undocumented template fields: 295
-Unreferenced values: 64 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 33
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E041](#e041)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": []
-  }
-}
+```text
+Error: YAML parse error on kuberay/templates/apiserver/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not
+allowed in this context
 ```
+
+Phase: $.apiserver.image.tag | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.apiserver.image.tag = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kuberay_1789321235/0000/paths/59e72c2ad87ace6ebb08>)
+
+#### E097
+
+```text
+Error: YAML parse error on kuberay/templates/cluster/raycluster.yaml: error converting YAML to JSON: yaml: line 55: found an indentation
+indicator equal to 0
+```
+
+Phase: $.rayImage.pullPolicy | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.rayImage.pullPolicy = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kuberay_1789321235/0000/paths/21a6be6e1f125b3a5329>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kuberay_1789321235/0000>)
 
 ### bitnami/kubernetes-event-exporter
 
-Result: FAIL | Status: failed
-Attempts: 191 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/kubernetes-event-exporter_1789262168/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kubernetes-event-exporter_1789262168/0000>)
+Status: failed | Attempts: 1626
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E098
 
-Identified input fields (lower bound): 82 | Varied in render attempts: 23
-Missing values: 2 | Undocumented template fields: 87
-Unreferenced values: 33 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 90
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E042](#e042)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": null
-  }
-}
+```text
+Error: YAML parse error on kubernetes-event-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 35: did not find
+expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kubernetes-event-exporter_1789321235/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E099
+
+```text
+Error: YAML parse error on kubernetes-event-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 59: mapping values
+are not allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kubernetes-event-exporter_1789321235/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E100
+
+```text
+Error: YAML parse error on kubernetes-event-exporter/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation
+indicator equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kubernetes-event-exporter_1789321235/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kubernetes-event-exporter_1789321235/0000>)
 
 ### bitnami/logstash
 
-Result: FAIL | Status: failed
-Attempts: 141 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/logstash_1789262184/0000](<bitnami-runs/bitnami-charts_1789260948/runs/logstash_1789262184/0000>)
+Status: failed | Attempts: 1627
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E101
 
-Identified input fields (lower bound): 110 | Varied in render attempts: 4
-Missing values: 5 | Undocumented template fields: 119
-Unreferenced values: 27 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 40
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E043](#e043)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "existingConfiguration": "\u001f"
-}
+```text
+Error: YAML parse error on logstash/templates/configuration-cm.yaml: error converting YAML to JSON: yaml: line 31: could not find expected
+':'
 ```
+
+Phase: $.filter | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.filter = "\r0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/logstash_1789321239/0000/paths/0e1e9caa4953f85afca2>)
+
+#### E102
+
+```text
+Error: YAML parse error on logstash/templates/networkpolicy.yaml: error converting YAML to JSON: yaml: line 28: could not find expected ':'
+```
+
+Phase: $.networkPolicy.customRules | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.networkPolicy.customRules = true`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/logstash_1789321239/0000/paths/1d6a5faf6612f0fc5d5a>)
+
+#### E103
+
+```text
+Error: YAML parse error on logstash/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal
+to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/logstash_1789321239/0000/paths/d6baed3b8998a068f471>)
+
+#### E104
+
+```text
+Error: YAML parse error on logstash/templates/sts.yaml: error converting YAML to JSON: yaml: line 34: block sequence entries are not allowed
+in this context
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/logstash_1789321239/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/logstash_1789321239/0000/paths/097f6358a00dddbcdd83>)
+
+#### E105
+
+```text
+Error: YAML parse error on logstash/templates/sts.yaml: error converting YAML to JSON: yaml: line 58: mapping values are not allowed in this
+context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/logstash_1789321239/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/logstash_1789321239/0000>)
 
 ### bitnami/mariadb
 
-Result: FAIL | Status: failed
-Attempts: 132 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000>)
+Status: failed | Attempts: 872
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E110
 
-Identified input fields (lower bound): 242 | Varied in render attempts: 72
-Missing values: 12 | Undocumented template fields: 22
-Unreferenced values: 81 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 5
-
-Phase robustness: failed | Attempts: 127
-
-Errors: [E099](#e099)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "architecture": ""
-}
+```text
+Error: YAML parse error on mariadb/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 197: found an indentation
+indicator equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.primary.existingConfigmap | Status: failed
 
-```json
-{
-  "": [],
-  "architecture": ""
-}
-```
+Selected fields (full context in artifacts):
+- `$.primary.existingConfigmap = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb_1789321241/0000/paths/5840f42f3422db400ece>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb_1789321241/0000>)
 
 ### bitnami/mariadb-galera
 
-Result: FAIL | Status: failed
-Attempts: 128 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/mariadb-galera_1789262206/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb-galera_1789262206/0000>)
+Status: failed | Attempts: 1262
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E106
 
-Identified input fields (lower bound): 139 | Varied in render attempts: 38
-Missing values: 10 | Undocumented template fields: 127
-Unreferenced values: 50 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 100
-
-Phase robustness: time-limit | Attempts: 28
-
-Errors: [E097](#e097)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "resourcesPreset": ""
-}
+```text
+Error: YAML parse error on mariadb-galera/templates/networkpolicy.yaml: error converting YAML to JSON: yaml: line 29: could not find
+expected ':'
 ```
+
+Phase: $.networkPolicy.customRules | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.networkPolicy.customRules = true`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb-galera_1789321537/0000/paths/1d6a5faf6612f0fc5d5a>)
+
+#### E107
+
+```text
+Error: YAML parse error on mariadb-galera/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 235: found an indentation
+indicator equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb-galera_1789321537/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E108
+
+```text
+Error: YAML parse error on mariadb-galera/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 33: did not find expected
+',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb-galera_1789321537/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E109
+
+```text
+Error: YAML parse error on mariadb-galera/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 57: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb-galera_1789321537/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E229
+
+Source: mariadb-galera 16.0.2 / templates/NOTES.txt
+
+```text
+execution error at (mariadb-galera/templates/NOTES.txt:90:3): VALUES VALIDATION: mariadb-galera: galera.mariabackup.password A MariaBackup
+Password is required ("galera.mariabackup.forcePassword=true" is set) Please set a password (--set galera.mariabackup.password="xxxx")
+```
+
+Phase: $.galera.mariabackup.forcePassword | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.galera.mariabackup.forcePassword = true`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb-galera_1789321537/0000/paths/374c3045cc99de520f56>)
+
+#### E230
+
+Source: mariadb-galera 16.0.2 / templates/NOTES.txt
+
+```text
+execution error at (mariadb-galera/templates/NOTES.txt:90:3): VALUES VALIDATION: mariadb-galera: rootUser.password A MariaDB Database Root
+Password is required ("rootUser.forcePassword=true" is set) Please set a password (--set rootUser.password="xxxx")
+```
+
+Phase: $.rootUser | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.rootUser = {"forcePassword": true}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb-galera_1789321537/0000/paths/9bfb61fcd2895ab39c7d>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb-galera_1789321537/0000>)
 
 ### bitnami/mastodon
 
-Result: FAIL | Status: failed
-Attempts: 160 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/mastodon_1789262219/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mastodon_1789262219/0000>)
+Status: time-limit | Attempts: 364
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 284 | Varied in render attempts: 16
-Missing values: 5 | Undocumented template fields: 300
-Unreferenced values: 150 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 59
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E112](#e112)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "serviceAccount": {
-    "name": "0"
-  }
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mastodon_1789321537/0000>)
 
 ### bitnami/matomo
 
-Result: FAIL | Status: failed
-Attempts: 134 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/matomo_1789262257/0000](<bitnami-runs/bitnami-charts_1789260948/runs/matomo_1789262257/0000>)
+Status: failed | Attempts: 886
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E111
 
-Identified input fields (lower bound): 160 | Varied in render attempts: 3
-Missing values: 0 | Undocumented template fields: 170
-Unreferenced values: 53 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 33
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E044](#e044)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "\u001f"
-}
+```text
+Error: YAML parse error on matomo/templates/cronjob.yaml: error converting YAML to JSON: yaml: line 40: mapping values are not allowed in
+this context
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/matomo_1789321541/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E112
+
+```text
+Error: YAML parse error on matomo/templates/deployment.yaml: error converting YAML to JSON: yaml: line 155: found an indentation indicator
+equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/matomo_1789321541/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E113
+
+```text
+Error: YAML parse error on matomo/templates/deployment.yaml: error converting YAML to JSON: yaml: line 156: found an indentation indicator
+equal to 0
+```
+
+Phase: $.smtpExistingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.smtpExistingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/matomo_1789321541/0000/paths/5787f0eface5fec9a681>)
+
+#### E217
+
+```text
+Error: matomo/templates/deployment.yaml:328:34 executing "matomo/templates/deployment.yaml" at <$customCA.secret>: nil pointer evaluating
+interface {}.secret
+```
+
+Phase: $.certificates.customCAs[*] | Status: failed
+
+Selected fields (full context in artifacts):
+- No supplied value at the selected paths.
+Absent from overrides: $.certificates.customCAs["*"]. Defaults may still apply.
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/matomo_1789321541/0000/paths/f0b38f929a3c18847f6b>)
+
+#### E231
+
+Source: mariadb 22.0.0 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4): VALUES VALIDATION: mariadb: architecture Invalid architecture selected. Valid values
+are "standalone" and "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+Phase: $.mariadb.architecture | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mariadb.architecture = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/matomo_1789321541/0000/paths/1ff74c0fd3bc5bc52c04>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/matomo_1789321541/0000>)
 
 ### bitnami/memcached
 
-Result: FAIL | Status: failed
-Attempts: 146 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/memcached_1789262312/0000](<bitnami-runs/bitnami-charts_1789260948/runs/memcached_1789262312/0000>)
+Status: failed | Attempts: 1537
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E114
 
-Identified input fields (lower bound): 122 | Varied in render attempts: 27
-Missing values: 1 | Undocumented template fields: 129
-Unreferenced values: 46 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 45
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E101](#e101)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "architecture": ""
-}
+```text
+Error: YAML parse error on memcached/templates/deployment.yaml: error converting YAML to JSON: yaml: line 31: did not find expected ',' or
+']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/memcached_1789321543/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E115
+
+```text
+Error: YAML parse error on memcached/templates/deployment.yaml: error converting YAML to JSON: yaml: line 56: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/memcached_1789321543/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E116
+
+```text
+Error: YAML parse error on memcached/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal
+to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/memcached_1789321543/0000/paths/d6baed3b8998a068f471>)
+
+#### E117
+
+```text
+Error: YAML parse error on memcached/templates/service.yaml: error converting YAML to JSON: yaml: line 14: found an indentation indicator
+equal to 0
+```
+
+Phase: $.service.trafficDistribution | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.trafficDistribution = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/memcached_1789321543/0000/paths/76c21b9e4a991e167280>)
+
+#### E233
+
+Source: memcached 8.0.0 / templates/NOTES.txt
+
+```text
+execution error at (memcached/templates/NOTES.txt:46:4): VALUES VALIDATION: memcached: auth.username Enabling authentication requires
+setting a valid admin username. Please set a valid username (--set auth.username="xxxx") memcached:
+containerSecurityContext.readOnlyRootFilesystem Enabling authentication is not compatible with using a read-only filesystem. Please disable
+it (--set containerSecurityContext.readOnlyRootFilesystem=false)
+```
+
+Phase: $.auth | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.auth = {"enabled": true}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/memcached_1789321543/0000/paths/9add85c17048305af4de>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/memcached_1789321543/0000>)
 
 ### bitnami/metallb
 
-Result: FAIL | Status: failed
-Attempts: 160 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/metallb_1789262350/0000](<bitnami-runs/bitnami-charts_1789260948/runs/metallb_1789262350/0000>)
+Status: failed | Attempts: 593
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E118
 
-Identified input fields (lower bound): 166 | Varied in render attempts: 7
-Missing values: 3 | Undocumented template fields: 174
-Unreferenced values: 75 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 59
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E045](#e045)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "commonAnnotations": {
-    "": []
-  }
-}
+```text
+Error: YAML parse error on metallb/templates/controller/deployment.yaml: error converting YAML to JSON: yaml: line 34: block sequence
+entries are not allowed in this context
 ```
+
+Phase: $.speaker.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.speaker.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metallb_1789321839/0000/paths/5ab2d3186d90225b4cbe>)
+
+#### E218
+
+```text
+Error: metallb/templates/speaker/networkpolicy.yaml:41:64 executing "metallb/templates/speaker/networkpolicy.yaml" at
+<.Values.rts.networkPolicy.extraEgress>: nil pointer evaluating interface {}.networkPolicy
+```
+
+Phase: $.speaker.networkPolicy | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.speaker.networkPolicy = {"allowExternalEgress": false, "extraEgress": [null]}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metallb_1789321839/0000/paths/f5d31f16549a6dfd7a6a>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metallb_1789321839/0000>)
 
 ### bitnami/metrics-server
 
-Result: FAIL | Status: failed
-Attempts: 199 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/metrics-server_1789262363/0000](<bitnami-runs/bitnami-charts_1789260948/runs/metrics-server_1789262363/0000>)
+Status: failed | Attempts: 1861
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E119
 
-Identified input fields (lower bound): 72 | Varied in render attempts: 13
-Missing values: 0 | Undocumented template fields: 75
-Unreferenced values: 32 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 98
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E046](#e046)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "dnsPolicy": "\u001f"
-}
+```text
+Error: YAML parse error on metrics-server/templates/deployment.yaml: error converting YAML to JSON: yaml: line 30: block sequence entries
+are not allowed in this context
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metrics-server_1789321842/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metrics-server_1789321842/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E120
+
+```text
+Error: YAML parse error on metrics-server/templates/deployment.yaml: error converting YAML to JSON: yaml: line 54: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metrics-server_1789321842/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E121
+
+```text
+Error: YAML parse error on metrics-server/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator
+equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metrics-server_1789321842/0000/paths/d6baed3b8998a068f471>)
+
+Phase: $.pdb.minAvailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.minAvailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metrics-server_1789321842/0000/paths/07d4854a45a9e7c1eb04>)
+
+#### E122
+
+```text
+Error: YAML parse error on metrics-server/templates/svc.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator
+equal to 0
+```
+
+Phase: $.service.type | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.type = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metrics-server_1789321842/0000/paths/6e931799d09f8182f34b>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metrics-server_1789321842/0000>)
 
 ### bitnami/milvus
 
-Result: N/A | Status: time-limit
-Attempts: 30 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/milvus_1789262386/0000](<bitnami-runs/bitnami-charts_1789260948/runs/milvus_1789262386/0000>)
+Status: time-limit | Attempts: 78
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 601 | Varied in render attempts: 3
-Missing values: 1 | Undocumented template fields: 32
-Unreferenced values: 227 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: time-limit | Attempts: 23
-
-Phase robustness: time-limit | Attempts: 7
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/milvus_1789321843/0000>)
 
 ### bitnami/mlflow
 
-Result: FAIL | Status: failed
-Attempts: 251 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000>)
+Status: time-limit | Attempts: 566
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 217 | Varied in render attempts: 20
-Missing values: 3 | Undocumented template fields: 18
-Unreferenced values: 110 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 120
-
-Phase robustness: failed | Attempts: 131
-
-Errors: [E083](#e083), [E047](#e047)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "volumePermissions": {
-    "enabled": true
-  }
-}
-```
-
-Reproducing values (robustness):
-
-```json
-{
-  "nameOverride": "\u001f",
-  "": []
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mlflow_1789321845/0000>)
 
 ### bitnami/mongodb
 
-Result: FAIL | Status: failed
-Attempts: 101 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/mongodb_1789262443/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb_1789262443/0000>)
+Status: time-limit | Attempts: 667
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 348 | Varied in render attempts: 7
-Missing values: 5 | Undocumented template fields: 348
-Unreferenced values: 141 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 43
-
-Phase robustness: time-limit | Attempts: 58
-
-Errors: [E049](#e049)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "configuration": "\u001f"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mongodb_1789322141/0000>)
 
 ### bitnami/mongodb-sharded
 
-Result: FAIL | Status: failed
-Attempts: 145 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/mongodb-sharded_1789262509/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb-sharded_1789262509/0000>)
+Status: failed | Attempts: 603
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E123
 
-Identified input fields (lower bound): 280 | Varied in render attempts: 2
-Missing values: 2 | Undocumented template fields: 306
-Unreferenced values: 7 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 44
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E048](#e048)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "clusterDomain": "\u001f"
-}
+```text
+Error: YAML parse error on mongodb-sharded/templates/config-server/config-server-statefulset.yaml: error converting YAML to JSON: yaml: line
+21: found an indentation indicator equal to 0
 ```
+
+Phase: $.configsvr.podManagementPolicy | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.configsvr.podManagementPolicy = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mongodb-sharded_1789322143/0000/paths/31b5e6e1c0df26c243fd>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mongodb-sharded_1789322143/0000>)
 
 ### bitnami/moodle
 
-Result: FAIL | Status: failed
-Attempts: 242 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/moodle_1789262603/0000](<bitnami-runs/bitnami-charts_1789260948/runs/moodle_1789262603/0000>)
+Status: failed | Attempts: 1146
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E124
 
-Identified input fields (lower bound): 140 | Varied in render attempts: 45
-Missing values: 3 | Undocumented template fields: 147
-Unreferenced values: 51 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 141
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E050](#e050)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "\u001f"
-}
+```text
+Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: line 108: could not find expected ':'
 ```
+
+Phase: $.lifecycleHooks | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.lifecycleHooks = "\r0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/moodle_1789322148/0000/paths/f43b61ad2b3dc983dbd6>)
+
+#### E125
+
+```text
+Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: line 155: found an indentation indicator
+equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/moodle_1789322148/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E126
+
+```text
+Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: line 31: block sequence entries are not
+allowed in this context
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/moodle_1789322148/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E127
+
+```text
+Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/moodle_1789322148/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E231
+
+Source: mariadb 22.0.0 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4): VALUES VALIDATION: mariadb: architecture Invalid architecture selected. Valid values
+are "standalone" and "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+Phase: $.mariadb.architecture | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mariadb.architecture = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/moodle_1789322148/0000/paths/1ff74c0fd3bc5bc52c04>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/moodle_1789322148/0000>)
 
 ### bitnami/multus-cni
 
-Result: FAIL | Status: failed
-Attempts: 135 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/multus-cni_1789262612/0000](<bitnami-runs/bitnami-charts_1789260948/runs/multus-cni_1789262612/0000>)
+Status: failed | Attempts: 2245
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E128
 
-Identified input fields (lower bound): 51 | Varied in render attempts: 2
-Missing values: 1 | Undocumented template fields: 54
-Unreferenced values: 36 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 34
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E051](#e051)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "CNIMountPath": ">"
-}
+```text
+Error: YAML parse error on multus-cni/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 28: did not find expected ',' or
+']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/multus-cni_1789322151/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/multus-cni_1789322151/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E129
+
+```text
+Error: YAML parse error on multus-cni/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 50: found an indentation indicator
+equal to 0
+```
+
+Phase: $.schedulerName | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.schedulerName = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/multus-cni_1789322151/0000/paths/57504c968732d9714f10>)
+
+#### E130
+
+```text
+Error: YAML parse error on multus-cni/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 54: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/multus-cni_1789322151/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E131
+
+```text
+Error: YAML parse error on multus-cni/templates/service-account.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal
+array into Go struct field .metadata.annotations. of type string
+```
+
+Phase: $.serviceAccount.annotations | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.serviceAccount.annotations = {"": []}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/multus-cni_1789322151/0000/paths/840a8a2bc50327388c2a>)
+
+#### E234
+
+Source: multus-cni 2.2.22 / templates/NOTES.txt
+
+```text
+[Diagnostic shortened; full text in artifacts] ...  containers is likely to cause degraded security and performance, broken chart features,
+and missing environment variables. Unrecognized images: - docker.io/0:4.2.2-debian-12-r2 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+Phase: $.image.repository | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.repository = "0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/multus-cni_1789322151/0000/paths/3f7165f1837241716c3c>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/multus-cni_1789322151/0000>)
 
 ### bitnami/mysql
 
-Result: FAIL | Status: failed
-Attempts: 239 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/mysql_1789262639/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mysql_1789262639/0000>)
+Status: failed | Attempts: 974
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E132
 
-Identified input fields (lower bound): 235 | Varied in render attempts: 40
-Missing values: 6 | Undocumented template fields: 226
-Unreferenced values: 86 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 138
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E052](#e052)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on mysql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 211: found an indentation
+indicator equal to 0
 ```
+
+Phase: $.primary.existingConfigmap | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.primary.existingConfigmap = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mysql_1789322445/0000/paths/5840f42f3422db400ece>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mysql_1789322445/0000>)
 
 ### bitnami/nats
 
-Result: FAIL | Status: failed
-Attempts: 327 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/nats_1789262668/0000](<bitnami-runs/bitnami-charts_1789260948/runs/nats_1789262668/0000>)
+Status: failed | Attempts: 1470
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E133
 
-Identified input fields (lower bound): 129 | Varied in render attempts: 51
-Missing values: 0 | Undocumented template fields: 135
-Unreferenced values: 70 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 226
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E053](#e053)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
+```text
+Error: YAML parse error on nats/templates/application.yaml: error converting YAML to JSON: yaml: line 33: did not find expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nats_1789322446/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E134
+
+```text
+Error: YAML parse error on nats/templates/application.yaml: error converting YAML to JSON: yaml: line 57: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nats_1789322446/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E220
+
+```text
+Inconsistent data generation! Data generation behaved differently between test cases. Is your data generation depending on external state?
+The second run stopped drawing earlier than the first run, which continued to draw more data.
+```
+
+Phase: $.livenessProbe.periodSeconds | Status: failed
+
+Selected fields (full context in artifacts):
+- No supplied value at the selected paths.
+Absent from overrides: $.livenessProbe.periodSeconds. Defaults may still apply.
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nats_1789322446/0000/paths/1806901960e9247cdf0a>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nats_1789322446/0000>)
 
 ### bitnami/neo4j
 
-Result: FAIL | Status: failed
-Attempts: 137 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/neo4j_1789262693/0000](<bitnami-runs/bitnami-charts_1789260948/runs/neo4j_1789262693/0000>)
+Status: failed | Attempts: 1230
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E235
 
-Identified input fields (lower bound): 123 | Varied in render attempts: 9
-Missing values: 0 | Undocumented template fields: 131
-Unreferenced values: 32 (unknown)
-Field variation does not prove branch or output coverage.
+Source: neo4j 0.4.15 / templates/NOTES.txt
 
-Phase known-inputs: failed | Attempts: 36
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E112](#e112)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": "0"
-}
+```text
+[Diagnostic shortened; full text in artifacts] ... ners is likely to cause degraded security and performance, broken chart features, and
+missing environment variables. Unrecognized images: - 00/bitnami/neo4j:5.26.11-debian-12-r0 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
 ```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"registry": "00"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/neo4j_1789322450/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/neo4j_1789322450/0000>)
 
 ### bitnami/nessie
 
-Result: FAIL | Status: failed
-Attempts: 184 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/nessie_1789262730/0000](<bitnami-runs/bitnami-charts_1789260948/runs/nessie_1789262730/0000>)
+Status: failed | Attempts: 1064
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E135
 
-Identified input fields (lower bound): 141 | Varied in render attempts: 29
-Missing values: 1 | Undocumented template fields: 147
-Unreferenced values: 59 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 83
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E054](#e054)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "annotations": {
-    "": []
-  }
-}
+```text
+Error: YAML parse error on nessie/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173: found
+an indentation indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nessie_1789322452/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E136
+
+```text
+Error: YAML parse error on nessie/templates/deployment.yaml: error converting YAML to JSON: yaml: line 135: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nessie_1789322452/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E137
+
+```text
+Error: YAML parse error on nessie/templates/deployment.yaml: error converting YAML to JSON: yaml: line 39: block sequence entries are not
+allowed in this context
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nessie_1789322452/0000/paths/a4a0ea6ab697189bb963>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nessie_1789322452/0000>)
 
 ### bitnami/nginx
 
-Result: FAIL | Status: failed
-Attempts: 325 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000](<bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000>)
+Status: failed | Attempts: 796
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E138
 
-Identified input fields (lower bound): 170 | Varied in render attempts: 108
-Missing values: 2 | Undocumented template fields: 159
-Unreferenced values: 58 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 84
-
-Phase robustness: failed | Attempts: 241
-
-Errors: [E056](#e056), [E055](#e055)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "existingContextEventsConfigmaps": [
-    "\u001f"
-  ]
-}
+```text
+Error: YAML parse error on nginx/templates/deployment.yaml: error converting YAML to JSON: yaml: line 183: found an indentation indicator
+equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.existingContextEventsConfigmaps[*] | Status: failed
 
-```json
-{
-  "contextIncludes": {
-    "events": "\u001f",
-    "": []
-  }
-}
-```
+Selected fields (full context in artifacts):
+- No supplied value at the selected paths.
+Absent from overrides: $.existingContextEventsConfigmaps["*"]. Defaults may still apply.
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nginx_1789322747/0000/paths/d3a4ba9b3aa8276f735b>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/nginx_1789322747/0000>)
 
 ### bitnami/node-exporter
 
-Result: FAIL | Status: failed
-Attempts: 240 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/node-exporter_1789262746/0000](<bitnami-runs/bitnami-charts_1789260948/runs/node-exporter_1789262746/0000>)
+Status: failed | Attempts: 2042
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E139
 
-Identified input fields (lower bound): 85 | Varied in render attempts: 23
-Missing values: 1 | Undocumented template fields: 88
-Unreferenced values: 35 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 139
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E114](#e114)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "kubeVersion": ":"
-}
+```text
+Error: YAML parse error on node-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 32: block sequence entries are
+not allowed in this context
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/node-exporter_1789322747/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/node-exporter_1789322747/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E140
+
+```text
+Error: YAML parse error on node-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 55: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/node-exporter_1789322747/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E141
+
+```text
+Error: YAML parse error on node-exporter/templates/service.yaml: error converting YAML to JSON: yaml: line 15: found an indentation
+indicator equal to 0
+```
+
+Phase: $.service.type | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.type = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/node-exporter_1789322747/0000/paths/6e931799d09f8182f34b>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/node-exporter_1789322747/0000>)
 
 ### bitnami/oauth2-proxy
 
-Result: FAIL | Status: failed
-Attempts: 130 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/oauth2-proxy_1789262793/0000](<bitnami-runs/bitnami-charts_1789260948/runs/oauth2-proxy_1789262793/0000>)
+Status: failed | Attempts: 1205
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E142
 
-Identified input fields (lower bound): 103 | Varied in render attempts: 23
-Missing values: 0 | Undocumented template fields: 106
-Unreferenced values: 50 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 29
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E105](#e105)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "redis": {
-    "architecture": ""
-  }
-}
+```text
+Error: YAML parse error on oauth2-proxy/templates/deployment.yaml: error converting YAML to JSON: yaml: line 36: block sequence entries are
+not allowed in this context
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/oauth2-proxy_1789322752/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E143
+
+```text
+Error: YAML parse error on oauth2-proxy/templates/deployment.yaml: error converting YAML to JSON: yaml: line 59: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/oauth2-proxy_1789322752/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E237
+
+Source: redis 22.0.4 / templates/NOTES.txt
+
+```text
+execution error at (redis/templates/NOTES.txt:202:4): VALUES VALIDATION: redis: architecture Using redis sentinel on standalone mode is not
+supported. To deploy redis sentinel, please select the "replication" mode (--set "architecture=replication,sentinel.enabled=true")
+```
+
+Phase: $.redis.sentinel.enabled | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.redis.sentinel.enabled = true`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/oauth2-proxy_1789322752/0000/paths/06ba645f6017e60308b2>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/oauth2-proxy_1789322752/0000>)
 
 ### bitnami/odoo
 
-Result: FAIL | Status: failed
-Attempts: 128 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/odoo_1789262798/0000](<bitnami-runs/bitnami-charts_1789260948/runs/odoo_1789262798/0000>)
+Status: failed | Attempts: 1281
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E144
 
-Identified input fields (lower bound): 122 | Varied in render attempts: 12
-Missing values: 4 | Undocumented template fields: 127
-Unreferenced values: 42 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 27
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E102](#e102)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "resourcesPreset": ""
-}
+```text
+Error: YAML parse error on odoo/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173: found
+an indentation indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/odoo_1789322754/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E145
+
+```text
+Error: YAML parse error on odoo/templates/deployment.yaml: error converting YAML to JSON: yaml: line 139: found an indentation indicator
+equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/odoo_1789322754/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E146
+
+```text
+Error: YAML parse error on odoo/templates/deployment.yaml: error converting YAML to JSON: yaml: line 150: found an indentation indicator
+equal to 0
+```
+
+Phase: $.smtpExistingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.smtpExistingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/odoo_1789322754/0000/paths/5787f0eface5fec9a681>)
+
+#### E147
+
+```text
+Error: YAML parse error on odoo/templates/deployment.yaml: error converting YAML to JSON: yaml: line 30: did not find expected ',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/odoo_1789322754/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E148
+
+```text
+Error: YAML parse error on odoo/templates/deployment.yaml: error converting YAML to JSON: yaml: line 54: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/odoo_1789322754/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E149
+
+```text
+Error: YAML parse error on odoo/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/odoo_1789322754/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/odoo_1789322754/0000>)
 
 ### bitnami/opensearch
 
-Result: FAIL | Status: failed
-Attempts: 206 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/opensearch_1789262840/0000](<bitnami-runs/bitnami-charts_1789260948/runs/opensearch_1789262840/0000>)
+Status: time-limit | Attempts: 362
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 523 | Varied in render attempts: 17
-Missing values: 17 | Undocumented template fields: 546
-Unreferenced values: 217 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 105
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E057](#e057)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": ":"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/opensearch_1789323049/0000>)
 
 ### bitnami/parse
 
-Result: FAIL | Status: failed
-Attempts: 120 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/parse_1789262841/0000](<bitnami-runs/bitnami-charts_1789260948/runs/parse_1789262841/0000>)
+Status: failed | Attempts: 741
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E150
 
-Identified input fields (lower bound): 165 | Varied in render attempts: 21
-Missing values: 0 | Undocumented template fields: 173
-Unreferenced values: 61 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 19
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E058](#e058)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on parse/charts/mongodb/templates/standalone/pvc.yaml: error converting YAML to JSON: yaml: line 22: could not find
+expected ':'
 ```
+
+Phase: $.mongodb.persistence | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mongodb.persistence = {"storageClass": "\r0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/parse_1789323049/0000/paths/41d6ae6f8aea08087045>)
+
+#### E151
+
+```text
+Error: YAML parse error on parse/templates/server-deployment.yaml: error converting YAML to JSON: yaml: line 203: found an indentation
+indicator equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/parse_1789323049/0000/paths/bc81b51736a9cdc4eda3>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/parse_1789323049/0000>)
 
 ### bitnami/phpmyadmin
 
-Result: FAIL | Status: failed
-Attempts: 234 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/phpmyadmin_1789262890/0000](<bitnami-runs/bitnami-charts_1789260948/runs/phpmyadmin_1789262890/0000>)
+Status: failed | Attempts: 1524
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E152
 
-Identified input fields (lower bound): 120 | Varied in render attempts: 27
-Missing values: 5 | Undocumented template fields: 124
-Unreferenced values: 36 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 133
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E112](#e112)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "serviceAccount": {
-    "name": "0"
-  }
-}
+```text
+Error: YAML parse error on phpmyadmin/templates/deployment.yaml: error converting YAML to JSON: yaml: line 29: did not find expected ',' or
+']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/phpmyadmin_1789323054/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E153
+
+```text
+Error: YAML parse error on phpmyadmin/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/phpmyadmin_1789323054/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E154
+
+```text
+Error: YAML parse error on phpmyadmin/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal
+to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/phpmyadmin_1789323054/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/phpmyadmin_1789323054/0000>)
 
 ### bitnami/pinniped
 
-Result: FAIL | Status: failed
-Attempts: 160 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/pinniped_1789262910/0000](<bitnami-runs/bitnami-charts_1789260948/runs/pinniped_1789262910/0000>)
+Status: failed | Attempts: 722
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E155
 
-Identified input fields (lower bound): 173 | Varied in render attempts: 1
-Missing values: 0 | Undocumented template fields: 180
-Unreferenced values: 56 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 59
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E059](#e059)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": "'"
-}
+```text
+Error: YAML parse error on pinniped/templates/concierge/service-proxy.yaml: error converting YAML to JSON: yaml: line 15: found an
+indentation indicator equal to 0
 ```
+
+Phase: $.concierge.service.type | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.concierge.service.type = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pinniped_1789323056/0000/paths/d209f09a7eedd8fb595e>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pinniped_1789323056/0000>)
 
 ### bitnami/postgresql
 
-Result: FAIL | Status: failed
-Attempts: 280 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000>)
+Status: failed | Attempts: 714
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E157
 
-Identified input fields (lower bound): 310 | Varied in render attempts: 21
-Missing values: 7 | Undocumented template fields: 314
-Unreferenced values: 106 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 15
-
-Phase robustness: failed | Attempts: 265
-
-Errors: [E103](#e103), [E061](#e061)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "psp": {
-    "create": true
-  }
-}
+```text
+Error: YAML parse error on postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 171: found an
+indentation indicator equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.primary.existingConfigmap | Status: failed
 
-```json
-{
-  "": [],
-  "auth": {
-    "database": "\u001f"
-  }
-}
-```
+Selected fields (full context in artifacts):
+- `$.primary.existingConfigmap = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/postgresql_1789323352/0000/paths/5840f42f3422db400ece>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/postgresql_1789323352/0000>)
 
 ### bitnami/postgresql-ha
 
-Result: FAIL | Status: failed
-Attempts: 157 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/postgresql-ha_1789262929/0000](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql-ha_1789262929/0000>)
+Status: failed | Attempts: 633
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E156
 
-Identified input fields (lower bound): 371 | Varied in render attempts: 18
-Missing values: 3 | Undocumented template fields: 386
-Unreferenced values: 121 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 56
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E060](#e060)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "clusterDomain": "\u001f"
-}
+```text
+Error: YAML parse error on postgresql-ha/templates/postgresql/extended-configmap.yaml: error converting YAML to JSON: yaml: line 17: could
+not find expected ':'
 ```
+
+Phase: $.postgresql.extendedConf | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.extendedConf = "\r0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/postgresql-ha_1789323352/0000/paths/ec3d694da0ed2a1dba65>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/postgresql-ha_1789323352/0000>)
 
 ### bitnami/prometheus
 
-Result: FAIL | Status: failed
-Attempts: 345 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000](<bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000>)
+Status: failed | Attempts: 708
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E158
 
-Identified input fields (lower bound): 230 | Varied in render attempts: 18
-Missing values: 0 | Undocumented template fields: 10
-Unreferenced values: 86 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 93
-
-Phase robustness: failed | Attempts: 252
-
-Errors: [E062](#e062), [E063](#e063)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
+```text
+Error: YAML parse error on prometheus/templates/alertmanager/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an indentation
+indicator equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.alertmanager.pdb.maxUnavailable | Status: failed
 
-```json
-{
-  "": [],
-  "extraDeploy": [
-    []
-  ]
-}
-```
+Selected fields (full context in artifacts):
+- `$.alertmanager.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/prometheus_1789323355/0000/paths/480167216d2b593f3a39>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/prometheus_1789323355/0000>)
 
 ### bitnami/pytorch
 
-Result: FAIL | Status: failed
-Attempts: 179 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/pytorch_1789262979/0000](<bitnami-runs/bitnami-charts_1789260948/runs/pytorch_1789262979/0000>)
+Status: failed | Attempts: 1780
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E159
 
-Identified input fields (lower bound): 87 | Varied in render attempts: 17
-Missing values: 8 | Undocumented template fields: 92
-Unreferenced values: 38 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 78
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E104](#e104)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "architecture": ""
-}
+```text
+Error: YAML parse error on pytorch/templates/deployment.yaml: error converting YAML to JSON: yaml: line 32: did not find expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E160
+
+```text
+Error: YAML parse error on pytorch/templates/deployment.yaml: error converting YAML to JSON: yaml: line 57: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E161
+
+```text
+Error: YAML parse error on pytorch/templates/deployment.yaml: error converting YAML to JSON: yaml: line 79: could not find expected ':'
+```
+
+Phase: $.entrypoint | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.entrypoint = {"file": "\n0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000/paths/cba2f2c92b4a1013a6b6>)
+
+#### E162
+
+```text
+Error: YAML parse error on pytorch/templates/pdb.yaml: error converting YAML to JSON: yaml: line 14: found an indentation indicator equal to
+0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000/paths/d6baed3b8998a068f471>)
+
+#### E163
+
+```text
+Error: YAML parse error on pytorch/templates/service.yaml: error converting YAML to JSON: yaml: line 15: did not find expected ',' or ']'
+```
+
+Phase: $.service.port | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.port = [{}]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000/paths/8519a498beb325a2a1ea>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000>)
 
 ### bitnami/rabbitmq
 
-Result: FAIL | Status: failed
-Attempts: 185 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq_1789262993/0000](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq_1789262993/0000>)
+Status: failed | Attempts: 1005
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E167
 
-Identified input fields (lower bound): 215 | Varied in render attempts: 28
-Missing values: 1 | Undocumented template fields: 213
-Unreferenced values: 94 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 84
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E065](#e065)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "hostPorts": {
-    "amqp": "\u001f"
-  }
-}
+```text
+Error: YAML parse error on rabbitmq/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 257: found an indentation
+indicator equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq_1789323655/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E168
+
+```text
+Error: YAML parse error on rabbitmq/templates/svc-headless.yaml: error converting YAML to JSON: yaml: line 31: found an indentation
+indicator equal to 0
+```
+
+Phase: $.service.trafficDistribution | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.trafficDistribution = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq_1789323655/0000/paths/76c21b9e4a991e167280>)
+
+#### E236
+
+Source: rabbitmq 16.0.16 / templates/validation.yaml
+
+```text
+execution error at (rabbitmq/templates/validation.yaml:6:4): VALUES VALIDATION: rabbitmq: memoryHighWatermark.type Invalid Memory high
+watermark type. Valid values are "absolute" and "relative". Please set a valid mode (--set memoryHighWatermark.type="xxxx")
+```
+
+Phase: $.memoryHighWatermark.type | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.memoryHighWatermark.type = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq_1789323655/0000/paths/1add63f1953bb5cbc012>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq_1789323655/0000>)
 
 ### bitnami/rabbitmq-cluster-operator
 
-Result: FAIL | Status: failed
-Attempts: 230 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq-cluster-operator_1789263004/0000](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq-cluster-operator_1789263004/0000>)
+Status: failed | Attempts: 515
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E164
 
-Identified input fields (lower bound): 206 | Varied in render attempts: 90
-Missing values: 3 | Undocumented template fields: 212
-Unreferenced values: 53 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 129
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E064](#e064)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on rabbitmq-cluster-operator/templates/cluster-operator/deployment.yaml: error converting YAML to JSON: yaml: line
+91: found an indentation indicator equal to 0
 ```
+
+Phase: $.clusterOperator.extraEnvVarsSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.clusterOperator.extraEnvVarsSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq-cluster-operator_1789323655/0000/paths/a6041cb7b2e91c7b6c1e>)
+
+#### E165
+
+```text
+Error: YAML parse error on rabbitmq-cluster-operator/templates/cluster-operator/service-account.yaml: error unmarshaling JSON: while
+decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+Phase: $.clusterOperator.serviceAccount | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.clusterOperator.serviceAccount = {"annotations": {"": []}}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq-cluster-operator_1789323655/0000/paths/6d28fd19dee82cbaef38>)
+
+Phase: $.clusterOperator.serviceAccount.annotations | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.clusterOperator.serviceAccount.annotations = {"": []}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq-cluster-operator_1789323655/0000/paths/abf0ef6f3f64bfaa2513>)
+
+#### E166
+
+```text
+Error: YAML parse error on rabbitmq-cluster-operator/templates/messaging-topology-operator/deployment.yaml: error converting YAML to JSON:
+yaml: line 58: found an indentation indicator equal to 0
+```
+
+Phase: $.msgTopologyOperator.hostNetwork | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.msgTopologyOperator.hostNetwork = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq-cluster-operator_1789323655/0000/paths/2cd3ab168c8c9d9390a6>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/rabbitmq-cluster-operator_1789323655/0000>)
 
 ### bitnami/redis
 
-Result: FAIL | Status: failed
-Attempts: 134 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000](<bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000>)
+Status: failed | Attempts: 593
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E219
 
-Identified input fields (lower bound): 350 | Varied in render attempts: 67
-Missing values: 6 | Undocumented template fields: 29
-Unreferenced values: 133 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 5
-
-Phase robustness: failed | Attempts: 129
-
-Errors: [E106](#e106)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "architecture": ""
-}
+```text
+Error: redis/templates/replicas/application.yaml:49:38 executing "redis/templates/replicas/application.yaml" at <include (print
+$.Template.BasePath "/configmap.yaml") .>: error calling include: redis/templates/configmap.yaml:61:25 executing
+"redis/templates/configmap.yaml" at <.password>: nil pointer evaluating interface {}.password
 ```
 
-Reproducing values (robustness):
+Phase: $.auth.acl | Status: failed
 
-```json
-{
-  "": [],
-  "architecture": ""
-}
-```
+Selected fields (full context in artifacts):
+- `$.auth.acl = {"enabled": true, "users": [null]}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redis_1789323658/0000/paths/37081c129204c3c032e8>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redis_1789323658/0000>)
 
 ### bitnami/redis-cluster
 
-Result: FAIL | Status: failed
-Attempts: 148 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/redis-cluster_1789263038/0000](<bitnami-runs/bitnami-charts_1789260948/runs/redis-cluster_1789263038/0000>)
+Status: failed | Attempts: 977
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E169
 
-Identified input fields (lower bound): 175 | Varied in render attempts: 4
-Missing values: 1 | Undocumented template fields: 184
-Unreferenced values: 51 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 47
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E066](#e066)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "existingSecret": "-"
-}
+```text
+Error: YAML parse error on redis-cluster/templates/redis-statefulset.yaml: error converting YAML to JSON: yaml: line 39: did not find
+expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redis-cluster_1789323660/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E170
+
+```text
+Error: YAML parse error on redis-cluster/templates/redis-statefulset.yaml: error converting YAML to JSON: yaml: line 64: mapping values are
+not allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redis-cluster_1789323660/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redis-cluster_1789323660/0000>)
 
 ### bitnami/redmine
 
-Result: FAIL | Status: failed
-Attempts: 516 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000](<bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000>)
+Status: failed | Attempts: 931
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E171
 
-Identified input fields (lower bound): 157 | Varied in render attempts: 50
-Missing values: 9 | Undocumented template fields: 153
-Unreferenced values: 66 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 104
-
-Phase robustness: failed | Attempts: 412
-
-Errors: [E067](#e067), [E068](#e068)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "terminationGracePeriodSeconds": "\u001f"
-}
+```text
+Error: YAML parse error on redmine/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173:
+found an indentation indicator equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.postgresql.auth.existingSecret | Status: failed
 
-```json
-{
-  "": [],
-  "service": {
-    "type": "-"
-  }
-}
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redmine_1789323957/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E172
+
+```text
+Error: YAML parse error on redmine/templates/deployment.yaml: error converting YAML to JSON: yaml: line 150: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redmine_1789323957/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E173
+
+```text
+Error: YAML parse error on redmine/templates/deployment.yaml: error converting YAML to JSON: yaml: line 58: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redmine_1789323957/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E231
+
+Source: mariadb 22.0.0 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4): VALUES VALIDATION: mariadb: architecture Invalid architecture selected. Valid values
+are "standalone" and "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+Phase: $.mariadb.architecture | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mariadb.architecture = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redmine_1789323957/0000/paths/1ff74c0fd3bc5bc52c04>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redmine_1789323957/0000>)
 
 ### bitnami/schema-registry
 
-Result: FAIL | Status: failed
-Attempts: 171 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/schema-registry_1789263074/0000](<bitnami-runs/bitnami-charts_1789260948/runs/schema-registry_1789263074/0000>)
+Status: failed | Attempts: 1126
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E174
 
-Identified input fields (lower bound): 119 | Varied in render attempts: 35
-Missing values: 5 | Undocumented template fields: 122
-Unreferenced values: 35 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 70
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E084](#e084)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "httpRoutes": [
-    null
-  ]
-}
+```text
+Error: YAML parse error on schema-registry/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 32: block sequence entries
+are not allowed in this context
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[null]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/schema-registry_1789323957/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E175
+
+```text
+Error: YAML parse error on schema-registry/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 55: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/schema-registry_1789323957/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/schema-registry_1789323957/0000>)
 
 ### bitnami/scylladb
 
-Result: FAIL | Status: failed
-Attempts: 209 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/scylladb_1789263109/0000](<bitnami-runs/bitnami-charts_1789260948/runs/scylladb_1789263109/0000>)
+Status: failed | Attempts: 1245
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E176
 
-Identified input fields (lower bound): 161 | Varied in render attempts: 79
-Missing values: 0 | Undocumented template fields: 169
-Unreferenced values: 82 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 108
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E085](#e085)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraContainerPorts": [
-    null
-  ]
-}
+```text
+Error: YAML parse error on scylladb/templates/individual-svc.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal
+array into Go struct field .metadata.annotations. of type string
 ```
+
+Phase: $.service.internal | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.internal = {"annotations": {"": []}}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/scylladb_1789323961/0000/paths/b768ca9fe0c4043c8f02>)
+
+#### E177
+
+```text
+Error: YAML parse error on scylladb/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 197: found an indentation
+indicator equal to 0
+```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/scylladb_1789323961/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E178
+
+```text
+Error: YAML parse error on scylladb/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 35: did not find expected ',' or
+']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/scylladb_1789323961/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E179
+
+```text
+Error: YAML parse error on scylladb/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 59: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/scylladb_1789323961/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/scylladb_1789323961/0000>)
 
 ### bitnami/sealed-secrets
 
-Result: FAIL | Status: failed
-Attempts: 164 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/sealed-secrets_1789263115/0000](<bitnami-runs/bitnami-charts_1789260948/runs/sealed-secrets_1789263115/0000>)
+Status: failed | Attempts: 1678
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E180
 
-Identified input fields (lower bound): 114 | Varied in render attempts: 4
-Missing values: 0 | Undocumented template fields: 117
-Unreferenced values: 33 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 63
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E107](#e107)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "resourcesPreset": ""
-}
+```text
+Error: YAML parse error on sealed-secrets/templates/deployment.yaml: error converting YAML to JSON: yaml: line 29: did not find expected ','
+or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sealed-secrets_1789323962/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sealed-secrets_1789323962/0000/paths/097f6358a00dddbcdd83>)
+
+#### E181
+
+```text
+Error: YAML parse error on sealed-secrets/templates/deployment.yaml: error converting YAML to JSON: yaml: line 52: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sealed-secrets_1789323962/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E182
+
+```text
+Error: YAML parse error on sealed-secrets/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator
+equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sealed-secrets_1789323962/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sealed-secrets_1789323962/0000>)
 
 ### bitnami/seaweedfs
 
-Result: FAIL | Status: failed
-Attempts: 135 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/seaweedfs_1789263116/0000](<bitnami-runs/bitnami-charts_1789260948/runs/seaweedfs_1789263116/0000>)
+Status: failed | Attempts: 338
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E231
 
-Identified input fields (lower bound): 578 | Varied in render attempts: 3
-Missing values: 6 | Undocumented template fields: 610
-Unreferenced values: 250 (unknown)
-Field variation does not prove branch or output coverage.
+Source: mariadb 22.0.0 / templates/NOTES.txt
 
-Phase known-inputs: failed | Attempts: 34
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E069](#e069)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "clusterDomain": "\u001f"
-}
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4): VALUES VALIDATION: mariadb: architecture Invalid architecture selected. Valid values
+are "standalone" and "replication". Please set a valid architecture (--set architecture="xxxx")
 ```
+
+Phase: $.mariadb.architecture | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mariadb.architecture = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/seaweedfs_1789324259/0000/paths/1ff74c0fd3bc5bc52c04>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/seaweedfs_1789324259/0000>)
 
 ### bitnami/solr
 
-Result: FAIL | Status: failed
-Attempts: 213 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/solr_1789263147/0000](<bitnami-runs/bitnami-charts_1789260948/runs/solr_1789263147/0000>)
+Status: failed | Attempts: 973
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E183
 
-Identified input fields (lower bound): 168 | Varied in render attempts: 71
-Missing values: 1 | Undocumented template fields: 176
-Unreferenced values: 66 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 112
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E070](#e070)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on solr/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 224: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/solr_1789324259/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E184
+
+```text
+Error: YAML parse error on solr/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 64: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/solr_1789324259/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/solr_1789324259/0000>)
 
 ### bitnami/sonarqube
 
-Result: FAIL | Status: failed
-Attempts: 129 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/sonarqube_1789263200/0000](<bitnami-runs/bitnami-charts_1789260948/runs/sonarqube_1789263200/0000>)
+Status: failed | Attempts: 913
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E185
 
-Identified input fields (lower bound): 165 | Varied in render attempts: 8
-Missing values: 0 | Undocumented template fields: 181
-Unreferenced values: 55 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 28
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E071](#e071)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on sonarqube/charts/postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 173:
+found an indentation indicator equal to 0
 ```
+
+Phase: $.postgresql.auth.existingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.postgresql.auth.existingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sonarqube_1789324263/0000/paths/a0cdb2ba618083d9a8df>)
+
+#### E186
+
+```text
+Error: YAML parse error on sonarqube/templates/deployment.yaml: error converting YAML to JSON: yaml: line 243: found an indentation
+indicator equal to 0
+```
+
+Phase: $.smtpExistingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.smtpExistingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sonarqube_1789324263/0000/paths/5787f0eface5fec9a681>)
+
+#### E187
+
+```text
+Error: YAML parse error on sonarqube/templates/deployment.yaml: error converting YAML to JSON: yaml: line 55: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sonarqube_1789324263/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sonarqube_1789324263/0000>)
 
 ### bitnami/spark
 
-Result: FAIL | Status: failed
-Attempts: 129 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/spark_1789263236/0000](<bitnami-runs/bitnami-charts_1789260948/runs/spark_1789263236/0000>)
+Status: failed | Attempts: 1053
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E188
 
-Identified input fields (lower bound): 180 | Varied in render attempts: 1
-Missing values: 0 | Undocumented template fields: 185
-Unreferenced values: 57 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 28
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E112](#e112)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": "0"
-}
+```text
+Error: YAML parse error on spark/templates/pdb-worker.yaml: error converting YAML to JSON: yaml: line 14: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.worker.pdb | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.worker.pdb = {"maxUnavailable": ">0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/spark_1789324264/0000/paths/7b3233b72c7ae2177a76>)
+
+#### E189
+
+```text
+Error: YAML parse error on spark/templates/statefulset-master.yaml: error converting YAML to JSON: yaml: line 58: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/spark_1789324264/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/spark_1789324264/0000>)
 
 ### bitnami/superset
 
-Result: FAIL | Status: failed
-Attempts: 137 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/superset_1789263238/0000](<bitnami-runs/bitnami-charts_1789260948/runs/superset_1789263238/0000>)
+Status: time-limit | Attempts: 446
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 299 | Varied in render attempts: 6
-Missing values: 1 | Undocumented template fields: 313
-Unreferenced values: 161 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 36
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E072](#e072)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/superset_1789324562/0000>)
 
 ### bitnami/tensorflow-resnet
 
-Result: FAIL | Status: failed
-Attempts: 215 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/tensorflow-resnet_1789263255/0000](<bitnami-runs/bitnami-charts_1789260948/runs/tensorflow-resnet_1789263255/0000>)
+Status: failed | Attempts: 1912
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E190
 
-Identified input fields (lower bound): 73 | Varied in render attempts: 30
-Missing values: 4 | Undocumented template fields: 77
-Unreferenced values: 30 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 114
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E073](#e073)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "service": {
-    "loadBalancerIP": ":"
-  }
-}
+```text
+Error: YAML parse error on tensorflow-resnet/templates/deployment.yaml: error converting YAML to JSON: yaml: line 29: did not find expected
+',' or ']'
 ```
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000/paths/097f6358a00dddbcdd83>)
+
+#### E191
+
+```text
+Error: YAML parse error on tensorflow-resnet/templates/deployment.yaml: error converting YAML to JSON: yaml: line 46: found an indentation
+indicator equal to 0
+```
+
+Phase: $.schedulerName | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.schedulerName = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000/paths/57504c968732d9714f10>)
+
+#### E192
+
+```text
+Error: YAML parse error on tensorflow-resnet/templates/deployment.yaml: error converting YAML to JSON: yaml: line 93: mapping values are not
+allowed in this context
+```
+
+Phase: $.server.image.tag | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.server.image.tag = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000/paths/80b6cb2f8dcf3d2dcb4b>)
+
+#### E193
+
+```text
+Error: YAML parse error on tensorflow-resnet/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation
+indicator equal to 0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000/paths/d6baed3b8998a068f471>)
+
+Phase: $.pdb.minAvailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.minAvailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000/paths/07d4854a45a9e7c1eb04>)
+
+#### E194
+
+```text
+Error: YAML parse error on tensorflow-resnet/templates/service.yaml: error converting YAML to JSON: yaml: line 13: found an indentation
+indicator equal to 0
+```
+
+Phase: $.service.type | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.service.type = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000/paths/6e931799d09f8182f34b>)
+
+#### E238
+
+Source: tensorflow-resnet 4.3.15 / templates/NOTES.txt
+
+```text
+[Diagnostic shortened; full text in artifacts] ... ely to cause degraded security and performance, broken chart features, and missing
+environment variables. Unrecognized images: - 00/bitnami/tensorflow-resnet:2.19.1-debian-12-r0 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+Phase: $.client.image.registry | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.client.image.registry = "00"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000/paths/c7b0ad2c6e1b5f0ff3bc>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tensorflow-resnet_1789324564/0000>)
 
 ### bitnami/thanos
 
-Result: FAIL | Status: failed
-Attempts: 155 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/thanos_1789263263/0000](<bitnami-runs/bitnami-charts_1789260948/runs/thanos_1789263263/0000>)
+Status: time-limit | Attempts: 256
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 971 | Varied in render attempts: 36
-Missing values: 62 | Undocumented template fields: 992
-Unreferenced values: 242 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 54
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E074](#e074)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "bucketCacheConfig": "\u001f"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/thanos_1789324565/0000>)
 
 ### bitnami/tomcat
 
-Result: FAIL | Status: failed
-Attempts: 144 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/tomcat_1789263266/0000](<bitnami-runs/bitnami-charts_1789260948/runs/tomcat_1789263266/0000>)
+Status: failed | Attempts: 1483
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E195
 
-Identified input fields (lower bound): 80 | Varied in render attempts: 0
-Missing values: 5 | Undocumented template fields: 82
-Unreferenced values: 93 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 43
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E075](#e075)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "\u001f"
-}
+```text
+Error: YAML parse error on tomcat/templates/deployment.yaml: error converting YAML to JSON: yaml: line 139: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tomcat_1789324566/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E196
+
+```text
+Error: YAML parse error on tomcat/templates/deployment.yaml: error converting YAML to JSON: yaml: line 29: did not find expected ',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tomcat_1789324566/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E197
+
+```text
+Error: YAML parse error on tomcat/templates/deployment.yaml: error converting YAML to JSON: yaml: line 54: mapping values are not allowed in
+this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tomcat_1789324566/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/tomcat_1789324566/0000>)
 
 ### bitnami/valkey
 
-Result: FAIL | Status: failed
-Attempts: 140 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/valkey_1789263282/0000](<bitnami-runs/bitnami-charts_1789260948/runs/valkey_1789263282/0000>)
+Status: time-limit | Attempts: 610
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 311 | Varied in render attempts: 13
-Missing values: 1 | Undocumented template fields: 314
-Unreferenced values: 132 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 39
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E077](#e077)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "clusterDomain": "\u001f"
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/valkey_1789324865/0000>)
 
 ### bitnami/valkey-cluster
 
-Result: FAIL | Status: failed
-Attempts: 134 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/valkey-cluster_1789263288/0000](<bitnami-runs/bitnami-charts_1789260948/runs/valkey-cluster_1789263288/0000>)
+Status: failed | Attempts: 916
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E198
 
-Identified input fields (lower bound): 168 | Varied in render attempts: 51
-Missing values: 0 | Undocumented template fields: 177
-Unreferenced values: 49 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 33
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E076](#e076)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
+```text
+Error: YAML parse error on valkey-cluster/templates/valkey-statefulset.yaml: error converting YAML to JSON: yaml: line 39: did not find
+expected ',' or ']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/valkey-cluster_1789324866/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E199
+
+```text
+Error: YAML parse error on valkey-cluster/templates/valkey-statefulset.yaml: error converting YAML to JSON: yaml: line 63: mapping values
+are not allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/valkey-cluster_1789324866/0000/paths/8e79b7dd85a286cfaddb>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/valkey-cluster_1789324866/0000>)
 
 ### bitnami/vault
 
-Result: FAIL | Status: failed
-Attempts: 168 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/vault_1789263307/0000](<bitnami-runs/bitnami-charts_1789260948/runs/vault_1789263307/0000>)
+Status: time-limit | Attempts: 578
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Identified input fields (lower bound): 259 | Varied in render attempts: 7
-Missing values: 1 | Undocumented template fields: 273
-Unreferenced values: 94 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 67
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E078](#e078)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
-```
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/vault_1789324867/0000>)
 
 ### bitnami/victoriametrics
 
-Result: FAIL | Status: failed
-Attempts: 174 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/victoriametrics_1789263322/0000](<bitnami-runs/bitnami-charts_1789260948/runs/victoriametrics_1789263322/0000>)
+Status: failed | Attempts: 344
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E200
 
-Identified input fields (lower bound): 591 | Varied in render attempts: 4
-Missing values: 0 | Undocumented template fields: 617
-Unreferenced values: 129 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 73
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E079](#e079)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "loggerFormat": "\u001f"
-}
+```text
+Error: YAML parse error on victoriametrics/templates/vmauth/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an indentation
+indicator equal to 0
 ```
+
+Phase: $.vmauth.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.vmauth.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/victoriametrics_1789324870/0000/paths/937ff6fb474ef0a860f5>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/victoriametrics_1789324870/0000>)
 
 ### bitnami/whereabouts
 
-Result: FAIL | Status: failed
-Attempts: 120 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/whereabouts_1789263358/0000](<bitnami-runs/bitnami-charts_1789260948/runs/whereabouts_1789263358/0000>)
+Status: failed | Attempts: 2137
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E201
 
-Identified input fields (lower bound): 48 | Varied in render attempts: 4
-Missing values: 0 | Undocumented template fields: 51
-Unreferenced values: 33 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 19
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E108](#e108)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "resourcesPreset": ""
-}
+```text
+Error: YAML parse error on whereabouts/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 29: did not find expected ',' or
+']'
 ```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/whereabouts_1789325168/0000/paths/a4a0ea6ab697189bb963>)
+
+Phase: $.global.imagePullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.global.imagePullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/whereabouts_1789325168/0000/paths/097f6358a00dddbcdd83>)
+
+1 additional occurrences are retained in the JSON report and chart artifacts.
+
+#### E202
+
+```text
+Error: YAML parse error on whereabouts/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 51: found an indentation
+indicator equal to 0
+```
+
+Phase: $.schedulerName | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.schedulerName = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/whereabouts_1789325168/0000/paths/57504c968732d9714f10>)
+
+#### E203
+
+```text
+Error: YAML parse error on whereabouts/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 56: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/whereabouts_1789325168/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E204
+
+```text
+Error: YAML parse error on whereabouts/templates/service-account.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal
+array into Go struct field .metadata.annotations. of type string
+```
+
+Phase: $.serviceAccount.annotations | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.serviceAccount.annotations = {"": []}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/whereabouts_1789325168/0000/paths/840a8a2bc50327388c2a>)
+
+#### E239
+
+Source: whereabouts 1.2.20 / templates/NOTES.txt
+
+```text
+[Diagnostic shortened; full text in artifacts] ... containers is likely to cause degraded security and performance, broken chart features,
+and missing environment variables. Unrecognized images: - docker.io/00:0.9.2-debian-12-r2 If you are sure you want to proceed with
+non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to
+true. Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+Phase: $.image.repository | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.repository = "00"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/whereabouts_1789325168/0000/paths/3f7165f1837241716c3c>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/whereabouts_1789325168/0000>)
 
 ### bitnami/wildfly
 
-Result: FAIL | Status: failed
-Attempts: 145 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/wildfly_1789263365/0000](<bitnami-runs/bitnami-charts_1789260948/runs/wildfly_1789263365/0000>)
+Status: failed | Attempts: 1523
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E205
 
-Identified input fields (lower bound): 110 | Varied in render attempts: 2
-Missing values: 6 | Undocumented template fields: 116
-Unreferenced values: 36 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 44
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E112](#e112)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "fullnameOverride": "0"
-}
+```text
+Error: YAML parse error on wildfly/templates/deployment.yaml: error converting YAML to JSON: yaml: line 182: found an indentation indicator
+equal to 0
 ```
+
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wildfly_1789325168/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E206
+
+```text
+Error: YAML parse error on wildfly/templates/deployment.yaml: error converting YAML to JSON: yaml: line 31: did not find expected ',' or ']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wildfly_1789325168/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E207
+
+```text
+Error: YAML parse error on wildfly/templates/deployment.yaml: error converting YAML to JSON: yaml: line 68: mapping values are not allowed
+in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wildfly_1789325168/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E208
+
+```text
+Error: YAML parse error on wildfly/templates/pdb.yaml: error converting YAML to JSON: yaml: line 13: found an indentation indicator equal to
+0
+```
+
+Phase: $.pdb.maxUnavailable | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.pdb.maxUnavailable = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wildfly_1789325168/0000/paths/d6baed3b8998a068f471>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wildfly_1789325168/0000>)
 
 ### bitnami/wordpress
 
-Result: FAIL | Status: failed
-Attempts: 395 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000](<bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000>)
+Status: failed | Attempts: 853
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E209
 
-Identified input fields (lower bound): 177 | Varied in render attempts: 41
-Missing values: 5 | Undocumented template fields: 170
-Unreferenced values: 84 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 122
-
-Phase robustness: failed | Attempts: 273
-
-Errors: [E080](#e080), [E081](#e081)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "apacheConfiguration": "\u001f"
-}
+```text
+Error: YAML parse error on wordpress/templates/deployment.yaml: error converting YAML to JSON: yaml: line 256: found an indentation
+indicator equal to 0
 ```
 
-Reproducing values (robustness):
+Phase: $.persistence.existingClaim | Status: failed
 
-```json
-{
-  "": [],
-  "service": {
-    "type": "?"
-  }
-}
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wordpress_1789325170/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E210
+
+```text
+Error: YAML parse error on wordpress/templates/deployment.yaml: error converting YAML to JSON: yaml: line 257: found an indentation
+indicator equal to 0
 ```
+
+Phase: $.smtpExistingSecret | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.smtpExistingSecret = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wordpress_1789325170/0000/paths/5787f0eface5fec9a681>)
+
+#### E231
+
+Source: mariadb 22.0.0 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4): VALUES VALIDATION: mariadb: architecture Invalid architecture selected. Valid values
+are "standalone" and "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+Phase: $.mariadb.architecture | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.mariadb.architecture = ""`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wordpress_1789325170/0000/paths/1ff74c0fd3bc5bc52c04>)
+
+#### E232
+
+Source: memcached 7.9.7 / templates/NOTES.txt
+
+```text
+execution error at (memcached/templates/NOTES.txt:46:4): VALUES VALIDATION: memcached: auth.username Enabling authentication requires
+setting a valid admin username. Please set a valid username (--set auth.username="xxxx") memcached:
+containerSecurityContext.readOnlyRootFilesystem Enabling authentication is not compatible with using a read-only filesystem. Please disable
+it (--set containerSecurityContext.readOnlyRootFilesystem=false)
+```
+
+Phase: $.memcached | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.memcached = {"auth": {"enabled": true}, "enabled": true}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wordpress_1789325170/0000/paths/db425870801cbb8fd099>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wordpress_1789325170/0000>)
 
 ### bitnami/zipkin
 
-Result: FAIL | Status: failed
-Attempts: 2 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000](<bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000>)
+Status: failed | Attempts: 1
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E241
 
-Identified input fields (lower bound): 135 | Varied in render attempts: 0
-Missing values: 1 | Undocumented template fields: 140
-Unreferenced values: 77 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 1
-
-Phase robustness: failed | Attempts: 1
-
-Errors: [E109](#e109)
-
-Reproducing values (known-inputs):
-
-```json
-{}
+```text
+invalid rendered YAML: more indented follow up line than first in a block scalar in "<unicode string>", line 474, column 15: set -o errexit
+^ (line: 474)
 ```
 
-Reproducing values (robustness):
+Phase: chart | Status: failed
 
-```json
-{}
-```
+No triggering values were recorded for this diagnostic.
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zipkin_1789325174/0000>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zipkin_1789325174/0000>)
 
 ### bitnami/zookeeper
 
-Result: FAIL | Status: failed
-Attempts: 131 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts:
-[bitnami-runs/bitnami-charts_1789260948/runs/zookeeper_1789263392/0000](<bitnami-runs/bitnami-charts_1789260948/runs/zookeeper_1789263392/0000>)
+Status: failed | Attempts: 1241
 
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
+#### E211
 
-Identified input fields (lower bound): 166 | Varied in render attempts: 1
-Missing values: 2 | Undocumented template fields: 173
-Unreferenced values: 46 (unknown)
-Field variation does not prove branch or output coverage.
-
-Phase known-inputs: failed | Attempts: 30
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E082](#e082)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "dataLogDir": "-"
-}
+```text
+Error: YAML parse error on zookeeper/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 189: found an indentation
+indicator equal to 0
 ```
 
+Phase: $.persistence.existingClaim | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.existingClaim = ">0"`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zookeeper_1789325176/0000/paths/bc81b51736a9cdc4eda3>)
+
+#### E212
+
+```text
+Error: YAML parse error on zookeeper/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 191: could not find expected ':'
+```
+
+Phase: $.persistence.dataLogDir | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.persistence.dataLogDir = {"existingClaim": "\r0"}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zookeeper_1789325176/0000/paths/cd88da17db57f0ffc104>)
+
+#### E213
+
+```text
+Error: YAML parse error on zookeeper/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 39: did not find expected ',' or
+']'
+```
+
+Phase: $.image.pullSecrets | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image.pullSecrets = [[{}]]`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zookeeper_1789325176/0000/paths/a4a0ea6ab697189bb963>)
+
+#### E214
+
+```text
+Error: YAML parse error on zookeeper/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 64: mapping values are not
+allowed in this context
+```
+
+Phase: $.image | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.image = {"tag": ""}`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zookeeper_1789325176/0000/paths/8e79b7dd85a286cfaddb>)
+
+#### E240
+
+Source: zookeeper 13.8.9 / templates/NOTES.txt
+
+```text
+execution error at (zookeeper/templates/NOTES.txt:79:4): VALUES VALIDATION: zookeeper: auth.client.enabled In order to enable client-server
+authentication, you need to provide the list of users to be created and the user to use for clients authentication.
+```
+
+Phase: $.auth.client.enabled | Status: failed
+
+Selected fields (full context in artifacts):
+- `$.auth.client.enabled = true`
+
+[Full input and diagnostic](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zookeeper_1789325176/0000/paths/63842ee46576ca4d1d3b>)
+
+[Chart artifacts](<https://github.com/astrivant/hypothesis-helm/tree/main/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/zookeeper_1789325176/0000>)

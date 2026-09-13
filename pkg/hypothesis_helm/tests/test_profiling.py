@@ -8,6 +8,7 @@ import shutil
 import sys
 import time
 from pathlib import Path
+from unittest.mock import Mock
 
 import pytest
 
@@ -170,3 +171,33 @@ def test_lost_hook_marks_partial_capture(tmp_path: Path) -> None:
     profile = mapping(json.loads(next(tmp_path.glob("worker-*.json")).read_text()))
     assert profile["capture_complete"] is False
     assert float(str(profile["elapsed_seconds"])) - float(str(profile["captured_seconds"])) >= 0.01
+
+
+def test_ci_process_id_collisions_stay_separate(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Keep captures from different machines distinct when their operating-system PIDs match.
+
+    Args:
+        tmp_path (Path): Combined CI artifact directory.
+        monkeypatch (pytest.MonkeyPatch): Avoid redrawing figures while checking process ownership.
+
+    Returns:
+        None: Two worker identities yield separate views plus one combined view.
+    """
+    for identity in ("first-machine", "second-machine"):
+        document = {
+            "format": "hypothesis-helm-profile-v1",
+            "role": "worker",
+            "pid": 42,
+            "process_id": identity,
+            "truncated_events": 0,
+            "capture_complete": True,
+            "frames": [{"label": "profiled entry", "parent": -1, "self_seconds": 1.0, "calls": 1}],
+        }
+        (tmp_path / f"worker-42-{identity}.json").write_text(json.dumps(document))
+    monkeypatch.setattr("hypothesis_helm.benchmarking.flamegraph.plot", Mock(return_value=1.0))
+    result = render_profiles(tmp_path, tmp_path / "plots")
+    assert result["worker_processes"] == 2
+    figures = [mapping(item) for item in sequence(result["figures"])]
+    assert len(figures) == 3
+    assert len({str(item["png"]) for item in figures}) == 3

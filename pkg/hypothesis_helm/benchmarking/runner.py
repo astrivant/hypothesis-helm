@@ -28,7 +28,7 @@ from hypothesis_helm.benchmarking.workload import (
     standard_values,
 )
 from hypothesis_helm.charts.runner import Chart, RenderFailure, merge_values, render
-from hypothesis_helm.compiler.pruning import Pruner
+from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.execution.render_hashes import RenderHashes
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer

@@ -1,0 +1,608 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 61,
+    "present_fields": [
+      [
+        "additionalVolumeMounts"
+      ],
+      [
+        "additionalVolumes"
+      ],
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configuration",
+        "config"
+      ],
+      [
+        "configuration",
+        "structuredConfig"
+      ],
+      [
+        "deploymentAnnotations"
+      ],
+      [
+        "deploymentLabels"
+      ],
+      [
+        "environmentVariables"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraInitContainers"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "name"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalMetricsRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "configuration",
+        "config"
+      ],
+      [
+        "serviceMonitor",
+        "targets"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "additionalVolumeMounts"
+      ],
+      [
+        "additionalVolumes"
+      ],
+      [
+        "affinity"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "targetMemoryUtilizationPercentage"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configuration",
+        "structuredConfig"
+      ],
+      [
+        "deploymentAnnotations"
+      ],
+      [
+        "deploymentLabels"
+      ],
+      [
+        "environmentVariables"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraContainers"
+      ],
+      [
+        "extraInitContainers"
+      ],
+      [
+        "extraManifests"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "className"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "hosts"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "route"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "name"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalMetricsRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "additionalRelabels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "defaults",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "scheme"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 59,
+    "varied_count": 2,
+    "varied_fraction": 0.03278688524590164,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-dj4eu1tc/chart",
+  "seed": 0,
+  "attempts": 44,
+  "error": "Error: YAML parse error on prometheus-json-exporter/templates/configmap.yaml: error converting YAML to JSON: yaml: line 17: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "replicaCount": 1,
+    "image": {
+      "repository": "quay.io/prometheuscommunity/json-exporter",
+      "pullPolicy": "IfNotPresent",
+      "tag": ""
+    },
+    "imagePullSecrets": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "serviceAccount": {
+      "create": true,
+      "annotations": {},
+      "name": ""
+    },
+    "commonLabels": {},
+    "deploymentAnnotations": {},
+    "deploymentLabels": {},
+    "podAnnotations": {},
+    "podSecurityContext": {},
+    "podLabels": {},
+    "securityContext": {},
+    "livenessProbe": {
+      "httpGet": {
+        "path": "/metrics",
+        "port": "http"
+      }
+    },
+    "readinessProbe": {
+      "httpGet": {
+        "path": "/metrics",
+        "port": "http"
+      }
+    },
+    "service": {
+      "type": "ClusterIP",
+      "port": 7979,
+      "targetPort": "http",
+      "name": "http",
+      "labels": {},
+      "annotations": {}
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "",
+      "scheme": "http",
+      "defaults": {
+        "additionalMetricsRelabels": {},
+        "additionalRelabels": [],
+        "interval": "10s",
+        "labels": {},
+        "scrapeTimeout": "8s"
+      },
+      "targets": null
+    },
+    "ingress": {
+      "enabled": false,
+      "className": "",
+      "labels": {},
+      "annotations": {},
+      "hosts": [
+        {
+          "host": "chart-example.local",
+          "paths": [
+            {
+              "path": "/",
+              "pathType": "ImplementationSpecific"
+            }
+          ]
+        }
+      ],
+      "tls": []
+    },
+    "route": {
+      "main": {
+        "enabled": false,
+        "apiVersion": "",
+        "kind": "",
+        "name": "",
+        "annotations": {},
+        "labels": {},
+        "parentRefs": [],
+        "hostnames": [],
+        "additionalRules": [],
+        "filters": [],
+        "matches": [
+          {
+            "path": {
+              "type": "PathPrefix",
+              "value": "/"
+            }
+          }
+        ],
+        "httpsRedirect": false
+      }
+    },
+    "resources": {},
+    "revisionHistoryLimit": 10,
+    "environmentVariables": [],
+    "autoscaling": {
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 100,
+      "targetCPUUtilizationPercentage": 80
+    },
+    "nodeSelector": [],
+    "tolerations": [],
+    "affinity": [],
+    "configuration": {
+      "config": "\r0",
+      "structuredConfig": {}
+    },
+    "prometheusRule": {
+      "enabled": false,
+      "additionalLabels": {},
+      "namespace": "",
+      "rules": []
+    },
+    "additionalVolumes": [],
+    "additionalVolumeMounts": [],
+    "extraInitContainers": [],
+    "extraArgs": [],
+    "extraContainers": [],
+    "extraManifests": []
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 36,
+    "unique_bundles": 34,
+    "duplicate_bundles": 2,
+    "validation_cache_hits": 2,
+    "validated_entries": 34
+  },
+  "phase": "$.configuration.config",
+  "kind": "value-path",
+  "path": [
+    "configuration",
+    "config"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789311940/runs/prometheus-json-exporter_1789326420/0000/paths/48c0936ef6759819cf71"
+}

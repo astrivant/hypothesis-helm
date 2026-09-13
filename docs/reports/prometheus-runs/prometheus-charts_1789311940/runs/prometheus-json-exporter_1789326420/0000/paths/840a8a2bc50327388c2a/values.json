@@ -1,0 +1,127 @@
+{
+  "replicaCount": 1,
+  "image": {
+    "repository": "quay.io/prometheuscommunity/json-exporter",
+    "pullPolicy": "IfNotPresent",
+    "tag": ""
+  },
+  "imagePullSecrets": [],
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "serviceAccount": {
+    "create": true,
+    "annotations": {
+      "": []
+    },
+    "name": ""
+  },
+  "commonLabels": {},
+  "deploymentAnnotations": {},
+  "deploymentLabels": {},
+  "podAnnotations": {},
+  "podSecurityContext": {},
+  "podLabels": {},
+  "securityContext": {},
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/metrics",
+      "port": "http"
+    }
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/metrics",
+      "port": "http"
+    }
+  },
+  "service": {
+    "type": "ClusterIP",
+    "port": 7979,
+    "targetPort": "http",
+    "name": "http",
+    "labels": {},
+    "annotations": {}
+  },
+  "serviceMonitor": {
+    "enabled": false,
+    "namespace": "",
+    "scheme": "http",
+    "defaults": {
+      "additionalMetricsRelabels": {},
+      "additionalRelabels": [],
+      "interval": "10s",
+      "labels": {},
+      "scrapeTimeout": "8s"
+    },
+    "targets": null
+  },
+  "ingress": {
+    "enabled": false,
+    "className": "",
+    "labels": {},
+    "annotations": {},
+    "hosts": [
+      {
+        "host": "chart-example.local",
+        "paths": [
+          {
+            "path": "/",
+            "pathType": "ImplementationSpecific"
+          }
+        ]
+      }
+    ],
+    "tls": []
+  },
+  "route": {
+    "main": {
+      "enabled": false,
+      "apiVersion": "",
+      "kind": "",
+      "name": "",
+      "annotations": {},
+      "labels": {},
+      "parentRefs": [],
+      "hostnames": [],
+      "additionalRules": [],
+      "filters": [],
+      "matches": [
+        {
+          "path": {
+            "type": "PathPrefix",
+            "value": "/"
+          }
+        }
+      ],
+      "httpsRedirect": false
+    }
+  },
+  "resources": {},
+  "revisionHistoryLimit": 10,
+  "environmentVariables": [],
+  "autoscaling": {
+    "enabled": false,
+    "minReplicas": 1,
+    "maxReplicas": 100,
+    "targetCPUUtilizationPercentage": 80
+  },
+  "nodeSelector": [],
+  "tolerations": [],
+  "affinity": [],
+  "configuration": {
+    "config": "---\nmodules:\n  default:\n    metrics:\n      - name: example_global_value\n        path: \"{ .counter }\"\n        help: Example of a top-level global value scrape in the json\n        labels:\n          environment: beta # static label\n          location: \"planet-{.location}\"          # dynamic label\n\n      - name: example_value\n        type: object\n        help: Example of sub-level value scrapes from a json\n        path: '{.values[?(@.state == \"ACTIVE\")]}'\n        labels:\n          environment: beta # static label\n          id: '{.id}'          # dynamic label\n        values:\n          active: 1      # static value\n          count: '{.count}' # dynamic value\n          boolean: '{.some_boolean}'\n\n    headers:\n      X-Dummy: my-test-header\n\n    # If 'body' is set, it will be sent by the exporter as the body content in the scrape request. The HTTP method will also be set as 'POST' in this case.\n    # body:\n    #   content: |\n    #     {\"time_diff\": \"1m25s\", \"anotherVar\": \"some value\"}\n\n    # The body content can also be a Go Template (https://golang.org/pkg/text/template), with all the functions from the Sprig library (https://masterminds.github.io/sprig/) available. All the query parameters sent by prometheus in the scrape query to the exporter, are available in the template.\n    # body:\n    #   content: |\n    #     {\"time_diff\": \"{{ duration `95` }}\",\"anotherVar\": \"{{ .myVal | first }}\"}\n    #   templatize: true\n\n    # For full http client config parameters, ref: https://pkg.go.dev/github.com/prometheus/common/config?tab=doc#HTTPClientConfig\n    #\n    # http_client_config:\n    #   tls_config:\n    #     insecure_skip_verify: true\n    #   basic_auth:\n    #     username: myuser\n    #     #password: veryverysecret\n    #     password_file: /tmp/mysecret.txt\n",
+    "structuredConfig": {}
+  },
+  "prometheusRule": {
+    "enabled": false,
+    "additionalLabels": {},
+    "namespace": "",
+    "rules": []
+  },
+  "additionalVolumes": [],
+  "additionalVolumeMounts": [],
+  "extraInitContainers": [],
+  "extraArgs": [],
+  "extraContainers": [],
+  "extraManifests": []
+}

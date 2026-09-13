@@ -1,0 +1,48 @@
+{
+  "replicaCount": 1,
+  "rbac": {
+    "create": true,
+    "pspEnabled": true,
+    "pspUseAppArmor": true
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": null
+  },
+  "image": {
+    "repository": "prom/consul-exporter",
+    "tag": "",
+    "pullPolicy": ">0"
+  },
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "consulServer": "localhost:8500",
+  "options": {},
+  "service": {
+    "type": "ClusterIP",
+    "port": 9107,
+    "annotations": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "annotations": {},
+    "path": "/",
+    "hosts": [
+      "chart-example.local"
+    ],
+    "tls": []
+  },
+  "resources": {},
+  "serviceMonitor": {
+    "enabled": false
+  },
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "extraEnv": [],
+  "podAnnotations": {},
+  "initContainers": [],
+  "extraContainers": [],
+  "extraVolumes": [],
+  "extraVolumeMounts": []
+}

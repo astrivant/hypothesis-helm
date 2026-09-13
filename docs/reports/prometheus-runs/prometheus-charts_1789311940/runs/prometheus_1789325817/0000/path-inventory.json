@@ -1,0 +1,4944 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "accessModes"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "alertmanager",
+      "podSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "readinessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "configmapReload",
+      "reloadUrl"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "commonMetaLabels"
+    ],
+    [
+      "alertmanager",
+      "persistence",
+      "annotations"
+    ],
+    [
+      "server",
+      "deploymentAnnotations"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "mountPath"
+    ],
+    [
+      "server",
+      "verticalAutoscaler"
+    ],
+    [
+      "server",
+      "extraFlags"
+    ],
+    [
+      "server",
+      "baseURL"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "tls_config"
+    ],
+    [
+      "alertmanager",
+      "enabled"
+    ],
+    [
+      "extraManifests"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path",
+      "type"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "tls_config",
+      "insecure_skip_verify"
+    ],
+    [
+      "server",
+      "emptyDir",
+      "sizeLimit"
+    ],
+    [
+      "server",
+      "livenessProbeTimeout"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs",
+      "*",
+      "replacement"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "startupProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "httpsRedirect"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "metrics_path"
+    ],
+    [
+      "prometheus-pushgateway",
+      "serviceAnnotations"
+    ],
+    [
+      "alertmanager",
+      "persistence"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "enabled"
+    ],
+    [
+      "configmapReload"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "startupProbe"
+    ],
+    [
+      "server",
+      "podDisruptionBudget"
+    ],
+    [
+      "imagePullSecrets"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "server",
+      "service",
+      "servicePort"
+    ],
+    [
+      "server",
+      "containerSecurityContext"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "tls_config",
+      "ca_file"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "scheme"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus",
+      "static_configs",
+      "*",
+      "targets"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "enabled"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "honor_labels"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "headless",
+      "labels"
+    ],
+    [
+      "server",
+      "service",
+      "loadBalancerClass"
+    ],
+    [
+      "server",
+      "service",
+      "gRPC",
+      "servicePort"
+    ],
+    [
+      "server",
+      "livenessProbeInitialDelay"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs",
+      "*",
+      "target_label"
+    ],
+    [
+      "server",
+      "livenessProbePeriodSeconds"
+    ],
+    [
+      "prometheus-node-exporter"
+    ],
+    [
+      "server",
+      "global",
+      "evaluation_interval"
+    ],
+    [
+      "serviceAccounts",
+      "server",
+      "name"
+    ],
+    [
+      "serviceAccounts",
+      "server"
+    ],
+    [
+      "server",
+      "image",
+      "tag"
+    ],
+    [
+      "server",
+      "podLabels"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "annotations"
+    ],
+    [
+      "alertmanager",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "alertmanager",
+      "nameOverride"
+    ],
+    [
+      "server",
+      "global",
+      "scrape_timeout"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "server",
+      "hostNetwork"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "labels"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "livenessProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "scrapeConfigFiles"
+    ],
+    [
+      "server",
+      "priorityClassName"
+    ],
+    [
+      "server",
+      "readinessProbeSuccessThreshold"
+    ],
+    [
+      "server",
+      "releaseNamespace"
+    ],
+    [
+      "server",
+      "defaultFlagsOverride"
+    ],
+    [
+      "server",
+      "namespaces"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow"
+    ],
+    [
+      "server",
+      "emptyDir"
+    ],
+    [
+      "forceNamespace"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "relabel_configs"
+    ],
+    [
+      "serverFiles",
+      "recording_rules.yml"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "metrics_path"
+    ],
+    [
+      "server",
+      "livenessProbeFailureThreshold"
+    ],
+    [
+      "server",
+      "service",
+      "additionalPorts"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "livenessProbe"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "startupProbe",
+      "httpGet",
+      "port"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "annotations"
+    ],
+    [
+      "server",
+      "prefixURL"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "server",
+      "dnsConfig"
+    ],
+    [
+      "server",
+      "route",
+      "main"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "server",
+      "podAntiAffinity"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "server",
+      "service",
+      "gRPC",
+      "nodePort"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "enabled"
+    ],
+    [
+      "server",
+      "securityContext",
+      "fsGroup"
+    ],
+    [
+      "server",
+      "storagePath"
+    ],
+    [
+      "server",
+      "podDisruptionBudget",
+      "maxUnavailable"
+    ],
+    [
+      "server",
+      "ingress",
+      "annotations"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "matches"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "additionalRules",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "params",
+      "module"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs",
+      "*",
+      "target_label"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "honor_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "server",
+      "configMapOverrideName"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "server",
+      "image",
+      "repository"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs"
+    ],
+    [
+      "server",
+      "tsdb"
+    ],
+    [
+      "prometheus-node-exporter",
+      "rbac"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "headless",
+      "gRPC",
+      "enabled"
+    ],
+    [
+      "server",
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "server",
+      "statefulSet"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "enabled"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "extraArgs"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "kind"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "enabled"
+    ],
+    [
+      "server",
+      "service",
+      "statefulsetReplica"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs",
+      "*",
+      "target_label"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "scheme"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus",
+      "static_configs",
+      "*"
+    ],
+    [
+      "server"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "labels"
+    ],
+    [
+      "server",
+      "ingress",
+      "path"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "job_name"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "resources"
+    ],
+    [
+      "serviceAccounts",
+      "server",
+      "automountServiceAccountToken"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "rule_files",
+      "*"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "hostnames",
+      "*"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "updateStrategy"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "apiVersion"
+    ],
+    [
+      "server",
+      "extraFlags",
+      "*"
+    ],
+    [
+      "prometheus-node-exporter",
+      "containerSecurityContext"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "bearer_token_file"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "tls_config"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "size"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "bearer_token_file"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "headless",
+      "annotations"
+    ],
+    [
+      "server",
+      "service",
+      "gRPC",
+      "enabled"
+    ],
+    [
+      "serviceAccounts"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "scrape_configs",
+      "*",
+      "static_configs",
+      "*",
+      "targets",
+      "*"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "filters"
+    ],
+    [
+      "alertmanager",
+      "persistence",
+      "enabled"
+    ],
+    [
+      "rbac",
+      "create"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "image",
+      "digest"
+    ],
+    [
+      "server",
+      "sidecarTemplateValues"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "labels"
+    ],
+    [
+      "server",
+      "dnsPolicy"
+    ],
+    [
+      "serviceAccounts",
+      "server",
+      "annotations"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "extraVolumeDirs"
+    ],
+    [
+      "server",
+      "readinessProbePeriodSeconds"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "tls_config",
+      "insecure_skip_verify"
+    ],
+    [
+      "server",
+      "service",
+      "annotations"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "server",
+      "image",
+      "digest"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "scrape_configs",
+      "*",
+      "static_configs"
+    ],
+    [
+      "networkPolicy"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "relabel_configs"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "scrape_configs",
+      "*",
+      "job_name"
+    ],
+    [
+      "alertmanager",
+      "persistence",
+      "accessModes",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "alertmanager",
+      "podSecurityContext"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs",
+      "*",
+      "target_label"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs",
+      "*",
+      "target_label"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "server",
+      "emptyDir",
+      "medium"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "server",
+      "service",
+      "statefulsetReplica",
+      "enabled"
+    ],
+    [
+      "server",
+      "alertmanagers"
+    ],
+    [
+      "server",
+      "strategy",
+      "type"
+    ],
+    [
+      "server",
+      "fullnameOverride"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "job_name"
+    ],
+    [
+      "server",
+      "runtimeClassName"
+    ],
+    [
+      "server",
+      "readinessProbeTimeout"
+    ],
+    [
+      "server",
+      "service",
+      "gRPC"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "honor_labels"
+    ],
+    [
+      "server",
+      "automountServiceAccountToken"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "image",
+      "tag"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus",
+      "static_configs",
+      "*",
+      "targets",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "honor_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "job_name"
+    ],
+    [
+      "server",
+      "nodeSelector"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "relabel_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "server",
+      "image",
+      "distroless"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "podManagementPolicy"
+    ],
+    [
+      "server",
+      "sidecarContainers"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "job_name"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path",
+      "value"
+    ],
+    [
+      "alertmanager",
+      "podSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "ruleFiles"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs"
+    ],
+    [
+      "server",
+      "service"
+    ],
+    [
+      "server",
+      "affinity"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "readinessProbe"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "server",
+      "topologySpreadConstraints"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "server",
+      "securityContext"
+    ],
+    [
+      "server",
+      "podAnnotations"
+    ],
+    [
+      "scrapeConfigs"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "storageClass"
+    ],
+    [
+      "server",
+      "extraArgs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "volumeName"
+    ],
+    [
+      "server",
+      "startupProbe"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "subPath"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "scrape_interval"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "enabled"
+    ],
+    [
+      "server",
+      "retentionSize"
+    ],
+    [
+      "server",
+      "podDisruptionBudget",
+      "enabled"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "extraVolumeMounts"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "enabled"
+    ],
+    [
+      "server",
+      "ingress",
+      "servicePort"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "scrape_timeout"
+    ],
+    [
+      "prometheus-node-exporter",
+      "rbac",
+      "pspEnabled"
+    ],
+    [
+      "server",
+      "verticalAutoscaler",
+      "enabled"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "server",
+      "global",
+      "scrape_interval"
+    ],
+    [
+      "server",
+      "useExistingClusterRoleName"
+    ],
+    [
+      "server",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "extraScrapeConfigs"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "headless",
+      "gRPC",
+      "servicePort"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "rule_files"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "honor_labels"
+    ],
+    [
+      "server",
+      "daemonSet"
+    ],
+    [
+      "server",
+      "ingress",
+      "tls"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "matches",
+      "*",
+      "path"
+    ],
+    [
+      "server",
+      "tolerations"
+    ],
+    [
+      "prometheus-pushgateway"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "params"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "headless",
+      "servicePort"
+    ],
+    [
+      "server",
+      "service",
+      "labels"
+    ],
+    [
+      "serverFiles"
+    ],
+    [
+      "serverFiles",
+      "rules"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "enabled"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "relabel_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "alertmanager",
+      "persistence",
+      "size"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "server",
+      "configFromSecret"
+    ],
+    [
+      "rbac"
+    ],
+    [
+      "server",
+      "image"
+    ],
+    [
+      "server",
+      "persistentVolume"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "configmapReload",
+      "env"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "honor_labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "alertmanager"
+    ],
+    [
+      "server",
+      "schedulerName"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "containerPortName"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "scrape_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "bearer_token_file"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "server",
+      "remoteWrite"
+    ],
+    [
+      "server",
+      "tcpSocketProbeEnabled"
+    ],
+    [
+      "prometheus-pushgateway",
+      "service"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "params",
+      "module",
+      "*"
+    ],
+    [
+      "server",
+      "service",
+      "nodePort"
+    ],
+    [
+      "server",
+      "global"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "scrape_interval"
+    ],
+    [
+      "server",
+      "extraConfigmapLabels"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "scrape_configs",
+      "*",
+      "static_configs",
+      "*",
+      "targets"
+    ],
+    [
+      "server",
+      "service",
+      "gRPC",
+      "type"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "tls_config",
+      "ca_file"
+    ],
+    [
+      "server",
+      "hostPort"
+    ],
+    [
+      "server",
+      "hostAliases"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "server",
+      "extraConfigmapMounts"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "alertmanager",
+      "persistence",
+      "accessModes"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "readinessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "alertmanager",
+      "persistence",
+      "emptyDir"
+    ],
+    [
+      "server",
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus",
+      "job_name"
+    ],
+    [
+      "server",
+      "extraSecretMounts"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "pvcDeleteOnStsScale"
+    ],
+    [
+      "server",
+      "probeScheme"
+    ],
+    [
+      "server",
+      "namespaces",
+      "*"
+    ],
+    [
+      "configmapReload",
+      "prometheus"
+    ],
+    [
+      "server",
+      "service",
+      "statefulsetReplica",
+      "replica"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "headless"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "scheme"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "filters",
+      "*"
+    ],
+    [
+      "server",
+      "revisionHistoryLimit"
+    ],
+    [
+      "server",
+      "env"
+    ],
+    [
+      "server",
+      "extraVolumeMounts"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "parentRefs",
+      "*"
+    ],
+    [
+      "server",
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "server",
+      "securityContext",
+      "runAsGroup"
+    ],
+    [
+      "alertmanager",
+      "prefixURL"
+    ],
+    [
+      "server",
+      "resources"
+    ],
+    [
+      "prometheus-pushgateway",
+      "serviceAnnotations",
+      "prometheus.io/probe"
+    ],
+    [
+      "server",
+      "service",
+      "clusterIP"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes",
+      "tls_config",
+      "ca_file"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "relabel_configs",
+      "*",
+      "replacement"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "server",
+      "strategy"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "livenessProbe",
+      "httpGet"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "enabled"
+    ],
+    [
+      "server",
+      "remoteRead"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs",
+      "*",
+      "source_labels"
+    ],
+    [
+      "server",
+      "livenessProbeSuccessThreshold"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "pvcDeleteOnStsDelete"
+    ],
+    [
+      "server",
+      "replicaCount"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "parentRefs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "relabel_configs",
+      "*",
+      "target_label"
+    ],
+    [
+      "prometheus-pushgateway",
+      "enabled"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus",
+      "enabled"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "name"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "tls_config"
+    ],
+    [
+      "server",
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "job_name"
+    ],
+    [
+      "server",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "server",
+      "clusterRoleNameOverride"
+    ],
+    [
+      "server",
+      "portName"
+    ],
+    [
+      "server",
+      "command"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "extraConfigmapMounts"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "readinessProbe",
+      "httpGet"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "existingClaim"
+    ],
+    [
+      "prometheus-pushgateway",
+      "ingress"
+    ],
+    [
+      "server",
+      "otlp"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "containerPort"
+    ],
+    [
+      "server",
+      "service",
+      "type"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "annotations"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers",
+      "job_name"
+    ],
+    [
+      "server",
+      "retention"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "readinessProbe",
+      "httpGet",
+      "scheme"
+    ],
+    [
+      "server",
+      "securityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "server",
+      "daemonSet",
+      "labels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "prometheus-node-exporter",
+      "enabled"
+    ],
+    [
+      "kube-state-metrics"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "enabled"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "accessModes",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway"
+    ],
+    [
+      "server",
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes"
+    ],
+    [
+      "server",
+      "ingress",
+      "ingressClassName"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "enabled"
+    ],
+    [
+      "server",
+      "securityContext",
+      "runAsUser"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus",
+      "static_configs"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "kubernetes_sd_configs",
+      "*",
+      "role"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "scrape_configs",
+      "*"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "server",
+      "extraVolumes"
+    ],
+    [
+      "server",
+      "configMapAnnotations"
+    ],
+    [
+      "server",
+      "ingress",
+      "enabled"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "additionalRules"
+    ],
+    [
+      "server",
+      "ingress",
+      "extraPaths"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "job_name"
+    ],
+    [
+      "server",
+      "service",
+      "externalIPs"
+    ],
+    [
+      "server",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "server",
+      "podAntiAffinityTopologyKey"
+    ],
+    [
+      "alertmanager",
+      "podSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "relabel_configs",
+      "*",
+      "replacement"
+    ],
+    [
+      "server",
+      "exemplars"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "startupProbe",
+      "httpGet",
+      "scheme"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs",
+      "*",
+      "replacement"
+    ],
+    [
+      "server",
+      "extraHostPathMounts"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "image",
+      "repository"
+    ],
+    [
+      "server",
+      "route"
+    ],
+    [
+      "server",
+      "configPath"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "containerSecurityContext"
+    ],
+    [
+      "prometheus-node-exporter",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml"
+    ],
+    [
+      "server",
+      "verticalAutoscaler",
+      "updateMode"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "matches",
+      "*"
+    ],
+    [
+      "server",
+      "ingress"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "scrape_timeout"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "livenessProbe",
+      "httpGet",
+      "scheme"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "livenessProbe",
+      "httpGet",
+      "path"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "enabled"
+    ],
+    [
+      "server",
+      "daemonSet",
+      "enabled"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "statefulSetNameOverride"
+    ],
+    [
+      "server",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs",
+      "*",
+      "action"
+    ],
+    [
+      "alertmanager",
+      "persistence",
+      "labels"
+    ],
+    [
+      "server",
+      "statefulSet",
+      "headless",
+      "gRPC"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints",
+      "enabled"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods",
+      "job_name"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "server",
+      "extraInitContainers"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "image"
+    ],
+    [
+      "scrapeConfigs",
+      "prometheus-pushgateway",
+      "relabel_configs",
+      "*",
+      "source_labels",
+      "*"
+    ],
+    [
+      "server",
+      "ingress",
+      "pathType"
+    ],
+    [
+      "alertRelabelConfigs"
+    ],
+    [
+      "server",
+      "persistentVolume",
+      "selector"
+    ],
+    [
+      "server",
+      "ingress",
+      "hosts"
+    ],
+    [
+      "server",
+      "service",
+      "enabled"
+    ],
+    [
+      "serviceAccounts",
+      "server",
+      "create"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor"
+    ],
+    [
+      "serverFiles",
+      "prometheus.yml",
+      "scrape_configs",
+      "*",
+      "static_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-api-servers"
+    ],
+    [
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "server",
+      "daemonSet",
+      "annotations"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "relabel_configs",
+      "*",
+      "replacement"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-nodes-cadvisor",
+      "relabel_configs"
+    ],
+    [
+      "server",
+      "enableServiceLinks"
+    ],
+    [
+      "server",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "server",
+      "name"
+    ],
+    [
+      "kube-state-metrics",
+      "enabled"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "job_name"
+    ],
+    [
+      "server",
+      "readinessProbeFailureThreshold"
+    ],
+    [
+      "serverFiles",
+      "alerting_rules.yml"
+    ],
+    [
+      "server",
+      "verticalAutoscaler",
+      "containerPolicies"
+    ],
+    [
+      "server",
+      "ingress",
+      "extraLabels"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-services",
+      "kubernetes_sd_configs"
+    ],
+    [
+      "server",
+      "route",
+      "main",
+      "hostnames"
+    ],
+    [
+      "server",
+      "probeHeaders"
+    ],
+    [
+      "serverFiles",
+      "alerts"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-service-endpoints-slow",
+      "kubernetes_sd_configs",
+      "*"
+    ],
+    [
+      "scrapeConfigs",
+      "kubernetes-pods-slow",
+      "relabel_configs",
+      "*",
+      "regex"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "startupProbe",
+      "httpGet"
+    ],
+    [
+      "server",
+      "readinessProbeInitialDelay"
+    ],
+    [
+      "configmapReload",
+      "prometheus",
+      "startupProbe",
+      "periodSeconds"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 2,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 7,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 4,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 9,
+      "message": "unresolved dot context: .Values.server.route.main.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 11,
+      "message": "unresolved dot context: .Values.server.route.main.hostnames"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 16,
+      "message": "unresolved dot context: .Values.server.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 18,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 16,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 20,
+      "message": "unresolved dot context: .Values.server.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 24,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 24,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 25,
+      "message": "unresolved dot context: .Values.server.service.servicePort"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 26,
+      "message": "unresolved dot context: .Values.server.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 27,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 27,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 27,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 28,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 28,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 31,
+      "message": "unresolved dot context: .Values.server.persistentVolume.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 42,
+      "message": "unresolved variable context: $am.service"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 43,
+      "message": "unresolved variable context: $amSvc.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 44,
+      "message": "unresolved variable context: $am.ingress"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 45,
+      "message": "unresolved variable context: $amSvc.port"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 48,
+      "message": "unresolved variable context: $amIngress.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 50,
+      "message": "unresolved variable context: $amIngress.hosts"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 51,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 48,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 56,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 56,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 57,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 55,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 61,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 61,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 63,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 63,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 64,
+      "message": "unresolved variable context: $amSvc.port"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 66,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 66,
+      "message": "unresolved dot context: .Subcharts.alertmanager"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 66,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 67,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 83,
+      "message": "unresolved variable context: $pgSvc.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 85,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 86,
+      "message": "unresolved variable context: $pgSvc.port"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 89,
+      "message": "unresolved variable context: $pgIngress.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 91,
+      "message": "unresolved variable context: $pgIngress.hosts"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 92,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 89,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 97,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 98,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 96,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 102,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 104,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 105,
+      "message": "unresolved variable context: $pgSvc.port"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 107,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 107,
+      "message": "unresolved dot context: .Subcharts"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 107,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 107,
+      "message": "unresolved lookup target: include\n  \"prometheus-pushgateway.name\" (index .Subcharts \"prometheus-pushgateway\")"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 108,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 109,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 5,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 6,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 6,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 12,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 19,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "unresolved dot context: .Chart.Version"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 26,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 27,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 28,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 34,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 35,
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 36,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 38,
+      "message": "unresolved dot context: .Values.commonMetaLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 43,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 44,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 44,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 45,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 48,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "unresolved dot context: .Values.server.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 57,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 58,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 59,
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 61,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 61,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 62,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 63,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 65,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 74,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "unresolved dot context: .Values.server.clusterRoleNameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 76,
+      "message": "unresolved dot context: .Values.server.clusterRoleNameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 78,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 86,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 87,
+      "message": "unresolved dot context: .Subcharts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 87,
+      "message": "unresolved lookup target: if (index .Subcharts \"alertmanager\")"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "unresolved dot context: .Subcharts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "unresolved lookup target: include \"alertmanager.fullname\" (index .Subcharts \"alertmanager\")"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 90,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 98,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 99,
+      "message": "unresolved dot context: .Subcharts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 99,
+      "message": "unresolved lookup target: if (index .Subcharts \"prometheus-pushgateway\")"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 100,
+      "message": "unresolved dot context: .Subcharts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 100,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 100,
+      "message": "unresolved lookup target: include \"prometheus-pushgateway.fullname\" (index .Subcharts \"prometheus-pushgateway\")"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 102,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 110,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 111,
+      "message": "unresolved dot context: .Values.server.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 112,
+      "message": "unresolved dot context: .Values.server.fullnameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 114,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 114,
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 115,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 116,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 116,
+      "message": "unresolved dot context: .Values.server.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 118,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 118,
+      "message": "unresolved dot context: .Values.server.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 126,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 127,
+      "message": "unresolved dot context: .Capabilities.KubeVersion.Version"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 133,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 140,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 141,
+      "message": "unresolved dot context: .Values.serviceAccounts.server.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 142,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 142,
+      "message": "unresolved dot context: .Values.serviceAccounts.server.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 142,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 144,
+      "message": "unresolved dot context: .Values.serviceAccounts.server.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 151,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 152,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 152,
+      "message": "unresolved dot context: .Values.forceNamespace"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 158,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 160,
+      "message": "unresolved dot context: .Values.rbac.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 160,
+      "message": "unresolved dot context: .Values.server.useExistingClusterRoleName"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 161,
+      "message": "unresolved dot context: .Values.server.namespaces"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 162,
+      "message": "unresolved dot context: .Values.server.namespaces"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 163,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 163,
+      "message": "variable reassignment requires review: $namespaces = append $namespaces (tpl $ns $)"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 166,
+      "message": "unresolved dot context: .Values.server.releaseNamespace"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 167,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 167,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 167,
+      "message": "variable reassignment requires review: $namespaces = append $namespaces (include \"prometheus.namespace\" .)"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 176,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 178,
+      "message": "unresolved dot context: .Values.server.remoteWrite"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 179,
+      "message": "unresolved variable context: $remoteWrite.url"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 179,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 179,
+      "message": "dynamic template/context or mutation requires review: set"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 179,
+      "message": "variable reassignment requires review: $remoteWrites = tpl $remoteWrite.url $ | set $remoteWrite \"url\" | append $remoteWrites"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 187,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 189,
+      "message": "unresolved dot context: .Values.server.remoteRead"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 190,
+      "message": "unresolved variable context: $remoteRead.url"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 190,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 190,
+      "message": "dynamic template/context or mutation requires review: set"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 190,
+      "message": "variable reassignment requires review: $remoteReads = tpl $remoteRead.url $ | set $remoteRead \"url\" | append $remoteReads"
+    },
+    {
+      "file": "templates/clusterrole.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrole.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: set"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 68,
+      "message": "dynamic template/context or mutation requires review: unset"
+    },
+    {
+      "file": "templates/cm.yaml",
+      "line": 96,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 2,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 14,
+      "message": "unresolved dot context: .Values.server.daemonSet.enabled"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 18,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 19,
+      "message": "unresolved dot context: .Values.server.daemonSet.labels"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 20,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 26,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 27,
+      "message": "unresolved dot context: .Values.server.deploymentAnnotations"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 29,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 32,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 35,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 47,
+      "message": "unresolved dot context: .Values.server.daemonSet.enabled"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 48,
+      "message": "unresolved dot context: .Values.server.daemonSet.updateStrategy"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 50,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 53,
+      "message": "unresolved dot context: .Values.server.strategy"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 55,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 56,
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 73,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 94,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 104,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 117,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 119,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 119,
+      "message": "variable reassignment requires review: $default_url = printf \"http://127.0.0.1:%s%s/-/reload\" (include \"prometheus.port\" .) ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 178,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 194,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 197,
+      "message": "unresolved dot context: .Values.server.retention"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 198,
+      "message": "unresolved dot context: .Values.server.retention"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 200,
+      "message": "unresolved dot context: .Values.server.retentionSize"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 201,
+      "message": "unresolved dot context: .Values.server.retentionSize"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 203,
+      "message": "unresolved dot context: .Values.server.configPath"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 204,
+      "message": "unresolved dot context: .Values.server.storagePath"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 205,
+      "message": "unresolved dot context: .Values.server.storagePath"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 207,
+      "message": "unresolved dot context: .Values.server.persistentVolume.mountPath"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 211,
+      "message": "unresolved dot context: .Values.server.extraFlags"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 212,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 214,
+      "message": "unresolved dot context: .Values.server.extraArgs"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 221,
+      "message": "unresolved dot context: .Values.server.prefixURL"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 222,
+      "message": "unresolved dot context: .Values.server.prefixURL"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 224,
+      "message": "unresolved dot context: .Values.server.baseURL"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 225,
+      "message": "unresolved dot context: .Values.server.baseURL"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 229,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 240,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 248,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 259,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 267,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 279,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 290,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 336,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 384,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 378,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 385,
+      "message": "unresolved dot context: .Values.server.podAntiAffinity"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 390,
+      "message": "unresolved dot context: .Values.server.podAntiAffinityTopologyKey"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 393,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 393,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 404,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 446,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 443,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 447,
+      "message": "unresolved dot context: .Values.server.persistentVolume.enabled"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 450,
+      "message": "unresolved dot context: .Values.server.emptyDir.sizeLimit"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 450,
+      "message": "unresolved dot context: .Values.server.emptyDir.medium"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 451,
+      "message": "unresolved dot context: .Values.server.emptyDir.medium"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 452,
+      "message": "unresolved dot context: .Values.server.emptyDir.medium"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 454,
+      "message": "unresolved dot context: .Values.server.emptyDir.sizeLimit"
+    },
+    {
+      "file": "templates/deploy.yaml",
+      "line": 455,
+      "message": "unresolved dot context: .Values.server.emptyDir.sizeLimit"
+    },
+    {
+      "file": "templates/extra-manifests.yaml",
+      "line": 3,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/headless-svc.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/headless-svc.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/headless-svc.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/headless-svc.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/headless-svc.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/httproute.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/httproute.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/httproute.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/httproute.yaml",
+      "line": 21,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/httproute.yaml",
+      "line": 25,
+      "message": "tpl source is absent or dynamically indexed"
+    },
+    {
+      "file": "templates/httproute.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 3,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 29,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 33,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 45,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/network-policy.yaml",
+      "line": 2,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/network-policy.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/network-policy.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/network-policy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/network-policy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/network-policy.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 18,
+      "message": "unresolved variable context: $pdbSpec.minAvailable"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 21,
+      "message": "unresolved variable context: $pdbSpec.maxUnavailable"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 24,
+      "message": "unresolved variable context: $pdbSpec.unhealthyPodEvictionPolicy"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 1,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 9,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 11,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 13,
+      "message": "unresolved dot context: .Values.serviceAccounts.server.automountServiceAccountToken"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 14,
+      "message": "unresolved dot context: .Values.serviceAccounts.server.automountServiceAccountToken"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 5,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "path": [
+        "alertmanager",
+        "prefixURL"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "extraManifests",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "prometheus-pushgateway",
+        "ingress"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "prometheus-pushgateway",
+        "service"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "ruleFiles",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "scrapeConfigs",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "automountServiceAccountToken"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "hostPort"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "schedulerName"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "scrapeConfigs",
+        "*",
+        "enabled"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "scrapeConfigs",
+        "*",
+        "job_name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "ingress",
+        "servicePort"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "persistentVolume",
+        "selector"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "persistentVolume",
+        "storageClass"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "persistentVolume",
+        "volumeName"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "service",
+        "nodePort"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "sidecarContainers",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "statefulSet",
+        "updateStrategy"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "verticalAutoscaler",
+        "containerPolicies"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*",
+        "groups"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*",
+        "scrape_configs"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraArgs",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraVolumeDirs",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "configMap"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "hostPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "optional"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "secretName"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "ingress",
+        "extraLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "ingress",
+        "hosts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "probeHeaders",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "probeHeaders",
+        "*",
+        "value"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "additionalRules"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "annotations"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "apiVersion"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "enabled"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "filters"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "hostnames"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "httpsRedirect"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "kind"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "labels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "matches"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "parentRefs"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "server",
+        "service",
+        "gRPC",
+        "nodePort"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "service",
+        "gRPC",
+        "type"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "server",
+        "service",
+        "loadBalancerSourceRanges",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "configMap"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "optional"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraArgs",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "configMap"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "optional"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraConfigmapMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "configmapReload",
+        "prometheus",
+        "extraVolumeDirs",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "extraManifests",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ruleFiles",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "scrapeConfigs",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "scrapeConfigs",
+        "*",
+        "enabled"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "scrapeConfigs",
+        "*",
+        "job_name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "configMap"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraConfigmapMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "hostPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraHostPathMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "mountPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "optional"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "readOnly"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "secretName"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "extraSecretMounts",
+        "*",
+        "subPath"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "ingress",
+        "extraLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "ingress",
+        "hosts",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "probeHeaders",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "probeHeaders",
+        "*",
+        "value"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "additionalRules"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "annotations"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "apiVersion"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "enabled"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "filters"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "hostnames"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "httpsRedirect"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "kind"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "labels"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "matches"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "route",
+        "*",
+        "parentRefs"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "service",
+        "loadBalancerSourceRanges",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "server",
+        "sidecarContainers",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*",
+        "groups"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "serverFiles",
+        "*",
+        "scrape_configs"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}
