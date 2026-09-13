@@ -5,7 +5,6 @@ Compare failure expansion policies using fresh Helm populations and rerendered a
 import argparse
 import json
 import shutil
-import subprocess
 import time
 from pathlib import Path
 
@@ -18,6 +17,7 @@ from hypothesis_helm.benchmarking.structures import STRUCTURES
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.passes.expansion import FailureExpansion
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
@@ -182,7 +182,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     document: dict[str, object] = {
         "metadata": {
             "profiling": profile_settings(),
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
             "code_sha256": code_digest(),
             "input_complexity": args.input_complexity,
             "error_percent": args.error_percent,

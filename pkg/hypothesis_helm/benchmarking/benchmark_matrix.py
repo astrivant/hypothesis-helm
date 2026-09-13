@@ -27,6 +27,7 @@ from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.compiler.passes.topology import trim_topology
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.render_hashes import RenderHashes
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
@@ -278,7 +279,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     document: dict[str, object] = {
         "metadata": {
             "profiling": profile_settings(),
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
             "python": platform.python_version(),
             "platform": platform.platform(),
             "code_sha256": code_digest(),

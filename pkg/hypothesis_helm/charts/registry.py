@@ -10,7 +10,6 @@ import logging
 import os
 import re
 import shutil
-import signal
 import subprocess
 import tarfile
 import tempfile
@@ -24,6 +23,7 @@ from ruamel.yaml.error import YAMLError
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.repository import RepositorySource
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.schemas.contracts import mapping, sequence, text
 
 LOGGER = logging.getLogger(__name__)
@@ -56,19 +56,7 @@ class HelmTransport:
         remaining = self.stop - time.monotonic()
         if remaining <= 0:
             raise subprocess.TimeoutExpired(command, 0)
-        with subprocess.Popen(
-            command, env=self.environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True
-        ) as process:
-            try:
-                output, error = process.communicate(timeout=remaining)
-            except BaseException:
-                try:
-                    os.killpg(process.pid, signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
-                process.communicate()
-                raise
-        return subprocess.CompletedProcess(command, process.returncode, output, error)
+        return Processes().run(command, env=self.environment, capture_output=True, timeout=remaining)
 
 
 def unpack_chart(archive: Path, destination: Path, name: str, version: str | None) -> tuple[str, str]:

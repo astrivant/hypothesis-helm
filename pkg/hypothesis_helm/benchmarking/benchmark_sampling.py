@@ -23,6 +23,7 @@ from hypothesis_helm.benchmarking.structures import expected_manifests
 from hypothesis_helm.benchmarking.workload import source_digest
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import RenderFailure, render
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, number, sequence
@@ -186,7 +187,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     document: dict[str, object] = {
         "status": status,
         "metadata": {
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
             "python": platform.python_version(),
             "code_sha256": code_digest(),
             "chart_sha256": source_digest(chart.path),

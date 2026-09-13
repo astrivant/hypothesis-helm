@@ -12,7 +12,6 @@ import json
 import os
 import platform
 import shutil
-import subprocess
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
@@ -22,6 +21,7 @@ from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.runner import measure
 from hypothesis_helm.benchmarking.workload import MULTIPLICITY, VERSION, load_inputs, source_digest
 from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, sequence
@@ -208,7 +208,7 @@ def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = N
         "platform": platform.platform(),
         "machine": platform.machine(),
         "logical_cpus": os.cpu_count(),
-        "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+        "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
         "matplotlib": importlib.metadata.version("matplotlib"),
         "cache_scope": ("fresh caches per scaling point and progressive trajectory; progressive checkpoints share their trajectory cache"),
         "timing": ("wall time includes spawn, chart loading, input generation and validation; cleanup measured"),

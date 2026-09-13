@@ -232,7 +232,7 @@ def test_timeout_is_a_counterexample(monkeypatch: pytest.MonkeyPatch, tmp_path: 
         """
         raise subprocess.TimeoutExpired(str(args[0]), number(kwargs["timeout"]))
 
-    monkeypatch.setattr(subprocess, "run", timeout)
+    monkeypatch.setattr("hypothesis_helm.charts.rendering.Processes.run", lambda self, *args, **kwargs: timeout(*args, **kwargs))
     report = check_chart(ROOT / "examples/configmap", timeout=0.1, artifact_dir=tmp_path)
     assert report["status"] == "failed"
     assert "exceeded 0.1s" in text(report["error"])

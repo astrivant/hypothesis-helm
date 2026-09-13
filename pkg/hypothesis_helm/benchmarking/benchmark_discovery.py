@@ -7,7 +7,6 @@ import itertools
 import json
 import random
 import shutil
-import subprocess
 import time
 from pathlib import Path
 
@@ -22,6 +21,7 @@ from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.workload import source_digest
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions
 from hypothesis_helm.schemas.contracts import mapping, sequence
@@ -190,7 +190,7 @@ def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = N
     document: dict[str, object] = {
         "metadata": {
             "profiling": profile_settings(),
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
             "seed": args.seed,
             "input_complexity": complexity,
             "bugs": bug_spec,

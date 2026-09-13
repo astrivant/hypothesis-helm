@@ -5,7 +5,6 @@ Sweep topology depth against fixed faulty populations and distributed structural
 import argparse
 import json
 import shutil
-import subprocess
 import time
 from pathlib import Path
 
@@ -17,6 +16,7 @@ from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.compiler.passes.topology import trim_topology
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, number, sequence
 
@@ -124,7 +124,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     document: dict[str, object] = {
         "metadata": {
             "profiling": profile_settings(),
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
             "code_sha256": code_digest(),
             "depths": args.depths,
             "input_complexity": args.input_complexity,

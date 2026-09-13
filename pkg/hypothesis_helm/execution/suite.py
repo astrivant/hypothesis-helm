@@ -229,7 +229,7 @@ def run_suite(
             else:
                 workers = 1
                 environment["HYPOTHESIS_HELM_PROGRESS"] = "1"
-                completed = Processes().run(
+                completed = Processes(interrupt_grace=5.0).run(
                     command,
                     cwd=directory,
                     env=environment,

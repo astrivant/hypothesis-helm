@@ -54,7 +54,8 @@ def run_parallel(
         depths_file = workspace / "path-depths.json"
         collection_environment = dict(environment, HYPOTHESIS_HELM_COLLECT=str(collected), HYPOTHESIS_HELM_COLLECT_DEPTHS=str(depths_file))
         collection_environment.pop("HYPOTHESIS_HELM_MANIFEST_FD", None)
-        processes = Processes()
+        # Allow pytest to clean up its own bounded external-command groups first.
+        processes = Processes(interrupt_grace=5.0)
         collection = processes.run(
             [*command, "--collect-only"],
             cwd=directory,
@@ -174,14 +175,18 @@ def run_parallel(
         except KeyboardInterrupt:
             interrupted = True
             LOGGER.info("Interrupted; stopping active tests and preserving partial results")
-            processes.stop()
-            for future in pending:
-                future.cancel()
         finally:
-            pool.shutdown(wait=True, cancel_futures=True)
-            if interrupted:
-                progress.update(task, description="Interrupted", workers=0)
-            progress.stop()
+            try:
+                for future in pending:
+                    future.cancel()
+                processes.stop()
+            finally:
+                try:
+                    pool.shutdown(wait=True, cancel_futures=True)
+                finally:
+                    if interrupted:
+                        progress.update(task, description="Interrupted", workers=0)
+                    progress.stop()
         if interrupted:
             for future, index in pending.items():
                 if future.cancelled():

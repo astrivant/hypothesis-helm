@@ -16,6 +16,7 @@ from ruamel.yaml.error import YAMLError
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
 from hypothesis_helm.reporting.output import emit_manifest
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, validate
@@ -120,7 +121,7 @@ def render(
         if kube_version:
             command += ["--kube-version", kube_version]
         try:
-            process = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
+            process = Processes().run(command, capture_output=True, text=True, timeout=timeout)
         except subprocess.TimeoutExpired as exc:
             raise RenderFailure(f"helm exceeded {timeout}s") from exc
         if process.returncode:

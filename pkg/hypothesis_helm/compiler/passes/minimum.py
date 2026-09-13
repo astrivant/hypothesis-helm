@@ -21,6 +21,7 @@ from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.constants import fill_missing
 from hypothesis_helm.compiler.passes.inputs import InputInventory
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.render_hashes import RenderHashes
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.schemas.conformity import ENVIRONMENT
@@ -142,7 +143,7 @@ def export_minimal(
                 if metadata.get("type") == "library":
                     raise ValueError("Library charts do not have standalone nonempty manifests")
                 if build_dependencies and metadata.get("dependencies"):
-                    built = subprocess.run(
+                    built = Processes().run(
                         [helm, "dependency", "build", str(isolated)],
                         capture_output=True,
                         text=True,
@@ -174,7 +175,7 @@ def export_minimal(
                         return 0
                     (isolated / "values.yaml").write_text(yamlio.dump(values))
                     try:
-                        lint = subprocess.run(
+                        lint = Processes().run(
                             [helm, "lint", str(isolated)],
                             capture_output=True,
                             text=True,

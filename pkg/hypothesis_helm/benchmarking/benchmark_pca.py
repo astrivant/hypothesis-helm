@@ -7,7 +7,6 @@ import json
 import logging
 import platform
 import shutil
-import subprocess
 import time
 from pathlib import Path
 
@@ -22,6 +21,7 @@ from hypothesis_helm.benchmarking.workload import source_digest
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.passes.topology import trim_topology
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.contracts import configuration_key, mapping
@@ -234,7 +234,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     document: dict[str, object] = {
         "metadata": {
             "profiling": profile_settings(),
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
             "python": platform.python_version(),
             "code_sha256": code_digest(),
             "input_complexity": args.input_complexity,

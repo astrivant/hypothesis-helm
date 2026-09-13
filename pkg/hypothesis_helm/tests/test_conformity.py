@@ -132,7 +132,7 @@ def test_validator_boundary(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> 
         assert kwargs["input"] == "kind: ConfigMap"
         return subprocess.CompletedProcess(command, 1, "invalid resource", "")
 
-    monkeypatch.setattr(subprocess, "run", execute)
+    monkeypatch.setattr("hypothesis_helm.schemas.conformity.Processes.run", lambda self, *args, **kwargs: execute(*args, **kwargs))
     with pytest.raises(AssertionError, match="invalid resource"):
         conformity.validate("kind: ConfigMap", 1)
 
@@ -214,11 +214,15 @@ def test_memory_snapshot(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Non
     assert conformity.memory_snapshot(snapshot) == snapshot
     root = tmp_path / "memory"
     monkeypatch.setenv("HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR", str(root))
-    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "ext4\n"))
+    monkeypatch.setattr(
+        "hypothesis_helm.schemas.conformity.Processes.run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "ext4\n")
+    )
     with pytest.raises(ValueError, match="Linux tmpfs"):
         conformity.memory_snapshot(snapshot)
     assert not root.exists()
-    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "tmpfs\n"))
+    monkeypatch.setattr(
+        "hypothesis_helm.schemas.conformity.Processes.run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "tmpfs\n")
+    )
     staged = conformity.memory_snapshot(snapshot)
     assert staged == root / snapshot.parent.name / snapshot.name
     assert (staged / "pod.json").read_bytes() == (snapshot / "pod.json").read_bytes()

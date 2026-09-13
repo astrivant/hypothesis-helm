@@ -40,9 +40,14 @@ The chart runner coordinates separate modules: `charts/model.py` owns loaded con
 `charts/planning.py` builds finite plans and estimates, `charts/candidates.py` evaluates one candidate,
 `charts/rendering.py` owns Helm rendering, and `charts/audit.py` assembles audit findings.
 
-`execution/processes.py` owns worker process groups until descendants have stopped and direct children
-have been joined. Communication errors trigger cleanup; a failed cleanup retains the unresolved ownership
-record while other children are still joined. Benchmark commands pass arguments and chart workspace owners
+`execution/processes.py` owns external commands and worker process groups until descendants have stopped
+and direct children have been joined. Git, Helm, schema validators, collection, and benchmark commands use
+the same owner. Communication errors and timeouts trigger cleanup; a failed cleanup retains the unresolved
+ownership record while other children are still joined. Execution and cleanup failures are reported together.
+The test scheduler stops children and joins worker threads even when scheduling or cleanup raises an error.
+Outer pytest and CI owners allow longer interruption grace periods so inner command owners can finish cleanup.
+The benchmark process pool also joins its replicas when a result raises an exception.
+Benchmark commands pass arguments and chart workspace owners
 explicitly, without changing the process command line or selecting a workspace through ambient context.
 
 ## Syntax trees and compiler passes

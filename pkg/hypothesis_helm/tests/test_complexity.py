@@ -259,3 +259,78 @@ def test_shared_gate_does_not_combine_incompatible_output_maxima(tmp_path: Path)
         assert result["maximum_score"] == max(
             output_profile(render(chart, {"enabled": enabled}, stream=False))["score"] for enabled in (False, True)
         )
+
+
+def test_component_bound_is_admissible_for_every_partial_assignment() -> None:
+    """
+    Independently enumerate compatible profiles to check that pruning bounds never underestimate.
+
+    Returns:
+        None: Partial bounds cover every feasible score and complete assignments have exact bounds.
+    """
+    from hypothesis_helm.compiler.passes.complexity import Component, OutputCase, bound
+
+    components = (
+        Component((0,), (OutputCase((0,), (), (1, 8)), OutputCase((1,), (), (1, 1, 1, 2)))),
+        Component(
+            (0, 1),
+            (
+                OutputCase((0, 0), (), (1, 2, 5)),
+                OutputCase((0, 1), (), (1, 3)),
+                OutputCase((1, 0), (), (1, 4)),
+                OutputCase((1, 1), (), (1, 1, 1, 1, 1)),
+            ),
+        ),
+    )
+    scores = {}
+    for assignment in product(range(2), repeat=2):
+        profiles = [
+            next(case.levels for case in component.cases if case.choices == tuple(assignment[index] for index in component.factors))
+            for component in components
+        ]
+        depth = max(map(len, profiles))
+        levels = [sum(profile[level] if level < len(profile) else 0 for profile in profiles) for level in range(depth)]
+        scores[assignment] = max(levels) * depth
+    for partial in ({}, {0: 0}, {0: 1}, {1: 0}, {1: 1}):
+        feasible = [score for choices, score in scores.items() if all(choices[index] == value for index, value in partial.items())]
+        assert bound(components, partial) >= max(feasible)
+    for choices, score in scores.items():
+        assert bound(components, dict(enumerate(choices))) == score
+
+
+def test_complexity_cli_accepts_chart_paths(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """
+    Exercise typed command arguments and report the same maximum as the audit API.
+
+    Args:
+        tmp_path (Path): Destination for the finite chart.
+        capsys (pytest.CaptureFixture[str]): Capture the CLI's JSON output.
+
+    Returns:
+        None: Chart and mathematical-size modes both emit their documented results.
+    """
+    from hypothesis_helm.compiler.passes.complexity import main
+
+    _chart(tmp_path)
+    assert main(["--chart", str(tmp_path)]) == 0
+    assert json.loads(capsys.readouterr().out)["maximum_score"] == 21
+    assert main(["--nodes", "13"]) == 0
+    assert json.loads(capsys.readouterr().out) == {"nodes": 13, "size_ceiling": 49}
+
+
+def test_root_enum_remains_an_atomic_supported_domain(tmp_path: Path) -> None:
+    """
+    Preserve whole-document constraints instead of inventing independent field choices.
+
+    Args:
+        tmp_path (Path): Destination for a chart constrained by a root enum.
+
+    Returns:
+        None: Branch-and-bound retains the exhaustive maximum for supported atomic schemas.
+    """
+    _chart(tmp_path)
+    (tmp_path / "values.schema.json").write_text(json.dumps({"type": "object", "enum": [{"enabled": False}, {"enabled": True}]}))
+    result = measure(Chart.load(tmp_path))
+    assert result["status"] == "compiled-maximum"
+    assert result["maximum_score"] == 21
+    assert result["maximizing_values"] == {"enabled": True}

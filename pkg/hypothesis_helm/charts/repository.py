@@ -7,7 +7,6 @@ from __future__ import annotations
 import logging
 import os
 import re
-import signal
 import subprocess
 import tempfile
 import time
@@ -16,6 +15,8 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from attrs import define, field
+
+from hypothesis_helm.execution.processes import Processes
 
 LOGGER = logging.getLogger(__name__)
 
@@ -67,24 +68,7 @@ def run_git(command: list[str], timeout: float) -> subprocess.CompletedProcess[s
     environment = dict(os.environ, GIT_TERMINAL_PROMPT="0")
     if "GIT_SSH" not in environment:
         environment.setdefault("GIT_SSH_COMMAND", "ssh -o BatchMode=yes")
-    with subprocess.Popen(
-        command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        env=environment,
-        start_new_session=True,
-    ) as process:
-        try:
-            output, error = process.communicate(timeout=timeout)
-        except BaseException:
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            process.communicate()
-            raise
-        return subprocess.CompletedProcess(command, process.returncode, output, error)
+    return Processes().run(command, env=environment, capture_output=True, timeout=timeout)
 
 
 @define

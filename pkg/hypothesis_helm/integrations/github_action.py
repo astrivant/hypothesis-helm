@@ -57,7 +57,7 @@ def main() -> int:
         security = os.environ.get("HH_KUBESEC", "false").lower() == "true"
         with manifests.open("w") as stream:
             # Give the Helm parent time to stop its own pytest process groups.
-            result = Processes(interrupt_grace=5.0).run(
+            result = Processes(interrupt_grace=10.0).run(
                 ["bash", str(Path(__file__).with_suffix(".sh"))],
                 cwd=Path.cwd(),
                 env={

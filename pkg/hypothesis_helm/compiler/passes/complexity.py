@@ -10,6 +10,7 @@ import json
 import math
 import time
 from collections.abc import Sequence
+from pathlib import Path
 
 from attrs import frozen
 from jsonschema import validators
@@ -23,7 +24,7 @@ from hypothesis_helm.compiler.complexity import maximum_score, output_profile
 from hypothesis_helm.compiler.passes.pruning import Pruner, safe_values
 from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping
 from hypothesis_helm.schemas.factors import FactorSpace, factor_space
-from hypothesis_helm.schemas.finite import NonFiniteSchema
+from hypothesis_helm.schemas.finite import NonFiniteSchema, enumerate_values
 from hypothesis_helm.schemas.model import ValuesModel
 
 
@@ -71,6 +72,8 @@ def _values(model: ValuesModel, space: FactorSpace, choices: Sequence[int]) -> d
     """
     values = model.structure(space.skeleton, validate=False)
     for node, domain, index in zip(space.nodes, space.domains, choices, strict=True):
+        if not node.path:
+            return mapping(domain[index])
         name = node.path[-1]
         if name in domain[index]:
             model.assign(values, node, domain[index][name])
@@ -230,7 +233,11 @@ def measure(chart: Chart, *, max_cases: int = 4096, time_limit: float = 5.0) -> 
         compiler = Pruner(chart.path, chart.defaults, model)
         if compiler.disabled:
             raise ValueError(compiler.disabled)
-        space = factor_space(model, max_cases)
+        if "enum" in chart.schema or "const" in chart.schema:
+            # A constrained root document is one atomic factor, not independently variable fields.
+            space = FactorSpace([()], [enumerate_values(chart.schema, max_cases)], {}, [model.root])
+        else:
+            space = factor_space(model, max_cases)
         # Stable domain ordering also defines the canonical values for unused factors.
         for domain in space.domains:
             domain.sort(key=configuration_key)
@@ -367,9 +374,12 @@ def measure(chart: Chart, *, max_cases: int = 4096, time_limit: float = 5.0) -> 
     return result
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     """
     Compute a chart's potential output maximum or the mathematical ceiling for a tree size.
+
+    Args:
+        argv (list[str] | None): Explicit arguments or the process command line.
 
     Returns:
         int: Zero after emitting the structured complexity result.
@@ -378,18 +388,18 @@ def main() -> int:
 
     parser = argparse.ArgumentParser(description="Compute potential rendered-chart complexity with the supported compiler subset.")
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--chart", help="Chart whose complete allowed output space should be analyzed")
+    group.add_argument("--chart", type=Path, help="Chart whose complete allowed output space should be analyzed")
     group.add_argument("--nodes", type=int, help="Compute only the unrestricted tree ceiling for this number of output nodes")
     parser.add_argument("--max-cases", type=int, default=4096)
     parser.add_argument("--time-limit", type=float, default=5.0)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     try:
         result = (
             {"nodes": args.nodes, "size_ceiling": maximum_score(args.nodes)}
             if args.nodes is not None
             else measure(load_input_chart(args.chart), max_cases=args.max_cases, time_limit=args.time_limit)
         )
-    except ValueError as exc:
+    except (ValueError, OSError) as exc:
         parser.error(str(exc))
     print(json.dumps(result, indent=2))
     return 0

@@ -7,13 +7,19 @@ import os
 import signal
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
+from textwrap import dedent
 from typing import cast
 from unittest.mock import Mock
 
 import pytest
 
+from hypothesis_helm.benchmarking.runner import Job, measure
+from hypothesis_helm.charts.registry import HelmTransport
+from hypothesis_helm.charts.repository import run_git
+from hypothesis_helm.execution.parallel import run_parallel
 from hypothesis_helm.execution.processes import Processes, _signal_group
 
 
@@ -58,8 +64,10 @@ def test_group_permission_denial_is_not_hidden(monkeypatch: pytest.MonkeyPatch) 
         _signal_group(child, signal.SIGTERM, permission_grace=0)
 
 
-@pytest.mark.parametrize(("jobs", "stubborn"), [("1", False), ("auto", False), ("2", True)])
-def test_interrupt_stops_process_groups(tmp_path: Path, jobs: str, stubborn: bool) -> None:
+@pytest.mark.parametrize(
+    ("jobs", "stubborn", "nested"), [("1", False, False), ("auto", False, False), ("2", True, False), ("1", True, True), ("2", True, True)]
+)
+def test_interrupt_stops_process_groups(tmp_path: Path, jobs: str, stubborn: bool, nested: bool) -> None:
     """
     Interrupt only the CLI and verify that workers and descendants are stopped.
 
@@ -67,6 +75,7 @@ def test_interrupt_stops_process_groups(tmp_path: Path, jobs: str, stubborn: boo
         tmp_path (Path): Directory containing the interruptible saved suite.
         jobs (str): Serial, adaptive, or fixed parallel execution.
         stubborn (bool): Whether the active worker ignores cooperative shutdown signals.
+        nested (bool): Whether an inner command owner must finish before pytest is stopped.
 
     Returns:
         None: Exit 130 preserves partial results and leaves no live child processes.
@@ -82,6 +91,7 @@ import time
 from pathlib import Path
 import pytest
 from hypothesis_helm.reporting.output import emit_manifest
+from hypothesis_helm.execution.processes import Processes
 
 @pytest.mark.parametrize("index", range(8))
 def test_shutdown(index):
@@ -92,6 +102,12 @@ def test_shutdown(index):
         time.sleep(60)
         return
     stubborn = os.environ["STUBBORN"] == "1"
+    if os.environ["NESTED"] == "1":
+        Processes().run([sys.executable, "-c",
+            "import json,os,signal,time; from pathlib import Path; "
+            "signal.signal(signal.SIGINT, signal.SIG_IGN); signal.signal(signal.SIGTERM, signal.SIG_IGN); "
+            "Path('ready.json').write_text(json.dumps([os.getppid(),os.getpid()])); time.sleep(60)"])
+        return
     if stubborn:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         signal.signal(signal.SIGTERM, signal.SIG_IGN)
@@ -103,7 +119,7 @@ def test_shutdown(index):
     time.sleep(60)
 """
     )
-    environment = dict(os.environ, STUBBORN=str(int(stubborn)), PYTHON_CPU_COUNT="2")
+    environment = dict(os.environ, STUBBORN=str(int(stubborn)), NESTED=str(int(nested)), PYTHON_CPU_COUNT="2")
     output_file = tmp_path / "stdout.log"
     diagnostics_file = tmp_path / "stderr.log"
     # Workers can fill an unread pipe before writing the readiness/JUnit files.
@@ -277,3 +293,199 @@ def test_one_cleanup_failure_does_not_skip_other_children(monkeypatch: pytest.Mo
     blocked.wait.assert_called_once()
     finished.wait.assert_called_once()
     assert processes._children == {blocked}
+
+
+@pytest.mark.parametrize("transport", ["command", "git", "helm"])
+@pytest.mark.parametrize("failure", ["read", "timeout", "success"])
+def test_transports_reap_descendants(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, transport: str, failure: str) -> None:
+    """
+    Exercise shared ownership through real transports, including an already exited leader.
+
+    Args:
+        tmp_path (Path): Readiness and child identity files.
+        monkeypatch (pytest.MonkeyPatch): Inject a read failure after descendants exist.
+        transport (str): External-command, Git or Helm transport boundary.
+        failure (str): Communication error, deadline or successful leader completion.
+
+    Returns:
+        None: Both leader and descendant are gone before the transport returns or raises.
+    """
+    ready = tmp_path / "ready.json"
+    script = tmp_path / "transport.py"
+    script.write_text(
+        dedent("""
+        import json
+        import os
+        import subprocess
+        import sys
+        import time
+        from pathlib import Path
+
+        child = subprocess.Popen(
+            [sys.executable, "-c", "import time; time.sleep(30)"],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+        Path(sys.argv[1]).write_text(json.dumps([os.getpid(), child.pid]))
+        if sys.argv[2] != "success":
+            time.sleep(30)
+    """)
+    )
+    original = subprocess.Popen.communicate
+
+    def communicate(child: subprocess.Popen[str], *args: object, **kwargs: object) -> tuple[str, str]:
+        """
+        Fail a live pipe only after the process has created its descendant.
+
+        Args:
+            child (subprocess.Popen[str]): Owned transport leader.
+            *args (object): Communication input arguments.
+            **kwargs (object): Communication deadline arguments.
+
+        Returns:
+            tuple[str, str]: Captured streams when no read failure is injected.
+        """
+        if failure == "read":
+            deadline = time.monotonic() + 5
+            while not ready.exists() and time.monotonic() < deadline:
+                time.sleep(0.01)
+            raise OSError("injected transport read failure")
+        return original(child, *args, **kwargs)  # type: ignore[arg-type]
+
+    monkeypatch.setattr(subprocess.Popen, "communicate", communicate)
+    command = [sys.executable, str(script), str(ready), failure]
+    try:
+        if transport == "git":
+            result = run_git(command, 1)
+        elif transport == "helm":
+            result = HelmTransport(dict(os.environ), time.monotonic() + 1).run(command)
+        else:
+            result = Processes().run(command, capture_output=True, timeout=1)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        assert isinstance(exc, subprocess.TimeoutExpired if failure == "timeout" else OSError)
+        assert failure != "success"
+    else:
+        assert failure == "success"
+        assert result.returncode == 0
+    assert ready.exists()
+    for pid in json.loads(ready.read_text()):
+        with pytest.raises(ProcessLookupError):
+            os.kill(pid, 0)
+
+
+def test_execution_and_cleanup_errors_are_preserved(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Preserve both failures while retaining an unjoined worker for a later cleanup attempt.
+
+    Args:
+        tmp_path (Path): Unused working directory for the mocked worker.
+        monkeypatch (pytest.MonkeyPatch): Inject failures before successful cleanup is retried.
+
+    Returns:
+        None: Both causes are reported and unresolved ownership remains registered.
+    """
+    child = Mock(spec=subprocess.Popen, pid=12345)
+    child.communicate.side_effect = OSError("read failed")
+    monkeypatch.setattr(subprocess, "Popen", Mock(return_value=child))
+    monkeypatch.setattr(Processes, "stop", Mock(side_effect=PermissionError("cleanup failed")))
+    owner = Processes()
+    with pytest.raises(ExceptionGroup) as errors:
+        owner.run(["worker"], cwd=tmp_path)
+    assert [str(error) for error in errors.value.exceptions] == ["read failed", "cleanup failed"]
+    assert owner._children == {child}
+
+
+@pytest.mark.parametrize("cleanup_fails", [False, True])
+def test_scheduler_joins_threads_after_failure(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, cleanup_fails: bool) -> None:
+    """
+    Join a live sibling even when scheduling and process cleanup both fail.
+
+    Args:
+        tmp_path (Path): Collection and report directory.
+        monkeypatch (pytest.MonkeyPatch): Replace child execution while retaining real worker threads.
+        cleanup_fails (bool): Whether cleanup raises after requesting the sibling to stop.
+
+    Returns:
+        None: The sibling has finished and every executor thread is joined before error propagation.
+    """
+    started, stopped, finished = threading.Event(), threading.Event(), threading.Event()
+
+    def execute(owner: Processes, command: list[str], *, env: dict[str, str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        """
+        Collect two properties and fail the first only after its sibling is running.
+
+        Args:
+            owner (Processes): Shared process owner.
+            command (list[str]): Collection or worker invocation.
+            env (dict[str, str]): Collection destinations.
+            **kwargs (object): Other execution options.
+
+        Returns:
+            subprocess.CompletedProcess[str]: Successful collection or stopped sibling.
+        """
+        if "--collect-only" in command:
+            Path(env["HYPOTHESIS_HELM_COLLECT"]).write_text(json.dumps(["test_chart_values.py::first", "test_chart_values.py::second"]))
+        elif command[-1].endswith("::first"):
+            assert started.wait(5)
+            raise OSError("worker failed")
+        else:
+            started.set()
+            try:
+                assert stopped.wait(5)
+            finally:
+                finished.set()
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    def stop(owner: Processes) -> None:
+        """
+        Unblock the sibling while optionally failing cleanup.
+
+        Args:
+            owner (Processes): Shared process owner.
+
+        Returns:
+            None: A waiting worker receives the shutdown request.
+        """
+        stopped.set()
+        if cleanup_fails:
+            raise PermissionError("cleanup failed")
+
+    monkeypatch.setattr(Processes, "run", execute)
+    monkeypatch.setattr(Processes, "stop", stop)
+    with pytest.raises(OSError, match="cleanup failed" if cleanup_fails else "worker failed"):
+        run_parallel(["pytest", "--junitxml", "junit.xml", "test_chart_values.py"], tmp_path, {}, None, 2)
+    assert finished.is_set()
+    assert not any(thread.name.startswith("helm-hypothesis") for thread in threading.enumerate())
+
+
+def _failing_replica(job: Job) -> dict[str, object]:
+    """
+    Fail one spawned replica while another records its completed work.
+
+    Args:
+        job (Job): Disjoint worker assignment with a directory for completion markers.
+
+    Returns:
+        dict[str, object]: An unused result from the surviving replica.
+    """
+    if 0 in job.indices:
+        raise OSError("replica failed")
+    time.sleep(0.2)
+    Path(job.chart, "replica-finished").touch()
+    return {}
+
+
+def test_benchmark_pool_joins_after_replica_failure(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Verify the benchmark pool's existing shutdown barrier with real spawned processes.
+
+    Args:
+        tmp_path (Path): Replica completion directory.
+        monkeypatch (pytest.MonkeyPatch): Substitute a deterministic failing replica.
+
+    Returns:
+        None: A sibling finishes before the failed benchmark returns control.
+    """
+    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.execute_profiled_worker", _failing_replica)
+    with pytest.raises(OSError, match="replica failed"):
+        measure(tmp_path, 2, 2, False, seed=0, multiplicity=1, time_limit=5, helm="helm", shard=None)
+    assert (tmp_path / "replica-finished").exists()

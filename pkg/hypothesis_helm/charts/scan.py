@@ -28,6 +28,7 @@ from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.compiler.passes.graph import export_graph
 from hypothesis_helm.compiler.passes.inputs import load_input_chart
 from hypothesis_helm.compiler.passes.minimum import export_minimal
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.errors import chart_errors, deduplicate_errors
@@ -105,7 +106,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
     Returns:
         dict[str, object]: Results distinguishing blocked execution and limited coverage.
     """
-    baseline = subprocess.run([args.helm, "lint", str(path)], capture_output=True, text=True, timeout=args.timeout)
+    baseline = Processes().run([args.helm, "lint", str(path)], capture_output=True, text=True, timeout=args.timeout)
     artifacts.mkdir(parents=True, exist_ok=True)
     diagnostic = baseline.stdout + baseline.stderr
     (artifacts / "lint.txt").write_text(diagnostic)
@@ -339,7 +340,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
                         LOGGER.info("Preparing dependencies for %s (excluded from testing budgets)", record["chart"])
                         preparation_started = time.monotonic()
                         try:
-                            built = subprocess.run(
+                            built = Processes().run(
                                 [args.helm, "dependency", "build", str(copy)],
                                 capture_output=True,
                                 text=True,

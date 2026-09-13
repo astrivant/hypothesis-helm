@@ -5,7 +5,6 @@ Compare structural gate-depth distributions at fixed permutation interaction str
 import argparse
 import json
 import shutil
-import subprocess
 import time
 from pathlib import Path
 
@@ -16,6 +15,7 @@ from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.pca import project
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, number, sequence
@@ -138,7 +138,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     document: dict[str, object] = {
         "metadata": {
             "profiling": profile_settings(),
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
             "code_sha256": code_digest(),
             "permutations": args.permutations,
             "input_complexity": 10,

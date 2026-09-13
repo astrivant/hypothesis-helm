@@ -1,5 +1,5 @@
 """
-Own pytest process groups and stop their descendants on interruption.
+Own external process groups and stop their descendants on every exit path.
 """
 
 import os
@@ -49,7 +49,7 @@ class Processes:
     Track child process groups with a shutdown barrier around process creation.
     """
 
-    _interrupt_grace: float = 2.0
+    _interrupt_grace: float = 0.5
     _lock: threading.Lock = field(factory=threading.Lock)
     _shutdown_lock: threading.Lock = field(factory=threading.Lock)
     _stopping: threading.Event = field(factory=threading.Event)
@@ -59,26 +59,30 @@ class Processes:
         self,
         command: list[str],
         *,
-        cwd: Path,
-        env: dict[str, str],
+        cwd: Path | None = None,
+        env: dict[str, str] | None = None,
         capture_output: bool = False,
         text: bool = True,
         check: bool = False,
         pass_fds: tuple[int, ...] = (),
         stdout: TextIO | None = None,
+        input: str | None = None,
+        timeout: float | None = None,
     ) -> subprocess.CompletedProcess[str]:
         """
         Run a child in a new session and retain ownership until it has exited.
 
         Args:
             command (list[str]): Child invocation.
-            cwd (Path): Working directory for the child.
-            env (dict[str, str]): Child environment.
+            cwd (Path | None): Working directory, or inherit the current directory.
+            env (dict[str, str] | None): Child environment, or inherit the current environment.
             capture_output (bool): Whether to collect stdout and stderr.
             text (bool): Whether subprocess pipes use text mode.
             check (bool): Whether nonzero exits raise a subprocess error.
             pass_fds (tuple[int, ...]): Manifest descriptors inherited by the child.
             stdout (TextIO | None): Destination for uncaptured child stdout.
+            input (str | None): Text written to the child's standard input.
+            timeout (float | None): Communication deadline in seconds, excluding cleanup.
 
         Returns:
             subprocess.CompletedProcess[str]: Collected process result.
@@ -91,6 +95,7 @@ class Processes:
                 cwd=cwd,
                 env=env,
                 text=text,
+                stdin=subprocess.PIPE if input is not None else None,
                 stdout=subprocess.PIPE if capture_output else stdout,
                 stderr=subprocess.PIPE if capture_output else None,
                 pass_fds=pass_fds,
@@ -98,7 +103,7 @@ class Processes:
             )
             self._children.add(child)
         try:
-            output, errors = child.communicate()
+            output, errors = child.communicate(input=input, timeout=timeout)
             with self._shutdown_lock:
                 # A completed parent can leave descendants in its owned session.
                 # Ownership ends only after the complete group has been stopped.
@@ -106,8 +111,11 @@ class Processes:
                     owned = child in self._children
                 if owned:
                     self._reap([child])
-        except BaseException:
-            self.stop()
+        except BaseException as error:
+            try:
+                self.stop()
+            except BaseException as cleanup_error:
+                raise BaseExceptionGroup("Process execution and cleanup failed", [error, cleanup_error]) from None
             raise
         result = subprocess.CompletedProcess(command, child.returncode, output, errors)
         if check:

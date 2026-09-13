@@ -5,13 +5,13 @@ Estimate selected property work without executing fixtures or property examples.
 import ast
 import json
 import os
-import subprocess
 import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Literal
 
 from hypothesis_helm.execution.cache import fingerprint, in_ci, read_outcomes, seed_key
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.sampling import ENVIRONMENT as SAMPLING_ENVIRONMENT
 from hypothesis_helm.execution.sampling import REPORT as SAMPLING_REPORT
@@ -137,7 +137,7 @@ def estimate_suite(
         if match is not None:
             command += ["-k", match]
         command.append(str(module))
-        completed = subprocess.run(command, cwd=directory, env=environment, capture_output=True, text=True, check=False)
+        completed = Processes().run(command, cwd=directory, env=environment, capture_output=True, text=True, check=False)
         if completed.returncode not in (0, 5):
             raise ValueError(f"dry-run collection failed:\n{completed.stdout}{completed.stderr}")
         nodes: list[str] = json.loads(inventory.read_text()) if inventory.exists() else []

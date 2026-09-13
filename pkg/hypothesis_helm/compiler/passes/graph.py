@@ -18,6 +18,7 @@ from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import validate_resources
 from hypothesis_helm.compiler.asts.templates import fold, lower, specialize, value_path, walk
 from hypothesis_helm.compiler.passes.inputs import InputInventory
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.schemas.contracts import mapping
 
 
@@ -170,7 +171,7 @@ def export_graph(
 
     observed: dict[str, object] = {"status": "unavailable"}
     try:
-        process = subprocess.run(
+        process = Processes().run(
             [helm, "template", "hypothesis", str(chart.path)],
             capture_output=True,
             text=True,

@@ -405,7 +405,7 @@ def test_values_override_and_dependency_build(tmp_path: Path, monkeypatch: pytes
         assert (path / "values.yaml").read_text() == "enabled: true\n"
         return {"status": "passed", "attempts": 1}
 
-    monkeypatch.setattr("hypothesis_helm.charts.scan.subprocess.run", command)
+    monkeypatch.setattr("hypothesis_helm.charts.scan.Processes.run", lambda self, *args, **kwargs: command(*args, **kwargs))
     monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", exercise)
     assert (
         main(
@@ -666,7 +666,7 @@ def test_dependency_timing_accounting(
         clock[0] += 0.25
         return {"status": "passed", "attempts": 1, "execution_seconds": 0.2}
 
-    monkeypatch.setattr("hypothesis_helm.charts.scan.subprocess.run", prepare)
+    monkeypatch.setattr("hypothesis_helm.charts.scan.Processes.run", lambda self, *args, **kwargs: prepare(*args, **kwargs))
     monkeypatch.setattr(module, "exercise_chart", exercise)
     code = main(
         [

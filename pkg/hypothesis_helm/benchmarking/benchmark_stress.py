@@ -6,7 +6,6 @@ import argparse
 import csv
 import json
 import shutil
-import subprocess
 from pathlib import Path
 
 from attrs import asdict, evolve
@@ -22,6 +21,7 @@ from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.stress import FAMILIES, Stress, progression, stress_manifests
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
@@ -168,7 +168,9 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             "seed": args.seed,
             "time_limit_seconds": args.time_limit,
             "time_limit_scope": "per strategy per step",
-            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip() if helm and not args.generate_only else None,
+            "helm": Processes().run([helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip()
+            if helm and not args.generate_only
+            else None,
             "fault_families": list(FAMILIES),
             "starting_parameters": asdict(parameters),
         },

@@ -104,6 +104,10 @@ charts. For non-finite charts it restricts generation to known schema, default, 
 template paths where analysis permits. Filtering precedes traversal. Each discovered
 path is scheduled at most once; failed properties retain their reproducing values.
 
+The proposed [`--filter-aggressive` preset](../aggressive-filtering/README.md#recompute-before-visiting-each-chart)
+would recompute complexity after preparing each discovered chart, before selecting its tests. Earlier audits and
+cached outcomes would not replace this per-visit calculation. This preset is not yet implemented.
+
 Use `--traversal-strategy random|linear|root-first|leaf-first` to choose execution order.
 Random is the default and uses `--seed`; another seed changes the subset reached
 before timeout. Discovery records the path inventory, while execution may visit only
