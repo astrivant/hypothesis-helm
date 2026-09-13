@@ -34,6 +34,7 @@ jobs:
           schema-cache-dir: .cache/hypothesis-helm/schemas
           job-index: ${{ matrix.shard }}
           job-total: '3'
+          run-id: ${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.kubernetes }}
       - name: Check shard outputs
         shell: bash
         env:
@@ -42,3 +43,34 @@ jobs:
         run: |
           test -f "$REPORT"
           test -f "$MANIFESTS"
+  aggregate:
+    needs: sharded-chart
+    if: ${{ always() && needs.sharded-chart.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kubernetes: ['1.34.0', '1.35.0']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: pip install .
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: hypothesis-helm-${{ matrix.kubernetes }}-sharded-chart-*
+          path: downloaded
+      - name: Write final report for this Kubernetes version
+        env:
+          HH_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.kubernetes }}
+        run: |
+          cat downloaded/*/report.json | hypothesis-helm aggregate \
+            --shards 3 --run-id "$HH_RUN_ID" --output-dir reports/final
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: hypothesis-helm-final-${{ matrix.kubernetes }}
+          path: reports/final/
+          if-no-files-found: error
+          retention-days: 30

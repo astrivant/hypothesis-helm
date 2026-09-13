@@ -21,8 +21,8 @@ from pathlib import Path
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.paths import check_paths
 from hypothesis_helm.charts.registry import prepare_helm_source
-from hypothesis_helm.charts.repository import RepositorySource
-from hypothesis_helm.charts.runner import Chart, check_chart
+from hypothesis_helm.charts.repository import RepositorySource, remote_name
+from hypothesis_helm.charts.runner import Chart, audit, check_chart
 from hypothesis_helm.compiler.graph import export_graph
 from hypothesis_helm.compiler.inputs import load_input_chart
 from hypothesis_helm.compiler.minimum import export_minimal
@@ -127,6 +127,10 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
     except Exception as exc:
         return {"status": "unsupported-schema", "error": str(exc), "coverage": "lint only"}
     filtering: dict[str, object] = {"requested": args.filter, "applied": False}
+    if getattr(args, "strict", False):
+        findings = audit(chart)
+        if findings["findings"] or findings["unresolved"]:
+            return {"status": "failed", "error": "Strict input audit failed", "audit": findings, "coverage": "audit only"}
     strength = args.permutations
     try:
         factor_space(chart.schema, 10000)
@@ -134,7 +138,9 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         filtering["reason"] = f"Finite filtering unavailable: {exc}"
         if args.filter:
             LOGGER.info("%s; filtering generation before value-path traversal", filtering["reason"])
-        if strength is not None:
+        if strength is not None or any(
+            getattr(args, option, False) for option in ("trim", "trim_topology", "expand_failures", "prune_equivalent", "exhaustive_group")
+        ):
             return {"status": "unsupported-schema", "error": str(exc), "coverage": "lint only"}
     else:
         strength = strength or 2
@@ -152,6 +158,10 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
             fail_fast=args.fail,
             filtering=args.filter,
             traversal_strategy=args.traversal_strategy,
+            release=getattr(args, "release", "hypothesis"),
+            namespace=getattr(args, "namespace", "default"),
+            kube_version=getattr(args, "kube_version", None),
+            allow_empty=getattr(args, "allow_empty", False),
         )
         return {
             **result,
@@ -171,8 +181,20 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         if args.scan_deadline is not None
         else args.chart_timeout,
         permutations=strength,
-        trim_topology=2 if filtering["applied"] else 0,
-        expand_failures=bool(filtering["applied"]),
+        trim=getattr(args, "trim", 0),
+        trim_topology=2 if filtering["applied"] else getattr(args, "trim_topology", 0),
+        expand_failures=bool(filtering["applied"]) or getattr(args, "expand_failures", False),
+        prune_equivalent=getattr(args, "prune_equivalent", False),
+        max_cases=getattr(args, "max_cases", 10000),
+        max_candidates=getattr(args, "max_candidates", 100000),
+        exhaustive_threshold=getattr(args, "exhaustive_threshold", 10000),
+        exhaustive_groups=tuple(getattr(args, "exhaustive_group", [])),
+        infer_exhaustive_groups=not getattr(args, "no_infer_groups", False),
+        max_group_cases=getattr(args, "max_group_cases", 256),
+        release=getattr(args, "release", "hypothesis"),
+        namespace=getattr(args, "namespace", "default"),
+        kube_version=getattr(args, "kube_version", None),
+        allow_empty=getattr(args, "allow_empty", False),
         fail_fast=args.fail,
         artifact_dir=artifacts,
     )
@@ -204,6 +226,11 @@ def scan(args: argparse.Namespace) -> int:
     scan_started = time.monotonic()
     args.scan_deadline = scan_started + args.scan_timeout if args.scan_timeout is not None else None
     with ExitStack() as scope:
+        if args.command == "test":
+            root = Path(args.directory).expanduser().resolve()
+            return scan_checkout(args, RepositorySource(str(root), root, root.name, False, kind="local"), started, scan_started)
+        if not args.helm_repository and Path(args.directory).expanduser().exists():
+            raise ValueError("scan accepts remote sources only; use test for local charts and directories")
         source = prepare_helm_source(
             str(args.directory),
             scope,
@@ -214,6 +241,8 @@ def scan(args: argparse.Namespace) -> int:
             version=args.chart_version,
         )
         if source is None:
+            if remote_name(str(args.directory)) is None:
+                raise ValueError("scan requires a remote Git or Helm source; use test for local directories")
             if args.chart_version is not None:
                 raise ValueError("--chart-version requires a Helm repository or OCI chart source")
             source = RepositorySource.prepare(str(args.directory), scope, args.clone_timeout, args.scan_deadline)
@@ -431,6 +460,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         )
     counts = dict(Counter(str(record["status"]) for record in records))
     report: dict[str, object] = {
+        "title": "Remote Helm chart scan" if source.remote else "Local Helm chart tests",
         "directory": source.location,
         "started_epoch": int(started),
         "elapsed_seconds": time.monotonic() - scan_started,

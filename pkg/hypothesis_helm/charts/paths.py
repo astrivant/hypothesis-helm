@@ -67,6 +67,10 @@ def check_paths(
     filtering: bool = False,
     traversal_strategy: str = "random",
     fail_fast: bool = False,
+    release: str = "hypothesis",
+    namespace: str = "default",
+    kube_version: str | None = None,
+    allow_empty: bool = False,
 ) -> dict[str, object]:
     """
     Schedule each discovered path once after filtering, retaining partial coverage.
@@ -86,6 +90,10 @@ def check_paths(
         filtering (bool): Apply known-input generation restrictions before ordering.
         traversal_strategy (str): Random, linear, shallow, or deep path traversal.
         fail_fast (bool): Stop after the first observed failure without shrinking.
+        release (str): Helm release name for every input.
+        namespace (str): Helm release namespace.
+        kube_version (str | None): Kubernetes capability version supplied to Helm.
+        allow_empty (bool): Accept inputs that render no resources.
 
     Returns:
         dict[str, object]: Visited, completed, incomplete, and remaining path evidence.
@@ -131,8 +139,10 @@ def check_paths(
     try:
         with execution_timer(budget):
             baseline["attempts"] = 1
-            resources = render(chart, {}, helm=helm, timeout=min(timeout, budget))
-            if not resources:
+            resources = render(
+                chart, {}, helm=helm, timeout=min(timeout, budget), release=release, namespace=namespace, kube_version=kube_version
+            )
+            if not resources and not allow_empty:
                 raise RenderFailure("chart rendered no resources")
             baseline["status"] = "passed"
             measured.observe(chart.defaults)
@@ -156,6 +166,10 @@ def check_paths(
                     artifact_dir=directory,
                     fail_fast=fail_fast,
                     check_defaults=False,
+                    release=release,
+                    namespace=namespace,
+                    kube_version=kube_version,
+                    allow_empty=allow_empty,
                 )
                 phase.pop("input_inventory", None)
                 phase.update(phase=format_path(entry.path), kind="value-path", path=list(entry.path), artifacts=str(directory))

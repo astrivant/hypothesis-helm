@@ -1,0 +1,281 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "apiVersions": [],
+  "clusterDomain": "cluster.local",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "extraDeploy": [],
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/gitlab-runner",
+    "tag": "18.3.0-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "helperImage": {
+    "registry": "docker.io",
+    "repository": "bitnami/gitlab-runner-helper",
+    "tag": "18.3.0-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "automountServiceAccountToken": true,
+  "hostAliases": [],
+  "replicaCount": 1,
+  "gitlabUrl": "",
+  "runnerToken": "",
+  "existingSecret": "",
+  "existingCacheSecret": "",
+  "existingConfigMap": "",
+  "extraConfig": "",
+  "unregisterRunners": true,
+  "existingCertsSecret": "",
+  "concurrent": 10,
+  "shutdownTimeout": 0,
+  "checkInterval": 3,
+  "logLevel": "info",
+  "logFormat": "runner",
+  "sentryDsn": "",
+  "connectionMaxAge": "15m",
+  "preEntrypointScript": "",
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "autoscaling": {
+    "vpa": {
+      "enabled": false,
+      "annotations": {},
+      "controlledResources": [],
+      "maxAllowed": {},
+      "minAllowed": {},
+      "updatePolicy": {
+        "updateMode": "Auto"
+      }
+    },
+    "hpa": {
+      "enabled": false,
+      "minReplicas": "",
+      "maxReplicas": "",
+      "targetCPU": "",
+      "targetMemory": ""
+    }
+  },
+  "rbac": {
+    "create": true,
+    "clusterWideAccess": false,
+    "rules": []
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "automountServiceAccountToken": false,
+    "annotations": {}
+  },
+  "containerPorts": {
+    "metrics": 9252,
+    "sessionServer": 8093
+  },
+  "dnsPolicy": "ClusterFirst",
+  "command": [],
+  "args": [],
+  "lifecycleHooks": {},
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "extraArgs": [],
+  "sidecars": [],
+  "initContainers": [],
+  "podLabels": {},
+  "podAnnotations": {},
+  "priorityClassName": "",
+  "schedulerName": "",
+  "terminationGracePeriodSeconds": "",
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "topologySpreadConstraints": [],
+  "nodeSelector": {},
+  "tolerations": [],
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "kubeAPIServerPorts": [
+      443,
+      6443,
+      8443,
+      10250
+    ],
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "resourcesPreset": "small",
+  "resources": {},
+  "startupProbe": {
+    "enabled": false,
+    "initialDelaySeconds": 0,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 3,
+    "successThreshold": 1
+  },
+  "livenessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 0,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 3,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 0,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 3,
+    "successThreshold": 1
+  },
+  "customStartupProbe": {},
+  "customLivenessProbe": {},
+  "customReadinessProbe": {},
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "runners": {
+    "config": "\r0"
+  },
+  "sessionServer": {
+    "enabled": false,
+    "sessionTimeout": 1800,
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "sessionServer": 9000
+      },
+      "nodePorts": {
+        "sessionServer": ""
+      },
+      "labels": {},
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "hostname": "session-server.local",
+      "ingressClassName": "",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    }
+  },
+  "metrics": {
+    "enabled": false,
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "metrics": 9252
+      },
+      "nodePorts": {
+        "metrics": ""
+      },
+      "labels": {},
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "",
+      "annotations": {},
+      "labels": {},
+      "jobLabel": "",
+      "honorLabels": false,
+      "interval": "",
+      "scrapeTimeout": "",
+      "metricRelabelings": [],
+      "relabelings": [],
+      "selector": {}
+    }
+  }
+}

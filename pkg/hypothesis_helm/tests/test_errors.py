@@ -213,7 +213,7 @@ def test_scan_dependency_deduplication(tmp_path: Path, monkeypatch: pytest.Monke
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 "/usr/bin/true",

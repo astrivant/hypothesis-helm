@@ -40,12 +40,21 @@ helm-properties:
     matrix:
       - K8S_VERSION: ['1.34.0', '1.35.0']
         SHARD_INDEX: ['1', '2', '3']
+
+helm-report:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: always
 ```
 
 The [shared job](../../ci/gitlab.yml) installs Helm, the plugin and validators;
 restores Kubernetes schemas; runs each version across three shards; and saves
-reports even on failure. If changing the shard matrix, set `SHARD_TOTAL` to match.
+reports even on failure. If changing the shard matrix, set the global `SHARD_TOTAL` variable to match.
 `HYPOTHESIS_HELM_REF` pins the plugin separately and defaults to `main`.
+The included `helm-report` job downloads every shard's artifacts and runs
+`hypothesis-helm aggregate`, producing one final bundle per Kubernetes version.
+Version and shard directories prevent artifact collisions. If changing versions,
+update the `parallel.matrix` on both `helm-properties` and `helm-report`.
 
 GitLab requires a public raw YAML URL for
 [`include:remote`](https://docs.gitlab.com/ci/yaml/#includeremote).
@@ -77,6 +86,13 @@ workflows:
           parallelism: 3
           schema-version: '1.35.0'
           kubesec: false
+      - hypothesis-helm/aggregate:
+          requires:
+            - hypothesis-helm/test-chart: [success, failed, canceled]
+          filters:
+            branches:
+              only: main
+          shards: 3
 ```
 
 Add `https://raw.githubusercontent.com/astrivant/hypothesis-helm/` to your
@@ -84,6 +100,13 @@ organization's [URL-orb allow list](https://circleci.com/docs/orbs/use/managing-
 The [shared orb](../../ci/circleci.yml) installs the plugin remotely by default.
 Its `test` command can also run inside an existing job after installing the tools
 and preparing schemas with `helm hypothesis schemas`.
+`test-chart` persists each shard's report before returning its test or validator
+failure. The `aggregate` job consumes the workspace and runs `hypothesis-helm aggregate`.
+Its workflow dependency accepts failed jobs using CircleCI's
+[status-aware requirements](https://circleci.com/docs/reference/configuration-reference/#requires).
+For multiple charts or Kubernetes versions, give each test/aggregate pair a distinct
+matching `report-group`. Set `aggregate.package` to the same plugin revision used by
+`test-chart.plugin-path` when pinning versions.
 
 ## GitHub Actions
 
@@ -169,6 +192,18 @@ command flags at the execution site; Python handles shard metadata, cancellation
 and action outputs.
 
 ## Validation and caches
+
+Every sharded example has a downstream aggregation job. Its core command is:
+
+```sh
+cat downloaded/*/report.json | hypothesis-helm aggregate \
+  --shards 3 --run-id "$HH_RUN_ID" --output-dir reports/final
+```
+
+All shards must receive the same run ID. Upload idle shards too: a missing report
+prevents publication. Aggregation writes one PDF, Markdown, JSON, and JUnit bundle
+per chart/version group, including test failures. Optional security results remain
+separate artifacts; require both the test jobs and aggregation before releasing.
 
 Kubeconform validates API schemas by default. With Kubesec enabled, supported
 workloads go to Kubesec and remaining resources go to Kubeconform. GNU Parallel

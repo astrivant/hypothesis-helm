@@ -24,26 +24,28 @@ shrink multiple values. A timeout leaves the unvisited paths explicitly untested
 | `deep` | Decreasing path depth: deepest leaves before their parent containers. |
 
 ```sh
-helm hypothesis scan ./charts --filter --seed 42 --traversal-strategy random --chart-timeout 3m
+helm hypothesis test ./charts --filter --seed 42 --traversal-strategy random --chart-timeout 3m
 helm hypothesis run generated-tests --traversal-strategy deep --seed 42
 ```
 
-The same seed and selected inventory reproduce the order. Change the seed for a
-different timeout prefix; subsets from separate runs can overlap. Random priorities
-retain their relative order across shards and cached exclusions. Shallow and deep
-finish a depth layer before starting the next within each shard; independent CI
-shards do not synchronize their layers. Depth ties retain linear order.
+The same seed and selected paths reproduce the execution order. Change the seed
+to test a different selection of paths before a timeout; some paths may appear in
+both runs. Assigning paths to shards or skipping cached successes does not reorder
+the remaining paths. Shallow and deep traversal finish all paths at one depth
+before starting the next depth within each shard. Independent CI shards do not
+wait for one another. Paths at the same depth keep their original order.
 
 Finite permutation runs order distinct configurations after trimming, with defaults
 checked first. Fields necessarily recur across joint configurations. In these modes,
 shallow uses the shallowest changed field and deep the deepest, relative to defaults.
-Exact-equivalence render reuse still requires a previously validated witness.
+A render can be skipped as equivalent only after another input has passed validation
+and the compiler has established that both inputs produce exactly the same output.
 
 Ordering costs O(P) for linear traversal and O(P log P) for the other strategies,
-with O(P) storage, excluding path encoding and finite-case comparisons. P is retained
-work, not the number of possible values. Traversal changes order, not the retained
-population or its coverage guarantees. Completing every path does not exhaust its
-values or establish complete joint-input coverage.
+with O(P) storage, excluding path encoding and finite-case comparisons. P counts
+the paths or configurations selected for execution. Changing traversal strategy
+changes their order; it does not add or remove tests. Testing every path does not
+test every possible value or every interaction between paths.
 
 Scan reports retain the seed, strategy, visited order, completed and incomplete path
 counts, and remaining order. `path-inventory.json` records the planned sequence.
@@ -234,23 +236,32 @@ A shared filesystem must support process locks and atomic renames. CI cache rest
 on separate machines are independent snapshots, not shared memory. Upload shard
 artifacts for aggregation; do not rely on concurrent CI cache uploads to merge data.
 Cached successes appear as reused properties, separately from executed JUnit cases.
+An idle shard exits successfully with zero test workers and still publishes its report,
+whether it owns no properties or all its properties have cached successes. Include that
+report in aggregation, even when every shard is idle. For two pending properties across
+three shards, unused capacity is expected; hash assignment does not guarantee equal loads.
+An unmatched `--match` expression remains an error. Cache reuse requires a compatible
+suite fingerprint; changing chart contents can invalidate the full cached selection.
 Elapsed time spans the timestamps reported by the shards; cross-host clock skew can
 affect that measurement.
 
 ## Progressive dry runs
 
 Run `helm hypothesis test examples/workload --dry-run --prune-equivalent`
-to plot increasing strengths through the finite factor count, additional and cumulative inputs, and
-potential render savings. The plot goes to stderr; stdout remains JSON.
-The configured run retains automatic exhaustive enumeration for small domains.
-Affordable full totals are exact; larger totals show bounds and an explicitly
-heuristic filtering extrapolation. Stages need not be nested, so incremental
-work is calculated using input-set unions.
+to compare pairs, triples, and higher interaction strengths, up to the number of
+fields with finite value choices. The plot shows planned input counts and estimated
+render savings. It goes to stderr; stdout remains JSON.
+Small input spaces are still enumerated automatically. Totals are exact when the
+planner can enumerate the space within its limits. For larger spaces, the report
+gives bounds and labels estimated filtering savings as estimates.
+A higher-strength plan may omit cases from a lower-strength plan. To count the
+additional work across stages, the estimate counts each distinct input only once.
 
 Dry runs never invoke Helm, run assertions, write history, or authorize pruning.
-Filtering forecasts assume successful representatives and a fixed renderer and
-chart; unsupported templates require rendering. Runtime estimates use compatible
-measured renderer and check costs from prior runs in the artifact directory.
+Estimated render savings assume the first tested input in each equivalence group
+passes validation and that the chart and renderer stay unchanged. Templates the
+compiler cannot analyze still require rendering. Runtime estimates use compatible
+render and validation timings from prior runs in the artifact directory.
 Without those measurements, time is unknown. Per-path dry runs instead plot
 selected, scheduled and cached properties with their existing filters.
 
@@ -285,25 +296,35 @@ Both controls default to zero and can be combined:
 helm hypothesis test CHART --permutations 2 --trim-random 1 --trim-topology 1 --seed 2026
 ```
 
-- `--trim-random N`: seeded uniform thinning, retaining one quarter per step.
+- `--trim-random N`: randomly keep one quarter of the cases for each increase in N.
   `--trim` remains an alias. Levels 1–3 retain about 25%, 6.25%, and 1.56%.
-- `--trim-topology N`: thin within matching symbolic output **and branch** regions,
-  keeping at least one representative per region and every unclassified case.
-- Together: apply both depths within regions, preserving those same floors. The
-  resulting case count can exceed a global random sampling target.
+- `--trim-topology N`: group inputs whose predicted template output and branch
+  choices match, then keep one quarter of each group for each increase in N.
+  Keep at least one input per group and every input the compiler cannot classify.
+- Together: add the two levels and sample within each topology group. Still keep
+  at least one input per group and all unclassified inputs. This can keep more
+  cases than random trimming alone at the same total level.
 
-Defaults always run. Counts round upward and fixed seeds produce nested subsets.
-Topology regions describe static projections, not previously successful tests;
-unsupported expressions or uncertain renderer context retain cases. Reports include
-template-to-input influences, branch decisions, region counts, and omitted cases.
-Topology sampling prioritizes outcome diversity; retained frequencies need not
-represent the original input distribution.
+The chart's default values are always checked before the trimmed cases.
+Each quarter-size selection is rounded up to a whole number of cases: 17 non-default cases
+become 5 at level 1, then 2 at level 2. With the same planned cases, seed, and
+other options, increasing the trim level only removes cases. For example, every
+case kept by `--trim-random 2` is also kept by `--trim-random 1`.
 
-Trimming follows planning and deduplication. It reduces execution work, not planning
-limits or cost. Passing means the retained checks passed; interaction and exhaustive
-group coverage are not guaranteed after cases are omitted. Exact-equivalence pruning
-remains a separate control. These options apply to finite permutation plans, including
-automatic enumeration, rather than per-path, random whole-chart or explicit exhaustive modes.
+Topology groups come from template analysis before testing. Membership does not
+mean an input has passed a test. If the compiler cannot analyze an expression or
+establish the renderer's behavior, it keeps the affected cases. Reports show which
+inputs affect each template, branch choices, group sizes, and omitted cases.
+Sampling within groups preserves examples of different outputs, but it can change
+how often each output appears compared with the full input space.
+
+The planner builds the test cases and removes duplicates before trimming. Trimming
+reduces the number of cases executed; it does not reduce the work needed to plan
+them. A passing trimmed run means all executed checks passed. It does not establish
+the original plan's interaction coverage or exhaustive group coverage.
+Exact-equivalence pruning remains a separate control. Trimming applies to finite
+permutation plans, including automatic enumeration. It does not apply to per-path
+suites, random whole-chart sampling, or explicit exhaustive mode.
 
 ### Computational cost
 
@@ -312,7 +333,7 @@ automatic enumeration, rather than per-path, random whole-chart or explicit exha
 | Default | `P + N·R` | Execute the full finite plan. |
 | `--trim-random` | `P + N + K log K + K·R` | Shuffle once; restore retained cases to execution order. |
 | `--trim-topology` | `P + A + N·C + Σ(Kᵢ log Kᵢ) + K·R` | Classify every candidate; sample within regions. |
-| Both | Same form as topology | Both depths apply inside each region; protected cases remain. |
+| Both | Same form as topology | Add the levels within each group; keep at least one case and all unclassified cases. |
 
 `P`: planning cost; `N`: planned non-default cases; `K`: retained cases;
 `Kᵢ`: retained cases in region i; `R`: render and validation cost;
@@ -322,11 +343,11 @@ The single defaults check is omitted from these expressions. They describe execu
 without optional equivalence pruning, with bounded-size values; larger values add
 serialization and copying costs.
 
-All modes materialize the plan (`O(N)` case storage). Random trimming adds `O(N)`
-indices. Topology adds case membership and per-region projection metadata. Planning
-can dominate: exhaustive space grows as the product of factor domain sizes, while
-strength-t coverage targets grow with the number of t-way assignments. Configured
-planning limits still apply before trimming.
+All modes store the full plan (`O(N)` cases). Random trimming also stores `O(N)`
+indices. Topology trimming stores group membership and predicted output information.
+Planning can take longer than execution: exhaustive enumeration must account for
+the product of all fields' value counts. Strength-t planning must cover every valid
+assignment to each set of t fields. Planning limits still apply before trimming.
 
 ### Expanding observed failures
 

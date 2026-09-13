@@ -38,11 +38,11 @@ positional arguments:
     aggregate           verify piped shard reports and write one final report
     export-minimal-values
                         write example values beside each discovered chart
-    scan                test charts from a directory, Git, or Helm repository
+    scan                fetch and test charts from remote Git or Helm repositories
     generate            generate one typed Python property test per values path
     audit               discover value references and schema gaps
     run                 run a saved generated Python suite
-    test                select finite coverage or generate per-path tests
+    test                discover and test local charts recursively
     schemas             prepare the sparse Kubernetes schema cache
 
 options:
@@ -128,8 +128,8 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             SOURCE
 
 positional arguments:
-  SOURCE                directory, Git URL, Helm repo[/chart], public index.yaml URL,
-                        or OCI chart
+  SOURCE                Git URL, Helm repo[/chart], public index.yaml URL, or OCI
+                        chart; local paths use test
 
 options:
   -h, --help            show this help message and exit
@@ -154,8 +154,8 @@ options:
   --permutations PERMUTATIONS
                         finite interaction strength; default: automatic finite
                         coverage or sampling
-  --filter              filter finite charts; otherwise prioritize known inputs and
-                        run robustness cases last
+  --filter              filter finite charts with failure expansion; otherwise filter
+                        generated inputs before path traversal
   --fail                stop on the first chart test failure; save partial results and
                         exit 1
   --seed SEED
@@ -304,7 +304,11 @@ options:
 <summary>helm hypothesis test</summary>
 
 ~~~text
-usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DURATION]
+usage: helm hypothesis test [-h] [--report [PATH]] [--values VALUES]
+                            [--chart-timeout CHART_TIMEOUT]
+                            [--scan-timeout SCAN_TIMEOUT]
+                            [--build-dependencies | --no-build-dependencies] [--fail]
+                            [--max-examples MAX_EXAMPLES] [--time-limit DURATION]
                             [--paths | --exhaustive | --whole-chart |
                             --permutations N] [--filter] [--trim-random N]
                             [--trim-topology N] [--expand-failures]
@@ -330,10 +334,21 @@ usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DUR
                             [chart]
 
 positional arguments:
-  chart                 chart directory (defaults to the current directory)
+  chart                 local chart or directory containing charts (default: current
+                        directory)
 
 options:
   -h, --help            show this help message and exit
+  --report [PATH]       write combined Markdown/PDF; default: <dir>_<epoch>_report
+  --values VALUES       baseline file relative to each chart, or an absolute path
+  --chart-timeout CHART_TIMEOUT
+                        property-test budget per discovered chart (default: 3m)
+  --scan-timeout SCAN_TIMEOUT
+                        total local discovery/testing budget, excluding dependency
+                        preparation
+  --build-dependencies, --no-build-dependencies
+                        build dependencies in isolated copies
+  --fail                stop on the first chart failure and save partial results
   --max-examples MAX_EXAMPLES
   --time-limit DURATION
                         whole-chart execution budget, e.g. 30s or 3m (default: 3m);

@@ -108,7 +108,7 @@ def test_cli_error(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
     Returns:
         None: None. The operation completes through its documented side effects.
     """
-    assert main(["test", str(tmp_path)]) == 2
+    assert main(["test", str(tmp_path / "missing")]) == 2
     assert json.loads(capsys.readouterr().out)["status"] == "error"
 
 

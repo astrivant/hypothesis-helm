@@ -1,0 +1,1449 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 120,
+    "present_fields": [
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "grafana",
+        "affinity"
+      ],
+      [
+        "grafana",
+        "client",
+        "timeout"
+      ],
+      [
+        "grafana",
+        "config"
+      ],
+      [
+        "grafana",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "disableDefaultAdminSecret"
+      ],
+      [
+        "grafana",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "envFrom"
+      ],
+      [
+        "grafana",
+        "extraEnvVars"
+      ],
+      [
+        "grafana",
+        "extraVolumeMounts"
+      ],
+      [
+        "grafana",
+        "extraVolumes"
+      ],
+      [
+        "grafana",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "host"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "labels"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "path"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "tls"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "tlsSecret"
+      ],
+      [
+        "grafana",
+        "jsonnetLibrarySelector"
+      ],
+      [
+        "grafana",
+        "labels"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "failureThreshold"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "successThreshold"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "grafana",
+        "nodeSelector"
+      ],
+      [
+        "grafana",
+        "pdb",
+        "create"
+      ],
+      [
+        "grafana",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "grafana",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "existingVolume"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "size"
+      ],
+      [
+        "grafana",
+        "podAnnotations"
+      ],
+      [
+        "grafana",
+        "podLabels"
+      ],
+      [
+        "grafana",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "failureThreshold"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "successThreshold"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "grafana",
+        "replicaCount"
+      ],
+      [
+        "grafana",
+        "resources"
+      ],
+      [
+        "grafana",
+        "secrets"
+      ],
+      [
+        "grafana",
+        "service",
+        "annotations"
+      ],
+      [
+        "grafana",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "grafana",
+        "service",
+        "type"
+      ],
+      [
+        "grafana",
+        "serviceAccount"
+      ],
+      [
+        "grafana",
+        "sidecars"
+      ],
+      [
+        "grafana",
+        "tolerations"
+      ],
+      [
+        "grafana",
+        "updateStrategy"
+      ],
+      [
+        "operator",
+        "affinity"
+      ],
+      [
+        "operator",
+        "args"
+      ],
+      [
+        "operator",
+        "automountServiceAccountToken"
+      ],
+      [
+        "operator",
+        "command"
+      ],
+      [
+        "operator",
+        "containerPorts",
+        "health"
+      ],
+      [
+        "operator",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "operator",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "operator",
+        "customLivenessProbe"
+      ],
+      [
+        "operator",
+        "customReadinessProbe"
+      ],
+      [
+        "operator",
+        "customStartupProbe"
+      ],
+      [
+        "operator",
+        "enabled"
+      ],
+      [
+        "operator",
+        "extraEnvVars"
+      ],
+      [
+        "operator",
+        "extraEnvVarsCM"
+      ],
+      [
+        "operator",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "operator",
+        "extraVolumeMounts"
+      ],
+      [
+        "operator",
+        "extraVolumes"
+      ],
+      [
+        "operator",
+        "hostAliases"
+      ],
+      [
+        "operator",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "operator",
+        "initContainers"
+      ],
+      [
+        "operator",
+        "lifecycleHooks"
+      ],
+      [
+        "operator",
+        "namespaceScope"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "operator",
+        "nodeSelector"
+      ],
+      [
+        "operator",
+        "pdb",
+        "create"
+      ],
+      [
+        "operator",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "operator",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "operator",
+        "podAnnotations"
+      ],
+      [
+        "operator",
+        "podLabels"
+      ],
+      [
+        "operator",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "operator",
+        "priorityClassName"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "operator",
+        "rbac",
+        "create"
+      ],
+      [
+        "operator",
+        "replicaCount"
+      ],
+      [
+        "operator",
+        "resources"
+      ],
+      [
+        "operator",
+        "schedulerName"
+      ],
+      [
+        "operator",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "operator",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "operator",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "operator",
+        "sidecars"
+      ],
+      [
+        "operator",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "operator",
+        "tolerations"
+      ],
+      [
+        "operator",
+        "topologySpreadConstraints"
+      ],
+      [
+        "operator",
+        "updateStrategy"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "grafana",
+        "pdb",
+        "create"
+      ],
+      [
+        "grafana",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "grafana",
+        "pdb",
+        "minAvailable"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "grafana",
+        "affinity"
+      ],
+      [
+        "grafana",
+        "client",
+        "timeout"
+      ],
+      [
+        "grafana",
+        "config"
+      ],
+      [
+        "grafana",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "disableDefaultAdminSecret"
+      ],
+      [
+        "grafana",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "envFrom"
+      ],
+      [
+        "grafana",
+        "extraEnvVars"
+      ],
+      [
+        "grafana",
+        "extraVolumeMounts"
+      ],
+      [
+        "grafana",
+        "extraVolumes"
+      ],
+      [
+        "grafana",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "host"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "labels"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "path"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "tls"
+      ],
+      [
+        "grafana",
+        "ingress",
+        "tlsSecret"
+      ],
+      [
+        "grafana",
+        "jsonnetLibrarySelector"
+      ],
+      [
+        "grafana",
+        "labels"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "failureThreshold"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "successThreshold"
+      ],
+      [
+        "grafana",
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "grafana",
+        "nodeSelector"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "existingVolume"
+      ],
+      [
+        "grafana",
+        "persistence",
+        "size"
+      ],
+      [
+        "grafana",
+        "podAnnotations"
+      ],
+      [
+        "grafana",
+        "podLabels"
+      ],
+      [
+        "grafana",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "failureThreshold"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "successThreshold"
+      ],
+      [
+        "grafana",
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "grafana",
+        "replicaCount"
+      ],
+      [
+        "grafana",
+        "resources"
+      ],
+      [
+        "grafana",
+        "secrets"
+      ],
+      [
+        "grafana",
+        "service",
+        "annotations"
+      ],
+      [
+        "grafana",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "grafana",
+        "service",
+        "type"
+      ],
+      [
+        "grafana",
+        "serviceAccount"
+      ],
+      [
+        "grafana",
+        "sidecars"
+      ],
+      [
+        "grafana",
+        "tolerations"
+      ],
+      [
+        "grafana",
+        "topologySpreadConstraints"
+      ],
+      [
+        "grafana",
+        "updateStrategy"
+      ],
+      [
+        "operator",
+        "affinity"
+      ],
+      [
+        "operator",
+        "args"
+      ],
+      [
+        "operator",
+        "automountServiceAccountToken"
+      ],
+      [
+        "operator",
+        "command"
+      ],
+      [
+        "operator",
+        "containerPorts",
+        "health"
+      ],
+      [
+        "operator",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "operator",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "operator",
+        "customLivenessProbe"
+      ],
+      [
+        "operator",
+        "customReadinessProbe"
+      ],
+      [
+        "operator",
+        "customStartupProbe"
+      ],
+      [
+        "operator",
+        "enabled"
+      ],
+      [
+        "operator",
+        "extraEnvVars"
+      ],
+      [
+        "operator",
+        "extraEnvVarsCM"
+      ],
+      [
+        "operator",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "operator",
+        "extraVolumeMounts"
+      ],
+      [
+        "operator",
+        "extraVolumes"
+      ],
+      [
+        "operator",
+        "hostAliases"
+      ],
+      [
+        "operator",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "operator",
+        "initContainers"
+      ],
+      [
+        "operator",
+        "lifecycleHooks"
+      ],
+      [
+        "operator",
+        "namespaceScope"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "operator",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "operator",
+        "nodeSelector"
+      ],
+      [
+        "operator",
+        "pdb",
+        "create"
+      ],
+      [
+        "operator",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "operator",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "operator",
+        "podAnnotations"
+      ],
+      [
+        "operator",
+        "podLabels"
+      ],
+      [
+        "operator",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "operator",
+        "priorityClassName"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "operator",
+        "prometheus",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "operator",
+        "rbac",
+        "create"
+      ],
+      [
+        "operator",
+        "replicaCount"
+      ],
+      [
+        "operator",
+        "resources"
+      ],
+      [
+        "operator",
+        "schedulerName"
+      ],
+      [
+        "operator",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "operator",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "operator",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "operator",
+        "sidecars"
+      ],
+      [
+        "operator",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "operator",
+        "tolerations"
+      ],
+      [
+        "operator",
+        "topologySpreadConstraints"
+      ],
+      [
+        "operator",
+        "updateStrategy"
+      ]
+    ],
+    "present_count": 119,
+    "varied_count": 3,
+    "varied_fraction": 0.025,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-uc6s32zb/chart",
+  "seed": 0,
+  "attempts": 71,
+  "error": "Error: YAML parse error on grafana-operator/templates/grafana-pdb.yaml: error converting YAML to JSON: yaml: line 15: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "disabled"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "extraDeploy": [],
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "operator": {
+      "enabled": true,
+      "command": [],
+      "args": [],
+      "schedulerName": "",
+      "lifecycleHooks": {},
+      "replicaCount": 1,
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "sidecars": [],
+      "namespaceScope": false,
+      "watchNamespace": "",
+      "topologySpreadConstraints": [],
+      "priorityClassName": "",
+      "terminationGracePeriodSeconds": "",
+      "updateStrategy": {
+        "type": "Recreate"
+      },
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/grafana-operator",
+        "tag": "5.19.4-debian-12-r2",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "leaderElect": true,
+      "zapDevel": false,
+      "zapEncoder": "",
+      "zapLevel": "",
+      "zapSample": "",
+      "zapStacktraceLevel": "",
+      "zapTimeEncoding": "",
+      "extraArgs": [],
+      "rbac": {
+        "create": true
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "annotations": {},
+        "automountServiceAccountToken": false
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerPorts": {
+        "metrics": 8080,
+        "health": 8081
+      },
+      "automountServiceAccountToken": true,
+      "hostAliases": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "podAnnotations": {},
+      "podLabels": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "affinity": {},
+      "prometheus": {
+        "serviceMonitor": {
+          "enabled": false,
+          "namespace": "",
+          "jobLabel": "app.kubernetes.io/name",
+          "interval": "",
+          "scrapeTimeout": "",
+          "metricRelabelings": [],
+          "relabelings": [],
+          "selector": {},
+          "labels": {},
+          "honorLabels": false
+        }
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "startupProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "kubeAPIServerPorts": [
+          443,
+          6443,
+          8443
+        ],
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      }
+    },
+    "grafana": {
+      "enabled": true,
+      "disableDefaultAdminSecret": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/grafana",
+        "tag": "12.1.1-debian-12-r1",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "serviceAccount": {},
+      "podLabels": {},
+      "podAnnotations": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 0,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": false,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "resourcesPreset": "none",
+      "resources": {},
+      "replicaCount": 1,
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "pdb": {
+        "create": true,
+        "maxUnavailable": "\r0"
+      },
+      "extraEnvVars": [],
+      "envFrom": [],
+      "client": {
+        "timeout": 5
+      },
+      "labels": {},
+      "service": {
+        "type": "ClusterIP",
+        "annotations": {},
+        "extraPorts": []
+      },
+      "ingress": {
+        "enabled": false,
+        "ingressClassName": "",
+        "host": "grafana.local",
+        "path": "/",
+        "pathType": "ImplementationSpecific",
+        "labels": {},
+        "annotations": {},
+        "tls": false,
+        "tlsSecret": "grafana.local-tls"
+      },
+      "persistence": {
+        "enabled": false,
+        "storageClass": "",
+        "existingVolume": "",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "annotations": {},
+        "size": "10Gi"
+      },
+      "config": {
+        "server": {
+          "root_url": "{{- if .Values.grafana.ingress.enabled }}\n{{ if .Values.grafana.ingress.tls }}https{{ else }}http{{ end }}://{{ include \"common.tplvalues.render\" (dict \"value\" .Values.grafana.ingress.host \"context\" $) }}\n{{- else }}\nhttp://localhost:3000\n{{- end }}"
+        },
+        "log": {
+          "mode": "console",
+          "level": "warn"
+        },
+        "database": {
+          "wal": "true"
+        },
+        "analytics": {
+          "reporting_enabled": "false",
+          "check_for_updates": "false"
+        },
+        "security": {
+          "disable_gravatar": "false"
+        }
+      },
+      "jsonnetLibrarySelector": {
+        "matchLabels": {
+          "app.kubernetes.io/instance": "{{ .Release.Name }}"
+        }
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 120,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 6,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 6,
+        "successThreshold": 1
+      },
+      "updateStrategy": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "secrets": [],
+      "sidecars": []
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 55,
+    "unique_bundles": 23,
+    "duplicate_bundles": 32,
+    "validation_cache_hits": 32,
+    "validated_entries": 23
+  },
+  "phase": "$.grafana.pdb",
+  "kind": "value-path",
+  "path": [
+    "grafana",
+    "pdb"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-operator_1789319723/0000/paths/ba207baecff7b9d3f583"
+}

@@ -41,7 +41,9 @@ assert not subprocess.check_output(["git", "-C", metadata["source"], "status", "
     "Source checkout contains unrecorded modifications"
 )
 for filename, expected_hash in metadata["implementation_sha256"].items():
-    assert hashlib.sha256(Path(filename).read_bytes()).hexdigest() == expected_hash, f"Implementation changed during scan: {filename}"
+    assert hashlib.sha256((Path(metadata.get("implementation_root", ".")) / filename).read_bytes()).hexdigest() == expected_hash, (
+        f"Implementation changed during scan: {filename}"
+    )
 with (run / "joblog.tsv").open() as stream:
     jobs = list(csv.DictReader(stream, delimiter="\t"))
 assert len(jobs) == len(inventory), "Missing or extra completed jobs"

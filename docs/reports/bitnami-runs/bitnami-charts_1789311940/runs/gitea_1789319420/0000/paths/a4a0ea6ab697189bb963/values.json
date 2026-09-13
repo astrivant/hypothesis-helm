@@ -1,0 +1,251 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "storageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "commonAnnotations": {},
+  "commonLabels": {},
+  "extraDeploy": [],
+  "usePasswordFiles": true,
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/gitea",
+    "tag": "1.24.5-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": [
+      [
+        {}
+      ]
+    ],
+    "debug": false
+  },
+  "adminUsername": "bn_user",
+  "adminPassword": "",
+  "adminEmail": "user@example.com",
+  "appName": "example",
+  "runMode": "prod",
+  "exposeSSH": true,
+  "rootURL": "",
+  "command": [],
+  "args": [],
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "priorityClassName": "",
+  "schedulerName": "",
+  "topologySpreadConstraints": [],
+  "automountServiceAccountToken": false,
+  "hostAliases": [],
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "initContainers": [],
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "sidecars": [],
+  "tolerations": [],
+  "existingSecret": "",
+  "existingSecretKey": "admin-password",
+  "smtpHost": "",
+  "smtpPort": "",
+  "smtpUser": "",
+  "smtpPassword": "",
+  "smtpExistingSecret": "",
+  "containerPorts": {
+    "http": 3000,
+    "ssh": 2222
+  },
+  "extraContainerPorts": [],
+  "openid": {
+    "enableSignIn": false,
+    "enableSignUp": false
+  },
+  "persistence": {
+    "enabled": true,
+    "storageClass": "",
+    "accessModes": [
+      "ReadWriteOnce"
+    ],
+    "size": "8Gi",
+    "dataSource": {},
+    "existingClaim": "",
+    "hostPath": "",
+    "annotations": {},
+    "selector": {}
+  },
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "resourcesPreset": "micro",
+  "resources": {},
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "startupProbe": {
+    "enabled": false,
+    "path": "/",
+    "initialDelaySeconds": 600,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "livenessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 600,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "path": "/",
+    "initialDelaySeconds": 30,
+    "periodSeconds": 5,
+    "timeoutSeconds": 1,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "customStartupProbe": {},
+  "customLivenessProbe": {},
+  "customReadinessProbe": {},
+  "lifecycleHooks": {},
+  "podAnnotations": {},
+  "podLabels": {},
+  "service": {
+    "type": "LoadBalancer",
+    "ports": {
+      "http": 80,
+      "ssh": 22
+    },
+    "loadBalancerSourceRanges": [],
+    "loadBalancerIP": "",
+    "nodePorts": {
+      "http": "",
+      "ssh": ""
+    },
+    "externalTrafficPolicy": "Cluster",
+    "clusterIP": "",
+    "extraPorts": [],
+    "annotations": {},
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {}
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "pathType": "ImplementationSpecific",
+    "apiVersion": "",
+    "ingressClassName": "",
+    "hostname": "gitea.local",
+    "path": "/",
+    "annotations": {},
+    "tls": false,
+    "selfSigned": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "secrets": [],
+    "extraRules": []
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "automountServiceAccountToken": false,
+    "annotations": {}
+  },
+  "postgresql": {
+    "enabled": true,
+    "auth": {
+      "username": "bn_gitea",
+      "password": "",
+      "database": "bitnami_gitea",
+      "existingSecret": ""
+    },
+    "architecture": "standalone",
+    "service": {
+      "ports": {
+        "postgresql": 5432
+      }
+    }
+  },
+  "externalDatabase": {
+    "host": "",
+    "port": 5432,
+    "user": "postgres",
+    "database": "gitea",
+    "password": "",
+    "existingSecret": "",
+    "existingSecretPasswordKey": "db-password"
+  },
+  "volumePermissions": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "nano",
+    "resources": {}
+  }
+}

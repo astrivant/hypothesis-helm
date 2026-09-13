@@ -1,0 +1,313 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "disabled"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "extraDeploy": [],
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "clusterDomain": "cluster.local",
+  "operator": {
+    "enabled": true,
+    "command": [],
+    "args": [],
+    "schedulerName": "",
+    "lifecycleHooks": {},
+    "replicaCount": 1,
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "sidecars": [],
+    "namespaceScope": false,
+    "watchNamespace": "",
+    "topologySpreadConstraints": [],
+    "priorityClassName": "",
+    "terminationGracePeriodSeconds": "",
+    "updateStrategy": {
+      "type": "Recreate"
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/grafana-operator",
+      "tag": "5.19.4-debian-12-r2",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "leaderElect": true,
+    "zapDevel": false,
+    "zapEncoder": "",
+    "zapLevel": "",
+    "zapSample": "",
+    "zapStacktraceLevel": "",
+    "zapTimeEncoding": "",
+    "extraArgs": [],
+    "rbac": {
+      "create": true
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "containerPorts": {
+      "metrics": 8080,
+      "health": 8081
+    },
+    "automountServiceAccountToken": true,
+    "hostAliases": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "podAnnotations": {},
+    "podLabels": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "affinity": {},
+    "prometheus": {
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "jobLabel": "app.kubernetes.io/name",
+        "interval": "",
+        "scrapeTimeout": "",
+        "metricRelabelings": [],
+        "relabelings": [],
+        "selector": {},
+        "labels": {},
+        "honorLabels": false
+      }
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "failureThreshold": 3,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "failureThreshold": 3,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "startupProbe": {
+      "enabled": true,
+      "failureThreshold": 3,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "kubeAPIServerPorts": [
+        443,
+        6443,
+        8443
+      ],
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    }
+  },
+  "grafana": {
+    "enabled": true,
+    "disableDefaultAdminSecret": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/grafana",
+      "tag": "12.1.1-debian-12-r1",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "serviceAccount": {},
+    "podLabels": {},
+    "podAnnotations": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 0,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": false,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "resourcesPreset": "none",
+    "resources": {},
+    "replicaCount": 1,
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "pdb": {
+      "create": false,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "extraEnvVars": [],
+    "envFrom": [],
+    "client": {
+      "timeout": 5
+    },
+    "labels": {},
+    "service": {
+      "type": "ClusterIP",
+      "annotations": {},
+      "extraPorts": []
+    },
+    "ingress": {
+      "enabled": false,
+      "ingressClassName": "",
+      "host": "grafana.local",
+      "path": "/",
+      "pathType": "ImplementationSpecific",
+      "labels": {},
+      "annotations": {},
+      "tls": false,
+      "tlsSecret": "grafana.local-tls"
+    },
+    "persistence": {
+      "enabled": false,
+      "storageClass": "",
+      "existingVolume": "",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "annotations": {},
+      "size": "10Gi"
+    },
+    "config": {
+      "server": {
+        "root_url": "{{- if .Values.grafana.ingress.enabled }}\n{{ if .Values.grafana.ingress.tls }}https{{ else }}http{{ end }}://{{ include \"common.tplvalues.render\" (dict \"value\" .Values.grafana.ingress.host \"context\" $) }}\n{{- else }}\nhttp://localhost:3000\n{{- end }}"
+      },
+      "log": {
+        "mode": "console",
+        "level": "warn"
+      },
+      "database": {
+        "wal": "true"
+      },
+      "analytics": {
+        "reporting_enabled": "false",
+        "check_for_updates": "false"
+      },
+      "security": {
+        "disable_gravatar": "false"
+      }
+    },
+    "jsonnetLibrarySelector": {
+      "matchLabels": {
+        "app.kubernetes.io/instance": "{{ .Release.Name }}"
+      }
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 120,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "updateStrategy": {},
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "secrets": [
+      {
+        "'": null
+      }
+    ],
+    "sidecars": []
+  }
+}

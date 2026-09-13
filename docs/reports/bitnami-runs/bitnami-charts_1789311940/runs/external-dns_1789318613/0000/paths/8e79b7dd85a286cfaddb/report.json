@@ -1,0 +1,2222 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 235,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "akamai",
+        "accessToken"
+      ],
+      [
+        "akamai",
+        "clientSecret"
+      ],
+      [
+        "akamai",
+        "clientToken"
+      ],
+      [
+        "akamai",
+        "host"
+      ],
+      [
+        "akamai",
+        "secretName"
+      ],
+      [
+        "alibabacloud",
+        "accessKeyId"
+      ],
+      [
+        "alibabacloud",
+        "accessKeySecret"
+      ],
+      [
+        "alibabacloud",
+        "secretName"
+      ],
+      [
+        "alibabacloud",
+        "zoneType"
+      ],
+      [
+        "annotationFilter"
+      ],
+      [
+        "args"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "aws",
+        "apiRetries"
+      ],
+      [
+        "aws",
+        "assumeRoleArn"
+      ],
+      [
+        "aws",
+        "batchChangeSize"
+      ],
+      [
+        "aws",
+        "credentials",
+        "accessKey"
+      ],
+      [
+        "aws",
+        "credentials",
+        "accessKeyIDSecretRef",
+        "key"
+      ],
+      [
+        "aws",
+        "credentials",
+        "accessKeyIDSecretRef",
+        "name"
+      ],
+      [
+        "aws",
+        "credentials",
+        "mountPath"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretAccessKeySecretRef",
+        "key"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretAccessKeySecretRef",
+        "name"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretKey"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretName"
+      ],
+      [
+        "aws",
+        "dynamodbRegion"
+      ],
+      [
+        "aws",
+        "dynamodbTable"
+      ],
+      [
+        "aws",
+        "evaluateTargetHealth"
+      ],
+      [
+        "aws",
+        "preferCNAME"
+      ],
+      [
+        "aws",
+        "region"
+      ],
+      [
+        "aws",
+        "roleArn"
+      ],
+      [
+        "aws",
+        "zoneMatchParent"
+      ],
+      [
+        "aws",
+        "zoneTags"
+      ],
+      [
+        "aws",
+        "zoneType"
+      ],
+      [
+        "aws",
+        "zonesCacheDuration"
+      ],
+      [
+        "azure",
+        "resourceGroup"
+      ],
+      [
+        "azure",
+        "secretName"
+      ],
+      [
+        "azure",
+        "subscriptionId"
+      ],
+      [
+        "azure",
+        "tenantId"
+      ],
+      [
+        "civo",
+        "apiToken"
+      ],
+      [
+        "cloudflare",
+        "apiKey"
+      ],
+      [
+        "cloudflare",
+        "apiToken"
+      ],
+      [
+        "cloudflare",
+        "dnsRecordsPerPage"
+      ],
+      [
+        "cloudflare",
+        "email"
+      ],
+      [
+        "cloudflare",
+        "proxied"
+      ],
+      [
+        "cloudflare",
+        "regionKey"
+      ],
+      [
+        "cloudflare",
+        "regionalServices"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "combineFQDNAnnotation"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "coredns",
+        "etcdEndpoints"
+      ],
+      [
+        "coredns",
+        "etcdTLS",
+        "enabled"
+      ],
+      [
+        "coredns",
+        "etcdTLS",
+        "mountPath"
+      ],
+      [
+        "crd",
+        "apiversion"
+      ],
+      [
+        "crd",
+        "create"
+      ],
+      [
+        "crd",
+        "kind"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "digitalocean",
+        "apiToken"
+      ],
+      [
+        "digitalocean",
+        "secretName"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "dnsPolicy"
+      ],
+      [
+        "domainFilters"
+      ],
+      [
+        "dryRun"
+      ],
+      [
+        "excludeDomains"
+      ],
+      [
+        "exoscale",
+        "apiKey"
+      ],
+      [
+        "exoscale",
+        "apiToken"
+      ],
+      [
+        "exoscale",
+        "secretName"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "forceTxtOwnerId"
+      ],
+      [
+        "fqdnTemplates"
+      ],
+      [
+        "google",
+        "batchChangeSize"
+      ],
+      [
+        "google",
+        "project"
+      ],
+      [
+        "google",
+        "serviceAccountKey"
+      ],
+      [
+        "google",
+        "serviceAccountSecret"
+      ],
+      [
+        "google",
+        "serviceAccountSecretKey"
+      ],
+      [
+        "google",
+        "zoneVisibility"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "ignoreHostnameAnnotation"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingressClassFilters"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "interval"
+      ],
+      [
+        "labelFilter"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "linode",
+        "apiToken"
+      ],
+      [
+        "linode",
+        "secretName"
+      ],
+      [
+        "logFormat"
+      ],
+      [
+        "logLevel"
+      ],
+      [
+        "managedRecordTypesFilters"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "endpoint"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "ns1",
+        "apiKey"
+      ],
+      [
+        "ns1",
+        "minTTL"
+      ],
+      [
+        "ns1",
+        "secretName"
+      ],
+      [
+        "oci",
+        "compartmentOCID"
+      ],
+      [
+        "oci",
+        "useInstancePrincipal"
+      ],
+      [
+        "ovh",
+        "applicationKey"
+      ],
+      [
+        "ovh",
+        "applicationSecret"
+      ],
+      [
+        "ovh",
+        "consumerKey"
+      ],
+      [
+        "ovh",
+        "secretName"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "pdns",
+        "apiKey"
+      ],
+      [
+        "pdns",
+        "apiPort"
+      ],
+      [
+        "pdns",
+        "apiUrl"
+      ],
+      [
+        "pihole",
+        "password"
+      ],
+      [
+        "pihole",
+        "secretName"
+      ],
+      [
+        "pihole",
+        "server"
+      ],
+      [
+        "pihole",
+        "tlsSkipVerify"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "policy"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "provider"
+      ],
+      [
+        "publishHostIP"
+      ],
+      [
+        "publishInternalServices"
+      ],
+      [
+        "rbac",
+        "apiVersion"
+      ],
+      [
+        "rbac",
+        "clusterRole"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "regexDomainExclusion"
+      ],
+      [
+        "regexDomainFilter"
+      ],
+      [
+        "registry"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "rfc2136",
+        "host"
+      ],
+      [
+        "rfc2136",
+        "kerberosConfig"
+      ],
+      [
+        "rfc2136",
+        "kerberosPassword"
+      ],
+      [
+        "rfc2136",
+        "kerberosRealm"
+      ],
+      [
+        "rfc2136",
+        "kerberosUsername"
+      ],
+      [
+        "rfc2136",
+        "minTTL"
+      ],
+      [
+        "rfc2136",
+        "port"
+      ],
+      [
+        "rfc2136",
+        "rfc3645Enabled"
+      ],
+      [
+        "rfc2136",
+        "secretName"
+      ],
+      [
+        "rfc2136",
+        "tsigAxfr"
+      ],
+      [
+        "rfc2136",
+        "tsigSecret"
+      ],
+      [
+        "rfc2136",
+        "zone"
+      ],
+      [
+        "rfc2136",
+        "zones"
+      ],
+      [
+        "scaleway",
+        "scwAccessKey"
+      ],
+      [
+        "scaleway",
+        "scwSecretKey"
+      ],
+      [
+        "scaleway",
+        "secretName"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "secretAnnotations"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "enabled"
+      ],
+      [
+        "service",
+        "externalIPs"
+      ],
+      [
+        "service",
+        "externalName"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccount",
+        "labels"
+      ],
+      [
+        "serviceTypeFilter"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "sources"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "traefik",
+        "disableLegacy"
+      ],
+      [
+        "traefik",
+        "disableNew"
+      ],
+      [
+        "transip",
+        "account"
+      ],
+      [
+        "transip",
+        "apiKey"
+      ],
+      [
+        "triggerLoopOnEvent"
+      ],
+      [
+        "txtEncrypt",
+        "aesKey"
+      ],
+      [
+        "txtEncrypt",
+        "enabled"
+      ],
+      [
+        "txtNewFormatOnly"
+      ],
+      [
+        "txtOwnerId"
+      ],
+      [
+        "txtPrefix"
+      ],
+      [
+        "txtSuffix"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "zoneIdFilters"
+      ],
+      [
+        "zoneNameFilters"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "akamai",
+        "accessToken"
+      ],
+      [
+        "akamai",
+        "clientSecret"
+      ],
+      [
+        "akamai",
+        "clientToken"
+      ],
+      [
+        "akamai",
+        "host"
+      ],
+      [
+        "akamai",
+        "secretName"
+      ],
+      [
+        "alibabacloud",
+        "accessKeyId"
+      ],
+      [
+        "alibabacloud",
+        "accessKeySecret"
+      ],
+      [
+        "alibabacloud",
+        "secretName"
+      ],
+      [
+        "alibabacloud",
+        "zoneType"
+      ],
+      [
+        "annotationFilter"
+      ],
+      [
+        "args"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "aws",
+        "apiRetries"
+      ],
+      [
+        "aws",
+        "assumeRoleArn"
+      ],
+      [
+        "aws",
+        "batchChangeSize"
+      ],
+      [
+        "aws",
+        "credentials",
+        "accessKey"
+      ],
+      [
+        "aws",
+        "credentials",
+        "accessKeyIDSecretRef",
+        "key"
+      ],
+      [
+        "aws",
+        "credentials",
+        "accessKeyIDSecretRef",
+        "name"
+      ],
+      [
+        "aws",
+        "credentials",
+        "mountPath"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretAccessKeySecretRef",
+        "key"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretAccessKeySecretRef",
+        "name"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretKey"
+      ],
+      [
+        "aws",
+        "credentials",
+        "secretName"
+      ],
+      [
+        "aws",
+        "dynamodbRegion"
+      ],
+      [
+        "aws",
+        "dynamodbTable"
+      ],
+      [
+        "aws",
+        "evaluateTargetHealth"
+      ],
+      [
+        "aws",
+        "preferCNAME"
+      ],
+      [
+        "aws",
+        "region"
+      ],
+      [
+        "aws",
+        "roleArn"
+      ],
+      [
+        "aws",
+        "zoneMatchParent"
+      ],
+      [
+        "aws",
+        "zoneTags"
+      ],
+      [
+        "aws",
+        "zoneType"
+      ],
+      [
+        "aws",
+        "zonesCacheDuration"
+      ],
+      [
+        "azure",
+        "resourceGroup"
+      ],
+      [
+        "azure",
+        "secretName"
+      ],
+      [
+        "azure",
+        "subscriptionId"
+      ],
+      [
+        "azure",
+        "tenantId"
+      ],
+      [
+        "civo",
+        "apiToken"
+      ],
+      [
+        "cloudflare",
+        "apiKey"
+      ],
+      [
+        "cloudflare",
+        "apiToken"
+      ],
+      [
+        "cloudflare",
+        "dnsRecordsPerPage"
+      ],
+      [
+        "cloudflare",
+        "email"
+      ],
+      [
+        "cloudflare",
+        "proxied"
+      ],
+      [
+        "cloudflare",
+        "regionKey"
+      ],
+      [
+        "cloudflare",
+        "regionalServices"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "combineFQDNAnnotation"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "coredns",
+        "etcdEndpoints"
+      ],
+      [
+        "coredns",
+        "etcdTLS",
+        "enabled"
+      ],
+      [
+        "coredns",
+        "etcdTLS",
+        "mountPath"
+      ],
+      [
+        "crd",
+        "apiversion"
+      ],
+      [
+        "crd",
+        "create"
+      ],
+      [
+        "crd",
+        "kind"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "digitalocean",
+        "apiToken"
+      ],
+      [
+        "digitalocean",
+        "secretName"
+      ],
+      [
+        "dnsConfig"
+      ],
+      [
+        "dnsPolicy"
+      ],
+      [
+        "domainFilters"
+      ],
+      [
+        "dryRun"
+      ],
+      [
+        "excludeDomains"
+      ],
+      [
+        "exoscale",
+        "apiKey"
+      ],
+      [
+        "exoscale",
+        "apiToken"
+      ],
+      [
+        "exoscale",
+        "secretName"
+      ],
+      [
+        "extraArgs"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "forceTxtOwnerId"
+      ],
+      [
+        "fqdnTemplates"
+      ],
+      [
+        "google",
+        "batchChangeSize"
+      ],
+      [
+        "google",
+        "project"
+      ],
+      [
+        "google",
+        "serviceAccountKey"
+      ],
+      [
+        "google",
+        "serviceAccountSecret"
+      ],
+      [
+        "google",
+        "serviceAccountSecretKey"
+      ],
+      [
+        "google",
+        "zoneVisibility"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "ignoreHostnameAnnotation"
+      ],
+      [
+        "infoblox",
+        "createPtr"
+      ],
+      [
+        "infoblox",
+        "domainFilter"
+      ],
+      [
+        "infoblox",
+        "gridHost"
+      ],
+      [
+        "infoblox",
+        "maxResults"
+      ],
+      [
+        "infoblox",
+        "nameRegex"
+      ],
+      [
+        "infoblox",
+        "noSslVerify"
+      ],
+      [
+        "infoblox",
+        "view"
+      ],
+      [
+        "infoblox",
+        "wapiPort"
+      ],
+      [
+        "infoblox",
+        "wapiVersion"
+      ],
+      [
+        "ingressClassFilters"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "interval"
+      ],
+      [
+        "labelFilter"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "linode",
+        "apiToken"
+      ],
+      [
+        "linode",
+        "secretName"
+      ],
+      [
+        "logFormat"
+      ],
+      [
+        "logLevel"
+      ],
+      [
+        "managedRecordTypesFilters"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "endpoint"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "googlePodMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "ns1",
+        "apiKey"
+      ],
+      [
+        "ns1",
+        "minTTL"
+      ],
+      [
+        "ns1",
+        "secretName"
+      ],
+      [
+        "oci",
+        "compartmentOCID"
+      ],
+      [
+        "oci",
+        "useInstancePrincipal"
+      ],
+      [
+        "ovh",
+        "applicationKey"
+      ],
+      [
+        "ovh",
+        "applicationSecret"
+      ],
+      [
+        "ovh",
+        "consumerKey"
+      ],
+      [
+        "ovh",
+        "secretName"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "pdns",
+        "apiKey"
+      ],
+      [
+        "pdns",
+        "apiPort"
+      ],
+      [
+        "pdns",
+        "apiUrl"
+      ],
+      [
+        "pihole",
+        "password"
+      ],
+      [
+        "pihole",
+        "secretName"
+      ],
+      [
+        "pihole",
+        "server"
+      ],
+      [
+        "pihole",
+        "tlsSkipVerify"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "policy"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "provider"
+      ],
+      [
+        "publishHostIP"
+      ],
+      [
+        "publishInternalServices"
+      ],
+      [
+        "rbac",
+        "apiVersion"
+      ],
+      [
+        "rbac",
+        "clusterRole"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "regexDomainExclusion"
+      ],
+      [
+        "regexDomainFilter"
+      ],
+      [
+        "registry"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "revisionHistoryLimit"
+      ],
+      [
+        "rfc2136",
+        "host"
+      ],
+      [
+        "rfc2136",
+        "kerberosConfig"
+      ],
+      [
+        "rfc2136",
+        "kerberosPassword"
+      ],
+      [
+        "rfc2136",
+        "kerberosRealm"
+      ],
+      [
+        "rfc2136",
+        "kerberosUsername"
+      ],
+      [
+        "rfc2136",
+        "minTTL"
+      ],
+      [
+        "rfc2136",
+        "port"
+      ],
+      [
+        "rfc2136",
+        "rfc3645Enabled"
+      ],
+      [
+        "rfc2136",
+        "secretName"
+      ],
+      [
+        "rfc2136",
+        "tsigAxfr"
+      ],
+      [
+        "rfc2136",
+        "tsigSecret"
+      ],
+      [
+        "rfc2136",
+        "zone"
+      ],
+      [
+        "rfc2136",
+        "zones"
+      ],
+      [
+        "scaleway",
+        "scwAccessKey"
+      ],
+      [
+        "scaleway",
+        "scwSecretKey"
+      ],
+      [
+        "scaleway",
+        "secretName"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "secretAnnotations"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "enabled"
+      ],
+      [
+        "service",
+        "externalIPs"
+      ],
+      [
+        "service",
+        "externalName"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceAccount",
+        "labels"
+      ],
+      [
+        "serviceTypeFilter"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "sources"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "traefik",
+        "disableLegacy"
+      ],
+      [
+        "traefik",
+        "disableNew"
+      ],
+      [
+        "transip",
+        "account"
+      ],
+      [
+        "transip",
+        "apiKey"
+      ],
+      [
+        "triggerLoopOnEvent"
+      ],
+      [
+        "txtEncrypt",
+        "aesKey"
+      ],
+      [
+        "txtEncrypt",
+        "enabled"
+      ],
+      [
+        "txtNewFormatOnly"
+      ],
+      [
+        "txtOwnerId"
+      ],
+      [
+        "txtPrefix"
+      ],
+      [
+        "txtSuffix"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "useInstancePrincipal"
+      ],
+      [
+        "zoneIdFilters"
+      ],
+      [
+        "zoneNameFilters"
+      ]
+    ],
+    "present_count": 225,
+    "varied_count": 1,
+    "varied_fraction": 0.00425531914893617,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-rkrtbzob/chart",
+  "seed": 0,
+  "attempts": 35,
+  "error": "Error: YAML parse error on external-dns/templates/deployment.yaml: error converting YAML to JSON: yaml: line 52: mapping values are not allowed in this context\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "clusterDomain": "cluster.local",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "extraDeploy": [],
+    "kubeVersion": "",
+    "image": {
+      "tag": ""
+    },
+    "revisionHistoryLimit": 10,
+    "automountServiceAccountToken": true,
+    "hostAliases": [],
+    "updateStrategy": {},
+    "command": [],
+    "args": [],
+    "sources": [
+      "service",
+      "ingress"
+    ],
+    "provider": "aws",
+    "initContainers": [],
+    "dnsPolicy": "",
+    "dnsConfig": {},
+    "sidecars": [],
+    "namespace": "",
+    "watchReleaseNamespace": false,
+    "fqdnTemplates": [],
+    "containerPorts": {
+      "http": 7979
+    },
+    "combineFQDNAnnotation": false,
+    "ignoreHostnameAnnotation": false,
+    "publishInternalServices": false,
+    "publishHostIP": false,
+    "serviceTypeFilter": [],
+    "validation": {
+      "enabled": true
+    },
+    "akamai": {
+      "host": "",
+      "accessToken": "",
+      "clientToken": "",
+      "clientSecret": "",
+      "secretName": ""
+    },
+    "alibabacloud": {
+      "accessKeyId": "",
+      "accessKeySecret": "",
+      "regionId": "",
+      "vpcId": "",
+      "secretName": "",
+      "zoneType": ""
+    },
+    "aws": {
+      "credentials": {
+        "secretKey": "",
+        "accessKey": "",
+        "mountPath": "/.aws",
+        "secretName": "",
+        "accessKeyIDSecretRef": {
+          "name": "",
+          "key": ""
+        },
+        "secretAccessKeySecretRef": {
+          "name": "",
+          "key": ""
+        }
+      },
+      "region": "us-east-1",
+      "zoneType": "",
+      "assumeRoleArn": "",
+      "roleArn": "",
+      "apiRetries": 3,
+      "batchChangeSize": 1000,
+      "zonesCacheDuration": 0,
+      "zoneTags": [],
+      "preferCNAME": "",
+      "evaluateTargetHealth": "",
+      "dynamodbTable": "",
+      "dynamodbRegion": "",
+      "zoneMatchParent": false
+    },
+    "azure": {
+      "secretName": "",
+      "cloud": "",
+      "resourceGroup": "",
+      "tenantId": "",
+      "subscriptionId": "",
+      "aadClientId": "",
+      "aadClientSecret": "",
+      "useWorkloadIdentityExtension": false,
+      "useManagedIdentityExtension": false,
+      "userAssignedIdentityID": ""
+    },
+    "civo": {
+      "apiToken": "",
+      "secretName": ""
+    },
+    "cloudflare": {
+      "apiToken": "",
+      "apiKey": "",
+      "secretName": "",
+      "email": "",
+      "proxied": true,
+      "dnsRecordsPerPage": 100,
+      "regionalServices": false,
+      "regionKey": ""
+    },
+    "coredns": {
+      "etcdEndpoints": "http://etcd-extdns:2379",
+      "etcdTLS": {
+        "enabled": false,
+        "autoGenerated": false,
+        "secretName": "etcd-client-certs",
+        "mountPath": "/etc/coredns/tls/etcd",
+        "caFilename": "ca.crt",
+        "certFilename": "cert.pem",
+        "keyFilename": "key.pem"
+      }
+    },
+    "exoscale": {
+      "apiKey": "",
+      "apiToken": "",
+      "secretName": ""
+    },
+    "digitalocean": {
+      "apiToken": "",
+      "secretName": ""
+    },
+    "google": {
+      "project": "",
+      "batchChangeSize": 1000,
+      "serviceAccountSecret": "",
+      "serviceAccountSecretKey": "credentials.json",
+      "serviceAccountKey": "",
+      "zoneVisibility": ""
+    },
+    "linode": {
+      "apiToken": "",
+      "secretName": ""
+    },
+    "ns1": {
+      "minTTL": 10,
+      "apiKey": "",
+      "secretName": ""
+    },
+    "pihole": {
+      "server": "",
+      "tlsSkipVerify": "",
+      "password": "",
+      "secretName": ""
+    },
+    "traefik": {
+      "disableNew": false,
+      "disableLegacy": false
+    },
+    "oci": {
+      "region": "",
+      "tenancyOCID": "",
+      "userOCID": "",
+      "compartmentOCID": "",
+      "privateKey": "-----BEGIN RSA PRIVATE KEY-----\n-----END RSA PRIVATE KEY-----\n",
+      "privateKeyFingerprint": "",
+      "privateKeyPassphrase": "",
+      "secretName": "",
+      "useInstancePrincipal": false,
+      "useWorkloadIdentity": false
+    },
+    "ovh": {
+      "consumerKey": "",
+      "applicationKey": "",
+      "applicationSecret": "",
+      "secretName": ""
+    },
+    "scaleway": {
+      "scwAccessKey": "",
+      "scwSecretKey": "",
+      "secretName": ""
+    },
+    "rfc2136": {
+      "host": "",
+      "port": 53,
+      "zone": "",
+      "zones": [],
+      "tsigSecret": "",
+      "secretName": "",
+      "tsigSecretAlg": "hmac-sha256",
+      "tsigKeyname": "rfc2136_tsig_secret",
+      "tsigAxfr": true,
+      "minTTL": "0s",
+      "rfc3645Enabled": false,
+      "kerberosConfig": "",
+      "kerberosUsername": "",
+      "kerberosPassword": "",
+      "kerberosRealm": ""
+    },
+    "pdns": {
+      "apiUrl": "",
+      "apiPort": "8081",
+      "apiKey": "",
+      "secretName": ""
+    },
+    "transip": {
+      "account": "",
+      "apiKey": ""
+    },
+    "domainFilters": [],
+    "excludeDomains": [],
+    "regexDomainFilter": "",
+    "regexDomainExclusion": "",
+    "zoneNameFilters": [],
+    "zoneIdFilters": [],
+    "annotationFilter": "",
+    "labelFilter": "",
+    "ingressClassFilters": [],
+    "managedRecordTypesFilters": [],
+    "dryRun": false,
+    "triggerLoopOnEvent": false,
+    "interval": "1m",
+    "logLevel": "info",
+    "logFormat": "text",
+    "policy": "upsert-only",
+    "registry": "txt",
+    "txtPrefix": "",
+    "txtSuffix": "",
+    "txtNewFormatOnly": false,
+    "txtOwnerId": "",
+    "forceTxtOwnerId": false,
+    "txtEncrypt": {
+      "enabled": false,
+      "aesKey": "",
+      "secretName": ""
+    },
+    "extraArgs": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "lifecycleHooks": {},
+    "schedulerName": "",
+    "topologySpreadConstraints": [],
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "podAnnotations": {},
+    "podLabels": {},
+    "priorityClassName": "",
+    "secretAnnotations": {},
+    "crd": {
+      "create": false,
+      "apiversion": "",
+      "kind": ""
+    },
+    "service": {
+      "enabled": true,
+      "type": "ClusterIP",
+      "ports": {
+        "http": 7979
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "externalIPs": [],
+      "externalName": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "extraPorts": [],
+      "annotations": {},
+      "labels": {},
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "kubeAPIServerPorts": [
+        443,
+        6443,
+        8443
+      ],
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false,
+      "labels": {}
+    },
+    "rbac": {
+      "create": true,
+      "clusterRole": true,
+      "apiVersion": "v1",
+      "pspEnabled": false
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "readOnlyRootFilesystem": true,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 2,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "metrics": {
+      "enabled": false,
+      "podAnnotations": {},
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "interval": "",
+        "scrapeTimeout": "",
+        "selector": {},
+        "metricRelabelings": [],
+        "relabelings": [],
+        "honorLabels": false,
+        "labels": {},
+        "targetLabels": [],
+        "podTargetLabels": [],
+        "annotations": {},
+        "jobLabel": ""
+      },
+      "googlePodMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "interval": "60s",
+        "endpoint": "/metrics"
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 20,
+    "unique_bundles": 8,
+    "duplicate_bundles": 12,
+    "validation_cache_hits": 0,
+    "validated_entries": 20
+  },
+  "phase": "$.image",
+  "kind": "value-path",
+  "path": [
+    "image"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/external-dns_1789318613/0000/paths/8e79b7dd85a286cfaddb"
+}

@@ -12,7 +12,7 @@ from combinations of Helm chart inputs to reproducible examples.
 - Traverse unique value paths randomly with a reproducible seed, or choose linear, shallow, or deep order.
 - Skip provably equivalent renders or opt into sampling to reduce test volume.
 - Preview coverage and runtime estimates; set execution budgets and shard tests across workers.
-- Scan local, Git, and authenticated Helm repositories; build dependencies and export Markdown/PDF reports.
+- Test local chart trees or scan remote Git and authenticated Helm repositories; build dependencies and export Markdown/PDF reports.
 - Integrate Kubernetes schema validation and optional security checks into CI with [kubesec](https://github.com/controlplaneio/kubesec) and [kubeconform](https://github.com/yannh/kubeconform).
 
 We recommend a **manual CI check on trunk before tagging a service release**, to
@@ -24,6 +24,7 @@ and tag the tested commit. See the [release-check workflow and cache retention](
 - [Hypothesis](#hypothesis)
   - [Table of contents](#table-of-contents)
   - [Install](#install)
+  - [Example: catch a failure hidden by defaults](#example-catch-a-failure-hidden-by-defaults)
   - [Audit, test, or scan?](#audit-test-or-scan)
     - [Quick start](#quick-start)
   - [Guides](#guides)
@@ -51,17 +52,47 @@ hypothesis-helm-benchmark --help
 
 See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot commands.
 
+## Example: catch a failure hidden by defaults
+
+The [broken example chart](examples/broken) renders successfully with its default
+`replicas: 1`. Its values schema also permits `replicas: 0`, but its template rejects
+that value. Testing only the defaults would miss this mismatch.
+
+From this repository's root, run:
+
+```sh
+helm hypothesis test examples/broken --match replicas --max-examples 4 \
+  --seed 0 --shard none --rerun all --artifact-dir reports/example
+```
+
+Hypothesis generates values allowed by the schema and finds this failing input:
+
+```yaml
+replicas: 0
+```
+
+Helm reports `replicas=0 is documented but unsupported`, and the command exits
+with a failure. You now have a concrete input to reproduce the problem and decide
+whether to fix the template or narrow the schema. Results are saved in `reports/example/`.
+
+Another common bug is an unquoted ConfigMap value. A default of `banner: Ready`
+works with the template `banner: {{ .Values.banner }}`. But the equally valid input
+`banner: "Release: ready"` makes that template emit `banner: Release: ready`, which
+is invalid YAML. Hypothesis can expose this by varying values and rendering the
+chart locally, without a Kubernetes cluster. The fix is to quote the template value:
+`banner: {{ .Values.banner | quote }}`.
+
 ## Audit, test, or scan?
 
 | Command | Use it for | What it does |
 | --- | --- | --- |
 | `audit ./chart` | Understanding one chart's input contract. | Statically compares values, schema, and template references. Reports missing defaults, undocumented fields, and unresolved access as JSON. Renders only when an export option requests verification or output observation. |
-| `test ./chart` | Finding failures in one chart. | Generates inputs, renders them with Helm, checks the manifests, and shrinks failures into reproducible examples. Saves test results and failing values. |
-| `scan SOURCE` | Reviewing charts from local, Git, or Helm repositories. | Discovers charts, builds dependencies in isolated copies, runs Helm lint and chart tests, and records each chart's outcome. `--report` adds combined Markdown/PDF reports. Also accepts individual repository/OCI charts and public Helm indexes. |
+| `test PATH` | Testing a local chart or directory of charts. | Discovers local charts recursively, generates inputs, renders them with Helm, and records failures. `--report` writes combined Markdown/PDF results. |
+| `scan SOURCE` | Testing charts fetched from remote repositories. | Fetches a Git repository, Helm repository/chart, public Helm index, or OCI chart, then discovers and tests its charts. Local paths use `test`. |
 
-`test` requires a values schema and dependencies already available in the chart.
-`audit` also works without a schema. For schema-less charts, `scan` infers path
-strategies from supplied values and template references. `--filter` restricts
+`test` and `scan` infer input-generation strategies when a chart has no values schema.
+Recursive testing builds dependencies in isolated copies; single-chart suite controls
+use dependencies already available in the chart. `audit` also works without a schema. `--filter` restricts
 generation before traversal. Skipped charts and incomplete coverage remain explicit.
 
 Use `--export-minimal-values` to save example values with validation status, or
@@ -89,10 +120,10 @@ and generated artifacts go to `reports/hypothesis-helm/`.
 See [Getting started](docs/getting-started/README.md) for saved suites, validation,
 and coverage options.
 
-Scan a repository and write Markdown/PDF summaries:
+Test local charts or fetch remote charts, with Markdown/PDF summaries:
 
 ```sh
-helm hypothesis scan ./charts --report
+helm hypothesis test ./charts --report
 helm hypothesis scan https://github.com/bitnami/charts.git --filter --report
 helm hypothesis scan prometheus-community/prometheus --filter --report
 helm hypothesis scan prometheus-community --filter --report
@@ -104,7 +135,7 @@ See [Repository scanning](docs/scanning/README.md) for authentication, public in
 
 | Guide | Contents |
 | --- | --- |
-| [Architecture](docs/architecture/README.md) | How chart values become tests, with a worked example. |
+| [Architecture](docs/architecture/README.md) | Input discovery, test generation, rendering, and validation. |
 | [Execution](docs/execution/README.md) | Parallel workers, sharding, estimates, and time limits. |
 | [CI examples](docs/ci/README.md) | GitHub Action, CircleCI, and GitLab setup. |
 | [Benchmarking](docs/benchmarks/README.md) | Local shard commands, chart generation, and measured plots. |

@@ -1,0 +1,967 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 91,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "args"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "health"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "deploymentAnnotations"
+      ],
+      [
+        "deploymentLabels"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "labels"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "rules"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "runnerImage"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "starterImage"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "watchAllNamespaces"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "args"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "health"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "deploymentAnnotations"
+      ],
+      [
+        "deploymentLabels"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "labels"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "rules"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "runnerImage"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "starterImage"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "watchAllNamespaces"
+      ]
+    ],
+    "present_count": 91,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-wppq7sde/chart",
+  "seed": 0,
+  "attempts": 67,
+  "error": "Error: YAML parse error on grafana-k6-operator/templates/deployment.yaml: error converting YAML to JSON: yaml: line 36: did not find expected ',' or ']'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "apiVersions": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/grafana-k6-operator",
+      "tag": "0.0.23-debian-12-r1",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [
+        [
+          {}
+        ]
+      ]
+    },
+    "starterImage": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r51",
+      "digest": ""
+    },
+    "runnerImage": {
+      "registry": "docker.io",
+      "repository": "bitnami/grafana-k6",
+      "tag": "1.2.3-debian-12-r0",
+      "digest": ""
+    },
+    "replicaCount": 1,
+    "containerPorts": {
+      "metrics": 8080,
+      "health": 8081
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "watchAllNamespaces": true,
+    "resourcesPreset": "nano",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "command": [],
+    "args": [],
+    "extraArgs": [],
+    "automountServiceAccountToken": true,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "deploymentLabels": {},
+    "deploymentAnnotations": {},
+    "extraContainerPorts": [],
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "autoscaling": {
+      "vpa": {
+        "enabled": false,
+        "annotations": {},
+        "controlledResources": [],
+        "maxAllowed": {},
+        "minAllowed": {},
+        "updatePolicy": {
+          "updateMode": "Auto"
+        }
+      },
+      "hpa": {
+        "enabled": false,
+        "minReplicas": "",
+        "maxReplicas": "",
+        "targetCPU": "",
+        "targetMemory": ""
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "kubeAPIServerPorts": [
+        443,
+        6443,
+        8443
+      ],
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "addExternalClientAccess": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "rbac": {
+      "create": true,
+      "rules": []
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "metrics": {
+      "enabled": false,
+      "service": {
+        "ports": {
+          "metrics": 443
+        },
+        "clusterIP": "",
+        "sessionAffinity": "None",
+        "labels": {},
+        "annotations": {}
+      },
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "annotations": {},
+        "labels": {},
+        "jobLabel": "",
+        "honorLabels": false,
+        "interval": "",
+        "scrapeTimeout": "",
+        "metricRelabelings": [],
+        "relabelings": [],
+        "selector": {}
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 50,
+    "unique_bundles": 18,
+    "duplicate_bundles": 32,
+    "validation_cache_hits": 32,
+    "validated_entries": 18
+  },
+  "phase": "$.image.pullSecrets",
+  "kind": "value-path",
+  "path": [
+    "image",
+    "pullSecrets"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/grafana-k6-operator_1789319722/0000/paths/a4a0ea6ab697189bb963"
+}

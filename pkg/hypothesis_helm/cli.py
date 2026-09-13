@@ -16,7 +16,7 @@ from typing import Literal
 from hypothesis_helm.charts.generate import generate_tests
 from hypothesis_helm.charts.generated import RenderOptions
 from hypothesis_helm.charts.runner import Chart, audit, check_chart
-from hypothesis_helm.charts.scan import scan
+from hypothesis_helm.charts.scan import discover_charts, scan
 from hypothesis_helm.compiler.exports import export_repository
 from hypothesis_helm.compiler.graph import export_graph
 from hypothesis_helm.compiler.inputs import load_input_chart
@@ -114,9 +114,9 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     exports.add_argument("--timeout", type=parse_time_limit, default=30)
     exports.add_argument("--minimal-values-timeout", type=parse_time_limit, default=30)
     exports.add_argument("--files-list", type=Path, help="write NUL-delimited exported YAML and proof paths")
-    repository = commands.add_parser("scan", help="test charts from a directory, Git, or Helm repository")
+    repository = commands.add_parser("scan", help="fetch and test charts from remote Git or Helm repositories")
     repository.add_argument(
-        "directory", metavar="SOURCE", help="directory, Git URL, Helm repo[/chart], public index.yaml URL, or OCI chart"
+        "directory", metavar="SOURCE", help="Git URL, Helm repo[/chart], public index.yaml URL, or OCI chart; local paths use test"
     )
     repository.add_argument("--helm-repository", action="store_true", help="interpret SOURCE as a Helm repository name or HTTP(S) base URL")
     repository.add_argument("--chart-version", help="Helm chart version or constraint; default: latest stable release per chart")
@@ -170,7 +170,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     repository.add_argument(
         "--filter",
         action="store_true",
-        help="filter finite charts; otherwise prioritize known inputs and run robustness cases last",
+        help="filter finite charts with failure expansion; otherwise filter generated inputs before path traversal",
     )
     repository.add_argument(
         "--fail",
@@ -197,14 +197,24 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     run.add_argument("--match", help="select tests by value-path keyword")
     run.add_argument("--collect-only", action="store_true")
     run.add_argument("--artifact-dir", type=Path, help="report directory for a saved suite")
-    test = commands.add_parser("test", help="select finite coverage or generate per-path tests")
+    test = commands.add_parser("test", help="discover and test local charts recursively")
     test.add_argument(
         "chart",
         type=Path,
         nargs="?",
         default=Path("."),
-        help="chart directory (defaults to the current directory)",
+        help="local chart or directory containing charts (default: current directory)",
     )
+    test.add_argument("--report", nargs="?", const="", metavar="PATH", help="write combined Markdown/PDF; default: <dir>_<epoch>_report")
+    test.add_argument("--values", type=Path, default=Path("values.yaml"), help="baseline file relative to each chart, or an absolute path")
+    test.add_argument("--chart-timeout", type=parse_time_limit, help="property-test budget per discovered chart (default: 3m)")
+    test.add_argument(
+        "--scan-timeout", type=parse_time_limit, help="total local discovery/testing budget, excluding dependency preparation"
+    )
+    test.add_argument(
+        "--build-dependencies", action=argparse.BooleanOptionalAction, default=None, help="build dependencies in isolated copies"
+    )
+    test.add_argument("--fail", action="store_true", help="stop on the first chart failure and save partial results")
     test.add_argument("--max-examples", type=int, default=100)
     test.add_argument(
         "--time-limit",
@@ -392,6 +402,66 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     return parser
 
 
+def local_discovery(args: argparse.Namespace) -> bool:
+    """
+    Select recursive local execution while retaining single-chart suite controls.
+
+    Args:
+        args (argparse.Namespace): Local test options with resolved shard coordinates.
+
+    Returns:
+        bool: Whether repository discovery should handle this invocation.
+    """
+    args.chart = args.chart.expanduser()
+    if not args.chart.is_dir():
+        raise ValueError("test requires a local directory; use scan for remote Git or Helm sources")
+    unsupported = {
+        "--paths": args.paths,
+        "--whole-chart": args.whole_chart,
+        "--exhaustive": args.exhaustive,
+        "--match": args.match is not None,
+        "--collect-only": args.collect_only,
+        "--dry-run": args.dry_run,
+        "--shard": args.shard is not None,
+        "--jobs": args.jobs not in ("auto", 1),
+        "--cache-dir": args.cache_dir is not None,
+        "--no-cache": args.no_cache,
+        "--disable-schema-caching": args.disable_schema_caching,
+        "--rerun": args.rerun != "auto",
+        "--run-id": args.run_id is not None,
+    }
+    recursive = (
+        not (args.chart / "Chart.yaml").is_file()
+        or not (args.chart / "values.schema.json").is_file()
+        or args.report is not None
+        or args.values != Path("values.yaml")
+        or args.chart_timeout is not None
+        or args.scan_timeout is not None
+        or args.build_dependencies is not None
+        or args.fail
+        or (not any(unsupported.values()) and len(discover_charts(args.chart)) > 1)
+    )
+    if args.filter and not recursive:
+        try:
+            factor_space(Chart.load(args.chart).schema, args.max_cases)
+        except NonFiniteSchema:
+            recursive = True
+    if not recursive:
+        return False
+    incompatible = [name for name, enabled in unsupported.items() if enabled]
+    if incompatible:
+        raise ValueError(f"{', '.join(incompatible)} require single-chart suite execution; run test on an individual schema-backed chart")
+    if args.chart_timeout is not None and args.time_limit is not None:
+        raise ValueError("use either --chart-timeout or --time-limit for recursive testing")
+    args.directory = str(args.chart)
+    args.chart_timeout = args.chart_timeout or args.time_limit or 180.0
+    args.build_dependencies = True if args.build_dependencies is None else args.build_dependencies
+    args.clone_timeout = 180.0
+    args.chart_version = None
+    args.helm_repository = False
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     """
     Dispatch chart auditing, generation, and property checks.
@@ -433,6 +503,16 @@ def main(argv: list[str] | None = None) -> int:
             )
         if args.command == "scan":
             return scan(args)
+        if args.command == "test":
+            selector = args.shard
+            args.shard, _ = resolve_shard(args.shard, os.environ)
+            if local_discovery(args):
+                if args.kubeconform:
+                    os.environ[ENVIRONMENT] = prepare(
+                        args.schema_cache_dir, args.schema_version, args.kubeconform_binary, args.schema_offline
+                    )
+                return scan(args)
+            args.shard = selector
         minimal_values = None
         if args.command == "schemas":
             print(

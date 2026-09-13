@@ -1,0 +1,491 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "storageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "disabled"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "clusterDomain": "cluster.local",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "extraDeploy": [],
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/concourse",
+    "tag": "7.13.2-debian-12-r12",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "secrets": {
+    "localAuth": {
+      "enabled": true
+    },
+    "localUsers": "",
+    "teamAuthorizedKeys": [],
+    "conjurAccount": "",
+    "conjurAuthnLogin": "",
+    "conjurAuthnApiKey": "",
+    "conjurAuthnTokenFile": "",
+    "conjurCACert": "",
+    "hostKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEA2AUPXxuiDC/qrBWjIdT5fvNcMlMEYpR3X4SLQIgLC1ULDsCO\nfleKZ+Wi4RzwbkUKiKmJm5GeyNVVCDdfvdD1Sd1+5faqmp2/OQBzLS7o8NY/btMw\n8h9lx4KVJaJJ1EM1EiyGY41Nx591KP14pBfr0/NdOIrDu2JvF6e7CHEbrzkN57kb\nBVQkaIMaS01Rw/5Oe68GFalli2ii8L8dNWVVzquBh5PwVWimvTgwv3TYG2TH8L1V\nV7n+/zRRpkjMl2+PUouGqD+Bp+4wF+hp4AW5v24CqjtLJEMv4IEJv2FRfrOauBIZ\nXjAS1SSg9VaTOS3iwxaYrv8uG1XfMFHICvkEPQIDAQABAoIBAG87W8jrX6vK2Jm3\nooJ/OeFmymiXWsCwFi+2/kVCR/2T0tfLyxO/W+NX2WD1F9CP+HaaZeMXPp3HS7up\nV8FT4ZohVYBwXTS0WYyucKApcYThrVQRpzhldnEfClGQmVeVK7Sp/KEyV4Sc1SVA\nL2i/cI142N2Ohm7spquVkLcuFsVINzZ0fXCv25dTqbkEgjTJzNdBzyFXvc4z0Mt9\ngW14M7mz+YKYOfsCxIEm438fC9b16C96yIFBdN+/jaP8pmb2RoIE2D0F8bj5K1hR\nYyGFKMOU4e6cYq59iWfubKuu2WNJEBk/5aO7x7Xu2S0k8wIYlwxFuu4LfR2Kvizu\n+mFVf3kCgYEA9e0+40tJGpOPM8hAB3DwXjYc8lCuyYf3z30T3RqVNCUVSWnlaj/s\n3ENi6+Ng3u+Zs8cR2CFou+jAClTyWLuSnI9yACD0eyW9n4bzYMUbgdC6vneLjpzx\nwWR9Xv5RmZVly7xWuqcgEeEf8RNcYI3oXby0laF3EObvuAx/4ETIkFcCgYEA4N42\nw1UEWGopWBIIXYHkEPHQuF0SxR2CZyh9ExTeSxFphyibkcHRjDW+t91ZLnSm5k1N\nTOdYuc0ApBV3U+TexeFvDI94L/Oze6Ht5MatRQz8kRwMFGJL3TrpbgTmWdfG05Ad\noiScJzwY16oJXnKusxik7V+gCCNNE0/2UuMnY4sCgYAEf82pvOPef5qcGOrK+A79\nukG3UTCRcVJgUmp9nhHivVbxW+WdlwPPV9BEfol0KrAGMPsrmBjhbzWsOregVfYt\ntRYh2HiAlEUu2Po06AZDzrzL5UYBWu+1WRBOH5sAk1IkcxKnIY2dph++elszTQVW\nSbCIGEckYQU7ucbRJJECywKBgBb4vHFx8vKxTa3wkagzx7+vZFohL/SxEgxFx5k2\nbYsPqU8kZ9gZC7YeG3CfDShAxHgMd5QeoiLA/YrFop4QaG2gnP6UfXuwkqpTnYDc\nhwDh1b9hNR6z9/oOtaAGoh2VfHtKYqyYvtcHPaZyeWiLoKstHlQdi7SpHouVhJ1t\nFS4HAoGAGy+56+zvdROjJy9A2Mn/4BvWrsu4RSQILBJ6Hb4TpF46p2fn0rwqyhOj\nOccs+xkdEsI9w5phXzIEeOq2LqvWHDPxtdLpxOrrmx4AftAWdM8S1+OqTpzHihK1\ny1ZOrWfvON+XjWFFAEej/CpQZkNUkTzjTtSC0dnfAveZlasQHdI=\n-----END RSA PRIVATE KEY-----",
+    "hostKeyPub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYBQ9fG6IML+qsFaMh1Pl+81wyUwRilHdfhItAiAsLVQsOwI5+V4pn5aLhHPBuRQqIqYmbkZ7I1VUIN1+90PVJ3X7l9qqanb85AHMtLujw1j9u0zDyH2XHgpUloknUQzUSLIZjjU3Hn3Uo/XikF+vT8104isO7Ym8Xp7sIcRuvOQ3nuRsFVCRogxpLTVHD/k57rwYVqWWLaKLwvx01ZVXOq4GHk/BVaKa9ODC/dNgbZMfwvVVXuf7/NFGmSMyXb49Si4aoP4Gn7jAX6GngBbm/bgKqO0skQy/ggQm/YVF+s5q4EhleMBLVJKD1VpM5LeLDFpiu/y4bVd8wUcgK+QQ9 Concourse",
+    "sessionSigningKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEAwLql/rUIaI+PX7Tl3FWcTee4sQf8/daakALXx955tPwkhqlY\ne4T2V84p/ylFvNWpM4vfcMYKfMY0JLKgAgBvJhCytSkDBhTBoWmN6yE0AB11P9En\nlIZRBWNYqaC2cSge2ZD8qOSnwfFhnQAW8+7pE+ElJAVh7dtdF3A478H50lIigq8I\nzMWp2EGJpFC7/Uu36oIL/03MNGCmrH1jvtTuJiAMQUZYyL1ReBkvvHOzw9i4HXPy\nSMVtcllm4NBs2aVPtwhr2kwSkLt8t1bPdRn6OIyEAw5WktzAKaiZnkTvj6g3xzdp\nzKcrdlBr9aznlNvoSinBUfvtwyFmvFN1HHbA9wIDAQABAoIBAE7G/DrUfI9gvtX7\n90jMpYsigFe8UCjho2PiBZlo0o6r0bJJXiV+/8J8PqZRlHPPUc4EClzqVjcSPRYS\n/VxUGRqSELoD/Xxq14rGvn+xnrO9VsOzFl6bWFq/dOpBCtHN+G4t2VifvgKES8YE\n11z19sdta+UBXjn/RFnkQSGfRCI3QqTaYvjxevt0uWlyPmqkFPQQw8bvHIXzoB+B\nrzeiMa++nMvbX5pAH9XA0BvhyuH3fHidTUwiVBpkMcpLWtjP0A0JTsecDdbinDDq\nun2EIo8zMWRwKQN/JnUxsi8AUEigBTCUqeDgREXtW62uvFkSpcVMXwmVityLYIVy\nqnVLUCECgYEA6IwXkP1qnSfcNeoVI/ypDuz1/kdqcjSPhLYe+jdiLLoFkMW9AlDm\nlzwNaWlTFD9ygo+NjJCo63/A8HCm55sajws5hZ6r20vdZcKFMk9h0qF5oVA7lkQ2\ngvG2WaznuU7KkqhfP+pXhiLgZKoJkst/+g7r6uHpredwDY6hxeBK4vsCgYEA1CqH\n8ywC5qUo/36kQg/TU2adN/YEHdJAAbU23EVrGQSVmnXW08H2NLFk0tsxrwoNnbgp\nPIk2J7BimbJvbND17ibr4GAklDTsR8aJkDl+0JgNCAK9N07qVt1s7FXzhg95jUL9\nEQW55z60GAJpecqNwA4Jsa8P852N0355Obp92TUCgYBkOBvf7JcJ66fHxH4f6D+j\noxPQ5k5Fsck4VJS9GSlCRVkor09ptBvsiYDuMOoRC9b51YwXTDDAbWplNOd5YSrt\nAtVjdKJz/BoKRO7KY9Owxs54au+DLxqfDDSeKRokjoRW+CE0lnXp5RX3zCAcF3+r\n8MpTi9D9lYSBEzs84BDmCQKBgQCMcH6/K3HcJJVn0fd+tyUGftUw9sswxjySJNbk\npZrH263/qWMDls+Xf5kire9MU1ZCAWZiaN0NFoed/2wcVpGEDAV0548u/30r4bKr\nYjOcdhmiJNYFJ1qdF0MDib2CDvpB1IbZXrX46RujDO2urbJ435HxKNVhR/had8xc\ntyKYxQKBgCVDhN0MhnlUQJVZfX42APmF4gQg0r3sfL/NGXjEjMIKKFe5a88eZVHr\nL8x1+dp0q7czC8a/l1DUuiwDKl8OEpxLsGCq/J/wAfrSMPifu6EUlbUwlJOPdgha\n+p/KFAelHXJ2w/8yackAcarh35VP7ixhuvxswHNdgvfsBTFcjn30\n-----END RSA PRIVATE KEY-----",
+    "workerKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQEAuPehUmBXAQCoA7TLAQCYhf+vzcZVyj+VGXnMhLHnWLk7dRjo\nCU8GgNamdS5h7G3ywxOvKA3YjOLr8XyOMLS4c+e8N7tIzlMWdiXhe0lcBH9Z1ai5\n+Bof3/BlDUBksiKdc1A+QcfX6tDwMkOO5re1H4vOK3H/Cype58wCB03HYNgb05ED\nfW1Bj2qvz29VtmyjwEMuDs100iMqwCfPUx9oxXmmX8sUBRmw/Y1Rx/8pdKIjKw3m\nkWIHHBOSCPimO1qC47Aa8v/UH9hERCykyuFHiBiKlnIvZWm9bYvhsRTz4gt5KzRY\n6OI0oVeHlLOHDSK48Da8VWij15lOqO2Nx6WssQIDAQABAoIBADET22UNFOi6MNpS\n5S5N5ypezlnOD0NLnZcV3zMyNQ0wkNsgEakuo64Zxi7/cJIYFjq2hVoeWl//cdUw\nVFYODYcLbMBo3AeKukH9CRf6PgUfeUmcrENtQxnbIiTi+hTd5GMNXod7rAmtCJ59\nmHQVOGS3ZqvWYnKm+mmMktk3RPinynX/A4y3WHPacuAS58HM09Ck43WcHMxbGpsL\n/gZpICyFYZ2DviM+AHyWGcmw7LJrpC0QHo6+BAFMs4xlUecNgVIFUpfOoAcfsdtG\nK9j4AbuZ47iFisbay+1pyg/7O5eRTdGVQRtc7PBMOjea5jGsfmlDmdn1ZS50ykun\nANfoQ5UCgYEA9Ak73PRy9nLlRkt4OBCF/4fwThUCMedsnWaVjQBMJYim4FB2ivF5\ncKdWt3y/RZI85KKYu0EXhLEoSIEAfz057R8t3QdVK4tZx6B47UFjBjCYeVMtwHDQ\nprxQiOPHIHCplBNFuGzA5VXL9gQLRD+ek0uOy2GJJ0Wu1xyeouI+SW8CgYEAwgkO\nTOtOogqmcAALjWgeeQiZetflSKbJlpQNhmCPAMm0SFI8eF4SpRXLzd41VC2mLIwT\nL3tjc7/8ocXoElFM4L0fo9Lx/SHFH4JEn5FT0PXPmvsF2JRhsXJFLJSihxF/91Xs\n2aBcQILPFzLcrI6OFUakNwGTU/CIxpkzRvQrG98CgYEAzNVnUuo4CNadzagRK3Xr\nE3Yl5VRK+FpY17FAfA6w25xc/dFr/un61e0Po4no/ltmEz7LVfmn5O/ScTEemq5o\njbjrBShfe+JGpIH0nqiQlqR5hvSjZXEMIbfVHWGbRYZrQGgA0HEwZA7k2QXB8zI3\nR0lXfSzMM5OQ0uwp12xxfa8CgYBHILq1R6zTicPpWprhg0FobNaWSX4rW7iaEjvC\n/rJtP4Nu33Z7SUDcc1j6ZnJ2ISXBPrfpt/mE/OPHCZ1A2bysxadLjpBWkoKIQmCV\nfdiTyQgJb+t8sSf+vDzPUs0hZjDaogzo2ff3TfxMLMDoIHnFItgfsdwn8QyygIZj\nhC4pUQKBgQDqsxnkI6yXFE5gshnW7H8zqKNlzKd/dZEL6e+lRz4R3UY/KcEkRAfq\nYi3cwo9fE3U3kSmpl5MQwUjWm/BZ7JyueoY/4ndwaFPgc34IKsgJ0wau9pZiQAB1\nDxpOSF+BR71Jx3sxvIdCODNTtm645j5yrZVnJAuMPofo5XFmunDoJA==\n-----END RSA PRIVATE KEY-----",
+    "workerKeyPub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC496FSYFcBAKgDtMsBAJiF/6/NxlXKP5UZecyEsedYuTt1GOgJTwaA1qZ1LmHsbfLDE68oDdiM4uvxfI4wtLhz57w3u0jOUxZ2JeF7SVwEf1nVqLn4Gh/f8GUNQGSyIp1zUD5Bx9fq0PAyQ47mt7Ufi84rcf8LKl7nzAIHTcdg2BvTkQN9bUGPaq/Pb1W2bKPAQy4OzXTSIyrAJ89TH2jFeaZfyxQFGbD9jVHH/yl0oiMrDeaRYgccE5II+KY7WoLjsBry/9Qf2ERELKTK4UeIGIqWci9lab1ti+GxFPPiC3krNFjo4jShV4eUs4cNIrjwNrxVaKPXmU6o7Y3Hpayx Concourse",
+    "workerAdditionalCerts": ""
+  },
+  "web": {
+    "enabled": true,
+    "baseUrl": "/",
+    "logLevel": "debug",
+    "clusterName": "",
+    "bindIp": "0.0.0.0",
+    "peerAddress": "",
+    "externalUrl": "",
+    "auth": {
+      "cookieSecure": false,
+      "duration": "24h",
+      "passwordConnector": "",
+      "mainTeam": {
+        "config": "",
+        "localUser": "user"
+      }
+    },
+    "existingSecret": "",
+    "enableAcrossStep": false,
+    "enablePipelineInstances": false,
+    "enableCacheStreamedVolumes": false,
+    "baseResourceTypeDefaults": "",
+    "tsa": {
+      "logLevel": "debug",
+      "bindIp": "0.0.0.0",
+      "debugBindIp": "127.0.0.1",
+      "heartbeatInterval": "30s",
+      "gardenRequestTimeout": ""
+    },
+    "tls": {
+      "enabled": false
+    },
+    "conjur": {
+      "enabled": false,
+      "applianceUrl": "",
+      "pipelineSecretTemplate": "concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}",
+      "teamSecretTemplate": "concourse/{{.Team}}/{{.Secret}}",
+      "secretTemplate": "concourse/{{.Secret}}"
+    },
+    "configRBAC": "",
+    "existingConfigmap": "",
+    "command": [],
+    "args": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "replicaCount": 1,
+    "containerPorts": {
+      "http": 8080,
+      "https": 8443,
+      "tsa": 2222,
+      "pprof": 2221
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "kubeAPIServerPorts": [
+        443,
+        6443,
+        8443
+      ],
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 15,
+      "timeoutSeconds": 3,
+      "failureThreshold": 1,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 15,
+      "timeoutSeconds": 3,
+      "failureThreshold": 1,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 1,
+      "failureThreshold": 15,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "nano",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "readOnlyRootFilesystem": true,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "automountServiceAccountToken": true,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "topologySpreadConstraints": [],
+    "priorityClassName": "",
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "updateStrategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {}
+    },
+    "lifecycleHooks": {},
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "psp": {
+      "create": false
+    },
+    "rbac": {
+      "create": true,
+      "rules": []
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    }
+  },
+  "worker": {
+    "enabled": true,
+    "runtime": "containerd",
+    "logLevel": "debug",
+    "bindIp": "127.0.0.1",
+    "tsa": {
+      "hosts": []
+    },
+    "existingSecret": "",
+    "baggageclaim": {
+      "logLevel": "info",
+      "bindIp": "127.0.0.1",
+      "debugBindIp": "127.0.0.1",
+      "disableUserNamespaces": "",
+      "volumes": "",
+      "driver": "",
+      "btrfsBin": "btrfs",
+      "mkfsBin": "mkfs.btrfs",
+      "overlaysDir": ""
+    },
+    "command": [],
+    "args": [],
+    "replicaCount": 2,
+    "mode": "deployment",
+    "containerPorts": {
+      "garden": 7777,
+      "health": 8888,
+      "baggageclaim": 7788,
+      "pprof": 7787
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "kubeAPIServerPorts": [
+        443,
+        6443,
+        8443
+      ],
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 15,
+      "timeoutSeconds": 3,
+      "failureThreshold": 1,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 15,
+      "timeoutSeconds": 3,
+      "failureThreshold": 1,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 1,
+      "failureThreshold": 15,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "nano",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 0,
+      "runAsGroup": 0,
+      "runAsNonRoot": false,
+      "privileged": true,
+      "allowPrivilegeEscalation": true,
+      "readOnlyRootFilesystem": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "automountServiceAccountToken": true,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "topologySpreadConstraints": [],
+    "priorityClassName": "",
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "podManagementPolicy": "OrderedReady",
+    "updateStrategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {}
+    },
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "autoscaling": {
+      "enabled": false,
+      "maxReplicas": "",
+      "minReplicas": "",
+      "builtInMetrics": [],
+      "customMetrics": []
+    },
+    "pdb": {
+      "create": true,
+      "minAvailable": 2,
+      "maxUnavailable": ""
+    },
+    "psp": {
+      "create": false
+    },
+    "persistence": {
+      "enabled": true,
+      "existingClaim": "",
+      "storageClass": "",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "annotations": {},
+      "selector": {}
+    },
+    "rbac": {
+      "create": true,
+      "rules": []
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    }
+  },
+  "service": {
+    "web": {
+      "type": "LoadBalancer",
+      "ports": {
+        "http": 80,
+        "https": 443
+      },
+      "nodePorts": {
+        "http": "",
+        "https": ""
+      },
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": []
+    },
+    "workerGateway": {
+      "type": "ClusterIP",
+      "ports": {
+        "tsa": 2222
+      },
+      "nodePorts": {
+        "tsa": ""
+      },
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": []
+    }
+  },
+  "ingress": {
+    "enabled": false,
+    "ingressClassName": "",
+    "pathType": "ImplementationSpecific",
+    "apiVersion": "",
+    "hostname": "concourse.local",
+    "path": "/",
+    "annotations": {},
+    "tls": false,
+    "selfSigned": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "secrets": [],
+    "extraRules": []
+  },
+  "volumePermissions": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 0,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    }
+  },
+  "postgresql": {
+    "enabled": true,
+    "auth": {
+      "enablePostgresUser": false,
+      "username": "bn_concourse",
+      "password": "",
+      "database": "bitnami_concourse",
+      "existingSecret": ">0"
+    },
+    "architecture": "standalone",
+    "primary": {
+      "resourcesPreset": "nano",
+      "resources": {}
+    }
+  },
+  "externalDatabase": {
+    "host": "localhost",
+    "port": 5432,
+    "sslmode": "disable",
+    "user": "bn_concourse",
+    "password": "",
+    "database": "bitnami_concourse",
+    "existingSecret": "",
+    "existingSecretPasswordKey": ""
+  }
+}

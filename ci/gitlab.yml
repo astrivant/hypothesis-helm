@@ -1,4 +1,7 @@
-# Remote include: installs tools, tests every version/shard, and preserves reports.
+# Remote include: test every version/shard, then publish one verified report per version.
+variables:
+  SHARD_TOTAL: "3"
+  HYPOTHESIS_HELM_REF: main
 helm-properties:
   image: python:3.13-slim
   stage: test
@@ -9,8 +12,6 @@ helm-properties:
   variables:
     HELM_VERSION: v4.3.0
     HELM_CHART: ./chart
-    SHARD_TOTAL: "3"
-    HYPOTHESIS_HELM_REF: main
     KUBECONFORM_VERSION: v0.7.0
     KUBESEC_ENABLED: 'false' # opt in to security scanning
     KUBESEC_VERSION: v2.14.2
@@ -45,30 +46,33 @@ helm-properties:
     - PYTHON=python3.13 helm plugin install https://github.com/astrivant/hypothesis-helm --version "$HYPOTHESIS_HELM_REF"
     - helm hypothesis schemas --schema-version "$K8S_VERSION" --schema-cache-dir "$SCHEMA_CACHE_DIR"
   script:
-    - mkdir -p reports/hypothesis-helm
+    - export HH_ARTIFACT_DIR="reports/hypothesis-helm/${K8S_VERSION}/${SHARD_INDEX}"
+    - mkdir -p "$HH_ARTIFACT_DIR"
     - |
       test_status=0
       if [ "$KUBESEC_ENABLED" = "true" ]; then
         helm hypothesis test "$HELM_CHART" \
+          --run-id "${CI_PIPELINE_ID}-${K8S_VERSION}" \
           --shard "$SHARD_INDEX/$SHARD_TOTAL" --jobs auto --max-examples 50 --seed 0 --rerun all \
           --schema-version "$K8S_VERSION" \
           --schema-cache-dir "$SCHEMA_CACHE_DIR" --schema-offline \
-          --artifact-dir reports/hypothesis-helm --output json \
-          > "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" || test_status=$?
+          --artifact-dir "$HH_ARTIFACT_DIR" --output json \
+          > "$HH_ARTIFACT_DIR/manifests.jsonl" || test_status=$?
       else
         helm hypothesis test "$HELM_CHART" \
+          --run-id "${CI_PIPELINE_ID}-${K8S_VERSION}" \
           --shard "$SHARD_INDEX/$SHARD_TOTAL" --jobs auto --max-examples 50 --seed 0 --rerun all \
           --kubeconform --schema-version "$K8S_VERSION" \
           --schema-cache-dir "$SCHEMA_CACHE_DIR" --schema-offline \
-          --artifact-dir reports/hypothesis-helm --output json \
-          > "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" || test_status=$?
+          --artifact-dir "$HH_ARTIFACT_DIR" --output json \
+          > "$HH_ARTIFACT_DIR/manifests.jsonl" || test_status=$?
       fi
       if [ "$KUBESEC_ENABLED" = "true" ]; then
         kubesec_cli="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/hypothesis-helm-kubesec"
         scan_status=0
         "$kubesec_cli" \
-          "reports/hypothesis-helm/manifests-${SHARD_INDEX}.jsonl" \
-          --output reports/hypothesis-helm/kubesec --jobs "$KUBESEC_JOBS" \
+          "$HH_ARTIFACT_DIR/manifests.jsonl" \
+          --output "$HH_ARTIFACT_DIR/kubesec" --jobs "$KUBESEC_JOBS" \
           --shard "$SHARD_INDEX/$SHARD_TOTAL" --pre-sharded --validate-rest \
           --schema-version "$K8S_VERSION" --schema-cache-dir "$SCHEMA_CACHE_DIR" \
           --schema-offline || scan_status=$?
@@ -80,6 +84,35 @@ helm-properties:
     expire_in: 30 days
     name: "helm-properties-${K8S_VERSION}-${SHARD_INDEX}"
     paths:
-      - reports/hypothesis-helm/
+      - reports/hypothesis-helm/${K8S_VERSION}/${SHARD_INDEX}/
     reports:
-      junit: reports/hypothesis-helm/shards/*/junit.xml
+      junit: reports/hypothesis-helm/${K8S_VERSION}/${SHARD_INDEX}/shards/*/junit.xml
+
+helm-report:
+  image: python:3.13-slim
+  stage: test
+  when: always
+  needs:
+    - job: helm-properties
+      artifacts: true
+  parallel:
+    matrix:
+      - K8S_VERSION: ['1.34.0', '1.35.0']
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends ca-certificates git
+    - pip install "git+https://github.com/astrivant/hypothesis-helm.git@${HYPOTHESIS_HELM_REF}"
+  script:
+    - |
+      cat reports/hypothesis-helm/"$K8S_VERSION"/*/shards/*/report.json |
+        hypothesis-helm aggregate --shards "$SHARD_TOTAL" \
+          --run-id "${CI_PIPELINE_ID}-${K8S_VERSION}" \
+          --output-dir "reports/final/${K8S_VERSION}"
+  artifacts:
+    when: always
+    expire_in: 30 days
+    name: "helm-final-${K8S_VERSION}"
+    paths:
+      - reports/final/${K8S_VERSION}/
+    reports:
+      junit: reports/final/${K8S_VERSION}/junit.xml

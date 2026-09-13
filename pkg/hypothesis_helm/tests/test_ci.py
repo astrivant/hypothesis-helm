@@ -2,6 +2,7 @@
 Verify CI index normalization, explicit overrides, and action invocation boundaries.
 """
 
+import hashlib
 import json
 import os
 import subprocess
@@ -229,16 +230,17 @@ def test_action_preserves_arguments_outputs_and_status(
     assert "report-dir<<" in values
 
 
-@pytest.mark.parametrize("provider", ["gitlab", "circleci"])
+@pytest.mark.parametrize(("provider", "defer_failure"), [("gitlab", False), ("circleci", False), ("circleci", True)])
 @pytest.mark.parametrize("security", [False, True])
 @pytest.mark.parametrize("helm_status", [0, 1])
-def test_remote_ci_commands(tmp_path: Path, provider: str, security: bool, helm_status: int) -> None:
+def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, security: bool, helm_status: int) -> None:
     """
     Exercise published job scripts with literal paths, shard routing and validator failures.
 
     Args:
         tmp_path (Path): Mock executable and report directory.
         provider (str): Remote configuration to exercise.
+        defer_failure (bool): Persist CircleCI workspace evidence before failing the job.
         security (bool): Whether workload security routing is enabled.
         helm_status (int): Simulated Helm success or failure.
 
@@ -305,6 +307,10 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, security: bool, helm_
         "HH_MAX_EXAMPLES": "50",
         "HH_SEED": "0",
         "HH_ARTIFACT_DIR": "reports/hypothesis-helm",
+        "CI_PIPELINE_ID": "123",
+        "CIRCLE_WORKFLOW_ID": "workflow-123",
+        "HH_REPORT_GROUP": "chart",
+        "HH_DEFER_FAILURE": str(defer_failure).lower(),
     }
     result = subprocess.run(
         ["bash", "-euo", "pipefail", "-c", script],
@@ -314,15 +320,130 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, security: bool, helm_
         text=True,
         check=False,
     )
-    assert result.returncode == (helm_status or (2 if security else 0)), result.stderr
+    expected_status = helm_status or (2 if security else 0)
+    assert result.returncode == (0 if defer_failure else expected_status), result.stderr
+    if provider == "circleci":
+        assert (tmp_path / "reports/hypothesis-helm/exit-code.txt").read_text().strip() == str(expected_status)
     calls = [json.loads(line) for line in capture.read_text().splitlines()]
     command = calls[0]
     assert command[:4] == ["helm", "hypothesis", "test", chart]
     assert ("--kubeconform" in command) is (not security)
     assert "--schema-offline" in command
-    assert command[command.index("--shard") + 1] == ("2/3" if provider == "gitlab" else "auto")
+    assert command[command.index("--shard") + 1] == "2/3"
+    assert command[command.index("--run-id") + 1] == ("123-1.35.0" if provider == "gitlab" else "workflow-123-chart")
     assert len(calls) == (2 if security else 1)
     if security:
         assert "--pre-sharded" in calls[1] and "--validate-rest" in calls[1]
         assert "--schema-offline" in calls[1]
     assert not (tmp_path / "unexpected").exists()
+
+
+@pytest.mark.parametrize(
+    ("provider", "outcome"),
+    [(provider, outcome) for provider in ("gitlab", "circleci", "github") for outcome in ("passed", "failed", "missing")]
+    + [("circleci", "validator")],
+)
+def test_ci_aggregation_commands(tmp_path: Path, provider: str, outcome: str) -> None:
+    """
+    Execute the published aggregation scripts with transported reports and an idle shard.
+
+    Args:
+        tmp_path (Path): Isolated downloaded artifacts and final bundle.
+        provider (str): CI configuration whose Bash command is exercised.
+        outcome (str): Successful, failing, incomplete, or externally rejected shard evidence.
+
+    Returns:
+        None: Complete evidence produces one bundle and missing idle reports fail closed.
+    """
+    from ruamel.yaml import YAML
+
+    from hypothesis_helm.schemas.contracts import sequence
+
+    root = Path(__file__).resolve().parents[3]
+    source = root / (".github/workflows/action.yml" if provider == "github" else f"ci/{provider}.yml")
+    document = mapping(YAML(typ="safe").load(source.read_text()))
+    if provider == "gitlab":
+        script = str(sequence(mapping(document["helm-report"])["script"])[0])
+        artifact_root = tmp_path / "reports/hypothesis-helm/1.35.0"
+        final = tmp_path / "reports/final/1.35.0"
+    else:
+        job = mapping(mapping(document["jobs"])["aggregate"])
+        steps = [mapping(step) for step in sequence(job["steps"])]
+        artifact_root = tmp_path / ("workspace/chart" if provider == "circleci" else "downloaded")
+        final = tmp_path / "reports/final"
+        if provider == "circleci":
+            run = next(mapping(step["run"]) for step in steps if isinstance(step.get("run"), dict) and "Write" in str(step["run"]))
+            script = str(run["command"])
+            script = script.replace("/tmp/hypothesis-helm-aggregation", str(tmp_path / "workspace"))
+        else:
+            script = next(str(step["run"]) for step in steps if str(step.get("name", "")).startswith("Write"))
+    run_id = "123-1.35.0" if provider == "gitlab" else "workflow-123-chart"
+    nodes = ["test_chart_values.py::test_alpha", "test_chart_values.py::test_beta"]
+    reports = []
+    for index in range(1, 4):
+        selected = [node for node in nodes if Shard(index, 3).includes(node)]
+        failed = outcome == "failed" and nodes[0] in selected
+        junit = (
+            "<testsuites><testsuite>"
+            + "".join(
+                f'<testcase name="{node}">' + ('<failure message="chart defect"/>' if failed and node == nodes[0] else "") + "</testcase>"
+                for node in selected
+            )
+            + "</testsuite></testsuites>"
+        )
+        record = {
+            "run_id": run_id,
+            "suite_fingerprint": "same-suite",
+            "suite": "/other-runner/generated",
+            "status": "failed" if failed else "passed",
+            "exit_code": int(failed),
+            "jobs": 2,
+            "started_epoch": 1000,
+            "elapsed_seconds": 1,
+            "junit_xml": junit,
+            "junit_sha256": hashlib.sha256(junit.encode()).hexdigest(),
+            "shard": {
+                "index": index,
+                "total": 3,
+                "matched": len(nodes),
+                "matched_digest": hashlib.sha256(json.dumps(sorted(nodes)).encode()).hexdigest(),
+                "selected": len(selected),
+                "tests": selected,
+            },
+        }
+        reports.append(record)
+        if outcome == "missing" and not selected:
+            continue
+        destination = artifact_root / str(index)
+        if provider == "gitlab":
+            destination = destination / "shards" / f"{index}-of-3"
+        destination.mkdir(parents=True)
+        (destination / "report.json").write_text(json.dumps(record))
+        (destination / "exit-code.txt").write_text(str(2 if outcome == "validator" and index == 1 else int(failed)))
+    assert any(not mapping(record["shard"])["selected"] for record in reports)
+    result = subprocess.run(
+        ["bash", "-euo", "pipefail", "-c", script],
+        cwd=tmp_path,
+        env=dict(
+            os.environ,
+            PATH=str(Path(sys.executable).parent) + os.pathsep + os.environ["PATH"],
+            CI_PIPELINE_ID="123",
+            K8S_VERSION="1.35.0",
+            SHARD_TOTAL="3",
+            CIRCLE_WORKFLOW_ID="workflow-123",
+            HH_REPORT_GROUP="chart",
+            HH_SHARDS="3",
+            HH_RUN_ID=run_id,
+        ),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == {"passed": 0, "failed": 1, "missing": 2, "validator": 2}[outcome], result.stdout + result.stderr
+    if outcome == "missing":
+        assert not final.exists()
+    else:
+        assert (final / "report.pdf").is_file()
+        report = json.loads((final / "report.json").read_text())
+        assert report["properties"]["selected"] == report["properties"]["tests"] == 2
+        assert len(report["shards"]) == 3

@@ -24,7 +24,7 @@ hypothesis-helm-benchmark topology --graph topology.json --output reports/topolo
 ```
 
 The PNG/SVG plots retain all vertices and directed edges. See
-[graph invariants and layout semantics](../inputs/README.md#render-the-mathematical-graph).
+[what the graph and its layout represent](../inputs/README.md#render-the-mathematical-graph).
 Browse the [synthetic and real-chart topology catalog](chart-topologies/README.md)
 for complete graphs, per-chart measurements, and downloadable graph data.
 
@@ -59,9 +59,10 @@ hypothesis-helm-benchmark run \
   --shards 1,2,3,4 --shard none --output reports/benchmark
 ~~~
 
-Checkpoints increase by **50, 100, 150, …** inputs. Each trajectory or scaling run
-has a nine-minute execution budget; the complete study takes longer. Outputs are
-checked against an independent oracle, and exact-equivalent renders are skipped.
+Measurements are recorded after **50, 100, 150, …** inputs. Each progressive or scaling
+run has a nine-minute execution budget; the complete study takes longer. Rendered
+outputs are checked against expected values calculated independently of Helm.
+Renders are skipped when the compiler proves they match an already validated output.
 Use each script's `--help` for options.
 
 The figures below use local Python workers and the [standard chart](standard-chart).
@@ -71,8 +72,8 @@ with **11,583 checks** without pruning, within each nine-minute budget.
 [refresh provenance](refresh/README.md) include the host and run details.
 These are single-run measurements; they do not establish timing variability.
 
-Progressive checkpoints share one execution. Dashed tails mark unfinished targets
-at the deadline.
+The progressive plot follows one continuous run, recording progress at each input
+count. Dashed lines show targets the run did not finish before its time limit.
 
 ![Measured permutation runtime and completed-work plateau](progressive.png)
 
@@ -98,10 +99,12 @@ hypothesis-helm-benchmark discovery \
   --chart .cache/faulty-chart --max-strength 6 --output reports/discovery
 ~~~
 
-`--bug-percent` selects that percentage of path-subset/value-pattern assignments at
-each order, rounded down. The seed fixes their random placement; `benchmark.json`
-records exact counts. Trigger overlap means this is not the percentage of complete
-configurations that fail. `--max-bugs` bounds fixture size.
+`--bug-orders` sets how many fields must have particular values to trigger each
+injected fault. At each order, `--bug-percent` selects a percentage of those possible
+triggers, rounded down to a whole number. The seed determines which triggers are
+selected, and `benchmark.json` records the exact counts. A complete input can trigger
+several faults, so 5% of triggers does not mean 5% of complete inputs fail.
+`--max-bugs` limits the number of injected faults.
 
 The x-axis is `--permutations` interaction strength. The chart, its 256 possible
 configurations, and its injected faults stay fixed. Runs use the application's
@@ -121,17 +124,19 @@ coverage as the number of cases falls.
 
 ## Topology fixture
 
-Generate the normal-quantile chart with downstream interactions:
+Generate a chart whose inputs also control resource creation and shared fields:
 
 ```sh
 hypothesis-helm-benchmark generate \
   --output .cache/topology-chart --input-complexity 100 --topology
 ```
 
-`--topology` uses six additional input bits for resource gates, shared Service/Ingress
-ports, replica thresholds, and a nested rare branch. `--topology-opaque` adds a loop
-to test conservative fallback. Both retain the normal quantile projection; the
-benchmark runner checks the added projections against an independent oracle.
+`--topology` adds six Boolean inputs that control resource creation, shared Service
+and Ingress ports, replica thresholds, and a branch reached only by a specific
+input pattern. `--topology-opaque` adds a loop the compiler cannot analyze, testing
+whether it keeps those inputs for rendering. Both keep the chart's rounded
+normal-distribution output. The benchmark independently calculates expected outputs
+for the added behavior and checks the rendered manifests against them.
 Fault injection (`--bug-percent`, `--bug-orders`, `--bug-seed`) remains available.
 
 The [small fixture](../../examples/topology-benchmark) has 1,024 possible inputs for

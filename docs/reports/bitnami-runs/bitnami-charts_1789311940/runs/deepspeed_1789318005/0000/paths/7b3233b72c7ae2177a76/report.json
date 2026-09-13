@@ -1,0 +1,1694 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 145,
+    "present_fields": [
+      [
+        "client",
+        "affinity"
+      ],
+      [
+        "client",
+        "annotations"
+      ],
+      [
+        "client",
+        "automountServiceAccountToken"
+      ],
+      [
+        "client",
+        "backoffLimit"
+      ],
+      [
+        "client",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "client",
+        "customLivenessProbe"
+      ],
+      [
+        "client",
+        "customReadinessProbe"
+      ],
+      [
+        "client",
+        "customStartupProbe"
+      ],
+      [
+        "client",
+        "enableDefaultInitContainers"
+      ],
+      [
+        "client",
+        "enabled"
+      ],
+      [
+        "client",
+        "extraEnvVars"
+      ],
+      [
+        "client",
+        "extraEnvVarsCM"
+      ],
+      [
+        "client",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "client",
+        "extraVolumeMounts"
+      ],
+      [
+        "client",
+        "extraVolumes"
+      ],
+      [
+        "client",
+        "hostAliases"
+      ],
+      [
+        "client",
+        "initContainers"
+      ],
+      [
+        "client",
+        "labels"
+      ],
+      [
+        "client",
+        "lifecycleHooks"
+      ],
+      [
+        "client",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "client",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "client",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "client",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "client",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "client",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "client",
+        "nodeSelector"
+      ],
+      [
+        "client",
+        "pdb",
+        "create"
+      ],
+      [
+        "client",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "client",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "client",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "client",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "client",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "client",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "client",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "client",
+        "persistence",
+        "labels"
+      ],
+      [
+        "client",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "client",
+        "persistence",
+        "size"
+      ],
+      [
+        "client",
+        "podAffinityPreset"
+      ],
+      [
+        "client",
+        "podAnnotations"
+      ],
+      [
+        "client",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "client",
+        "podLabels"
+      ],
+      [
+        "client",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "client",
+        "priorityClassName"
+      ],
+      [
+        "client",
+        "resources"
+      ],
+      [
+        "client",
+        "runtimeClassName"
+      ],
+      [
+        "client",
+        "schedulerName"
+      ],
+      [
+        "client",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "client",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "client",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "client",
+        "sidecars"
+      ],
+      [
+        "client",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "client",
+        "tolerations"
+      ],
+      [
+        "client",
+        "topologySpreadConstraints"
+      ],
+      [
+        "client",
+        "useJob"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "config",
+        "defaultHostFile"
+      ],
+      [
+        "config",
+        "defaultSSHClient"
+      ],
+      [
+        "config",
+        "defaultSSHServer"
+      ],
+      [
+        "config",
+        "existingSSHKeySecret"
+      ],
+      [
+        "config",
+        "overrideHostFile"
+      ],
+      [
+        "config",
+        "overrideSSHClient"
+      ],
+      [
+        "config",
+        "overrideSSHServer"
+      ],
+      [
+        "config",
+        "sshPrivateKey"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "gitImage"
+      ],
+      [
+        "global"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "source",
+        "configMap"
+      ],
+      [
+        "source",
+        "existingConfigMap"
+      ],
+      [
+        "source",
+        "type"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image"
+      ],
+      [
+        "worker",
+        "affinity"
+      ],
+      [
+        "worker",
+        "annotations"
+      ],
+      [
+        "worker",
+        "automountServiceAccountToken"
+      ],
+      [
+        "worker",
+        "containerPorts",
+        "ssh"
+      ],
+      [
+        "worker",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "worker",
+        "customLivenessProbe"
+      ],
+      [
+        "worker",
+        "customReadinessProbe"
+      ],
+      [
+        "worker",
+        "customStartupProbe"
+      ],
+      [
+        "worker",
+        "enableDefaultInitContainers"
+      ],
+      [
+        "worker",
+        "enabled"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "enabled"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "annotations"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "labels"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "loadBalancerAnnotations"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "loadBalancerIPs"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "nodePorts"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "ports",
+        "ssh"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "publishNotReadyAddresses"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "type"
+      ],
+      [
+        "worker",
+        "extraEnvVars"
+      ],
+      [
+        "worker",
+        "extraEnvVarsCM"
+      ],
+      [
+        "worker",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "worker",
+        "extraVolumeMounts"
+      ],
+      [
+        "worker",
+        "extraVolumes"
+      ],
+      [
+        "worker",
+        "headlessServiceAnnotations"
+      ],
+      [
+        "worker",
+        "hostAliases"
+      ],
+      [
+        "worker",
+        "initContainers"
+      ],
+      [
+        "worker",
+        "labels"
+      ],
+      [
+        "worker",
+        "lifecycleHooks"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "worker",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "worker",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "worker",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "worker",
+        "nodeSelector"
+      ],
+      [
+        "worker",
+        "pdb",
+        "create"
+      ],
+      [
+        "worker",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "worker",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "worker",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "worker",
+        "podAffinityPreset"
+      ],
+      [
+        "worker",
+        "podAnnotations"
+      ],
+      [
+        "worker",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "worker",
+        "podLabels"
+      ],
+      [
+        "worker",
+        "podManagementPolicy"
+      ],
+      [
+        "worker",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "worker",
+        "priorityClassName"
+      ],
+      [
+        "worker",
+        "replicaCount"
+      ],
+      [
+        "worker",
+        "resources"
+      ],
+      [
+        "worker",
+        "runtimeClassName"
+      ],
+      [
+        "worker",
+        "schedulerName"
+      ],
+      [
+        "worker",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "worker",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "worker",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "worker",
+        "sidecars"
+      ],
+      [
+        "worker",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "worker",
+        "tolerations"
+      ],
+      [
+        "worker",
+        "topologySpreadConstraints"
+      ],
+      [
+        "worker",
+        "updateStrategy"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "worker",
+        "pdb",
+        "create"
+      ],
+      [
+        "worker",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "worker",
+        "pdb",
+        "minAvailable"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "client",
+        "affinity"
+      ],
+      [
+        "client",
+        "annotations"
+      ],
+      [
+        "client",
+        "automountServiceAccountToken"
+      ],
+      [
+        "client",
+        "backoffLimit"
+      ],
+      [
+        "client",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "client",
+        "customLivenessProbe"
+      ],
+      [
+        "client",
+        "customReadinessProbe"
+      ],
+      [
+        "client",
+        "customStartupProbe"
+      ],
+      [
+        "client",
+        "enableDefaultInitContainers"
+      ],
+      [
+        "client",
+        "enabled"
+      ],
+      [
+        "client",
+        "extraEnvVars"
+      ],
+      [
+        "client",
+        "extraEnvVarsCM"
+      ],
+      [
+        "client",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "client",
+        "extraVolumeMounts"
+      ],
+      [
+        "client",
+        "extraVolumes"
+      ],
+      [
+        "client",
+        "hostAliases"
+      ],
+      [
+        "client",
+        "initContainers"
+      ],
+      [
+        "client",
+        "labels"
+      ],
+      [
+        "client",
+        "lifecycleHooks"
+      ],
+      [
+        "client",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "client",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "client",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "client",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "client",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "client",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "client",
+        "nodeSelector"
+      ],
+      [
+        "client",
+        "pdb",
+        "create"
+      ],
+      [
+        "client",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "client",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "client",
+        "persistence",
+        "accessMode"
+      ],
+      [
+        "client",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "client",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "client",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "client",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "client",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "client",
+        "persistence",
+        "labels"
+      ],
+      [
+        "client",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "client",
+        "persistence",
+        "size"
+      ],
+      [
+        "client",
+        "podAffinityPreset"
+      ],
+      [
+        "client",
+        "podAnnotations"
+      ],
+      [
+        "client",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "client",
+        "podLabels"
+      ],
+      [
+        "client",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "client",
+        "priorityClassName"
+      ],
+      [
+        "client",
+        "resources"
+      ],
+      [
+        "client",
+        "runtimeClassName"
+      ],
+      [
+        "client",
+        "schedulerName"
+      ],
+      [
+        "client",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "client",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "client",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "client",
+        "sidecars"
+      ],
+      [
+        "client",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "client",
+        "tolerations"
+      ],
+      [
+        "client",
+        "topologySpreadConstraints"
+      ],
+      [
+        "client",
+        "useJob"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "config",
+        "defaultHostFile"
+      ],
+      [
+        "config",
+        "defaultSSHClient"
+      ],
+      [
+        "config",
+        "defaultSSHServer"
+      ],
+      [
+        "config",
+        "existingSSHKeySecret"
+      ],
+      [
+        "config",
+        "overrideHostFile"
+      ],
+      [
+        "config",
+        "overrideSSHClient"
+      ],
+      [
+        "config",
+        "overrideSSHServer"
+      ],
+      [
+        "config",
+        "sshPrivateKey"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "gitImage"
+      ],
+      [
+        "global"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "source",
+        "configMap"
+      ],
+      [
+        "source",
+        "existingConfigMap"
+      ],
+      [
+        "source",
+        "type"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image"
+      ],
+      [
+        "worker",
+        "affinity"
+      ],
+      [
+        "worker",
+        "annotations"
+      ],
+      [
+        "worker",
+        "automountServiceAccountToken"
+      ],
+      [
+        "worker",
+        "containerPorts",
+        "ssh"
+      ],
+      [
+        "worker",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "worker",
+        "customLivenessProbe"
+      ],
+      [
+        "worker",
+        "customReadinessProbe"
+      ],
+      [
+        "worker",
+        "customStartupProbe"
+      ],
+      [
+        "worker",
+        "enableDefaultInitContainers"
+      ],
+      [
+        "worker",
+        "enabled"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "enabled"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "annotations"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "labels"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "loadBalancerAnnotations"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "loadBalancerIPs"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "nodePorts"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "ports",
+        "ssh"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "publishNotReadyAddresses"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "worker",
+        "externalAccess",
+        "service",
+        "type"
+      ],
+      [
+        "worker",
+        "extraEnvVars"
+      ],
+      [
+        "worker",
+        "extraEnvVarsCM"
+      ],
+      [
+        "worker",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "worker",
+        "extraVolumeMounts"
+      ],
+      [
+        "worker",
+        "extraVolumes"
+      ],
+      [
+        "worker",
+        "headlessServiceAnnotations"
+      ],
+      [
+        "worker",
+        "hostAliases"
+      ],
+      [
+        "worker",
+        "initContainers"
+      ],
+      [
+        "worker",
+        "labels"
+      ],
+      [
+        "worker",
+        "lifecycleHooks"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "worker",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "worker",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "worker",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "worker",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "worker",
+        "nodeSelector"
+      ],
+      [
+        "worker",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "worker",
+        "podAffinityPreset"
+      ],
+      [
+        "worker",
+        "podAnnotations"
+      ],
+      [
+        "worker",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "worker",
+        "podLabels"
+      ],
+      [
+        "worker",
+        "podManagementPolicy"
+      ],
+      [
+        "worker",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "worker",
+        "priorityClassName"
+      ],
+      [
+        "worker",
+        "replicaCount"
+      ],
+      [
+        "worker",
+        "resources"
+      ],
+      [
+        "worker",
+        "runtimeClassName"
+      ],
+      [
+        "worker",
+        "schedulerName"
+      ],
+      [
+        "worker",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "worker",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "worker",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "worker",
+        "sidecars"
+      ],
+      [
+        "worker",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "worker",
+        "tolerations"
+      ],
+      [
+        "worker",
+        "topologySpreadConstraints"
+      ],
+      [
+        "worker",
+        "updateStrategy"
+      ]
+    ],
+    "present_count": 144,
+    "varied_count": 3,
+    "varied_fraction": 0.020689655172413793,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ic8hn18r/chart",
+  "seed": 0,
+  "attempts": 39,
+  "error": "Error: YAML parse error on deepspeed/templates/worker/pdb.yaml: error converting YAML to JSON: yaml: line 15: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/deepspeed",
+      "tag": "0.17.5-debian-12-r0",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "source": {
+      "type": "configmap",
+      "launchCommand": "",
+      "configMap": {},
+      "existingConfigMap": "",
+      "git": {
+        "repository": "",
+        "revision": "",
+        "extraVolumeMounts": []
+      }
+    },
+    "config": {
+      "defaultHostFile": "{{- $workers := $.Values.worker.replicaCount | int }}\n{{- range $i, $e := until $workers }}\n{{ include \"deepspeed.v0.worker.fullname\" $ }}-{{ $i }}.{{ printf \"%s-headless\" (include \"deepspeed.v0.worker.fullname\" $) }} slots={{ $.Values.worker.slotsPerNode }}\n{{- end }}\n",
+      "overrideHostFile": "",
+      "existingHostFileConfigMap": "",
+      "defaultSSHClient": "{{- $workers := $.Values.worker.replicaCount | int }}\n{{- range $i, $e := until $workers }}\nHost {{ include \"deepspeed.v0.worker.fullname\" $ }}-{{ $i }}.{{ printf \"%s-headless\" (include \"deepspeed.v0.worker.fullname\" $) }}\n  Port {{ $.Values.worker.containerPorts.ssh }}\n  IdentityFile /bitnami/ssh/client-private-key/id_rsa\n  StrictHostKeyChecking no\n{{- end }}\n",
+      "overrideSSHClient": "",
+      "existingSSHClientConfigMap": "",
+      "defaultSSHServer": "Port {{ .Values.worker.containerPorts.ssh }}\nPasswordAuthentication no\nUsePAM no\nPermitUserEnvironment yes\n",
+      "overrideSSHServer": "",
+      "existingSSHServerConfigMap": "",
+      "sshPrivateKey": "",
+      "existingSSHKeySecret": ""
+    },
+    "client": {
+      "enabled": true,
+      "useJob": false,
+      "backoffLimit": 10,
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "annotations": {},
+      "command": [],
+      "args": [],
+      "terminationGracePeriodSeconds": "",
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 30,
+        "timeoutSeconds": 60,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 30,
+        "timeoutSeconds": 90,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 30,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "medium",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "lifecycleHooks": {},
+      "runtimeClassName": "",
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "labels": {},
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "priorityClassName": "",
+      "schedulerName": "",
+      "updateStrategy": {
+        "type": "RollingUpdate",
+        "rollingUpdate": {}
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "enableDefaultInitContainers": true,
+      "initContainers": [],
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternalEgress": true,
+        "extraIngress": [],
+        "extraEgress": []
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "persistence": {
+        "enabled": false,
+        "storageClass": "",
+        "existingClaim": "",
+        "mountPath": "/bitnami/deepspeed/data",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "dataSource": {},
+        "selector": {},
+        "size": "8Gi",
+        "labels": {},
+        "annotations": {}
+      },
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      }
+    },
+    "worker": {
+      "enabled": true,
+      "slotsPerNode": 1,
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "command": [],
+      "args": [],
+      "replicaCount": 3,
+      "terminationGracePeriodSeconds": "",
+      "containerPorts": {
+        "ssh": 2222
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 30,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 30,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 30,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "medium",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "lifecycleHooks": {},
+      "runtimeClassName": "",
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "labels": {},
+      "annotations": {},
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "podManagementPolicy": "Parallel",
+      "priorityClassName": "",
+      "schedulerName": "",
+      "updateStrategy": {
+        "type": "RollingUpdate",
+        "rollingUpdate": {}
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "enableDefaultInitContainers": true,
+      "initContainers": [],
+      "headlessServiceAnnotations": {},
+      "externalAccess": {
+        "enabled": false,
+        "service": {
+          "type": "ClusterIP",
+          "loadBalancerIPs": [],
+          "externalIPs": [],
+          "loadBalancerAnnotations": [],
+          "publishNotReadyAddresses": false,
+          "ports": {
+            "ssh": 22
+          },
+          "nodePorts": [],
+          "sessionAffinityConfig": {},
+          "sessionAffinity": "None",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "labels": {},
+          "annotations": {},
+          "extraPorts": []
+        }
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "persistence": {
+        "enabled": false,
+        "storageClass": "",
+        "existingClaim": "",
+        "mountPath": "/bitnami/deepspeed/data",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "selector": {},
+        "dataSource": {},
+        "size": "8Gi",
+        "labels": {},
+        "annotations": {}
+      },
+      "pdb": {
+        "maxUnavailable": ">0"
+      }
+    },
+    "gitImage": {
+      "registry": "docker.io",
+      "repository": "bitnami/git",
+      "tag": "2.51.0-debian-12-r0",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 27,
+    "unique_bundles": 27,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 27
+  },
+  "phase": "$.worker.pdb",
+  "kind": "value-path",
+  "path": [
+    "worker",
+    "pdb"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/deepspeed_1789318005/0000/paths/7b3233b72c7ae2177a76"
+}

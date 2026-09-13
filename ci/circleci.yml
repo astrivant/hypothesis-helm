@@ -34,6 +34,12 @@ commands:
       artifact-dir:
         type: string
         default: reports/hypothesis-helm
+      report-group:
+        type: string
+        default: chart
+      defer-failure:
+        type: boolean
+        default: false
     steps:
       - run:
           name: Test Helm chart values
@@ -48,6 +54,8 @@ commands:
             HH_SCHEMA_VERSION: << parameters.schema-version >>
             HH_SCHEMA_CACHE_DIR: << parameters.schema-cache-dir >>
             HH_ARTIFACT_DIR: << parameters.artifact-dir >>
+            HH_REPORT_GROUP: << parameters.report-group >>
+            HH_DEFER_FAILURE: "<< parameters.defer-failure >>"
           command: |
             mkdir -p "$HH_ARTIFACT_DIR"
             test_status=0
@@ -55,7 +63,8 @@ commands:
               helm hypothesis test "$HH_CHART" \
                 --jobs "$HH_JOBS" --max-examples "$HH_MAX_EXAMPLES" --seed "$HH_SEED" \
                 --schema-version "$HH_SCHEMA_VERSION" --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
-                --schema-offline --shard auto --rerun all \
+                --schema-offline --shard "$((${CIRCLE_NODE_INDEX:-0} + 1))/${CIRCLE_NODE_TOTAL:-1}" --rerun all \
+                --run-id "${CIRCLE_WORKFLOW_ID}-${HH_REPORT_GROUP}" \
                 --artifact-dir "$HH_ARTIFACT_DIR" --output json \
                 > "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl" || test_status=$?
               kubesec_cli="$(helm env HELM_PLUGINS)/hypothesis/.plugin-venv/bin/hypothesis-helm-kubesec"
@@ -70,11 +79,13 @@ commands:
               helm hypothesis test "$HH_CHART" \
                 --jobs "$HH_JOBS" --max-examples "$HH_MAX_EXAMPLES" --seed "$HH_SEED" \
                 --schema-version "$HH_SCHEMA_VERSION" --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
-                --kubeconform --schema-offline --shard auto --rerun all \
+                --kubeconform --schema-offline --shard "$((${CIRCLE_NODE_INDEX:-0} + 1))/${CIRCLE_NODE_TOTAL:-1}" --rerun all \
+                --run-id "${CIRCLE_WORKFLOW_ID}-${HH_REPORT_GROUP}" \
                 --artifact-dir "$HH_ARTIFACT_DIR" --output json \
                 > "$HH_ARTIFACT_DIR/manifests-${CIRCLE_NODE_INDEX:-0}.jsonl" || test_status=$?
             fi
-            exit "$test_status"
+            echo "$test_status" > "$HH_ARTIFACT_DIR/exit-code.txt"
+            if [[ "$HH_DEFER_FAILURE" != "true" ]]; then exit "$test_status"; fi
 jobs:
   test-chart:
     description: Install Hypothesis Helm and test a chart with automatic sharding.
@@ -127,6 +138,9 @@ jobs:
       artifact-dir:
         type: string
         default: reports/hypothesis-helm
+      report-group:
+        type: string
+        default: chart
     docker:
       - image: cimg/python:3.13
     parallelism: << parameters.parallelism >>
@@ -184,6 +198,8 @@ jobs:
           paths:
             - << parameters.schema-cache-dir >>
       - test:
+          defer-failure: true
+          report-group: << parameters.report-group >>
           kubesec: << parameters.kubesec >>
           kubesec-jobs: << parameters.kubesec-jobs >>
           schema-memory-dir: << parameters.schema-memory-dir >>
@@ -194,7 +210,69 @@ jobs:
           max-examples: << parameters.max-examples >>
           seed: << parameters.seed >>
           artifact-dir: << parameters.artifact-dir >>
+      - run:
+          name: Stage this shard for aggregation
+          environment:
+            HH_ARTIFACT_DIR: << parameters.artifact-dir >>
+            HH_REPORT_GROUP: << parameters.report-group >>
+          command: |
+            shard_id="$((CIRCLE_NODE_INDEX + 1))-of-${CIRCLE_NODE_TOTAL}"
+            destination="/tmp/hypothesis-helm-aggregation/${HH_REPORT_GROUP}/${shard_id}"
+            mkdir -p "$destination"
+            cp "$HH_ARTIFACT_DIR/shards/$shard_id/report.json" "$destination/report.json"
+            cp "$HH_ARTIFACT_DIR/exit-code.txt" "$destination/exit-code.txt"
+      - persist_to_workspace:
+          root: /tmp/hypothesis-helm-aggregation
+          paths:
+            - << parameters.report-group >>
+      - run:
+          name: Preserve the test and validator exit status
+          when: always
+          environment:
+            HH_ARTIFACT_DIR: << parameters.artifact-dir >>
+          command: exit "$(cat "$HH_ARTIFACT_DIR/exit-code.txt")"
       - store_test_results:
           path: << parameters.artifact-dir >>
       - store_artifacts:
           path: << parameters.artifact-dir >>
+  aggregate:
+    description: Verify all shard reports and publish one final bundle, including after failures.
+    parameters:
+      shards:
+        type: integer
+      report-group:
+        type: string
+        default: chart
+      package:
+        type: string
+        default: git+https://github.com/astrivant/hypothesis-helm.git@main
+    docker:
+      - image: cimg/python:3.13
+    steps:
+      - run:
+          name: Install the matching Hypothesis Helm version
+          environment:
+            HH_PACKAGE: << parameters.package >>
+          command: pip install "$HH_PACKAGE"
+      - attach_workspace:
+          at: /tmp/hypothesis-helm-aggregation
+      - run:
+          name: Write the final report
+          environment:
+            HH_REPORT_GROUP: << parameters.report-group >>
+            HH_SHARDS: << parameters.shards >>
+          command: |
+            source_dir="/tmp/hypothesis-helm-aggregation/${HH_REPORT_GROUP}"
+            aggregate_status=0
+            cat "$source_dir"/*/report.json | hypothesis-helm aggregate \
+              --shards "$HH_SHARDS" --run-id "${CIRCLE_WORKFLOW_ID}-${HH_REPORT_GROUP}" \
+              --output-dir reports/final || aggregate_status=$?
+            for status_file in "$source_dir"/*/exit-code.txt; do
+              status="$(cat "$status_file")"
+              if ((aggregate_status == 0 && status != 0)); then aggregate_status=$status; fi
+            done
+            exit "$aggregate_status"
+      - store_test_results:
+          path: reports/final
+      - store_artifacts:
+          path: reports/final

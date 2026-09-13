@@ -120,7 +120,7 @@ Example validation failures are recorded in the exported files. See [pre-commit 
 
 ```sh
 helm hypothesis audit ./chart --export-topological-graph ./review/topology.json
-helm hypothesis scan ./charts --export-topological-graph
+helm hypothesis test ./charts --export-topological-graph
 ```
 
 The JSON graph and adjacent Graphviz `.dot` file connect named values to template

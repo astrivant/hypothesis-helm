@@ -287,8 +287,14 @@ runs:
       uses: actions/upload-artifact@v7
       with:
         name: ${{ inputs.artifact-name }}-${{ github.job }}-${{ steps.test.outputs.shard-id }}
-        path: |
-          ${{ steps.test.outputs.report-dir }}
-          ${{ steps.test.outputs.kubesec-report-dir }}
+        path: ${{ steps.test.outputs.report-dir }}
+        if-no-files-found: warn
+        retention-days: ${{ inputs.artifact-retention-days }}
+    - name: Upload this shard's security results
+      if: ${{ always() && inputs.upload-artifacts == 'true' && steps.test.outputs.kubesec-report-dir != '' }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ inputs.artifact-name }}-kubesec-${{ github.job }}-${{ steps.test.outputs.shard-id }}
+        path: ${{ steps.test.outputs.kubesec-report-dir }}
         if-no-files-found: warn
         retention-days: ${{ inputs.artifact-retention-days }}

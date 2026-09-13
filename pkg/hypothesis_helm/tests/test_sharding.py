@@ -3,12 +3,14 @@ Verify deterministic partitioning and independent parallel runner instances.
 """
 
 import argparse
+import io
 import json
 import os
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from textwrap import dedent
 
 import pytest
 
@@ -243,6 +245,121 @@ def test_empty_shard_and_empty_match_are_distinct(tmp_path: Path, jobs: str) -> 
     assert report["workers"] == 0
     assert report["shard"]["selected"] == 0
     assert main([*args, "--match", "does_not_exist"]) == 5
+
+
+@pytest.mark.parametrize("jobs", ["1", "2", "auto"])
+@pytest.mark.parametrize("properties", [2, 6])
+def test_idle_shards_preserve_cached_coverage(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, jobs: str, properties: int) -> None:
+    """
+    Aggregate idle partitions and cached partitions through real concurrent CLI runs.
+
+    Args:
+        tmp_path (Path): Shared suite, cache, and isolated report roots.
+        monkeypatch (pytest.MonkeyPatch): Supply transported JSON to aggregation.
+        jobs (str): Serial, fixed, or adaptive workers per shard.
+        properties (int): Two assigned properties, or six with only two pending on retry.
+
+    Returns:
+        None: Idle shards succeed, cache entries survive, and all reports remain mandatory.
+    """
+    names = []
+    for owner in [1, 2] if properties == 2 else [1, 2, 3, 1, 2, 3]:
+        names.append(
+            next(
+                name
+                for number in range(1000)
+                if (name := f"test_path_{number}") not in names and Shard(owner, 3).includes(f"test_chart_values.py::{name}")
+            )
+        )
+    (tmp_path / "test_chart_values.py").write_text(
+        "\n".join(
+            dedent(
+                f"""
+                def {name}():
+                    pass
+                """
+            )
+            for name in names
+        )
+    )
+    cache = tmp_path / "cache"
+    for run_id, expected_tests in (("cold", properties), ("partial", 2), ("cached", 0)):
+        reports = tmp_path / run_id
+        children = [
+            subprocess.Popen(
+                [
+                    str(Path(sys.executable).with_name("hypothesis-helm")),
+                    "run",
+                    str(tmp_path),
+                    "--shard",
+                    f"{index}/3",
+                    "--jobs",
+                    jobs,
+                    "--rerun",
+                    "failed",
+                    "--run-id",
+                    run_id,
+                    "--artifact-dir",
+                    str(reports),
+                    "--cache-dir",
+                    str(cache),
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                env=dict(os.environ, CI="true", PYTHON_CPU_COUNT="2"),
+            )
+            for index in range(1, 4)
+        ]
+        try:
+            for child in children:
+                output, diagnostics = child.communicate(timeout=60)
+                assert child.returncode == 0, output + diagnostics
+        finally:
+            for child in children:
+                if child.poll() is None:
+                    child.kill()
+                child.wait()
+        records = [json.loads(path.read_text()) for path in sorted(reports.glob("shards/*/report.json"))]
+        assert len(records) == 3
+        idle = []
+        for record in records:
+            cases = list(ET.fromstring(record["junit_xml"]).iter("testcase"))
+            assert len(cases) + len(record["reused_properties"]) == record["shard"]["selected"]
+            if not cases:
+                idle.append(record)
+                assert record["workers"] == 0
+                assert record["status"] == "passed"
+        assert len(idle) == (3 if run_id == "cached" else 0 if run_id == "cold" and properties == 6 else 1)
+        if idle:
+            incomplete = [record for record in records if record is not idle[0]]
+            monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps(incomplete)))
+            rejected = reports / "missing-shard"
+            assert main(["aggregate", "--shards", "3", "--run-id", run_id, "--output-dir", str(rejected)]) == 2
+            assert not rejected.exists()
+        monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps(records)))
+        final = reports / "final"
+        assert main(["aggregate", "--shards", "3", "--run-id", run_id, "--output-dir", str(final)]) == 0
+        combined = json.loads((final / "report.json").read_text())
+        assert combined["properties"] == {
+            "selected": properties,
+            "tests": expected_tests,
+            "reused": properties - expected_tests,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+        }
+        assert (final / "report.md").is_file() and (final / "report.pdf").is_file()
+        assert len(list(reports.rglob("*.pdf"))) == 1
+        outcomes = {node: status for path in cache.glob("*/*.json") for node, status in json.loads(path.read_text()).items()}
+        assert outcomes == {f"test_chart_values.py::{name}": "passed" for name in names}
+        if run_id == "cold":
+            # Simulate two incomplete cache entries without changing the suite fingerprint.
+            for path in cache.glob("*/*.json"):
+                entries = json.loads(path.read_text())
+                for name in names[:2]:
+                    entries.pop(f"test_chart_values.py::{name}", None)
+                path.write_text(json.dumps(entries))
 
 
 def test_shard_collection_is_independent_of_checkout_location(tmp_path: Path) -> None:

@@ -273,7 +273,7 @@ def test_scan_exports_each_chart(
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(chart.path),
                 "--no-build-dependencies",
                 "--export-minimal-values",
@@ -320,7 +320,7 @@ def test_scan_export_cannot_overwrite_original_values(chart: Chart, tmp_path: Pa
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(chart.path),
                 "--helm",
                 "/usr/bin/true",

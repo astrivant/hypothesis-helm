@@ -84,6 +84,33 @@ jobs:
           jobs: auto
           max-examples: '50'
           seed: '42'
+          run-id: ${{ github.run_id }}-${{ github.run_attempt }}
+  report:
+    needs: chart
+    if: ${{ always() && needs.chart.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: pip install 'git+https://github.com/astrivant/hypothesis-helm.git@main'
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: hypothesis-helm-chart-*
+          path: downloaded
+      - name: Write final report
+        env:
+          HH_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          cat downloaded/*/report.json | hypothesis-helm aggregate \
+            --shards 4 --run-id "$HH_RUN_ID" --output-dir reports/final
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: hypothesis-helm-final
+          path: reports/final/
+          if-no-files-found: error
+          retention-days: 30
 ```
 
 No shard calculation is required in shell. The matrix values create four jobs;
@@ -142,6 +169,8 @@ Use the [copyable remote examples](ci/README.md). CircleCI imports the
 [URL orb](../ci/circleci.yml); GitLab uses `include: remote` with the
 [shared job](../ci/gitlab.yml). Both install the plugin and validators, prepare
 cached schemas, and preserve per-shard artifacts.
+Both provide a downstream aggregation job that verifies every shard, including
+idle shards, and writes the final PDF, Markdown, JSON, and JUnit bundle.
 
 CircleCI detects its node coordinates automatically. The GitLab version/shard
 matrix passes explicit indices so each Kubernetes version covers the whole suite.

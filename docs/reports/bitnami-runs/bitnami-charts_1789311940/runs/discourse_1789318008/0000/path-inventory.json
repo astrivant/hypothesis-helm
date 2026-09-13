@@ -1,0 +1,3691 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "auth",
+      "email"
+    ],
+    [
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "existingSecret"
+    ],
+    [
+      "initContainers"
+    ],
+    [
+      "persistence",
+      "existingClaim"
+    ],
+    [
+      "ingress",
+      "secrets"
+    ],
+    [
+      "image"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "volumePermissions",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "sidekiq",
+      "resources"
+    ],
+    [
+      "ingress",
+      "selfSigned"
+    ],
+    [
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "discourse",
+      "persistPlugins"
+    ],
+    [
+      "externalRedis",
+      "password"
+    ],
+    [
+      "sidekiq",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "discourse",
+      "command",
+      "*"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "discourse",
+      "startupProbe"
+    ],
+    [
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "smtp",
+      "enabled"
+    ],
+    [
+      "redis",
+      "enabled"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "enablePostgresUser"
+    ],
+    [
+      "auth"
+    ],
+    [
+      "updateStrategy"
+    ],
+    [
+      "updateStrategy",
+      "rollingUpdate"
+    ],
+    [
+      "discourse",
+      "containerPorts"
+    ],
+    [
+      "diagnosticMode",
+      "args",
+      "*"
+    ],
+    [
+      "global",
+      "imagePullSecrets"
+    ],
+    [
+      "podSecurityContext"
+    ],
+    [
+      "volumePermissions",
+      "containerSecurityContext"
+    ],
+    [
+      "sidekiq",
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "smtp",
+      "password"
+    ],
+    [
+      "discourse",
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "persistence",
+      "accessModes",
+      "*"
+    ],
+    [
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "discourse",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "sidekiq",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "smtp",
+      "port"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "sidekiq",
+      "livenessProbe"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "postgresPassword"
+    ],
+    [
+      "service",
+      "type"
+    ],
+    [
+      "discourse",
+      "containerPorts",
+      "http"
+    ],
+    [
+      "externalDatabase",
+      "existingSecret"
+    ],
+    [
+      "discourse",
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "discourse",
+      "skipInstall"
+    ],
+    [
+      "discourse",
+      "readinessProbe"
+    ],
+    [
+      "discourse",
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "schedulerName"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "persistence",
+      "size"
+    ],
+    [
+      "automountServiceAccountToken"
+    ],
+    [
+      "discourse",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "sidekiq",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "discourse",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "discourse",
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "http"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "redis",
+      "architecture"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "discourse",
+      "customReadinessProbe"
+    ],
+    [
+      "sidekiq",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "volumePermissions",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "discourse",
+      "extraContainerPorts"
+    ],
+    [
+      "externalRedis",
+      "existingSecret"
+    ],
+    [
+      "externalDatabase",
+      "port"
+    ],
+    [
+      "redis",
+      "master",
+      "resourcesPreset"
+    ],
+    [
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "service",
+      "nodePorts"
+    ],
+    [
+      "podAffinityPreset"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "capabilities",
+      "add",
+      "*"
+    ],
+    [
+      "volumePermissions",
+      "image",
+      "tag"
+    ],
+    [
+      "volumePermissions",
+      "image",
+      "registry"
+    ],
+    [
+      "discourse",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "diagnosticMode",
+      "enabled"
+    ],
+    [
+      "externalRedis"
+    ],
+    [
+      "redis",
+      "auth",
+      "enabled"
+    ],
+    [
+      "postgresql"
+    ],
+    [
+      "discourse",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "smtp",
+      "host"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "externalDatabase",
+      "user"
+    ],
+    [
+      "sidekiq",
+      "customLivenessProbe"
+    ],
+    [
+      "sidekiq",
+      "resourcesPreset"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "redis",
+      "auth",
+      "existingSecret"
+    ],
+    [
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "discourse",
+      "extraVolumeMounts"
+    ],
+    [
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "username"
+    ],
+    [
+      "externalDatabase",
+      "existingSecretPasswordKey"
+    ],
+    [
+      "ingress",
+      "annotations"
+    ],
+    [
+      "sidekiq",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "sidekiq",
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "sidekiq",
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "nodeAffinityPreset"
+    ],
+    [
+      "sidekiq",
+      "extraEnvVarsCM"
+    ],
+    [
+      "postgresql",
+      "auth"
+    ],
+    [
+      "sidekiq",
+      "customStartupProbe"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "discourse",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "networkPolicy"
+    ],
+    [
+      "externalDatabase",
+      "database"
+    ],
+    [
+      "service",
+      "annotations"
+    ],
+    [
+      "postgresql",
+      "primary"
+    ],
+    [
+      "sidekiq",
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "externalDatabase",
+      "existingSecretPostgresPasswordKey"
+    ],
+    [
+      "discourse",
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "volumePermissions",
+      "image",
+      "digest"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "redis",
+      "master"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "ingress",
+      "extraTls"
+    ],
+    [
+      "auth",
+      "existingSecret"
+    ],
+    [
+      "ingress",
+      "apiVersion"
+    ],
+    [
+      "sidekiq",
+      "extraVolumeMounts"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "discourse",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "sidekiq"
+    ],
+    [
+      "sidecars"
+    ],
+    [
+      "externalDatabase",
+      "create"
+    ],
+    [
+      "ingress",
+      "extraRules",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "volumePermissions",
+      "resourcesPreset"
+    ],
+    [
+      "diagnosticMode",
+      "command",
+      "*"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "volumePermissions",
+      "image",
+      "repository"
+    ],
+    [
+      "sidecars",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "smtp",
+      "protocol"
+    ],
+    [
+      "sidekiq",
+      "customReadinessProbe"
+    ],
+    [
+      "ingress",
+      "path"
+    ],
+    [
+      "sidekiq",
+      "args"
+    ],
+    [
+      "initContainers",
+      "*"
+    ],
+    [
+      "discourse",
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "capabilities",
+      "add",
+      "*"
+    ],
+    [
+      "service",
+      "ports",
+      "http"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "password"
+    ],
+    [
+      "sidekiq",
+      "args",
+      "*"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "database"
+    ],
+    [
+      "ingress",
+      "pathType"
+    ],
+    [
+      "volumePermissions",
+      "enabled"
+    ],
+    [
+      "ingress",
+      "tls"
+    ],
+    [
+      "siteName"
+    ],
+    [
+      "discourse",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "sidekiq",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "extraDeploy"
+    ],
+    [
+      "global",
+      "defaultStorageClass"
+    ],
+    [
+      "discourse",
+      "customLivenessProbe"
+    ],
+    [
+      "discourse",
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "volumePermissions",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "sidekiq",
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "ingress",
+      "ingressClassName"
+    ],
+    [
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "externalDatabase",
+      "postgresPassword"
+    ],
+    [
+      "discourse",
+      "command"
+    ],
+    [
+      "persistence",
+      "enabled"
+    ],
+    [
+      "commonLabels"
+    ],
+    [
+      "kubeVersion"
+    ],
+    [
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "image",
+      "digest"
+    ],
+    [
+      "commonAnnotations"
+    ],
+    [
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "sidekiq",
+      "command",
+      "*"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "sidekiq",
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "hostAliases",
+      "*"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "sidekiq",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "ingress",
+      "secrets",
+      "*"
+    ],
+    [
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "pdb",
+      "create"
+    ],
+    [
+      "externalDatabase",
+      "host"
+    ],
+    [
+      "smtp"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "postgresql",
+      "primary",
+      "resourcesPreset"
+    ],
+    [
+      "postgresql",
+      "primary",
+      "resources"
+    ],
+    [
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "discourse",
+      "args",
+      "*"
+    ],
+    [
+      "redis"
+    ],
+    [
+      "ingress",
+      "extraTls",
+      "*"
+    ],
+    [
+      "volumePermissions",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "ingress",
+      "hostname"
+    ],
+    [
+      "hostAliases"
+    ],
+    [
+      "diagnosticMode",
+      "args"
+    ],
+    [
+      "sidekiq",
+      "command"
+    ],
+    [
+      "externalRedis",
+      "host"
+    ],
+    [
+      "redis",
+      "auth"
+    ],
+    [
+      "ingress",
+      "extraHosts"
+    ],
+    [
+      "discourse",
+      "resourcesPreset"
+    ],
+    [
+      "persistence",
+      "annotations"
+    ],
+    [
+      "sidekiq",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext"
+    ],
+    [
+      "service",
+      "extraPorts"
+    ],
+    [
+      "discourse",
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "extraDeploy",
+      "*"
+    ],
+    [
+      "host"
+    ],
+    [
+      "volumePermissions"
+    ],
+    [
+      "discourse",
+      "resources"
+    ],
+    [
+      "smtp",
+      "auth"
+    ],
+    [
+      "discourse"
+    ],
+    [
+      "podLabels"
+    ],
+    [
+      "smtp",
+      "existingSecret"
+    ],
+    [
+      "volumePermissions",
+      "resources"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "sidekiq",
+      "extraEnvVars"
+    ],
+    [
+      "ingress",
+      "extraPaths",
+      "*"
+    ],
+    [
+      "discourse",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "discourse",
+      "lifecycleHooks"
+    ],
+    [
+      "redis",
+      "auth",
+      "password"
+    ],
+    [
+      "sidekiq",
+      "startupProbe"
+    ],
+    [
+      "image",
+      "debug"
+    ],
+    [
+      "discourse",
+      "args"
+    ],
+    [
+      "global",
+      "compatibility"
+    ],
+    [
+      "sidekiq",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "discourse",
+      "extraEnvVars"
+    ],
+    [
+      "externalDatabase"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "persistence",
+      "accessModes"
+    ],
+    [
+      "service",
+      "ports"
+    ],
+    [
+      "discourse",
+      "extraContainerPorts",
+      "*"
+    ],
+    [
+      "ingress",
+      "extraPaths"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "podAntiAffinityPreset"
+    ],
+    [
+      "discourse",
+      "customStartupProbe"
+    ],
+    [
+      "persistence"
+    ],
+    [
+      "podAnnotations"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "capabilities",
+      "add"
+    ],
+    [
+      "discourse",
+      "compatiblePlugins"
+    ],
+    [
+      "diagnosticMode",
+      "command"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "ingress",
+      "extraHosts",
+      "*"
+    ],
+    [
+      "volumePermissions",
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "auth",
+      "username"
+    ],
+    [
+      "replicaCount"
+    ],
+    [
+      "sidekiq",
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "redis",
+      "master",
+      "resources"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "volumePermissions",
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "ingress",
+      "enabled"
+    ],
+    [
+      "discourse",
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "volumePermissions",
+      "image"
+    ],
+    [
+      "sidekiq",
+      "lifecycleHooks"
+    ],
+    [
+      "auth",
+      "password"
+    ],
+    [
+      "fullnameOverride"
+    ],
+    [
+      "sidekiq",
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "sidekiq",
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "ingress",
+      "extraRules"
+    ],
+    [
+      "diagnosticMode"
+    ],
+    [
+      "externalRedis",
+      "existingSecretPasswordKey"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "sidekiq",
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "sidekiq",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "global"
+    ],
+    [
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "global",
+      "security"
+    ],
+    [
+      "discourse",
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "discourse",
+      "livenessProbe"
+    ],
+    [
+      "externalRedis",
+      "port"
+    ],
+    [
+      "sidekiq",
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "volumePermissions",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "discourse",
+      "plugins",
+      "*"
+    ],
+    [
+      "discourse",
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "discourse",
+      "extraEnvVarsCM"
+    ],
+    [
+      "externalDatabase",
+      "password"
+    ],
+    [
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "volumePermissions",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "externalDatabase",
+      "postgresUser"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "ingress"
+    ],
+    [
+      "service",
+      "clusterIP"
+    ],
+    [
+      "postgresql",
+      "enabled"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "topologySpreadConstraints"
+    ],
+    [
+      "clusterDomain"
+    ],
+    [
+      "sidekiq",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext",
+      "capabilities",
+      "add"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "discourse",
+      "containerSecurityContext"
+    ],
+    [
+      "discourse",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "serviceAccount"
+    ],
+    [
+      "persistence",
+      "selector"
+    ],
+    [
+      "discourse",
+      "plugins"
+    ],
+    [
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "postgresql",
+      "architecture"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "smtp",
+      "user"
+    ],
+    [
+      "sidekiq",
+      "readinessProbe"
+    ],
+    [
+      "image",
+      "registry"
+    ],
+    [
+      "service"
+    ],
+    [
+      "pdb"
+    ],
+    [
+      "nameOverride"
+    ],
+    [
+      "persistence",
+      "storageClass"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "global",
+      "security",
+      "allowInsecureImages"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 16,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 37,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 47,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 47,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 52,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 58,
+      "message": "unresolved dot context: .Values.service.ports.http"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 64,
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 64,
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 65,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 66,
+      "message": "unresolved dot context: .Values.global.imagePullSecrets"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 67,
+      "message": "unresolved dot context: .Values.global.imagePullSecrets"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 70,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 75,
+      "message": "unresolved dot context: .Values.service.ports.http"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 81,
+      "message": "unresolved dot context: .Values.ingress.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 86,
+      "message": "unresolved dot context: .Values.ingress.tls"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 86,
+      "message": "unresolved dot context: .Values.ingress.hostname"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 87,
+      "message": "unresolved dot context: .Values.ingress.hostname"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 81,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 89,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 93,
+      "message": "unresolved dot context: .Values.service.ports.http"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 94,
+      "message": "unresolved dot context: .Values.service.ports.http"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 96,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 104,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 109,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 111,
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 112,
+      "message": "unresolved dot context: .Values.service.ports.http"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 120,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 121,
+      "message": "unresolved dot context: .Values.auth.username"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 127,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 128,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 129,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 130,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 12,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 13,
+      "message": "unresolved dot context: .Values.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 21,
+      "message": "unresolved dot context: .Values.redis"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 27,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 28,
+      "message": "unresolved dot context: .Values.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 28,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 34,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 35,
+      "message": "unresolved dot context: .Values.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 35,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 41,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 42,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 43,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 43,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 45,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 53,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 54,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 57,
+      "message": "unresolved dot context: .Values.service.loadBalancerIP"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 65,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 66,
+      "message": "unresolved dot context: .Values.ingress.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 67,
+      "message": "unresolved dot context: .Values.ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 68,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 68,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 70,
+      "message": "unresolved dot context: .Values.host"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 71,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 78,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 79,
+      "message": "unresolved dot context: .Values.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 79,
+      "message": "unresolved dot context: .Values.smtp.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 79,
+      "message": "unresolved dot context: .Values.smtp.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 79,
+      "message": "unresolved dot context: .Values.smtp.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 87,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "unresolved dot context: .Values.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 94,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 95,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 95,
+      "message": "unresolved dot context: .Values.smtp.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 95,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 95,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 101,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 102,
+      "message": "unresolved dot context: .Values.smtp.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 102,
+      "message": "unresolved dot context: .Values.smtp.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 102,
+      "message": "unresolved dot context: .Values.smtp.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 110,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 111,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 111,
+      "message": "unresolved dot context: .Values.externalDatabase.host"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 111,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 111,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 117,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 118,
+      "message": "unresolved dot context: .Values.externalDatabase.port"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 118,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 124,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 125,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 126,
+      "message": "unresolved dot context: .Values.global.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 127,
+      "message": "unresolved dot context: .Values.global.postgresql.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 128,
+      "message": "unresolved dot context: .Values.global.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 128,
+      "message": "unresolved dot context: .Values.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 130,
+      "message": "unresolved dot context: .Values.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 133,
+      "message": "unresolved dot context: .Values.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 136,
+      "message": "unresolved dot context: .Values.externalDatabase.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 143,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 144,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 145,
+      "message": "unresolved dot context: .Values.global.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 146,
+      "message": "unresolved dot context: .Values.global.postgresql.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 147,
+      "message": "unresolved dot context: .Values.global.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 147,
+      "message": "unresolved dot context: .Values.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 149,
+      "message": "unresolved dot context: .Values.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 152,
+      "message": "unresolved dot context: .Values.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 155,
+      "message": "unresolved dot context: .Values.externalDatabase.user"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 162,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 163,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 164,
+      "message": "unresolved dot context: .Values.global.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 165,
+      "message": "unresolved dot context: .Values.global.postgresql.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 166,
+      "message": "unresolved dot context: .Values.global.postgresql.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 167,
+      "message": "unresolved dot context: .Values.global.postgresql.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 167,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 169,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 169,
+      "message": "unresolved dot context: .Values.postgresql.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 169,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 169,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 172,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 172,
+      "message": "unresolved dot context: .Values.postgresql.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 172,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 172,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 175,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 175,
+      "message": "unresolved dot context: .Values.postgresql.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 175,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 175,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 178,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 178,
+      "message": "unresolved dot context: .Values.externalDatabase.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 178,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 178,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 185,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 186,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 186,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 189,
+      "message": "unresolved dot context: .Values.externalDatabase.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 190,
+      "message": "unresolved dot context: .Values.externalDatabase.existingSecretPasswordKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 200,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 201,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 201,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 204,
+      "message": "unresolved dot context: .Values.externalDatabase.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 205,
+      "message": "unresolved dot context: .Values.externalDatabase.existingSecretPostgresPasswordKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 215,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 216,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 216,
+      "message": "unresolved dot context: .Values.externalRedis.host"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 216,
+      "message": "unresolved dot context: .Values.redis.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 216,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 222,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 223,
+      "message": "unresolved dot context: .Values.externalRedis.port"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 223,
+      "message": "unresolved dot context: .Values.redis.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 229,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 230,
+      "message": "unresolved dot context: .Values.redis.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 231,
+      "message": "unresolved dot context: .Values.redis.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 232,
+      "message": "unresolved dot context: .Values.redis.auth.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 234,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 234,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 230,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 236,
+      "message": "unresolved dot context: .Values.externalRedis.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 237,
+      "message": "unresolved dot context: .Values.externalRedis.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 239,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 239,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 246,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 247,
+      "message": "unresolved dot context: .Values.redis.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 247,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 250,
+      "message": "unresolved dot context: .Values.externalRedis.existingSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 251,
+      "message": "unresolved dot context: .Values.externalRedis.existingSecretPasswordKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 261,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 262,
+      "message": "unresolved dot context: .Values.redis.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 262,
+      "message": "unresolved dot context: .Values.redis.auth.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 262,
+      "message": "unresolved dot context: .Values.externalRedis.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 262,
+      "message": "unresolved dot context: .Values.externalRedis.existingSecret"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmaps.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 32,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 70,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 74,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 83,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 85,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 87,
+      "message": "unresolved dot context: .Values.volumePermissions.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 88,
+      "message": "unresolved dot context: .Values.volumePermissions.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 88,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 96,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 99,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 120,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 123,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 133,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 135,
+      "message": "unresolved dot context: .Values.discourse.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 136,
+      "message": "unresolved dot context: .Values.discourse.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 136,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 145,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 148,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 151,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 150,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 152,
+      "message": "unresolved dot context: .Values.discourse.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 153,
+      "message": "unresolved dot context: .Values.discourse.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 153,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 154,
+      "message": "unresolved dot context: .Values.discourse.plugins"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 154,
+      "message": "unresolved dot context: .Values.discourse.persistPlugins"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 159,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 158,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 160,
+      "message": "unresolved dot context: .Values.discourse.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 161,
+      "message": "unresolved dot context: .Values.discourse.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 161,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 162,
+      "message": "unresolved dot context: .Values.discourse.plugins"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 162,
+      "message": "unresolved dot context: .Values.discourse.persistPlugins"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 175,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 184,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 185,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 189,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 190,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 195,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 196,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 198,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 202,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 203,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 205,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 209,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 217,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 221,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 235,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 239,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 238,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 240,
+      "message": "unresolved dot context: .Values.discourse.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 244,
+      "message": "unresolved dot context: .Values.discourse.livenessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 245,
+      "message": "unresolved dot context: .Values.discourse.livenessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 246,
+      "message": "unresolved dot context: .Values.discourse.livenessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 247,
+      "message": "unresolved dot context: .Values.discourse.livenessProbe.successThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 248,
+      "message": "unresolved dot context: .Values.discourse.livenessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 251,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 250,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 252,
+      "message": "unresolved dot context: .Values.discourse.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 257,
+      "message": "unresolved dot context: .Values.discourse.readinessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 258,
+      "message": "unresolved dot context: .Values.discourse.readinessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 259,
+      "message": "unresolved dot context: .Values.discourse.readinessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 260,
+      "message": "unresolved dot context: .Values.discourse.readinessProbe.successThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 261,
+      "message": "unresolved dot context: .Values.discourse.readinessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 264,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 263,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 265,
+      "message": "unresolved dot context: .Values.discourse.startupProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 266,
+      "message": "unresolved dot context: .Values.discourse.startupProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 266,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 272,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 274,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 276,
+      "message": "unresolved dot context: .Values.discourse.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 277,
+      "message": "unresolved dot context: .Values.discourse.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 277,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 289,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 292,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 295,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 298,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 297,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 299,
+      "message": "unresolved dot context: .Values.sidekiq.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 300,
+      "message": "unresolved dot context: .Values.sidekiq.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 300,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 303,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 302,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 304,
+      "message": "unresolved dot context: .Values.sidekiq.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 305,
+      "message": "unresolved dot context: .Values.sidekiq.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 305,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 313,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 318,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 319,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 320,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 324,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 325,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 327,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 331,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 339,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 343,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 354,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 353,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 355,
+      "message": "unresolved dot context: .Values.sidekiq.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 359,
+      "message": "unresolved dot context: .Values.sidekiq.livenessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 360,
+      "message": "unresolved dot context: .Values.sidekiq.livenessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 361,
+      "message": "unresolved dot context: .Values.sidekiq.livenessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 362,
+      "message": "unresolved dot context: .Values.sidekiq.livenessProbe.successThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 363,
+      "message": "unresolved dot context: .Values.sidekiq.livenessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 366,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 365,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 367,
+      "message": "unresolved dot context: .Values.sidekiq.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 371,
+      "message": "unresolved dot context: .Values.sidekiq.readinessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 372,
+      "message": "unresolved dot context: .Values.sidekiq.readinessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 373,
+      "message": "unresolved dot context: .Values.sidekiq.readinessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 374,
+      "message": "unresolved dot context: .Values.sidekiq.readinessProbe.successThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 375,
+      "message": "unresolved dot context: .Values.sidekiq.readinessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 378,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 377,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 379,
+      "message": "unresolved dot context: .Values.sidekiq.startupProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 380,
+      "message": "unresolved dot context: .Values.sidekiq.startupProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 380,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 385,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 387,
+      "message": "unresolved dot context: .Values.sidekiq.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 388,
+      "message": "unresolved dot context: .Values.sidekiq.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 388,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 391,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 403,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 406,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 416,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 421,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/extra-list.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 44,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/ingress.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 77,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pvc.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-database.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-database.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-database.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-database.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-database.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-discourse.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-discourse.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-discourse.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-discourse.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-discourse.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-redis.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-redis.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-redis.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/secrets-redis.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 41,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 43,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 40,
+      "message": "unresolved variable context: $cert.Cert"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 41,
+      "message": "unresolved variable context: $cert.Key"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 42,
+      "message": "unresolved variable context: $ca.Cert"
+    },
+    {
+      "file": "templates/tls-secrets.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "path": [
+        "extraDeploy",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "discourse",
+        "plugins",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "persistence",
+        "accessModes",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "volumePermissions",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "discourse",
+        "extraContainerPorts",
+        "*",
+        "containerPort"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "secrets",
+        "*",
+        "certificate"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "secrets",
+        "*",
+        "key"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "ingress",
+        "secrets",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "discourse",
+        "extraContainerPorts",
+        "*",
+        "containerPort"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "secrets",
+        "*",
+        "certificate"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "secrets",
+        "*",
+        "key"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "ingress",
+        "secrets",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}

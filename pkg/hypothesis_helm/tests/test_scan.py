@@ -13,6 +13,55 @@ from hypothesis_helm.cli import argument_parser, main
 from hypothesis_helm.reporting.repository import wrap_markdown, write_reports
 
 
+@pytest.mark.parametrize("existing", [False, True])
+def test_scan_rejects_local_directories(tmp_path: Path, existing: bool, capsys: pytest.CaptureFixture[str]) -> None:
+    """
+    Keep remote scanning separate from local directory testing.
+
+    Args:
+        tmp_path (Path): Local source directory.
+        existing (bool): Whether the requested local path exists.
+        capsys (pytest.CaptureFixture[str]): Capture the CLI diagnostic.
+
+    Returns:
+        None: Both local spellings fail with guidance to use test.
+    """
+    source = tmp_path if existing else tmp_path / "missing"
+    assert main(["scan", str(source), "--helm", "/usr/bin/true"]) == 2
+    error = json.loads(capsys.readouterr().out)["error"]
+    assert "use test" in error
+
+
+def test_local_testing_never_fetches_source(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Prevent local discovery from interpreting a directory as a remote repository alias.
+
+    Args:
+        tmp_path (Path): Empty local directory.
+        monkeypatch (pytest.MonkeyPatch): Guard remote source preparation.
+
+    Returns:
+        None: Local discovery reports no charts without a source-fetch request.
+    """
+
+    def remote(*args: object, **kwargs: object) -> None:
+        """
+        Reject an unexpected remote source operation.
+
+        Args:
+            *args (object): Source arguments.
+            **kwargs (object): Source options.
+
+        Returns:
+            None: This boundary must never be reached.
+        """
+        pytest.fail("Local testing attempted remote source preparation")
+
+    monkeypatch.setattr("hypothesis_helm.charts.scan.prepare_helm_source", remote)
+    monkeypatch.setattr("hypothesis_helm.charts.scan.RepositorySource.prepare", remote)
+    assert main(["test", str(tmp_path), "--helm", "/usr/bin/true", "--artifact-dir", str(tmp_path / "results")]) == 2
+
+
 def test_discovery(tmp_path: Path) -> None:
     """
     Find nested charts, preserve invalid metadata, and avoid symlink cycles.
@@ -155,7 +204,7 @@ def test_scan_execution(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys:
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--no-build-dependencies",
                 "--report",
@@ -170,7 +219,7 @@ def test_scan_execution(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys:
     assert report["counts"] == {"passed": 1, "baseline-only": 1}
     assert (tmp_path / "result.md").exists()
     assert (tmp_path / "result.pdf").exists()
-    assert argument_parser().parse_args(["scan", str(tmp_path), "--report"]).report == ""
+    assert argument_parser().parse_args(["test", str(tmp_path), "--report"]).report == ""
 
 
 @pytest.mark.parametrize("fail_fast", [False, True])
@@ -228,7 +277,7 @@ def test_scan_fail_flag(
 
     monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", exercise)
     options = [
-        "scan",
+        "test",
         str(tmp_path),
         "--helm",
         "/usr/bin/true",
@@ -275,7 +324,7 @@ def test_missing_values_single_and_recursive(tmp_path: Path, capsys: pytest.Capt
     first = tmp_path / "first"
     first.mkdir()
     (first / "Chart.yaml").write_text("apiVersion: v2\nname: first\nversion: '1.0.0'\n")
-    assert main(["scan", str(first), "--helm", "/usr/bin/true", "--artifact-dir", str(tmp_path / "out")]) == 1
+    assert main(["test", str(first), "--helm", "/usr/bin/true", "--artifact-dir", str(tmp_path / "out")]) == 1
     report = json.loads(capsys.readouterr().out)
     assert report["counts"] == {"missing-values": 1}
     assert report["charts"][0]["result"] == "N/A"
@@ -286,7 +335,7 @@ def test_missing_values_single_and_recursive(tmp_path: Path, capsys: pytest.Capt
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 "/usr/bin/true",
@@ -355,7 +404,7 @@ def test_values_override_and_dependency_build(tmp_path: Path, monkeypatch: pytes
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 "/usr/bin/true",
@@ -407,7 +456,7 @@ def test_interrupt_preserves_remaining_charts(tmp_path: Path, monkeypatch: pytes
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 "/usr/bin/true",
@@ -466,7 +515,7 @@ def test_scan_timeout_pauses_for_dependencies(tmp_path: Path, capsys: pytest.Cap
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 str(helm),
@@ -521,7 +570,7 @@ def test_timeout_during_discovery(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 "/usr/bin/true",
@@ -615,7 +664,7 @@ def test_dependency_timing_accounting(
     monkeypatch.setattr(module, "exercise_chart", exercise)
     code = main(
         [
-            "scan",
+            "test",
             str(tmp_path),
             "--helm",
             "/usr/bin/true",
@@ -644,13 +693,13 @@ def test_scan_timeout_arguments() -> None:
         None: Defaults and duration parsing remain explicit.
     """
     parser = argument_parser()
-    args = parser.parse_args(["scan", "."])
+    args = parser.parse_args(["scan", "https://example.com/charts.git"])
     assert args.chart_timeout == 180
     assert args.scan_timeout is None
-    assert parser.parse_args(["scan", ".", "--time-limit", "2m"]).chart_timeout == 120
+    assert parser.parse_args(["scan", "https://example.com/charts.git", "--time-limit", "2m"]).chart_timeout == 120
     for flag in ("--chart-timeout", "--scan-timeout"):
         with pytest.raises(SystemExit):
-            parser.parse_args(["scan", ".", flag, "0"])
+            parser.parse_args(["scan", "https://example.com/charts.git", flag, "0"])
 
 
 def test_scan_deadline_preserves_runner_statistics(
@@ -701,7 +750,7 @@ def test_scan_deadline_preserves_runner_statistics(
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 "/usr/bin/true",
@@ -773,7 +822,7 @@ def test_scan_filter_support(
     assert (
         main(
             [
-                "scan",
+                "test",
                 str(tmp_path),
                 "--helm",
                 "/usr/bin/true",

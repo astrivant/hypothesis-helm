@@ -1,16 +1,17 @@
-# Scan a chart repository
+# Local chart testing and remote repository scans
 
 [Documentation](../README.md) · [Project](../../README.md)
 
 ```sh
-helm hypothesis scan ./charts --report
+helm hypothesis test ./charts --report
 helm hypothesis scan https://github.com/bitnami/charts.git --filter --report
 helm hypothesis scan git@github.com:my-org/charts.git --report
-helm hypothesis scan ./charts --values ci/test-values.yaml --report reports/charts
+helm hypothesis test ./charts --values ci/test-values.yaml --report reports/charts
 ```
 
-The source can be a local directory, a Helm repository/chart (see below), an HTTPS Git repository URL, or an SSH URL
-(`git@host:owner/repo.git` or `ssh://git@host/owner/repo.git`). Remote sources
+`test PATH` discovers charts in a local directory. `scan SOURCE` fetches remote charts
+from a Helm repository/chart (see below), an HTTPS Git repository URL, or an SSH URL
+(`git@host:owner/repo.git` or `ssh://git@host/owner/repo.git`). Git sources
 require Git and use a shallow checkout of the default branch. Reports retain
 the original URL and resolved commit; the temporary checkout is removed after
 the scan, while reports, diagnostics, and failing values remain in the artifact
@@ -56,8 +57,8 @@ Indexes and downloaded chart caches are isolated per scan, so concurrent source
 downloads do not write to the same caches. A public index URL is added only to a
 temporary repository configuration, leaving `helm repo list` unchanged.
 
-Existing local paths take precedence over repository names. Use `--helm-repository`
-to select a repository when its name also identifies a local directory, or to
+`scan` rejects existing local paths. Use `test` for those directories. Use
+`--helm-repository` to select a remote repository whose alias matches a local directory, or to
 distinguish a public HTTP(S) repository base URL from an HTTPS Git clone URL.
 OCI sources must identify an individual chart: OCI registries do not expose Helm
 `index.yaml` inventories, so this command does not enumerate an entire OCI registry.
@@ -77,8 +78,17 @@ exits **130**, with an incomplete report and the available package inventory.
 
 ## Discovery and testing
 
-The scanner finds `Chart.yaml` at the root and in child directories, including
-nested charts. It checks the required `apiVersion`, `name`, and `version` fields
+Local directories and schema-less charts use recursive testing automatically.
+Single schema-backed charts retain their finite and generated-suite modes. Use
+`--report`, `--chart-timeout`, `--scan-timeout`, `--values FILE`, or an explicit
+dependency-build option to select the discovery/reporting flow for one chart too.
+
+Suite controls (`--match`, `--paths`, `--collect-only`, `--dry-run`, worker/shard
+settings, and outcome-cache controls) require an individual schema-backed chart
+without recursive reporting options. Use `run` for saved suites.
+
+Local `test` and remote `scan` discover `Chart.yaml` at the root and in child directories, including
+nested charts. Discovery checks the required `apiVersion`, `name`, and `version` fields
 before invoking Helm. Directory symlinks and tooling directories such as `.git`
 and `.venv` are not traversed. Invalid metadata remains visible in the report.
 
@@ -125,7 +135,7 @@ and other incomplete/N/A results do not trigger this flag. Each scan process
 stops independently; it does not cancel scans launched by other workers.
 
 ```sh
-helm hypothesis scan ./charts --filter --fail --report
+helm hypothesis test ./charts --filter --fail --report
 ```
 
 `--values` defaults to `values.yaml`, relative to each chart; an absolute path
@@ -157,7 +167,7 @@ Historical reports without these measurements retain their wall-clock duration;
 their testing time is not inferred.
 
 ```sh
-helm hypothesis scan ./charts --chart-timeout 3m --scan-timeout 9m --report
+helm hypothesis test ./charts --chart-timeout 3m --scan-timeout 9m --report
 ```
 
 A scan timeout exits with **124**, preserves available test statistics, and leaves
@@ -169,7 +179,8 @@ saves partial results and exits with **130**.
 working directory. An explicit stem or either filename extension overrides both
 paths. Reusing an explicit output path replaces the previous report.
 JSON statistics, lint/dependency logs, and failing values go under
-`reports/scans/`; override that parent with `--artifact-dir`.
+`reports/hypothesis-helm/` for local `test` and `reports/scans/` for remote `scan`;
+override that parent with `--artifact-dir`.
 
 Repeated errors are grouped automatically across charts and dependencies. Reports
 show each diagnostic once, with links to every affected chart and phase. Dependency
@@ -180,7 +191,7 @@ per-chart `error_refs`, while retaining original errors and artifacts. Grouping
 does not skip tests or change chart statuses, and a matching diagnostic does not
 prove a shared root cause.
 
-Add `--export-minimal-values` to retain a example YAML baseline with validation status and compiler
+Add `--export-minimal-values` to retain an example YAML baseline with validation status and compiler
 inventory for each chart. An optional filename overrides the generated name; chart-relative subdirectories
 keep exports separate. The default is `values-minimal-<checksum>-<epoch>.yaml`.
 Reports include identified input-field counts and observed variation where
@@ -195,7 +206,7 @@ A successful sample is not a proof that all possible values work.
 
 ```sh
 git submodule update --init --depth 1 third_party/bitnami-charts
-helm hypothesis scan third_party/bitnami-charts --report reports/bitnami
+helm hypothesis test third_party/bitnami-charts --report reports/bitnami
 ```
 
 The submodule pins the source revision. Locked dependencies are downloaded from
@@ -210,7 +221,7 @@ Initialize the Prometheus source with:
 
 ```sh
 git submodule update --init third_party/prometheus-community-helm-charts
-helm hypothesis scan third_party/prometheus-community-helm-charts/charts --filter --report
+helm hypothesis test third_party/prometheus-community-helm-charts/charts --filter --report
 ```
 
 The [retained Prometheus Community scan](../reports/prometheus.md) includes all

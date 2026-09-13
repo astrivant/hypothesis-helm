@@ -1,0 +1,3863 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 304,
+    "present_fields": [
+      [
+        "bootstrapUserJob",
+        "annotations"
+      ],
+      [
+        "bootstrapUserJob",
+        "automountServiceAccountToken"
+      ],
+      [
+        "bootstrapUserJob",
+        "backoffLimit"
+      ],
+      [
+        "bootstrapUserJob",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "bootstrapUserJob",
+        "customLivenessProbe"
+      ],
+      [
+        "bootstrapUserJob",
+        "customReadinessProbe"
+      ],
+      [
+        "bootstrapUserJob",
+        "customStartupProbe"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraCommands"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraEnvVarsCM"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraVolumeMounts"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraVolumes"
+      ],
+      [
+        "bootstrapUserJob",
+        "hostAliases"
+      ],
+      [
+        "bootstrapUserJob",
+        "labels"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "bootstrapUserJob",
+        "podAnnotations"
+      ],
+      [
+        "bootstrapUserJob",
+        "podLabels"
+      ],
+      [
+        "bootstrapUserJob",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "bootstrapUserJob",
+        "resources"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "coordinator",
+        "affinity"
+      ],
+      [
+        "coordinator",
+        "automountServiceAccountToken"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "coordinator",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "customLivenessProbe"
+      ],
+      [
+        "coordinator",
+        "customReadinessProbe"
+      ],
+      [
+        "coordinator",
+        "customStartupProbe"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "configOverrides"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "existingConfigmap"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "existingSecret"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "extraFiles"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "extraSecretFiles"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "secretConfigOverrides"
+      ],
+      [
+        "coordinator",
+        "extraContainerPorts"
+      ],
+      [
+        "coordinator",
+        "extraEnvVars"
+      ],
+      [
+        "coordinator",
+        "extraEnvVarsCM"
+      ],
+      [
+        "coordinator",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "coordinator",
+        "extraJavaOpts"
+      ],
+      [
+        "coordinator",
+        "extraVolumeMounts"
+      ],
+      [
+        "coordinator",
+        "extraVolumes"
+      ],
+      [
+        "coordinator",
+        "hostAliases"
+      ],
+      [
+        "coordinator",
+        "initContainers"
+      ],
+      [
+        "coordinator",
+        "lifecycleHooks"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "ingressPodMatchLabels"
+      ],
+      [
+        "coordinator",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "coordinator",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "coordinator",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "coordinator",
+        "nodeSelector"
+      ],
+      [
+        "coordinator",
+        "pdb",
+        "create"
+      ],
+      [
+        "coordinator",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "coordinator",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "selector"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "size"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "coordinator",
+        "podAffinityPreset"
+      ],
+      [
+        "coordinator",
+        "podAnnotations"
+      ],
+      [
+        "coordinator",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "coordinator",
+        "podLabels"
+      ],
+      [
+        "coordinator",
+        "podManagementPolicy"
+      ],
+      [
+        "coordinator",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "priorityClassName"
+      ],
+      [
+        "coordinator",
+        "replicaCount"
+      ],
+      [
+        "coordinator",
+        "resources"
+      ],
+      [
+        "coordinator",
+        "schedulerName"
+      ],
+      [
+        "coordinator",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "coordinator",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "coordinator",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "coordinator",
+        "sidecars"
+      ],
+      [
+        "coordinator",
+        "statefulsetAnnotations"
+      ],
+      [
+        "coordinator",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "coordinator",
+        "tolerations"
+      ],
+      [
+        "coordinator",
+        "topologySpreadConstraints"
+      ],
+      [
+        "coordinator",
+        "updateStrategy"
+      ],
+      [
+        "defaultInitContainers",
+        "copyDefaultConf",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "defaultImage",
+        "pullPolicy"
+      ],
+      [
+        "defaultInitContainers",
+        "generateConf",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "initCerts",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "upgradeKeystore",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "wait",
+        "enabled"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "auth",
+        "email"
+      ],
+      [
+        "dremio",
+        "auth",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "auth",
+        "firstName"
+      ],
+      [
+        "dremio",
+        "auth",
+        "lastName"
+      ],
+      [
+        "dremio",
+        "auth",
+        "username"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "client"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "conduit"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "fabric"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "flight"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "jmx"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "liveness"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "web"
+      ],
+      [
+        "dremio",
+        "coreSite",
+        "appendConfiguration"
+      ],
+      [
+        "dremio",
+        "coreSite",
+        "existingSecret"
+      ],
+      [
+        "dremio",
+        "distStorageType"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "configOverrides"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "extraFiles"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "extraSecretFiles"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "secretConfigOverrides"
+      ],
+      [
+        "dremio",
+        "image",
+        "debug"
+      ],
+      [
+        "dremio",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "dremio",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "dremio",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "dremio",
+        "tls",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "dremio",
+        "tls",
+        "keystoreFilename"
+      ],
+      [
+        "dremio",
+        "tls",
+        "password"
+      ],
+      [
+        "dremio",
+        "tls",
+        "passwordSecret"
+      ],
+      [
+        "dremio",
+        "tls",
+        "usePemCerts"
+      ],
+      [
+        "executor",
+        "common"
+      ],
+      [
+        "executor",
+        "engines"
+      ],
+      [
+        "externalS3",
+        "accessKeyID"
+      ],
+      [
+        "externalS3",
+        "accessKeySecret"
+      ],
+      [
+        "externalS3",
+        "authentication"
+      ],
+      [
+        "externalS3",
+        "disableCertChecking"
+      ],
+      [
+        "externalS3",
+        "existingSecret"
+      ],
+      [
+        "externalS3",
+        "existingSecretAccessKeyIDKey"
+      ],
+      [
+        "externalS3",
+        "existingSecretKeySecretKey"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "masterCoordinator",
+        "affinity"
+      ],
+      [
+        "masterCoordinator",
+        "automountServiceAccountToken"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "masterCoordinator",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "customLivenessProbe"
+      ],
+      [
+        "masterCoordinator",
+        "customReadinessProbe"
+      ],
+      [
+        "masterCoordinator",
+        "customStartupProbe"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "configOverrides"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "existingConfigmap"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "existingSecret"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "extraFiles"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "extraSecretFiles"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "secretConfigOverrides"
+      ],
+      [
+        "masterCoordinator",
+        "extraContainerPorts"
+      ],
+      [
+        "masterCoordinator",
+        "extraEnvVars"
+      ],
+      [
+        "masterCoordinator",
+        "extraEnvVarsCM"
+      ],
+      [
+        "masterCoordinator",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "masterCoordinator",
+        "extraJavaOpts"
+      ],
+      [
+        "masterCoordinator",
+        "extraVolumeMounts"
+      ],
+      [
+        "masterCoordinator",
+        "extraVolumes"
+      ],
+      [
+        "masterCoordinator",
+        "hostAliases"
+      ],
+      [
+        "masterCoordinator",
+        "initContainers"
+      ],
+      [
+        "masterCoordinator",
+        "lifecycleHooks"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "ingressPodMatchLabels"
+      ],
+      [
+        "masterCoordinator",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "masterCoordinator",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "masterCoordinator",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "masterCoordinator",
+        "nodeSelector"
+      ],
+      [
+        "masterCoordinator",
+        "pdb",
+        "create"
+      ],
+      [
+        "masterCoordinator",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "masterCoordinator",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "selector"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "size"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "masterCoordinator",
+        "podAffinityPreset"
+      ],
+      [
+        "masterCoordinator",
+        "podAnnotations"
+      ],
+      [
+        "masterCoordinator",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "masterCoordinator",
+        "podLabels"
+      ],
+      [
+        "masterCoordinator",
+        "podManagementPolicy"
+      ],
+      [
+        "masterCoordinator",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "priorityClassName"
+      ],
+      [
+        "masterCoordinator",
+        "replicaCount"
+      ],
+      [
+        "masterCoordinator",
+        "resources"
+      ],
+      [
+        "masterCoordinator",
+        "schedulerName"
+      ],
+      [
+        "masterCoordinator",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "masterCoordinator",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "masterCoordinator",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "masterCoordinator",
+        "sidecars"
+      ],
+      [
+        "masterCoordinator",
+        "statefulsetAnnotations"
+      ],
+      [
+        "masterCoordinator",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "masterCoordinator",
+        "tolerations"
+      ],
+      [
+        "masterCoordinator",
+        "topologySpreadConstraints"
+      ],
+      [
+        "masterCoordinator",
+        "updateStrategy"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "existingConfigmap"
+      ],
+      [
+        "metrics",
+        "extraArgs"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "resourcesPreset"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "metrics",
+        "startupProbe",
+        "enabled"
+      ],
+      [
+        "minio",
+        "containerPorts",
+        "api"
+      ],
+      [
+        "minio",
+        "enabled"
+      ],
+      [
+        "minio",
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "minio",
+        "tls",
+        "enabled"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "client"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "flight"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "web"
+      ],
+      [
+        "service",
+        "ports",
+        "client"
+      ],
+      [
+        "service",
+        "ports",
+        "flight"
+      ],
+      [
+        "service",
+        "ports",
+        "web"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "zookeeper",
+        "enabled"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "dremio",
+        "auth",
+        "username"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "bootstrapUserJob",
+        "annotations"
+      ],
+      [
+        "bootstrapUserJob",
+        "automountServiceAccountToken"
+      ],
+      [
+        "bootstrapUserJob",
+        "backoffLimit"
+      ],
+      [
+        "bootstrapUserJob",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "bootstrapUserJob",
+        "customLivenessProbe"
+      ],
+      [
+        "bootstrapUserJob",
+        "customReadinessProbe"
+      ],
+      [
+        "bootstrapUserJob",
+        "customStartupProbe"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraCommands"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraEnvVarsCM"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraVolumeMounts"
+      ],
+      [
+        "bootstrapUserJob",
+        "extraVolumes"
+      ],
+      [
+        "bootstrapUserJob",
+        "hostAliases"
+      ],
+      [
+        "bootstrapUserJob",
+        "labels"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "bootstrapUserJob",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "bootstrapUserJob",
+        "podAnnotations"
+      ],
+      [
+        "bootstrapUserJob",
+        "podLabels"
+      ],
+      [
+        "bootstrapUserJob",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "bootstrapUserJob",
+        "resources"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "coordinator",
+        "affinity"
+      ],
+      [
+        "coordinator",
+        "automountServiceAccountToken"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "coordinator",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "coordinator",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "customLivenessProbe"
+      ],
+      [
+        "coordinator",
+        "customReadinessProbe"
+      ],
+      [
+        "coordinator",
+        "customStartupProbe"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "configOverrides"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "existingConfigmap"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "existingSecret"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "extraFiles"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "extraSecretFiles"
+      ],
+      [
+        "coordinator",
+        "dremioConf",
+        "secretConfigOverrides"
+      ],
+      [
+        "coordinator",
+        "extraContainerPorts"
+      ],
+      [
+        "coordinator",
+        "extraEnvVars"
+      ],
+      [
+        "coordinator",
+        "extraEnvVarsCM"
+      ],
+      [
+        "coordinator",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "coordinator",
+        "extraJavaOpts"
+      ],
+      [
+        "coordinator",
+        "extraVolumeMounts"
+      ],
+      [
+        "coordinator",
+        "extraVolumes"
+      ],
+      [
+        "coordinator",
+        "hostAliases"
+      ],
+      [
+        "coordinator",
+        "initContainers"
+      ],
+      [
+        "coordinator",
+        "lifecycleHooks"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "coordinator",
+        "networkPolicy",
+        "ingressPodMatchLabels"
+      ],
+      [
+        "coordinator",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "coordinator",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "coordinator",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "coordinator",
+        "nodeSelector"
+      ],
+      [
+        "coordinator",
+        "pdb",
+        "create"
+      ],
+      [
+        "coordinator",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "coordinator",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "selector"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "size"
+      ],
+      [
+        "coordinator",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "coordinator",
+        "podAffinityPreset"
+      ],
+      [
+        "coordinator",
+        "podAnnotations"
+      ],
+      [
+        "coordinator",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "coordinator",
+        "podLabels"
+      ],
+      [
+        "coordinator",
+        "podManagementPolicy"
+      ],
+      [
+        "coordinator",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "coordinator",
+        "priorityClassName"
+      ],
+      [
+        "coordinator",
+        "replicaCount"
+      ],
+      [
+        "coordinator",
+        "resources"
+      ],
+      [
+        "coordinator",
+        "schedulerName"
+      ],
+      [
+        "coordinator",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "coordinator",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "coordinator",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "coordinator",
+        "sidecars"
+      ],
+      [
+        "coordinator",
+        "statefulsetAnnotations"
+      ],
+      [
+        "coordinator",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "coordinator",
+        "tolerations"
+      ],
+      [
+        "coordinator",
+        "topologySpreadConstraints"
+      ],
+      [
+        "coordinator",
+        "updateStrategy"
+      ],
+      [
+        "defaultInitContainers",
+        "copyDefaultConf",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "defaultImage",
+        "pullPolicy"
+      ],
+      [
+        "defaultInitContainers",
+        "generateConf",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "initCerts",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "upgradeKeystore",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "wait",
+        "enabled"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "auth",
+        "email"
+      ],
+      [
+        "dremio",
+        "auth",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "auth",
+        "firstName"
+      ],
+      [
+        "dremio",
+        "auth",
+        "lastName"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "client"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "conduit"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "fabric"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "flight"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "jmx"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "liveness"
+      ],
+      [
+        "dremio",
+        "containerPorts",
+        "web"
+      ],
+      [
+        "dremio",
+        "coreSite",
+        "appendConfiguration"
+      ],
+      [
+        "dremio",
+        "coreSite",
+        "existingSecret"
+      ],
+      [
+        "dremio",
+        "distStorageType"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "configOverrides"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "extraFiles"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "extraSecretFiles"
+      ],
+      [
+        "dremio",
+        "dremioConf",
+        "secretConfigOverrides"
+      ],
+      [
+        "dremio",
+        "image",
+        "debug"
+      ],
+      [
+        "dremio",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "dremio",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "dremio",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "dremio",
+        "tls",
+        "enabled"
+      ],
+      [
+        "dremio",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "dremio",
+        "tls",
+        "keystoreFilename"
+      ],
+      [
+        "dremio",
+        "tls",
+        "password"
+      ],
+      [
+        "dremio",
+        "tls",
+        "passwordSecret"
+      ],
+      [
+        "dremio",
+        "tls",
+        "usePemCerts"
+      ],
+      [
+        "executor",
+        "common"
+      ],
+      [
+        "executor",
+        "engines"
+      ],
+      [
+        "externalS3",
+        "accessKeyID"
+      ],
+      [
+        "externalS3",
+        "accessKeySecret"
+      ],
+      [
+        "externalS3",
+        "authentication"
+      ],
+      [
+        "externalS3",
+        "disableCertChecking"
+      ],
+      [
+        "externalS3",
+        "existingSecret"
+      ],
+      [
+        "externalS3",
+        "existingSecretAccessKeyIDKey"
+      ],
+      [
+        "externalS3",
+        "existingSecretKeySecretKey"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "masterCoordinator",
+        "affinity"
+      ],
+      [
+        "masterCoordinator",
+        "automountServiceAccountToken"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "masterCoordinator",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "masterCoordinator",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "customLivenessProbe"
+      ],
+      [
+        "masterCoordinator",
+        "customReadinessProbe"
+      ],
+      [
+        "masterCoordinator",
+        "customStartupProbe"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "configOverrides"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "existingConfigmap"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "existingSecret"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "extraFiles"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "extraSecretFiles"
+      ],
+      [
+        "masterCoordinator",
+        "dremioConf",
+        "secretConfigOverrides"
+      ],
+      [
+        "masterCoordinator",
+        "extraContainerPorts"
+      ],
+      [
+        "masterCoordinator",
+        "extraEnvVars"
+      ],
+      [
+        "masterCoordinator",
+        "extraEnvVarsCM"
+      ],
+      [
+        "masterCoordinator",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "masterCoordinator",
+        "extraJavaOpts"
+      ],
+      [
+        "masterCoordinator",
+        "extraVolumeMounts"
+      ],
+      [
+        "masterCoordinator",
+        "extraVolumes"
+      ],
+      [
+        "masterCoordinator",
+        "hostAliases"
+      ],
+      [
+        "masterCoordinator",
+        "initContainers"
+      ],
+      [
+        "masterCoordinator",
+        "lifecycleHooks"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "masterCoordinator",
+        "networkPolicy",
+        "ingressPodMatchLabels"
+      ],
+      [
+        "masterCoordinator",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "masterCoordinator",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "masterCoordinator",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "masterCoordinator",
+        "nodeSelector"
+      ],
+      [
+        "masterCoordinator",
+        "pdb",
+        "create"
+      ],
+      [
+        "masterCoordinator",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "masterCoordinator",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "resourcePolicy"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "selector"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "size"
+      ],
+      [
+        "masterCoordinator",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "masterCoordinator",
+        "podAffinityPreset"
+      ],
+      [
+        "masterCoordinator",
+        "podAnnotations"
+      ],
+      [
+        "masterCoordinator",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "masterCoordinator",
+        "podLabels"
+      ],
+      [
+        "masterCoordinator",
+        "podManagementPolicy"
+      ],
+      [
+        "masterCoordinator",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "masterCoordinator",
+        "priorityClassName"
+      ],
+      [
+        "masterCoordinator",
+        "replicaCount"
+      ],
+      [
+        "masterCoordinator",
+        "resources"
+      ],
+      [
+        "masterCoordinator",
+        "schedulerName"
+      ],
+      [
+        "masterCoordinator",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "masterCoordinator",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "masterCoordinator",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "masterCoordinator",
+        "sidecars"
+      ],
+      [
+        "masterCoordinator",
+        "statefulsetAnnotations"
+      ],
+      [
+        "masterCoordinator",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "masterCoordinator",
+        "tolerations"
+      ],
+      [
+        "masterCoordinator",
+        "topologySpreadConstraints"
+      ],
+      [
+        "masterCoordinator",
+        "updateStrategy"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "existingConfigmap"
+      ],
+      [
+        "metrics",
+        "extraArgs"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "jmxConfigOverrides"
+      ],
+      [
+        "metrics",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "resourcesPreset"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "labels"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "metrics",
+        "startupProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "telemetryConfigOverrides"
+      ],
+      [
+        "minio",
+        "containerPorts",
+        "api"
+      ],
+      [
+        "minio",
+        "enabled"
+      ],
+      [
+        "minio",
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "minio",
+        "tls",
+        "enabled"
+      ],
+      [
+        "minio",
+        "tls",
+        "server",
+        "certFilename"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "client"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "flight"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "web"
+      ],
+      [
+        "service",
+        "ports",
+        "client"
+      ],
+      [
+        "service",
+        "ports",
+        "flight"
+      ],
+      [
+        "service",
+        "ports",
+        "web"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "zookeeper",
+        "enabled"
+      ]
+    ],
+    "present_count": 298,
+    "varied_count": 1,
+    "varied_fraction": 0.003289473684210526,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-yufzgged/chart",
+  "seed": 0,
+  "attempts": 29,
+  "error": "Error: YAML parse error on dremio/templates/bootstrap-user/job.yaml: error converting YAML to JSON: yaml: line 121: did not find expected key\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "apiVersions": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "usePasswordFiles": true,
+    "dremio": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/dremio",
+        "tag": "26.0.0-debian-12-r5",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [],
+        "debug": false
+      },
+      "auth": {
+        "enabled": true,
+        "username": "\n",
+        "password": "",
+        "firstName": "User",
+        "lastName": "User",
+        "email": "user@example.com",
+        "existingSecret": "",
+        "existingSecretKey": ""
+      },
+      "tls": {
+        "enabled": false,
+        "usePemCerts": true,
+        "existingSecret": "",
+        "certFilename": "tls.crt",
+        "certKeyFilename": "tls.key",
+        "keystoreFilename": "dremio.jks",
+        "password": "",
+        "passwordSecret": "",
+        "autoGenerated": {
+          "enabled": true,
+          "engine": "helm",
+          "certManager": {
+            "existingIssuer": "",
+            "existingIssuerKind": "",
+            "keySize": 2048,
+            "keyAlgorithm": "RSA",
+            "duration": "2160h",
+            "renewBefore": "360h"
+          }
+        }
+      },
+      "distStorageType": "minio",
+      "dremioConf": {
+        "configOverrides": {},
+        "secretConfigOverrides": {},
+        "extraFiles": {},
+        "extraSecretFiles": {}
+      },
+      "coreSite": {
+        "appendConfiguration": "",
+        "existingSecret": ""
+      },
+      "containerPorts": {
+        "web": 9047,
+        "client": 31010,
+        "flight": 32010,
+        "fabric": 45678,
+        "conduit": 45679,
+        "jmx": 50000,
+        "liveness": 44349
+      }
+    },
+    "masterCoordinator": {
+      "replicaCount": 1,
+      "extraContainerPorts": [],
+      "extraJavaOpts": "",
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "xlarge",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "readOnlyRootFilesystem": true,
+        "privileged": false,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "statefulsetAnnotations": {},
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "dremioConf": {
+        "configOverrides": {},
+        "secretConfigOverrides": {},
+        "extraFiles": {},
+        "extraSecretFiles": {},
+        "existingConfigmap": "",
+        "existingSecret": ""
+      },
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "podManagementPolicy": "OrderedReady",
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "autoscaling": {
+        "vpa": {
+          "enabled": false,
+          "annotations": {},
+          "controlledResources": [],
+          "maxAllowed": {},
+          "minAllowed": {},
+          "updatePolicy": {
+            "updateMode": "Auto"
+          }
+        },
+        "hpa": {
+          "enabled": false,
+          "minReplicas": "",
+          "maxReplicas": "",
+          "targetCPU": "",
+          "targetMemory": ""
+        }
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "addExternalClientAccess": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressPodMatchLabels": {},
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "persistence": {
+        "enabled": true,
+        "mountPath": "/bitnami/dremio/data",
+        "subPath": "",
+        "storageClass": "",
+        "annotations": {},
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "existingClaim": "",
+        "selector": {},
+        "dataSource": {}
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "annotations": {},
+        "automountServiceAccountToken": false
+      }
+    },
+    "coordinator": {
+      "replicaCount": 1,
+      "extraContainerPorts": [],
+      "extraJavaOpts": "",
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "xlarge",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "readOnlyRootFilesystem": true,
+        "privileged": false,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "statefulsetAnnotations": {},
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "dremioConf": {
+        "configOverrides": {},
+        "secretConfigOverrides": {},
+        "extraFiles": {},
+        "extraSecretFiles": {},
+        "existingConfigmap": "",
+        "existingSecret": ""
+      },
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "podManagementPolicy": "OrderedReady",
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "autoscaling": {
+        "vpa": {
+          "enabled": false,
+          "annotations": {},
+          "controlledResources": [],
+          "maxAllowed": {},
+          "minAllowed": {},
+          "updatePolicy": {
+            "updateMode": "Auto"
+          }
+        },
+        "hpa": {
+          "enabled": false,
+          "minReplicas": "",
+          "maxReplicas": "",
+          "targetCPU": "",
+          "targetMemory": ""
+        }
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "addExternalClientAccess": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressPodMatchLabels": {},
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "persistence": {
+        "enabled": true,
+        "mountPath": "/bitnami/dremio/data",
+        "subPath": "",
+        "storageClass": "",
+        "annotations": {},
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "existingClaim": "",
+        "selector": {},
+        "dataSource": {}
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "annotations": {},
+        "automountServiceAccountToken": false
+      }
+    },
+    "executor": {
+      "common": {
+        "replicaCount": 1,
+        "extraContainerPorts": [],
+        "extraJavaOpts": "",
+        "livenessProbe": {
+          "enabled": true,
+          "initialDelaySeconds": 20,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "successThreshold": 1,
+          "failureThreshold": 5
+        },
+        "readinessProbe": {
+          "enabled": true,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "successThreshold": 1,
+          "failureThreshold": 5
+        },
+        "startupProbe": {
+          "enabled": false,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "successThreshold": 1,
+          "failureThreshold": 5
+        },
+        "customLivenessProbe": {},
+        "customReadinessProbe": {},
+        "customStartupProbe": {},
+        "resourcesPreset": "xlarge",
+        "resources": {},
+        "podSecurityContext": {
+          "enabled": true,
+          "fsGroupChangePolicy": "Always",
+          "sysctls": [],
+          "supplementalGroups": [],
+          "fsGroup": 1001
+        },
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "readOnlyRootFilesystem": true,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "command": [],
+        "args": [],
+        "automountServiceAccountToken": false,
+        "hostAliases": [],
+        "statefulsetAnnotations": {},
+        "podLabels": {},
+        "podAnnotations": {},
+        "podAffinityPreset": "",
+        "podAntiAffinityPreset": "soft",
+        "dremioConf": {
+          "configOverrides": {},
+          "secretConfigOverrides": {},
+          "extraFiles": {},
+          "extraSecretFiles": {},
+          "existingConfigmap": "",
+          "existingSecret": ""
+        },
+        "nodeAffinityPreset": {
+          "type": "",
+          "key": "",
+          "values": []
+        },
+        "affinity": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "updateStrategy": {
+          "type": "RollingUpdate"
+        },
+        "podManagementPolicy": "OrderedReady",
+        "priorityClassName": "",
+        "topologySpreadConstraints": [],
+        "schedulerName": "",
+        "terminationGracePeriodSeconds": "",
+        "lifecycleHooks": {},
+        "extraEnvVars": [],
+        "extraEnvVarsCM": "",
+        "extraEnvVarsSecret": "",
+        "extraVolumes": [],
+        "extraVolumeMounts": [],
+        "sidecars": [],
+        "initContainers": [],
+        "pdb": {
+          "create": true,
+          "minAvailable": "",
+          "maxUnavailable": ""
+        },
+        "autoscaling": {
+          "vpa": {
+            "enabled": false,
+            "annotations": {},
+            "controlledResources": [],
+            "maxAllowed": {},
+            "minAllowed": {},
+            "updatePolicy": {
+              "updateMode": "Auto"
+            }
+          },
+          "hpa": {
+            "enabled": false,
+            "minReplicas": "",
+            "maxReplicas": "",
+            "targetCPU": "",
+            "targetMemory": ""
+          }
+        },
+        "networkPolicy": {
+          "enabled": true,
+          "allowExternal": true,
+          "allowExternalEgress": true,
+          "addExternalClientAccess": true,
+          "extraIngress": [],
+          "extraEgress": [],
+          "ingressPodMatchLabels": {},
+          "ingressNSMatchLabels": {},
+          "ingressNSPodMatchLabels": {}
+        },
+        "persistence": {
+          "enabled": true,
+          "mountPath": "/bitnami/dremio/data",
+          "subPath": "",
+          "storageClass": "",
+          "annotations": {},
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "size": "8Gi",
+          "existingClaim": "",
+          "selector": {},
+          "dataSource": {}
+        },
+        "serviceAccount": {
+          "create": true,
+          "name": "",
+          "annotations": {},
+          "automountServiceAccountToken": false
+        }
+      },
+      "engines": [
+        {
+          "name": "default",
+          "overrides": {}
+        }
+      ]
+    },
+    "service": {
+      "type": "LoadBalancer",
+      "ports": {
+        "web": 9047,
+        "client": 31010,
+        "flight": 32010
+      },
+      "nodePorts": {
+        "web": "",
+        "client": "",
+        "flight": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "headless": {
+        "annotations": {}
+      }
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "hostname": "dremio.local",
+      "ingressClassName": "",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "bootstrapUserJob": {
+      "enabled": true,
+      "forceRun": false,
+      "labels": {},
+      "backoffLimit": 10,
+      "extraVolumes": [],
+      "extraCommands": "",
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumeMounts": [],
+      "resourcesPreset": "micro",
+      "resources": {},
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "annotations": {
+        "helm.sh/hook": "post-install",
+        "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded",
+        "helm.sh/hook-weight": "10"
+      },
+      "podLabels": {},
+      "podAnnotations": {},
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternalEgress": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      }
+    },
+    "defaultInitContainers": {
+      "defaultImage": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "wait": {
+        "enabled": true,
+        "resourcesPreset": "nano",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "readOnlyRootFilesystem": true,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        }
+      },
+      "generateConf": {
+        "enabled": true,
+        "resourcesPreset": "nano",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "readOnlyRootFilesystem": true,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "extraEnvVars": [],
+        "extraEnvVarsCM": "",
+        "extraEnvVarsSecret": "",
+        "extraVolumeMounts": []
+      },
+      "initCerts": {
+        "enabled": true,
+        "resourcesPreset": "nano",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "readOnlyRootFilesystem": true,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        }
+      },
+      "copyDefaultConf": {
+        "enabled": true,
+        "resourcesPreset": "nano",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "readOnlyRootFilesystem": true,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        }
+      },
+      "upgradeKeystore": {
+        "enabled": true,
+        "resourcesPreset": "large",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "readOnlyRootFilesystem": true,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        }
+      },
+      "volumePermissions": {
+        "enabled": false,
+        "resourcesPreset": "nano",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 0
+        }
+      },
+      "importMinIOCert": {
+        "resourcesPreset": "nano",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "readOnlyRootFilesystem": true,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        }
+      }
+    },
+    "minio": {
+      "enabled": true,
+      "containerPorts": {
+        "api": 9000
+      },
+      "auth": {
+        "rootUser": "admin",
+        "rootPassword": "",
+        "existingSecret": ""
+      },
+      "defaultBuckets": "dremio",
+      "provisioning": {
+        "enabled": true,
+        "extraCommands": [
+          "mc anonymous set download provisioning/dremio"
+        ]
+      },
+      "tls": {
+        "enabled": true,
+        "autoGenerated": {
+          "enabled": true
+        }
+      },
+      "service": {
+        "type": "ClusterIP",
+        "loadBalancerIP": "",
+        "ports": {
+          "api": 9000
+        }
+      },
+      "console": {
+        "enabled": false
+      }
+    },
+    "metrics": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/jmx-exporter",
+        "tag": "1.4.0-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "extraArgs": [],
+      "containerSecurityContext": {
+        "enabled": true,
+        "privileged": false,
+        "runAsNonRoot": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "containerPorts": {
+        "metrics": 5556
+      },
+      "resourcesPreset": "micro",
+      "resources": {},
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 60,
+        "periodSeconds": 10,
+        "timeoutSeconds": 30,
+        "successThreshold": 1,
+        "failureThreshold": 3
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 30,
+        "successThreshold": 1,
+        "failureThreshold": 3
+      },
+      "startupProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 30,
+        "successThreshold": 1,
+        "failureThreshold": 3
+      },
+      "service": {
+        "ports": {
+          "metrics": 5556
+        },
+        "clusterIP": "",
+        "sessionAffinity": "None",
+        "annotations": {}
+      },
+      "configOverrides": {},
+      "existingConfigmap": "",
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "annotations": {},
+        "labels": {},
+        "jobLabel": "",
+        "honorLabels": false,
+        "interval": "",
+        "scrapeTimeout": "",
+        "metricRelabelings": [],
+        "relabelings": [],
+        "selector": {}
+      }
+    },
+    "externalS3": {
+      "host": "",
+      "port": 443,
+      "accessKeyID": "",
+      "accessKeySecret": "",
+      "existingSecret": "",
+      "existingSecretAccessKeyIDKey": "root-user",
+      "existingSecretKeySecretKey": "root-password",
+      "bucket": "dremio",
+      "path": "",
+      "region": "us-east-1",
+      "authentication": "accesskey",
+      "protocol": "https",
+      "disableCertChecking": false
+    },
+    "externalZookeeper": {
+      "servers": [],
+      "port": 2888
+    },
+    "zookeeper": {
+      "enabled": true,
+      "replicaCount": 1,
+      "containerPorts": {
+        "client": 2181
+      },
+      "resourcesPreset": "micro",
+      "resources": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 18,
+    "unique_bundles": 18,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 18
+  },
+  "phase": "$.dremio.auth.username",
+  "kind": "value-path",
+  "path": [
+    "dremio",
+    "auth",
+    "username"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/dremio_1789318305/0000/paths/7e3ba2e9db7688fe1f85"
+}
