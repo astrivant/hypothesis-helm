@@ -1,0 +1,7268 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "operator",
+      "command"
+    ],
+    [
+      "apiserver",
+      "image",
+      "tag"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa"
+    ],
+    [
+      "cluster",
+      "head",
+      "automountServiceAccountToken"
+    ],
+    [
+      "rayImage",
+      "pullPolicy"
+    ],
+    [
+      "apiserver",
+      "livenessProbe"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "cluster",
+      "head",
+      "nodeSelector"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "apiserver",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "operator",
+      "crNamespacedRbacEnable"
+    ],
+    [
+      "apiserver",
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "apiserver",
+      "service",
+      "nodePorts",
+      "http"
+    ],
+    [
+      "apiserver",
+      "service",
+      "nodePorts",
+      "grpc"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "operator",
+      "pdb",
+      "create"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "selector"
+    ],
+    [
+      "apiserver",
+      "image",
+      "registry"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "topologySpreadConstraints"
+    ],
+    [
+      "operator",
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "apiserver",
+      "command"
+    ],
+    [
+      "operator",
+      "topologySpreadConstraints"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "hostname"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "tolerations",
+      "*"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "customStartupProbe"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "args",
+      "*"
+    ],
+    [
+      "operator",
+      "ingress",
+      "hostname"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "nodeAffinityPreset"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "operator",
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "operator",
+      "ingress"
+    ],
+    [
+      "apiserver",
+      "autoscaling"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "operator",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext"
+    ],
+    [
+      "apiserver",
+      "image"
+    ],
+    [
+      "operator",
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "automountServiceAccountToken"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraPaths",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext"
+    ],
+    [
+      "operator",
+      "nodeSelector"
+    ],
+    [
+      "operator",
+      "service",
+      "ports"
+    ],
+    [
+      "cluster",
+      "head",
+      "rayStartParams"
+    ],
+    [
+      "rayImage",
+      "repository"
+    ],
+    [
+      "apiserver",
+      "service",
+      "type"
+    ],
+    [
+      "apiserver",
+      "lifecycleHooks"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podAffinityPreset"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraEnvVarsCM"
+    ],
+    [
+      "operator",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "operator",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "apiserver",
+      "tolerations",
+      "*"
+    ],
+    [
+      "operator",
+      "image"
+    ],
+    [
+      "apiserver",
+      "extraEnvVars"
+    ],
+    [
+      "apiserver",
+      "extraEnvVarsCM"
+    ],
+    [
+      "operator",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "diagnosticMode",
+      "args",
+      "*"
+    ],
+    [
+      "operator",
+      "livenessProbe"
+    ],
+    [
+      "global",
+      "imagePullSecrets"
+    ],
+    [
+      "apiserver",
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "hpa",
+      "targetMemory"
+    ],
+    [
+      "operator",
+      "metrics",
+      "annotations",
+      "prometheus.io/scrape"
+    ],
+    [
+      "apiserver",
+      "automountServiceAccountToken"
+    ],
+    [
+      "operator",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "operator",
+      "metrics"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "resources"
+    ],
+    [
+      "operator",
+      "ingress",
+      "secrets",
+      "*"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "apiserver",
+      "pdb"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "annotations",
+      "prometheus.io/port"
+    ],
+    [
+      "operator",
+      "image",
+      "debug"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "operator",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podAntiAffinityPreset"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "controlledResources"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "apiserver",
+      "initContainers"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "schedulerName"
+    ],
+    [
+      "operator",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraTls"
+    ],
+    [
+      "apiserver",
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "apiserver",
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "apiserver",
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "rayImage",
+      "registry"
+    ],
+    [
+      "cluster",
+      "head",
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "operator",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "hpa",
+      "minReplicas"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "sidecars",
+      "*"
+    ],
+    [
+      "apiserver",
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "apiserver",
+      "service",
+      "ports"
+    ],
+    [
+      "operator",
+      "podAffinityPreset"
+    ],
+    [
+      "apiserver",
+      "resources"
+    ],
+    [
+      "operator",
+      "service",
+      "type"
+    ],
+    [
+      "apiserver",
+      "schedulerName"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "operator",
+      "affinity"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "operator",
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "apiserver",
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "maxAllowed"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "apiserver",
+      "rbac"
+    ],
+    [
+      "operator",
+      "initContainers"
+    ],
+    [
+      "apiserver",
+      "ingress"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "replicaCount"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "annotations"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "minAllowed"
+    ],
+    [
+      "apiserver",
+      "service",
+      "clusterIP"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraRules",
+      "*"
+    ],
+    [
+      "operator",
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "cluster",
+      "head",
+      "podAntiAffinityPreset"
+    ],
+    [
+      "cluster",
+      "head",
+      "topologySpreadConstraints"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "operator",
+      "automountServiceAccountToken"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "cluster",
+      "head",
+      "command"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "operator",
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "hpa",
+      "maxReplicas"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "hpa",
+      "targetCPU"
+    ],
+    [
+      "operator",
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "operator",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "operator",
+      "customLivenessProbe"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "cluster",
+      "head",
+      "nodeAffinityPreset"
+    ],
+    [
+      "diagnosticMode",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "customLivenessProbe"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "operator",
+      "hostAliases"
+    ],
+    [
+      "apiserver",
+      "command",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "resourcesPreset"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "operator",
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "apiserver",
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraRules",
+      "*"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "apiserver",
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "initContainers"
+    ],
+    [
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "cluster",
+      "worker",
+      "groupSpecs",
+      "*",
+      "groupName"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "operator",
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext"
+    ],
+    [
+      "apiserver",
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "apiserver",
+      "initContainers",
+      "*"
+    ],
+    [
+      "operator",
+      "image",
+      "repository"
+    ],
+    [
+      "operator",
+      "rbac"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "priorityClassName"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "operator",
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "operator",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podAnnotations"
+    ],
+    [
+      "apiserver",
+      "nodeSelector"
+    ],
+    [
+      "operator",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext"
+    ],
+    [
+      "operator",
+      "ingress",
+      "secrets"
+    ],
+    [
+      "cluster",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "operator",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "apiserver",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "secrets"
+    ],
+    [
+      "apiserver",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "tolerations"
+    ],
+    [
+      "operator",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "rayImage"
+    ],
+    [
+      "apiserver",
+      "podAntiAffinityPreset"
+    ],
+    [
+      "apiserver",
+      "affinity"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraTls"
+    ],
+    [
+      "cluster",
+      "head",
+      "priorityClassName"
+    ],
+    [
+      "operator",
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "apiserver",
+      "sidecars",
+      "*"
+    ],
+    [
+      "apiserver",
+      "networkPolicy"
+    ],
+    [
+      "operator",
+      "ingress",
+      "selfSigned"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "operator",
+      "tolerations",
+      "*"
+    ],
+    [
+      "apiserver",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "cluster",
+      "head",
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "operator",
+      "ingress",
+      "tls"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "resourcesPreset"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "selector"
+    ],
+    [
+      "operator",
+      "customReadinessProbe"
+    ],
+    [
+      "operator",
+      "command",
+      "*"
+    ],
+    [
+      "operator",
+      "rbac",
+      "create"
+    ],
+    [
+      "apiserver",
+      "topologySpreadConstraints"
+    ],
+    [
+      "apiserver",
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "operator",
+      "metrics",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "operator",
+      "replicaCount"
+    ],
+    [
+      "apiserver",
+      "service",
+      "ports",
+      "http"
+    ],
+    [
+      "operator",
+      "readinessProbe"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "hpa",
+      "enabled"
+    ],
+    [
+      "operator",
+      "extraEnvVarsCM"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "operator",
+      "tolerations"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "apiserver",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "lifecycleHooks"
+    ],
+    [
+      "apiserver",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "cluster",
+      "worker",
+      "groupSpecs",
+      "*"
+    ],
+    [
+      "operator",
+      "service",
+      "nodePorts",
+      "metrics"
+    ],
+    [
+      "namespaceOverride"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraHosts"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "apiserver",
+      "priorityClassName"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa"
+    ],
+    [
+      "operator",
+      "extraVolumeMounts"
+    ],
+    [
+      "operator",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "operator",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "apiserver",
+      "service",
+      "nodePorts"
+    ],
+    [
+      "operator",
+      "rbac",
+      "rules",
+      "*"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "nodeSelector"
+    ],
+    [
+      "apiserver",
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "cluster",
+      "head",
+      "customLivenessProbe"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "annotations",
+      "prometheus.io/scrape"
+    ],
+    [
+      "operator",
+      "initContainers",
+      "*"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "cluster",
+      "head",
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "apiserver",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "operator",
+      "podLabels"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "rayImage",
+      "tag"
+    ],
+    [
+      "apiserver",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "operator",
+      "startupProbe"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "apiserver",
+      "watchAllNamespaces"
+    ],
+    [
+      "apiserver",
+      "updateStrategy"
+    ],
+    [
+      "cluster",
+      "head",
+      "tolerations"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "diagnosticMode",
+      "command",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "apiserver",
+      "resourcesPreset"
+    ],
+    [
+      "apiserver"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "apiserver",
+      "customStartupProbe"
+    ],
+    [
+      "apiserver",
+      "service"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraRules"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "operator",
+      "extraEnvVars"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "affinity"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "hpa",
+      "enabled"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "apiserver",
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "honorLabels"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "operator",
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "operator",
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraVolumeMounts"
+    ],
+    [
+      "cluster",
+      "head",
+      "hostAliases"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "operator",
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "operator",
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "operator",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "cluster",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "head",
+      "podLabels"
+    ],
+    [
+      "cluster",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "operator",
+      "resources"
+    ],
+    [
+      "operator",
+      "watchNamespaces",
+      "*"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "annotations"
+    ],
+    [
+      "extraDeploy"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "labels"
+    ],
+    [
+      "global",
+      "defaultStorageClass"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "apiserver",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "rayImage",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "apiserver",
+      "podLabels"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "jobLabel"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "operator",
+      "priorityClassName"
+    ],
+    [
+      "operator",
+      "schedulerName"
+    ],
+    [
+      "apiserver",
+      "args",
+      "*"
+    ],
+    [
+      "operator",
+      "sidecars"
+    ],
+    [
+      "apiserver",
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "operator",
+      "args"
+    ],
+    [
+      "operator",
+      "podSecurityContext"
+    ],
+    [
+      "operator",
+      "args",
+      "*"
+    ],
+    [
+      "apiserver",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "operator",
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "annotations"
+    ],
+    [
+      "operator",
+      "image",
+      "registry"
+    ],
+    [
+      "apiserver",
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "apiserver",
+      "containerPorts",
+      "http"
+    ],
+    [
+      "apiserver",
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "operator",
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "commonLabels"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "enabled"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "jobLabel"
+    ],
+    [
+      "kubeVersion"
+    ],
+    [
+      "apiserver",
+      "pdb",
+      "create"
+    ],
+    [
+      "operator",
+      "ingress",
+      "apiVersion"
+    ],
+    [
+      "cluster",
+      "head",
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "apiserver",
+      "watchNamespaces",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "hpa",
+      "targetCPU"
+    ],
+    [
+      "commonAnnotations"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "cluster",
+      "head",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "operator",
+      "enableBatchScheduler"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "apiserver",
+      "hostAliases"
+    ],
+    [
+      "operator",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "relabelings"
+    ],
+    [
+      "apiserver",
+      "image",
+      "digest"
+    ],
+    [
+      "operator",
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "apiserver",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "apiserver",
+      "readinessProbe"
+    ],
+    [
+      "operator",
+      "containerPorts",
+      "health"
+    ],
+    [
+      "cluster",
+      "head",
+      "args",
+      "*"
+    ],
+    [
+      "operator",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "operator",
+      "service",
+      "nodePorts"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "command",
+      "*"
+    ],
+    [
+      "operator",
+      "service",
+      "ports",
+      "metrics"
+    ],
+    [
+      "operator",
+      "service",
+      "annotations"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext"
+    ],
+    [
+      "apiserver",
+      "args"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "initContainers",
+      "*"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraHosts",
+      "*"
+    ],
+    [
+      "operator",
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "initContainers",
+      "*"
+    ],
+    [
+      "apiserver",
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "operator",
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "operator",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "relabelings",
+      "*"
+    ],
+    [
+      "apiserver",
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "operator",
+      "ingress",
+      "pathType"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "diagnosticMode",
+      "args"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "sidecars"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraEnvVars"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraEnvVars"
+    ],
+    [
+      "apiserver",
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "cluster",
+      "head",
+      "podAffinityPreset"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "updatePolicy"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "selfSigned"
+    ],
+    [
+      "apiserver",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "apiVersions"
+    ],
+    [
+      "operator",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "hostAliases"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraHosts",
+      "*"
+    ],
+    [
+      "apiserver",
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "operator",
+      "lifecycleHooks"
+    ],
+    [
+      "apiserver",
+      "podAnnotations"
+    ],
+    [
+      "cluster",
+      "head"
+    ],
+    [
+      "apiserver",
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "apiserver",
+      "image",
+      "repository"
+    ],
+    [
+      "operator",
+      "enabled"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "cluster",
+      "head",
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "apiserver",
+      "replicaCount"
+    ],
+    [
+      "apiserver",
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "rayImage",
+      "digest"
+    ],
+    [
+      "extraDeploy",
+      "*"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "operator",
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "apiserver",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "cluster",
+      "head",
+      "podAnnotations"
+    ],
+    [
+      "cluster",
+      "head",
+      "lifecycleHooks"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "maxAllowed"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraPaths"
+    ],
+    [
+      "cluster",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "relabelings",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "global",
+      "compatibility"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "annotations"
+    ],
+    [
+      "cluster",
+      "worker"
+    ],
+    [
+      "operator",
+      "metrics",
+      "annotations",
+      "prometheus.io/port"
+    ],
+    [
+      "operator",
+      "service"
+    ],
+    [
+      "apiserver",
+      "rbac",
+      "create"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "tls"
+    ],
+    [
+      "apiserver",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraPaths"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "hpa"
+    ],
+    [
+      "operator",
+      "metrics",
+      "annotations"
+    ],
+    [
+      "apiserver",
+      "tolerations"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "hpa",
+      "targetMemory"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraVolumes"
+    ],
+    [
+      "apiserver",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "operator",
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "diagnosticMode",
+      "command"
+    ],
+    [
+      "apiserver",
+      "watchNamespaces"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "apiserver",
+      "containerPorts"
+    ],
+    [
+      "apiserver",
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "operator",
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "operator",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "rayImage",
+      "pullSecrets"
+    ],
+    [
+      "apiserver",
+      "extraVolumes"
+    ],
+    [
+      "cluster",
+      "head",
+      "args"
+    ],
+    [
+      "cluster",
+      "serviceAccount"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "updatePolicy"
+    ],
+    [
+      "cluster",
+      "head",
+      "initContainers"
+    ],
+    [
+      "cluster",
+      "head",
+      "sidecars"
+    ],
+    [
+      "operator",
+      "containerSecurityContext"
+    ],
+    [
+      "operator",
+      "sidecars",
+      "*"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "command"
+    ],
+    [
+      "operator",
+      "ingress",
+      "ingressClassName"
+    ],
+    [
+      "apiserver",
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "apiserver",
+      "customLivenessProbe"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "operator",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraTls",
+      "*"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "apiVersions",
+      "*"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "hpa",
+      "minReplicas"
+    ],
+    [
+      "cluster",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraVolumes"
+    ],
+    [
+      "operator",
+      "networkPolicy"
+    ],
+    [
+      "operator",
+      "serviceAccount"
+    ],
+    [
+      "apiserver",
+      "metrics",
+      "serviceMonitor",
+      "honorLabels"
+    ],
+    [
+      "operator",
+      "rbac",
+      "rules"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraRules"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "apiserver",
+      "startupProbe"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "labels"
+    ],
+    [
+      "operator",
+      "podAnnotations"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "controlledResources"
+    ],
+    [
+      "apiserver",
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "apiserver",
+      "rbac",
+      "rules"
+    ],
+    [
+      "operator",
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "apiserver",
+      "containerPorts",
+      "grpc"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "args"
+    ],
+    [
+      "fullnameOverride"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "apiserver",
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "apiserver",
+      "image",
+      "debug"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "operator",
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "operator",
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "apiserver",
+      "service",
+      "ports",
+      "grpc"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "diagnosticMode"
+    ],
+    [
+      "apiserver",
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "cluster",
+      "head",
+      "customReadinessProbe"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "secrets",
+      "*"
+    ],
+    [
+      "global"
+    ],
+    [
+      "global",
+      "storageClass"
+    ],
+    [
+      "apiserver",
+      "metrics"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podLabels"
+    ],
+    [
+      "cluster",
+      "head",
+      "sidecars",
+      "*"
+    ],
+    [
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "minAllowed"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "path"
+    ],
+    [
+      "apiserver",
+      "enabled"
+    ],
+    [
+      "operator",
+      "ingress",
+      "annotations"
+    ],
+    [
+      "cluster",
+      "serviceType"
+    ],
+    [
+      "operator",
+      "containerPorts"
+    ],
+    [
+      "global",
+      "security"
+    ],
+    [
+      "operator",
+      "podAntiAffinityPreset"
+    ],
+    [
+      "cluster",
+      "worker",
+      "groupSpecs"
+    ],
+    [
+      "cluster",
+      "head",
+      "affinity"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "rayStartParams"
+    ],
+    [
+      "operator",
+      "customStartupProbe"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "pathType"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext"
+    ],
+    [
+      "operator",
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "operator",
+      "watchAllNamespaces"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "operator",
+      "updateStrategy"
+    ],
+    [
+      "operator",
+      "metrics",
+      "serviceMonitor",
+      "relabelings"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "cluster",
+      "head",
+      "tolerations",
+      "*"
+    ],
+    [
+      "operator",
+      "image",
+      "tag"
+    ],
+    [
+      "apiserver",
+      "service",
+      "annotations"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "apiserver",
+      "customReadinessProbe"
+    ],
+    [
+      "cluster",
+      "head",
+      "customStartupProbe"
+    ],
+    [
+      "operator"
+    ],
+    [
+      "operator",
+      "image",
+      "digest"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "annotations"
+    ],
+    [
+      "apiserver",
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "operator",
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "apiserver",
+      "serviceAccount"
+    ],
+    [
+      "apiserver",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "hpa"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "ingressClassName"
+    ],
+    [
+      "operator",
+      "watchNamespaces"
+    ],
+    [
+      "operator",
+      "service",
+      "clusterIP"
+    ],
+    [
+      "cluster",
+      "head",
+      "schedulerName"
+    ],
+    [
+      "cluster"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "apiserver",
+      "rbac",
+      "rules",
+      "*"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "apiVersion"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "extraVolumeMounts"
+    ],
+    [
+      "apiserver",
+      "podAffinityPreset"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "apiserver",
+      "service",
+      "extraPorts"
+    ],
+    [
+      "apiserver",
+      "extraVolumeMounts"
+    ],
+    [
+      "operator",
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "operator",
+      "autoscaling",
+      "hpa",
+      "maxReplicas"
+    ],
+    [
+      "operator",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "clusterDomain"
+    ],
+    [
+      "apiserver",
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "cluster",
+      "head",
+      "extraEnvVarsCM"
+    ],
+    [
+      "operator",
+      "extraVolumes"
+    ],
+    [
+      "apiserver",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "customReadinessProbe"
+    ],
+    [
+      "operator",
+      "service",
+      "extraPorts"
+    ],
+    [
+      "apiserver",
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "operator",
+      "ingress",
+      "path"
+    ],
+    [
+      "operator",
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "enabled"
+    ],
+    [
+      "apiserver",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "operator",
+      "resourcesPreset"
+    ],
+    [
+      "apiserver",
+      "autoscaling",
+      "vpa",
+      "annotations"
+    ],
+    [
+      "operator",
+      "nodeAffinityPreset"
+    ],
+    [
+      "operator",
+      "containerPorts",
+      "metrics"
+    ],
+    [
+      "rayImage",
+      "debug"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraHosts"
+    ],
+    [
+      "apiserver",
+      "nodeAffinityPreset"
+    ],
+    [
+      "nameOverride"
+    ],
+    [
+      "global",
+      "security",
+      "allowInsecureImages"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "command",
+      "*"
+    ],
+    [
+      "cluster",
+      "head",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "cluster",
+      "head",
+      "resources"
+    ],
+    [
+      "operator",
+      "pdb"
+    ],
+    [
+      "operator",
+      "autoscaling"
+    ],
+    [
+      "operator",
+      "ingress",
+      "extraTls",
+      "*"
+    ],
+    [
+      "apiserver",
+      "ingress",
+      "extraPaths",
+      "*"
+    ],
+    [
+      "operator",
+      "ingress",
+      "enabled"
+    ],
+    [
+      "operator",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common",
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "apiserver",
+      "sidecars"
+    ],
+    [
+      "operator",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "cluster",
+      "worker",
+      "common"
+    ],
+    [
+      "apiserver",
+      "podSecurityContext",
+      "fsGroup"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 11,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 29,
+      "message": "unresolved dot context: .Values.operator.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 32,
+      "message": "unresolved dot context: .Values.apiserver.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 35,
+      "message": "unresolved dot context: .Values.cluster.enabled"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 54,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 9,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.operator.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.apiserver.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.rayImage"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 16,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 23,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 24,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Values.operator.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 38,
+      "message": "unresolved dot context: .Values.operator.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: .Values.operator.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 41,
+      "message": "unresolved dot context: .Values.operator.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 48,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 56,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 57,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 63,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "unresolved dot context: .Values.apiserver.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 70,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 71,
+      "message": "unresolved dot context: .Values.apiserver.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 72,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 72,
+      "message": "unresolved dot context: .Values.apiserver.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 72,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 74,
+      "message": "unresolved dot context: .Values.apiserver.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 81,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "unresolved dot context: .Values.rayImage"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 88,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 89,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 89,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 95,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 96,
+      "message": "unresolved dot context: .Values.cluster.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 97,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 97,
+      "message": "unresolved dot context: .Values.cluster.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 97,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 99,
+      "message": "unresolved dot context: .Values.cluster.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 106,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 108,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 108,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 119,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 120,
+      "message": "unresolved dot context: .Values.operator.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 120,
+      "message": "unresolved dot context: .Values.apiserver.enabled"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/clusterrolebinding.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterroles.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterroles.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterroles.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterroles.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterroles.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterroles.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/clusterroles.yaml",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 68,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 82,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 85,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 88,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 87,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 89,
+      "message": "unresolved dot context: .Values.apiserver.command"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 90,
+      "message": "unresolved dot context: .Values.apiserver.command"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 90,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 93,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 92,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 94,
+      "message": "unresolved dot context: .Values.apiserver.args"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 95,
+      "message": "unresolved dot context: .Values.apiserver.args"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 95,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 98,
+      "message": "unresolved dot context: .Values.apiserver.containerPorts.grpc"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 99,
+      "message": "unresolved dot context: .Values.apiserver.containerPorts.http"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 102,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 107,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 111,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 113,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 115,
+      "message": "unresolved dot context: .Values.apiserver.resourcesPreset"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 116,
+      "message": "unresolved dot context: .Values.apiserver.resourcesPreset"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 116,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 125,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 124,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 126,
+      "message": "unresolved dot context: .Values.apiserver.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 127,
+      "message": "unresolved dot context: .Values.apiserver.livenessProbe"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 127,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 132,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 131,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 133,
+      "message": "unresolved dot context: .Values.apiserver.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 134,
+      "message": "unresolved dot context: .Values.apiserver.readinessProbe"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 134,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 140,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 139,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 141,
+      "message": "unresolved dot context: .Values.apiserver.startupProbe.enabled"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 142,
+      "message": "unresolved dot context: .Values.apiserver.startupProbe"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 142,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 149,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 155,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 158,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/deployment.yaml",
+      "line": 164,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/hpa.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 46,
+      "message": "unresolved variable context: $cert.Cert"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 47,
+      "message": "unresolved variable context: $cert.Key"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 48,
+      "message": "unresolved variable context: $ca.Cert"
+    },
+    {
+      "file": "templates/apiserver/ingress-tls-secret.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/ingress.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 69,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 73,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/networkpolicy.yaml",
+      "line": 90,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/pdb.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 16,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/role.yaml",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/rolebinding.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service-account.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service-account.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service-account.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service-account.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service-account.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service-account.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 51,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 53,
+      "message": "unresolved dot context: .Values.apiserver.service.type"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 60,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 62,
+      "message": "unresolved dot context: .Values.apiserver.service.type"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 67,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 69,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/service.yaml",
+      "line": 70,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/servicemonitor.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/apiserver/vpa.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 65,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 68,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 74,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 81,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 84,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 83,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 85,
+      "message": "unresolved dot context: .Values.cluster.head.command"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 86,
+      "message": "unresolved dot context: .Values.cluster.head.command"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 86,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 89,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 88,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 90,
+      "message": "unresolved dot context: .Values.cluster.head.args"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 91,
+      "message": "unresolved dot context: .Values.cluster.head.args"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 91,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 94,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 99,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 103,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 105,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 107,
+      "message": "unresolved dot context: .Values.cluster.head.resourcesPreset"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 108,
+      "message": "unresolved dot context: .Values.cluster.head.resourcesPreset"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 108,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 111,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 117,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 120,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 123,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 126,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 129,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 135,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 142,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 151,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 153,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 154,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 158,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 159,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 162,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 166,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 170,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 172,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 174,
+      "message": "unresolved variable context: $nodeAffinityPreset.type"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 174,
+      "message": "unresolved variable context: $nodeAffinityPreset.key"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 174,
+      "message": "unresolved variable context: $nodeAffinityPreset.values"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 174,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 178,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 182,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 194,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 197,
+      "message": "unresolved variable context: $podSecurityContext.enabled"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 198,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 206,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 210,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 213,
+      "message": "unresolved variable context: $containerSecurityContext.enabled"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 214,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 218,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 217,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 220,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 224,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 223,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 226,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 230,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 236,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 241,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 249,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 253,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 257,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 261,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 268,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 272,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/raycluster.yaml",
+      "line": 279,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/service-account.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/service-account.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/service-account.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/service-account.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/service-account.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cluster/service-account.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/extra-list.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 54,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 69,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 70,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 73,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 75,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 76,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 77,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 82,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 87,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 90,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 91,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 94,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 96,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 97,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 98,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 99,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 103,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 108,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 111,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/clusterrolebinding.yaml",
+      "line": 112,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 225,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 227,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 228,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 229,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 230,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 234,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 257,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 259,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 260,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 261,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 262,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 266,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 285,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 287,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 288,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 289,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 290,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 294,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 317,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 319,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 320,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 321,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 322,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/clusterroles.yaml",
+      "line": 326,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 68,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 82,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 85,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 88,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 87,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 89,
+      "message": "unresolved dot context: .Values.operator.command"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 90,
+      "message": "unresolved dot context: .Values.operator.command"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 90,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 93,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 92,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 94,
+      "message": "unresolved dot context: .Values.operator.args"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 95,
+      "message": "unresolved dot context: .Values.operator.args"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 95,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 98,
+      "message": "unresolved dot context: .Values.operator.containerPorts.metrics"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 99,
+      "message": "unresolved dot context: .Values.operator.containerPorts.health"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 100,
+      "message": "unresolved dot context: .Values.operator.watchAllNamespaces"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 101,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 101,
+      "message": "unresolved dot context: .Values.operator.watchNamespaces"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 101,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 106,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 111,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 115,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 117,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 119,
+      "message": "unresolved dot context: .Values.operator.resourcesPreset"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 120,
+      "message": "unresolved dot context: .Values.operator.resourcesPreset"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 120,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 129,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 128,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 130,
+      "message": "unresolved dot context: .Values.operator.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 131,
+      "message": "unresolved dot context: .Values.operator.livenessProbe"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 131,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 136,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 135,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 137,
+      "message": "unresolved dot context: .Values.operator.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 138,
+      "message": "unresolved dot context: .Values.operator.readinessProbe"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 138,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 144,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 143,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 145,
+      "message": "unresolved dot context: .Values.operator.startupProbe.enabled"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 146,
+      "message": "unresolved dot context: .Values.operator.startupProbe"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 146,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 153,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 159,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 162,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/deployment.yaml",
+      "line": 168,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/hpa.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 46,
+      "message": "unresolved variable context: $cert.Cert"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 47,
+      "message": "unresolved variable context: $cert.Key"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 48,
+      "message": "unresolved variable context: $ca.Cert"
+    },
+    {
+      "file": "templates/operator/ingress-tls-secret.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/ingress.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 69,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 73,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/networkpolicy.yaml",
+      "line": 91,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/pdb.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 65,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 66,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 67,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/role.yaml",
+      "line": 312,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/rolebinding.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service-account.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service-account.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service-account.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service-account.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service-account.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service-account.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 51,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 53,
+      "message": "unresolved dot context: .Values.operator.service.type"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/service.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/servicemonitor.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/operator/vpa.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "path": [
+        "extraDeploy",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "networkPolicy",
+        "kubeAPIServerPorts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "networkPolicy",
+        "kubeAPIServerPorts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "secrets",
+        "*",
+        "certificate"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "secrets",
+        "*",
+        "key"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "secrets",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "affinity"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "args"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "command"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "containerSecurityContext"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "customLivenessProbe"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "customReadinessProbe"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "customStartupProbe"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraEnvVars"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraEnvVarsCM"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraEnvVarsSecret"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraVolumeMounts"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraVolumes"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "groupName"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "hostAliases"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "initContainers"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "lifecycleHooks"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "nodeAffinityPreset"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "nodeSelector"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podAffinityPreset"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podAnnotations"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podAntiAffinityPreset"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podLabels"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podSecurityContext"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "priorityClassName"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "rayStartParams"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "replicaCount"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "resources"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "schedulerName"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "sidecars"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "terminationGracePeriodSeconds"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "tolerations"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "topologySpreadConstraints"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "secrets",
+        "*",
+        "certificate"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "secrets",
+        "*",
+        "key"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "secrets",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "secrets",
+        "*",
+        "certificate"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "secrets",
+        "*",
+        "key"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "apiserver",
+        "ingress",
+        "secrets",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "apiserver",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "apiserver",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "affinity"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "args"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "command"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "containerSecurityContext"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "customLivenessProbe"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "customReadinessProbe"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "customStartupProbe"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraEnvVars"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraEnvVarsCM"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraEnvVarsSecret"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraVolumeMounts"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "extraVolumes"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "hostAliases"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "initContainers"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "lifecycleHooks"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "nodeAffinityPreset"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "nodeSelector"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podAffinityPreset"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podAnnotations"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podAntiAffinityPreset"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podLabels"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "podSecurityContext"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "priorityClassName"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "rayStartParams"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "replicaCount"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "resources"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "schedulerName"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "sidecars"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "terminationGracePeriodSeconds"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "tolerations"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cluster",
+        "worker",
+        "groupSpecs",
+        "*",
+        "topologySpreadConstraints"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "secrets",
+        "*",
+        "certificate"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "secrets",
+        "*",
+        "key"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "ingress",
+        "secrets",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "operator",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}

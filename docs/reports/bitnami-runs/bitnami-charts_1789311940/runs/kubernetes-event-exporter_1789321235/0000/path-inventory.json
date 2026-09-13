@@ -1,0 +1,1921 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "metrics",
+      "service",
+      "annotations",
+      "prometheus.io/scrape"
+    ],
+    [
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "config",
+      "receivers",
+      "*",
+      "name"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "endpoints",
+      "*",
+      "path"
+    ],
+    [
+      "initContainers"
+    ],
+    [
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "lifecycleHooks"
+    ],
+    [
+      "image"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*",
+      "verbs",
+      "*"
+    ],
+    [
+      "metrics",
+      "prometheusRule",
+      "namespace"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*"
+    ],
+    [
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "updateStrategy"
+    ],
+    [
+      "diagnosticMode",
+      "args",
+      "*"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "config"
+    ],
+    [
+      "global",
+      "imagePullSecrets"
+    ],
+    [
+      "podSecurityContext"
+    ],
+    [
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "metrics",
+      "service",
+      "ports"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "minReplicas"
+    ],
+    [
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "annotations"
+    ],
+    [
+      "config",
+      "logLevel"
+    ],
+    [
+      "config",
+      "receivers",
+      "*",
+      "file",
+      "path"
+    ],
+    [
+      "config",
+      "route",
+      "routes"
+    ],
+    [
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "schedulerName"
+    ],
+    [
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "automountServiceAccountToken"
+    ],
+    [
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "config",
+      "route",
+      "routes",
+      "*",
+      "match",
+      "*",
+      "receiver"
+    ],
+    [
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "rts",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "resources"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "recommenders"
+    ],
+    [
+      "podAffinityPreset"
+    ],
+    [
+      "revisionHistoryLimit"
+    ],
+    [
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "diagnosticMode",
+      "enabled"
+    ],
+    [
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "config",
+      "route",
+      "routes",
+      "*",
+      "match",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "metrics",
+      "prometheusRule"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "extraEnvVars"
+    ],
+    [
+      "config",
+      "receivers",
+      "*",
+      "file",
+      "layout"
+    ],
+    [
+      "extraEnvVarsSecret"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "containerPorts",
+      "http"
+    ],
+    [
+      "containerPorts"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "metrics",
+      "service",
+      "annotations"
+    ],
+    [
+      "rts",
+      "networkPolicy"
+    ],
+    [
+      "nodeAffinityPreset"
+    ],
+    [
+      "metrics",
+      "serviceMonitor"
+    ],
+    [
+      "rbac",
+      "create"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "selector"
+    ],
+    [
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "networkPolicy"
+    ],
+    [
+      "metrics"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "recommenders",
+      "*"
+    ],
+    [
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "config",
+      "logFormat"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "rbac",
+      "rules"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "enabled"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "sidecars"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "diagnosticMode",
+      "command",
+      "*"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "controlledResources"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "relabelings",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "sidecars",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "initContainers",
+      "*"
+    ],
+    [
+      "extraEnvVarsCM"
+    ],
+    [
+      "command",
+      "*"
+    ],
+    [
+      "rts"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "endpoints"
+    ],
+    [
+      "autoscaling"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "customLivenessProbe"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "extraDeploy"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "port"
+    ],
+    [
+      "config",
+      "route",
+      "routes",
+      "*"
+    ],
+    [
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "endpoints",
+      "*"
+    ],
+    [
+      "commonLabels"
+    ],
+    [
+      "kubeVersion"
+    ],
+    [
+      "resourcesPreset"
+    ],
+    [
+      "rbac"
+    ],
+    [
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "image",
+      "digest"
+    ],
+    [
+      "commonAnnotations"
+    ],
+    [
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "relabelings"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "hostAliases",
+      "*"
+    ],
+    [
+      "metrics",
+      "service",
+      "port"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "pdb",
+      "create"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*",
+      "verbs"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "labels"
+    ],
+    [
+      "metrics",
+      "enabled"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "maxAllowed"
+    ],
+    [
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "hostAliases"
+    ],
+    [
+      "diagnosticMode",
+      "args"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "customStartupProbe"
+    ],
+    [
+      "apiVersions"
+    ],
+    [
+      "args",
+      "*"
+    ],
+    [
+      "extraDeploy",
+      "*"
+    ],
+    [
+      "podLabels"
+    ],
+    [
+      "metrics",
+      "service",
+      "ports",
+      "http"
+    ],
+    [
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "readinessProbe"
+    ],
+    [
+      "global",
+      "compatibility"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "customReadinessProbe"
+    ],
+    [
+      "podAntiAffinityPreset"
+    ],
+    [
+      "autoscaling",
+      "vpa"
+    ],
+    [
+      "podAnnotations"
+    ],
+    [
+      "command"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "path"
+    ],
+    [
+      "metrics",
+      "prometheusRule",
+      "groups",
+      "*"
+    ],
+    [
+      "startupProbe"
+    ],
+    [
+      "diagnosticMode",
+      "command"
+    ],
+    [
+      "livenessProbe"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "replicaCount"
+    ],
+    [
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "updatePolicy"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "honorLabels"
+    ],
+    [
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "args"
+    ],
+    [
+      "apiVersions",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*",
+      "apiGroups"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "fullnameOverride"
+    ],
+    [
+      "diagnosticMode"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "minAllowed"
+    ],
+    [
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "global"
+    ],
+    [
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "extraContainerPorts"
+    ],
+    [
+      "global",
+      "security"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "config",
+      "route",
+      "routes",
+      "*",
+      "match"
+    ],
+    [
+      "extraContainerPorts",
+      "*"
+    ],
+    [
+      "metrics",
+      "service",
+      "annotations",
+      "prometheus.io/port"
+    ],
+    [
+      "metrics",
+      "prometheusRule",
+      "groups"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "config",
+      "receivers",
+      "*"
+    ],
+    [
+      "config",
+      "route"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*",
+      "resources"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*",
+      "apiGroups",
+      "*"
+    ],
+    [
+      "config",
+      "receivers"
+    ],
+    [
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "config",
+      "clusterName"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "jobLabel"
+    ],
+    [
+      "topologySpreadConstraints"
+    ],
+    [
+      "metrics",
+      "prometheusRule",
+      "enabled"
+    ],
+    [
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "serviceAccount"
+    ],
+    [
+      "metrics",
+      "service"
+    ],
+    [
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "image",
+      "registry"
+    ],
+    [
+      "pdb"
+    ],
+    [
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "nameOverride"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "global",
+      "security",
+      "allowInsecureImages"
+    ],
+    [
+      "containerSecurityContext"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "config",
+      "receivers",
+      "*",
+      "file"
+    ],
+    [
+      "metrics",
+      "prometheusRule",
+      "labels"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*",
+      "resources",
+      "*"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 32,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 11,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 12,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 13,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 13,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 15,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 22,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 23,
+      "message": "unresolved dot context: .Values.replicaCount"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 26,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 35,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 36,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "unresolved dot context: .Values.config"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "variable reassignment requires review: $config = fromYaml (tpl $config .)"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: mergeOverwrite"
+    },
+    {
+      "file": "templates/clusterrole.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrole.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/clusterrole.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrole.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 69,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 73,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 76,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 79,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 78,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 80,
+      "message": "unresolved dot context: .Values.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 81,
+      "message": "unresolved dot context: .Values.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 81,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 84,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 83,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 85,
+      "message": "unresolved dot context: .Values.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 86,
+      "message": "unresolved dot context: .Values.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 86,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 92,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 95,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 101,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 105,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 110,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 109,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 111,
+      "message": "unresolved dot context: .Values.startupProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 112,
+      "message": "unresolved dot context: .Values.startupProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 112,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 118,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 117,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 119,
+      "message": "unresolved dot context: .Values.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 120,
+      "message": "unresolved dot context: .Values.livenessProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 120,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 126,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 125,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 127,
+      "message": "unresolved dot context: .Values.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 128,
+      "message": "unresolved dot context: .Values.readinessProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 128,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 134,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 136,
+      "message": "unresolved dot context: .Values.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 137,
+      "message": "unresolved dot context: .Values.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 137,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 144,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 150,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 153,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 158,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 160,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/extra-list.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/metrics-service.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/metrics-service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/metrics-service.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/metrics-service.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/metrics-service.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/metrics-service.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/metrics-service.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 67,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/prometheusrule.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 7,
+      "message": "unresolved variable context: $config.leaderElection.enabled"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 21,
+      "message": "unresolved variable context: $config.leaderElection.leaderElectionID"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 37,
+      "message": "unresolved variable context: $config.leaderElection.leaderElectionID"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac-leader-election.yaml",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rbac.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/serviceaccount.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 26,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: merge"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 27,
+      "message": "unresolved variable context: $endpoint.port"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 28,
+      "message": "unresolved variable context: $endpoint.path"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 29,
+      "message": "unresolved variable context: $endpoint.interval"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 30,
+      "message": "unresolved variable context: $endpoint.interval"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 32,
+      "message": "unresolved variable context: $endpoint.scrapeTimeout"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 33,
+      "message": "unresolved variable context: $endpoint.scrapeTimeout"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 35,
+      "message": "unresolved variable context: $endpoint.relabelings"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 36,
+      "message": "unresolved variable context: $endpoint.relabelings"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 38,
+      "message": "unresolved variable context: $endpoint.metricRelabelings"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 39,
+      "message": "unresolved variable context: $endpoint.metricRelabelings"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 41,
+      "message": "unresolved variable context: $endpoint.honorLabels"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 42,
+      "message": "unresolved variable context: $endpoint.honorLabels"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "path": [
+        "extraDeploy",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "metrics",
+        "service",
+        "port"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "kubeAPIServerPorts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "rbac",
+        "rules",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "rts",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}

@@ -1,0 +1,2735 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 242,
+    "present_fields": [
+      [
+        "architecture"
+      ],
+      [
+        "auth",
+        "database"
+      ],
+      [
+        "auth",
+        "forcePassword"
+      ],
+      [
+        "auth",
+        "password"
+      ],
+      [
+        "auth",
+        "replicationPassword"
+      ],
+      [
+        "auth",
+        "replicationUser"
+      ],
+      [
+        "auth",
+        "rootPassword"
+      ],
+      [
+        "auth",
+        "usePasswordFiles"
+      ],
+      [
+        "auth",
+        "username"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initdbScripts"
+      ],
+      [
+        "initdbScriptsConfigMap"
+      ],
+      [
+        "metrics",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "extraArgs",
+        "primary"
+      ],
+      [
+        "metrics",
+        "extraVolumeMounts",
+        "primary"
+      ],
+      [
+        "metrics",
+        "extraVolumeMounts",
+        "secondary"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "passwordUpdateJob",
+        "args"
+      ],
+      [
+        "passwordUpdateJob",
+        "automountServiceAccountToken"
+      ],
+      [
+        "passwordUpdateJob",
+        "backoffLimit"
+      ],
+      [
+        "passwordUpdateJob",
+        "command"
+      ],
+      [
+        "passwordUpdateJob",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "passwordUpdateJob",
+        "customLivenessProbe"
+      ],
+      [
+        "passwordUpdateJob",
+        "customReadinessProbe"
+      ],
+      [
+        "passwordUpdateJob",
+        "customStartupProbe"
+      ],
+      [
+        "passwordUpdateJob",
+        "enabled"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraEnvVars"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraEnvVarsCM"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraVolumeMounts"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraVolumes"
+      ],
+      [
+        "passwordUpdateJob",
+        "hostAliases"
+      ],
+      [
+        "passwordUpdateJob",
+        "initContainers"
+      ],
+      [
+        "passwordUpdateJob",
+        "podAnnotations"
+      ],
+      [
+        "passwordUpdateJob",
+        "podLabels"
+      ],
+      [
+        "passwordUpdateJob",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "existingSecret"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "password"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "replicationPassword"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "rootPassword"
+      ],
+      [
+        "passwordUpdateJob",
+        "resources"
+      ],
+      [
+        "primary",
+        "affinity"
+      ],
+      [
+        "primary",
+        "automountServiceAccountToken"
+      ],
+      [
+        "primary",
+        "configuration"
+      ],
+      [
+        "primary",
+        "containerPorts",
+        "mysql"
+      ],
+      [
+        "primary",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "primary",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "primary",
+        "customLivenessProbe"
+      ],
+      [
+        "primary",
+        "customReadinessProbe"
+      ],
+      [
+        "primary",
+        "customStartupProbe"
+      ],
+      [
+        "primary",
+        "existingConfigmap"
+      ],
+      [
+        "primary",
+        "extraEnvVars"
+      ],
+      [
+        "primary",
+        "extraEnvVarsCM"
+      ],
+      [
+        "primary",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "primary",
+        "extraFlags"
+      ],
+      [
+        "primary",
+        "extraVolumeMounts"
+      ],
+      [
+        "primary",
+        "extraVolumes"
+      ],
+      [
+        "primary",
+        "hostAliases"
+      ],
+      [
+        "primary",
+        "initContainerSecurityContext",
+        "enabled"
+      ],
+      [
+        "primary",
+        "initContainers"
+      ],
+      [
+        "primary",
+        "lifecycleHooks"
+      ],
+      [
+        "primary",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "primary",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "primary",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "primary",
+        "nodeSelector"
+      ],
+      [
+        "primary",
+        "pdb",
+        "create"
+      ],
+      [
+        "primary",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "primary",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "primary",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "primary",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "primary",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "primary",
+        "podAffinityPreset"
+      ],
+      [
+        "primary",
+        "podAnnotations"
+      ],
+      [
+        "primary",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "primary",
+        "podLabels"
+      ],
+      [
+        "primary",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "primary",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "primary",
+        "priorityClassName"
+      ],
+      [
+        "primary",
+        "resources"
+      ],
+      [
+        "primary",
+        "revisionHistoryLimit"
+      ],
+      [
+        "primary",
+        "runtimeClassName"
+      ],
+      [
+        "primary",
+        "schedulerName"
+      ],
+      [
+        "primary",
+        "service",
+        "annotations"
+      ],
+      [
+        "primary",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "primary",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "primary",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "primary",
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "primary",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "primary",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "primary",
+        "service",
+        "nodePorts",
+        "mysql"
+      ],
+      [
+        "primary",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "primary",
+        "service",
+        "ports",
+        "mysql"
+      ],
+      [
+        "primary",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "primary",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "primary",
+        "service",
+        "type"
+      ],
+      [
+        "primary",
+        "sidecars"
+      ],
+      [
+        "primary",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "primary",
+        "tolerations"
+      ],
+      [
+        "primary",
+        "topologySpreadConstraints"
+      ],
+      [
+        "primary",
+        "updateStrategy"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "secondary",
+        "affinity"
+      ],
+      [
+        "secondary",
+        "automountServiceAccountToken"
+      ],
+      [
+        "secondary",
+        "configuration"
+      ],
+      [
+        "secondary",
+        "containerPorts",
+        "mysql"
+      ],
+      [
+        "secondary",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "secondary",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "secondary",
+        "customLivenessProbe"
+      ],
+      [
+        "secondary",
+        "customReadinessProbe"
+      ],
+      [
+        "secondary",
+        "customStartupProbe"
+      ],
+      [
+        "secondary",
+        "existingConfigmap"
+      ],
+      [
+        "secondary",
+        "extraEnvVars"
+      ],
+      [
+        "secondary",
+        "extraEnvVarsCM"
+      ],
+      [
+        "secondary",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "secondary",
+        "extraFlags"
+      ],
+      [
+        "secondary",
+        "extraVolumeMounts"
+      ],
+      [
+        "secondary",
+        "extraVolumes"
+      ],
+      [
+        "secondary",
+        "hostAliases"
+      ],
+      [
+        "secondary",
+        "initContainers"
+      ],
+      [
+        "secondary",
+        "lifecycleHooks"
+      ],
+      [
+        "secondary",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "secondary",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "secondary",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "secondary",
+        "nodeSelector"
+      ],
+      [
+        "secondary",
+        "pdb",
+        "create"
+      ],
+      [
+        "secondary",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "secondary",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "labels"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "selector"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "size"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "secondary",
+        "podAffinityPreset"
+      ],
+      [
+        "secondary",
+        "podAnnotations"
+      ],
+      [
+        "secondary",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "secondary",
+        "podLabels"
+      ],
+      [
+        "secondary",
+        "podManagementPolicy"
+      ],
+      [
+        "secondary",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "secondary",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "secondary",
+        "priorityClassName"
+      ],
+      [
+        "secondary",
+        "replicaCount"
+      ],
+      [
+        "secondary",
+        "resources"
+      ],
+      [
+        "secondary",
+        "revisionHistoryLimit"
+      ],
+      [
+        "secondary",
+        "runtimeClassName"
+      ],
+      [
+        "secondary",
+        "schedulerName"
+      ],
+      [
+        "secondary",
+        "service",
+        "annotations"
+      ],
+      [
+        "secondary",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "secondary",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "secondary",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "secondary",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "secondary",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "secondary",
+        "service",
+        "nodePorts",
+        "mysql"
+      ],
+      [
+        "secondary",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "secondary",
+        "service",
+        "ports",
+        "mysql"
+      ],
+      [
+        "secondary",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "secondary",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "secondary",
+        "service",
+        "type"
+      ],
+      [
+        "secondary",
+        "sidecars"
+      ],
+      [
+        "secondary",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "secondary",
+        "tolerations"
+      ],
+      [
+        "secondary",
+        "topologySpreadConstraints"
+      ],
+      [
+        "secondary",
+        "updateStrategy"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceBindings",
+        "enabled"
+      ],
+      [
+        "tde",
+        "enabled"
+      ],
+      [
+        "tde",
+        "encryptedKeyFilename"
+      ],
+      [
+        "tde",
+        "existingSecret"
+      ],
+      [
+        "tde",
+        "randomKeyFilename"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "enabled"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "provider"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "address"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "authMountPath"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "encryptedKeySecretKey"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "encryptedKeySecretPath"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "randomKeySecretKey"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "randomKeySecretPath"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "roleName"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "primary",
+        "existingConfigmap"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "architecture"
+      ],
+      [
+        "auth",
+        "customPasswordFiles",
+        "replicator"
+      ],
+      [
+        "auth",
+        "customPasswordFiles",
+        "root"
+      ],
+      [
+        "auth",
+        "customPasswordFiles",
+        "user"
+      ],
+      [
+        "auth",
+        "database"
+      ],
+      [
+        "auth",
+        "forcePassword"
+      ],
+      [
+        "auth",
+        "password"
+      ],
+      [
+        "auth",
+        "replicationPassword"
+      ],
+      [
+        "auth",
+        "replicationUser"
+      ],
+      [
+        "auth",
+        "rootPassword"
+      ],
+      [
+        "auth",
+        "usePasswordFiles"
+      ],
+      [
+        "auth",
+        "username"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initdbScripts"
+      ],
+      [
+        "initdbScriptsConfigMap"
+      ],
+      [
+        "metrics",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "extraArgs",
+        "primary"
+      ],
+      [
+        "metrics",
+        "extraVolumeMounts",
+        "primary"
+      ],
+      [
+        "metrics",
+        "extraVolumeMounts",
+        "secondary"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "passwordUpdateJob",
+        "args"
+      ],
+      [
+        "passwordUpdateJob",
+        "automountServiceAccountToken"
+      ],
+      [
+        "passwordUpdateJob",
+        "backoffLimit"
+      ],
+      [
+        "passwordUpdateJob",
+        "command"
+      ],
+      [
+        "passwordUpdateJob",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "passwordUpdateJob",
+        "customLivenessProbe"
+      ],
+      [
+        "passwordUpdateJob",
+        "customReadinessProbe"
+      ],
+      [
+        "passwordUpdateJob",
+        "customStartupProbe"
+      ],
+      [
+        "passwordUpdateJob",
+        "enabled"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraEnvVars"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraEnvVarsCM"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraVolumeMounts"
+      ],
+      [
+        "passwordUpdateJob",
+        "extraVolumes"
+      ],
+      [
+        "passwordUpdateJob",
+        "hostAliases"
+      ],
+      [
+        "passwordUpdateJob",
+        "initContainers"
+      ],
+      [
+        "passwordUpdateJob",
+        "podAnnotations"
+      ],
+      [
+        "passwordUpdateJob",
+        "podLabels"
+      ],
+      [
+        "passwordUpdateJob",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "existingSecret"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "password"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "replicationPassword"
+      ],
+      [
+        "passwordUpdateJob",
+        "previousPasswords",
+        "rootPassword"
+      ],
+      [
+        "passwordUpdateJob",
+        "resources"
+      ],
+      [
+        "primary",
+        "affinity"
+      ],
+      [
+        "primary",
+        "automountServiceAccountToken"
+      ],
+      [
+        "primary",
+        "configuration"
+      ],
+      [
+        "primary",
+        "containerPorts",
+        "mysql"
+      ],
+      [
+        "primary",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "primary",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "primary",
+        "customLivenessProbe"
+      ],
+      [
+        "primary",
+        "customReadinessProbe"
+      ],
+      [
+        "primary",
+        "customStartupProbe"
+      ],
+      [
+        "primary",
+        "extraEnvVars"
+      ],
+      [
+        "primary",
+        "extraEnvVarsCM"
+      ],
+      [
+        "primary",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "primary",
+        "extraFlags"
+      ],
+      [
+        "primary",
+        "extraVolumeMounts"
+      ],
+      [
+        "primary",
+        "extraVolumes"
+      ],
+      [
+        "primary",
+        "hostAliases"
+      ],
+      [
+        "primary",
+        "initContainerSecurityContext",
+        "enabled"
+      ],
+      [
+        "primary",
+        "initContainers"
+      ],
+      [
+        "primary",
+        "lifecycleHooks"
+      ],
+      [
+        "primary",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "primary",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "primary",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "primary",
+        "nodeSelector"
+      ],
+      [
+        "primary",
+        "pdb",
+        "create"
+      ],
+      [
+        "primary",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "primary",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "primary",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "primary",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "primary",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "primary",
+        "podAffinityPreset"
+      ],
+      [
+        "primary",
+        "podAnnotations"
+      ],
+      [
+        "primary",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "primary",
+        "podLabels"
+      ],
+      [
+        "primary",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "primary",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "primary",
+        "priorityClassName"
+      ],
+      [
+        "primary",
+        "resources"
+      ],
+      [
+        "primary",
+        "revisionHistoryLimit"
+      ],
+      [
+        "primary",
+        "runtimeClassName"
+      ],
+      [
+        "primary",
+        "schedulerName"
+      ],
+      [
+        "primary",
+        "service",
+        "annotations"
+      ],
+      [
+        "primary",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "primary",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "primary",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "primary",
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "primary",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "primary",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "primary",
+        "service",
+        "nodePort"
+      ],
+      [
+        "primary",
+        "service",
+        "nodePorts",
+        "mysql"
+      ],
+      [
+        "primary",
+        "service",
+        "port"
+      ],
+      [
+        "primary",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "primary",
+        "service",
+        "ports",
+        "mysql"
+      ],
+      [
+        "primary",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "primary",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "primary",
+        "service",
+        "type"
+      ],
+      [
+        "primary",
+        "sidecars"
+      ],
+      [
+        "primary",
+        "startupWaitOptions",
+        "retries"
+      ],
+      [
+        "primary",
+        "startupWaitOptions",
+        "sleepTime"
+      ],
+      [
+        "primary",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "primary",
+        "tolerations"
+      ],
+      [
+        "primary",
+        "topologySpreadConstraints"
+      ],
+      [
+        "primary",
+        "updateStrategy"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "secondary",
+        "affinity"
+      ],
+      [
+        "secondary",
+        "automountServiceAccountToken"
+      ],
+      [
+        "secondary",
+        "configuration"
+      ],
+      [
+        "secondary",
+        "containerPorts",
+        "mysql"
+      ],
+      [
+        "secondary",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "secondary",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "secondary",
+        "customLivenessProbe"
+      ],
+      [
+        "secondary",
+        "customReadinessProbe"
+      ],
+      [
+        "secondary",
+        "customStartupProbe"
+      ],
+      [
+        "secondary",
+        "existingConfigmap"
+      ],
+      [
+        "secondary",
+        "extraEnvVars"
+      ],
+      [
+        "secondary",
+        "extraEnvVarsCM"
+      ],
+      [
+        "secondary",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "secondary",
+        "extraFlags"
+      ],
+      [
+        "secondary",
+        "extraVolumeMounts"
+      ],
+      [
+        "secondary",
+        "extraVolumes"
+      ],
+      [
+        "secondary",
+        "hostAliases"
+      ],
+      [
+        "secondary",
+        "initContainers"
+      ],
+      [
+        "secondary",
+        "lifecycleHooks"
+      ],
+      [
+        "secondary",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "secondary",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "secondary",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "secondary",
+        "nodeSelector"
+      ],
+      [
+        "secondary",
+        "pdb",
+        "create"
+      ],
+      [
+        "secondary",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "secondary",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "labels"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "selector"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "size"
+      ],
+      [
+        "secondary",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "secondary",
+        "podAffinityPreset"
+      ],
+      [
+        "secondary",
+        "podAnnotations"
+      ],
+      [
+        "secondary",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "secondary",
+        "podLabels"
+      ],
+      [
+        "secondary",
+        "podManagementPolicy"
+      ],
+      [
+        "secondary",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "secondary",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "secondary",
+        "priorityClassName"
+      ],
+      [
+        "secondary",
+        "replicaCount"
+      ],
+      [
+        "secondary",
+        "resources"
+      ],
+      [
+        "secondary",
+        "revisionHistoryLimit"
+      ],
+      [
+        "secondary",
+        "runtimeClassName"
+      ],
+      [
+        "secondary",
+        "schedulerName"
+      ],
+      [
+        "secondary",
+        "service",
+        "annotations"
+      ],
+      [
+        "secondary",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "secondary",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "secondary",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "secondary",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "secondary",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "secondary",
+        "service",
+        "nodePort"
+      ],
+      [
+        "secondary",
+        "service",
+        "nodePorts",
+        "mysql"
+      ],
+      [
+        "secondary",
+        "service",
+        "port"
+      ],
+      [
+        "secondary",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "secondary",
+        "service",
+        "ports",
+        "mysql"
+      ],
+      [
+        "secondary",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "secondary",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "secondary",
+        "service",
+        "type"
+      ],
+      [
+        "secondary",
+        "sidecars"
+      ],
+      [
+        "secondary",
+        "startupWaitOptions",
+        "retries"
+      ],
+      [
+        "secondary",
+        "startupWaitOptions",
+        "sleepTime"
+      ],
+      [
+        "secondary",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "secondary",
+        "tolerations"
+      ],
+      [
+        "secondary",
+        "topologySpreadConstraints"
+      ],
+      [
+        "secondary",
+        "updateStrategy"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceBindings",
+        "enabled"
+      ],
+      [
+        "tde",
+        "enabled"
+      ],
+      [
+        "tde",
+        "encryptedKeyFilename"
+      ],
+      [
+        "tde",
+        "existingSecret"
+      ],
+      [
+        "tde",
+        "randomKeyFilename"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "enabled"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "provider"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "address"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "authMountPath"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "encryptedKeySecretKey"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "encryptedKeySecretPath"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "randomKeySecretKey"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "randomKeySecretPath"
+      ],
+      [
+        "tde",
+        "secretsStoreProvider",
+        "vault",
+        "roleName"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "present_count": 230,
+    "varied_count": 1,
+    "varied_fraction": 0.004132231404958678,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-vtmau6oc/chart",
+  "seed": 0,
+  "attempts": 36,
+  "error": "Error: YAML parse error on mariadb/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: line 197: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "clusterDomain": "cluster.local",
+    "commonAnnotations": {},
+    "commonLabels": {},
+    "schedulerName": "",
+    "runtimeClassName": "",
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "serviceBindings": {
+      "enabled": false
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/mariadb",
+      "tag": "12.0.2-debian-12-r0",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "architecture": "standalone",
+    "auth": {
+      "rootPassword": "",
+      "database": "my_database",
+      "username": "",
+      "password": "",
+      "replicationUser": "replicator",
+      "replicationPassword": "",
+      "existingSecret": "",
+      "forcePassword": false,
+      "usePasswordFiles": true,
+      "customPasswordFiles": {}
+    },
+    "initdbScripts": {},
+    "initdbScriptsConfigMap": "",
+    "tls": {
+      "enabled": false,
+      "existingSecret": "",
+      "certFilename": "tls.crt",
+      "certKeyFilename": "tls.key",
+      "certCAFilename": "",
+      "ca": "",
+      "cert": "",
+      "key": "",
+      "autoGenerated": {
+        "enabled": true,
+        "engine": "helm",
+        "certManager": {
+          "existingIssuer": "",
+          "existingIssuerKind": "",
+          "keySize": 2048,
+          "keyAlgorithm": "RSA",
+          "duration": "2160h",
+          "renewBefore": "360h"
+        }
+      }
+    },
+    "tde": {
+      "enabled": false,
+      "existingSecret": "",
+      "randomKeyFilename": "keyfile.key",
+      "encryptedKeyFilename": "keyfile.enc",
+      "fileKeyManagementEncryptionAlgorithm": "AES_CTR",
+      "innodbEncryptTables": "FORCE",
+      "innodbEncryptLog": "ON",
+      "innodbEncryptTemporaryTables": "ON",
+      "encryptTmpDiskTables": "ON",
+      "encryptTmpTiles": "ON",
+      "encryptBINLOG": "ON",
+      "ariaEncryptTables": "ON",
+      "innodbEncryptionThreads": 4,
+      "secretsStoreProvider": {
+        "enabled": false,
+        "provider": "vault",
+        "vault": {
+          "roleName": "",
+          "address": "",
+          "authMountPath": "",
+          "randomKeySecretPath": "",
+          "randomKeySecretKey": "",
+          "encryptedKeySecretPath": "",
+          "encryptedKeySecretKey": ""
+        }
+      }
+    },
+    "primary": {
+      "name": "primary",
+      "command": [],
+      "args": [],
+      "lifecycleHooks": {},
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "containerPorts": {
+        "mysql": 3306
+      },
+      "configuration": "[mysqld]\nskip-name-resolve\nexplicit_defaults_for_timestamp\nbasedir=/opt/bitnami/mariadb\ndatadir=/bitnami/mariadb/data\nplugin_dir=/opt/bitnami/mariadb/plugin\nport={{ .Values.primary.containerPorts.mysql }}\nsocket=/opt/bitnami/mariadb/tmp/mysql.sock\ntmpdir=/opt/bitnami/mariadb/tmp\nmax_allowed_packet=16M\nbind-address=*\npid-file=/opt/bitnami/mariadb/tmp/mysqld.pid\nlog-error=/opt/bitnami/mariadb/logs/mysqld.log\ncharacter-set-server=UTF8\ncollation-server=utf8_general_ci\nslow_query_log=0\nlong_query_time=10.0\nbinlog_expire_logs_seconds=2592000\n{{- if .Values.tls.enabled }}\nssl_cert=/opt/bitnami/mariadb/certs/{{ .Values.tls.certFilename }}\nssl_key=/opt/bitnami/mariadb/certs/{{ .Values.tls.certKeyFilename }}\n{{- if (include \"mariadb.tlsCACert\" .) }}\nssl_ca={{ include \"mariadb.tlsCACert\" . }}\n{{- end }}\n{{- end }}\n{{- if .Values.tde.enabled }}\nplugin_load_add=file_key_management\nfile_key_management_filename=/opt/bitnami/mariadb/tde/{{ .Values.tde.encryptedKeyFilename }}\nfile_key_management_filekey=FILE:/opt/bitnami/mariadb/tde/{{ .Values.tde.randomKeyFilename }}\nfile_key_management_encryption_algorithm={{ .Values.tde.fileKeyManagementEncryptionAlgorithm }}\ninnodb_encrypt_tables={{ .Values.tde.innodbEncryptTables }}\ninnodb_encrypt_log={{ .Values.tde.innodbEncryptLog }}\ninnodb_encrypt_temporary_tables={{ .Values.tde.innodbEncryptTemporaryTables }}\ninnodb_encryption_threads={{ .Values.tde.innodbEncryptionThreads }}\nencrypt_tmp_disk_tables={{ .Values.tde.encryptTmpDiskTables }}\nencrypt_tmp_files={{ .Values.tde.encryptTmpTiles }}\nencrypt_binlog={{ .Values.tde.encryptBINLOG }}\naria_encrypt_tables={{ .Values.tde.ariaEncryptTables }}\n{{- end }}\n\n[client]\nport=3306\nsocket=/opt/bitnami/mariadb/tmp/mysql.sock\ndefault-character-set=UTF8\nplugin_dir=/opt/bitnami/mariadb/plugin\n\n[manager]\nport=3306\nsocket=/opt/bitnami/mariadb/tmp/mysql.sock\npid-file=/opt/bitnami/mariadb/tmp/mysqld.pid",
+      "existingConfigmap": ">0",
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "rollingUpdatePartition": "",
+      "podAnnotations": {},
+      "podLabels": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "podManagementPolicy": "",
+      "topologySpreadConstraints": [],
+      "priorityClassName": "",
+      "runtimeClassName": "",
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "initContainerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "resourcesPreset": "small",
+      "resources": {},
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 120,
+        "periodSeconds": 15,
+        "timeoutSeconds": 5,
+        "failureThreshold": 10,
+        "successThreshold": 1
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 120,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "failureThreshold": 3,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "failureThreshold": 3,
+        "successThreshold": 1
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "startupWaitOptions": {},
+      "extraFlags": "",
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "persistence": {
+        "enabled": true,
+        "existingClaim": "",
+        "subPath": "",
+        "storageClass": "",
+        "labels": {},
+        "annotations": {},
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "selector": {}
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "sidecars": [],
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "mysql": 3306,
+          "metrics": 9104
+        },
+        "nodePorts": {
+          "mysql": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "externalTrafficPolicy": "Cluster",
+        "loadBalancerSourceRanges": [],
+        "extraPorts": [],
+        "annotations": {},
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {},
+        "headless": {
+          "annotations": {}
+        }
+      },
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "revisionHistoryLimit": 10
+    },
+    "secondary": {
+      "name": "secondary",
+      "replicaCount": 1,
+      "command": [],
+      "args": [],
+      "lifecycleHooks": {},
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "containerPorts": {
+        "mysql": 3306
+      },
+      "configuration": "[mysqld]\nskip-name-resolve\nexplicit_defaults_for_timestamp\nbasedir=/opt/bitnami/mariadb\ndatadir=/bitnami/mariadb/data\nport={{ .Values.secondary.containerPorts.mysql }}\nsocket=/opt/bitnami/mariadb/tmp/mysql.sock\ntmpdir=/opt/bitnami/mariadb/tmp\nmax_allowed_packet=16M\nbind-address=0.0.0.0\npid-file=/opt/bitnami/mariadb/tmp/mysqld.pid\nlog-error=/opt/bitnami/mariadb/logs/mysqld.log\ncharacter-set-server=UTF8\ncollation-server=utf8_general_ci\nslow_query_log=0\nlong_query_time=10.0\nbinlog_expire_logs_seconds=2592000\n{{- if .Values.tls.enabled }}\nssl_cert=/opt/bitnami/mariadb/certs/{{ .Values.tls.certFilename }}\nssl_key=/opt/bitnami/mariadb/certs/{{ .Values.tls.certKeyFilename }}\n{{- if (include \"mariadb.tlsCACert\" .) }}\nssl_ca={{ include \"mariadb.tlsCACert\" . }}\n{{- end }}\n{{- end }}\n\n[client]\nport=3306\nsocket=/opt/bitnami/mariadb/tmp/mysql.sock\ndefault-character-set=UTF8\n\n[manager]\nport=3306\nsocket=/opt/bitnami/mariadb/tmp/mysql.sock\npid-file=/opt/bitnami/mariadb/tmp/mysqld.pid",
+      "existingConfigmap": "",
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "rollingUpdatePartition": "",
+      "podAnnotations": {},
+      "podLabels": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "priorityClassName": "",
+      "runtimeClassName": "",
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "podManagementPolicy": "",
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "resourcesPreset": "small",
+      "resources": {},
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 120,
+        "periodSeconds": 15,
+        "timeoutSeconds": 5,
+        "failureThreshold": 10,
+        "successThreshold": 1
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 120,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "failureThreshold": 3,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "failureThreshold": 3,
+        "successThreshold": 1
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "startupWaitOptions": {},
+      "extraFlags": "",
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "persistence": {
+        "enabled": true,
+        "subPath": "",
+        "storageClass": "",
+        "labels": {},
+        "annotations": {},
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "selector": {}
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "sidecars": [],
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "mysql": 3306,
+          "metrics": 9104
+        },
+        "nodePorts": {
+          "mysql": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "externalTrafficPolicy": "Cluster",
+        "loadBalancerSourceRanges": [],
+        "extraPorts": [],
+        "annotations": {},
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "revisionHistoryLimit": 10
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "rbac": {
+      "create": false
+    },
+    "passwordUpdateJob": {
+      "enabled": false,
+      "backoffLimit": 10,
+      "command": [],
+      "args": [],
+      "extraCommands": "",
+      "previousPasswords": {
+        "rootPassword": "",
+        "password": "",
+        "replicationPassword": "",
+        "existingSecret": ""
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "resourcesPreset": "micro",
+      "resources": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "annotations": {},
+      "podLabels": {},
+      "podAnnotations": {}
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "metrics": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/mysqld-exporter",
+        "tag": "0.17.2-debian-12-r16",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "annotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "9104"
+      },
+      "extraArgs": {
+        "primary": [],
+        "secondary": []
+      },
+      "extraVolumeMounts": {
+        "primary": [],
+        "secondary": []
+      },
+      "containerPorts": {
+        "http": 9104
+      },
+      "containerSecurityContext": {
+        "enabled": false,
+        "privileged": false,
+        "runAsNonRoot": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 120,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 3
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 3
+      },
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "jobLabel": "",
+        "interval": "30s",
+        "scrapeTimeout": "",
+        "relabelings": [],
+        "metricRelabelings": [],
+        "honorLabels": false,
+        "selector": {},
+        "labels": {}
+      },
+      "prometheusRule": {
+        "enabled": false,
+        "namespace": "",
+        "additionalLabels": {},
+        "rules": []
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 24,
+    "unique_bundles": 24,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 24
+  },
+  "phase": "$.primary.existingConfigmap",
+  "kind": "value-path",
+  "path": [
+    "primary",
+    "existingConfigmap"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/mariadb_1789321241/0000/paths/5840f42f3422db400ece"
+}

@@ -764,3 +764,14 @@
 [INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
 [INFO] Testing path $.prometheus.initContainers[*] (2/1266)
 [INFO] Compiler input baseline: 691 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.prometheus.thanos.extraArgs[*] (3/1266)
+[INFO] Compiler input baseline: 691 statically named fields
+[INFO] Execution stopped at the 32.9295s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 22 observed, 1 unique, 21 duplicate bundles; 1 successful validations reused
+[INFO] .: time-limit; testing 302.37s; dependency preparation 1.27s; 1 charts remain
+[INFO] Chart 2/2: charts/kube-prometheus-crds
+[INFO] Preparing dependencies for charts/kube-prometheus-crds (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Discovered 1 unique value paths; random traversal, seed 0
+[INFO] charts/kube-prometheus-crds: failed; testing 0.29s; dependency preparation 0.08s; 0 charts remain
