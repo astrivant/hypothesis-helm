@@ -2,8 +2,11 @@
 # Export beside charts; optionally commit exported YAML and proof files in one CI job.
 set -euo pipefail
 case "${HH_RESOLVED_SHARD:-none}" in
-  none|1/*) ;;
-  *) echo 'Minimal values export is handled by shard 1.'; exit 0 ;;
+  none | 1/*) ;;
+  *)
+    echo 'Minimal values export is handled by shard 1.'
+    exit 0
+    ;;
 esac
 files_list="$(mktemp "${RUNNER_TEMP:-${TMPDIR:-/tmp}}/helm-minimal-files.XXXXXX")"
 trap 'rm -f "$files_list"' EXIT

@@ -2130,6 +2130,25 @@ files = [
 ]
 
 [[package]]
+name = "shfmt-py"
+version = "4.1.0"
+description = "Installs the shfmt shell script formatter binary, plus a ready-made pre-commit hook"
+optional = false
+python-versions = ">=3.9"
+groups = ["dev"]
+files = [
+    {file = "shfmt_py-4.1.0-py2.py3-none-macosx_10_9_x86_64.whl", hash = "sha256:7186d0cdb21d8a5e6cb647c1b0ae7ee264751be3cac755277d060df90b1cfa8f"},
+    {file = "shfmt_py-4.1.0-py2.py3-none-macosx_11_0_arm64.whl", hash = "sha256:8e0201449fc35f3cf16abed3189f1de0c5c30d5c4c989b8d367fd5cd1d35e779"},
+    {file = "shfmt_py-4.1.0-py2.py3-none-manylinux2014_aarch64.whl", hash = "sha256:887a7a04a297302f3472edaeabb5f33f146d9a681234743acc5932a2a39bdb22"},
+    {file = "shfmt_py-4.1.0-py2.py3-none-manylinux2014_x86_64.whl", hash = "sha256:4f1573856d84725f148175ef56532365dc4a7e5332e27c31b6c82be544ad2bda"},
+    {file = "shfmt_py-4.1.0-py2.py3-none-win_amd64.whl", hash = "sha256:7e5c55ac4b619fc4d215259459ac80e8513735245ec621ca290574fa7ab2811d"},
+    {file = "shfmt_py-4.1.0.tar.gz", hash = "sha256:e863c07885e2e976b1441e38f660b3262a87a52bf84124415b866e48eed7c00b"},
+]
+
+[package.extras]
+test = ["pytest (>=7)", "setuptools (>=70.1)"]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -2216,4 +2235,4 @@ benchmarking = ["matplotlib", "numpy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13,<4.0"
-content-hash = "d6e06c698ddaa63dd2f04b231158230abda5d189a3b06d0456175c44e9244431"
+content-hash = "b25cb5f50dbe2df9762a9341ca74339d207c57c5349e71c42e6ebdad0879d218"

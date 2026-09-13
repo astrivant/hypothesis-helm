@@ -17,29 +17,43 @@ The default output is a fresh directory under reports/local-shards/.
 EOF
 }
 
-die() { printf '%s\n' "$*" >&2; exit 2; }
+die() {
+  printf '%s\n' "$*" >&2
+  exit 2
+}
 shards=1
 output=
 suite=
 while (($#)); do
   case "$1" in
-    --shards|--output-dir)
+    --shards | --output-dir)
       (($# >= 2)) || die "Missing value for $1"
       if [[ $1 == --shards ]]; then shards=$2; else output=$2; fi
-      shift 2 ;;
-    -h|--help) usage; exit 0 ;;
-    --) shift; break ;;
+      shift 2
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
     -*) die "Unknown wrapper option: $1 (put run options after --)" ;;
-    *) [[ -z $suite ]] || die "Supply exactly one suite before --"
-       suite=$1; shift ;;
+    *)
+      [[ -z $suite ]] || die "Supply exactly one suite before --"
+      suite=$1
+      shift
+      ;;
   esac
 done
 [[ -n $suite ]] || die "A saved suite is required; see --help"
 [[ $shards =~ ^[1-9][0-9]*$ && ${#shards} -le 4 ]] || die "--shards must be 1..9999"
 for arg in "$@"; do
   case "$arg" in
-    --shard*|--jobs*|-j*|--artifact*|--cache-dir*|--no-cache*|--rerun*|--seed*)
-      die "Benchmark-controlled option: $arg" ;;
+    --shard* | --jobs* | -j* | --artifact* | --cache-dir* | --no-cache* | --rerun* | --seed*)
+      die "Benchmark-controlled option: $arg"
+      ;;
   esac
 done
 # A dedicated replacement token prevents GNU Parallel from interpreting literal {}.
@@ -58,7 +72,7 @@ else
   output=$(mktemp -d reports/local-shards/run-XXXXXXXX)
 fi
 indices=()
-for ((index=1; index<=shards; index++)); do indices+=("$index"); done
+for ((index = 1; index <= shards; index++)); do indices+=("$index"); done
 printf 'Running %s local shards; measurements: %s\n' "$shards" "$output" >&2
 # --plain ignores personal Parallel profiles; --halt never completes every shard
 # while GNU Parallel still returns nonzero when any job fails.

@@ -169,6 +169,14 @@ env -u VIRTUAL_ENV -u PYENV_VERSION -u PYENV_VIRTUAL_ENV poetry install
 bash scripts/check.sh
 ```
 
+Development dependencies include shfmt. Pre-commit formats maintained shell scripts;
+`scripts/check.sh` checks their formatting in CI. Shell indentation is configured in
+`.editorconfig`. To format them manually:
+
+```sh
+bash scripts/project-run.sh shfmt -w scripts pkg/hypothesis_helm/integrations
+```
+
 ## License
 
 [GNU General Public License v3.0 only](LICENSE).

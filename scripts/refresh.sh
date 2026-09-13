@@ -51,5 +51,5 @@ python "$root/verify-publication.py" "$root"
 ruff check .
 ruff format --check .
 cp "$root/publication-verification.json" docs/benchmarks/refresh/
-date +%s > "$root/publication-finished-epoch.txt"
+date +%s >"$root/publication-finished-epoch.txt"
 printf 'Full refresh complete: %s\n' "$root"
