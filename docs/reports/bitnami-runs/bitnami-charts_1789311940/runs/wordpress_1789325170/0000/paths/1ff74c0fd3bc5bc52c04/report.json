@@ -1,0 +1,1782 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 177,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "allowEmptyPassword"
+      ],
+      [
+        "allowOverrideNone"
+      ],
+      [
+        "apacheConfiguration"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPU"
+      ],
+      [
+        "autoscaling",
+        "targetMemory"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "https"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "customHTAccessCM"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customPostInitScripts"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingApacheConfigurationConfigMap"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "existingWordPressConfigurationSecret"
+      ],
+      [
+        "externalDatabase",
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "htaccessPersistenceEnabled"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "ingress",
+        "tlsWwwPrefix"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "mariadb",
+        "enabled"
+      ],
+      [
+        "memcached",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "customLivenessProbe"
+      ],
+      [
+        "metrics",
+        "customReadinessProbe"
+      ],
+      [
+        "metrics",
+        "customStartupProbe"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "multisite",
+        "enable"
+      ],
+      [
+        "multisite",
+        "enableNipIoRedirect"
+      ],
+      [
+        "multisite",
+        "host"
+      ],
+      [
+        "multisite",
+        "networkType"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "overrideDatabaseSettings"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "secondaryIngress",
+        "enabled"
+      ],
+      [
+        "secondaryIngress",
+        "extraHosts"
+      ],
+      [
+        "secondaryIngress",
+        "extraPaths"
+      ],
+      [
+        "secondaryIngress",
+        "extraRules"
+      ],
+      [
+        "secondaryIngress",
+        "extraTls"
+      ],
+      [
+        "secondaryIngress",
+        "hostname"
+      ],
+      [
+        "secondaryIngress",
+        "ingressClassName"
+      ],
+      [
+        "secondaryIngress",
+        "path"
+      ],
+      [
+        "secondaryIngress",
+        "pathType"
+      ],
+      [
+        "secondaryIngress",
+        "selfSigned"
+      ],
+      [
+        "secondaryIngress",
+        "tls"
+      ],
+      [
+        "secondaryIngress",
+        "tlsWwwPrefix"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "httpsTargetPort"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "smtpExistingSecret"
+      ],
+      [
+        "smtpFromEmail"
+      ],
+      [
+        "smtpFromName"
+      ],
+      [
+        "smtpHost"
+      ],
+      [
+        "smtpPassword"
+      ],
+      [
+        "smtpPort"
+      ],
+      [
+        "smtpProtocol"
+      ],
+      [
+        "smtpUser"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "wordpressBlogName"
+      ],
+      [
+        "wordpressConfiguration"
+      ],
+      [
+        "wordpressConfigureCache"
+      ],
+      [
+        "wordpressEmail"
+      ],
+      [
+        "wordpressExtraConfigContent"
+      ],
+      [
+        "wordpressFirstName"
+      ],
+      [
+        "wordpressLastName"
+      ],
+      [
+        "wordpressPlugins"
+      ],
+      [
+        "wordpressScheme"
+      ],
+      [
+        "wordpressSkipInstall"
+      ],
+      [
+        "wordpressTablePrefix"
+      ],
+      [
+        "wordpressUsername"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "allowEmptyPassword"
+      ],
+      [
+        "allowOverrideNone"
+      ],
+      [
+        "apacheConfiguration"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPU"
+      ],
+      [
+        "autoscaling",
+        "targetMemory"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "https"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "customHTAccessCM"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customPostInitScripts"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingApacheConfigurationConfigMap"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "existingWordPressConfigurationSecret"
+      ],
+      [
+        "externalDatabase",
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "htaccessPersistenceEnabled"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations",
+        "nginx.ingress.kubernetes.io/from-to-www-redirect"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "ingress",
+        "tlsWwwPrefix"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "mariadb",
+        "enabled"
+      ],
+      [
+        "memcached",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "customLivenessProbe"
+      ],
+      [
+        "metrics",
+        "customReadinessProbe"
+      ],
+      [
+        "metrics",
+        "customStartupProbe"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabellings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "multisite",
+        "enable"
+      ],
+      [
+        "multisite",
+        "enableNipIoRedirect"
+      ],
+      [
+        "multisite",
+        "host"
+      ],
+      [
+        "multisite",
+        "networkType"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "overrideDatabaseSettings"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessMode"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "secondaryIngress",
+        "annotations",
+        "nginx.ingress.kubernetes.io/from-to-www-redirect"
+      ],
+      [
+        "secondaryIngress",
+        "enabled"
+      ],
+      [
+        "secondaryIngress",
+        "extraHosts"
+      ],
+      [
+        "secondaryIngress",
+        "extraPaths"
+      ],
+      [
+        "secondaryIngress",
+        "extraRules"
+      ],
+      [
+        "secondaryIngress",
+        "extraTls"
+      ],
+      [
+        "secondaryIngress",
+        "hostname"
+      ],
+      [
+        "secondaryIngress",
+        "ingressClassName"
+      ],
+      [
+        "secondaryIngress",
+        "path"
+      ],
+      [
+        "secondaryIngress",
+        "pathType"
+      ],
+      [
+        "secondaryIngress",
+        "selfSigned"
+      ],
+      [
+        "secondaryIngress",
+        "tls"
+      ],
+      [
+        "secondaryIngress",
+        "tlsWwwPrefix"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "httpsTargetPort"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "smtpExistingSecret"
+      ],
+      [
+        "smtpFromEmail"
+      ],
+      [
+        "smtpFromName"
+      ],
+      [
+        "smtpHost"
+      ],
+      [
+        "smtpPassword"
+      ],
+      [
+        "smtpPort"
+      ],
+      [
+        "smtpProtocol"
+      ],
+      [
+        "smtpUser"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "wordpressBlogName"
+      ],
+      [
+        "wordpressConfiguration"
+      ],
+      [
+        "wordpressConfigureCache"
+      ],
+      [
+        "wordpressEmail"
+      ],
+      [
+        "wordpressExtraConfigContent"
+      ],
+      [
+        "wordpressFirstName"
+      ],
+      [
+        "wordpressLastName"
+      ],
+      [
+        "wordpressPlugins"
+      ],
+      [
+        "wordpressScheme"
+      ],
+      [
+        "wordpressSkipInstall"
+      ],
+      [
+        "wordpressTablePrefix"
+      ],
+      [
+        "wordpressUsername"
+      ]
+    ],
+    "present_count": 172,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-s6wyxik1/chart",
+  "seed": 0,
+  "attempts": 3,
+  "error": "Error: execution error at (wordpress/charts/mariadb/templates/NOTES.txt:74:4): \nVALUES VALIDATION:\nmariadb: architecture\n    Invalid architecture selected. Valid values are \"standalone\" and\n    \"replication\". Please set a valid architecture (--set architecture=\"xxxx\")\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/wordpress",
+      "tag": "6.8.2-debian-12-r4",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "wordpressUsername": "user",
+    "wordpressPassword": "",
+    "existingSecret": "",
+    "wordpressEmail": "user@example.com",
+    "wordpressFirstName": "FirstName",
+    "wordpressLastName": "LastName",
+    "wordpressBlogName": "User's Blog!",
+    "wordpressTablePrefix": "wp_",
+    "wordpressScheme": "http",
+    "wordpressSkipInstall": false,
+    "wordpressExtraConfigContent": "",
+    "wordpressConfiguration": "",
+    "existingWordPressConfigurationSecret": "",
+    "wordpressConfigureCache": false,
+    "wordpressPlugins": "none",
+    "apacheConfiguration": "",
+    "existingApacheConfigurationConfigMap": "",
+    "customPostInitScripts": {},
+    "smtpHost": "",
+    "smtpPort": "",
+    "smtpUser": "",
+    "smtpPassword": "",
+    "smtpProtocol": "",
+    "smtpFromEmail": "",
+    "smtpFromName": "",
+    "smtpExistingSecret": "",
+    "allowEmptyPassword": true,
+    "allowOverrideNone": false,
+    "overrideDatabaseSettings": false,
+    "htaccessPersistenceEnabled": false,
+    "customHTAccessCM": "",
+    "command": [],
+    "args": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "multisite": {
+      "enable": false,
+      "host": "",
+      "networkType": "subdomain",
+      "enableNipIoRedirect": false
+    },
+    "replicaCount": 1,
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "topologySpreadConstraints": [],
+    "priorityClassName": "",
+    "automountServiceAccountToken": false,
+    "hostAliases": [
+      {
+        "ip": "127.0.0.1",
+        "hostnames": [
+          "status.localhost"
+        ]
+      }
+    ],
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "resourcesPreset": "micro",
+    "resources": {},
+    "containerPorts": {
+      "http": 8080,
+      "https": 8443
+    },
+    "extraContainerPorts": [],
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "tcpSocket": {
+        "port": "http"
+      },
+      "initialDelaySeconds": 120,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "httpGet": {
+        "path": "/wp-login.php",
+        "port": "{{ .Values.wordpressScheme }}",
+        "scheme": "{{ .Values.wordpressScheme | upper }}",
+        "httpHeaders": []
+      },
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "httpGet": {
+        "path": "/wp-login.php",
+        "port": "{{ .Values.wordpressScheme }}",
+        "scheme": "{{ .Values.wordpressScheme | upper }}",
+        "httpHeaders": []
+      },
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "lifecycleHooks": {},
+    "service": {
+      "type": "LoadBalancer",
+      "ports": {
+        "http": 80,
+        "https": 443
+      },
+      "httpsTargetPort": "https",
+      "nodePorts": {
+        "http": "",
+        "https": ""
+      },
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": []
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "ingressClassName": "",
+      "hostname": "wordpress.local",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "tlsWwwPrefix": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "secondaryIngress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "ingressClassName": "",
+      "hostname": "wordpress.local",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "tlsWwwPrefix": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "persistence": {
+      "enabled": true,
+      "storageClass": "",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "10Gi",
+      "dataSource": {},
+      "existingClaim": "",
+      "selector": {},
+      "annotations": {}
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerSecurityContext": {
+        "seLinuxOptions": {},
+        "runAsUser": 0
+      }
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    },
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "autoscaling": {
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 11,
+      "targetCPU": 50,
+      "targetMemory": 50
+    },
+    "metrics": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/apache-exporter",
+        "tag": "1.0.10-debian-12-r55",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "containerPorts": {
+        "metrics": 9117
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 15,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 3,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 3,
+        "failureThreshold": 3,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "failureThreshold": 15,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "service": {
+        "ports": {
+          "metrics": 9150
+        },
+        "annotations": {
+          "prometheus.io/scrape": "true",
+          "prometheus.io/port": "{{ .Values.metrics.containerPorts.metrics }}"
+        }
+      },
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "interval": "",
+        "scrapeTimeout": "",
+        "labels": {},
+        "selector": {},
+        "relabelings": [],
+        "metricRelabelings": [],
+        "honorLabels": false,
+        "jobLabel": ""
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "mariadb": {
+      "enabled": true,
+      "architecture": "",
+      "auth": {
+        "rootPassword": "",
+        "database": "bitnami_wordpress",
+        "username": "bn_wordpress",
+        "password": ""
+      },
+      "primary": {
+        "persistence": {
+          "enabled": true,
+          "storageClass": "",
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "size": "8Gi"
+        },
+        "resourcesPreset": "micro",
+        "resources": {}
+      }
+    },
+    "externalDatabase": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "bn_wordpress",
+      "password": "",
+      "database": "bitnami_wordpress",
+      "existingSecret": ""
+    },
+    "memcached": {
+      "enabled": false,
+      "auth": {
+        "enabled": false,
+        "username": "",
+        "password": "",
+        "existingPasswordSecret": ""
+      },
+      "service": {
+        "port": 11211
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "externalCache": {
+      "host": "localhost",
+      "port": 11211
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 0,
+    "unique_bundles": 0,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 0
+  },
+  "phase": "$.mariadb.architecture",
+  "kind": "value-path",
+  "path": [
+    "mariadb",
+    "architecture"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/wordpress_1789325170/0000/paths/1ff74c0fd3bc5bc52c04"
+}

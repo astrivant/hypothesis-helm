@@ -13,6 +13,7 @@ from hypothesis_helm.benchmarking.benchmark_expansion import compare
 from hypothesis_helm.benchmarking.benchmark_helm import code_digest
 from hypothesis_helm.benchmarking.benchmark_pca import run_case, selections
 from hypothesis_helm.benchmarking.pca import project
+from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.charts.runner import Chart
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions
@@ -131,6 +132,7 @@ def main() -> int:
     rows: list[dict[str, object]] = []
     document: dict[str, object] = {
         "metadata": {
+            "profiling": profile_settings(),
             "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
             "code_sha256": code_digest(),
             "permutations": args.permutations,

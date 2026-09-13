@@ -1,0 +1,234 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "storageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "disabled"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "clusterDomain": "cluster.local",
+  "extraDeploy": [],
+  "usePasswordFiles": true,
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "image": {
+    "tag": ""
+  },
+  "wildflyUsername": "user",
+  "wildflyPassword": "",
+  "exposeManagementConsole": false,
+  "command": [],
+  "args": [],
+  "lifecycleHooks": {},
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "replicaCount": 1,
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "automountServiceAccountToken": true,
+  "hostAliases": [],
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "serviceAccountName": "",
+  "sidecars": [],
+  "initContainers": [],
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "podLabels": {},
+  "podAnnotations": {},
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "priorityClassName": "",
+  "schedulerName": "",
+  "topologySpreadConstraints": [],
+  "resourcesPreset": "small",
+  "resources": {},
+  "containerPorts": {
+    "http": 8080,
+    "https": 8443,
+    "mgmt": 9990
+  },
+  "extraContainerPorts": [],
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "startupProbe": {
+    "enabled": false,
+    "tcpSocket": {
+      "port": "http"
+    },
+    "initialDelaySeconds": 120,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 6,
+    "successThreshold": 1
+  },
+  "livenessProbe": {
+    "enabled": true,
+    "tcpSocket": {
+      "port": "http"
+    },
+    "initialDelaySeconds": 120,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 6,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "httpGet": {
+      "path": "/",
+      "port": "http"
+    },
+    "initialDelaySeconds": 30,
+    "periodSeconds": 5,
+    "timeoutSeconds": 3,
+    "failureThreshold": 3,
+    "successThreshold": 1
+  },
+  "customStartupProbe": {},
+  "customLivenessProbe": {},
+  "customReadinessProbe": {},
+  "service": {
+    "type": "LoadBalancer",
+    "ports": {
+      "http": 80,
+      "mgmt": 9990
+    },
+    "nodePorts": {
+      "http": "",
+      "mgmt": ""
+    },
+    "clusterIP": "",
+    "loadBalancerIP": "",
+    "loadBalancerSourceRanges": [],
+    "externalTrafficPolicy": "Cluster",
+    "annotations": {},
+    "extraPorts": [],
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {}
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "automountServiceAccountToken": false,
+    "annotations": {}
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "pathType": "ImplementationSpecific",
+    "apiVersion": "",
+    "hostname": "wildfly.local",
+    "path": "/",
+    "annotations": {},
+    "tls": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "secrets": [],
+    "ingressClassName": "",
+    "extraRules": []
+  },
+  "mgmtIngress": {
+    "enabled": false,
+    "pathType": "ImplementationSpecific",
+    "hostname": "management.local",
+    "annotations": {},
+    "tls": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "secrets": [],
+    "ingressClassName": ""
+  },
+  "persistence": {
+    "enabled": true,
+    "storageClass": "",
+    "existingClaim": "",
+    "accessModes": [
+      "ReadWriteOnce"
+    ],
+    "size": "8Gi",
+    "annotations": {}
+  },
+  "volumePermissions": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "securityContext": {
+      "seLinuxOptions": {},
+      "runAsUser": 0
+    }
+  }
+}

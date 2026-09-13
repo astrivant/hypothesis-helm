@@ -17,6 +17,46 @@ needed. Results default to `reports/benchmarks/` under the working directory.
 Use `hypothesis-helm-benchmark --help` to list studies, or append `--help` to a
 study such as `hypothesis-helm-benchmark nesting --help`.
 
+### Flame graphs across worker cores
+
+Place `--profile DIRECTORY` before the study name to capture Python call stacks
+and generate Matplotlib flame graphs:
+
+```sh
+hypothesis-helm-benchmark --profile reports/profiles run --chart benchmark-chart \
+  --suite scaling --scaling-counts 50,100,150 --replicas 1,2,3,4 \
+  --time-limit 30s --shard none --output reports/benchmarks/profiled
+```
+
+Each invocation prints a fresh `profile-*` directory containing raw JSON captures
+and a `flamegraphs/` directory with per-process PNG/SVG plots, a combined worker
+plot, and `index.json`. Each worker profiles its executing Python thread on its
+own core and writes a unique file. The coordinator is plotted separately.
+Independent CI shards can upload their capture files into one directory for plotting.
+
+Widths show time spent in a function and its children. The combined worker view
+sums time across overlapping workers, so its width can exceed elapsed runtime.
+Native functions and Helm subprocess waits are charged to their Python caller;
+these graphs do not expose Helm's internal Go calls or other Python threads.
+
+Capture uses Python's [standard profiling hook](https://docs.python.org/3/library/sys.html#sys.setprofile)
+to preserve actual caller paths, including recursion. Profiling adds overhead,
+and the measurement metadata marks instrumented runs. Use ordinary runs for
+performance comparisons. Capture retains up to 25,000 call-context nodes and
+128 levels per invocation; beyond those limits, time is charged to the nearest
+retained ancestor and the capture is marked. Interrupted hooks are reported as partial.
+
+Redraw or combine saved captures without rerunning the benchmark:
+
+```sh
+hypothesis-helm-benchmark flamegraph reports/profiles/profile-EXAMPLE \
+  --output reports/flamegraphs --max-depth 40 --min-percent 0.05
+```
+
+Display limits hide small or deep frames in the drawing while preserving the raw
+captures. Only fully written capture files are read; a forcibly killed process
+may leave no capture.
+
 ### Reproduce the full project run
 
 From a checkout with Helm 4 and GNU Parallel on `PATH`:

@@ -17,6 +17,7 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
+from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.runner import measure
 from hypothesis_helm.benchmarking.workload import MULTIPLICITY, VERSION, load_inputs, source_digest
 from hypothesis_helm.charts.runner import Chart
@@ -182,6 +183,7 @@ def run(argv: list[str] | None = None) -> int:
     available = 2 ** int(str(spec["input_complexity"])) if spec else len(inputs or [])
     shard_total = shard.total if shard else 1
     metadata: dict[str, object] = {
+        "profiling": profile_settings(),
         "format_version": 1,
         "workload": VERSION if inputs is None else "custom-jsonl",
         "distribution": spec,

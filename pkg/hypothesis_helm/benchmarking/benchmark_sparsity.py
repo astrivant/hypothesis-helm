@@ -15,6 +15,7 @@ from pathlib import Path
 
 from hypothesis_helm.benchmarking.benchmark_helm import ROOT, code_digest
 from hypothesis_helm.benchmarking.plots import finish
+from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.runner import Job, execute_worker
 from hypothesis_helm.benchmarking.topology import expected_topology
 from hypothesis_helm.benchmarking.workload import expected_output, source_digest
@@ -199,6 +200,7 @@ def run() -> int:
     rows: list[dict[str, object]] = []
     document: dict[str, object] = {
         "metadata": {
+            "profiling": profile_settings(),
             "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
             "seed": args.seed,
             "count": args.count,

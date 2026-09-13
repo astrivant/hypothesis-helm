@@ -7,6 +7,7 @@ import copy
 import hashlib
 import json
 import math
+import os
 import resource
 import subprocess
 import sys
@@ -18,6 +19,7 @@ from pathlib import Path
 from attrs import field, frozen
 from jsonschema import validators
 
+from hypothesis_helm.benchmarking.profiling import PROFILE_DIRECTORY, capture
 from hypothesis_helm.benchmarking.topology import expected_topology, validate_topology
 from hypothesis_helm.benchmarking.workload import (
     expected_output,
@@ -50,6 +52,7 @@ class Job:
         values (str | None): Custom JSONL workload location.
         checkpoints (list[int]): Requested global-prefix observation boundaries.
         started (float): Shared parent start time for cumulative measurements.
+        profile_directory (str | None): Shared capture directory with uniquely owned files per invocation.
     """
 
     chart: str
@@ -62,6 +65,7 @@ class Job:
     values: str | None = None
     checkpoints: list[int] = field(factory=list)
     started: float = 0.0
+    profile_directory: str | None = None
 
 
 def execute_worker(job: Job) -> dict[str, object]:
@@ -230,6 +234,26 @@ def execute_worker(job: Job) -> dict[str, object]:
     return result
 
 
+def execute_profiled_worker(job: Job) -> dict[str, object]:
+    """
+    Capture worker execution inside the spawned process when profiling was requested.
+
+    Args:
+        job (Job): Disjoint assignment including optional profile output location.
+
+    Returns:
+        dict[str, object]: Original measurements, with profiling performed in the owning worker.
+    """
+    if job.profile_directory is None:
+        return execute_worker(job)
+    return capture(
+        lambda: execute_worker(job),
+        Path(job.profile_directory),
+        "worker",
+        {"chart": job.chart, "assigned": len(job.indices), "seed": job.seed, "pruning": job.pruning},
+    )
+
+
 def measure(
     chart: Path,
     count: int,
@@ -283,13 +307,14 @@ def measure(
             str(values.resolve()) if values else None,
             checkpoints or [],
             started,
+            os.environ.get(PROFILE_DIRECTORY),
         )
         for indices in assignments
         if indices
     ]
     if jobs:
         with ProcessPoolExecutor(max_workers=len(jobs), mp_context=get_context("spawn")) as pool:
-            futures = [pool.submit(execute_worker, job) for job in jobs]
+            futures = [pool.submit(execute_profiled_worker, job) for job in jobs]
             for future in as_completed(futures):
                 results.append(future.result())
     elapsed = time.perf_counter() - started

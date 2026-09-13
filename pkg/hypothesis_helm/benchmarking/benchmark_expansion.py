@@ -12,6 +12,7 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.benchmark_helm import code_digest
 from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key
 from hypothesis_helm.benchmarking.benchmark_pca import run_case
+from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES
 from hypothesis_helm.charts.runner import Chart, render
 from hypothesis_helm.compiler.expansion import FailureExpansion
@@ -174,6 +175,7 @@ def main() -> int:
     references: list[dict[str, object]] = []
     document: dict[str, object] = {
         "metadata": {
+            "profiling": profile_settings(),
             "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
             "code_sha256": code_digest(),
             "input_complexity": args.input_complexity,
