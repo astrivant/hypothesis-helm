@@ -39,6 +39,7 @@ class RejectionPolicy:
         contracts (Contracts): Supported template AST and helper-call relationships.
         defaults (dict[str, object]): Chart defaults available for deterministic repair candidates.
         declared_schema (bool): Preserve failures admitted by an authored values schema.
+        verify_every_candidate (bool): Require native confirmation when dependency coalescing is not modeled completely.
         records (dict[str, dict[str, object]]): Rejection evidence and bounded representative cases.
         witnesses (dict[str, set[str]]): Distinct inputs whose rejection Helm verified.
         disabled (set[str]): Contracts contradicted by native execution.
@@ -53,6 +54,7 @@ class RejectionPolicy:
     contracts: Contracts
     defaults: dict[str, object]
     declared_schema: bool = False
+    verify_every_candidate: bool = False
     records: dict[str, dict[str, object]] = field(factory=dict)
     witnesses: dict[str, set[str]] = field(factory=dict)
     disabled: set[str] = field(factory=set)
@@ -80,7 +82,7 @@ class RejectionPolicy:
 
     def needs_probe(self, rejection: Rejection, values: dict[str, object]) -> bool:
         """
-        Render the first two distinct witnesses for each rejection contract.
+        Request native verification for initial witnesses or every candidate when required.
 
         Args:
             rejection (Rejection): Predicted explicit rejection.
@@ -90,7 +92,7 @@ class RejectionPolicy:
             bool: Whether native verification is still needed for this witness.
         """
         seen = self.witnesses.get(rejection.key, set())
-        return len(seen) < 2 and configuration_key(values) not in seen
+        return self.verify_every_candidate or (len(seen) < 2 and configuration_key(values) not in seen)
 
     def verified(self, rejection: Rejection, values: dict[str, object]) -> None:
         """
@@ -180,6 +182,7 @@ class RejectionPolicy:
             "filtered_candidates": self.filtered,
             "adjusted_candidates": self.adjusted,
             "verification_renders": self.probes,
+            "verify_every_candidate": self.verify_every_candidate,
             "classifier_disagreements": self.contradictions,
             "declared_schema": self.declared_schema,
             "schema_conflicts": self.schema_conflicts,

@@ -9,9 +9,24 @@ from typing import TypeVar
 
 from hypothesis_helm.schemas.contracts import configuration_key
 
-STRATEGIES = ("random", "linear", "shallow", "deep")
+STRATEGIES = ("random", "linear", "root-first", "leaf-first")
 ALGORITHM = "seeded-path-priority-v1"
 T = TypeVar("T")
+
+
+def validate_strategy(strategy: str) -> str:
+    """
+    Validate the requested traversal spelling without compatibility aliases.
+
+    Args:
+        strategy (str): Requested traversal name.
+
+    Returns:
+        str: Canonical name used in scheduling, reports, and worker environments.
+    """
+    if strategy not in STRATEGIES:
+        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
+    return strategy
 
 
 def order_paths(  # noqa: UP047 - pinned pydocstyle 6 cannot parse PEP 695 function type parameters.
@@ -32,19 +47,18 @@ def order_paths(  # noqa: UP047 - pinned pydocstyle 6 cannot parse PEP 695 funct
     Args:
         items (Sequence[T]): Selected work, in its original linear order.
         path (Callable[[T], tuple[str | int, ...]]): Typed YAML path for each item.
-        strategy (str): Random, linear, shallow, or deep traversal.
+        strategy (str): Random, linear, root-first, or leaf-first traversal.
         seed (int): Existing invocation seed, including zero and negative integers.
         identity (Callable[[T], str] | None): Optional disambiguator for shared paths.
 
     Returns:
         list[T]: Every selected item exactly once, in the requested traversal order.
     """
-    if strategy not in STRATEGIES:
-        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
+    strategy = validate_strategy(strategy)
     if strategy == "linear":
         return list(items)
-    if strategy in {"shallow", "deep"}:
-        direction = 1 if strategy == "shallow" else -1
+    if strategy in {"root-first", "leaf-first"}:
+        direction = 1 if strategy == "root-first" else -1
         return sorted(items, key=lambda item: direction * len(path(item)))
 
     def priority(item: T) -> bytes:
@@ -75,23 +89,22 @@ def order_configurations(
     Reorder retained finite cases using their identity or changed-field depth.
 
     Unlike path properties, joint configurations necessarily revisit fields.
-    Shallow prioritizes the shallowest changed field, deep the deepest changed
+    Root-first prioritizes the shallowest changed field, leaf-first the deepest changed
     field; ties retain planner order. The baseline is scheduled separately.
 
     Args:
         values (Sequence[dict[str, object]]): Unique finite cases after all selection filters.
         effective (Callable[[dict[str, object]], dict[str, object]]): Merge an override with defaults.
         defaults (dict[str, object]): Fixed baseline for comparing changed field depth.
-        strategy (str): Random, linear, shallow, or deep traversal.
+        strategy (str): Random, linear, root-first, or leaf-first traversal.
         seed (int): Reproducible configuration-order seed.
 
     Returns:
         list[dict[str, object]]: The same retained configurations in execution order.
     """
+    strategy = validate_strategy(strategy)
     if strategy in {"random", "linear"}:
         return order_paths(values, lambda value: (), strategy=strategy, seed=seed, identity=configuration_key)
-    if strategy not in STRATEGIES:
-        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
 
     def depths(value: object, baseline: object, depth: int = 0) -> list[int]:
         """
@@ -130,6 +143,6 @@ def order_configurations(
             int: Ascending shallow rank or descending deep rank.
         """
         changed = depths(effective(value), defaults) or [0]
-        return min(changed) if strategy == "shallow" else -max(changed)
+        return min(changed) if strategy == "root-first" else -max(changed)
 
     return sorted(values, key=priority)

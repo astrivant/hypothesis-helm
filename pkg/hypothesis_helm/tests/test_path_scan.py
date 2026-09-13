@@ -46,7 +46,7 @@ def chart(tmp_path: Path) -> Chart:
     )
 
 
-@pytest.mark.parametrize("strategy", ["random", "linear", "shallow", "deep"])
+@pytest.mark.parametrize("strategy", ["random", "linear", "root-first", "leaf-first"])
 def test_scan_visits_each_path_once(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, strategy: str) -> None:
     """
     Visit the entire finite path inventory without mutating its original contract.
@@ -97,8 +97,8 @@ def test_scan_visits_each_path_once(chart: Chart, tmp_path: Path, monkeypatch: p
     visited = [tuple(path) for path in traversal["visited_order"]]
     assert len(visited) == len(set(visited)) == len(calls) == 6
     assert traversal["remaining_paths"] == 0 and traversal["path_targets_complete"]
-    if strategy in {"shallow", "deep"}:
-        assert [len(path) for path in visited] == sorted(map(len, visited), reverse=strategy == "deep")
+    if strategy in {"root-first", "leaf-first"}:
+        assert [len(path) for path in visited] == sorted(map(len, visited), reverse=strategy == "leaf-first")
     assert (chart.schema, chart.defaults) == original
     assert result["coverage_complete"] is False
 

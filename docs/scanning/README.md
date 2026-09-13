@@ -104,11 +104,28 @@ charts. For non-finite charts it restricts generation to known schema, default, 
 template paths where analysis permits. Filtering precedes traversal. Each discovered
 path is scheduled at most once; failed properties retain their reproducing values.
 
-Use `--traversal-strategy random|linear|shallow|deep` to choose execution order.
+Use `--traversal-strategy random|linear|root-first|leaf-first` to choose execution order.
 Random is the default and uses `--seed`; another seed changes the subset reached
 before timeout. Discovery records the path inventory, while execution may visit only
 a prefix. Reports distinguish visited, completed, incomplete, and remaining paths.
 See [traversal semantics and complexity](../execution/README.md#value-path-traversal).
+
+Discovery also reads dependency conditions and tags from chart metadata, including
+controls absent from `values.yaml`, and inspects installed child charts under their
+alias-qualified values paths. When testing a child setting, generation prioritizes
+an enabled context and keeps the original context eligible. It preserves the selected
+value and parent-schema constraints; it does not force activation when those conflict.
+Nested dependencies include their ancestor controls. This applies to path testing
+with or without `--filter`, including generated suites.
+When testing a fallback condition or tag, generation also tries removing earlier
+conditions that would mask it, provided the parent schema allows that change.
+
+JSON reports include dependency relationships, predicted baseline states, enabled
+contexts proposed, and contexts that could not be established. Per-path results
+count render attempts by predicted activation state; these are not proof of child
+output coverage. Missing/ambiguous sources and unresolved forwarding remain visible.
+Finite permutation runs propose activation interaction groups within the configured
+group budget. Graph exports include dependency-control and conditional-template edges.
 
 Random string generation excludes C0/C1 control characters, including tabs and `\u001f`,
 from generated values and object keys at every nesting level. Line feeds, carriage returns, and other Unicode text remain
@@ -223,10 +240,12 @@ accepted generated inputs is `configuration-rejected`, not a pass. Unknown guard
 remain testable. Automatic exclusions apply to inferred inputs; rejections of
 inputs admitted by an authored values schema remain visible failures, with their
 recovered requirements. See [compiler passes](../architecture/README.md#syntax-trees-and-compiler-passes).
-The first two distinct witnesses for each recognized requirement are checked with
-Helm. If Helm accepts one or returns a different error, that requirement is disabled
-for automatic exclusion. Later exclusions use the supported compiler analysis;
-the witness checks are supporting evidence, not a proof about all inputs.
+For charts without dependencies, the first two distinct witnesses for each recognized
+requirement are checked with Helm. Later exclusions use the supported compiler analysis.
+For charts with dependencies, Helm must confirm every predicted rejection before exclusion,
+because child defaults and imported values can change what a parent template sees.
+If Helm accepts a predicted rejection or returns a different error, that requirement is disabled
+for automatic exclusion. Witness checks are supporting evidence, not a proof about all inputs.
 
 Published Bitnami and Prometheus reports use absolute GitHub links targeting `main`.
 PDF links are blue, underlined, and clickable, including links within paragraphs.

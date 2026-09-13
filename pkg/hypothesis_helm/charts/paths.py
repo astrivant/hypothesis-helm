@@ -10,24 +10,28 @@ import time
 from pathlib import Path
 
 from hypothesis import strategies as st
+from jsonschema import validators
 
 from hypothesis_helm.charts.generate import Model, ValuePath, coalesce, enumerate_paths
 from hypothesis_helm.charts.generated import path_values
-from hypothesis_helm.charts.runner import Chart, RenderFailure, _default_paths, check_chart, render
+from hypothesis_helm.charts.runner import Chart, RenderFailure, _default_paths, check_chart, merge_values, render
 from hypothesis_helm.compiler.asts.contracts import Contracts
+from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.passes.rejections import RejectionPolicy
-from hypothesis_helm.execution.traversal import ALGORITHM, STRATEGIES, order_paths
+from hypothesis_helm.execution.traversal import ALGORITHM, order_paths, validate_strategy
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.progress import format_path
-from hypothesis_helm.schemas.contracts import schema_strategy
+from hypothesis_helm.schemas.contracts import json_value, schema_strategy
 from hypothesis_helm.schemas.priority import PriorityInputs
 
 LOGGER = logging.getLogger(__name__)
 GENERATION_ERRORS = {"Unsatisfiable", "FailedHealthCheck", "SchemaError", "InvalidArgument"}
 
 
-def path_strategy(chart: Chart, entry: ValuePath, generation_schema: dict[str, object]) -> st.SearchStrategy[dict[str, object]]:
+def path_strategy(
+    chart: Chart, entry: ValuePath, generation_schema: dict[str, object], dependencies: Dependencies | None = None
+) -> st.SearchStrategy[dict[str, object]]:
     """
     Generate one target path in baseline or schema-valid dependent context.
 
@@ -35,6 +39,7 @@ def path_strategy(chart: Chart, entry: ValuePath, generation_schema: dict[str, o
         chart (Chart): Original chart whose schema validates complete candidates.
         entry (ValuePath): One discovered and filtered path strategy.
         generation_schema (dict[str, object]): Generation-only parent type information.
+        dependencies (Dependencies | None): Shared activation model for enabled child contexts.
 
     Returns:
         st.SearchStrategy[dict[str, object]]: Complete values for the selected path property.
@@ -52,7 +57,17 @@ def path_strategy(chart: Chart, entry: ValuePath, generation_schema: dict[str, o
             dict[str, object]: Original-schema-valid values with the selected path varied.
         """
         value = draw(schema_strategy(entry.schema))
-        return path_values(chart, entry.path, value, draw(st.data()), generation_schema=generation_schema)
+        values = path_values(chart, entry.path, value, draw(st.data()), generation_schema=generation_schema)
+        if dependencies is not None and dependencies.nodes:
+            validator = validators.validator_for(chart.schema)(chart.schema)
+            contexts = dependencies.contexts(
+                chart.defaults,
+                values,
+                entry.path,
+                lambda candidate: validator.is_valid(json_value(merge_values(chart.defaults, candidate))),
+            )
+            values = draw(st.sampled_from(contexts))
+        return values
 
     return candidate()
 
@@ -90,7 +105,7 @@ def check_paths(
         timeout (float): Per-render subprocess timeout.
         artifacts (Path): Root for path findings and the complete traversal inventory.
         filtering (bool): Apply known-input generation restrictions before ordering.
-        traversal_strategy (str): Random, linear, shallow, or deep path traversal.
+        traversal_strategy (str): Random, linear, root-first, or leaf-first path traversal.
         fail_fast (bool): Stop after the first observed failure without shrinking.
         release (str): Helm release name for every input.
         namespace (str): Helm release namespace.
@@ -100,8 +115,7 @@ def check_paths(
     Returns:
         dict[str, object]: Visited, completed, incomplete, and remaining path evidence.
     """
-    if traversal_strategy not in STRATEGIES:
-        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
+    traversal_strategy = validate_strategy(traversal_strategy)
     if not math.isfinite(budget) or budget <= 0 or max_examples < 1 or timeout <= 0:
         raise ValueError("budget, max_examples, and timeout must be positive")
     planning_started = time.monotonic()
@@ -166,7 +180,7 @@ def check_paths(
                     helm=helm,
                     timeout=timeout,
                     time_limit=remaining,
-                    input_strategy=path_strategy(chart, entry, model.schema),
+                    input_strategy=path_strategy(chart, entry, model.schema, inventory.dependencies),
                     input_inventory=inventory,
                     artifact_dir=directory,
                     fail_fast=fail_fast,
@@ -248,6 +262,7 @@ def check_paths(
         "coverage_complete": False,
         "proof_of_totality": False,
         "input_inventory": inventory.report(),
+        "dependency_activation": inventory.dependencies.report(chart.defaults),
         "field_coverage": measured.statistics,
         "filtering": {
             "requested": filtering,

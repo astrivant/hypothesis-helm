@@ -18,8 +18,9 @@ from ruamel.yaml.comments import CommentedMap
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.generated import RenderOptions
-from hypothesis_helm.charts.runner import Chart, _schema_nodes
+from hypothesis_helm.charts.runner import Chart, _default_paths, _schema_nodes
 from hypothesis_helm.charts.templates import Action, Reference, discover, parse
+from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.reporting.progress import format_path
 from hypothesis_helm.schemas.contracts import mapping, number, sequence, text
 
@@ -392,7 +393,39 @@ def coalesce(chart: Chart) -> Model:
     values = mapping(yamlio.load(yamlio.dump(chart.defaults)))
     schema = copy.deepcopy(chart.schema)
     references, warnings = discover(chart.path)
+    dependencies = chart.dependency_model or Dependencies.build(chart.path)
+    if dependencies.nodes:
+        values = mapping(yamlio.load(yamlio.dump(dependencies.context(chart.defaults, {}))))
+    references.extend(dependencies.references)
     diagnostics = [asdict(w) for w in warnings]
+    diagnostics.extend(dependencies.diagnostics)
+    # Child defaults supply generation types without changing the original chart contract.
+    for dependency in dependencies.nodes:
+        if '"$ref"' in json.dumps(dependency.schema):
+            diagnostics.append(
+                {"path": list(dependency.path), "message": "Child schema references remain local; unresolved types use supplied defaults"}
+            )
+        for entry in enumerate_paths(dependency.schema):
+            full_path = (*dependency.path, *(str(part) for part in entry.path))
+            if not _schema_nodes(schema, full_path, schema) and '"$ref"' not in json.dumps(entry.schema):
+                _add_schema(schema, full_path, copy.deepcopy(entry.schema))
+        for child_path in _default_paths(dependency.defaults):
+            if "*" in child_path:
+                continue
+            full_path = (*dependency.path, *child_path)
+            found, value = _get(dependency.defaults, child_path)
+            if found:
+                _insert(values, full_path, copy.deepcopy(value))
+                if not _schema_nodes(schema, full_path, schema):
+                    _add_schema(schema, full_path, infer_schema(value))
+        for control in dependency.controls:
+            if not _schema_nodes(schema, control, schema):
+                present, supplied = _get(values, control)
+                control_schema: dict[str, object] = {"type": "boolean"}
+                if present and type(supplied) is not bool:
+                    control_schema = {"anyOf": [{"type": "boolean"}, infer_schema(supplied)]}
+                _add_schema(schema, control, control_schema)
+    dependency_controls = {control for dependency in dependencies.nodes for control in dependency.controls}
     fallbacks = _fallbacks(chart, references)
     inferred_paths = set()
     for path in sorted({r.path for r in references if r.path}, key=lambda p: (len(p), p)):
@@ -407,6 +440,8 @@ def coalesce(chart: Chart) -> Model:
             continue
         found, value = _get(values, path)
         nodes = _schema_nodes(chart.schema, path, chart.schema)
+        if not found and path in dependency_controls:
+            continue
         if not found:
             candidates = [n["default"] for n in nodes if "default" in n]
             candidates += fallbacks.get(path, [])

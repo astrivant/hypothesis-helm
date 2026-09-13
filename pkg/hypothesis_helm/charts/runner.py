@@ -26,13 +26,14 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.presence import has_path
 from hypothesis_helm.charts.templates import discover
 from hypothesis_helm.compiler.asts.contracts import Contracts
+from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.compiler.passes.rejections import RejectionPolicy, matches_rejection
 from hypothesis_helm.compiler.passes.topology import trim_topology as topology_trim
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
-from hypothesis_helm.execution.traversal import ALGORITHM, STRATEGIES, order_configurations
+from hypothesis_helm.execution.traversal import ALGORITHM, order_configurations, validate_strategy
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.changes import compare
 from hypothesis_helm.reporting.output import emit_manifest
@@ -65,11 +66,13 @@ class Chart:
         path (Path): Resolved value path or chart location.
         schema (dict[str, object]): Schema describing accepted values.
         defaults (dict[str, object]): Values loaded from the source chart.
+        dependency_model (Dependencies | None): Optional dependency snapshot for an isolated generated suite.
     """
 
     path: Path
     schema: dict[str, object]
     defaults: dict[str, object]
+    dependency_model: Dependencies | None = None
 
     @classmethod
     def load(cls, path: str | Path) -> Chart:
@@ -496,8 +499,7 @@ def check_chart(
     Returns:
         dict[str, object]: Resulting schema, values mapping, or structured report.
     """
-    if traversal_strategy not in STRATEGIES:
-        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
+    traversal_strategy = validate_strategy(traversal_strategy)
     if input_strategy is not None and (permutations is not None or exhaustive):
         raise ValueError("input_strategy applies to sampled testing only")
     if not check_defaults and input_strategy is None:
@@ -532,6 +534,9 @@ def check_chart(
     )
     initial_rejections = policy.snapshot() if policy is not None else {}
     inputs = input_inventory if input_inventory is not None else InputInventory.build(chart)
+    if policy is not None and inputs.dependencies.nodes:
+        policy.verify_every_candidate = True
+    dependency_attempts = {node.path: {"enabled": 0, "disabled": 0, "unknown": 0} for node in inputs.dependencies.nodes}
     field_coverage = FieldCoverage(inputs, chart.defaults)
     LOGGER.info("Compiler input baseline: %d statically named fields", len(inputs.known))
     hashes = RenderHashes(scope="run-local")
@@ -805,6 +810,12 @@ def check_chart(
         Returns:
             None: In-place additions preserve successful and failed execution counts separately.
         """
+        if inputs.dependencies.nodes:
+            result["dependency_activation"] = {
+                **inputs.dependencies.report(chart.defaults),
+                "render_attempts_by_predicted_state": [{"path": list(path), **counts} for path, counts in dependency_attempts.items()],
+                "activation_coverage_proven": False,
+            }
         if policy is not None:
             evidence = policy.snapshot()
             for key in (
@@ -911,7 +922,10 @@ def check_chart(
         try:
             with execution_timer(remaining_time()):
                 effective = merge_values(chart.defaults, values)
-                validators.validator_for(chart.schema)(chart.schema).validate(json_value(effective))
+                # Helm coalesces child defaults and imports before validating dependency charts.
+                # A parent-only merge cannot authoritatively reject those configurations.
+                if not inputs.dependencies.nodes:
+                    validators.validator_for(chart.schema)(chart.schema).validate(json_value(effective))
                 rejection = policy.predict(effective) if policy is not None and not baseline and not policy.declared_schema else None
                 if rejection is not None and policy is not None:
                     if policy.needs_probe(rejection, effective):
@@ -977,6 +991,8 @@ def check_chart(
                     resources = pruner.lookup(None if force_render else witness, count)
                 if resources is None:
                     field_coverage.observe(effective)
+                    for path, state in inputs.dependencies.states(chart.defaults, values).items():
+                        dependency_attempts[path]["unknown" if state is None else "enabled" if state else "disabled"] += 1
                     render_started = time.perf_counter()
                     rendered = True
                     resources = render(

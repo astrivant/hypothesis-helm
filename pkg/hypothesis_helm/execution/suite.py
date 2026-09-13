@@ -30,7 +30,7 @@ from hypothesis_helm.execution.render_hashes import (
     summarize_process_statistics,
 )
 from hypothesis_helm.execution.structure import inspect_structure
-from hypothesis_helm.execution.traversal import ALGORITHM, STRATEGIES
+from hypothesis_helm.execution.traversal import ALGORITHM, validate_strategy
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.output import MANIFEST_FD
 
@@ -62,7 +62,7 @@ def run_suite(
     Args:
         directory (Path): Directory containing the generated test module.
         seed (int): Hypothesis seed applied to every property in this invocation.
-        traversal_strategy (str): Seeded random, original linear, shallow, or deep path order.
+        traversal_strategy (str): Seeded random, original linear, root-first, or leaf-first path order.
         match (str | None): Optional pytest keyword expression selecting value paths.
         collect_only (bool): Whether to list tests without invoking Helm rendering.
         jobs (int | Literal["auto"]): Fixed worker count or automatic PID throughput tuning.
@@ -78,8 +78,7 @@ def run_suite(
     Returns:
         int: Pytest exit status, or 130 when the child is interrupted.
     """
-    if traversal_strategy not in STRATEGIES:
-        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
+    traversal_strategy = validate_strategy(traversal_strategy)
     if rerun not in {"auto", "all", "failed"}:
         raise ValueError("rerun must be auto, all, or failed")
     if isinstance(jobs, int) and jobs < 1:

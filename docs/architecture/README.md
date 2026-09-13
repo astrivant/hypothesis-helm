@@ -48,10 +48,30 @@ equivalence pruning, rejection-guided generation, and export passes. Constants
 remain at the compiler root. Rejection analysis navigates parsed nodes rather than searching
 comments or message strings for words such as `fail`.
 
+Dependency records live in `compiler/asts/dependencies.py`; their discovery and
+generation pass lives in `compiler/passes/dependencies.py`. The pass reads installed
+child directories and archives, qualifies child inputs by alias, and records ordered
+Boolean conditions and shared tag controls. It discovers these controls even when
+they appear only in chart metadata. Nested dependencies retain their ancestor gates.
+
+Path generation proposes an enabled context for child settings while preserving
+the selected value and original parent-schema constraints. The original context
+remains eligible because parent templates may read child values independently of
+activation. Finite planning proposes groups containing one child field and its
+activation chain; existing group-size budgets still apply.
+
+Graph exports connect controls to dependency instances and child templates.
+Activation states are predictions, and every scheduled candidate is rendered by
+Helm. Missing or ambiguous sources, unresolved imports, and unsupported forwarding
+remain explicit limitations. Dependency activation never authorizes skipping a
+render: exact-equivalence and topology proofs still exclude charts with dependencies.
+
 With `--filter`, local tests and repository scans evaluate supported branches
 leading to explicit `fail` and `required` calls, including statically named helper
 calls. The first two distinct rejected inputs for each requirement are checked
-against Helm. A different native outcome disables that requirement's filtering;
+against Helm; charts with dependencies require native confirmation for every
+predicted rejection because coalescing and imports may alter the input context.
+A different native outcome disables that requirement's filtering;
 an unexpected rendering failure remains a failure.
 
 Automatic exclusions apply to inferred input domains. When an authored

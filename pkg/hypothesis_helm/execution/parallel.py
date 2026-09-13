@@ -14,6 +14,7 @@ from pathlib import Path
 
 from hypothesis_helm.execution.feedback import ThroughputController
 from hypothesis_helm.execution.processes import Processes
+from hypothesis_helm.execution.traversal import validate_strategy
 from hypothesis_helm.reporting.display import start_progress
 
 LOGGER = logging.getLogger(__name__)
@@ -75,7 +76,7 @@ def run_parallel(
             return (collection.returncode if collection.returncode > 0 else 130), 0
         nodes: list[str] = json.loads(collected.read_text())
         depths: dict[str, int] = json.loads(depths_file.read_text()) if depths_file.exists() else {}
-        layered = environment.get("HYPOTHESIS_HELM_TRAVERSAL_STRATEGY") in {"shallow", "deep"}
+        layered = validate_strategy(environment.get("HYPOTHESIS_HELM_TRAVERSAL_STRATEGY", "linear")) in {"root-first", "leaf-first"}
         if not nodes:
             return 5, 0
         maximum = min(jobs, len(nodes))

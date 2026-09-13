@@ -18,6 +18,7 @@ from jsonschema import validators
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.presence import has_path
 from hypothesis_helm.charts.templates import Reference, discover
+from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.schemas.contracts import configuration_key, json_value
 from hypothesis_helm.schemas.model import ValueReference, ValuesModel
 
@@ -91,6 +92,7 @@ class InputInventory:
         dynamic (set[tuple[str, ...]]): Prefixes with unresolved map or collection access.
         unresolved (list[dict[str, object]]): Constructs preventing complete inventory claims.
         usage_unknown (bool): Whether unmatched values may be consumed by opaque contexts.
+        dependencies (Dependencies): Namespaced child inputs and metadata activation controls.
     """
 
     model: ValuesModel
@@ -99,6 +101,7 @@ class InputInventory:
     dynamic: set[tuple[str, ...]]
     unresolved: list[dict[str, object]]
     usage_unknown: bool
+    dependencies: Dependencies = field(factory=Dependencies)
 
     @classmethod
     def build(cls, chart: Chart) -> InputInventory:
@@ -115,7 +118,11 @@ class InputInventory:
         from hypothesis_helm.charts.runner import _default_paths, _schema_nodes
 
         references, warnings = discover(chart.path, prune_literals=True)
+        dependency_graph = chart.dependency_model or Dependencies.build(chart.path)
+        dependency_graph.baseline = chart.defaults
+        references.extend(dependency_graph.references)
         unresolved = [asdict(warning) for warning in warnings]
+        unresolved.extend(dependency_graph.diagnostics)
         model = ValuesModel.from_schema(chart.schema)
         defaults = set(_default_paths(chart.defaults))
         try:
@@ -138,13 +145,11 @@ class InputInventory:
                     [ref for ref in references if ref.path == path],
                 )
             )
-        # Dependency/global forwarding is not resolved by the parent template analyzer.
-        metadata = chart.path / "Chart.yaml"
-        dependencies = yamlio.load(metadata.read_text()) if metadata.is_file() else {}
-        if isinstance(dependencies, dict) and dependencies.get("dependencies"):
-            unresolved.append({"message": "Dependency value forwarding requires downstream analysis"})
+        # Globals, imports, and opaque helpers still prevent a complete cross-chart proof.
+        if dependency_graph.nodes:
+            unresolved.append({"message": "Complete cross-chart influence is not proven; dependency forwarding remains conservative"})
         unknown = bool(unresolved) or () in dynamic
-        return cls(model, fields, leaves(named), dynamic, unresolved, unknown)
+        return cls(model, fields, leaves(named), dynamic, unresolved, unknown, dependency_graph)
 
     def report(self) -> dict[str, object]:
         """
@@ -171,7 +176,7 @@ class InputInventory:
             "fields": rows,
             "known_fields": [list(path) for path in sorted(self.known)],
             "lower_bound_fields": len(self.known),
-            "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+            "bound_scope": "identified leaf-most parent/child template selectors and dependency activation controls",
             "inventory_complete": False,
             "output_influence_proven": False,
             "missing_values": [row for row in rows if row["references"] and not row["in_values"]],
@@ -182,6 +187,7 @@ class InputInventory:
             "unreferenced_usage": "unknown" if self.usage_unknown else "possibly unused; not proven",
             "dynamic_regions": [list(path) for path in sorted(self.dynamic)],
             "unresolved": self.unresolved,
+            "dependency_activation": self.dependencies.report(self.dependencies.baseline),
         }
 
     def dump(

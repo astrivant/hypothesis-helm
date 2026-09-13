@@ -23,7 +23,7 @@ from hypothesis_helm.compiler.passes.inputs import load_input_chart
 from hypothesis_helm.compiler.passes.minimum import export_minimal
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
-from hypothesis_helm.execution.traversal import STRATEGIES
+from hypothesis_helm.execution.traversal import STRATEGIES, validate_strategy
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.reporting.changes import replay_file
@@ -307,9 +307,10 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     for testing in (run, test, repository):
         testing.add_argument(
             "--traversal-strategy",
+            type=validate_strategy,
             choices=STRATEGIES,
             default="random",
-            help="value-path order: seeded random (default), original linear, shallow first, or deep first",
+            help="value-path order: seeded random (default), original linear, root-first, or leaf-first",
         )
     test.add_argument("--timeout", type=float, default=30)
     test.add_argument("--helm", default="helm")

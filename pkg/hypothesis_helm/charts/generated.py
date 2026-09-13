@@ -13,11 +13,13 @@ from pathlib import Path
 
 from attrs import frozen
 from hypothesis import assume, note
+from hypothesis import strategies as st
 from hypothesis.strategies import DataObject
 from jsonschema import validators
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.runner import Chart, RenderFailure, merge_values, render
+from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.schemas.contracts import json_value, mapping, schema_strategy, sequence
 
 
@@ -60,7 +62,9 @@ def prepared_chart(source: Path, generated: Path) -> Iterator[Chart]:
         shutil.copytree(source, target)
         shutil.copyfile(generated / "values.coalesced.yaml", target / "values.yaml")
         shutil.copyfile(generated / "values.inferred.schema.json", target / "values.schema.json")
-        yield Chart.load(target)
+        chart = Chart.load(target)
+        chart.dependency_model = Dependencies.build(target)
+        yield chart
 
 
 def _replace(
@@ -274,6 +278,14 @@ def check_path(
         list[dict[str, object]]: Validated rendered resources for this candidate.
     """
     values = path_values(chart, path, value, data)
+    dependencies = chart.dependency_model or Dependencies.build(chart.path)
+    if dependencies.nodes:
+        validator = validators.validator_for(chart.schema)(chart.schema)
+        contexts = dependencies.contexts(
+            chart.defaults, values, path, lambda candidate: validator.is_valid(json_value(merge_values(chart.defaults, candidate)))
+        )
+        values = data.draw(st.sampled_from(contexts), label="dependency context")
+        note("dependency-aware overrides:\n" + yamlio.dump(values))
     selected = options or RenderOptions(timeout=timeout, allow_empty=allow_empty)
     resources = render(
         chart,

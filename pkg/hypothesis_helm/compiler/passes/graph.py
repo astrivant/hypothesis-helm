@@ -78,6 +78,8 @@ def export_graph(
             in_schema=item.in_schema,
         )
         for ref in item.locations:
+            if ref.file.endswith("Chart.yaml"):
+                continue
             template = node("template:" + ref.file, "template", path=ref.file)
             edges.append(
                 {
@@ -87,7 +89,29 @@ def export_graph(
                     "line": ref.line,
                 }
             )
-    for path in sorted(chart.path.rglob("*")):
+    dependency_states = inventory.dependencies.states(chart.defaults, {})
+    for dependency in inventory.dependencies.nodes:
+        identifier = node(
+            "dependency:" + json.dumps(dependency.path),
+            "dependency",
+            path=list(dependency.path),
+            name=dependency.name,
+            baseline_enabled=dependency_states[dependency.path],
+            activation_proven=False,
+            reason=dependency.reason,
+        )
+        for index, selector_path in enumerate(dependency.conditions):
+            edges.append(
+                {"from": "values:" + json.dumps(selector_path), "to": identifier, "kind": "dependency-condition", "priority": index}
+            )
+        for selector_path in dependency.tags:
+            edges.append({"from": "values:" + json.dumps(selector_path), "to": identifier, "kind": "dependency-tag"})
+        if len(dependency.path) > 1:
+            edges.append({"from": "dependency:" + json.dumps(dependency.path[:-1]), "to": identifier, "kind": "requires-enabled-parent"})
+        for child_template in dependency.templates:
+            template = node("template:" + child_template, "template", path=child_template, baseline_influences_proven=False)
+            edges.append({"from": identifier, "to": template, "kind": "conditionally-includes"})
+    for path in sorted((chart.path / "templates").rglob("*")):
         if not path.is_file() or "templates" not in path.relative_to(chart.path).parts:
             continue
         relative = path.relative_to(chart.path).as_posix()

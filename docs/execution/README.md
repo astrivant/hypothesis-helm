@@ -20,24 +20,27 @@ shrink multiple values. A timeout leaves the unvisited paths explicitly untested
 | --- | --- |
 | `random` | Stable random priorities derived from `--seed` and path identity. |
 | `linear` | Original path order. Scans follow supplied values before additional discovered paths. |
-| `shallow` | Increasing path depth: `.global` before `.global.configMaps`. |
-| `deep` | Decreasing path depth: deepest leaves before their parent containers. |
+| `root-first` | Increasing path depth: `.global` before `.global.configMaps`. |
+| `leaf-first` | Decreasing path depth: deepest leaves before their parent containers. |
 
 ```sh
 helm hypothesis test ./charts --filter --seed 42 --traversal-strategy random --chart-timeout 3m
-helm hypothesis run generated-tests --traversal-strategy deep --seed 42
+helm hypothesis run generated-tests --traversal-strategy leaf-first --seed 42
 ```
+
+The previous names `shallow` and `deep` are no longer accepted. Update existing
+commands to `root-first` and `leaf-first`, respectively.
 
 The same seed and selected paths reproduce the execution order. Change the seed
 to test a different selection of paths before a timeout; some paths may appear in
 both runs. Assigning paths to shards or skipping cached successes does not reorder
-the remaining paths. Shallow and deep traversal finish all paths at one depth
+the remaining paths. Root-first and leaf-first traversal finish all paths at one depth
 before starting the next depth within each shard. Independent CI shards do not
 wait for one another. Paths at the same depth keep their original order.
 
 Finite permutation runs order distinct configurations after trimming, with defaults
 checked first. Fields necessarily recur across joint configurations. In these modes,
-shallow uses the shallowest changed field and deep the deepest, relative to defaults.
+root-first uses the shallowest changed field and leaf-first the deepest, relative to defaults.
 A render can be skipped as equivalent only after another input has passed validation
 and the compiler has established that both inputs produce exactly the same output.
 

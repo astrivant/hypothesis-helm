@@ -7,6 +7,7 @@ from textwrap import dedent
 
 import pytest
 
+from hypothesis_helm.cli import argument_parser
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.execution.traversal import order_configurations, order_paths
@@ -19,8 +20,8 @@ PATHS = [("global",), ("global", "configMaps"), ("service",), ("service", "ports
     ("strategy", "expected"),
     [
         ("linear", [0, 1, 2, 3, 4]),
-        ("shallow", [0, 2, 1, 4, 3]),
-        ("deep", [3, 1, 4, 0, 2]),
+        ("root-first", [0, 2, 1, 4, 3]),
+        ("leaf-first", [3, 1, 4, 0, 2]),
     ],
 )
 def test_path_depth_order(strategy: str, expected: list[int]) -> None:
@@ -35,6 +36,8 @@ def test_path_depth_order(strategy: str, expected: list[int]) -> None:
         None: Container and array paths receive their actual YAML path depth.
     """
     assert order_paths(PATHS, lambda path: path, strategy=strategy) == [PATHS[index] for index in expected]
+    for command in ("run", "test", "scan"):
+        assert argument_parser().parse_args([command, "charts", "--traversal-strategy", strategy]).traversal_strategy == strategy
 
 
 def test_random_path_order_is_seeded_and_subset_stable() -> None:
@@ -54,15 +57,25 @@ def test_random_path_order_is_seeded_and_subset_stable() -> None:
     assert PATHS == original
 
 
-def test_unknown_traversal_is_rejected() -> None:
+@pytest.mark.parametrize("strategy", ["unknown", "shallow", "deep"])
+def test_unknown_traversal_is_rejected(strategy: str) -> None:
     """
     Reject invalid traversal modes even when the selected work is empty.
+
+    Args:
+        strategy (str): Unsupported or removed traversal name.
 
     Returns:
         None: An unsupported mode cannot silently fall back to linear traversal.
     """
     with pytest.raises(ValueError, match="traversal_strategy"):
-        order_paths([], lambda path: path, strategy="unknown")
+        order_paths([], lambda path: path, strategy=strategy)
+    with pytest.raises(ValueError, match="traversal_strategy"):
+        order_configurations([], lambda value: value, {}, strategy=strategy)
+    for command in ("run", "test", "scan"):
+        with pytest.raises(SystemExit) as error:
+            argument_parser().parse_args([command, "charts", "--traversal-strategy", strategy])
+        assert error.value.code == 2
 
 
 def test_finite_traversal_preserves_filtered_population() -> None:
@@ -76,15 +89,15 @@ def test_finite_traversal_preserves_filtered_population() -> None:
     shallow = {"replicas": 2, "global": {"port": 80}}
     deep = {"replicas": 1, "global": {"port": 81}}
     retained = [deep, shallow]
-    assert order_configurations(retained, lambda value: value, baseline, strategy="shallow") == [shallow, deep]
-    assert order_configurations(retained, lambda value: value, baseline, strategy="deep") == [deep, shallow]
+    assert order_configurations(retained, lambda value: value, baseline, strategy="root-first") == [shallow, deep]
+    assert order_configurations(retained, lambda value: value, baseline, strategy="leaf-first") == [deep, shallow]
     random = order_configurations(retained, lambda value: value, baseline, seed=42)
     assert random == order_configurations(retained, lambda value: value, baseline, seed=42)
     assert len(random) == 2 and all(value in retained for value in random)
     assert retained == [deep, shallow]
 
 
-@pytest.mark.parametrize("strategy", ["shallow", "deep"])
+@pytest.mark.parametrize("strategy", ["root-first", "leaf-first"])
 def test_parallel_workers_finish_each_depth_layer(tmp_path: Path, strategy: str) -> None:
     """
     Require an entire depth layer to finish before dispatching the next one.
@@ -106,7 +119,7 @@ def test_parallel_workers_finish_each_depth_layer(tmp_path: Path, strategy: str)
         earlier = [
             other
             for other, candidate in enumerate(PATHS)
-            if (len(candidate) < len(path) if strategy == "shallow" else len(candidate) > len(path))
+            if (len(candidate) < len(path) if strategy == "root-first" else len(candidate) > len(path))
         ]
         blocks.append(
             dedent(f"""

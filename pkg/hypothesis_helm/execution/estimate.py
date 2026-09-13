@@ -13,6 +13,7 @@ from typing import Literal
 
 from hypothesis_helm.execution.cache import fingerprint, in_ci, read_outcomes, seed_key
 from hypothesis_helm.execution.structure import inspect_structure
+from hypothesis_helm.execution.traversal import validate_strategy
 from hypothesis_helm.integrations.sharding import Shard
 
 
@@ -95,6 +96,7 @@ def estimate_suite(
     environment.pop("PYTEST_PLUGINS", None)
     environment["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    traversal_strategy = validate_strategy(traversal_strategy)
     environment["HYPOTHESIS_HELM_TRAVERSAL_STRATEGY"] = traversal_strategy
     environment["HYPOTHESIS_HELM_TRAVERSAL_SEED"] = str(seed)
     with TemporaryDirectory(prefix="hypothesis-helm-estimate-") as temporary:

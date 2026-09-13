@@ -7,6 +7,7 @@ from pathlib import Path
 from attrs import field, frozen
 
 from hypothesis_helm.charts.templates import Action, discover, parse
+from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.schemas.model import ValueReference, ValuesModel
 
 
@@ -88,6 +89,15 @@ def infer_groups(chart: Path, schema: dict[str, object] | ValuesModel) -> tuple[
 
     for relationship in model.relationships:
         add({reference.path for reference in relationship.references}, relationship.source)
+    dependencies = Dependencies.build(chart)
+    for dependency in dependencies.nodes:
+        controls = {
+            path for ancestor in dependencies.nodes if dependency.path[: len(ancestor.path)] == ancestor.path for path in ancestor.controls
+        }
+        # Each child field interacts with its activation chain; do not merge sibling
+        # fields into one exponentially larger group. Existing group budgets apply.
+        for reference in dependency.references:
+            add(controls | {reference.path}, "dependency:" + ".".join(dependency.path))
     references, diagnostics = discover(chart)
     for file in sorted((chart / "templates").rglob("*")):
         if not file.is_file():
@@ -130,4 +140,5 @@ def infer_groups(chart: Path, schema: dict[str, object] | ValuesModel) -> tuple[
 
         walk(nodes)
     unresolved = [{"file": item.file, "line": item.line, "message": item.message} for item in diagnostics]
+    unresolved.extend(dependencies.diagnostics)
     return list(dict.fromkeys(groups)), unresolved
