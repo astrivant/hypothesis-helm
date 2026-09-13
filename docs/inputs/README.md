@@ -180,7 +180,7 @@ The compiler's `constants.py` supplies these defaults for missing typed values:
 | Explicit null type | `null` |
 | Unknown type | No invented value; recorded as unresolved |
 
-Supplied values—including `false`, `0`, `""` and explicit null—are preserved.
+Supplied values-including `false`, `0`, `""` and explicit null-are preserved.
 Explicit schema defaults and constants take precedence over these type constants.
 This policy is deterministic; it does not invent strings, choose enum alternatives,
 or solve downstream constraints. Further validation catches invalid examples.

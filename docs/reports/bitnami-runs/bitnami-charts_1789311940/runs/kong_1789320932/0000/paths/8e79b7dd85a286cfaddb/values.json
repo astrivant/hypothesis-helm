@@ -1,0 +1,371 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "apiVersions": [],
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "commonAnnotations": {},
+  "commonLabels": {},
+  "clusterDomain": "cluster.local",
+  "extraDeploy": [],
+  "usePasswordFiles": true,
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "image": {
+    "tag": ""
+  },
+  "database": "postgresql",
+  "useDaemonset": false,
+  "replicaCount": 2,
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "updateStrategy": {
+    "type": "RollingUpdate",
+    "rollingUpdate": {}
+  },
+  "automountServiceAccountToken": true,
+  "hostAliases": [],
+  "topologySpreadConstraints": [],
+  "priorityClassName": "",
+  "schedulerName": "",
+  "terminationGracePeriodSeconds": "",
+  "podAnnotations": {},
+  "podLabels": {},
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "extraVolumes": [],
+  "initContainers": [],
+  "sidecars": [],
+  "autoscaling": {
+    "enabled": false,
+    "minReplicas": 2,
+    "maxReplicas": 5,
+    "metrics": [
+      {
+        "type": "Resource",
+        "resource": {
+          "name": "cpu",
+          "target": {
+            "type": "Utilization",
+            "averageUtilization": 80
+          }
+        }
+      }
+    ]
+  },
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": "50%"
+  },
+  "kong": {
+    "command": [],
+    "args": [],
+    "initScriptsCM": "",
+    "initScriptsSecret": "",
+    "declarativeConfig": "",
+    "declarativeConfigCM": "",
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumeMounts": [],
+    "containerPorts": {
+      "proxyHttp": 8000,
+      "proxyHttps": 8443,
+      "adminHttp": 8001,
+      "adminHttps": 8444
+    },
+    "resourcesPreset": "medium",
+    "resources": {},
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 120,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 15,
+      "timeoutSeconds": 3,
+      "failureThreshold": 20,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "lifecycleHooks": {}
+  },
+  "service": {
+    "type": "ClusterIP",
+    "exposeAdmin": false,
+    "disableHttpPort": false,
+    "ports": {
+      "proxyHttp": 80,
+      "proxyHttps": 443,
+      "adminHttp": 8001,
+      "adminHttps": 8444
+    },
+    "nodePorts": {
+      "proxyHttp": "",
+      "proxyHttps": "",
+      "adminHttp": "",
+      "adminHttps": ""
+    },
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {},
+    "clusterIP": "",
+    "externalTrafficPolicy": "",
+    "loadBalancerIP": "",
+    "loadBalancerSourceRanges": [],
+    "annotations": {},
+    "extraPorts": []
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "kubeAPIServerPorts": [
+      443,
+      6443,
+      8443
+    ],
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "ingressClassName": "",
+    "pathType": "ImplementationSpecific",
+    "apiVersion": "",
+    "hostname": "kong.local",
+    "path": "/",
+    "annotations": {},
+    "tls": false,
+    "selfSigned": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "secrets": [],
+    "extraRules": []
+  },
+  "ingressController": {
+    "enabled": true,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/kong-ingress-controller",
+      "tag": "3.5.1-debian-12-r3",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "proxyReadyTimeout": 300,
+    "ingressClass": "kong",
+    "command": [],
+    "args": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumeMounts": [],
+    "containerPorts": {
+      "health": 10254
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 120,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 15,
+      "timeoutSeconds": 3,
+      "failureThreshold": 20,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "lifecycleHooks": {},
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    },
+    "rbac": {
+      "create": true,
+      "rules": []
+    }
+  },
+  "migration": {
+    "command": [],
+    "args": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumeMounts": [],
+    "resourcesPreset": "nano",
+    "resources": {},
+    "automountServiceAccountToken": true,
+    "hostAliases": [],
+    "annotations": {
+      "helm.sh/hook": "post-install, pre-upgrade",
+      "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
+    },
+    "podLabels": {},
+    "podAnnotations": {}
+  },
+  "postgresql": {
+    "enabled": true,
+    "auth": {
+      "username": "kong",
+      "password": "",
+      "database": "kong",
+      "postgresPassword": "",
+      "existingSecret": ""
+    },
+    "architecture": "standalone",
+    "primary": {
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "external": {
+      "host": "",
+      "port": 5432,
+      "user": "kong",
+      "password": "",
+      "database": "kong",
+      "existingSecret": "",
+      "existingSecretPasswordKey": ""
+    }
+  },
+  "cassandra": {
+    "enabled": false,
+    "dbUser": {
+      "user": "kong",
+      "password": "",
+      "existingSecret": ""
+    },
+    "replicaCount": 1,
+    "external": {
+      "hosts": [],
+      "port": 9042,
+      "user": "",
+      "password": "",
+      "existingSecret": "",
+      "existingSecretPasswordKey": ""
+    },
+    "resourcesPreset": "large",
+    "resources": {}
+  },
+  "metrics": {
+    "enabled": false,
+    "containerPorts": {
+      "http": 9119
+    },
+    "service": {
+      "sessionAffinity": "None",
+      "clusterIP": "",
+      "annotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "{{ coalesce .Values.metrics.service.ports.http .Values.metrics.service.port }}",
+        "prometheus.io/path": "/metrics"
+      },
+      "ports": {
+        "http": 9119
+      }
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "",
+      "interval": "30s",
+      "scrapeTimeout": "",
+      "labels": {},
+      "selector": {},
+      "relabelings": [],
+      "metricRelabelings": [],
+      "honorLabels": false,
+      "jobLabel": "",
+      "serviceAccount": "",
+      "rbac": {
+        "create": true
+      }
+    }
+  }
+}

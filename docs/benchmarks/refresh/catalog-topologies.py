@@ -141,7 +141,7 @@ axes[1].set_ylim(bottom=0)
 for axis in axes:
     axis.legend()
     axis.grid(alpha=0.2)
-figure.suptitle("Compiler graph invariants — every exported vertex and edge retained")
+figure.suptitle("Compiler graph invariants - every exported vertex and edge retained")
 figure.tight_layout()
 figure.savefig(output / "graph-invariants.png", dpi=170)
 figure.savefig(output / "graph-invariants.svg")

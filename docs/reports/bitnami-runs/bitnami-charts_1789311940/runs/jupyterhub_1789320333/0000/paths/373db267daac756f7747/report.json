@@ -1,0 +1,3050 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 252,
+    "present_fields": [
+      [
+        "auxiliaryImage",
+        "pullPolicy"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "externalDatabase",
+        "database"
+      ],
+      [
+        "externalDatabase",
+        "host"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "externalDatabase",
+        "port"
+      ],
+      [
+        "externalDatabase",
+        "user"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hub",
+        "adminUser"
+      ],
+      [
+        "hub",
+        "affinity"
+      ],
+      [
+        "hub",
+        "automountServiceAccountToken"
+      ],
+      [
+        "hub",
+        "configuration"
+      ],
+      [
+        "hub",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "hub",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "hub",
+        "customLivenessProbe"
+      ],
+      [
+        "hub",
+        "customReadinessProbe"
+      ],
+      [
+        "hub",
+        "customStartupProbe"
+      ],
+      [
+        "hub",
+        "existingConfigmap"
+      ],
+      [
+        "hub",
+        "existingSecret"
+      ],
+      [
+        "hub",
+        "extraEnvVars"
+      ],
+      [
+        "hub",
+        "extraEnvVarsCM"
+      ],
+      [
+        "hub",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "hub",
+        "extraVolumeMounts"
+      ],
+      [
+        "hub",
+        "extraVolumes"
+      ],
+      [
+        "hub",
+        "hostAliases"
+      ],
+      [
+        "hub",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "hub",
+        "initContainers"
+      ],
+      [
+        "hub",
+        "lifecycleHooks"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "path"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "allowInterspaceAccess"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "hub",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "hub",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "hub",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "hub",
+        "nodeSelector"
+      ],
+      [
+        "hub",
+        "pdb",
+        "create"
+      ],
+      [
+        "hub",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "hub",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "hub",
+        "podAffinityPreset"
+      ],
+      [
+        "hub",
+        "podAnnotations"
+      ],
+      [
+        "hub",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "hub",
+        "podLabels"
+      ],
+      [
+        "hub",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "hub",
+        "priorityClassName"
+      ],
+      [
+        "hub",
+        "rbac",
+        "create"
+      ],
+      [
+        "hub",
+        "rbac",
+        "rules"
+      ],
+      [
+        "hub",
+        "resources"
+      ],
+      [
+        "hub",
+        "schedulerName"
+      ],
+      [
+        "hub",
+        "service",
+        "annotations"
+      ],
+      [
+        "hub",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "hub",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "hub",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "hub",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "hub",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "hub",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "hub",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "hub",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "hub",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "hub",
+        "service",
+        "type"
+      ],
+      [
+        "hub",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "hub",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "hub",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "hub",
+        "services"
+      ],
+      [
+        "hub",
+        "sidecars"
+      ],
+      [
+        "hub",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "hub",
+        "tolerations"
+      ],
+      [
+        "hub",
+        "topologySpreadConstraints"
+      ],
+      [
+        "hub",
+        "updateStrategy"
+      ],
+      [
+        "imagePuller",
+        "affinity"
+      ],
+      [
+        "imagePuller",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "customLivenessProbe"
+      ],
+      [
+        "imagePuller",
+        "customReadinessProbe"
+      ],
+      [
+        "imagePuller",
+        "customStartupProbe"
+      ],
+      [
+        "imagePuller",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "extraEnvVars"
+      ],
+      [
+        "imagePuller",
+        "extraEnvVarsCM"
+      ],
+      [
+        "imagePuller",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "imagePuller",
+        "extraVolumeMounts"
+      ],
+      [
+        "imagePuller",
+        "extraVolumes"
+      ],
+      [
+        "imagePuller",
+        "hostAliases"
+      ],
+      [
+        "imagePuller",
+        "initContainers"
+      ],
+      [
+        "imagePuller",
+        "lifecycleHooks"
+      ],
+      [
+        "imagePuller",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "imagePuller",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "imagePuller",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "imagePuller",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "imagePuller",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "imagePuller",
+        "nodeSelector"
+      ],
+      [
+        "imagePuller",
+        "podAffinityPreset"
+      ],
+      [
+        "imagePuller",
+        "podAnnotations"
+      ],
+      [
+        "imagePuller",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "imagePuller",
+        "podLabels"
+      ],
+      [
+        "imagePuller",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "priorityClassName"
+      ],
+      [
+        "imagePuller",
+        "resources"
+      ],
+      [
+        "imagePuller",
+        "resourcesPreset"
+      ],
+      [
+        "imagePuller",
+        "schedulerName"
+      ],
+      [
+        "imagePuller",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "imagePuller",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "imagePuller",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "imagePuller",
+        "sidecars"
+      ],
+      [
+        "imagePuller",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "imagePuller",
+        "tolerations"
+      ],
+      [
+        "imagePuller",
+        "topologySpreadConstraints"
+      ],
+      [
+        "imagePuller",
+        "updateStrategy"
+      ],
+      [
+        "postgresql",
+        "auth",
+        "database"
+      ],
+      [
+        "postgresql",
+        "auth",
+        "username"
+      ],
+      [
+        "postgresql",
+        "enabled"
+      ],
+      [
+        "postgresql",
+        "service",
+        "ports",
+        "postgresql"
+      ],
+      [
+        "proxy",
+        "affinity"
+      ],
+      [
+        "proxy",
+        "automountServiceAccountToken"
+      ],
+      [
+        "proxy",
+        "containerPort",
+        "api"
+      ],
+      [
+        "proxy",
+        "containerPort",
+        "http"
+      ],
+      [
+        "proxy",
+        "containerPort",
+        "metrics"
+      ],
+      [
+        "proxy",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "customLivenessProbe"
+      ],
+      [
+        "proxy",
+        "customReadinessProbe"
+      ],
+      [
+        "proxy",
+        "customStartupProbe"
+      ],
+      [
+        "proxy",
+        "extraEnvVars"
+      ],
+      [
+        "proxy",
+        "extraEnvVarsCM"
+      ],
+      [
+        "proxy",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "proxy",
+        "extraVolumeMounts"
+      ],
+      [
+        "proxy",
+        "extraVolumes"
+      ],
+      [
+        "proxy",
+        "hostAliases"
+      ],
+      [
+        "proxy",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "path"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "tls"
+      ],
+      [
+        "proxy",
+        "initContainers"
+      ],
+      [
+        "proxy",
+        "lifecycleHooks"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "path"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "allowInterspaceAccess"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "proxy",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "proxy",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "proxy",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "proxy",
+        "nodeSelector"
+      ],
+      [
+        "proxy",
+        "pdb",
+        "create"
+      ],
+      [
+        "proxy",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "proxy",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "proxy",
+        "podAffinityPreset"
+      ],
+      [
+        "proxy",
+        "podAnnotations"
+      ],
+      [
+        "proxy",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "proxy",
+        "podLabels"
+      ],
+      [
+        "proxy",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "priorityClassName"
+      ],
+      [
+        "proxy",
+        "resources"
+      ],
+      [
+        "proxy",
+        "schedulerName"
+      ],
+      [
+        "proxy",
+        "secretToken"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "clusterIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "externalTrafficPolicy"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "extraPorts"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "loadBalancerIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "ports",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "sessionAffinity"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "sessionAffinityConfig"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "type"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "clusterIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "externalTrafficPolicy"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "extraPorts"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "loadBalancerIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "ports",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "sessionAffinity"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "sessionAffinityConfig"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "type"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "clusterIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "externalTrafficPolicy"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "extraPorts"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "loadBalancerIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "ports",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "sessionAffinity"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "sessionAffinityConfig"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "type"
+      ],
+      [
+        "proxy",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "proxy",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "proxy",
+        "sidecars"
+      ],
+      [
+        "proxy",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "proxy",
+        "tolerations"
+      ],
+      [
+        "proxy",
+        "topologySpreadConstraints"
+      ],
+      [
+        "proxy",
+        "updateStrategy"
+      ],
+      [
+        "singleuser",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "singleuser",
+        "image"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowCloudMetadataAccess"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowInterspaceAccess"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "singleuser",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "singleuser",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "singleuser",
+        "serviceAccount",
+        "create"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "path"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "hub",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "auxiliaryImage",
+        "pullPolicy"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "externalDatabase",
+        "database"
+      ],
+      [
+        "externalDatabase",
+        "host"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "externalDatabase",
+        "port"
+      ],
+      [
+        "externalDatabase",
+        "user"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hub",
+        "adminUser"
+      ],
+      [
+        "hub",
+        "affinity"
+      ],
+      [
+        "hub",
+        "automountServiceAccountToken"
+      ],
+      [
+        "hub",
+        "configuration"
+      ],
+      [
+        "hub",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "hub",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "hub",
+        "customLivenessProbe"
+      ],
+      [
+        "hub",
+        "customReadinessProbe"
+      ],
+      [
+        "hub",
+        "customStartupProbe"
+      ],
+      [
+        "hub",
+        "existingConfigmap"
+      ],
+      [
+        "hub",
+        "existingSecret"
+      ],
+      [
+        "hub",
+        "extraEnvVars"
+      ],
+      [
+        "hub",
+        "extraEnvVarsCM"
+      ],
+      [
+        "hub",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "hub",
+        "extraVolumeMounts"
+      ],
+      [
+        "hub",
+        "extraVolumes"
+      ],
+      [
+        "hub",
+        "hostAliases"
+      ],
+      [
+        "hub",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "hub",
+        "initContainers"
+      ],
+      [
+        "hub",
+        "lifecycleHooks"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "allowInterspaceAccess"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "hub",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "hub",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "hub",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "hub",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "hub",
+        "nodeSelector"
+      ],
+      [
+        "hub",
+        "pdb",
+        "create"
+      ],
+      [
+        "hub",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "hub",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "hub",
+        "podAffinityPreset"
+      ],
+      [
+        "hub",
+        "podAnnotations"
+      ],
+      [
+        "hub",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "hub",
+        "podLabels"
+      ],
+      [
+        "hub",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "hub",
+        "priorityClassName"
+      ],
+      [
+        "hub",
+        "rbac",
+        "create"
+      ],
+      [
+        "hub",
+        "rbac",
+        "rules"
+      ],
+      [
+        "hub",
+        "resources"
+      ],
+      [
+        "hub",
+        "schedulerName"
+      ],
+      [
+        "hub",
+        "service",
+        "annotations"
+      ],
+      [
+        "hub",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "hub",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "hub",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "hub",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "hub",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "hub",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "hub",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "hub",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "hub",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "hub",
+        "service",
+        "type"
+      ],
+      [
+        "hub",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "hub",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "hub",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "hub",
+        "services"
+      ],
+      [
+        "hub",
+        "sidecars"
+      ],
+      [
+        "hub",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "hub",
+        "tolerations"
+      ],
+      [
+        "hub",
+        "topologySpreadConstraints"
+      ],
+      [
+        "hub",
+        "updateStrategy"
+      ],
+      [
+        "imagePuller",
+        "affinity"
+      ],
+      [
+        "imagePuller",
+        "automountServiceAccountToken"
+      ],
+      [
+        "imagePuller",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "customLivenessProbe"
+      ],
+      [
+        "imagePuller",
+        "customReadinessProbe"
+      ],
+      [
+        "imagePuller",
+        "customStartupProbe"
+      ],
+      [
+        "imagePuller",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "extraEnvVars"
+      ],
+      [
+        "imagePuller",
+        "extraEnvVarsCM"
+      ],
+      [
+        "imagePuller",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "imagePuller",
+        "extraVolumeMounts"
+      ],
+      [
+        "imagePuller",
+        "extraVolumes"
+      ],
+      [
+        "imagePuller",
+        "hostAliases"
+      ],
+      [
+        "imagePuller",
+        "initContainers"
+      ],
+      [
+        "imagePuller",
+        "lifecycleHooks"
+      ],
+      [
+        "imagePuller",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "imagePuller",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "imagePuller",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "imagePuller",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "imagePuller",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "imagePuller",
+        "nodeSelector"
+      ],
+      [
+        "imagePuller",
+        "podAffinityPreset"
+      ],
+      [
+        "imagePuller",
+        "podAnnotations"
+      ],
+      [
+        "imagePuller",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "imagePuller",
+        "podLabels"
+      ],
+      [
+        "imagePuller",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "imagePuller",
+        "priorityClassName"
+      ],
+      [
+        "imagePuller",
+        "resources"
+      ],
+      [
+        "imagePuller",
+        "resourcesPreset"
+      ],
+      [
+        "imagePuller",
+        "schedulerName"
+      ],
+      [
+        "imagePuller",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "imagePuller",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "imagePuller",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "imagePuller",
+        "sidecars"
+      ],
+      [
+        "imagePuller",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "imagePuller",
+        "tolerations"
+      ],
+      [
+        "imagePuller",
+        "topologySpreadConstraints"
+      ],
+      [
+        "imagePuller",
+        "updateStrategy"
+      ],
+      [
+        "postgresql",
+        "auth",
+        "database"
+      ],
+      [
+        "postgresql",
+        "auth",
+        "username"
+      ],
+      [
+        "postgresql",
+        "enabled"
+      ],
+      [
+        "postgresql",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "postgresql",
+        "service",
+        "ports",
+        "postgresql"
+      ],
+      [
+        "proxy",
+        "affinity"
+      ],
+      [
+        "proxy",
+        "automountServiceAccountToken"
+      ],
+      [
+        "proxy",
+        "containerPort",
+        "api"
+      ],
+      [
+        "proxy",
+        "containerPort",
+        "http"
+      ],
+      [
+        "proxy",
+        "containerPort",
+        "metrics"
+      ],
+      [
+        "proxy",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "customLivenessProbe"
+      ],
+      [
+        "proxy",
+        "customReadinessProbe"
+      ],
+      [
+        "proxy",
+        "customStartupProbe"
+      ],
+      [
+        "proxy",
+        "extraEnvVars"
+      ],
+      [
+        "proxy",
+        "extraEnvVarsCM"
+      ],
+      [
+        "proxy",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "proxy",
+        "extraVolumeMounts"
+      ],
+      [
+        "proxy",
+        "extraVolumes"
+      ],
+      [
+        "proxy",
+        "hostAliases"
+      ],
+      [
+        "proxy",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "certManager"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "path"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "proxy",
+        "ingress",
+        "tls"
+      ],
+      [
+        "proxy",
+        "initContainers"
+      ],
+      [
+        "proxy",
+        "lifecycleHooks"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "path"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "proxy",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "allowInterspaceAccess"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "proxy",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "proxy",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "proxy",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "proxy",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "proxy",
+        "nodeSelector"
+      ],
+      [
+        "proxy",
+        "pdb",
+        "create"
+      ],
+      [
+        "proxy",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "proxy",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "proxy",
+        "podAffinityPreset"
+      ],
+      [
+        "proxy",
+        "podAnnotations"
+      ],
+      [
+        "proxy",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "proxy",
+        "podLabels"
+      ],
+      [
+        "proxy",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "proxy",
+        "priorityClassName"
+      ],
+      [
+        "proxy",
+        "resources"
+      ],
+      [
+        "proxy",
+        "schedulerName"
+      ],
+      [
+        "proxy",
+        "secretToken"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "clusterIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "externalTrafficPolicy"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "extraPorts"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "loadBalancerIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "ports",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "sessionAffinity"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "sessionAffinityConfig"
+      ],
+      [
+        "proxy",
+        "service",
+        "api",
+        "type"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "clusterIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "externalTrafficPolicy"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "extraPorts"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "loadBalancerIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "ports",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "sessionAffinity"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "sessionAffinityConfig"
+      ],
+      [
+        "proxy",
+        "service",
+        "metrics",
+        "type"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "clusterIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "externalTrafficPolicy"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "extraPorts"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "loadBalancerIP"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "ports",
+        "http"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "sessionAffinity"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "sessionAffinityConfig"
+      ],
+      [
+        "proxy",
+        "service",
+        "public",
+        "type"
+      ],
+      [
+        "proxy",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "proxy",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "proxy",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "proxy",
+        "sidecars"
+      ],
+      [
+        "proxy",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "proxy",
+        "tolerations"
+      ],
+      [
+        "proxy",
+        "topologySpreadConstraints"
+      ],
+      [
+        "proxy",
+        "updateStrategy"
+      ],
+      [
+        "singleuser",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "singleuser",
+        "image"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowCloudMetadataAccess"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "allowInterspaceAccess"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "singleuser",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "singleuser",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "singleuser",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "singleuser",
+        "serviceAccount",
+        "create"
+      ]
+    ],
+    "present_count": 249,
+    "varied_count": 11,
+    "varied_fraction": 0.04365079365079365,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-n1gbnq4s/chart",
+  "seed": 0,
+  "attempts": 296,
+  "error": "Error: YAML parse error on jupyterhub/templates/hub/servicemonitor.yaml: error converting YAML to JSON: yaml: line 19: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "clusterDomain": "cluster.local",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "hub": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/jupyterhub",
+        "tag": "5.3.0-debian-12-r15",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "baseUrl": "/",
+      "adminUser": "user",
+      "password": "",
+      "services": {},
+      "configuration": "Chart:\n  Name: {{ .Chart.Name }}\n  Version: {{ .Chart.Version }}\nRelease:\n  Name: {{ .Release.Name }}\n  Namespace: {{ .Release.Namespace }}\n  Service: {{ .Release.Service }}\nhub:\n  config:\n    JupyterHub:\n      admin_access: true\n      authenticator_class: shared-password\n      SharedPasswordAuthenticator:\n        admin_users:\n          - {{ .Values.hub.adminUser }}\n      {{- if .Values.hub.password }}\n        admin_password: {{ .Values.hub.password | quote }}\n      {{- else }}\n        admin_password: {{ randAlphaNum 32 | quote }}\n      {{- end }}\n      Authenticator:\n        admin_users:\n          - {{ .Values.hub.adminUser }}\n        allow_all: true\n  cookieSecret:\n  concurrentSpawnLimit: 64\n  consecutiveFailureLimit: 5\n  activeServerLimit:\n  db:\n    type: postgres\n    url: postgresql://{{ ternary .Values.postgresql.auth.username .Values.externalDatabase.user .Values.postgresql.enabled }}@{{ ternary (include \"jupyterhub.postgresql.fullname\" .) .Values.externalDatabase.host .Values.postgresql.enabled }}:{{ ternary \"5432\" .Values.externalDatabase.port .Values.postgresql.enabled }}/{{ ternary .Values.postgresql.auth.database .Values.externalDatabase.database .Values.postgresql.enabled }}\n  services: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.hub.services \"context\" $ ) | nindent 8 }}\n  allowNamedServers: false\n  namedServerLimitPerUser:\n  {{- if .Values.hub.metrics.serviceMonitor.enabled }}\n  authenticatePrometheus: {{ .Values.hub.metrics.authenticatePrometheus }}\n  {{- end }}\n  redirectToServer:\n  shutdownOnLogout:\nsingleuser:\n  podNameTemplate: {{ include \"common.names.fullname\" . }}-jupyter-{username}\n  {{- if .Values.singleuser.tolerations }}\n  extraTolerations: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.tolerations \"context\" $) | nindent 4 }}\n  {{- end }}\n  {{- if .Values.singleuser.nodeSelector }}\n  nodeSelector: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.nodeSelector \"context\" $) | nindent 4 }}\n  {{- end }}\n  networkTools:\n    image:\n      name: {{ include \"jupyterhub.hubconfiguration.imageEntry\" ( dict \"imageRoot\" .Values.auxiliaryImage \"global\" .Values.global) }}\n      tag: {{ .Values.auxiliaryImage.tag }}\n      digest: {{ .Values.auxiliaryImage.digest }}\n      pullPolicy: {{ .Values.auxiliaryImage.pullPolicy }}\n      pullSecrets: {{- include \"jupyterhub.imagePullSecrets.list\" . | nindent 8 }}\n  cloudMetadata:\n    blockWithIptables: false\n  events: true\n  extraAnnotations:\n    {{- if .Values.commonAnnotations }}\n    {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.commonAnnotations \"context\" $ ) | nindent 4 }}\n    {{- end }}\n    {{- if .Values.singleuser.podAnnotations }}\n    {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.podAnnotations \"context\" $ ) | nindent 4 }}\n    {{- end }}\n  extraLabels:\n    hub.jupyter.org/network-access-hub: \"true\"\n    app.kubernetes.io/component: singleuser\n    {{- include \"common.labels.standard\" ( dict \"customLabels\" .Values.commonLabels \"context\" $ ) | nindent 4 }}\n    {{- if .Values.singleuser.podLabels }}\n    {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.podLabels \"context\" $ ) | nindent 4 }}\n    {{- end }}\n  {{- if .Values.singleuser.extraEnvVars }}\n  extraEnv: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.extraEnvVars \"context\" $ ) | nindent 4 }}\n  {{- end }}\n  {{- if .Values.singleuser.lifecycleHooks }}\n  lifecycleHooks: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.lifecycleHooks \"context\" $ ) | nindent 4 }}\n  {{- end }}\n  {{- if .Values.singleuser.initContainers }}\n  initContainers: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.initContainers \"context\" $ ) | nindent 4 }}\n  {{- end }}\n  {{- if .Values.singleuser.sidecars }}\n  extraContainers: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.sidecars \"context\" $ ) | nindent 4 }}\n  {{- end }}\n  {{- if not (or (eq .Values.global.compatibility.openshift.adaptSecurityContext \"force\") (and (eq .Values.global.compatibility.openshift.adaptSecurityContext \"auto\") (include \"common.compatibility.isOpenshift\" .))) }}\n  {{- if .Values.singleuser.containerSecurityContext.enabled }}\n  uid: {{ .Values.singleuser.containerSecurityContext.runAsUser }}\n  {{- end }}\n  {{- if .Values.singleuser.podSecurityContext.enabled }}\n  fsGid: {{ .Values.singleuser.podSecurityContext.fsGroup }}\n  {{- end }}\n  {{- end }}\n  {{- if .Values.singleuser.containerSecurityContext.enabled }}\n  containerSecurityContext: {{- include \"common.compatibility.renderSecurityContext\" (dict \"secContext\" .Values.singleuser.containerSecurityContext \"context\" $) | nindent 4 }}\n  {{- end }}\n  {{- if .Values.singleuser.podSecurityContext.enabled }}\n  podSecurityContext: {{- include \"common.compatibility.renderSecurityContext\" (dict \"secContext\" .Values.singleuser.podSecurityContext \"context\" $) | nindent 4 }}\n  {{- end }}\n  serviceAccountName: {{ template \"jupyterhub.singleuserServiceAccountName\" . }}\n  automountServiceAccountToken: {{ .Values.singleuser.automountServiceAccountToken }}\n  storage:\n    {{- if .Values.singleuser.persistence.enabled }}\n    type: dynamic\n    {{- else }}\n    type: none\n    {{- end }}\n    extraLabels:\n      app.kubernetes.io/component: singleuser\n      {{- include \"common.labels.standard\" ( dict \"customLabels\" .Values.commonLabels \"context\" $ ) | nindent 6 }}\n    extraVolumes:\n      - name: empty-dir\n        emptyDir: {}\n      {{- if .Values.singleuser.extraVolumes }}\n      {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.extraVolumes \"context\" $ ) | nindent 6 }}\n      {{- end }}\n    extraVolumeMounts:\n      - name: empty-dir\n        mountPath: /tmp\n        subPath: tmp-dir\n      {{- if .Values.singleuser.extraVolumeMounts }}\n      {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.extraVolumeMounts \"context\" $ ) | nindent 6 }}\n      {{- end }}\n    capacity: {{ .Values.singleuser.persistence.size }}\n    homeMountPath: {{ .Values.singleuser.notebookDir }}\n    dynamic:\n      {{ include \"jupyterhub.storage.class\" (dict \"persistence\" .Values.singleuser.persistence \"global\" .Values.global) }}\n      pvcNameTemplate: {{ include \"common.names.fullname\" . }}-claim-{username}{servername}\n      volumeNameTemplate: {{ include \"common.names.fullname\" . }}-volume-{username}{servername}\n      storageAccessModes: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.persistence.accessModes \"context\" $ ) | nindent 8 }}\n  image:\n    name: {{ include \"jupyterhub.hubconfiguration.imageEntry\" ( dict \"imageRoot\" .Values.singleuser.image \"global\" .Values.global) }}\n    tag: {{ .Values.singleuser.image.tag }}\n    digest: {{ .Values.singleuser.image.digest }}\n    pullPolicy: {{ .Values.singleuser.image.pullPolicy }}\n    pullSecrets: {{- include \"jupyterhub.imagePullSecrets.list\" . | nindent 4 }}\n  startTimeout: 300\n  {{- include \"jupyterhub.singleuser.resources\" . | nindent 2 }}\n  {{- if .Values.singleuser.command }}\n  cmd: {{- include \"common.tplvalues.render\" (dict \"value\" .Values.singleuser.command \"context\" $) | nindent 4 }}\n  {{- else }}\n  cmd: jupyterhub-singleuser\n  {{- end }}\n  defaultUrl:\n  {{- if .Values.singleuser.profileList }}\n  profileList: {{- include \"common.tplvalues.render\" ( dict \"value\" .Values.singleuser.profileList \"context\" $) | nindent 4 }}\n  {{- end }}\ncull:\n  enabled: true\n  users: false\n  removeNamedServers: false\n  timeout: 3600\n  every: 600\n  concurrency: 10\n  maxAge: 0\n",
+      "existingConfigmap": "",
+      "existingSecret": "",
+      "command": [],
+      "args": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "containerPorts": {
+        "http": 8081
+      },
+      "startupProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "failureThreshold": 30,
+        "timeoutSeconds": 3,
+        "successThreshold": 1
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "failureThreshold": 30,
+        "timeoutSeconds": 3,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "failureThreshold": 30,
+        "timeoutSeconds": 3,
+        "successThreshold": 1
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "resourcesPreset": "small",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "lifecycleHooks": {},
+      "automountServiceAccountToken": true,
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "priorityClassName": "",
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "updateStrategy": {
+        "type": "RollingUpdate",
+        "rollingUpdate": {}
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "sidecars": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "rbac": {
+        "create": true,
+        "rules": []
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "allowInterspaceAccess": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "http": 8081
+        },
+        "nodePorts": {
+          "http": ""
+        },
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {},
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerSourceRanges": [],
+        "externalTrafficPolicy": "Cluster",
+        "annotations": {},
+        "extraPorts": []
+      },
+      "metrics": {
+        "authenticatePrometheus": false,
+        "serviceMonitor": {
+          "enabled": true,
+          "interval": "\r0"
+        }
+      }
+    },
+    "proxy": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/configurable-http-proxy",
+        "tag": "5.0.1-debian-12-r21",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [],
+        "debug": false
+      },
+      "secretToken": "",
+      "command": [],
+      "args": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "containerPort": {
+        "api": 8001,
+        "metrics": 8002,
+        "http": 8000
+      },
+      "startupProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "failureThreshold": 30,
+        "timeoutSeconds": 3,
+        "successThreshold": 1
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "failureThreshold": 30,
+        "timeoutSeconds": 3,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "failureThreshold": 30,
+        "timeoutSeconds": 3,
+        "successThreshold": 1
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "lifecycleHooks": {},
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "priorityClassName": "",
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "updateStrategy": {
+        "type": "RollingUpdate",
+        "rollingUpdate": {}
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "sidecars": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "allowInterspaceAccess": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "service": {
+        "api": {
+          "type": "ClusterIP",
+          "ports": {
+            "http": 8001
+          },
+          "nodePorts": {
+            "http": ""
+          },
+          "sessionAffinity": "None",
+          "sessionAffinityConfig": {},
+          "clusterIP": "",
+          "loadBalancerIP": "",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "annotations": {},
+          "extraPorts": []
+        },
+        "metrics": {
+          "type": "ClusterIP",
+          "ports": {
+            "http": 8002
+          },
+          "nodePorts": {
+            "http": ""
+          },
+          "sessionAffinity": "None",
+          "sessionAffinityConfig": {},
+          "clusterIP": "",
+          "loadBalancerIP": "",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "annotations": {},
+          "extraPorts": []
+        },
+        "public": {
+          "type": "LoadBalancer",
+          "ports": {
+            "http": 80
+          },
+          "nodePorts": {
+            "http": ""
+          },
+          "sessionAffinity": "None",
+          "sessionAffinityConfig": {},
+          "clusterIP": "",
+          "loadBalancerIP": "",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "annotations": {},
+          "extraPorts": []
+        }
+      },
+      "ingress": {
+        "enabled": false,
+        "apiVersion": "",
+        "ingressClassName": "",
+        "pathType": "ImplementationSpecific",
+        "hostname": "jupyterhub.local",
+        "path": "/",
+        "annotations": {},
+        "tls": false,
+        "selfSigned": false,
+        "extraHosts": [],
+        "extraPaths": [],
+        "extraTls": [],
+        "secrets": [],
+        "extraRules": []
+      },
+      "metrics": {
+        "serviceMonitor": {
+          "enabled": false,
+          "namespace": "",
+          "path": "/metrics",
+          "interval": "30s",
+          "scrapeTimeout": "",
+          "labels": {},
+          "selector": {},
+          "relabelings": [],
+          "metricRelabelings": [],
+          "honorLabels": false,
+          "jobLabel": ""
+        }
+      }
+    },
+    "imagePuller": {
+      "enabled": true,
+      "command": [],
+      "args": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "lifecycleHooks": {},
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "priorityClassName": "",
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "updateStrategy": {
+        "type": "RollingUpdate",
+        "rollingUpdate": {}
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "sidecars": [],
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternalEgress": true,
+        "extraIngress": [],
+        "extraEgress": []
+      }
+    },
+    "singleuser": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/jupyter-base-notebook",
+        "tag": "5.3.0-debian-12-r10",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "notebookDir": "/opt/bitnami/jupyterhub-singleuser",
+      "allowPrivilegeEscalation": false,
+      "automountServiceAccountToken": false,
+      "command": [],
+      "extraEnvVars": [],
+      "containerPorts": {
+        "http": 8888
+      },
+      "resourcesPreset": "small",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "podLabels": {},
+      "podAnnotations": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "priorityClassName": "",
+      "lifecycleHooks": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "sidecars": [],
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "persistence": {
+        "enabled": true,
+        "storageClass": "",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "10Gi"
+      },
+      "profileList": [],
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "allowInterspaceAccess": true,
+        "allowCloudMetadataAccess": false,
+        "extraIngress": "",
+        "extraEgress": "",
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      }
+    },
+    "auxiliaryImage": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "postgresql": {
+      "enabled": true,
+      "auth": {
+        "username": "bn_jupyterhub",
+        "password": "",
+        "database": "bitnami_jupyterhub",
+        "existingSecret": ""
+      },
+      "architecture": "standalone",
+      "service": {
+        "ports": {
+          "postgresql": 5432
+        }
+      }
+    },
+    "externalDatabase": {
+      "host": "",
+      "port": 5432,
+      "user": "postgres",
+      "database": "jupyterhub",
+      "password": "",
+      "existingSecret": "",
+      "existingSecretPasswordKey": ""
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 231,
+    "unique_bundles": 231,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 231
+  },
+  "phase": "$.hub.metrics.serviceMonitor",
+  "kind": "value-path",
+  "path": [
+    "hub",
+    "metrics",
+    "serviceMonitor"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/jupyterhub_1789320333/0000/paths/373db267daac756f7747"
+}

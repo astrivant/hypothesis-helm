@@ -1,0 +1,1137 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 117,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "telemetry"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customResourceState",
+        "configuration"
+      ],
+      [
+        "customResourceState",
+        "enabled"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "kubeResources",
+        "certificatesigningrequests"
+      ],
+      [
+        "kubeResources",
+        "configmaps"
+      ],
+      [
+        "kubeResources",
+        "cronjobs"
+      ],
+      [
+        "kubeResources",
+        "daemonsets"
+      ],
+      [
+        "kubeResources",
+        "deployments"
+      ],
+      [
+        "kubeResources",
+        "endpoints"
+      ],
+      [
+        "kubeResources",
+        "horizontalpodautoscalers"
+      ],
+      [
+        "kubeResources",
+        "ingresses"
+      ],
+      [
+        "kubeResources",
+        "jobs"
+      ],
+      [
+        "kubeResources",
+        "leases"
+      ],
+      [
+        "kubeResources",
+        "limitranges"
+      ],
+      [
+        "kubeResources",
+        "mutatingwebhookconfigurations"
+      ],
+      [
+        "kubeResources",
+        "namespaces"
+      ],
+      [
+        "kubeResources",
+        "networkpolicies"
+      ],
+      [
+        "kubeResources",
+        "nodes"
+      ],
+      [
+        "kubeResources",
+        "persistentvolumeclaims"
+      ],
+      [
+        "kubeResources",
+        "persistentvolumes"
+      ],
+      [
+        "kubeResources",
+        "poddisruptionbudgets"
+      ],
+      [
+        "kubeResources",
+        "pods"
+      ],
+      [
+        "kubeResources",
+        "replicasets"
+      ],
+      [
+        "kubeResources",
+        "replicationcontrollers"
+      ],
+      [
+        "kubeResources",
+        "resourcequotas"
+      ],
+      [
+        "kubeResources",
+        "secrets"
+      ],
+      [
+        "kubeResources",
+        "services"
+      ],
+      [
+        "kubeResources",
+        "statefulsets"
+      ],
+      [
+        "kubeResources",
+        "storageclasses"
+      ],
+      [
+        "kubeResources",
+        "validatingwebhookconfigurations"
+      ],
+      [
+        "kubeResources",
+        "volumeattachments"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "minReadySeconds"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "rbac",
+        "rules"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "selfMonitor",
+        "enabled"
+      ],
+      [
+        "selfMonitor",
+        "telemetryNodePort"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "extraParameters"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "sampleLimit"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "telemetry"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customResourceState",
+        "configuration"
+      ],
+      [
+        "customResourceState",
+        "enabled"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "kubeResources",
+        "certificatesigningrequests"
+      ],
+      [
+        "kubeResources",
+        "configmaps"
+      ],
+      [
+        "kubeResources",
+        "cronjobs"
+      ],
+      [
+        "kubeResources",
+        "daemonsets"
+      ],
+      [
+        "kubeResources",
+        "deployments"
+      ],
+      [
+        "kubeResources",
+        "endpoints"
+      ],
+      [
+        "kubeResources",
+        "horizontalpodautoscalers"
+      ],
+      [
+        "kubeResources",
+        "ingresses"
+      ],
+      [
+        "kubeResources",
+        "jobs"
+      ],
+      [
+        "kubeResources",
+        "leases"
+      ],
+      [
+        "kubeResources",
+        "limitranges"
+      ],
+      [
+        "kubeResources",
+        "mutatingwebhookconfigurations"
+      ],
+      [
+        "kubeResources",
+        "namespaces"
+      ],
+      [
+        "kubeResources",
+        "networkpolicies"
+      ],
+      [
+        "kubeResources",
+        "nodes"
+      ],
+      [
+        "kubeResources",
+        "persistentvolumeclaims"
+      ],
+      [
+        "kubeResources",
+        "persistentvolumes"
+      ],
+      [
+        "kubeResources",
+        "poddisruptionbudgets"
+      ],
+      [
+        "kubeResources",
+        "pods"
+      ],
+      [
+        "kubeResources",
+        "replicasets"
+      ],
+      [
+        "kubeResources",
+        "replicationcontrollers"
+      ],
+      [
+        "kubeResources",
+        "resourcequotas"
+      ],
+      [
+        "kubeResources",
+        "secrets"
+      ],
+      [
+        "kubeResources",
+        "services"
+      ],
+      [
+        "kubeResources",
+        "statefulsets"
+      ],
+      [
+        "kubeResources",
+        "storageclasses"
+      ],
+      [
+        "kubeResources",
+        "validatingwebhookconfigurations"
+      ],
+      [
+        "kubeResources",
+        "volumeattachments"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "minReadySeconds"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "pspEnabled"
+      ],
+      [
+        "rbac",
+        "rules"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "selfMonitor",
+        "enabled"
+      ],
+      [
+        "selfMonitor",
+        "telemetryNodePort"
+      ],
+      [
+        "selfMonitor",
+        "telemetryPort"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "extraParameters"
+      ],
+      [
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "serviceMonitor",
+        "sampleLimit"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ]
+    ],
+    "present_count": 116,
+    "varied_count": 1,
+    "varied_fraction": 0.008547008547008548,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-n68l131x/chart",
+  "seed": 0,
+  "attempts": 35,
+  "error": "Error: YAML parse error on kube-state-metrics/templates/deployment.yaml: error converting YAML to JSON: yaml: line 55: mapping values are not allowed in this context\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "automountServiceAccountToken": true,
+    "hostAliases": [],
+    "rbac": {
+      "create": true,
+      "pspEnabled": true,
+      "rules": []
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    },
+    "image": {
+      "tag": ""
+    },
+    "extraArgs": {},
+    "command": [],
+    "args": [],
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "namespaces": "",
+    "kubeResources": {
+      "certificatesigningrequests": true,
+      "configmaps": true,
+      "cronjobs": true,
+      "daemonsets": true,
+      "deployments": true,
+      "endpoints": true,
+      "horizontalpodautoscalers": true,
+      "ingresses": true,
+      "jobs": true,
+      "leases": true,
+      "limitranges": true,
+      "mutatingwebhookconfigurations": true,
+      "namespaces": true,
+      "networkpolicies": true,
+      "nodes": true,
+      "persistentvolumeclaims": true,
+      "persistentvolumes": true,
+      "poddisruptionbudgets": true,
+      "pods": true,
+      "replicasets": true,
+      "replicationcontrollers": true,
+      "resourcequotas": true,
+      "secrets": true,
+      "services": true,
+      "statefulsets": true,
+      "storageclasses": true,
+      "validatingwebhookconfigurations": false,
+      "volumeattachments": true
+    },
+    "customResourceState": {
+      "enabled": false,
+      "configuration": {}
+    },
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "containerPorts": {
+      "http": 8080,
+      "telemetry": 8081
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "kubeAPIServerPorts": [
+        443,
+        6443,
+        8443
+      ],
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "http": 8080
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "extraPorts": [],
+      "annotations": {},
+      "labels": {},
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "hostNetwork": false,
+    "priorityClassName": "",
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "topologySpreadConstraints": [],
+    "resourcesPreset": "micro",
+    "resources": {},
+    "replicaCount": 1,
+    "podLabels": {},
+    "podAnnotations": {},
+    "updateStrategy": {},
+    "minReadySeconds": 0,
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 120,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "customStartupProbe": {},
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "",
+      "jobLabel": "",
+      "interval": "",
+      "scrapeTimeout": "",
+      "selector": {},
+      "honorLabels": false,
+      "relabelings": [],
+      "metricRelabelings": [],
+      "labels": {},
+      "extraParameters": {},
+      "sampleLimit": ""
+    },
+    "selfMonitor": {
+      "enabled": false,
+      "telemetryNodePort": ""
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 20,
+    "unique_bundles": 8,
+    "duplicate_bundles": 12,
+    "validation_cache_hits": 12,
+    "validated_entries": 8
+  },
+  "phase": "$.image",
+  "kind": "value-path",
+  "path": [
+    "image"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/kube-state-metrics_1789320939/0000/paths/8e79b7dd85a286cfaddb"
+}

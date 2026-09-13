@@ -35,8 +35,18 @@ for directory in sorted((root / "outputs").iterdir()):
 shutil.copytree(root / "standard-chart", target / "standard-chart", dirs_exist_ok=True)
 records = target / "refresh"
 records.mkdir(exist_ok=True)
+# A new measurement run cannot inherit an earlier manual inspection or interruption record.
+for name in ("visual-verification.json", "snapshot-transition.json", "publication-verification.json"):
+    (records / name).unlink(missing_ok=True)
 record_names = [
     "run.sh",
+    "initialize.py",
+    "repository-run.sh",
+    "repository-chart.sh",
+    "finalize-repository.py",
+    "update-documentation.py",
+    "verify-publication.py",
+    "measured-source.tar.gz",
     "prepare-discovery.py",
     "finish-refresh.sh",
     "plan-topology-retries.py",
@@ -94,10 +104,11 @@ for directory in (root / "outputs").iterdir():
             "[Environment and source fingerprints](provenance.json) · [Study exit codes](status.tsv) · [Artifact checksums](sha256.json)",
             "",
             "The retained shell commands, chart fixtures, seeds, raw results, and logs describe this run. Paths under "
-            "`.cache/benchmark-refresh-1789311940` identify its staging directory; the published fixtures and "
+            f"`{root}` identify its staging directory; the published fixtures and "
             "measurements are now under `docs/benchmarks/`.",
             "",
-            "All studies and graph exports use the same [recorded application sources](measured-source-hashes.json).",
+            "All studies and graph exports use the same [recorded application sources](measured-source-hashes.json), "
+            "retained in the [source snapshot](measured-source.tar.gz).",
             "",
             "This refresh excludes generated C0/C1 controls except LF and CR. Other Unicode text remains eligible. "
             "The finite Boolean benchmark domains are unchanged; the text policy primarily affects repository path sampling. "

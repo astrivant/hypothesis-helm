@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -uo pipefail
 root="${1:?refresh directory}"
-export PATH="$PWD/.venv/bin:/tmp/hh-helm4/darwin-arm64:$PATH"
 export MPLBACKEND=Agg
 export MPLCONFIGDIR="$PWD/$root/matplotlib"
 parallel --will-cite --jobs 4 --timeout 540 --colsep '\t' --joblog "$root/topology-retry-plots-joblog.tsv" \

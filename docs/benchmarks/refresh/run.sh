@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -uo pipefail
 root="${1:?refresh directory}"
-export PATH="$PWD/.venv/bin:/tmp/hh-helm4/darwin-arm64:$PATH"
 export HELM_PLUGINS="$PWD/$root/helm/plugins"
 export MPLCONFIGDIR="$PWD/$root/matplotlib"
 export MPLBACKEND=Agg
@@ -13,7 +12,7 @@ hypothesis-helm-benchmark run --chart "$root/standard-chart" --step 50 --time-li
 status=$?
 printf 'performance\t%s\n' "$status" >> "$root/status.tsv"
 [[ "$status" -eq 0 ]] || exit "$status"
-.venv/bin/python "$root/prepare-discovery.py" "$root" > "$root/logs/prepare-discovery.log" 2>&1
+python "$root/prepare-discovery.py" "$root" > "$root/logs/prepare-discovery.log" 2>&1
 printf '%s\n' 'discovery' > "$root/current.txt"
 hypothesis-helm-benchmark discovery --chart "$root/outputs/discovery/chart" --max-strength 6 --time-limit 9m --output "$root/outputs/discovery" > "$root/logs/discovery.log" 2>&1
 status=$?

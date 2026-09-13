@@ -12,7 +12,6 @@ scratch="$(mktemp -d "${TMPDIR:-/tmp}/hypothesis-helm-topology.XXXXXX")"
 trap 'rm -rf -- "$scratch"' EXIT
 mkdir -p "$scratch/chart"
 cp -RL "$source_chart/." "$scratch/chart/"
-export PATH="$PWD/.venv/bin:/tmp/hh-helm4/darwin-arm64:$PATH"
 export HELM_PLUGINS="$PWD/$root/helm/plugins"
 export HELM_REPOSITORY_CONFIG="$PWD/$root/helm/repositories.yaml"
 export HELM_CACHE_HOME="$scratch/helm-cache"

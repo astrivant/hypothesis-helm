@@ -158,8 +158,12 @@ runs:
         ACTION_PATH: ${{ github.action_path }}
       run: |
         plugin_root="$(mktemp -d "$RUNNER_TEMP/hypothesis-helm.XXXXXX")"
-        HELM_PLUGINS="$plugin_root" PYTHON=python helm plugin install "$ACTION_PATH"
-        echo "plugins=$plugin_root" >> "$GITHUB_OUTPUT"
+        export HELM_DATA_HOME="$plugin_root"
+        export HELM_PLUGINS="$HELM_DATA_HOME/plugins"
+        PYTHON=python helm plugin install "$ACTION_PATH"
+        helm hypothesis --help
+        echo "data=$HELM_DATA_HOME" >> "$GITHUB_OUTPUT"
+        echo "plugins=$HELM_PLUGINS" >> "$GITHUB_OUTPUT"
     - name: Install kubeconform
       if: ${{ (inputs.kubeconform == 'true' || inputs.kubesec == 'true') && inputs.kubeconform-binary == 'kubeconform' }}
       shell: bash
@@ -211,6 +215,7 @@ runs:
       if: ${{ inputs.kubeconform == 'true' || inputs.kubesec == 'true' }}
       shell: bash
       env:
+        HELM_DATA_HOME: ${{ steps.install.outputs.data }}
         HELM_PLUGINS: ${{ steps.install.outputs.plugins }}
         HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: ${{ inputs.schema-memory-dir }}
         SCHEMA_VERSION: ${{ inputs.schema-version }}
@@ -231,6 +236,7 @@ runs:
       shell: bash
       env:
         ACTION_PATH: ${{ github.action_path }}
+        HELM_DATA_HOME: ${{ steps.install.outputs.data }}
         HELM_PLUGINS: ${{ steps.install.outputs.plugins }}
         HYPOTHESIS_HELM_JOB_INDEX: ${{ inputs.job-index }}
         HYPOTHESIS_HELM_JOB_TOTAL: ${{ inputs.job-total }}
@@ -262,6 +268,7 @@ runs:
       shell: bash
       env:
         ACTION_PATH: ${{ github.action_path }}
+        HELM_DATA_HOME: ${{ steps.install.outputs.data }}
         HELM_PLUGINS: ${{ steps.install.outputs.plugins }}
         HH_CHART: ${{ inputs.chart }}
         HH_RESOLVED_SHARD: ${{ steps.test.outputs.shard }}

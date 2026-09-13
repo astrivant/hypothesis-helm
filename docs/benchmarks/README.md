@@ -17,6 +17,28 @@ needed. Results default to `reports/benchmarks/` under the working directory.
 Use `hypothesis-helm-benchmark --help` to list studies, or append `--help` to a
 study such as `hypothesis-helm-benchmark nesting --help`.
 
+### Reproduce the full project run
+
+From a checkout with Helm 4 and GNU Parallel on `PATH`:
+
+```sh
+poetry install --extras benchmarking && poetry run bash scripts/refresh.sh
+```
+
+This runs lint, type checks, documentation checks, and the full pytest suite, then
+all ten synthetic studies, their plots and tables, and the synthetic/Bitnami/Prometheus
+topology catalog. It tests both pinned chart submodules with four workers,
+`--filter`, seeded random traversal, and five minutes per chart, then verifies and
+publishes the combined Markdown/PDF reports. Dependency preparation is outside
+each chart's testing budget. External kubeconform/kubesec checks are not enabled.
+
+Each benchmark run has a nine-minute ceiling; the complete refresh takes hours.
+The command initializes missing submodules (Prometheus uses GitHub SSH), records
+source snapshots, and prints the fresh run directory containing progress and logs.
+Results are published under `docs/benchmarks/` and `docs/reports/`. It refuses to
+start while an earlier refresh is active or unfinished. Chart findings are retained
+in reports; incomplete workers or failed verification stop publication.
+
 Render an exported compiler dependency graph with Matplotlib:
 
 ```sh

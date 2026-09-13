@@ -5,6 +5,7 @@ Verify CI index normalization, explicit overrides, and action invocation boundar
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -18,6 +19,106 @@ from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.integrations import github_action
 from hypothesis_helm.integrations.sharding import Shard, resolve_shard
 from hypothesis_helm.schemas.contracts import mapping
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize("working_entrypoint", [True, False])
+def test_action_plugin_installation(tmp_path: Path, working_entrypoint: bool) -> None:
+    """
+    Verify Helm 4 registers the action plugin where following steps look for it.
+
+    Args:
+        tmp_path (Path): Isolated action checkout and runner directories.
+        working_entrypoint (bool): Whether the installed command can start successfully.
+
+    Returns:
+        None: Subsequent steps resolve the plugin, or installation fails before publishing paths.
+    """
+    from ruamel.yaml import YAML
+
+    from hypothesis_helm.schemas.contracts import sequence
+
+    helm = shutil.which("helm")
+    if helm is None:
+        pytest.skip("Helm 4 is required")
+    version = subprocess.run([helm, "version", "--short"], capture_output=True, text=True, check=True).stdout
+    if not version.startswith("v4."):
+        pytest.skip("The action requires Helm 4")
+    root = Path(__file__).resolve().parents[3]
+    document = mapping(YAML(typ="safe").load((root / "action.yml").read_text()))
+    steps = [mapping(step) for step in sequence(mapping(document["runs"])["steps"])]
+    install = next(step for step in steps if step.get("id") == "install")
+    prepare_schemas = next(step for step in steps if step.get("name") == "Prepare local Kubernetes schemas")
+    source = tmp_path / "main"
+    scripts = source / "scripts"
+    scripts.mkdir(parents=True)
+    shutil.copy2(root / "plugin.yaml", source / "plugin.yaml")
+    (scripts / "install.sh").write_text(
+        dedent(
+            """
+            #!/bin/sh
+            exit 0
+            """
+        ).lstrip()
+    )
+    (scripts / "run.sh").write_text(
+        dedent(
+            f"""
+            #!/bin/sh
+            printf '%s\\n' "$@"
+            exit {0 if working_entrypoint else 7}
+            """
+        ).lstrip()
+    )
+    for script in scripts.iterdir():
+        script.chmod(0o755)
+    output = tmp_path / "github-output"
+    environment = dict(
+        os.environ,
+        ACTION_PATH=str(source),
+        RUNNER_TEMP=str(tmp_path),
+        GITHUB_OUTPUT=str(output),
+        HELM_DATA_HOME=str(tmp_path / "unrelated-data"),
+        HELM_PLUGINS=str(tmp_path / "unrelated-plugins"),
+    )
+    result = subprocess.run(
+        ["bash", "-euo", "pipefail", "-c", str(install["run"])],
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == (0 if working_entrypoint else 7), result.stdout + result.stderr
+    assert not (tmp_path / "unrelated-data").exists()
+    assert not (tmp_path / "unrelated-plugins").exists()
+    if not working_entrypoint:
+        assert not output.exists()
+        return
+    outputs = dict(line.split("=", 1) for line in output.read_text().splitlines())
+    assert Path(outputs["plugins"]) == Path(outputs["data"]) / "plugins"
+    for name in ("Prepare local Kubernetes schemas", "Test chart values", "Export minimal example values"):
+        step = next(step for step in steps if step.get("name") == name)
+        assert mapping(step["env"])["HELM_DATA_HOME"] == "${{ steps.install.outputs.data }}"
+        assert mapping(step["env"])["HELM_PLUGINS"] == "${{ steps.install.outputs.plugins }}"
+    for offline in ("false", "true"):
+        result = subprocess.run(
+            ["bash", "-euo", "pipefail", "-c", str(prepare_schemas["run"])],
+            env=dict(
+                environment,
+                HELM_DATA_HOME=outputs["data"],
+                HELM_PLUGINS=outputs["plugins"],
+                SCHEMA_OFFLINE=offline,
+                SCHEMA_VERSION="1.35.0",
+                SCHEMA_CACHE_DIR=str(tmp_path / "schemas"),
+                KUBECONFORM_BINARY="kubeconform",
+            ),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert result.stdout.splitlines()[0] == "schemas"
+        assert ("--schema-offline" in result.stdout.splitlines()) == (offline == "true")
 
 
 @pytest.mark.parametrize(

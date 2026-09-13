@@ -51,6 +51,8 @@ hypothesis-helm-benchmark --help
 ```
 
 See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot commands.
+To rerun all project checks, benchmarks, plots, and repository reports, see the
+[full refresh command](docs/benchmarks/README.md#reproduce-the-full-project-run).
 
 ## Example: catch a failure hidden by defaults
 
