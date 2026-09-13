@@ -2,9 +2,13 @@
 
 <img src="img/logos/logo-transparent.png" alt="Astrivant logo" width="25%" />
 
-Property-based testing for Helm charts. Hypothesis generates typed inputs from
-values schemas and template references, renders your chart, and reduces failures
-from combinations of Helm chart inputs to reproducible examples.
+Test Helm charts with automatically generated `values.yaml` inputs. Built on Python's
+Hypothesis<sup>[\[1\]](https://github.com/HypothesisWorks/hypothesis/)</sup> testing framework, this tool
+generates inputs from declared or inferred types, renders your charts with Helm, and
+checks for failures. When a property-based test fails, Hypothesis simplifies the input
+to a small example you can reproduce. Filtering skips redundant renders, while optional
+sampling reduces the number of inputs tested so you can cover more charts within your
+time budget.
 
 - Audit templates, values schemas, and missing defaults.
 - Generate a minimal values schema.
@@ -32,6 +36,7 @@ and tag the tested commit. See the [release-check workflow and cache retention](
   - [Test case: Prometheus Community charts](#test-case-prometheus-community-charts)
   - [Development](#development)
   - [License](#license)
+  - [Acknowledgements and citation](#acknowledgements-and-citation)
 
 ## Install
 
@@ -180,3 +185,12 @@ bash scripts/check.sh
 ## License
 
 [GNU General Public License v3.0 only](LICENSE).
+
+## Acknowledgements and citation
+
+This project builds on [Hypothesis](https://github.com/HypothesisWorks/hypothesis/),
+the property-based testing framework for Python. Its authors recommend the following
+paper in their [citation guidance](https://github.com/HypothesisWorks/hypothesis/blob/master/CITATION.cff):
+
+MacIver et al. (2019). [Hypothesis: A new approach to property-based testing](https://doi.org/10.21105/joss.01891).
+*Journal of Open Source Software*, 4(43), 1891.

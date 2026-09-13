@@ -1,0 +1,1720 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 160,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "allowEmptyPassword"
+      ],
+      [
+        "args"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "certificates",
+        "customCAs"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "certificateLocation"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "certificateSecret"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "chainLocation"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "chainSecret",
+        "key"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "chainSecret",
+        "name"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "keyLocation"
+      ],
+      [
+        "certificates",
+        "image"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "https"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "affinity"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "args"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "automountServiceAccountToken"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "command"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "extraEnvVars"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "initContainers"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "nodeSelector"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "podAnnotations"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "podLabels"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "resources"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "schedule"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "serviceAccountName"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "suspend"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "tolerations"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "affinity"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "args"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "automountServiceAccountToken"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "command"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "extraEnvVars"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "initContainers"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "nodeSelector"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "podAnnotations"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "podLabels"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "resources"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "schedule"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "serviceAccountName"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "suspend"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "tolerations"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customPostInitScripts"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "database"
+      ],
+      [
+        "externalDatabase",
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "host"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "externalDatabase",
+        "user"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global",
+        "imagePullSecrets"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "mariadb",
+        "enabled"
+      ],
+      [
+        "matomoEmail"
+      ],
+      [
+        "matomoSkipInstall"
+      ],
+      [
+        "matomoUsername"
+      ],
+      [
+        "matomoWebsiteHost"
+      ],
+      [
+        "matomoWebsiteName"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "noreplyAddress"
+      ],
+      [
+        "noreplyName"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "hostPath"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccountName"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "smtpAuth"
+      ],
+      [
+        "smtpExistingSecret"
+      ],
+      [
+        "smtpHost"
+      ],
+      [
+        "smtpPassword"
+      ],
+      [
+        "smtpPort"
+      ],
+      [
+        "smtpProtocol"
+      ],
+      [
+        "smtpUser"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "image"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "allowEmptyPassword"
+      ],
+      [
+        "args"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "certificates",
+        "customCAs"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "certificateLocation"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "certificateSecret"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "chainLocation"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "chainSecret",
+        "key"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "chainSecret",
+        "name"
+      ],
+      [
+        "certificates",
+        "customCertificate",
+        "keyLocation"
+      ],
+      [
+        "certificates",
+        "image"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "https"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "affinity"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "args"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "automountServiceAccountToken"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "command"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "extraEnvVars"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "initContainers"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "nodeSelector"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "podAnnotations"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "podLabels"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "resources"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "schedule"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "serviceAccountName"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "suspend"
+      ],
+      [
+        "cronjobs",
+        "archive",
+        "tolerations"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "affinity"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "args"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "automountServiceAccountToken"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "command"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "extraEnvVars"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "initContainers"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "nodeSelector"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "podAnnotations"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "podLabels"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "resources"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "schedule"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "serviceAccountName"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "suspend"
+      ],
+      [
+        "cronjobs",
+        "taskScheduler",
+        "tolerations"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customPostInitScripts"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "database"
+      ],
+      [
+        "externalDatabase",
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "host"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "externalDatabase",
+        "user"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global",
+        "imagePullSecrets"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "mariadb",
+        "enabled"
+      ],
+      [
+        "matomoEmail"
+      ],
+      [
+        "matomoSkipInstall"
+      ],
+      [
+        "matomoUsername"
+      ],
+      [
+        "matomoWebsiteHost"
+      ],
+      [
+        "matomoWebsiteName"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "noreplyAddress"
+      ],
+      [
+        "noreplyName"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "hostPath"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccountName"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "smtpAuth"
+      ],
+      [
+        "smtpExistingSecret"
+      ],
+      [
+        "smtpHost"
+      ],
+      [
+        "smtpPassword"
+      ],
+      [
+        "smtpPort"
+      ],
+      [
+        "smtpProtocol"
+      ],
+      [
+        "smtpUser"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "image"
+      ]
+    ],
+    "present_count": 160,
+    "varied_count": 2,
+    "varied_fraction": 0.0125,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-zp6hn7pt/chart",
+  "seed": 0,
+  "attempts": 40,
+  "error": "Error: YAML parse error on matomo/templates/cronjob.yaml: error converting YAML to JSON: yaml: line 40: mapping values are not allowed in this context\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonAnnotations": {},
+    "commonLabels": {},
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "image": {
+      "tag": ""
+    },
+    "replicaCount": 1,
+    "matomoUsername": "user",
+    "matomoPassword": "",
+    "matomoEmail": "user@example.com",
+    "matomoWebsiteName": "example",
+    "matomoWebsiteHost": "https://example.org",
+    "matomoSkipInstall": false,
+    "customPostInitScripts": {},
+    "allowEmptyPassword": true,
+    "command": [],
+    "args": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "schedulerName": "",
+    "topologySpreadConstraints": [],
+    "automountServiceAccountToken": true,
+    "hostAliases": [
+      {
+        "ip": "127.0.0.1",
+        "hostnames": [
+          "status.localhost"
+        ]
+      }
+    ],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "sidecars": [],
+    "serviceAccountName": "",
+    "tolerations": [],
+    "existingSecret": "",
+    "smtpAuth": "",
+    "smtpHost": "",
+    "smtpPort": "",
+    "smtpUser": "",
+    "smtpPassword": "",
+    "smtpProtocol": "",
+    "noreplyName": "",
+    "noreplyAddress": "",
+    "smtpExistingSecret": "",
+    "containerPorts": {
+      "http": 8080,
+      "https": 8443
+    },
+    "extraContainerPorts": [],
+    "persistence": {
+      "enabled": true,
+      "storageClass": "",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "dataSource": {},
+      "existingClaim": "",
+      "hostPath": "",
+      "annotations": {},
+      "selector": {}
+    },
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "resourcesPreset": "micro",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 0,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": false,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "startupProbe": {
+      "enabled": false,
+      "path": "/matomo.php",
+      "initialDelaySeconds": 600,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 600,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "path": "/matomo.php",
+      "initialDelaySeconds": 30,
+      "periodSeconds": 5,
+      "timeoutSeconds": 1,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "customStartupProbe": {},
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "lifecycleHooks": {},
+    "podAnnotations": {},
+    "podLabels": {},
+    "service": {
+      "type": "LoadBalancer",
+      "ports": {
+        "http": 80,
+        "https": 443
+      },
+      "loadBalancerSourceRanges": [],
+      "loadBalancerIP": "",
+      "nodePorts": {
+        "http": "",
+        "https": ""
+      },
+      "externalTrafficPolicy": "Cluster",
+      "clusterIP": "",
+      "extraPorts": [],
+      "annotations": {},
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "ingressClassName": "",
+      "hostname": "matomo.local",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "mariadb": {
+      "enabled": true,
+      "architecture": "standalone",
+      "auth": {
+        "rootPassword": "",
+        "database": "bitnami_matomo",
+        "username": "bn_matomo",
+        "password": ""
+      },
+      "primary": {
+        "persistence": {
+          "enabled": true,
+          "storageClass": "",
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "size": "8Gi",
+          "hostPath": "",
+          "existingClaim": ""
+        },
+        "resourcesPreset": "micro",
+        "resources": {}
+      }
+    },
+    "externalDatabase": {
+      "host": "",
+      "port": 3306,
+      "user": "bn_matomo",
+      "password": "",
+      "database": "bitnami_matomo",
+      "existingSecret": ""
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "small",
+      "resources": {}
+    },
+    "metrics": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/apache-exporter",
+        "tag": "1.0.10-debian-12-r55",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "small",
+      "resources": {},
+      "podAnnotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "9117"
+      }
+    },
+    "certificates": {
+      "customCertificate": {
+        "certificateSecret": "",
+        "chainSecret": {
+          "name": "secret-name",
+          "key": "secret-key"
+        },
+        "certificateLocation": "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+        "keyLocation": "/etc/ssl/private/ssl-cert-snakeoil.key",
+        "chainLocation": "/etc/ssl/certs/mychain.pem"
+      },
+      "customCAs": [],
+      "command": [],
+      "args": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "cronjobs": {
+      "taskScheduler": {
+        "enabled": true,
+        "schedule": "*/5 * * * *",
+        "serviceAccountName": "",
+        "automountServiceAccountToken": true,
+        "suspend": false,
+        "affinity": {},
+        "nodeSelector": {},
+        "tolerations": [],
+        "command": [],
+        "args": [],
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 0,
+          "runAsNonRoot": true,
+          "privileged": false,
+          "readOnlyRootFilesystem": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "podAnnotations": {},
+        "podLabels": {},
+        "resources": {},
+        "persistence": {
+          "enabled": true,
+          "existingClaim": ""
+        },
+        "podSecurityContext": {
+          "enabled": true,
+          "fsGroupChangePolicy": "Always",
+          "sysctls": [],
+          "supplementalGroups": [],
+          "fsGroup": 1001
+        },
+        "extraEnvVars": [],
+        "initContainers": []
+      },
+      "archive": {
+        "enabled": true,
+        "schedule": "*/5 * * * *",
+        "serviceAccountName": "",
+        "automountServiceAccountToken": true,
+        "suspend": false,
+        "affinity": {},
+        "tolerations": [],
+        "nodeSelector": {},
+        "command": [],
+        "args": [],
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 0,
+          "runAsNonRoot": true,
+          "privileged": false,
+          "readOnlyRootFilesystem": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "podAnnotations": {},
+        "podLabels": {},
+        "resources": {},
+        "persistence": {
+          "enabled": true,
+          "existingClaim": ""
+        },
+        "podSecurityContext": {
+          "enabled": true,
+          "fsGroupChangePolicy": "Always",
+          "sysctls": [],
+          "supplementalGroups": [],
+          "fsGroup": 1001
+        },
+        "extraEnvVars": [],
+        "initContainers": []
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 23,
+    "unique_bundles": 23,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 23
+  },
+  "phase": "$.image",
+  "kind": "value-path",
+  "path": [
+    "image"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/matomo_1789321541/0000/paths/8e79b7dd85a286cfaddb"
+}
