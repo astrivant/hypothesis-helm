@@ -13,6 +13,36 @@ from typing import TextIO
 from attrs import define, field
 
 
+def _signal_group(child: subprocess.Popen[str], sig: int, *, permission_grace: float = 1.0) -> bool:
+    """
+    Signal an owned group, allowing a bounded retry while its members finish exiting.
+
+    Darwin can return EPERM for a group containing only exiting or zombie processes.
+    Reap the direct child and retry; only ESRCH establishes that the whole group is gone.
+    A terminated leader alone does not establish that its descendants have stopped.
+
+    Args:
+        child (subprocess.Popen[str]): Owned process whose PID is the group identifier.
+        sig (int): Signal to deliver, or zero to probe group existence.
+        permission_grace (float): Maximum seconds to retry a transient permission error.
+
+    Returns:
+        bool: True if the group accepted the signal, False if it no longer exists.
+    """
+    deadline = time.monotonic() + permission_grace
+    while True:
+        try:
+            os.killpg(child.pid, sig)
+            return True
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            child.poll()
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(0.02)
+
+
 @define
 class Processes:
     """
@@ -92,27 +122,22 @@ class Processes:
             with self._lock:
                 self._stopping.set()
                 children = list(self._children)
+            groups = set(children)
             for sig, grace in (
                 (signal.SIGINT, self._interrupt_grace),
                 (signal.SIGTERM, 1.0),
                 (signal.SIGKILL, 0.0),
             ):
-                for child in children:
-                    try:
-                        os.killpg(child.pid, sig)
-                    except ProcessLookupError:
-                        pass
+                for child in list(groups):
+                    if not _signal_group(child, sig):
+                        groups.remove(child)
                 deadline = time.monotonic() + grace
                 while time.monotonic() < deadline:
-                    alive = False
-                    for child in children:
+                    for child in list(groups):
                         child.poll()
-                        try:
-                            os.killpg(child.pid, 0)
-                            alive = True
-                        except ProcessLookupError:
-                            pass
-                    if not alive:
+                        if not _signal_group(child, 0):
+                            groups.remove(child)
+                    if not groups:
                         break
                     time.sleep(0.02)
             for child in children:
