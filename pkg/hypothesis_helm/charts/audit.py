@@ -9,7 +9,7 @@ import logging
 from hypothesis_helm.charts.model import Chart, _default_paths, _schema_nodes
 from hypothesis_helm.charts.presence import has_path
 from hypothesis_helm.charts.templates import discover
-from hypothesis_helm.compiler.complexity import measure
+from hypothesis_helm.compiler.passes.complexity import measure
 from hypothesis_helm.compiler.passes.inputs import InputInventory
 from hypothesis_helm.reporting.progress import format_path
 

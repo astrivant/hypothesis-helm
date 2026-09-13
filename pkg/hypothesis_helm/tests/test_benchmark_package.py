@@ -46,7 +46,7 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         entry_points = archive.read(metadata_name.replace("METADATA", "entry_points.txt")).decode()
         for declaration in (
             "hypothesis-helm-benchmark=hypothesis_helm.benchmarking.cli:main",
-            "hypothesis-helm-complexity=hypothesis_helm.compiler.complexity:main",
+            "hypothesis-helm-complexity=hypothesis_helm.compiler.passes.complexity:main",
             "hypothesis-helm-kubesec=hypothesis_helm.integrations.kubesec:main",
             "hypothesis-helm-github-action=hypothesis_helm.integrations.github_action:main",
         ):

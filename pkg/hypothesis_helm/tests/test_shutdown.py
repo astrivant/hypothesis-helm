@@ -223,7 +223,7 @@ def test_communication_failure_reaps_owned_worker(tmp_path: Path, monkeypatch: p
         Returns:
             subprocess.Popen[str]: Real worker with an injected read error.
         """
-        child = cast(subprocess.Popen[str], create(*args, **kwargs))  # type: ignore[call-overload]
+        child = cast("subprocess.Popen[str]", create(*args, **kwargs))  # type: ignore[call-overload]
         children.append(child)
         monkeypatch.setattr(child, "communicate", Mock(side_effect=OSError("pipe read failed")))
         return child

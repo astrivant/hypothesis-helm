@@ -214,7 +214,7 @@ API schema checks still omit some server-side checks; see
 
 ## Potential output complexity
 
-`helm hypothesis audit ./chart` includes a `complexity` result. It searches the complete finite values domain
+`helm hypothesis audit ./chart` includes a `complexity` result. It searches the allowed values with deterministic branch-and-bound
 within the existing compiler's supported template subset and scores each valid manifest tree as **breadth × depth**.
 Breadth is the most nodes at any depth; depth is the longest path from the synthetic bundle root. Resource roots,
 field values and array entries are nodes. Field names label edges; scalar text length does not change the score.
@@ -223,17 +223,27 @@ The result concerns the largest possible output, including resources disabled by
 source tree or estimate bugs, runtime or test count. A wide branch and a deep branch may be mutually exclusive;
 the reported maximum must be attained by one allowed configuration.
 
-- `compiled-maximum`: every declared finite configuration was analyzed in the supported compiler contract.
+- `compiled-maximum`: complete local output tables and sound bounds establish the maximum over the declared finite domain.
   `maximum_score`, `maximum_output` and `maximizing_values` record the greatest output and a configuration attaining it.
 - `unknown`: an open-ended domain, unsupported operation, dependency, source change or analysis limit prevented a maximum.
   `lower_bound` records the greatest supported output examined so far, if any. It is not an estimated maximum.
 - `no-valid-output`: the complete supported domain produced no valid resource envelopes.
 
-Analysis uses at most 4,096 configurations and checks a five-second budget between candidates. It does not call Helm
-or validate downstream Kubernetes APIs. The full finite domain must fit the case limit; it is never silently truncated.
+Analysis evaluates at most 4,096 template assignments and complete candidates, with a five-second budget checked between work units. It does not call Helm
+or validate downstream Kubernetes APIs. Each factor domain and all local template tables must fit the analysis limits. The full Cartesian space may be much larger.
 The `verification`, `reason` and `limits` fields state the scope of the result.
 
 The installed `hypothesis-helm-complexity` command repeats the analysis with adjustable `--chart`, `--max-cases` and
 `--time-limit` settings. Its `--nodes N` mode calculates only the mathematical tree ceiling for a given output size:
 `floor((N + 1)² / 4)`, or zero when N is zero. This follows from `breadth + depth - 1 <= N`. The maximizing output's
 `size_ceiling` uses that formula; it is not a claim that the chart can produce every tree shape of that size.
+
+The search maps each template to its influencing factors and evaluates that local domain once. For a partial assignment,
+it takes the largest possible node count at each depth for each template, then adds those counts across templates.
+This gives an upper bound even when the individual maxima cannot occur together. Shared factor choices remain synchronized;
+full candidates must still pass schema and complete resource-envelope checks. A branch is skipped only when its bound cannot
+beat an already checked result. Canonical domain ordering makes tie-breaking reproducible.
+
+`template_evaluations`, `examined_configurations`, `search_nodes` and `pruned_configurations` report the work performed.
+The candidate count includes inputs that may fail after defaults merging. Search bounds can remain loose, and a template
+that depends on every factor can still require exponential work. Unsupported behavior never becomes a pruning certificate.

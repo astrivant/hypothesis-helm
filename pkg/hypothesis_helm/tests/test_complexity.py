@@ -13,7 +13,8 @@ import pytest
 from hypothesis_helm.charts.audit import audit
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
-from hypothesis_helm.compiler.complexity import maximum_score, measure, output_profile
+from hypothesis_helm.compiler.complexity import maximum_score, output_profile
+from hypothesis_helm.compiler.passes.complexity import measure
 
 
 @pytest.mark.parametrize("nodes", range(8))
@@ -166,3 +167,95 @@ def test_tree_profiles_reject_cycles_and_define_empty_output() -> None:
     cyclic.append(cyclic)
     with pytest.raises(ValueError, match="cyclic"):
         output_profile(cyclic)
+
+
+@pytest.mark.parametrize("width", [3, 10])
+def test_topology_search_avoids_cartesian_enumeration(tmp_path: Path, width: int) -> None:
+    """
+    Maximize independent gated resources using small local tables and sound branch bounds.
+
+    Args:
+        tmp_path (Path): Destination for a chart with one Boolean gate per resource.
+        width (int): Number of gates whose full Cartesian space is intentionally larger than the work budget.
+
+    Returns:
+        None: The maximum is established while most complete assignments are never evaluated.
+    """
+    chart = _chart(tmp_path)
+    (tmp_path / "templates/example.yaml").unlink()
+    names = [f"gate{index}" for index in range(width)]
+    schema: dict[str, object] = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": names,
+        "properties": {name: {"type": "boolean"} for name in names},
+    }
+    (tmp_path / "values.schema.json").write_text(json.dumps(schema))
+    (tmp_path / "values.yaml").write_text("\n".join(f"{name}: false" for name in names) + "\n")
+    for name in names:
+        (tmp_path / "templates" / f"{name}.yaml").write_text(
+            dedent(
+                f"""
+                {{{{ if .Values.{name} }}}}
+                apiVersion: v1
+                kind: ConfigMap
+                metadata:
+                  name: {name}
+                {{{{ end }}}}
+                """
+            )
+        )
+    chart = Chart.load(tmp_path)
+    result = measure(chart, max_cases=64)
+    assert result["status"] == "compiled-maximum"
+    assert result["candidate_configurations"] == 2**width
+    assert result["maximum_score"] == 9 * width
+    assert result["maximizing_values"] == dict.fromkeys(names, True)
+    assert result["template_evaluations"] == 2 * width
+    assert result["examined_configurations"] == 2
+    assert result["pruned_configurations"] == 2**width - 2
+    if width == 3 and shutil.which("helm"):
+        scores = [
+            output_profile(render(chart, dict(zip(names, values, strict=True)), stream=False))["score"]
+            for values in product((False, True), repeat=width)
+        ]
+        assert max(scores) == result["maximum_score"]
+
+
+def test_shared_gate_does_not_combine_incompatible_output_maxima(tmp_path: Path) -> None:
+    """
+    Preserve shared conditions when independently largest components cannot coexist.
+
+    Args:
+        tmp_path (Path): Chart containing two resources controlled by opposite states of one gate.
+
+    Returns:
+        None: The score is attained by one input, rather than a sum of impossible local maxima.
+    """
+    chart = _chart(tmp_path)
+    (tmp_path / "templates/opposite.yaml").write_text(
+        dedent(
+            """
+            {{ if .Values.enabled }}
+            {{ else }}
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: opposite
+            data:
+              a: "a"
+              b: "b"
+              c: "c"
+              d: "d"
+            {{ end }}
+            """
+        )
+    )
+    result = measure(chart)
+    assert result["status"] == "compiled-maximum"
+    assert result["maximum_score"] == 21
+    assert result["maximizing_values"] in ({"enabled": False}, {"enabled": True})
+    if shutil.which("helm"):
+        assert result["maximum_score"] == max(
+            output_profile(render(chart, {"enabled": enabled}, stream=False))["score"] for enabled in (False, True)
+        )
