@@ -1,0 +1,377 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "kubeVersion": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "extraDeploy": [],
+  "usePasswordFiles": true,
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "server": {
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/parse",
+      "tag": "8.2.3-debian-12-r13",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "forceOverwriteConfFile": true,
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "command": [],
+    "args": [],
+    "containerPorts": {
+      "http": 1337
+    },
+    "mountPath": "/parse",
+    "appId": "myappID",
+    "masterKey": "",
+    "masterKeyIps": "0.0.0.0/0",
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "enableCloudCode": false,
+    "cloudCodeScripts": {},
+    "existingCloudCodeScriptsCM": "",
+    "resourcesPreset": "nano",
+    "resources": {},
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 120,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 5,
+      "timeoutSeconds": 5,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 0,
+      "periodSeconds": 3,
+      "timeoutSeconds": 1,
+      "successThreshold": 1,
+      "failureThreshold": 15
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "service": {
+      "type": "LoadBalancer",
+      "ports": {
+        "http": 1337
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    }
+  },
+  "dashboard": {
+    "enabled": true,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/parse-dashboard",
+      "tag": "7.3.0-debian-12-r15",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "replicaCount": 1,
+    "containerPorts": {
+      "http": 4040
+    },
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "command": [],
+    "args": [],
+    "username": "user",
+    "password": "",
+    "appName": "MyDashboard",
+    "resourcesPreset": "nano",
+    "resources": {},
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 240,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 5,
+      "timeoutSeconds": 5,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 0,
+      "periodSeconds": 3,
+      "timeoutSeconds": 2,
+      "failureThreshold": 15,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "parseServerUrlProtocol": "http",
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "forceOverwriteConfFile": true,
+    "service": {
+      "type": "LoadBalancer",
+      "ports": {
+        "http": 80
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    }
+  },
+  "ingress": {
+    "enabled": false,
+    "ingressClassName": "",
+    "tls": false,
+    "selfSigned": false,
+    "annotations": {},
+    "dashboard": {
+      "hostname": "parse-dashboard.local",
+      "path": "/",
+      "pathType": "ImplementationSpecific",
+      "extraHosts": [],
+      "extraPaths": []
+    },
+    "server": {
+      "hostname": "parse-server.local",
+      "path": "/",
+      "pathType": "ImplementationSpecific",
+      "extraHosts": [],
+      "extraPaths": []
+    },
+    "extraTls": [],
+    "secrets": [],
+    "extraRules": []
+  },
+  "persistence": {
+    "enabled": true,
+    "storageClass": "",
+    "accessModes": [
+      "ReadWriteOnce"
+    ],
+    "size": "8Gi",
+    "existingClaim": "",
+    "selector": {},
+    "dataSource": {},
+    "annotations": {}
+  },
+  "volumePermissions": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "none",
+    "resources": {}
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "annotations": {},
+    "automountServiceAccountToken": false
+  },
+  "mongodb": {
+    "enabled": true,
+    "auth": {
+      "enabled": true,
+      "rootPassword": "",
+      "username": "bn_parse",
+      "password": "",
+      "database": "bitnami_parse"
+    },
+    "persistence": {
+      "storageClass": "\r0"
+    },
+    "resourcesPreset": "small",
+    "resources": {}
+  }
+}

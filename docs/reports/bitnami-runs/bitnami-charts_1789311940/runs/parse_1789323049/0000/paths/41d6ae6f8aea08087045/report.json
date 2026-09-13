@@ -1,0 +1,1881 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 165,
+    "present_fields": [
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "dashboard",
+        "affinity"
+      ],
+      [
+        "dashboard",
+        "appName"
+      ],
+      [
+        "dashboard",
+        "automountServiceAccountToken"
+      ],
+      [
+        "dashboard",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "dashboard",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "customLivenessProbe"
+      ],
+      [
+        "dashboard",
+        "customReadinessProbe"
+      ],
+      [
+        "dashboard",
+        "customStartupProbe"
+      ],
+      [
+        "dashboard",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "extraEnvVars"
+      ],
+      [
+        "dashboard",
+        "extraEnvVarsCM"
+      ],
+      [
+        "dashboard",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "dashboard",
+        "extraVolumeMounts"
+      ],
+      [
+        "dashboard",
+        "extraVolumes"
+      ],
+      [
+        "dashboard",
+        "hostAliases"
+      ],
+      [
+        "dashboard",
+        "image",
+        "debug"
+      ],
+      [
+        "dashboard",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "dashboard",
+        "initContainers"
+      ],
+      [
+        "dashboard",
+        "lifecycleHooks"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "dashboard",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "dashboard",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "dashboard",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "dashboard",
+        "nodeSelector"
+      ],
+      [
+        "dashboard",
+        "parseServerUrlProtocol"
+      ],
+      [
+        "dashboard",
+        "pdb",
+        "create"
+      ],
+      [
+        "dashboard",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "dashboard",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "dashboard",
+        "podAffinityPreset"
+      ],
+      [
+        "dashboard",
+        "podAnnotations"
+      ],
+      [
+        "dashboard",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "dashboard",
+        "podLabels"
+      ],
+      [
+        "dashboard",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "priorityClassName"
+      ],
+      [
+        "dashboard",
+        "replicaCount"
+      ],
+      [
+        "dashboard",
+        "resources"
+      ],
+      [
+        "dashboard",
+        "schedulerName"
+      ],
+      [
+        "dashboard",
+        "service",
+        "annotations"
+      ],
+      [
+        "dashboard",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "dashboard",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "dashboard",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "dashboard",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "dashboard",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "dashboard",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "dashboard",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "dashboard",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "dashboard",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "dashboard",
+        "service",
+        "type"
+      ],
+      [
+        "dashboard",
+        "sidecars"
+      ],
+      [
+        "dashboard",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "dashboard",
+        "tolerations"
+      ],
+      [
+        "dashboard",
+        "topologySpreadConstraints"
+      ],
+      [
+        "dashboard",
+        "updateStrategy"
+      ],
+      [
+        "dashboard",
+        "username"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "path"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "server",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "server",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "server",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "server",
+        "path"
+      ],
+      [
+        "ingress",
+        "server",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "mongodb",
+        "auth",
+        "enabled"
+      ],
+      [
+        "mongodb",
+        "auth",
+        "username"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "server",
+        "affinity"
+      ],
+      [
+        "server",
+        "appId"
+      ],
+      [
+        "server",
+        "automountServiceAccountToken"
+      ],
+      [
+        "server",
+        "cloudCodeScripts"
+      ],
+      [
+        "server",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "server",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "server",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "server",
+        "customLivenessProbe"
+      ],
+      [
+        "server",
+        "customReadinessProbe"
+      ],
+      [
+        "server",
+        "customStartupProbe"
+      ],
+      [
+        "server",
+        "enableCloudCode"
+      ],
+      [
+        "server",
+        "existingCloudCodeScriptsCM"
+      ],
+      [
+        "server",
+        "extraEnvVars"
+      ],
+      [
+        "server",
+        "extraEnvVarsCM"
+      ],
+      [
+        "server",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "server",
+        "extraVolumeMounts"
+      ],
+      [
+        "server",
+        "extraVolumes"
+      ],
+      [
+        "server",
+        "forceOverwriteConfFile"
+      ],
+      [
+        "server",
+        "hostAliases"
+      ],
+      [
+        "server",
+        "image",
+        "debug"
+      ],
+      [
+        "server",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "server",
+        "initContainers"
+      ],
+      [
+        "server",
+        "lifecycleHooks"
+      ],
+      [
+        "server",
+        "masterKeyIps"
+      ],
+      [
+        "server",
+        "mountPath"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "server",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "server",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "server",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "server",
+        "nodeSelector"
+      ],
+      [
+        "server",
+        "pdb",
+        "create"
+      ],
+      [
+        "server",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "server",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "server",
+        "podAffinityPreset"
+      ],
+      [
+        "server",
+        "podAnnotations"
+      ],
+      [
+        "server",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "server",
+        "podLabels"
+      ],
+      [
+        "server",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "server",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "server",
+        "priorityClassName"
+      ],
+      [
+        "server",
+        "resources"
+      ],
+      [
+        "server",
+        "schedulerName"
+      ],
+      [
+        "server",
+        "service",
+        "annotations"
+      ],
+      [
+        "server",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "server",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "server",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "server",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "server",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "server",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "server",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "server",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "server",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "server",
+        "service",
+        "type"
+      ],
+      [
+        "server",
+        "sidecars"
+      ],
+      [
+        "server",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "server",
+        "tolerations"
+      ],
+      [
+        "server",
+        "topologySpreadConstraints"
+      ],
+      [
+        "server",
+        "updateStrategy"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "dashboard",
+        "affinity"
+      ],
+      [
+        "dashboard",
+        "appName"
+      ],
+      [
+        "dashboard",
+        "automountServiceAccountToken"
+      ],
+      [
+        "dashboard",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "dashboard",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "customLivenessProbe"
+      ],
+      [
+        "dashboard",
+        "customReadinessProbe"
+      ],
+      [
+        "dashboard",
+        "customStartupProbe"
+      ],
+      [
+        "dashboard",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "extraEnvVars"
+      ],
+      [
+        "dashboard",
+        "extraEnvVarsCM"
+      ],
+      [
+        "dashboard",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "dashboard",
+        "extraVolumeMounts"
+      ],
+      [
+        "dashboard",
+        "extraVolumes"
+      ],
+      [
+        "dashboard",
+        "hostAliases"
+      ],
+      [
+        "dashboard",
+        "image",
+        "debug"
+      ],
+      [
+        "dashboard",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "dashboard",
+        "initContainers"
+      ],
+      [
+        "dashboard",
+        "lifecycleHooks"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "dashboard",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "dashboard",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "dashboard",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "dashboard",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "dashboard",
+        "nodeSelector"
+      ],
+      [
+        "dashboard",
+        "parseServerUrlProtocol"
+      ],
+      [
+        "dashboard",
+        "pdb",
+        "create"
+      ],
+      [
+        "dashboard",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "dashboard",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "dashboard",
+        "podAffinityPreset"
+      ],
+      [
+        "dashboard",
+        "podAnnotations"
+      ],
+      [
+        "dashboard",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "dashboard",
+        "podLabels"
+      ],
+      [
+        "dashboard",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "dashboard",
+        "priorityClassName"
+      ],
+      [
+        "dashboard",
+        "replicaCount"
+      ],
+      [
+        "dashboard",
+        "resources"
+      ],
+      [
+        "dashboard",
+        "schedulerName"
+      ],
+      [
+        "dashboard",
+        "service",
+        "annotations"
+      ],
+      [
+        "dashboard",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "dashboard",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "dashboard",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "dashboard",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "dashboard",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "dashboard",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "dashboard",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "dashboard",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "dashboard",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "dashboard",
+        "service",
+        "type"
+      ],
+      [
+        "dashboard",
+        "sidecars"
+      ],
+      [
+        "dashboard",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "dashboard",
+        "tolerations"
+      ],
+      [
+        "dashboard",
+        "topologySpreadConstraints"
+      ],
+      [
+        "dashboard",
+        "updateStrategy"
+      ],
+      [
+        "dashboard",
+        "username"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "path"
+      ],
+      [
+        "ingress",
+        "dashboard",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "server",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "server",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "server",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "server",
+        "path"
+      ],
+      [
+        "ingress",
+        "server",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "mongodb",
+        "auth",
+        "enabled"
+      ],
+      [
+        "mongodb",
+        "auth",
+        "username"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "server",
+        "affinity"
+      ],
+      [
+        "server",
+        "appId"
+      ],
+      [
+        "server",
+        "automountServiceAccountToken"
+      ],
+      [
+        "server",
+        "cloudCodeScripts"
+      ],
+      [
+        "server",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "server",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "server",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "server",
+        "customLivenessProbe"
+      ],
+      [
+        "server",
+        "customReadinessProbe"
+      ],
+      [
+        "server",
+        "customStartupProbe"
+      ],
+      [
+        "server",
+        "enableCloudCode"
+      ],
+      [
+        "server",
+        "existingCloudCodeScriptsCM"
+      ],
+      [
+        "server",
+        "extraEnvVars"
+      ],
+      [
+        "server",
+        "extraEnvVarsCM"
+      ],
+      [
+        "server",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "server",
+        "extraVolumeMounts"
+      ],
+      [
+        "server",
+        "extraVolumes"
+      ],
+      [
+        "server",
+        "forceOverwriteConfFile"
+      ],
+      [
+        "server",
+        "hostAliases"
+      ],
+      [
+        "server",
+        "image",
+        "debug"
+      ],
+      [
+        "server",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "server",
+        "initContainers"
+      ],
+      [
+        "server",
+        "lifecycleHooks"
+      ],
+      [
+        "server",
+        "masterKeyIps"
+      ],
+      [
+        "server",
+        "mountPath"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "server",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "server",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "server",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "server",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "server",
+        "nodeSelector"
+      ],
+      [
+        "server",
+        "pdb",
+        "create"
+      ],
+      [
+        "server",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "server",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "server",
+        "podAffinityPreset"
+      ],
+      [
+        "server",
+        "podAnnotations"
+      ],
+      [
+        "server",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "server",
+        "podLabels"
+      ],
+      [
+        "server",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "server",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "server",
+        "priorityClassName"
+      ],
+      [
+        "server",
+        "resources"
+      ],
+      [
+        "server",
+        "schedulerName"
+      ],
+      [
+        "server",
+        "service",
+        "annotations"
+      ],
+      [
+        "server",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "server",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "server",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "server",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "server",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "server",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "server",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "server",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "server",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "server",
+        "service",
+        "type"
+      ],
+      [
+        "server",
+        "sidecars"
+      ],
+      [
+        "server",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "server",
+        "tolerations"
+      ],
+      [
+        "server",
+        "topologySpreadConstraints"
+      ],
+      [
+        "server",
+        "updateStrategy"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "present_count": 165,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-zxw0l_3f/chart",
+  "seed": 0,
+  "attempts": 65,
+  "error": "Error: YAML parse error on parse/charts/mongodb/templates/standalone/pvc.yaml: error converting YAML to JSON: yaml: line 22: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "kubeVersion": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "server": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/parse",
+        "tag": "8.2.3-debian-12-r13",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [],
+        "debug": false
+      },
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "forceOverwriteConfFile": true,
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "containerPorts": {
+        "http": 1337
+      },
+      "mountPath": "/parse",
+      "appId": "myappID",
+      "masterKey": "",
+      "masterKeyIps": "0.0.0.0/0",
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "enableCloudCode": false,
+      "cloudCodeScripts": {},
+      "existingCloudCodeScriptsCM": "",
+      "resourcesPreset": "nano",
+      "resources": {},
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 120,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 5,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 0,
+        "periodSeconds": 3,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 15
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "service": {
+        "type": "LoadBalancer",
+        "ports": {
+          "http": 1337
+        },
+        "nodePorts": {
+          "http": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerSourceRanges": [],
+        "externalTrafficPolicy": "Cluster",
+        "annotations": {},
+        "extraPorts": [],
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      }
+    },
+    "dashboard": {
+      "enabled": true,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/parse-dashboard",
+        "tag": "7.3.0-debian-12-r15",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [],
+        "debug": false
+      },
+      "replicaCount": 1,
+      "containerPorts": {
+        "http": 4040
+      },
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "username": "user",
+      "password": "",
+      "appName": "MyDashboard",
+      "resourcesPreset": "nano",
+      "resources": {},
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 240,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 5,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 0,
+        "periodSeconds": 3,
+        "timeoutSeconds": 2,
+        "failureThreshold": 15,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "parseServerUrlProtocol": "http",
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "forceOverwriteConfFile": true,
+      "service": {
+        "type": "LoadBalancer",
+        "ports": {
+          "http": 80
+        },
+        "nodePorts": {
+          "http": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerSourceRanges": [],
+        "externalTrafficPolicy": "Cluster",
+        "annotations": {},
+        "extraPorts": [],
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      }
+    },
+    "ingress": {
+      "enabled": false,
+      "ingressClassName": "",
+      "tls": false,
+      "selfSigned": false,
+      "annotations": {},
+      "dashboard": {
+        "hostname": "parse-dashboard.local",
+        "path": "/",
+        "pathType": "ImplementationSpecific",
+        "extraHosts": [],
+        "extraPaths": []
+      },
+      "server": {
+        "hostname": "parse-server.local",
+        "path": "/",
+        "pathType": "ImplementationSpecific",
+        "extraHosts": [],
+        "extraPaths": []
+      },
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "persistence": {
+      "enabled": true,
+      "storageClass": "",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "existingClaim": "",
+      "selector": {},
+      "dataSource": {},
+      "annotations": {}
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "none",
+      "resources": {}
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "mongodb": {
+      "enabled": true,
+      "auth": {
+        "enabled": true,
+        "rootPassword": "",
+        "username": "bn_parse",
+        "password": "",
+        "database": "bitnami_parse"
+      },
+      "persistence": {
+        "storageClass": "\r0"
+      },
+      "resourcesPreset": "small",
+      "resources": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 47,
+    "unique_bundles": 47,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 47
+  },
+  "phase": "$.mongodb.persistence",
+  "kind": "value-path",
+  "path": [
+    "mongodb",
+    "persistence"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/parse_1789323049/0000/paths/41d6ae6f8aea08087045"
+}

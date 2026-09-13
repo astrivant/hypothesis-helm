@@ -1,0 +1,249 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "clusterDomain": "cluster.local",
+  "extraDeploy": [],
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "service": {
+    "type": "ClusterIP",
+    "port": 80,
+    "nodePorts": {
+      "http": ""
+    },
+    "clusterIP": "",
+    "loadBalancerIP": "",
+    "loadBalancerSourceRanges": [],
+    "externalTrafficPolicy": "Cluster",
+    "extraPorts": [],
+    "annotations": {},
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {}
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "pathType": "ImplementationSpecific",
+    "apiVersion": "",
+    "ingressClassName": "",
+    "hostname": "oaut2-proxy.local",
+    "path": "/",
+    "annotations": {},
+    "tls": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "certManager": false,
+    "selfSigned": false,
+    "secrets": [],
+    "existingSecretName": "",
+    "extraRules": []
+  },
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/oauth2-proxy",
+    "tag": "7.12.0-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": [
+      [
+        null
+      ]
+    ]
+  },
+  "configuration": {
+    "clientID": "XXXXXXX",
+    "clientSecret": "XXXXXXXX",
+    "cookieSecret": "XXXXXXXXXXXXXXXX",
+    "existingSecret": "",
+    "google": {
+      "enabled": false,
+      "useApplicationDefaultCredentials": false,
+      "adminEmail": "",
+      "groups": [],
+      "serviceAccountJson": "",
+      "existingSecret": ""
+    },
+    "content": "email_domains = [ \"*\" ]\nupstreams = [ \"file:///dev/null\" ]\n",
+    "existingConfigmap": "",
+    "authenticatedEmailsFile": {
+      "enabled": false,
+      "content": "",
+      "existingSecret": ""
+    },
+    "htpasswdFile": {
+      "enabled": false,
+      "existingSecret": "",
+      "content": ""
+    },
+    "oidcIssuerUrl": "",
+    "redirectUrl": "",
+    "whiteList": ""
+  },
+  "containerPort": 4180,
+  "extraContainerPorts": [],
+  "replicaCount": 1,
+  "extraArgs": [],
+  "startupProbe": {
+    "enabled": false,
+    "initialDelaySeconds": 0,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "livenessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 0,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 0,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "customStartupProbe": {},
+  "customLivenessProbe": {},
+  "customReadinessProbe": {},
+  "resourcesPreset": "nano",
+  "resources": {},
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "command": [],
+  "args": [],
+  "automountServiceAccountToken": false,
+  "hostAliases": [],
+  "podLabels": {},
+  "podAnnotations": {},
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "priorityClassName": "",
+  "schedulerName": "",
+  "topologySpreadConstraints": [],
+  "lifecycleHooks": {},
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "sidecars": [],
+  "initContainers": [],
+  "dnsPolicy": "",
+  "dnsConfig": {},
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "automountServiceAccountToken": false,
+    "annotations": {}
+  },
+  "externalRedis": {
+    "host": "",
+    "password": "",
+    "port": 6379,
+    "databaseIndex": 0,
+    "existingSecret": "",
+    "existingSecretPasswordKey": ""
+  },
+  "redis": {
+    "enabled": true,
+    "architecture": "standalone",
+    "master": {
+      "service": {
+        "port": 6379
+      }
+    },
+    "replica": {
+      "replicaCount": 3
+    },
+    "auth": {
+      "enabled": true,
+      "existingSecret": "",
+      "existingSecretPasswordKey": "",
+      "sentinel": true
+    },
+    "sentinel": {
+      "enabled": false,
+      "masterSet": "mymaster",
+      "service": {
+        "port": 6379,
+        "sentinelPort": 26379
+      }
+    }
+  }
+}

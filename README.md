@@ -42,13 +42,21 @@ and tag the tested commit. See the [release-check workflow and cache retention](
 
 Requires Helm 4 and Python 3.13+.
 
+Install the Helm plugin and verify that it is available:
+
 ```sh
 PYTHON=python3.13 helm plugin install https://github.com/astrivant/hypothesis-helm
+helm hypothesis --help
 ```
 
-For a local checkout, replace the repository URL with `.`.
+To install from a local checkout instead, run these commands from the project root:
 
-Install the optional benchmark tools with:
+```sh
+PYTHON=python3.13 helm plugin install .
+helm hypothesis --help
+```
+
+Then, if you want the optional benchmark tools, install them with pip:
 
 ```sh
 pip install "hypothesis-helm[benchmarking]"

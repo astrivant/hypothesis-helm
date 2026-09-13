@@ -1,0 +1,2055 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 166,
+    "present_fields": [
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "controller",
+        "affinity"
+      ],
+      [
+        "controller",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controller",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "allowPrivilegeEscalation"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "capabilities",
+        "drop"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "controller",
+        "customLivenessProbe"
+      ],
+      [
+        "controller",
+        "customReadinessProbe"
+      ],
+      [
+        "controller",
+        "customStartupProbe"
+      ],
+      [
+        "controller",
+        "extraEnvVars"
+      ],
+      [
+        "controller",
+        "extraEnvVarsCM"
+      ],
+      [
+        "controller",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "controller",
+        "extraVolumeMounts"
+      ],
+      [
+        "controller",
+        "extraVolumes"
+      ],
+      [
+        "controller",
+        "hostAliases"
+      ],
+      [
+        "controller",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "controller",
+        "initContainers"
+      ],
+      [
+        "controller",
+        "lifecycleHooks"
+      ],
+      [
+        "controller",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "controller",
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "controller",
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "controller",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "controller",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "controller",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "controller",
+        "nodeSelector"
+      ],
+      [
+        "controller",
+        "pdb",
+        "create"
+      ],
+      [
+        "controller",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "controller",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "controller",
+        "podAffinityPreset"
+      ],
+      [
+        "controller",
+        "podAnnotations"
+      ],
+      [
+        "controller",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "controller",
+        "podLabels"
+      ],
+      [
+        "controller",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "controller",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "controller",
+        "priorityClassName"
+      ],
+      [
+        "controller",
+        "psp",
+        "create"
+      ],
+      [
+        "controller",
+        "rbac",
+        "create"
+      ],
+      [
+        "controller",
+        "resources"
+      ],
+      [
+        "controller",
+        "revisionHistoryLimit"
+      ],
+      [
+        "controller",
+        "runtimeClassName"
+      ],
+      [
+        "controller",
+        "schedulerName"
+      ],
+      [
+        "controller",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "controller",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controller",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "controller",
+        "sidecars"
+      ],
+      [
+        "controller",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "controller",
+        "tolerations"
+      ],
+      [
+        "controller",
+        "topologySpreadConstraints"
+      ],
+      [
+        "controller",
+        "updateStrategy"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "installCRDs"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "psp",
+        "create"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "speaker",
+        "affinity"
+      ],
+      [
+        "speaker",
+        "automountServiceAccountToken"
+      ],
+      [
+        "speaker",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "allowPrivilegeEscalation"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "capabilities",
+        "add"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "capabilities",
+        "drop"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "speaker",
+        "customLivenessProbe"
+      ],
+      [
+        "speaker",
+        "customReadinessProbe"
+      ],
+      [
+        "speaker",
+        "customStartupProbe"
+      ],
+      [
+        "speaker",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "extraEnvVars"
+      ],
+      [
+        "speaker",
+        "extraEnvVarsCM"
+      ],
+      [
+        "speaker",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "speaker",
+        "extraVolumeMounts"
+      ],
+      [
+        "speaker",
+        "extraVolumes"
+      ],
+      [
+        "speaker",
+        "frr",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "speaker",
+        "frr",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "frr",
+        "customLivenessProbe"
+      ],
+      [
+        "speaker",
+        "frr",
+        "customReadinessProbe"
+      ],
+      [
+        "speaker",
+        "frr",
+        "customStartupProbe"
+      ],
+      [
+        "speaker",
+        "frr",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "frr",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "speaker",
+        "frr",
+        "resources"
+      ],
+      [
+        "speaker",
+        "hostAliases"
+      ],
+      [
+        "speaker",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "speaker",
+        "initContainers"
+      ],
+      [
+        "speaker",
+        "lifecycleHooks"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "speaker",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "speaker",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "speaker",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "speaker",
+        "nodeSelector"
+      ],
+      [
+        "speaker",
+        "podAffinityPreset"
+      ],
+      [
+        "speaker",
+        "podAnnotations"
+      ],
+      [
+        "speaker",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "speaker",
+        "podLabels"
+      ],
+      [
+        "speaker",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "priorityClassName"
+      ],
+      [
+        "speaker",
+        "psp",
+        "create"
+      ],
+      [
+        "speaker",
+        "rbac",
+        "create"
+      ],
+      [
+        "speaker",
+        "resources"
+      ],
+      [
+        "speaker",
+        "secretName"
+      ],
+      [
+        "speaker",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "speaker",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "speaker",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "speaker",
+        "sidecars"
+      ],
+      [
+        "speaker",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "speaker",
+        "tolerations"
+      ],
+      [
+        "speaker",
+        "updateStrategy"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "speaker",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "speaker",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configInline"
+      ],
+      [
+        "controller",
+        "affinity"
+      ],
+      [
+        "controller",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controller",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "allowPrivilegeEscalation"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "capabilities",
+        "drop"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "controller",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "controller",
+        "customLivenessProbe"
+      ],
+      [
+        "controller",
+        "customReadinessProbe"
+      ],
+      [
+        "controller",
+        "customStartupProbe"
+      ],
+      [
+        "controller",
+        "extraEnvVars"
+      ],
+      [
+        "controller",
+        "extraEnvVarsCM"
+      ],
+      [
+        "controller",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "controller",
+        "extraVolumeMounts"
+      ],
+      [
+        "controller",
+        "extraVolumes"
+      ],
+      [
+        "controller",
+        "hostAliases"
+      ],
+      [
+        "controller",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "controller",
+        "initContainers"
+      ],
+      [
+        "controller",
+        "lifecycleHooks"
+      ],
+      [
+        "controller",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "controller",
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "controller",
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "controller",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "controller",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "controller",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "controller",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "controller",
+        "nodeSelector"
+      ],
+      [
+        "controller",
+        "pdb",
+        "create"
+      ],
+      [
+        "controller",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "controller",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "controller",
+        "podAffinityPreset"
+      ],
+      [
+        "controller",
+        "podAnnotations"
+      ],
+      [
+        "controller",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "controller",
+        "podLabels"
+      ],
+      [
+        "controller",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "controller",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "controller",
+        "priorityClassName"
+      ],
+      [
+        "controller",
+        "psp",
+        "create"
+      ],
+      [
+        "controller",
+        "rbac",
+        "create"
+      ],
+      [
+        "controller",
+        "resources"
+      ],
+      [
+        "controller",
+        "revisionHistoryLimit"
+      ],
+      [
+        "controller",
+        "runtimeClassName"
+      ],
+      [
+        "controller",
+        "schedulerName"
+      ],
+      [
+        "controller",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "controller",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controller",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "controller",
+        "sidecars"
+      ],
+      [
+        "controller",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "controller",
+        "tolerations"
+      ],
+      [
+        "controller",
+        "topologySpreadConstraints"
+      ],
+      [
+        "controller",
+        "updateStrategy"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingConfigMap"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "installCRDs"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "psp",
+        "create"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rts",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "speaker",
+        "affinity"
+      ],
+      [
+        "speaker",
+        "automountServiceAccountToken"
+      ],
+      [
+        "speaker",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "allowPrivilegeEscalation"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "capabilities",
+        "add"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "capabilities",
+        "drop"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "speaker",
+        "customLivenessProbe"
+      ],
+      [
+        "speaker",
+        "customReadinessProbe"
+      ],
+      [
+        "speaker",
+        "customStartupProbe"
+      ],
+      [
+        "speaker",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "extraEnvVars"
+      ],
+      [
+        "speaker",
+        "extraEnvVarsCM"
+      ],
+      [
+        "speaker",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "speaker",
+        "extraVolumeMounts"
+      ],
+      [
+        "speaker",
+        "extraVolumes"
+      ],
+      [
+        "speaker",
+        "frr",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "speaker",
+        "frr",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "frr",
+        "customLivenessProbe"
+      ],
+      [
+        "speaker",
+        "frr",
+        "customReadinessProbe"
+      ],
+      [
+        "speaker",
+        "frr",
+        "customStartupProbe"
+      ],
+      [
+        "speaker",
+        "frr",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "frr",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "speaker",
+        "frr",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "speaker",
+        "frr",
+        "resources"
+      ],
+      [
+        "speaker",
+        "hostAliases"
+      ],
+      [
+        "speaker",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "speaker",
+        "initContainers"
+      ],
+      [
+        "speaker",
+        "lifecycleHooks"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "speaker",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "speaker",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "speaker",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "speaker",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "speaker",
+        "nodeSelector"
+      ],
+      [
+        "speaker",
+        "podAffinityPreset"
+      ],
+      [
+        "speaker",
+        "podAnnotations"
+      ],
+      [
+        "speaker",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "speaker",
+        "podLabels"
+      ],
+      [
+        "speaker",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "speaker",
+        "priorityClassName"
+      ],
+      [
+        "speaker",
+        "psp",
+        "create"
+      ],
+      [
+        "speaker",
+        "rbac",
+        "create"
+      ],
+      [
+        "speaker",
+        "resources"
+      ],
+      [
+        "speaker",
+        "secretName"
+      ],
+      [
+        "speaker",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "speaker",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "speaker",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "speaker",
+        "sidecars"
+      ],
+      [
+        "speaker",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "speaker",
+        "tolerations"
+      ],
+      [
+        "speaker",
+        "updateStrategy"
+      ]
+    ],
+    "present_count": 163,
+    "varied_count": 8,
+    "varied_fraction": 0.04819277108433735,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-wr6cso87/chart",
+  "seed": 0,
+  "attempts": 89,
+  "error": "Error: metallb/templates/speaker/networkpolicy.yaml:41:64\n  executing \"metallb/templates/speaker/networkpolicy.yaml\" at <.Values.rts.networkPolicy.extraEgress>:\n    nil pointer evaluating interface {}.networkPolicy\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "installCRDs": true,
+    "rbac": {
+      "create": true
+    },
+    "psp": {
+      "create": false
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "kubeAPIServerPorts": [
+        443,
+        6443,
+        8443
+      ],
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "prometheusRule": {
+      "enabled": false
+    },
+    "controller": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/metallb-controller",
+        "tag": "0.15.2-debian-12-r7",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "automountServiceAccountToken": true,
+      "hostAliases": [],
+      "rbac": {
+        "create": true
+      },
+      "psp": {
+        "create": true
+      },
+      "priorityClassName": "",
+      "runtimeClassName": "",
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": 0,
+      "topologySpreadConstraints": [],
+      "resourcesPreset": "nano",
+      "resources": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "affinity": {},
+      "podAnnotations": {},
+      "podLabels": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "lifecycleHooks": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "revisionHistoryLimit": 3,
+      "containerPorts": {
+        "metrics": 7472
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "logLevel": "info",
+      "tlsMinVersion": "",
+      "tlsCipherSuites": "",
+      "webhookMode": "enabled",
+      "extraArgs": [],
+      "metrics": {
+        "enabled": false,
+        "service": {
+          "port": 7472,
+          "annotations": {
+            "prometheus.io/scrape": "true",
+            "prometheus.io/port": "7472",
+            "prometheus.io/path": "/metrics"
+          }
+        },
+        "serviceMonitor": {
+          "enabled": false,
+          "namespace": "",
+          "jobLabel": "app.kubernetes.io/name",
+          "interval": "",
+          "scrapeTimeout": "",
+          "metricRelabelings": [],
+          "relabelings": [],
+          "selector": {},
+          "labels": {},
+          "honorLabels": false
+        }
+      }
+    },
+    "speaker": {
+      "enabled": true,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/metallb-speaker",
+        "tag": "0.15.2-debian-12-r6",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "rbac": {
+        "create": true
+      },
+      "automountServiceAccountToken": true,
+      "networkPolicy": {
+        "allowExternalEgress": false,
+        "extraEgress": [
+          null
+        ]
+      },
+      "hostAliases": [],
+      "psp": {
+        "create": true
+      },
+      "priorityClassName": "",
+      "runtimeClassName": "",
+      "terminationGracePeriodSeconds": 2,
+      "resourcesPreset": "nano",
+      "resources": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "affinity": {},
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "podAnnotations": {},
+      "podLabels": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 0
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 0,
+        "runAsGroup": 0,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ],
+          "add": [
+            "NET_ADMIN",
+            "NET_RAW",
+            "SYS_ADMIN"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "lifecycleHooks": {},
+      "sidecars": [],
+      "initContainers": [],
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "secretName": "",
+      "secretKey": "",
+      "secretValue": "",
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "containerPorts": {
+        "metrics": 7472
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "logLevel": "info",
+      "frr": {
+        "enabled": false,
+        "image": {
+          "registry": "docker.io",
+          "repository": "bitnami/metallb-speaker",
+          "tag": "0.15.2-debian-12-r6",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": []
+        },
+        "resourcesPreset": "micro",
+        "resources": {},
+        "containerSecurityContext": {
+          "enabled": true,
+          "runAsUser": 0,
+          "runAsGroup": 0,
+          "capabilities": {
+            "add": [
+              "NET_ADMIN",
+              "NET_RAW",
+              "SYS_ADMIN",
+              "NET_BIND_SERVICE"
+            ]
+          }
+        },
+        "containerPorts": {
+          "metrics": 7473
+        },
+        "metrics": {
+          "service": {
+            "port": 7473,
+            "annotations": {
+              "prometheus.io/scrape": "true",
+              "prometheus.io/port": "7473",
+              "prometheus.io/path": "/metrics"
+            }
+          },
+          "serviceMonitor": {
+            "enabled": false,
+            "namespace": "",
+            "jobLabel": "app.kubernetes.io/name",
+            "interval": "",
+            "scrapeTimeout": "",
+            "metricRelabelings": [],
+            "relabelings": [],
+            "selector": {},
+            "labels": {},
+            "honorLabels": false
+          }
+        },
+        "livenessProbe": {
+          "enabled": true,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "successThreshold": 1,
+          "timeoutSeconds": 1
+        },
+        "readinessProbe": {
+          "enabled": true,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "successThreshold": 1,
+          "timeoutSeconds": 1
+        },
+        "startupProbe": {
+          "enabled": true,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "successThreshold": 1,
+          "timeoutSeconds": 1
+        },
+        "customStartupProbe": {},
+        "customLivenessProbe": {},
+        "customReadinessProbe": {}
+      },
+      "metrics": {
+        "enabled": false,
+        "service": {
+          "port": 7472,
+          "annotations": {
+            "prometheus.io/scrape": "true",
+            "prometheus.io/port": "7472",
+            "prometheus.io/path": "/metrics"
+          }
+        },
+        "serviceMonitor": {
+          "enabled": false,
+          "namespace": "",
+          "jobLabel": "app.kubernetes.io/name",
+          "interval": "",
+          "scrapeTimeout": "",
+          "metricRelabelings": [],
+          "relabelings": [],
+          "selector": {},
+          "labels": {},
+          "honorLabels": false
+        }
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 83,
+    "unique_bundles": 83,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 83
+  },
+  "phase": "$.speaker.networkPolicy",
+  "kind": "value-path",
+  "path": [
+    "speaker",
+    "networkPolicy"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/metallb_1789321839/0000/paths/f5d31f16549a6dfd7a6a"
+}

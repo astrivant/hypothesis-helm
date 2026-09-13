@@ -1,0 +1,320 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "commonAnnotations": {},
+  "commonLabels": {},
+  "extraDeploy": [],
+  "usePasswordFiles": true,
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/moodle",
+    "tag": "5.0.2-debian-12-r1",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": [],
+    "debug": false
+  },
+  "replicaCount": 1,
+  "autoscaling": {
+    "enabled": false,
+    "minReplicas": 1,
+    "maxReplicas": 10,
+    "targetCPU": 80,
+    "targetMemory": 80
+  },
+  "moodleSkipInstall": false,
+  "moodleSiteName": "",
+  "moodleLang": "",
+  "moodleUsername": "user",
+  "moodlePassword": "",
+  "moodleEmail": "user@example.com",
+  "allowEmptyPassword": true,
+  "command": [],
+  "args": [],
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "initContainers": [],
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "sidecars": [],
+  "automountServiceAccountToken": false,
+  "hostAliases": [
+    {
+      "ip": "127.0.0.1",
+      "hostnames": [
+        "status.localhost"
+      ]
+    }
+  ],
+  "tolerations": [],
+  "priorityClassName": "",
+  "schedulerName": "",
+  "topologySpreadConstraints": [],
+  "existingSecret": "",
+  "smtpHost": "",
+  "smtpPort": "",
+  "smtpUser": "",
+  "smtpPassword": "",
+  "smtpProtocol": "",
+  "containerPorts": {
+    "http": 8080,
+    "https": 8443
+  },
+  "extraContainerPorts": [],
+  "sessionAffinity": "None",
+  "persistence": {
+    "enabled": true,
+    "customStorageClass": {},
+    "storageClass": "",
+    "accessModes": [
+      "ReadWriteOnce"
+    ],
+    "size": "8Gi",
+    "existingClaim": "",
+    "hostPath": "",
+    "annotations": {}
+  },
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "resourcesPreset": "micro",
+  "resources": {},
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 0,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "readOnlyRootFilesystem": false,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "startupProbe": {
+    "enabled": false,
+    "path": "/login/index.php",
+    "initialDelaySeconds": 30,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 60,
+    "successThreshold": 1
+  },
+  "livenessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 600,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 6,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "path": "/login/index.php",
+    "initialDelaySeconds": 30,
+    "periodSeconds": 5,
+    "timeoutSeconds": 3,
+    "failureThreshold": 6,
+    "successThreshold": 1
+  },
+  "customStartupProbe": {},
+  "customLivenessProbe": {},
+  "customReadinessProbe": {},
+  "lifecycleHooks": "",
+  "podAnnotations": {},
+  "podLabels": {},
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "automountServiceAccountToken": false,
+    "annotations": {}
+  },
+  "service": {
+    "type": "LoadBalancer",
+    "ports": {
+      "http": 80,
+      "https": 443
+    },
+    "nodePorts": {
+      "http": "",
+      "https": ""
+    },
+    "clusterIP": "",
+    "loadBalancerSourceRanges": [],
+    "loadBalancerIP": "",
+    "externalTrafficPolicy": "Cluster",
+    "extraPorts": [],
+    "annotations": {},
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "pathType": "ImplementationSpecific",
+    "apiVersion": "",
+    "hostname": "moodle.local",
+    "path": "/",
+    "annotations": {},
+    "tls": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "secrets": [],
+    "ingressClassName": "",
+    "extraRules": []
+  },
+  "mariadb": {
+    "enabled": true,
+    "architecture": "",
+    "auth": {
+      "rootPassword": "",
+      "database": "bitnami_moodle",
+      "username": "bn_moodle",
+      "password": ""
+    },
+    "primary": {
+      "persistence": {
+        "enabled": true,
+        "storageClass": "",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "hostPath": "",
+        "existingClaim": ""
+      },
+      "resourcesPreset": "micro",
+      "resources": {}
+    }
+  },
+  "externalDatabase": {
+    "type": "",
+    "host": "",
+    "port": 3306,
+    "user": "bn_moodle",
+    "password": "",
+    "database": "bitnami_moodle",
+    "existingSecret": ""
+  },
+  "volumePermissions": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "nano",
+    "resources": {}
+  },
+  "metrics": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/apache-exporter",
+      "tag": "1.0.10-debian-12-r55",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "service": {
+      "type": "LoadBalancer",
+      "port": 9117,
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "clusterIP": "",
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "{{ .Values.metrics.service.port }}"
+      },
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "podAnnotations": {
+      "prometheus.io/scrape": "true",
+      "prometheus.io/port": "{{ .Values.metrics.service.port }}"
+    }
+  },
+  "certificates": {
+    "customCertificate": {
+      "certificateSecret": "",
+      "chainSecret": {
+        "name": "",
+        "key": ""
+      },
+      "certificateLocation": "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+      "keyLocation": "/etc/ssl/private/ssl-cert-snakeoil.key",
+      "chainLocation": "/etc/ssl/certs/mychain.pem"
+    },
+    "customCAs": [],
+    "command": [],
+    "args": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    }
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  }
+}
