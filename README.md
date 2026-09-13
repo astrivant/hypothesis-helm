@@ -69,33 +69,10 @@ To rerun all project checks, benchmarks, plots, and repository reports, see the
 
 ## Example: catch a failure hidden by defaults
 
-The [broken example chart](examples/broken) renders successfully with its default
-`replicas: 1`. Its values schema also permits `replicas: 0`, but its template rejects
-that value. Testing only the defaults would miss this mismatch.
-
-From this repository's root, run:
-
-```sh
-helm hypothesis test examples/broken --match replicas --max-examples 4 \
-  --seed 0 --shard none --rerun all --artifact-dir reports/example
-```
-
-Hypothesis generates values allowed by the schema and finds this failing input:
-
-```yaml
-replicas: 0
-```
-
-Helm reports `replicas=0 is documented but unsupported`, and the command exits
-with a failure. You now have a concrete input to reproduce the problem and decide
-whether to fix the template or narrow the schema. Results are saved in `reports/example/`.
-
-Another common bug is an unquoted ConfigMap value. A default of `banner: Ready`
-works with the template `banner: {{ .Values.banner }}`. But the equally valid input
-`banner: "Release: ready"` makes that template emit `banner: Release: ready`, which
-is invalid YAML. Hypothesis can expose this by varying values and rendering the
-chart locally, without a Kubernetes cluster. The fix is to quote the template value:
-`banner: {{ .Values.banner | quote }}`.
+A ConfigMap template containing `banner: {{ .Values.banner }}` works with the default
+`banner: Ready`. But `banner: "Release: ready"` produces `banner: Release: ready`,
+which is invalid YAML. Hypothesis can find this by generating inputs and rendering
+the chart locally. Fix it with `banner: {{ .Values.banner | quote }}`.
 
 ## Audit, test, or scan?
 

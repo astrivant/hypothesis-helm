@@ -1,0 +1,111 @@
+[INFO] Chart 1/1: .
+[INFO] Preparing dependencies for . (excluded from testing budgets)
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; filtering generation before value-path traversal
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.architecture
+[INFO] Coalescing path $.automountServiceAccountToken
+[INFO] Coalescing path $.commonAnnotations
+[INFO] Coalescing path $.commonLabels
+[INFO] Coalescing path $.configMap
+[INFO] Coalescing path $.containerSecurityContext
+[INFO] Coalescing path $.customLivenessProbe
+[INFO] Coalescing path $.customReadinessProbe
+[INFO] Coalescing path $.customStartupProbe
+[INFO] Coalescing path $.extraDeploy
+[INFO] Coalescing path $.extraEnvVars
+[INFO] Coalescing path $.extraEnvVarsCM
+[INFO] Coalescing path $.extraEnvVarsSecret
+[INFO] Coalescing path $.extraVolumeMounts
+[INFO] Coalescing path $.extraVolumes
+[INFO] Coalescing path $.git
+[INFO] Coalescing path $.global
+[INFO] Coalescing path $.hostAliases
+[INFO] Coalescing path $.image
+[INFO] Coalescing path $.lifecycleHooks
+[INFO] Coalescing path $.mode
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.persistence
+[INFO] Coalescing path $.podAffinityPreset
+[INFO] Coalescing path $.podAnnotations
+[INFO] Coalescing path $.podAntiAffinityPreset
+[INFO] Coalescing path $.podLabels
+[INFO] Coalescing path $.podManagementPolicy
+[INFO] Coalescing path $.port
+[INFO] Coalescing path $.priorityClassName
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.schedulerName
+[INFO] Coalescing path $.terminationGracePeriodSeconds
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.topologySpreadConstraints
+[INFO] Coalescing path $.updateStrategy
+[INFO] Coalescing path $.worldSize
+[INFO] Coalescing path $.cloneFilesFromGit.enabled
+[INFO] Coalescing path $.cloneFilesFromGit.extraVolumeMounts
+[INFO] Coalescing path $.cloneFilesFromGit.repository
+[INFO] Coalescing path $.cloneFilesFromGit.revision
+[INFO] Coalescing path $.containerPorts.pytorch
+[INFO] Coalescing path $.containerSecurityContext.enabled
+[INFO] Coalescing path $.diagnosticMode.args
+[INFO] Coalescing path $.diagnosticMode.command
+[INFO] Coalescing path $.diagnosticMode.enabled
+[INFO] Coalescing path $.extraDeploy[*]
+[INFO] Coalescing path $.git.pullPolicy
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.networkPolicy.allowExternal
+[INFO] Coalescing path $.networkPolicy.allowExternalEgress
+[INFO] Coalescing path $.networkPolicy.enabled
+[INFO] Coalescing path $.networkPolicy.extraEgress
+[INFO] Coalescing path $.networkPolicy.extraIngress
+[INFO] Coalescing path $.networkPolicy.ingressNSMatchLabels
+[INFO] Coalescing path $.networkPolicy.ingressNSPodMatchLabels
+[INFO] Coalescing path $.nodeAffinityPreset.key
+[INFO] Coalescing path $.nodeAffinityPreset.type
+[INFO] Coalescing path $.nodeAffinityPreset.values
+[INFO] Coalescing path $.pdb.create
+[INFO] Coalescing path $.pdb.maxUnavailable
+[INFO] Coalescing path $.pdb.minAvailable
+[INFO] Coalescing path $.persistence.accessModes
+[INFO] Coalescing path $.persistence.annotations
+[INFO] Coalescing path $.persistence.dataSource
+[INFO] Coalescing path $.persistence.enabled
+[INFO] Coalescing path $.persistence.existingClaim
+[INFO] Coalescing path $.persistence.mountPath
+[INFO] Coalescing path $.persistence.selector
+[INFO] Coalescing path $.persistence.size
+[INFO] Coalescing path $.securityContext.fsGroup
+[INFO] Coalescing path $.securityContext.runAsUser
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.clusterIP
+[INFO] Coalescing path $.service.externalTrafficPolicy
+[INFO] Coalescing path $.service.extraPorts
+[INFO] Coalescing path $.service.loadBalancerIP
+[INFO] Coalescing path $.service.loadBalancerSourceRanges
+[INFO] Coalescing path $.service.nodePort
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.automountServiceAccountToken
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.volumePermissions.enabled
+[INFO] Coalescing path $.volumePermissions.image
+[INFO] Coalescing path $.volumePermissions.resources
+[INFO] Coalescing path $.networkPolicy.ingressNSMatchLabels[*]
+[INFO] Coalescing path $.networkPolicy.ingressNSPodMatchLabels[*]
+[INFO] Coalescing path $.persistence.accessModes[*]
+[INFO] Coalescing path $.rts.networkPolicy.extraEgress
+[INFO] Coalescing path $.service.headless.annotations
+[INFO] Coalescing path $.service.nodePorts.pytorch
+[INFO] Coalescing path $.service.ports.pytorch
+[INFO] Coalescing path $.volumePermissions.image.pullPolicy
+[INFO] Discovered 216 unique value paths; random traversal, seed 0
+[INFO] Testing path $.networkPolicy.allowExternal (1/216)
+[INFO] Compiler input baseline: 87 statically named fields
+[INFO] Render hashes (run-local): 2 observed, 2 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] Testing path $.topologySpreadConstraints[*] (2/216)
+[INFO] Compiler input baseline: 87 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 87 unique, 13 duplicate bundles; 13 successful validations reused
+[INFO] Testing path $.initContainers (3/216)
+[INFO] Compiler input baseline: 87 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.startupProbe.timeoutSeconds (4/216)
+[INFO] Compiler input baseline: 87 statically named fields
