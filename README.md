@@ -31,7 +31,7 @@ and tag the tested commit. See the [release-check workflow and cache retention](
 - [Hypothesis](#hypothesis)
   - [Table of contents](#table-of-contents)
   - [Install](#install)
-  - [Example: catch a failure hidden by defaults](#example-catch-a-failure-hidden-by-defaults)
+  - [Examples: failures hidden by defaults](#examples-failures-hidden-by-defaults)
   - [Audit, test, or scan?](#audit-test-or-scan)
     - [Quick start](#quick-start)
   - [Guides](#guides)
@@ -70,12 +70,22 @@ See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot comm
 To rerun all project checks, benchmarks, plots, and repository reports, see the
 [full refresh command](docs/benchmarks/README.md#reproduce-the-full-project-run).
 
-## Example: catch a failure hidden by defaults
+## Examples: failures hidden by defaults
 
 A ConfigMap template containing `banner: {{ .Values.banner }}` works with the default
 `banner: Ready`. But `banner: "Release: ready"` produces `banner: Release: ready`,
 which is invalid YAML. Hypothesis can find this by generating inputs and rendering
 the chart locally. Fix it with `banner: {{ .Values.banner | quote }}`.
+
+The same idea applies beyond quoting:
+
+- **Optional branches:** A feature is disabled by default. Enabling it reaches a template
+  branch that reads a missing nested value and fails. Disabled subcharts can hide failures this way too.
+- **Boundary values:** The schema allows an empty list, but the template always reads its
+  first item. The populated default works; an empty list causes rendering to fail.
+- **Interacting settings:** Two switches each work on their own. Enabling both reaches a
+  shared branch that passes the wrong type to a template function. Testing each switch
+  separately misses it.
 
 ## Audit, test, or scan?
 
