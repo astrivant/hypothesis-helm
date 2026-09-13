@@ -206,7 +206,12 @@ class InputInventory:
         }
 
     def dump(
-        self, chart: Chart, target: Path | None = None, *, directory: Path = Path(".")
+        self,
+        chart: Chart,
+        target: Path | None = None,
+        *,
+        directory: Path = Path("."),
+        verification: dict[str, object] | None = None,
     ) -> dict[str, object]:
         """
         Export baseline values, a second YAML document of missing fields, and full JSON evidence.
@@ -215,6 +220,7 @@ class InputInventory:
             chart (Chart): Original values and authoritative validation schema.
             target (Path | None): Optional YAML filename; source chart inputs are never overwritten.
             directory (Path): Destination directory when generating the filename.
+            verification (dict[str, object] | None): Render checks; preserve values exactly.
 
         Returns:
             dict[str, object]: Dump paths and limits of the reduction.
@@ -241,7 +247,9 @@ class InputInventory:
             }
 
         values = (
-            copy.deepcopy(chart.defaults) if self.usage_unknown else project(chart.defaults, ())
+            copy.deepcopy(chart.defaults)
+            if self.usage_unknown or verification is not None
+            else project(chart.defaults, ())
         )
         reason = (
             "Unresolved access prevents reduction"
@@ -257,10 +265,20 @@ class InputInventory:
             "missing_values": inventory["missing_values"],
             "schema_fields_without_values": inventory["schema_fields_without_values"],
         }
+        if verification is not None:
+            missing["verification"] = {
+                key: value
+                for key, value in verification.items()
+                if key not in {"elapsed_seconds", "budget_seconds", "candidates_checked"}
+            }
         content = (
-            "# Conservative input baseline; missing fields follow in document 2.\n"
-            "# See the adjacent .inventory.json for full evidence and limits.\n"
-            + yamlio.dump(values)
+            (
+                "# Render-verified input baseline; missing fields follow in document 2.\n"
+                if verification is not None
+                else "# Conservative input baseline; missing fields follow in document 2.\n"
+            )
+            + "# See the adjacent .inventory.json for full evidence and limits.\n"
+            + yamlio.dump(values, explicit_null=verification is not None)
             + "---\n"
             + "# Missing input fields: diagnostic metadata, not chart values.\n"
             + yamlio.dump(missing)
@@ -287,6 +305,11 @@ class InputInventory:
             "render_equivalence_proven": False,
             "input_inventory": inventory,
         }
+        if verification is not None:
+            result["verification"] = verification
+            result["reason"] = (
+                "Concrete baseline verified with Helm; see the scoped minimality result"
+            )
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(content)
         target.with_suffix(".inventory.json").write_text(json.dumps(result, indent=2) + "\n")

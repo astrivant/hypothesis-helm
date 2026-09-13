@@ -71,13 +71,13 @@ def test_property(index):
     assert index != 7
 """
     )
+    (tmp_path / "values.coalesced.yaml").write_text("flag: false\n")
+    cache = tmp_path / "shared-cache"
     reports = tmp_path / "results"
     children = [
         subprocess.Popen(
             [
-                sys.executable,
-                "-m",
-                "hypothesis_helm.cli",
+                str(Path(sys.executable).with_name("hypothesis-helm")),
                 "run",
                 str(tmp_path),
                 "--artifact-dir",
@@ -86,6 +86,10 @@ def test_property(index):
                 f"{index}/3",
                 "--jobs",
                 "2",
+                "--run-id",
+                "cold",
+                "--cache-dir",
+                str(cache),
                 "-o",
                 "json",
             ],
@@ -115,6 +119,8 @@ def test_property(index):
             assert not nodeids.intersection(assignment["tests"])
             nodeids.update(assignment["tests"])
             assert report["workers"] == min(2, assignment["selected"])
+            assert report["run_id"] == "cold"
+            assert Path(report["cache"]).parent.parent == cache
             total += sum(
                 int(suite.get("tests", "0"))
                 for suite in ET.parse(root / "junit.xml").getroot().iter("testsuite")
@@ -127,6 +133,98 @@ def test_property(index):
             if child.poll() is None:
                 child.kill()
             child.wait()
+
+    caches = list(cache.glob("*/*.json"))
+    assert len(caches) == 3
+    outcomes = {
+        node: status for path in caches for node, status in json.loads(path.read_text()).items()
+    }
+    assert set(outcomes) == nodeids
+    assert list(outcomes.values()).count("failed") == 1
+    assert not list(cache.rglob("*.tmp"))
+    mergers = [
+        subprocess.Popen(
+            [
+                str(Path(sys.executable).with_name("hypothesis-helm")),
+                "aggregate",
+                str(reports),
+                "--shards",
+                "3",
+                "--run-id",
+                "cold",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        for _ in range(2)
+    ]
+    try:
+        for child in mergers:
+            _, diagnostics = child.communicate(timeout=30)
+            assert child.returncode == 1, diagnostics
+    finally:
+        for child in mergers:
+            if child.poll() is None:
+                child.kill()
+            child.wait()
+    final = reports / "final"
+    combined = json.loads((final / "report.json").read_text())
+    assert combined["properties"]["selected"] == combined["properties"]["tests"] == 12
+    assert combined["properties"]["failures"] == 1
+    assert combined["properties"]["reused"] == 0
+    assert combined["render_hashes"]["global_unique_bundles"] is None
+    assert len(list(ET.parse(final / "junit.xml").iter("testcase"))) == 12
+    assert (final / "report.md").exists() and (final / "report.pdf").exists()
+    original = (final / "report.json").read_bytes()
+    assert main(["aggregate", str(reports), "--shards", "3", "--run-id", "cold"]) == 1
+    assert (final / "report.json").read_bytes() == original
+
+    warm = tmp_path / "retry"
+    children = [
+        subprocess.Popen(
+            [
+                str(Path(sys.executable).with_name("hypothesis-helm")),
+                "run",
+                str(tmp_path),
+                "--artifact-dir",
+                str(warm),
+                "--cache-dir",
+                str(cache),
+                "--run-id",
+                "warm",
+                "--shard",
+                f"{index}/3",
+                "--jobs",
+                "2",
+                "--rerun",
+                "failed",
+                "-o",
+                "json",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        for index in range(1, 4)
+    ]
+    repeated: list[str] = []
+    try:
+        for child in children:
+            output, diagnostics = child.communicate(timeout=45)
+            assert child.returncode in (0, 1), diagnostics
+            repeated.extend(json.loads(line)["metadata"]["name"] for line in output.splitlines())
+    finally:
+        for child in children:
+            if child.poll() is None:
+                child.kill()
+            child.wait()
+    assert repeated == ["case-7"]
+    assert main(["aggregate", str(warm), "--shards", "3", "--run-id", "warm"]) == 1
+    retried = json.loads((warm / "final/report.json").read_text())
+    assert retried["properties"]["selected"] == 12
+    assert retried["properties"]["reused"] == 11
+    assert retried["properties"]["tests"] == retried["properties"]["failures"] == 1
 
 
 @pytest.mark.parametrize("jobs", ["1", "auto"])

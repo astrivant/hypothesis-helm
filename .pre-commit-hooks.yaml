@@ -6,3 +6,11 @@
   pass_filenames: false
   require_serial: true
   files: (^|/)(Chart\.yaml|values[^/]*\.ya?ml|values\.schema\.json|templates/.*|charts/.*)$
+- id: helm-hypothesis-minimal-values
+  name: Export verified minimal Helm values
+  description: Write concrete, render-verified values-minimal.yaml files beside discovered charts.
+  entry: helm hypothesis export-minimal-values
+  language: system
+  pass_filenames: false
+  require_serial: true
+  files: (^|/)(Chart\.yaml|values[^/]*\.ya?ml|values\.schema\.json|templates/.*|charts/.*)$

@@ -191,3 +191,51 @@ def test_seed_namespaces(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Non
     assert run_suite(tmp_path, jobs=1, seed=0) == 0
     assert len(list((tmp_path / "cache" / seed_key(0)).glob("*.json"))) == 2
     assert first.read_bytes() == original
+
+
+def test_concurrent_cache_publication(tmp_path: Path) -> None:
+    """
+    Preserve all six independent worker updates to one shared cache key.
+
+    Args:
+        tmp_path (Path): Shared cache destination.
+
+    Returns:
+        None: Complete updates survive concurrent publication and later retry recovery.
+    """
+    import subprocess
+    import sys
+
+    from hypothesis_helm.execution.cache import merge_outcomes
+
+    target = tmp_path / "shared.json"
+    children = [
+        subprocess.Popen(
+            [
+                sys.executable,
+                "-c",
+                "from pathlib import Path; import sys; "
+                "from hypothesis_helm.execution.cache import merge_outcomes; "
+                "merge_outcomes(Path(sys.argv[1]), {}, {sys.argv[2]: 'passed'})",
+                str(target),
+                f"node-{index}",
+            ]
+        )
+        for index in range(6)
+    ]
+    try:
+        for child in children:
+            assert child.wait(timeout=30) == 0
+    finally:
+        for child in children:
+            if child.poll() is None:
+                child.kill()
+            child.wait()
+    assert read_outcomes(target) == {f"node-{index}": "passed" for index in range(6)}
+    baseline = read_outcomes(target)
+    merge_outcomes(target, baseline, {"conflict": "failed"})
+    merge_outcomes(target, baseline, {"conflict": "passed"})
+    assert read_outcomes(target)["conflict"] == "failed"
+    merge_outcomes(target, read_outcomes(target), {"conflict": "passed"})
+    assert read_outcomes(target)["conflict"] == "passed"
+    assert not list(tmp_path.glob("*.tmp"))

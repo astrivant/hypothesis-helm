@@ -28,13 +28,16 @@ for title, command in parsers:
 <summary>helm hypothesis</summary>
 
 ~~~text
-usage: helm hypothesis [-h] {merge-reports,scan,generate,audit,run,test,schemas} ...
+usage: helm hypothesis [-h]
+                       {aggregate,export-minimal-values,scan,generate,audit,run,test,schemas} ...
 
 Audit and property-test Helm chart values.
 
 positional arguments:
-  {merge-reports,scan,generate,audit,run,test,schemas}
-    merge-reports       combine completed shards into one final report
+  {aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
+    aggregate           verify piped shard reports and write one final report
+    export-minimal-values
+                        write verified values beside each discovered chart
     scan                recursively test charts in a directory or Git repository
     generate            generate one typed Python property test per values path
     audit               discover value references and schema gaps
@@ -49,22 +52,47 @@ options:
 </details>
 
 <details>
-<summary>helm hypothesis merge-reports</summary>
+<summary>helm hypothesis aggregate</summary>
 
 ~~~text
-usage: helm hypothesis merge-reports [-h] --shards SHARDS --run-id RUN_ID
-                                     [--output-dir OUTPUT_DIR]
-                                     directory
+usage: helm hypothesis aggregate [-h] --shards SHARDS --run-id RUN_ID
+                                 [--output-dir OUTPUT_DIR]
+                                 [reports ...]
 
 positional arguments:
-  directory             artifact root containing shards/INDEX-of-TOTAL
+  reports               JSON files or artifact roots; default: stdin
 
 options:
   -h, --help            show this help message and exit
   --shards SHARDS
   --run-id RUN_ID       identifier shared by this run's shards
   --output-dir OUTPUT_DIR
-                        new report directory; default: SOURCE/final
+                        new report directory; stdin default: reports/aggregate
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis export-minimal-values</summary>
+
+~~~text
+usage: helm hypothesis export-minimal-values [-h] [--filename FILENAME] [--helm HELM]
+                                             [--timeout TIMEOUT]
+                                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
+                                             [--files-list FILES_LIST]
+                                             source
+
+positional arguments:
+  source
+
+options:
+  -h, --help            show this help message and exit
+  --filename FILENAME   YAML basename only
+  --helm HELM
+  --timeout TIMEOUT
+  --minimal-values-timeout MINIMAL_VALUES_TIMEOUT
+  --files-list FILES_LIST
+                        write NUL-delimited exported YAML paths
 ~~~
 
 </details>
@@ -82,6 +110,8 @@ usage: helm hypothesis scan [-h] [--clone-timeout CLONE_TIMEOUT] [--report [PATH
                             [--permutations PERMUTATIONS] [--filter] [--fail]
                             [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
+                            [--export-topological-graph [FILENAME]]
+                            [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
                             [--export-minimal-values [FILENAME]]
                             SOURCE
 
@@ -114,10 +144,16 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
+  --export-topological-graph [FILENAME]
+                        export input references, control flow and observed manifests
+                        as JSON and DOT
+  --minimal-values-timeout MINIMAL_VALUES_TIMEOUT
+                        verification and minimization budget for values export
+                        (default: 30s)
   --export-minimal-values [FILENAME]
-                        export conservative values and inventory; default: values-
-                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
-                        chart)
+                        export render-verified values and missing fields; default:
+                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
+                        per chart)
 ~~~
 
 </details>
@@ -127,7 +163,9 @@ options:
 
 ~~~text
 usage: helm hypothesis generate [-h] [--output OUTPUT] [--max-examples MAX_EXAMPLES]
-                                [--strict] [--export-minimal-values [FILENAME]]
+                                [--strict] [--export-topological-graph [FILENAME]]
+                                [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
+                                [--export-minimal-values [FILENAME]]
                                 chart
 
 positional arguments:
@@ -139,10 +177,16 @@ options:
   --max-examples MAX_EXAMPLES
   --strict              require all configurable fields in source values.yaml and a
                         clean audit
+  --export-topological-graph [FILENAME]
+                        export input references, control flow and observed manifests
+                        as JSON and DOT
+  --minimal-values-timeout MINIMAL_VALUES_TIMEOUT
+                        verification and minimization budget for values export
+                        (default: 30s)
   --export-minimal-values [FILENAME]
-                        export conservative values and inventory; default: values-
-                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
-                        chart)
+                        export render-verified values and missing fields; default:
+                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
+                        per chart)
 ~~~
 
 </details>
@@ -151,7 +195,9 @@ options:
 <summary>helm hypothesis audit</summary>
 
 ~~~text
-usage: helm hypothesis audit [-h] [--strict] [--export-minimal-values [FILENAME]]
+usage: helm hypothesis audit [-h] [--strict] [--export-topological-graph [FILENAME]]
+                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
+                             [--export-minimal-values [FILENAME]]
                              chart
 
 positional arguments:
@@ -160,10 +206,16 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   --strict              fail on any finding or unresolved access
+  --export-topological-graph [FILENAME]
+                        export input references, control flow and observed manifests
+                        as JSON and DOT
+  --minimal-values-timeout MINIMAL_VALUES_TIMEOUT
+                        verification and minimization budget for values export
+                        (default: 30s)
   --export-minimal-values [FILENAME]
-                        export conservative values and inventory; default: values-
-                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
-                        chart)
+                        export render-verified values and missing fields; default:
+                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
+                        per chart)
 ~~~
 
 </details>
@@ -247,6 +299,8 @@ usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DUR
                             [--progress] [--run-id RUN_ID] [--no-cache]
                             [--rerun {auto,all,failed}] [--shard SHARD] [--jobs JOBS]
                             [--output {json}] [--strict]
+                            [--export-topological-graph [FILENAME]]
+                            [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
                             [--export-minimal-values [FILENAME]]
                             [chart]
 
@@ -319,10 +373,16 @@ options:
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a
                         clean audit
+  --export-topological-graph [FILENAME]
+                        export input references, control flow and observed manifests
+                        as JSON and DOT
+  --minimal-values-timeout MINIMAL_VALUES_TIMEOUT
+                        verification and minimization budget for values export
+                        (default: 30s)
   --export-minimal-values [FILENAME]
-                        export conservative values and inventory; default: values-
-                        minimal-<checksum>-<epoch>.yaml (scan: separate files per
-                        chart)
+                        export render-verified values and missing fields; default:
+                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
+                        per chart)
 
 filtering:
   Use --filter or the individual methods below; random trimming is independent.

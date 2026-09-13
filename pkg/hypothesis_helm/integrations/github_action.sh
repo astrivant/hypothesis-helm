@@ -18,6 +18,7 @@ fi
 exec helm hypothesis test "${HH_CHART:-.}" \
   --shard "$HH_RESOLVED_SHARD" \
   --jobs "${HH_JOBS:-auto}" \
+  ${HH_RUN_ID:+--run-id "$HH_RUN_ID"} \
   --max-examples "${HH_MAX_EXAMPLES:-100}" \
   --seed "${HH_SEED:-0}" \
   --timeout "${HH_TIMEOUT:-30}" \

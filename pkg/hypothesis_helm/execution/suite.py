@@ -287,6 +287,9 @@ def run_suite(
             "match": match,
             "collect_only": collect_only,
             "junit": str(results / "junit.xml"),
+            "junit_xml": (results / "junit.xml").read_text()
+            if (results / "junit.xml").is_file()
+            else None,
             "junit_sha256": hashlib.sha256((results / "junit.xml").read_bytes()).hexdigest()
             if (results / "junit.xml").is_file()
             else None,

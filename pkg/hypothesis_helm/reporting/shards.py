@@ -7,6 +7,7 @@ from __future__ import annotations
 import fcntl
 import hashlib
 import json
+import sys
 import xml.etree.ElementTree as ET
 from contextlib import ExitStack
 from pathlib import Path
@@ -17,25 +18,59 @@ from hypothesis_helm.reporting.repository import write_reports
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
-def merge_reports(directory: Path, total: int, run_id: str, output: Path | None = None) -> int:
+def read_reports(inputs: list[Path]) -> list[dict[str, object]]:
+    """
+    Decode piped JSON objects, NDJSON, arrays, or downloaded report files.
+
+    Args:
+        inputs (list[Path]): Report files or artifact roots; empty reads stdin.
+
+    Returns:
+        list[dict[str, object]]: Self-contained shard records, with no remote filesystem reads.
+    """
+    sources = [
+        child
+        for source in inputs
+        for child in (sorted(source.glob("shards/*/report.json")) if source.is_dir() else [source])
+    ]
+    contents = [source.read_text() for source in sources] if inputs else [sys.stdin.read()]
+    result: list[dict[str, object]] = []
+    decoder = json.JSONDecoder()
+    for content in contents:
+        remaining = content.lstrip()
+        while remaining:
+            decoded, end = decoder.raw_decode(remaining)
+            records = decoded if isinstance(decoded, list) else [decoded]
+            result.extend(mapping(record) for record in records)
+            remaining = remaining[end:].lstrip()
+    return result
+
+
+def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None = None) -> int:
     """
     Validate all shard evidence and atomically publish JSON, JUnit, Markdown, and PDF together.
 
     Args:
-        directory (Path): Downloaded or shared artifact root containing shard subdirectories.
+        inputs (list[Path]): JSON report files or artifact directories; empty reads standard input.
         total (int): Required shard count, including empty partitions.
         run_id (str): Identifier explicitly supplied to every shard in this run.
-        output (Path | None): New immutable report directory, defaulting to directory/final.
+        output (Path | None): New immutable output directory; directory inputs default to final/.
 
     Returns:
         int: Combined execution status; incompatible or missing inputs raise before publication.
     """
     if total < 1 or not run_id.strip():
         raise ValueError("shards must be positive and run-id must be nonempty")
-    directory = directory.resolve()
-    output = (output or directory / "final").resolve()
-    if output == directory or output.is_relative_to(directory / "shards"):
+    directory = inputs[0].resolve() if len(inputs) == 1 and inputs[0].is_dir() else None
+    output = (output or (directory / "final" if directory else Path("reports/aggregate"))).resolve()
+    if directory is not None and (
+        output == directory or output.is_relative_to(directory / "shards")
+    ):
         raise ValueError("final reports must be separate from shard artifacts")
+    reports = read_reports(inputs)
+    if len(reports) != total:
+        raise ValueError(f"Expected {total} shard reports, received {len(reports)}")
+    reports.sort(key=lambda record: int(str(mapping(record.get("shard"))["index"])))
     output.parent.mkdir(parents=True, exist_ok=True)
     with ExitStack() as scope:
         publication = scope.enter_context((output.parent / f".{output.name}.lock").open("a"))
@@ -50,29 +85,23 @@ def merge_reports(directory: Path, total: int, run_id: str, output: Path | None 
         counts = dict.fromkeys(("tests", "failures", "errors", "skipped"), 0)
         reused = 0
         failures: list[str] = []
-        for index in range(1, total + 1):
-            root = directory / "shards" / Shard(index, total).name
-            if not root.is_dir():
-                raise ValueError(f"Missing shard {index}/{total}: {root}")
-            lock = scope.enter_context((root / ".run.lock").open("a"))
+        for index, record in enumerate(reports, 1):
+            raw = json.dumps(record, sort_keys=True).encode()
+            payload = record.get("junit_xml")
+            if not isinstance(payload, str):
+                raise ValueError(f"Shard {index}/{total} lacks its embedded JUnit report")
+            junit = payload.encode("utf-8")
             try:
-                fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
-            except BlockingIOError as exc:
-                raise ValueError(f"Shard {index}/{total} is still running") from exc
-            try:
-                raw = (root / "report.json").read_bytes()
-                record = mapping(json.loads(raw))
-                junit = (root / "junit.xml").read_bytes()
                 xml = ET.fromstring(junit)
-            except (OSError, ValueError, ET.ParseError) as exc:
-                raise ValueError(
-                    f"Shard {index}/{total} has incomplete report artifacts: {exc}"
-                ) from exc
+            except ET.ParseError as exc:
+                raise ValueError(f"Shard {index}/{total} has invalid JUnit XML") from exc
             if record.get("run_id") != run_id:
                 raise ValueError(f"Shard {index}/{total} belongs to a different or missing run-id")
             assignment = mapping(record.get("shard"))
             if (assignment.get("index"), assignment.get("total")) != (index, total):
-                raise ValueError(f"Invalid shard coordinates in {root}")
+                raise ValueError(
+                    f"Invalid or duplicate shard coordinates: expected {index}/{total}"
+                )
             signature = record.get("suite_fingerprint")
             inventory = assignment.get("matched_digest")
             if not isinstance(signature, str) or not isinstance(inventory, str):
@@ -119,12 +148,14 @@ def merge_reports(directory: Path, total: int, run_id: str, output: Path | None 
                             for entry in entries
                         )
             merged.extend([xml] if xml.tag == "testsuite" else list(xml))
-            record["artifact_directory"] = str(root)
             records.append(record)
             input_hash.update(raw)
             input_hash.update(junit)
         if len(signatures) != 1 or len(inventories) != 1 or matched != {len(selected)}:
             raise ValueError("Shards do not cover the same suite and complete property selection")
+        actual_inventory = hashlib.sha256(json.dumps(sorted(selected)).encode()).hexdigest()
+        if inventories != {actual_inventory}:
+            raise ValueError("Combined property selection does not match the collection checksum")
         identity = input_hash.hexdigest()
         if output.exists():
             existing = mapping(json.loads((output / "report.json").read_text()))
@@ -161,7 +192,7 @@ def merge_reports(directory: Path, total: int, run_id: str, output: Path | None 
             "status": outcome,
             "result": "PASS" if status == 0 else "FAIL" if status == 1 else "N/A",
             "coverage": f"{len(selected)} selected properties across {total} shards",
-            "artifacts": str(directory / "shards"),
+            "artifacts": str(directory / "shards") if directory is not None else "none",
             "phases": [
                 {"phase": f"shard {index}/{total}", "status": item["status"]}
                 for index, item in enumerate(records, 1)
@@ -171,7 +202,7 @@ def merge_reports(directory: Path, total: int, run_id: str, output: Path | None 
             record["error"] = "\n\n".join(failures)
         report: dict[str, object] = {
             "title": "Helm sharded test results",
-            "directory": str(directory),
+            "directory": str(directory) if directory is not None else "piped shard reports",
             "run_id": run_id,
             "input_digest": identity,
             "started_epoch": min(float(str(item["started_epoch"])) for item in records),

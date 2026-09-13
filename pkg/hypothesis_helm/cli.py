@@ -17,14 +17,17 @@ from hypothesis_helm.charts.generate import generate_tests
 from hypothesis_helm.charts.generated import RenderOptions
 from hypothesis_helm.charts.runner import Chart, audit, check_chart
 from hypothesis_helm.charts.scan import scan
-from hypothesis_helm.compiler.inputs import InputInventory, load_input_chart
+from hypothesis_helm.compiler.exports import export_repository
+from hypothesis_helm.compiler.graph import export_graph
+from hypothesis_helm.compiler.inputs import load_input_chart
+from hypothesis_helm.compiler.minimum import export_verified
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.reporting.output import MANIFEST_FD
 from hypothesis_helm.reporting.progressive import plot_progression
-from hypothesis_helm.reporting.shards import merge_reports
+from hypothesis_helm.reporting.shards import aggregate
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, prepare
 from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
@@ -101,16 +104,25 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     )
     commands = parser.add_subparsers(dest="command", required=True)
     merge = commands.add_parser(
-        "merge-reports", help="combine completed shards into one final report"
+        "aggregate", help="verify piped shard reports and write one final report"
     )
     merge.add_argument(
-        "directory", type=Path, help="artifact root containing shards/INDEX-of-TOTAL"
+        "reports", nargs="*", type=Path, help="JSON files or artifact roots; default: stdin"
     )
     merge.add_argument("--shards", type=int, required=True)
     merge.add_argument("--run-id", required=True, help="identifier shared by this run's shards")
     merge.add_argument(
-        "--output-dir", type=Path, help="new report directory; default: SOURCE/final"
+        "--output-dir", type=Path, help="new report directory; stdin default: reports/aggregate"
     )
+    exports = commands.add_parser(
+        "export-minimal-values", help="write verified values beside each discovered chart"
+    )
+    exports.add_argument("source", type=Path)
+    exports.add_argument("--filename", default="values-minimal.yaml", help="YAML basename only")
+    exports.add_argument("--helm", default="helm")
+    exports.add_argument("--timeout", type=parse_time_limit, default=30)
+    exports.add_argument("--minimal-values-timeout", type=parse_time_limit, default=30)
+    exports.add_argument("--files-list", type=Path, help="write NUL-delimited exported YAML paths")
     repository = commands.add_parser(
         "scan", help="recursively test charts in a directory or Git repository"
     )
@@ -381,11 +393,24 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         )
     for command in (repository, inspect, generate, test):
         command.add_argument(
+            "--export-topological-graph",
+            nargs="?",
+            const="",
+            metavar="FILENAME",
+            help="export input references, control flow and observed manifests as JSON and DOT",
+        )
+        command.add_argument(
+            "--minimal-values-timeout",
+            type=parse_time_limit,
+            default=30,
+            help="verification and minimization budget for values export (default: 30s)",
+        )
+        command.add_argument(
             "--export-minimal-values",
             nargs="?",
             const="",
             metavar="FILENAME",
-            help="export conservative values and inventory; default: "
+            help="export render-verified values and missing fields; default: "
             "values-minimal-<checksum>-<epoch>.yaml (scan: separate files per chart)",
         )
     return parser
@@ -417,17 +442,20 @@ def main(argv: list[str] | None = None) -> int:
         stack.enter_context(redirect_stdout(sys.stderr))
     previous_conformity = os.environ.pop(ENVIRONMENT, None)
     try:
-        if args.command == "merge-reports":
-            return merge_reports(args.directory, args.shards, args.run_id, args.output_dir)
+        if args.command == "aggregate":
+            return aggregate(args.reports, args.shards, args.run_id, args.output_dir)
+        if args.command == "export-minimal-values":
+            return export_repository(
+                args.source,
+                args.filename,
+                helm=args.helm,
+                timeout=args.timeout,
+                budget=args.minimal_values_timeout,
+                files_list=args.files_list,
+            )
         if args.command == "scan":
             return scan(args)
         minimal_values = None
-        if args.command in ("audit", "generate", "test") and args.export_minimal_values is not None:
-            original = load_input_chart(args.chart)
-            minimal_values = InputInventory.build(original).dump(
-                original, Path(args.export_minimal_values) if args.export_minimal_values else None
-            )
-            logger.info("Minimal input baseline: %s", minimal_values["yaml"])
         if args.command == "schemas":
             print(
                 prepare(
@@ -471,6 +499,27 @@ def main(argv: list[str] | None = None) -> int:
                     args.shard.total,
                     shard_source,
                 )
+        if args.command in ("audit", "generate", "test") and args.export_minimal_values is not None:
+            original = load_input_chart(args.chart)
+            minimal_values = export_verified(
+                original,
+                Path(args.export_minimal_values) if args.export_minimal_values else None,
+                helm=getattr(args, "helm", "helm"),
+                timeout=getattr(args, "timeout", 30),
+                budget=args.minimal_values_timeout,
+            )
+            logger.info("Minimal input baseline: %s", minimal_values["yaml"])
+        topological_graph = None
+        if (
+            args.command in ("audit", "generate", "test")
+            and args.export_topological_graph is not None
+        ):
+            topological_graph = export_graph(
+                load_input_chart(args.chart),
+                Path(args.export_topological_graph) if args.export_topological_graph else None,
+                helm=getattr(args, "helm", "helm"),
+                timeout=getattr(args, "timeout", 30),
+            )
         if args.command == "test":
             if args.filter:
                 args.trim_topology = 2
@@ -736,6 +785,8 @@ def main(argv: list[str] | None = None) -> int:
             plot_progression(report)
         if minimal_values is not None:
             report["minimal_values"] = minimal_values
+        if topological_graph is not None:
+            report["topological_graph"] = topological_graph
         print(json.dumps(report, indent=2))
         return status
     except KeyboardInterrupt:

@@ -144,6 +144,52 @@ Worker limits apply per instance, so use fixed `--jobs N` budgets when several
 instances share a host. See [sharding](../usage.md#distributed-sharding) for
 artifact handling, empty partitions, and reproducibility requirements.
 
+## One final report
+
+Give every shard the same `--run-id`, and use a fresh artifact directory per run.
+For three local shards with two worker processes each:
+
+```sh
+run_id="$(date +%s)-$$"
+artifacts="reports/sharded-$run_id"
+parallel --jobs 3 --halt never --quote \
+  helm hypothesis run generated-tests --shard {}/3 --jobs 2 \
+  --run-id "$run_id" --artifact-dir "$artifacts" \
+  --cache-dir .cache/hypothesis-helm/results ::: 1 2 3 || true
+cat "$artifacts"/shards/*/report.json |
+  helm hypothesis aggregate --shards 3 --run-id "$run_id" --output-dir "$artifacts/final"
+```
+
+`aggregate` writes one `final/` bundle containing `report.pdf`, `report.md`,
+`report.json`, and `junit.xml`. `--output-dir` selects another new directory.
+The merge returns a failure status when any shard fails. Missing, stale, or incompatible shards prevent publication. Suite fingerprints, collection
+identities, shard ownership, and JUnit checksums must agree. Repeating the merge
+with identical inputs reuses the same final bundle; concurrent mergers cannot
+publish competing reports. Partial shard artifacts remain available separately.
+
+On separate CI runners, upload each shard’s `report.json` and pipe the downloaded
+files into a single downstream aggregation job, including after test failures.
+Reports embed their JUnit evidence; original runner paths are never opened. JSON
+arrays, NDJSON, concatenated JSON objects, and explicit file arguments are supported.
+Include the pipeline attempt in the run ID to prevent mixing retries. See the
+[CI example](../ci/README.md). Checksums detect corruption and mismatched evidence;
+they do not authenticate untrusted report producers.
+
+Render-hash caches are process-local: six workers have six independent hash sets.
+Persistent property caches have separate shard keys. Worker results use private
+files; parents merge cache updates under a filesystem lock and publish atomically.
+Concurrent conflicting failures are retained, while a later successful retry can
+replace a previous failure. Schema checkouts use locks and immutable snapshots;
+values-structure markers use atomic replacement. Duplicate invocations targeting
+the same shard directory serialize through a per-shard lock.
+
+A shared filesystem must support process locks and atomic renames. CI cache restores
+on separate machines are independent snapshots, not shared memory. Upload shard
+artifacts for aggregation; do not rely on concurrent CI cache uploads to merge data.
+Cached successes appear as reused properties, separately from executed JUnit cases.
+Elapsed time spans the timestamps reported by the shards; cross-host clock skew can
+affect that measurement.
+
 ## Progressive dry runs
 
 Run `helm hypothesis test examples/workload --dry-run --prune-equivalent`

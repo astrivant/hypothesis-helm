@@ -111,7 +111,7 @@ per-chart `error_refs`, while retaining original errors and artifacts. Grouping
 does not skip tests or change chart statuses, and a matching diagnostic does not
 prove a shared root cause.
 
-Add `--export-minimal-values` to retain a conservative YAML baseline and compiler
+Add `--export-minimal-values` to retain a render-verified YAML baseline and compiler
 inventory for each chart. An optional filename overrides the generated name; chart-relative subdirectories
 keep exports separate. The default is `values-minimal-<checksum>-<epoch>.yaml`.
 Reports include identified input-field counts and observed variation where
@@ -134,3 +134,12 @@ the chart's declared repositories; inaccessible dependencies are reported as N/A
 
 The [retained Bitnami scan](../reports/bitnami.md) includes one combined PDF and
 all available per-chart measurements and logs.
+
+The external chart sources are retained as submodules under
+`third_party/bitnami-charts` and `third_party/prometheus-community-helm-charts`.
+Initialize the Prometheus source with:
+
+```sh
+git submodule update --init third_party/prometheus-community-helm-charts
+helm hypothesis scan third_party/prometheus-community-helm-charts/charts --filter --report
+```

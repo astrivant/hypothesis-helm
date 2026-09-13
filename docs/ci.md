@@ -209,3 +209,16 @@ through Kubesec; remaining resources go to Kubeconform. This routing also applie
 when the separate `kubeconform` input is false. Security runs force `--rerun all`
 to produce the manifests needed for validation. Validator failures fail the job
 and appear in scan artifacts rather than the Helm JUnit report.
+
+### Minimal values and aggregation
+
+| Input | Default | Purpose |
+| --- | --- | --- |
+| `run-id` | empty | Common pipeline and attempt identity for shard aggregation. |
+| `export-minimal-values` | `false` | Export verified concrete values after tests. |
+| `commit-minimal-values` | `false` | Export and commit only the verified YAML files. |
+| `minimal-values-filename` | `values-minimal.yaml` | Basename written inside each discovered chart. |
+| `minimal-values-timeout` | `30s` | Search budget per chart. |
+
+See the [piped aggregation and export examples](ci/README.md). Commit-back runs
+only in shard 1 (or an unsharded job) and requires branch write permission.

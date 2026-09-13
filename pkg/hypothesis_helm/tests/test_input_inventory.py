@@ -14,6 +14,7 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.runner import Chart, check_chart
 from hypothesis_helm.cli import main
 from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
+from hypothesis_helm.schemas.contracts import mapping
 
 
 @pytest.fixture
@@ -209,7 +210,8 @@ def test_audit_dump_without_schema(
     report = json.loads(capsys.readouterr().out)
     assert report["input_inventory"]["lower_bound_fields"] == 2
     assert report["minimal_values"]["yaml"] == str(target)
-    assert yamlio.load_all(target.read_text())[0] == {"used": False}
+    assert yamlio.load_all(target.read_text())[0] == {}
+    assert mapping(mapping(yamlio.load_all(target.read_text())[1])["verification"])["verified"]
 
 
 def test_export_default_filename(
@@ -240,7 +242,8 @@ def test_export_default_filename(
     assert exported["sha256"] == digest
     assert exported["exported_epoch"] == 1234567890
     assert json.loads(Path(exported["inventory"]).read_text()) == exported
-    assert yamlio.load_all(target.read_text())[0] == {"used": False}
+    assert yamlio.load_all(target.read_text())[0] == {}
+    assert mapping(mapping(yamlio.load_all(target.read_text())[1])["verification"])["verified"]
 
 
 @pytest.mark.parametrize("override", [False, True])
@@ -268,6 +271,15 @@ def test_scan_exports_each_chart(
     nested.mkdir()
     (nested / "Chart.yaml").write_text("apiVersion: v2\nname: child\nversion: 1.0.0\n")
     (nested / "values.yaml").write_text("{}\n")
+    (nested / "templates").mkdir()
+    (nested / "templates/config.yaml").write_text(
+        dedent("""
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: child
+    """)
+    )
     monkeypatch.setattr(
         "hypothesis_helm.charts.scan.exercise_chart", lambda *args: {"status": "passed"}
     )
@@ -277,8 +289,6 @@ def test_scan_exports_each_chart(
             [
                 "scan",
                 str(chart.path),
-                "--helm",
-                "/usr/bin/true",
                 "--no-build-dependencies",
                 "--export-minimal-values",
                 *([str(output / "minimal.yaml")] if override else []),

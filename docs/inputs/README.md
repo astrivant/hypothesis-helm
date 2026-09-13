@@ -60,12 +60,58 @@ locations, and reasons for retained values. `audit` also works without a values 
 During scans, the selected
 `--values` file supplies the original baseline being inspected.
 
-The export projects existing values onto known references and dynamic subtrees.
-Opaque contexts or dependency forwarding retain the original values; if a
-projection violates the declared schema, the original values are retained.
-Missing defaults are listed rather than filled with invented nulls or strings.
-The source values file is never overwritten.
+The export searches an isolated chart copy, replacing its `values.yaml` so Helm
+cannot fill removed fields back in from the original defaults. Each accepted
+candidate passes the declared values schema, `helm lint`, `helm template`, and
+manifest envelope checks. Configured Kubeconform validation also applies when
+exporting through `test --kubeconform`. These are local checks, not an API-server
+admission or deployment guarantee.
 
-This is a conservative reduction, not a globally smallest valid configuration
-or a certificate of identical rendering. The export is not automatically applied
-to testing; the original validation contract and generation strategy stay in use.
+Values are concrete: `false` and `0` remain meaningful values, and missing fields
+never become bare-key placeholders. Legitimate null values are written explicitly
+as `null`. If the original defaults fail, a bounded schema-based search may find
+an accepted starting configuration; no export is written without verification.
+Optional `enabled` components can be disabled when that reduces resource count.
+The search then removes entries while preserving valid, nonempty output without
+increasing that count. It is allowed to change the original manifests.
+
+`--minimal-values-timeout 30s` bounds each search. A completed search establishes
+**deletion-minimality**: no single remaining entry can be removed under those
+checks without increasing resource count. This is not a global minimum over all
+value assignments or a proof of the fewest possible resources. An interrupted
+search exports only its last verified candidate and records incomplete minimality.
+Verification details appear in document 2 and the JSON sidecar. Volatile timing
+statistics live only in JSON so repeated completed YAML exports stay stable.
+The export does not change the original test domain or source values file.
+
+## Export beside every chart
+
+```sh
+helm hypothesis export-minimal-values ./charts
+helm hypothesis export-minimal-values ./charts --filename values-review.yaml
+```
+
+This export-only command defaults to **`values-minimal.yaml` in every discovered
+chart directory**. `--filename` accepts a basename, never a directory override.
+Library charts are N/A; other unverified charts report failures while discovery
+continues. See [pre-commit and optional CI commit-back](../ci/README.md#minimal-values-in-ci).
+
+## Export the input-to-output graph
+
+```sh
+helm hypothesis audit ./chart --export-topological-graph ./review/topology.json
+helm hypothesis scan ./charts --export-topological-graph
+```
+
+The JSON graph and adjacent Graphviz `.dot` file connect named values to template
+references and control flow, then templates to baseline manifests and their field
+paths. Nodes use the compiler’s shared typed input model. Literal dead branches
+are eliminated; supported symbolic regions include baseline partitions and proven
+live references. Dynamic access and opaque regions remain explicitly unresolved.
+
+Reference edges describe potential influence, and rendered edges describe one
+observed baseline. The graph does not claim exact per-field causality or complete
+output-space coverage. It records paths and types rather than manifest values.
+If the baseline cannot render, static evidence is still exported with output
+observation marked unavailable. Default names are
+`topological-graph-<checksum>-<epoch>.json`; scans keep each chart’s graph separate.

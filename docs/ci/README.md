@@ -80,8 +80,35 @@ jobs:
         with:
           chart: ./chart
           shard: ${{ matrix.shard }}/3
+          jobs: '2'
+          run-id: ${{ github.run_id }}-${{ github.run_attempt }}
           schema-version: '1.35.0'
           kubesec: 'false'
+  report:
+    needs: chart
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: pip install 'git+https://github.com/astrivant/hypothesis-helm.git@main'
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: hypothesis-helm-chart-*
+          path: downloaded
+      - name: Write final report
+        env:
+          HH_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          cat downloaded/*/report.json | hypothesis-helm aggregate \
+            --shards 3 --run-id "$HH_RUN_ID" --output-dir results/final
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: hypothesis-helm-final
+          path: results/final/
+          if-no-files-found: error
 ```
 
 The [action](../../action.yml) installs the tools and uploads per-shard reports.
@@ -113,3 +140,47 @@ Persistent CI caches stay on disk. Separate runners stage their own copy.
 Choose a job-specific directory when jobs share a mount. The mount must have
 space for the schemas; parsing still costs time, and tmpfs can swap under pressure
 ([Linux documentation](https://docs.kernel.org/filesystems/tmpfs.html)).
+
+## Minimal values in CI
+
+Add the second pre-commit hook to export concrete, render-verified values beside
+all charts under the configured directory:
+
+```yaml
+repos:
+  - repo: https://github.com/astrivant/hypothesis-helm
+    rev: main # Pin a release or commit in your project.
+    hooks:
+      - id: helm-hypothesis
+        args: [./chart]
+      - id: helm-hypothesis-minimal-values
+        args: [./chart, --filename, values-minimal.yaml]
+```
+
+The hook updates files for review and staging. The GitHub action also accepts
+`export-minimal-values: 'true'`. To commit them back automatically, enable
+`commit-minimal-values` on a branch workflow with `contents: write` permission:
+
+```yaml
+permissions:
+  contents: write
+steps:
+  - uses: actions/checkout@v7
+  - uses: astrivant/hypothesis-helm@main
+    with:
+      chart: ./chart
+      commit-minimal-values: 'true'
+      minimal-values-filename: values-minimal.yaml
+      minimal-values-timeout: 30s
+```
+
+Commit-back implies export and defaults to `values-minimal.yaml` in **each chart’s
+directory**. Only the basename is configurable. Only verified YAML files are
+staged; diagnostic JSON files remain local. Shard 1 handles export and commit-back
+for a sharded action. For multiple chart matrices, use one final export job to
+avoid competing pushes. Pushes require a branch checkout and use normal
+fast-forward updates. Pull-request merge refs do not commit back.
+
+The search can remove optional resources while preserving valid, nonempty output.
+It reports whether deletion-minimality was established within its budget; it does
+not claim a global minimum. See [verification and limits](../inputs/README.md).

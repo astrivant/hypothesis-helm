@@ -328,6 +328,7 @@ def render(
     namespace: str = "default",
     kube_version: str | None = None,
     hashes: RenderHashes | None = None,
+    stream: bool = True,
 ) -> list[dict[str, object]]:
     """
     Render locally with Helm schema checks enabled and a subprocess deadline.
@@ -342,6 +343,7 @@ def render(
         kube_version (str | None): Optional Kubernetes capability version supplied to Helm.
 
         hashes (RenderHashes | None): Run index, or the current process index by default.
+        stream (bool): Emit manifests to the configured output stream.
 
     Returns:
         list[dict[str, object]]: Result of the documented operation.
@@ -371,8 +373,9 @@ def render(
             resources = [item for item in yamlio.load_all(process.stdout) if item is not None]
         except YAMLError as exc:
             raise RenderFailure(f"invalid rendered YAML: {exc}") from exc
-    for resource in resources:
-        emit_manifest(resource)
+    if stream:
+        for resource in resources:
+            emit_manifest(resource)
 
     def validate_bundle() -> None:
         """

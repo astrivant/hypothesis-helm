@@ -8,6 +8,18 @@ inputs:
   chart:
     description: Chart directory relative to the workspace.
     default: .
+  export-minimal-values:
+    description: Export verified concrete values beside each chart after testing (shard 1 only).
+    default: 'false'
+  commit-minimal-values:
+    description: Export and commit only verified YAML files back to the checked-out branch.
+    default: 'false'
+  minimal-values-filename:
+    description: YAML basename in every discovered chart directory; directory overrides are rejected.
+    default: values-minimal.yaml
+  minimal-values-timeout:
+    description: Verification and minimization budget per chart.
+    default: 30s
   python-version:
     description: Python version (3.13 or newer).
     default: '3.13'
@@ -26,6 +38,9 @@ inputs:
   jobs:
     description: 'auto tunes worker concurrency per runner; a positive integer fixes the limit.'
     default: auto
+  run-id:
+    description: Common run identifier for combining all shards into one final report.
+    default: ''
   max-examples:
     description: Maximum Hypothesis examples per property.
     default: '100'
@@ -219,6 +234,7 @@ runs:
         HH_CHART: ${{ inputs.chart }}
         HH_SHARD: ${{ inputs.shard }}
         HH_JOBS: ${{ inputs.jobs }}
+        HH_RUN_ID: ${{ inputs.run-id }}
         HH_MAX_EXAMPLES: ${{ inputs.max-examples }}
         HH_SEED: ${{ inputs.seed }}
         HH_TIMEOUT: ${{ inputs.timeout }}
@@ -238,6 +254,19 @@ runs:
         HH_RERUN: ${{ inputs.rerun }}
         HH_ARTIFACT_DIR: ${{ inputs.artifact-dir }}
       run: '"$ACTION_PATH/.plugin-venv/bin/hypothesis-helm-github-action"'
+    - name: Export verified minimal values
+      if: ${{ always() && steps.test.outputs.shard != '' && (inputs.export-minimal-values == 'true' || inputs.commit-minimal-values == 'true') }}
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        HELM_PLUGINS: ${{ steps.install.outputs.plugins }}
+        HH_CHART: ${{ inputs.chart }}
+        HH_RESOLVED_SHARD: ${{ steps.test.outputs.shard }}
+        HH_MINIMAL_VALUES_FILENAME: ${{ inputs.minimal-values-filename }}
+        HH_MINIMAL_VALUES_TIMEOUT: ${{ inputs.minimal-values-timeout }}
+        HH_COMMIT_MINIMAL_VALUES: ${{ inputs.commit-minimal-values }}
+        HH_COMMIT_BRANCH: ${{ github.ref_type == 'branch' && github.ref_name || '' }}
+      run: bash "$ACTION_PATH/pkg/hypothesis_helm/integrations/minimal_values.sh"
     - name: Save Kubernetes schemas
       if: ${{ always() && (inputs.kubeconform == 'true' || inputs.kubesec == 'true') && inputs.schema-cache == 'true' && steps.schemas.outputs.cache-primary-key != '' && steps.schemas.outputs.cache-hit != 'true' }}
       uses: actions/cache/save@v5

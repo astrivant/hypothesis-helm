@@ -22,7 +22,9 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.prioritized import check_prioritized
 from hypothesis_helm.charts.repository import RepositorySource
 from hypothesis_helm.charts.runner import Chart, check_chart, render
+from hypothesis_helm.compiler.graph import export_graph
 from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory, load_input_chart
+from hypothesis_helm.compiler.minimum import export_verified
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.errors import chart_errors, deduplicate_errors
 from hypothesis_helm.reporting.repository import write_reports
@@ -305,25 +307,6 @@ def scan_checkout(
                     # Unlink copied symlinks before writing to keep the source chart untouched.
                     (copy / "values.yaml").unlink(missing_ok=True)
                     (copy / "values.yaml").write_text(baseline)
-                    if args.export_minimal_values is not None:
-                        input_chart = load_input_chart(copy)
-                        inputs = InputInventory.build(input_chart)
-                        target = None
-                        if args.export_minimal_values:
-                            filename = Path(args.export_minimal_values)
-                            target = filename.parent / str(record["chart"]) / filename.name
-                            protected = {
-                                (path / name).resolve()
-                                for name in ("values.yaml", "values.schema.json", "Chart.yaml")
-                            } | {selected.resolve()}
-                            if target.resolve() in protected:
-                                raise ValueError(
-                                    "Minimal-values output must not overwrite source chart inputs"
-                                )
-                        record["minimal_values"] = inputs.dump(
-                            input_chart, target, directory=artifacts
-                        )
-                        record["input_inventory"] = inputs.report()
                     record["values_file"] = (
                         str(selected.relative_to(root))
                         if source.remote and selected.is_relative_to(root)
@@ -350,6 +333,51 @@ def scan_checkout(
                             coverage="not a standalone application",
                         )
                         continue
+                    if args.export_minimal_values is not None:
+                        input_chart = load_input_chart(copy)
+                        target = None
+                        if args.export_minimal_values:
+                            filename = Path(args.export_minimal_values)
+                            target = filename.parent / str(record["chart"]) / filename.name
+                            protected = {
+                                (path / name).resolve()
+                                for name in ("values.yaml", "values.schema.json", "Chart.yaml")
+                            } | {selected.resolve()}
+                            if target.resolve() in protected:
+                                raise ValueError(
+                                    "Minimal-values output must not overwrite source chart inputs"
+                                )
+                        record["minimal_values"] = export_verified(
+                            input_chart,
+                            target,
+                            directory=artifacts,
+                            helm=args.helm,
+                            timeout=args.timeout,
+                            budget=args.minimal_values_timeout,
+                            build_dependencies=False,
+                        )
+                        record["input_inventory"] = mapping(record["minimal_values"])[
+                            "input_inventory"
+                        ]
+                    if args.export_topological_graph is not None:
+                        target = None
+                        if args.export_topological_graph:
+                            filename = Path(args.export_topological_graph)
+                            target = filename.parent / str(record["chart"]) / filename.name
+                            if target.resolve() in {
+                                (path / "values.schema.json").resolve(),
+                                selected.resolve(),
+                            }:
+                                raise ValueError(
+                                    "Graph export must not overwrite source chart inputs"
+                                )
+                        record["topological_graph"] = export_graph(
+                            load_input_chart(copy),
+                            target,
+                            directory=artifacts,
+                            helm=args.helm,
+                            timeout=args.timeout,
+                        )
                     result = exercise_chart(copy, args, artifacts)
                     result.pop("chart", None)
                     record.update(result)

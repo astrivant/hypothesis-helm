@@ -49,7 +49,7 @@ See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot comm
 
 | Command | Use it for | What it does |
 | --- | --- | --- |
-| `audit ./chart` | Understanding one chart's input contract. | Statically compares values, schema, and template references. Reports missing defaults, undocumented fields, and unresolved access as JSON. Does not render the chart. |
+| `audit ./chart` | Understanding one chart's input contract. | Statically compares values, schema, and template references. Reports missing defaults, undocumented fields, and unresolved access as JSON. Renders only when an export option requests verification or output observation. |
 | `test ./chart` | Finding failures in one chart. | Generates inputs, renders them with Helm, checks the manifests, and shrinks failures into reproducible examples. Saves test results and failing values. |
 | `scan SOURCE` | Reviewing every chart in a repository. | Recursively discovers charts, builds dependencies in isolated copies, runs Helm lint and chart tests, and records each chart's outcome. `--report` adds combined Markdown/PDF reports. Accepts local directories and HTTPS/SSH Git URLs. |
 
@@ -58,8 +58,9 @@ See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot comm
 checks; adding `--filter` enables inferred-input testing and deferred robustness
 sampling. Skipped charts and incomplete coverage remain explicit in scan results.
 
-Use `--export-minimal-values` with any of these commands to inspect the conservative
-input baseline and its [field inventory](docs/inputs/README.md).
+Use `--export-minimal-values` to save a concrete, render-verified baseline, or
+`--export-topological-graph` to inspect the input-to-output map. See
+[verification and field inventory](docs/inputs/README.md).
 
 ## Quick start
 
