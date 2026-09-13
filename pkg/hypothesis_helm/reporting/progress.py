@@ -17,6 +17,7 @@ from hypothesis_helm.execution.render_hashes import (
     reset_process_hashes,
     save_process_statistics,
 )
+from hypothesis_helm.execution.traversal import order_paths
 from hypothesis_helm.integrations.sharding import parse_shard
 from hypothesis_helm.reporting.display import start_progress
 
@@ -101,6 +102,16 @@ def pytest_collection_finish(session: pytest.Session) -> None:
     destination = os.environ.get("HYPOTHESIS_HELM_COLLECT")
     if destination is not None:
         Path(destination).write_text(json.dumps([item.nodeid for item in session.items]))
+    depths = os.environ.get("HYPOTHESIS_HELM_COLLECT_DEPTHS")
+    if depths is not None:
+        Path(depths).write_text(
+            json.dumps(
+                {
+                    item.nodeid: len(marker.args[0]) if (marker := item.get_closest_marker("hypothesis_helm_path")) is not None else 0
+                    for item in session.items
+                }
+            )
+        )
 
 
 def pytest_runtest_logfinish(nodeid: str, location: tuple[str, int | None, str]) -> None:
@@ -145,15 +156,36 @@ def pytest_sessionfinish(session: pytest.Session, exitstatus: int) -> None:
 @pytest.hookimpl(trylast=True)
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
     """
-    Partition the keyword-selected properties before execution or inventory export.
+    Order and partition selected properties before execution or inventory export.
 
     Args:
         config (pytest.Config): Active pytest configuration.
         items (list[pytest.Item]): Collected properties after ordinary keyword filtering.
 
     Returns:
-        None: Only this shard's properties remain selected.
+        None: Each shard retains its assigned properties in the common traversal order.
     """
+
+    def path(item: pytest.Item) -> tuple[str | int, ...]:
+        """
+        Read generated path metadata, retaining unmarked properties at depth zero.
+
+        Args:
+            item (pytest.Item): Collected property, possibly from a hand-edited suite.
+
+        Returns:
+            tuple[str | int, ...]: Actual typed value path without splitting dotted keys.
+        """
+        marker = item.get_closest_marker("hypothesis_helm_path")
+        return cast(tuple[str | int, ...], marker.args[0]) if marker is not None else ()
+
+    items[:] = order_paths(
+        items,
+        path,
+        strategy=os.environ.get("HYPOTHESIS_HELM_TRAVERSAL_STRATEGY", "linear"),
+        seed=int(os.environ.get("HYPOTHESIS_HELM_TRAVERSAL_SEED", "0")),
+        identity=lambda item: item.nodeid,
+    )
     selector = os.environ.get("HYPOTHESIS_HELM_SHARD")
     if selector is None:
         return

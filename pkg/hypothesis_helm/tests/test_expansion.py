@@ -329,6 +329,66 @@ def test_expansion_cli_dry_run(expansion_chart: Chart, capsys: pytest.CaptureFix
     assert main(["test", str(expansion_chart.path), "--expand-failures", "--whole-chart"]) == 2
 
 
+@pytest.mark.parametrize("traversal", ["random", "linear"])
+def test_filter_cli_expands_observed_failures(
+    expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], traversal: str
+) -> None:
+    """
+    Enable actual failure expansion through the preset before either traversal order.
+
+    Args:
+        expansion_chart (Chart): Finite chart with four members per output region.
+        monkeypatch (pytest.MonkeyPatch): Substitute a renderer rejecting the faulty region.
+        capsys (pytest.CaptureFixture[str]): Capture the CLI execution report.
+        traversal (str): Requested order of the initially filtered configurations.
+
+    Returns:
+        None: The preset executes all omitted faulty members without duplicate renders.
+    """
+    from hypothesis_helm.cli import main
+
+    calls: list[dict[str, object]] = []
+
+    def render(chart: Chart, values: dict[str, object], **kwargs: object) -> list[dict[str, object]]:
+        """
+        Record execution and fail each member of the fixture's faulty output region.
+
+        Args:
+            chart (Chart): Chart under test.
+            values (dict[str, object]): Selected overrides.
+            **kwargs (object): Renderer settings.
+
+        Returns:
+            list[dict[str, object]]: Successful baseline or nonfaulty manifest output.
+        """
+        calls.append(values)
+        if values.get("a"):
+            raise ValueError("faulty output region")
+        return error_output(values)
+
+    monkeypatch.setattr("hypothesis_helm.charts.runner.render", render)
+    assert (
+        main(
+            [
+                "test",
+                str(expansion_chart.path),
+                "--filter",
+                "--no-infer-groups",
+                "--traversal-strategy",
+                traversal,
+                "--artifact-dir",
+                str(expansion_chart.path / "reports"),
+            ]
+        )
+        == 1
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["failure_expansion"]["enabled"] is True
+    assert report["failure_expansion"]["additional_executed"] == 3
+    assert report["failed_iterations"] == 4
+    assert len({configuration_key(value) for value in calls}) == len(calls)
+
+
 @pytest.mark.parametrize(
     "individual",
     [["--trim-topology", "0"], ["--expand-failures"]],

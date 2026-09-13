@@ -84,34 +84,43 @@ and `.venv` are not traversed. Invalid metadata remains visible in the report.
 
 Each application chart gets a dependency build, Helm lint, and schema-generated
 property tests. Finite domains use automatic exhaustive/pairwise coverage;
-other supported schemas use whole-chart sampling. `--permutations N` requests
-finite interaction coverage explicitly. Without `--filter`, charts without a values schema receive
-baseline lint/render checks, reported as **baseline-only**, not property-test passes.
+other charts visit discovered value-path properties in seeded random order.
+`--permutations N` requests finite interaction coverage explicitly. Charts without a
+values schema receive inferred path strategies from their values and template references.
 Library charts cannot be tested as standalone applications.
 
 `--filter` applies topology trimming and failure expansion to supported finite
-charts. For non-finite charts it tests schema-declared, defaulted, and referenced
-configuration paths first, then samples the original-schema cases outside that generation view last. The first phase receives at most 90% of the chart budget; the last
-phase receives the remainder. Cases are deferred, not proved irrelevant or removed.
-Both phases keep separate findings, counters, and reproducing values.
+charts. For non-finite charts it restricts generation to known schema, default, and
+template paths where analysis permits. Filtering precedes traversal. Each discovered
+path is scheduled at most once; failed properties retain their reproducing values.
+
+Use `--traversal-strategy random|linear|shallow|deep` to choose execution order.
+Random is the default and uses `--seed`; another seed changes the subset reached
+before timeout. Discovery records the path inventory, while execution may visit only
+a prefix. Reports distinguish visited, completed, incomplete, and remaining paths.
+See [traversal semantics and complexity](../execution/README.md#value-path-traversal).
+
+Random string generation excludes C0/C1 control characters, including tabs and `\u001f`,
+from generated values and object keys at every nesting level. Line feeds, carriage returns, and other Unicode text remain
+eligible for embedded configuration and application content. This sampling policy
+does not change the chart's schema, edit supplied values, or constrain explicit
+finite enumeration. Historical reports retain their original counterexamples.
 
 The prioritizer uses a generation-only view. The original schema still validates
 every input and remains unchanged. Empty maps, pattern/schema-defined maps, and
-maps accessed dynamically remain open in the known-input phase. Unsupported
+maps accessed dynamically remain open in the generation view. Unsupported
 schema compositions remain unconstrained by this optimization. Opaque helper and
-`tpl` contexts are reported explicitly; arbitrary root keys remain eligible in
-the final phase. No report claims complete coverage of those unknown inputs.
+`tpl` contexts are reported explicitly. Unknown key spaces are not enumerated into
+invented path inventories. No report claims complete coverage of those inputs.
 
-With `--filter`, charts without a values schema also receive known-input testing
-inferred from defaults and references, followed by broad robustness sampling.
 Inferred types guide generation; they do not become new validation requirements.
 Generation errors and budget exhaustion remain incomplete coverage, not chart bugs.
 
 Add `--fail` to exit **1** on the first lint, render, or property-test failure
 (or execution error). The failing input and available statistics are retained;
 later charts remain pending/N/A, with `scan_status: failed-early`. With `--filter`,
-this also stops failure expansion and skips the deferred phase after a known-input
-failure. Counterexamples are not shrunk. Missing values, blocked dependencies,
+this also stops failure expansion; path traversal stops before the next property.
+Counterexamples are not shrunk. Missing values, blocked dependencies,
 and other incomplete/N/A results do not trigger this flag. Each scan process
 stops independently; it does not cancel scans launched by other workers.
 

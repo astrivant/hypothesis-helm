@@ -71,6 +71,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
         fcntl.flock(publication, fcntl.LOCK_EX)
         records: list[dict[str, object]] = []
         signatures: set[str] = set()
+        traversal: set[tuple[str, str]] = set()
         inventories: set[str] = set()
         selected: set[str] = set()
         matched: set[int] = set()
@@ -99,6 +100,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             if not isinstance(signature, str) or not isinstance(inventory, str):
                 raise ValueError(f"Shard {index}/{total} lacks suite or collection identity")
             signatures.add(signature)
+            traversal.add((str(record.get("traversal_strategy", "linear")), str(record.get("traversal_algorithm", "legacy"))))
             inventories.add(inventory)
             matched.add(int(str(assignment["matched"])))
             nodes = [str(node) for node in sequence(assignment["tests"])]
@@ -136,6 +138,8 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             records.append(record)
             input_hash.update(raw)
             input_hash.update(junit)
+        if len(traversal) != 1:
+            raise ValueError("Shards used different traversal strategies or algorithms")
         if len(signatures) != 1 or len(inventories) != 1 or matched != {len(selected)}:
             raise ValueError("Shards do not cover the same suite and complete property selection")
         actual_inventory = hashlib.sha256(json.dumps(sorted(selected)).encode()).hexdigest()
@@ -192,7 +196,12 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             "charts_discovered": 1,
             "counts": {outcome: 1},
             "charts": [record],
-            "settings": {"shards": total, "jobs_per_shard": [item["jobs"] for item in records]},
+            "settings": {
+                "shards": total,
+                "jobs_per_shard": [item["jobs"] for item in records],
+                "traversal_strategy": next(iter(traversal))[0],
+                "traversal_algorithm": next(iter(traversal))[1],
+            },
             "summary": summary,
             "shards": records,
             "exit_code": status,

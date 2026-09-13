@@ -2,6 +2,53 @@
 
 [Documentation](../README.md) · [Project](../../README.md)
 
+Random text sampling excludes C0/C1 controls except LF and CR, including
+inside nested values and generated map keys. Generated tabs are excluded too. Other Unicode text remains eligible.
+This applies to whole-chart sampling and newly generated per-path suites; regenerate
+saved suites to update their strategies. Explicit finite domains and chart defaults
+are unchanged. If a schema requires only excluded strings, sampling cannot satisfy
+that schema; an empty or unsatisfiable sample is not a successful test.
+
+## Value-path traversal
+
+`run`, `test`, and `scan` default to `--traversal-strategy random`. Discovery builds
+the path inventory, filtering selects the work, and traversal orders it for execution.
+Each selected path is scheduled once per invocation; its property can generate and
+shrink multiple values. A timeout leaves the unvisited paths explicitly untested.
+
+| Strategy | Execution order |
+| --- | --- |
+| `random` | Stable random priorities derived from `--seed` and path identity. |
+| `linear` | Original path order. Scans follow supplied values before additional discovered paths. |
+| `shallow` | Increasing path depth: `.global` before `.global.configMaps`. |
+| `deep` | Decreasing path depth: deepest leaves before their parent containers. |
+
+```sh
+helm hypothesis scan ./charts --filter --seed 42 --traversal-strategy random --chart-timeout 3m
+helm hypothesis run generated-tests --traversal-strategy deep --seed 42
+```
+
+The same seed and selected inventory reproduce the order. Change the seed for a
+different timeout prefix; subsets from separate runs can overlap. Random priorities
+retain their relative order across shards and cached exclusions. Shallow and deep
+finish a depth layer before starting the next within each shard; independent CI
+shards do not synchronize their layers. Depth ties retain linear order.
+
+Finite permutation runs order distinct configurations after trimming, with defaults
+checked first. Fields necessarily recur across joint configurations. In these modes,
+shallow uses the shallowest changed field and deep the deepest, relative to defaults.
+Exact-equivalence render reuse still requires a previously validated witness.
+
+Ordering costs O(P) for linear traversal and O(P log P) for the other strategies,
+with O(P) storage, excluding path encoding and finite-case comparisons. P is retained
+work, not the number of possible values. Traversal changes order, not the retained
+population or its coverage guarantees. Completing every path does not exhaust its
+values or establish complete joint-input coverage.
+
+Scan reports retain the seed, strategy, visited order, completed and incomplete path
+counts, and remaining order. `path-inventory.json` records the planned sequence.
+Per-path dry runs list the same ordered properties without executing them.
+
 ## Parallel execution
 
 The unit of parallel work is a generated property for a values path. Each property
@@ -292,7 +339,8 @@ alongside `--filter` if wanted. Its default remains zero.
 helm hypothesis test ./chart --filter --time-limit 9m
 ```
 
-`--expand-failures` is opt-in for finite permutation runs. After a check fails,
+Failure expansion is enabled automatically by `--filter` in finite permutation
+tests and scans. Without `--filter`, opt in with `--expand-failures`. After a check fails,
 it schedules omitted inputs in the same supported symbolic region, executes each
 at most once, and continues within the existing `--time-limit`. Added inputs are
 rendered even when `--prune-equivalent` is enabled. The original failure still

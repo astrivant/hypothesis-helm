@@ -7,6 +7,7 @@ import copy
 import json
 import shutil
 import subprocess
+import unicodedata
 from pathlib import Path
 
 import pytest
@@ -106,7 +107,10 @@ def test_schema_paths_refs_arrays_and_branches() -> None:
             {"type": "integer", "exclusiveMinimum": 2, "exclusiveMaximum": 7},
             "st.integers(min_value=3, max_value=6)",
         ),
-        ({"type": "string", "minLength": 1, "maxLength": 3}, "st.text(min_size=1, max_size=3)"),
+        (
+            {"type": "string", "minLength": 1, "maxLength": 3},
+            "st.text(alphabet=st.characters(exclude_categories=('Cc', 'Cs'), include_characters='\\n\\r'), min_size=1, max_size=3)",
+        ),
         ({"type": "string", "enum": ["a", "b"]}, "st.sampled_from(['a', 'b'])"),
         (
             {"type": "array", "items": {"type": "boolean"}, "maxItems": 2},
@@ -141,6 +145,8 @@ def test_strategy_compiler(schema: dict[str, object], expected: str) -> None:
             None: None. The operation completes through its documented side effects.
         """
         validate(value, schema)
+        if isinstance(value, str):
+            assert all(unicodedata.category(char) not in {"Cc", "Cs"} or char in "\n\r" for char in value)
 
     valid()
 
@@ -175,6 +181,8 @@ def test_generated_source_one_function_per_path(tmp_path: Path) -> None:
     functions = [n.name for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name.startswith("test_")]
     assert len(functions) == report["tests"] == 4
     assert "st.integers(min_value=0, max_value=5)" in source
+    assert "schema_strategy as from_schema" in source
+    assert source.count(".filter(supported_generated_text)") == report["tests"]
     assert len(json.loads((tmp_path / "paths.json").read_text())["paths"]) == 4
 
 

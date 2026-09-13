@@ -37,6 +37,11 @@ records = target / "refresh"
 records.mkdir(exist_ok=True)
 record_names = [
     "run.sh",
+    "prepare-discovery.py",
+    "initial-status.tsv",
+    "initial-finished-epoch.txt",
+    "finish-refresh.sh",
+    "plan-topology-retries.py",
     "run-topologies.sh",
     "chart-topology.sh",
     "prepare-topologies.py",
@@ -49,6 +54,7 @@ record_names = [
     "measurement-verification.json",
     "publish.py",
     "provenance.json",
+    "previous-artifact-inventory.json",
     "measured-source-hashes.json",
     "plotting-order.patch",
     "status.tsv",
@@ -59,6 +65,8 @@ record_names = [
     "topology-exit-code.txt",
     "topology-joblog.tsv",
     "topology-inventory.json",
+    "topology-inventory-initial.json",
+    "topology-output-relocations.json",
     "topology-jobs.tsv",
 ]
 record_names.extend(path.name for path in root.glob("topology-retry*") if path.is_file())
@@ -90,11 +98,18 @@ for directory in (root / "outputs").iterdir():
             "[Environment and source fingerprints](provenance.json) · [Study exit codes](status.tsv) · [Artifact checksums](sha256.json)",
             "",
             "The retained shell commands, chart fixtures, seeds, raw results, and logs describe this run. Paths under "
-            "`.cache/benchmark-refresh-1789265418` identify its staging directory; the published fixtures and "
+            "`.cache/benchmark-refresh-1789304252` identify its staging directory; the published fixtures and "
             "measurements are now under `docs/benchmarks/`.",
             "",
-            "The graph renderer received explicit sorted parent traversal after timing finished. The [source "
-            "patch](plotting-order.patch) and [measured source hashes](measured-source-hashes.json) record that plotting-only difference.",
+            "The fixed-count discovery fixture was initially absent. It was regenerated from its original seed and "
+            "rerun after the other synthetic studies. The [initial exit codes](initial-status.tsv) and "
+            "[failure log](logs/discovery-initial.log) retain that setup failure; "
+            "published discovery results are from the successful rerun.",
+            "",
+            "All studies and graph exports use the same [recorded application sources](measured-source-hashes.json).",
+            "",
+            "This refresh excludes generated C0/C1 controls except tab, LF, and CR. Other Unicode text remains eligible. "
+            "The finite Boolean benchmark domains are unchanged; the text policy primarily affects repository sampling.",
             "",
             "Timing is from one host and one repetition. Deadline-censored trajectories are reported as incomplete "
             "work, not extrapolated completed checks. Graph baselines are observations, not Kubernetes API schema validation.",

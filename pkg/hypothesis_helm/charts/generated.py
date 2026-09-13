@@ -174,7 +174,7 @@ def _concrete_path(
                 segment = data.draw(st.sampled_from(sorted(current)))
             else:
                 patterns = [p for n in nodes for p in mapping(n.get("patternProperties", {}))]
-                segment = data.draw(st.from_regex(patterns[0])) if patterns else "__hypothesis_key__"
+                segment = str(data.draw(schema_strategy({"type": "string", "pattern": patterns[0]}))) if patterns else "__hypothesis_key__"
         concrete.append(segment)
         try:
             current = current[segment] if isinstance(current, list) and isinstance(segment, int) else mapping(current)[str(segment)]
@@ -203,18 +203,16 @@ def _constraint(path: tuple[str | int, ...], value: object) -> dict[str, object]
     return {"type": "object", "required": [head], "properties": {head: child}}
 
 
-def check_path(
+def path_values(
     chart: Chart,
     path: tuple[str | int, ...],
     value: object,
     data: DataObject,
     *,
-    timeout: float = 30,
-    allow_empty: bool = False,
-    options: RenderOptions | None = None,
-) -> list[dict[str, object]]:
+    generation_schema: dict[str, object] | None = None,
+) -> dict[str, object]:
     """
-    Exercise a path value in baseline context, or draw a valid dependent context.
+    Place a path value in baseline context, or draw a valid dependent context.
 
     The path strategy controls the candidate value. If sibling constraints make the
     baseline invalid, draw a complete schema-valid context constrained to that value.
@@ -225,17 +223,17 @@ def check_path(
         path (tuple[str | int, ...]): Value path or chart location to inspect.
         value (object): Candidate value supplied by the property strategy.
         data (DataObject): Hypothesis draw context for dependent values and parent containers.
-        timeout (float): Maximum seconds allowed for each Helm invocation.
-        allow_empty (bool): Whether a render with no resource documents is accepted.
-        options (RenderOptions | None): Suite options overriding the individual defaults.
+        generation_schema (dict[str, object] | None): Inferred parent types for generation;
+            the original chart schema remains the validation authority.
 
     Returns:
-        list[dict[str, object]]: Result of the documented operation.
+        dict[str, object]: Complete values satisfying the original merged contract.
     """
-    path = _concrete_path(path, chart.defaults, chart.schema, data)
+    context_schema = generation_schema if generation_schema is not None else chart.schema
+    path = _concrete_path(path, chart.defaults, context_schema, data)
     validator = validators.validator_for(chart.schema)(chart.schema)
     try:
-        values = _replace(chart.defaults, path, value, schema=chart.schema, data=data)
+        values = _replace(chart.defaults, path, value, schema=context_schema, data=data)
     except (TypeError, ValueError):
         values = {}
     if not validator.is_valid(json_value(values)):
@@ -247,6 +245,35 @@ def check_path(
     assume(validator.is_valid(json_value(effective)))
     note(f"value path: {path!r}")
     note("values override:\n" + yamlio.dump(values))
+    return values
+
+
+def check_path(
+    chart: Chart,
+    path: tuple[str | int, ...],
+    value: object,
+    data: DataObject,
+    *,
+    timeout: float = 30,
+    allow_empty: bool = False,
+    options: RenderOptions | None = None,
+) -> list[dict[str, object]]:
+    """
+    Render a path candidate in a context satisfying the original chart schema.
+
+    Args:
+        chart (Chart): Loaded chart and its authoritative schema and defaults.
+        path (tuple[str | int, ...]): Selected symbolic value path.
+        value (object): Candidate value from the path's strategy.
+        data (DataObject): Hypothesis context for dependent values and wildcard selectors.
+        timeout (float): Maximum seconds allowed for each Helm invocation.
+        allow_empty (bool): Whether empty rendered output satisfies the contract.
+        options (RenderOptions | None): Suite options overriding individual defaults.
+
+    Returns:
+        list[dict[str, object]]: Validated rendered resources for this candidate.
+    """
+    values = path_values(chart, path, value, data)
     selected = options or RenderOptions(timeout=timeout, allow_empty=allow_empty)
     resources = render(
         chart,

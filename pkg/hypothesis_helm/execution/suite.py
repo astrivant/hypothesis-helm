@@ -30,6 +30,7 @@ from hypothesis_helm.execution.render_hashes import (
     summarize_process_statistics,
 )
 from hypothesis_helm.execution.structure import inspect_structure
+from hypothesis_helm.execution.traversal import ALGORITHM, STRATEGIES
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.output import MANIFEST_FD
 
@@ -38,6 +39,7 @@ def run_suite(
     directory: Path,
     *,
     seed: int = 0,
+    traversal_strategy: str = "random",
     match: str | None = None,
     collect_only: bool = False,
     jobs: int | Literal["auto"] = "auto",
@@ -60,6 +62,7 @@ def run_suite(
     Args:
         directory (Path): Directory containing the generated test module.
         seed (int): Hypothesis seed applied to every property in this invocation.
+        traversal_strategy (str): Seeded random, original linear, shallow, or deep path order.
         match (str | None): Optional pytest keyword expression selecting value paths.
         collect_only (bool): Whether to list tests without invoking Helm rendering.
         jobs (int | Literal["auto"]): Fixed worker count or automatic PID throughput tuning.
@@ -75,6 +78,8 @@ def run_suite(
     Returns:
         int: Pytest exit status, or 130 when the child is interrupted.
     """
+    if traversal_strategy not in STRATEGIES:
+        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
     if rerun not in {"auto", "all", "failed"}:
         raise ValueError("rerun must be auto, all, or failed")
     if isinstance(jobs, int) and jobs < 1:
@@ -136,6 +141,8 @@ def run_suite(
             command.append("--collect-only")
         command.append(str(module))
         environment = dict(os.environ)
+        environment["HYPOTHESIS_HELM_TRAVERSAL_STRATEGY"] = traversal_strategy
+        environment["HYPOTHESIS_HELM_TRAVERSAL_SEED"] = str(seed)
         environment.pop("HYPOTHESIS_HELM_CACHE_READ", None)
         environment.pop("HYPOTHESIS_HELM_CACHE_RESULTS", None)
         cache_workspace = TemporaryDirectory(prefix="path-results-", dir=results)
@@ -184,6 +191,7 @@ def run_suite(
         environment.pop("PYTEST_ADDOPTS", None)
         environment.pop("PYTEST_PLUGINS", None)
         environment.pop("HYPOTHESIS_HELM_COLLECT", None)
+        environment.pop("HYPOTHESIS_HELM_COLLECT_DEPTHS", None)
         environment.pop("HYPOTHESIS_HELM_PROGRESS", None)
         environment.pop("HYPOTHESIS_HELM_FORCE_PROGRESS", None)
         if progress:
@@ -275,6 +283,8 @@ def run_suite(
             "cache": str(cache_file) if cache_file else None,
             "rerun": "failed" if retry else "all",
             "seed": seed,
+            "traversal_strategy": traversal_strategy,
+            "traversal_algorithm": ALGORITHM,
             "workers": workers,
             "jobs": jobs,
             "match": match,

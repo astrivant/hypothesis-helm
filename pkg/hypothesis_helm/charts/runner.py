@@ -29,6 +29,7 @@ from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.pruning import Pruner
 from hypothesis_helm.compiler.topology import trim_topology as topology_trim
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
+from hypothesis_helm.execution.traversal import ALGORITHM, STRATEGIES, order_configurations
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.output import emit_manifest
 from hypothesis_helm.reporting.permutations import PermutationStatistics
@@ -400,6 +401,7 @@ def check_chart(
     *,
     max_examples: int = 100,
     random_seed: int = 0,
+    traversal_strategy: str = "random",
     timeout: float = 30.0,
     helm: str = "helm",
     release: str = "hypothesis",
@@ -425,6 +427,7 @@ def check_chart(
     properties: tuple[Callable[[list[dict[str, object]]], None], ...] = (),
     input_strategy: SearchStrategy[dict[str, object]] | None = None,
     input_inventory: InputInventory | None = None,
+    check_defaults: bool = True,
 ) -> dict[str, object]:
     """
     Check defaults then generated overrides, shrinking failing inputs.
@@ -436,6 +439,7 @@ def check_chart(
         chart (Chart | str | Path): Loaded chart and its schema and defaults.
         max_examples (int): Maximum number of generated examples per property.
         random_seed (int): Seed for reproducible property generation.
+        traversal_strategy (str): Order retained finite configurations after filtering.
         timeout (float): Maximum seconds allowed for each Helm invocation.
         helm (str): Helm executable used to render the chart.
         release (str): Release name supplied to Helm.
@@ -464,12 +468,17 @@ def check_chart(
         input_strategy (SearchStrategy[dict[str, object]] | None): Optional generation-only
             preference; the original chart schema remains authoritative.
         input_inventory (InputInventory | None): Shared compiler inventory for phase comparisons.
+        check_defaults (bool): Render the baseline first; path schedulers may skip an already verified baseline.
 
     Returns:
         dict[str, object]: Resulting schema, values mapping, or structured report.
     """
+    if traversal_strategy not in STRATEGIES:
+        raise ValueError(f"traversal_strategy must be one of {', '.join(STRATEGIES)}")
     if input_strategy is not None and (permutations is not None or exhaustive):
         raise ValueError("input_strategy applies to sampled testing only")
+    if not check_defaults and input_strategy is None:
+        raise ValueError("skipping defaults requires an explicit path input strategy")
     if not isinstance(chart, Chart):
         chart = Chart.load(chart)
     if max_examples < 1 or timeout <= 0:
@@ -552,7 +561,7 @@ def check_chart(
             values (list[dict[str, object]]): Distinct non-default planned overrides.
 
         Returns:
-            list[dict[str, object]]: Selected overrides in original order.
+            list[dict[str, object]]: Retained overrides ordered only after selection.
         """
         nonlocal topology
         if trim_topology:
@@ -566,13 +575,28 @@ def check_chart(
                 random_steps=trim,
                 fixed_names=bool(release and namespace),
             )
-            return selected
-        return trim_values(values, trim, random_seed)
+        else:
+            selected = trim_values(values, trim, random_seed)
+        return order_configurations(
+            selected,
+            lambda value: merge_values(chart.defaults, value),
+            chart.defaults,
+            strategy=traversal_strategy,
+            seed=random_seed,
+        )
 
     expansion_values = [{}, *(finite_values or [])] if expand_failures else []
     untrimmed_cases = len(finite_values) if finite_values is not None else 0
     if interaction_plan is not None:
         interaction_plan.values = select_cases(interaction_plan.values)
+    elif finite_values is not None:
+        finite_values = order_configurations(
+            finite_values,
+            lambda value: merge_values(chart.defaults, value),
+            chart.defaults,
+            strategy=traversal_strategy,
+            seed=random_seed,
+        )
     trimmed_cases = untrimmed_cases - len(interaction_plan.values) if interaction_plan else 0
     expansion = None
     expansion_positions = {configuration_key(value): index for index, value in enumerate(expansion_values)}
@@ -594,6 +618,9 @@ def check_chart(
     coverage: dict[str, object] = {
         "input_inventory": inputs.report(),
         "field_coverage": field_coverage.statistics,
+        "traversal_strategy": traversal_strategy,
+        "traversal_algorithm": ALGORITHM,
+        "traversal_unit": "configuration" if finite_values is not None else "Hypothesis samples",
     }
     statistics = None
     if interaction_plan is not None:
@@ -637,6 +664,7 @@ def check_chart(
                 "trim_topology": trim_topology,
                 "expand_failures": expand_failures,
                 "trim_seed": random_seed,
+                "traversal_strategy": traversal_strategy,
                 "helm": helm,
                 "release": release,
                 "namespace": namespace,
@@ -950,8 +978,15 @@ def check_chart(
                 if first_error is None:
                     first_error, first_failure = exc, last_failure
                 added = expansion.failed(expansion_positions[configuration_key(values)])
-                work.extend(expansion_values[index] for index in added)
-                finite_values.extend(expansion_values[index] for index in added)
+                additional = order_configurations(
+                    [expansion_values[index] for index in added],
+                    lambda value: merge_values(chart.defaults, value),
+                    chart.defaults,
+                    strategy=traversal_strategy,
+                    seed=random_seed,
+                )
+                work.extend(additional)
+                finite_values.extend(additional)
                 LOGGER.info(
                     "Failure expansion: %d additional cases scheduled; %d remain",
                     len(added),
@@ -965,7 +1000,7 @@ def check_chart(
         # Successful opt-in runs share the usual finite report below, without repeating checks.
 
     try:
-        if expansion is None:
+        if expansion is None and check_defaults:
             check({})
     except TimeLimitReached:
         return stopped_report()

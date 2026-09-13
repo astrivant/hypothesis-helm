@@ -11,18 +11,12 @@ from hypothesis import strategies as st
 from hypothesis.strategies import DataObject
 from hypothesis_helm import Chart
 from hypothesis_helm.charts.generated import RenderOptions, check_path, prepared_chart
-from hypothesis_jsonschema import from_schema
+from hypothesis_helm.schemas.contracts import schema_strategy as from_schema
+from hypothesis_helm.schemas.contracts import supported_generated_text
 
 HERE = Path(__file__).resolve().parent
 OPTIONS = RenderOptions(
-    **{
-        "timeout": 30,
-        "helm": "helm",
-        "release": "hypothesis",
-        "namespace": "default",
-        "kube_version": None,
-        "allow_empty": False,
-    }
+    **{"timeout": 30, "helm": "helm", "release": "hypothesis", "namespace": "default", "kube_version": None, "allow_empty": False}
 )
 
 
@@ -41,7 +35,7 @@ def chart() -> Iterator[Chart]:
 # Path: ('replicas',); contract: schema
 @pytest.mark.hypothesis_helm_path(("replicas",))
 @settings(max_examples=20, deadline=None, suppress_health_check=[HealthCheck.too_slow])
-@given(value=st.integers(min_value=0, max_value=5), data=st.data())
+@given(value=(st.integers(min_value=0, max_value=5)).filter(supported_generated_text), data=st.data())
 def test_replicas_fc55c2d623(chart: Chart, value: object, data: DataObject) -> None:
     """
     Verify that this value path renders valid resource envelopes.
@@ -61,22 +55,20 @@ def test_replicas_fc55c2d623(chart: Chart, value: object, data: DataObject) -> N
 @pytest.mark.hypothesis_helm_path(("image",))
 @settings(max_examples=20, deadline=None, suppress_health_check=[HealthCheck.too_slow])
 @given(
-    value=from_schema(
-        {
-            "type": "object",
-            "description": "Container image",
-            "additionalProperties": False,
-            "required": ["repository", "tag"],
-            "properties": {
-                "repository": {
-                    "type": "string",
-                    "enum": ["nginx", "busybox"],
-                    "description": "Image repository",
+    value=(
+        from_schema(
+            {
+                "type": "object",
+                "description": "Container image",
+                "additionalProperties": False,
+                "required": ["repository", "tag"],
+                "properties": {
+                    "repository": {"type": "string", "enum": ["nginx", "busybox"], "description": "Image repository"},
+                    "tag": {"type": "string", "enum": ["stable", "latest"], "description": "Image tag"},
                 },
-                "tag": {"type": "string", "enum": ["stable", "latest"], "description": "Image tag"},
-            },
-        }
-    ),
+            }
+        )
+    ).filter(supported_generated_text),
     data=st.data(),
 )
 def test_image_45e0390eb7(chart: Chart, value: object, data: DataObject) -> None:
@@ -97,7 +89,7 @@ def test_image_45e0390eb7(chart: Chart, value: object, data: DataObject) -> None
 # Path: ('image', 'repository'); contract: schema
 @pytest.mark.hypothesis_helm_path(("image", "repository"))
 @settings(max_examples=20, deadline=None, suppress_health_check=[HealthCheck.too_slow])
-@given(value=st.sampled_from(["nginx", "busybox"]), data=st.data())
+@given(value=(st.sampled_from(["nginx", "busybox"])).filter(supported_generated_text), data=st.data())
 def test_image_repository_7df0ac81c4(chart: Chart, value: object, data: DataObject) -> None:
     """
     Verify that this value path renders valid resource envelopes.
@@ -116,7 +108,7 @@ def test_image_repository_7df0ac81c4(chart: Chart, value: object, data: DataObje
 # Path: ('image', 'tag'); contract: schema
 @pytest.mark.hypothesis_helm_path(("image", "tag"))
 @settings(max_examples=20, deadline=None, suppress_health_check=[HealthCheck.too_slow])
-@given(value=st.sampled_from(["stable", "latest"]), data=st.data())
+@given(value=(st.sampled_from(["stable", "latest"])).filter(supported_generated_text), data=st.data())
 def test_image_tag_5c4ac61fdd(chart: Chart, value: object, data: DataObject) -> None:
     """
     Verify that this value path renders valid resource envelopes.

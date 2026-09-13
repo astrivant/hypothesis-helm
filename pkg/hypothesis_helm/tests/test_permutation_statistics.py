@@ -140,9 +140,9 @@ def test_failure_retains_incomplete_iterations(monkeypatch: pytest.MonkeyPatch, 
     monkeypatch.setattr("hypothesis_helm.charts.runner.render", render)
     if interrupted:
         with pytest.raises(KeyboardInterrupt):
-            check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0)
+            check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0, traversal_strategy="linear")
     else:
-        check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0)
+        check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0, traversal_strategy="linear")
     report = json.loads((tmp_path / "report.json").read_text())
     assert report["status"] == ("interrupted" if interrupted else "failed")
     assert report["attempts"] == report["attempted_iterations"] == 2

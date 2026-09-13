@@ -5,7 +5,9 @@ Verify predictable generated outputs, disjoint benchmarking shards and truthful 
 import json
 import math
 import shutil
+import subprocess
 import time
+from contextlib import nullcontext
 from pathlib import Path
 from unittest.mock import Mock
 
@@ -20,7 +22,7 @@ from hypothesis_helm.benchmarking.workload import (
     partition_indices,
     standard_values,
 )
-from hypothesis_helm.charts.runner import Chart
+from hypothesis_helm.charts.runner import Chart, RenderFailure
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
@@ -141,6 +143,51 @@ def test_wrong_output_fails_instead_of_becoming_a_representative(
     assert result["status"] == "failed"
     assert result["completed"] == result["oracle_checks"] == result["pruned"] == 0
     assert "quantile" in str(result["error"])
+
+
+@pytest.mark.parametrize("remaining", [5.0, 60.0])
+@pytest.mark.parametrize("timeout", [False, True])
+def test_budget_limited_render_timeout(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, remaining: float, timeout: bool) -> None:
+    """
+    Distinguish deadline-censored renders from genuine renderer failures and timeouts.
+
+    Args:
+        tmp_path (Path): Generated finite benchmark fixture.
+        monkeypatch (pytest.MonkeyPatch): Control the clock and subprocess failure boundary.
+        remaining (float): Budget available when rendering starts.
+        timeout (bool): Whether the render fails from a subprocess timeout.
+
+    Returns:
+        None: Only budget-bound subprocess timeouts become incomplete, nonfailed runs.
+    """
+    generate(tmp_path, input_complexity=8)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.time.perf_counter", lambda: 100.0)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.execution_timer", lambda seconds: nullcontext())
+
+    def render(*args: object, **kwargs: object) -> list[dict[str, object]]:
+        """
+        Reproduce Helm's wrapped subprocess timeout or an independent render failure.
+
+        Args:
+            *args (object): Chart and generated overrides.
+            **kwargs (object): Per-render options, including the bounded timeout.
+
+        Returns:
+            list[dict[str, object]]: No output is committed by this failing boundary.
+        """
+        assert kwargs["timeout"] == min(30.0, remaining)
+        if timeout:
+            raise RenderFailure("helm exceeded its timeout") from subprocess.TimeoutExpired("helm", float(str(kwargs["timeout"])))
+        raise RenderFailure("invalid manifest")
+
+    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.render", render)
+    result = execute_worker(Job(str(tmp_path), [0, 1], 5, 8, False, "helm", 100.0 + remaining))
+    censored = timeout and remaining <= 30.0
+    assert result["status"] == ("time-limit" if censored else "failed")
+    assert (result["error"] is None) is censored
+    assert result["completed"] == result["oracle_checks"] == 0
+    assert result["attempted"] == result["render_invocations"] == 1
+    assert result["remaining"] == 2
 
 
 def test_censored_timing_is_never_a_scaling_speedup() -> None:

@@ -23,6 +23,7 @@ from hypothesis_helm.compiler.inputs import load_input_chart
 from hypothesis_helm.compiler.minimum import export_minimal
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
+from hypothesis_helm.execution.traversal import STRATEGIES
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.reporting.output import MANIFEST_FD
@@ -287,6 +288,13 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="bound automatically inferred group domains",
     )
     test.add_argument("--seed", type=int, default=0)
+    for testing in (run, test, repository):
+        testing.add_argument(
+            "--traversal-strategy",
+            choices=STRATEGIES,
+            default="random",
+            help="value-path order: seeded random (default), original linear, shallow first, or deep first",
+        )
     test.add_argument("--timeout", type=float, default=30)
     test.add_argument("--helm", default="helm")
     test.add_argument("--release", default="hypothesis")
@@ -595,6 +603,7 @@ def main(argv: list[str] | None = None) -> int:
                     source,
                     suite_location=logical,
                     seed=args.seed,
+                    traversal_strategy=args.traversal_strategy,
                     match=args.match,
                     jobs=args.jobs,
                     shard=args.shard,
@@ -611,6 +620,7 @@ def main(argv: list[str] | None = None) -> int:
             return run_suite(
                 args.suite,
                 seed=args.seed,
+                traversal_strategy=args.traversal_strategy,
                 match=args.match,
                 collect_only=args.collect_only,
                 jobs=args.jobs,
@@ -656,6 +666,7 @@ def main(argv: list[str] | None = None) -> int:
             return run_suite(
                 generated,
                 seed=args.seed,
+                traversal_strategy=args.traversal_strategy,
                 match=args.match,
                 collect_only=args.collect_only,
                 jobs=args.jobs,
@@ -679,6 +690,7 @@ def main(argv: list[str] | None = None) -> int:
                 chart,
                 max_examples=args.max_examples,
                 random_seed=args.seed,
+                traversal_strategy=args.traversal_strategy,
                 timeout=args.timeout,
                 helm=args.helm,
                 release=args.release,

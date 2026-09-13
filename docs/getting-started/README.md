@@ -53,6 +53,10 @@ Use `--artifact-dir` to choose a different location. Tests default to `--jobs au
 which adjusts concurrency using PID throughput feedback. Set `--jobs N` for a fixed
 worker count or `--jobs 1` to run serially.
 
+Path order defaults to seeded random traversal. Use `--seed` to reproduce it or
+change the timeout prefix, and `--traversal-strategy linear|shallow|deep` for an
+explicit order. See [value-path traversal](../execution/README.md#value-path-traversal).
+
 Add `--output json` (or `-o json`) to `test` or `run` to stream rendered
 manifests as JSON Lines, with progress and test reports on stderr. See
 [streaming to Kubeconform and Kubesec](../usage.md#stream-rendered-manifests)

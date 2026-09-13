@@ -294,10 +294,11 @@ def test_missing_values_single_and_recursive(tmp_path: Path, capsys: pytest.Capt
                 str(tmp_path / "out"),
             ]
         )
-        == 2
+        == 1
     )
     report = json.loads(capsys.readouterr().out)
-    assert report["counts"] == {"missing-values": 1, "baseline-only": 1}
+    assert report["counts"] == {"missing-values": 1, "failed": 1}
+    assert report["charts"][1]["error"] == "chart rendered no resources"
 
 
 def test_values_override_and_dependency_build(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
@@ -767,7 +768,8 @@ def test_scan_filter_support(
         return {"status": "passed", "attempts": 1}
 
     monkeypatch.setattr("hypothesis_helm.charts.scan.check_chart", check)
-    monkeypatch.setattr("hypothesis_helm.charts.prioritized.check_chart", check)
+    monkeypatch.setattr("hypothesis_helm.charts.paths.check_chart", check)
+    monkeypatch.setattr("hypothesis_helm.charts.paths.render", lambda *args, **kwargs: [{"kind": "ConfigMap"}])
     assert (
         main(
             [
@@ -788,5 +790,5 @@ def test_scan_filter_support(
     assert called.get("expand_failures", False) is finite
     assert report["charts"][0]["filtering"]["applied"] is True
     if not finite:
-        assert report["charts"][0]["filtering"]["method"] == "known-inputs-first"
+        assert report["charts"][0]["filtering"]["method"] == "known-path-generation"
         assert "input_strategy" in called

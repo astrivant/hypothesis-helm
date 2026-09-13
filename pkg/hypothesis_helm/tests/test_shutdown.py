@@ -70,6 +70,8 @@ def test_shutdown(index):
             str(tmp_path),
             "--jobs",
             jobs,
+            "--traversal-strategy",
+            "linear",
             "-o",
             "json",
         ],

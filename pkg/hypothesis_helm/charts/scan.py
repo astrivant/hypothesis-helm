@@ -19,12 +19,12 @@ from contextlib import ExitStack
 from pathlib import Path
 
 from hypothesis_helm.charts import yamlio
-from hypothesis_helm.charts.prioritized import check_prioritized
+from hypothesis_helm.charts.paths import check_paths
 from hypothesis_helm.charts.registry import prepare_helm_source
 from hypothesis_helm.charts.repository import RepositorySource
-from hypothesis_helm.charts.runner import Chart, check_chart, render
+from hypothesis_helm.charts.runner import Chart, check_chart
 from hypothesis_helm.compiler.graph import export_graph
-from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory, load_input_chart
+from hypothesis_helm.compiler.inputs import load_input_chart
 from hypothesis_helm.compiler.minimum import export_minimal
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.errors import chart_errors, deduplicate_errors
@@ -114,18 +114,6 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         )
         return {"status": status, "error": diagnostic, "coverage": "defaults only"}
     has_schema = (path / "values.schema.json").is_file()
-    if not has_schema and not args.filter:
-        source = load_input_chart(path)
-        inputs = InputInventory.build(source)
-        measured = FieldCoverage(inputs, source.defaults)
-        render(source, {}, helm=args.helm, timeout=args.timeout)
-        measured.observe(source.defaults)
-        return {
-            "status": "baseline-only",
-            "coverage": "defaults only; no values.schema.json",
-            "input_inventory": inputs.report(),
-            "field_coverage": measured.statistics,
-        }
     try:
         chart = (
             Chart.load(path)
@@ -145,13 +133,13 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
     except NonFiniteSchema as exc:
         filtering["reason"] = f"Finite filtering unavailable: {exc}"
         if args.filter:
-            LOGGER.info("%s; prioritizing known inputs before robustness sampling", filtering["reason"])
+            LOGGER.info("%s; filtering generation before value-path traversal", filtering["reason"])
         if strength is not None:
             return {"status": "unsupported-schema", "error": str(exc), "coverage": "lint only"}
     else:
         strength = strength or 2
-    if args.filter and strength is None:
-        result = check_prioritized(
+    if strength is None:
+        result = check_paths(
             chart,
             budget=min(args.chart_timeout, max(0.000001, args.scan_deadline - time.monotonic()))
             if args.scan_deadline is not None
@@ -162,10 +150,12 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
             timeout=args.timeout,
             artifacts=artifacts,
             fail_fast=args.fail,
+            filtering=args.filter,
+            traversal_strategy=args.traversal_strategy,
         )
         return {
             **result,
-            "coverage": "known inputs, then original-schema robustness sampling",
+            "coverage": "unique discovered paths; time-bounded property testing",
             "schema_source": "declared" if has_schema else "inferred generation; no values schema",
             "lint": "passed",
         }
@@ -174,6 +164,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         chart,
         max_examples=args.max_examples,
         random_seed=args.seed,
+        traversal_strategy=args.traversal_strategy,
         helm=args.helm,
         timeout=args.timeout,
         time_limit=min(args.chart_timeout, max(0.000001, args.scan_deadline - time.monotonic()))
@@ -469,6 +460,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
             "scan_timeout_excludes_dependency_preparation": True,
             "helm": args.helm,
             "seed": args.seed,
+            "traversal_strategy": args.traversal_strategy,
             "build_dependencies": args.build_dependencies,
             "values": str(args.values),
             "clone_timeout_seconds": args.clone_timeout,

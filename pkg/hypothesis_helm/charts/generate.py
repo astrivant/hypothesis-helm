@@ -263,6 +263,10 @@ def _fallbacks(chart: Chart, references: list[Reference]) -> dict[tuple[str, ...
         dict[tuple[str, ...], list[object]]: Result of the documented operation.
     """
     evidence: dict[tuple[str, ...], list[object]] = {}
+    locations: dict[tuple[str, int], set[tuple[str, ...]]] = {}
+    for reference in references:
+        if reference.path:
+            locations.setdefault((reference.file, reference.line), set()).add(reference.path)
     for file in sorted((chart.path / "templates").rglob("*")):
         if not file.is_file():
             continue
@@ -271,19 +275,19 @@ def _fallbacks(chart: Chart, references: list[Reference]) -> dict[tuple[str, ...
         except ValueError:
             continue
 
-        def walk(nodes: list[Action], file_path: Path = file) -> None:
+        def walk(nodes: list[Action], source_name: str = str(file.relative_to(chart.path))) -> None:
             """
             Collect literal fallback evidence from nested template actions.
 
             Args:
                 nodes (list[Action]): Template actions to inspect in lexical order.
-                file_path (Path): File path used by this operation.
+                source_name (str): Chart-relative template path used by the reference index.
 
             Returns:
                 None: None. The operation completes through its documented side effects.
             """
             for node in nodes:
-                paths = {r.path for r in references if r.file == str(file_path.relative_to(chart.path)) and r.line == node.line and r.path}
+                paths = locations.get((source_name, node.line), set())
                 # Parent references introduced by index/aliases are not separate levers.
                 paths = {p for p in paths if not any(q[: len(p)] == p and q != p for q in paths)}
                 if len(paths) == 1:
@@ -519,7 +523,10 @@ def strategy_source(schema: dict[str, object]) -> str:
     if kind == "number" and set(node) <= {"type", "minimum", "maximum"}:
         return f"st.floats(min_value={node.get('minimum')!r}, max_value={node.get('maximum')!r}, allow_nan=False, allow_infinity=False)"
     if kind == "string" and set(node) <= {"type", "minLength", "maxLength"}:
-        return f"st.text(min_size={node.get('minLength', 0)!r}, max_size={node.get('maxLength')!r})"
+        return (
+            "st.text(alphabet=st.characters(exclude_categories=('Cc', 'Cs'), include_characters='\\n\\r'), "
+            f"min_size={node.get('minLength', 0)!r}, max_size={node.get('maxLength')!r})"
+        )
     if kind == "array" and isinstance(node.get("items"), dict) and set(node) <= {"type", "items", "minItems", "maxItems"}:
         return (
             f"st.lists({strategy_source(mapping(node['items']))}, min_size={node.get('minItems', 0)!r}, max_size={node.get('maxItems')!r})"
@@ -583,7 +590,7 @@ def generate_tests(
         "from hypothesis import HealthCheck, given, settings",
         "from hypothesis import strategies as st",
         "from hypothesis.strategies import DataObject",
-        "from hypothesis_jsonschema import from_schema",
+        "from hypothesis_helm.schemas.contracts import schema_strategy as from_schema, supported_generated_text",
         "from hypothesis_helm import Chart",
         "from hypothesis_helm.charts.generated import RenderOptions, check_path, prepared_chart",
         "",
@@ -611,7 +618,7 @@ def generate_tests(
             f"# Path: {entry.path!r}; contract: {entry.origin}",
             f"@pytest.mark.hypothesis_helm_path({entry.path!r})",
             f"@settings(max_examples={max_examples}, deadline=None, suppress_health_check=[HealthCheck.too_slow])",
-            f"@given(value={strategy_source(entry.schema)}, data=st.data())",
+            f"@given(value=({strategy_source(entry.schema)}).filter(supported_generated_text), data=st.data())",
             f"def test_{name}_{digest}(chart: Chart, value: object, data: DataObject) -> None:",
             '    """',
             "    Verify that this value path renders valid resource envelopes.",

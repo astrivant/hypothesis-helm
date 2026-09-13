@@ -2,7 +2,7 @@
 
 [All chart topologies](../../../README.md)
 
-Status: **rendered**. Source: `.cache/benchmark-refresh-1789265418/outputs/bug-density/chart`.
+Status: **rendered**. Source: `.cache/benchmark-refresh-1789304252/outputs/bug-density/chart`.
 Potential references are not proof of exact input-to-output causality.
 Baseline-unavailable graphs contain static evidence only.
 

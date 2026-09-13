@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import resource
+import subprocess
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -24,7 +25,7 @@ from hypothesis_helm.benchmarking.workload import (
     partition_indices,
     standard_values,
 )
-from hypothesis_helm.charts.runner import Chart, merge_values, render
+from hypothesis_helm.charts.runner import Chart, RenderFailure, merge_values, render
 from hypothesis_helm.compiler.pruning import Pruner
 from hypothesis_helm.execution.render_hashes import RenderHashes
 from hypothesis_helm.integrations.sharding import Shard
@@ -119,14 +120,19 @@ def execute_worker(job: Job) -> dict[str, object]:
                     if remaining <= 0:
                         raise TimeLimitReached()
                     render_invocations += 1
-                    resources = render(
-                        chart,
-                        values,
-                        helm=job.helm,
-                        release="benchmark",
-                        timeout=min(30.0, remaining),
-                        hashes=hashes,
-                    )
+                    try:
+                        resources = render(
+                            chart,
+                            values,
+                            helm=job.helm,
+                            release="benchmark",
+                            timeout=min(30.0, remaining),
+                            hashes=hashes,
+                        )
+                    except RenderFailure as exc:
+                        if remaining <= 30.0 and isinstance(exc.__cause__, subprocess.TimeoutExpired):
+                            raise TimeLimitReached() from exc
+                        raise
                 if not resources:
                     raise AssertionError("benchmark chart emitted no resources")
                 pristine = copy.deepcopy(resources)

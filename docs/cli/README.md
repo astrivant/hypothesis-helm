@@ -121,6 +121,7 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--permutations PERMUTATIONS] [--filter] [--fail]
                             [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
+                            [--traversal-strategy {random,linear,shallow,deep}]
                             [--export-topological-graph [FILENAME]]
                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
                             [--export-minimal-values [FILENAME]]
@@ -160,6 +161,9 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
+  --traversal-strategy {random,linear,shallow,deep}
+                        value-path order: seeded random (default), original linear,
+                        shallow first, or deep first
   --export-topological-graph [FILENAME]
                         export input references, control flow and observed manifests
                         as JSON and DOT
@@ -241,8 +245,9 @@ options:
 
 ~~~text
 usage: helm hypothesis run [-h] [--seed SEED] [--match MATCH] [--collect-only]
-                           [--artifact-dir ARTIFACT_DIR] [--kubeconform]
-                           [--schema-version SCHEMA_VERSION]
+                           [--artifact-dir ARTIFACT_DIR]
+                           [--traversal-strategy {random,linear,shallow,deep}]
+                           [--kubeconform] [--schema-version SCHEMA_VERSION]
                            [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
                            [--kubeconform-binary KUBECONFORM_BINARY] [--dry-run]
                            [--cache-dir CACHE_DIR] [--disable-schema-caching]
@@ -261,6 +266,9 @@ options:
   --collect-only
   --artifact-dir ARTIFACT_DIR
                         report directory for a saved suite
+  --traversal-strategy {random,linear,shallow,deep}
+                        value-path order: seeded random (default), original linear,
+                        shallow first, or deep first
   --kubeconform         validate Kubernetes API schemas
   --schema-version SCHEMA_VERSION
                         Kubernetes schema version: latest or X.Y.Z
@@ -305,6 +313,7 @@ usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DUR
                             [--exhaustive-threshold EXHAUSTIVE_THRESHOLD]
                             [--exhaustive-group PATH,PATH] [--no-infer-groups]
                             [--max-group-cases MAX_GROUP_CASES] [--seed SEED]
+                            [--traversal-strategy {random,linear,shallow,deep}]
                             [--timeout TIMEOUT] [--helm HELM] [--release RELEASE]
                             [--namespace NAMESPACE] [--kube-version KUBE_VERSION]
                             [--allow-empty] [--artifact-dir ARTIFACT_DIR]
@@ -355,6 +364,9 @@ options:
   --max-group-cases MAX_GROUP_CASES
                         bound automatically inferred group domains
   --seed SEED
+  --traversal-strategy {random,linear,shallow,deep}
+                        value-path order: seeded random (default), original linear,
+                        shallow first, or deep first
   --timeout TIMEOUT
   --helm HELM
   --release RELEASE

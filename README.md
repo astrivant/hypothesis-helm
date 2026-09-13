@@ -9,6 +9,7 @@ from combinations of Helm chart inputs to reproducible examples.
 - Audit templates, values schemas, and missing defaults.
 - Generate a minimal values schema.
 - Choose permutation coverage, with exhaustive testing for small finite spaces.
+- Traverse unique value paths randomly with a reproducible seed, or choose linear, shallow, or deep order.
 - Skip provably equivalent renders or opt into sampling to reduce test volume.
 - Preview coverage and runtime estimates; set execution budgets and shard tests across workers.
 - Scan local, Git, and authenticated Helm repositories; build dependencies and export Markdown/PDF reports.
@@ -59,9 +60,9 @@ See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot comm
 | `scan SOURCE` | Reviewing charts from local, Git, or Helm repositories. | Discovers charts, builds dependencies in isolated copies, runs Helm lint and chart tests, and records each chart's outcome. `--report` adds combined Markdown/PDF reports. Also accepts individual repository/OCI charts and public Helm indexes. |
 
 `test` requires a values schema and dependencies already available in the chart.
-`audit` also works without a schema. For schema-less charts, `scan` runs baseline
-checks; adding `--filter` enables inferred-input testing and deferred robustness
-sampling. Skipped charts and incomplete coverage remain explicit in scan results.
+`audit` also works without a schema. For schema-less charts, `scan` infers path
+strategies from supplied values and template references. `--filter` restricts
+generation before traversal. Skipped charts and incomplete coverage remain explicit.
 
 Use `--export-minimal-values` to save example values with validation status, or
 `--export-topological-graph` to inspect the input-to-output map. See

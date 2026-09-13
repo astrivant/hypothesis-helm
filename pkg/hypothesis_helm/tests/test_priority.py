@@ -5,17 +5,116 @@ Known-input ordering retains original contracts and dynamic map coverage.
 import copy
 import json
 import shutil
+import unicodedata
 from pathlib import Path
 from textwrap import dedent
 
 import pytest
-from hypothesis import find, settings
+from hypothesis import find, given, settings
 from jsonschema import validators
 
 from hypothesis_helm.charts.prioritized import check_prioritized
 from hypothesis_helm.charts.runner import Chart, render
-from hypothesis_helm.schemas.contracts import json_value, mapping
+from hypothesis_helm.schemas.contracts import json_value, mapping, schema_strategy
 from hypothesis_helm.schemas.priority import PriorityInputs
+
+
+@pytest.mark.parametrize("deferred", [False, True])
+def test_sampled_control_characters_are_excluded(tmp_path: Path, deferred: bool) -> None:
+    """
+    Exclude the nginx reproducer and nested control-character keys in both phases.
+
+    Args:
+        tmp_path (Path): Empty chart template directory.
+        deferred (bool): Exercise original-schema robustness instead of known inputs.
+
+    Returns:
+        None: Every sample obeys the character policy and the unchanged chart schema.
+    """
+    schema: dict[str, object] = {
+        "type": "object",
+        "properties": {
+            "existingContextEventsConfigmaps": {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 2},
+        },
+        "required": ["existingContextEventsConfigmaps"],
+    }
+    chart = Chart(tmp_path, copy.deepcopy(schema), {"existingContextEventsConfigmaps": []})
+    priority = PriorityInputs.build(chart)
+    strategy = priority.deferred_strategy(chart) if deferred else priority.strategy(chart)
+
+    @settings(max_examples=100, deadline=None, derandomize=True)
+    @given(strategy)
+    def check(values: dict[str, object]) -> None:
+        """
+        Inspect the complete generated JSON tree, including arbitrary nested keys.
+
+        Args:
+            values (dict[str, object]): Sampled chart overrides.
+
+        Returns:
+            None: Each string contains text or permitted configuration whitespace.
+        """
+        assert validators.validator_for(schema)(schema).is_valid(json_value(values))
+        pending: list[object] = [values]
+        while pending:
+            item = pending.pop()
+            if isinstance(item, str):
+                assert all(unicodedata.category(char) != "Cc" or char in "\n\r" for char in item)
+            elif isinstance(item, dict):
+                pending.extend(item.keys())
+                pending.extend(item.values())
+            elif isinstance(item, list):
+                pending.extend(item)
+
+    check()
+    assert chart.schema == schema
+
+
+@pytest.mark.parametrize("value", ["café", "日本語", "🔑", "line 1\n  line 2\r\n"])
+def test_text_sampling_retains_application_content(value: str) -> None:
+    """
+    Keep Unicode application text and multiline configuration eligible for sampling.
+
+    Args:
+        value (str): Meaningful text that must remain in the sampled domain.
+
+    Returns:
+        None: Allowed text survives sampling alongside an excluded control character.
+    """
+    strategy = schema_strategy({"type": "string", "enum": ["\x1f", "\t", value]})
+    found = find(strategy, lambda candidate: True, settings=settings(max_examples=20, deadline=None, derandomize=True))
+    assert found == value
+
+
+def test_constrained_sampling_excludes_tabs() -> None:
+    """
+    Drop tab-only alternatives while retaining schema-valid application values.
+
+    Returns:
+        None: Random constrained sampling cannot reproduce indentation-tab noise.
+    """
+    schema = {
+        "type": "object",
+        "properties": {"config": {"type": "string", "enum": ["\t", "ready"]}},
+        "required": ["config"],
+        "additionalProperties": False,
+    }
+
+    @settings(max_examples=20, deadline=None, derandomize=True)
+    @given(schema_strategy(schema))
+    def check(value: object) -> None:
+        """
+        Check the generated configuration against its permitted useful alternative.
+
+        Args:
+            value (object): Fresh schema-constrained candidate.
+
+        Returns:
+            None: Tabs never reach the chart renderer through this strategy.
+        """
+        assert value == {"config": "ready"}
+
+    check()
 
 
 def test_known_inputs_preserve_dynamic_maps(tmp_path: Path) -> None:
@@ -175,7 +274,7 @@ def test_phase_order_and_failure_preservation(tmp_path: Path, monkeypatch: pytes
 
 @pytest.mark.integration
 @pytest.mark.parametrize("key", ["\U00010000", "é" * 180])
-@pytest.mark.parametrize("value", ["\U00010000", "\x7f", "\x85", "\x9f", "\u2028", "\u2029", "é", "\u0000"])
+@pytest.mark.parametrize("value", ["\U00010000", "\t", "\x7f", "\x85", "\x9f", "\u2028", "\u2029", "é", "\u0000"])
 def test_unicode_values_reach_helm(tmp_path: Path, key: str, value: str) -> None:
     """
     Send supplementary Unicode as UTF-8 instead of YAML-incompatible surrogate escapes.

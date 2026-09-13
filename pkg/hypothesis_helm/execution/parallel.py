@@ -50,7 +50,8 @@ def run_parallel(
     with tempfile.TemporaryDirectory(prefix="workers-", dir=results) as temporary:
         workspace = Path(temporary)
         collected = workspace / "collected.json"
-        collection_environment = dict(environment, HYPOTHESIS_HELM_COLLECT=str(collected))
+        depths_file = workspace / "path-depths.json"
+        collection_environment = dict(environment, HYPOTHESIS_HELM_COLLECT=str(collected), HYPOTHESIS_HELM_COLLECT_DEPTHS=str(depths_file))
         collection_environment.pop("HYPOTHESIS_HELM_MANIFEST_FD", None)
         processes = Processes()
         collection = processes.run(
@@ -73,6 +74,8 @@ def run_parallel(
             print(collection.stderr, end="", file=sys.stderr)
             return (collection.returncode if collection.returncode > 0 else 130), 0
         nodes: list[str] = json.loads(collected.read_text())
+        depths: dict[str, int] = json.loads(depths_file.read_text()) if depths_file.exists() else {}
+        layered = environment.get("HYPOTHESIS_HELM_TRAVERSAL_STRATEGY") in {"shallow", "deep"}
         if not nodes:
             return 5, 0
         maximum = min(jobs, len(nodes))
@@ -129,6 +132,8 @@ def run_parallel(
         try:
             while next_index < len(nodes) or pending:
                 while next_index < len(nodes) and len(pending) < controller.limit:
+                    if layered and pending and depths.get(nodes[next_index], 0) != depths.get(nodes[next(iter(pending.values()))], 0):
+                        break
                     pending[pool.submit(execute, next_index)] = next_index
                     next_index += 1
                     peak = max(peak, len(pending))
