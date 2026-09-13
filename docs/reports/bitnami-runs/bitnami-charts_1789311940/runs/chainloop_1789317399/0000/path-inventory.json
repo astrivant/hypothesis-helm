@@ -1,0 +1,7360 @@
+{
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "paths": [
+    [
+      "secretsBackend",
+      "gcpSecretManager",
+      "serviceAccountKey"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "controlledResources"
+    ],
+    [
+      "controlplane",
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "cas",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "casJWTPrivateKey"
+    ],
+    [
+      "cas",
+      "networkPolicy"
+    ],
+    [
+      "dex"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "existingSecret"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "ejbcaCA",
+      "certProfileName"
+    ],
+    [
+      "dex",
+      "podAffinityPreset"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "ports"
+    ],
+    [
+      "vault",
+      "server"
+    ],
+    [
+      "dex",
+      "sidecars"
+    ],
+    [
+      "controlplane",
+      "existingConfigMap"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "oidc",
+      "url"
+    ],
+    [
+      "dex",
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "nodePorts"
+    ],
+    [
+      "controlplane",
+      "automountServiceAccountToken"
+    ],
+    [
+      "cas",
+      "containerPorts",
+      "metrics"
+    ],
+    [
+      "secretsBackend",
+      "vault",
+      "address"
+    ],
+    [
+      "dex",
+      "networkPolicy"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "cas",
+      "sidecars"
+    ],
+    [
+      "controlplane"
+    ],
+    [
+      "controlplane",
+      "containerPorts",
+      "grpc"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*"
+    ],
+    [
+      "controlplane",
+      "tolerations",
+      "*"
+    ],
+    [
+      "cas",
+      "tolerations",
+      "*"
+    ],
+    [
+      "dex",
+      "replicaCount"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "nodePorts"
+    ],
+    [
+      "dex",
+      "service",
+      "clusterIP"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "secretsBackend",
+      "backend"
+    ],
+    [
+      "controlplane",
+      "nodeSelector"
+    ],
+    [
+      "dex",
+      "containerPorts"
+    ],
+    [
+      "controlplane",
+      "externalDatabase",
+      "port"
+    ],
+    [
+      "controlplane",
+      "sentry",
+      "dsn"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "enablePostgresUser"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "secrets"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "annotations",
+      "nginx.ingress.kubernetes.io/backend-protocol"
+    ],
+    [
+      "controlplane",
+      "containerPorts",
+      "metrics"
+    ],
+    [
+      "cas",
+      "customCAs",
+      "*"
+    ],
+    [
+      "cas"
+    ],
+    [
+      "dex",
+      "resources"
+    ],
+    [
+      "vault"
+    ],
+    [
+      "global",
+      "imagePullSecrets"
+    ],
+    [
+      "dex",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "cas",
+      "sidecars",
+      "*"
+    ],
+    [
+      "controlplane",
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "cas",
+      "sentry",
+      "enabled"
+    ],
+    [
+      "cas",
+      "ingress",
+      "secrets"
+    ],
+    [
+      "dex",
+      "service",
+      "annotations"
+    ],
+    [
+      "dex",
+      "runtimeClassName"
+    ],
+    [
+      "dex",
+      "nodeAffinityPreset"
+    ],
+    [
+      "controlplane",
+      "hostAliases"
+    ],
+    [
+      "controlplane",
+      "referrerSharedIndex"
+    ],
+    [
+      "secretsBackend",
+      "gcpSecretManager",
+      "projectId"
+    ],
+    [
+      "cas",
+      "ingress",
+      "tls"
+    ],
+    [
+      "controlplane",
+      "podAntiAffinityPreset"
+    ],
+    [
+      "casJWTPublicKey"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "hpa",
+      "targetMemory"
+    ],
+    [
+      "cas",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "cas",
+      "updateStrategy"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraHosts",
+      "*"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraRules"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "annotations"
+    ],
+    [
+      "dex",
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "dex",
+      "image",
+      "debug"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "secrets",
+      "*"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "oidc"
+    ],
+    [
+      "secretsBackend",
+      "vault"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "nodePort"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraTls",
+      "*"
+    ],
+    [
+      "secretsBackend",
+      "azureKeyVault",
+      "clientSecret"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "fileCA",
+      "key"
+    ],
+    [
+      "dex",
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "controlplane",
+      "externalDatabase",
+      "database"
+    ],
+    [
+      "controlplane",
+      "podLabels"
+    ],
+    [
+      "controlplane",
+      "extraEnvVarsCM"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "fileCA",
+      "keyPass"
+    ],
+    [
+      "controlplane",
+      "referrerSharedIndex",
+      "allowedOrgs",
+      "*"
+    ],
+    [
+      "cas",
+      "extraVolumeMounts"
+    ],
+    [
+      "cas",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "cas",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "dex",
+      "containerPorts",
+      "grpc"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "ingressClassName"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "hostname"
+    ],
+    [
+      "cas",
+      "tolerations"
+    ],
+    [
+      "dex",
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "controlplane",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "externalTrafficPolicy"
+    ],
+    [
+      "controlplane",
+      "prometheus_org_metrics",
+      "*"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "affinity"
+    ],
+    [
+      "dex",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "cas",
+      "service",
+      "nodePorts",
+      "http"
+    ],
+    [
+      "dex",
+      "service",
+      "type"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "dex",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "cas",
+      "ingress",
+      "hostname"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraHosts",
+      "*"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "dex",
+      "args",
+      "*"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraPaths"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "allowList"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "dex",
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "dex",
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "dex",
+      "lifecycleHooks"
+    ],
+    [
+      "cas",
+      "ingress",
+      "pathType"
+    ],
+    [
+      "cas",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "ejbcaCA"
+    ],
+    [
+      "dex",
+      "image",
+      "repository"
+    ],
+    [
+      "dex",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "dex",
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "oidc",
+      "externalURL"
+    ],
+    [
+      "controlplane",
+      "externalDatabase",
+      "password"
+    ],
+    [
+      "cas",
+      "image",
+      "registry"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraPaths",
+      "*"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "hpa",
+      "enabled"
+    ],
+    [
+      "cas",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "cas",
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "controlplane",
+      "initContainers",
+      "*"
+    ],
+    [
+      "dex",
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "fileCA",
+      "cert"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "tls"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "hpa"
+    ],
+    [
+      "controlplane",
+      "lifecycleHooks"
+    ],
+    [
+      "cas",
+      "schedulerName"
+    ],
+    [
+      "controlplane",
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "dex",
+      "initContainers",
+      "*"
+    ],
+    [
+      "cas",
+      "tls"
+    ],
+    [
+      "controlplane",
+      "ingress"
+    ],
+    [
+      "controlplane",
+      "migration"
+    ],
+    [
+      "controlplane",
+      "image",
+      "registry"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "ports"
+    ],
+    [
+      "cas",
+      "ingress",
+      "ingressClassName"
+    ],
+    [
+      "cas",
+      "nodeAffinityPreset"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "hpa",
+      "targetCPU"
+    ],
+    [
+      "controlplane",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "cas",
+      "podLabels"
+    ],
+    [
+      "dex",
+      "extraEnvVarsCM"
+    ],
+    [
+      "controlplane",
+      "externalDatabase"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "ingressClassName"
+    ],
+    [
+      "secretsBackend",
+      "azureKeyVault",
+      "vaultURI"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraTls"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "dex",
+      "extraVolumeMounts"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "passphrase"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "cas",
+      "nodeSelector"
+    ],
+    [
+      "cas",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "controlplane",
+      "updateStrategy"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "selfSigned"
+    ],
+    [
+      "dex",
+      "resourcesPreset"
+    ],
+    [
+      "dex",
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor"
+    ],
+    [
+      "controlplane",
+      "resourcesPreset"
+    ],
+    [
+      "secretsBackend",
+      "awsSecretManager"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "jobLabel"
+    ],
+    [
+      "postgresql"
+    ],
+    [
+      "dex",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "sessionAffinityConfig"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image",
+      "registry"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "cas",
+      "image"
+    ],
+    [
+      "dex",
+      "topologySpreadConstraints"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraRules",
+      "*"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "cas",
+      "ingress",
+      "selfSigned"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "secretsBackend",
+      "gcpSecretManager"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraRules"
+    ],
+    [
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "controlplane",
+      "sidecars",
+      "*"
+    ],
+    [
+      "controlplane",
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "dex",
+      "initContainers"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "controlledResources"
+    ],
+    [
+      "controlplane",
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "development"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "minAllowed"
+    ],
+    [
+      "dex",
+      "priorityClassName"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "ports",
+      "http"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "type"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "username"
+    ],
+    [
+      "cas",
+      "ingress",
+      "path"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "hpa",
+      "minReplicas"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraTls"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "dex",
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "cas",
+      "pdb",
+      "enabled"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "nodePorts",
+      "http"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "cas",
+      "customCAs"
+    ],
+    [
+      "dex",
+      "image"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "secrets",
+      "*"
+    ],
+    [
+      "controlplane",
+      "service",
+      "extraPorts"
+    ],
+    [
+      "cas",
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "controlplane",
+      "service",
+      "ports",
+      "http"
+    ],
+    [
+      "dex",
+      "extraArgs",
+      "*"
+    ],
+    [
+      "dex",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "rbac",
+      "create"
+    ],
+    [
+      "dex",
+      "service",
+      "ports",
+      "http"
+    ],
+    [
+      "dex",
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "postgresql",
+      "auth"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "annotations",
+      "nginx.ingress.kubernetes.io/proxy-body-size"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "annotations"
+    ],
+    [
+      "cas",
+      "service",
+      "ports"
+    ],
+    [
+      "dex",
+      "service",
+      "ports"
+    ],
+    [
+      "dex",
+      "command"
+    ],
+    [
+      "cas",
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "cas",
+      "containerPorts",
+      "grpc"
+    ],
+    [
+      "dex",
+      "containerPorts",
+      "metrics"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "hpa",
+      "enabled"
+    ],
+    [
+      "cas",
+      "podSecurityContext"
+    ],
+    [
+      "cas",
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "port"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "ssl"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "secrets",
+      "*"
+    ],
+    [
+      "dex",
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "namespaceOverride"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "dex",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "cas",
+      "replicaCount"
+    ],
+    [
+      "cas",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "dex",
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "dex",
+      "pdb",
+      "create"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "path"
+    ],
+    [
+      "controlplane",
+      "service",
+      "annotations"
+    ],
+    [
+      "secretsBackend"
+    ],
+    [
+      "cas",
+      "containerSecurityContext"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "secretsBackend",
+      "azureKeyVault",
+      "clientID"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "clusterIP"
+    ],
+    [
+      "cas",
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "dex",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "dex",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "dex",
+      "staticUsers",
+      "*",
+      "email"
+    ],
+    [
+      "secretsBackend",
+      "secretPrefix"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "dex",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "cas",
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "type"
+    ],
+    [
+      "dex",
+      "startupProbe"
+    ],
+    [
+      "dex",
+      "image",
+      "tag"
+    ],
+    [
+      "rbac",
+      "rules"
+    ],
+    [
+      "dex",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "ejbcaCA",
+      "clientCert"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "ports",
+      "https"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraPaths"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "annotations",
+      "nginx.ingress.kubernetes.io/client-body-buffer-size"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "cas",
+      "tls",
+      "existingSecret"
+    ],
+    [
+      "dex",
+      "extraArgs"
+    ],
+    [
+      "cas",
+      "serviceAPI"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "cas",
+      "service",
+      "clusterIP"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "sessionAffinity"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "priorityClassName"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraTls",
+      "*"
+    ],
+    [
+      "dex",
+      "podAntiAffinityPreset"
+    ],
+    [
+      "dex",
+      "staticUsers",
+      "*"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "dex",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "dex",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "controlplane",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "cas",
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "cas",
+      "pdb"
+    ],
+    [
+      "controlplane",
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "cas",
+      "image",
+      "digest"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "nodePorts",
+      "metrics"
+    ],
+    [
+      "controlplane",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "selfSigned"
+    ],
+    [
+      "cas",
+      "sentry",
+      "environment"
+    ],
+    [
+      "controlplane",
+      "customCAs"
+    ],
+    [
+      "controlplane",
+      "externalDatabase",
+      "user"
+    ],
+    [
+      "controlplane",
+      "service"
+    ],
+    [
+      "cas",
+      "affinity"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "dex",
+      "metrics",
+      "enabled"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "hpa",
+      "maxReplicas"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "cas",
+      "topologySpreadConstraints"
+    ],
+    [
+      "controlplane",
+      "nodeAffinityPreset"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "port"
+    ],
+    [
+      "cas",
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "dex",
+      "nodeSelector"
+    ],
+    [
+      "dex",
+      "updateStrategy"
+    ],
+    [
+      "controlplane",
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "controlplane",
+      "externalDatabase",
+      "host"
+    ],
+    [
+      "dex",
+      "staticUsers",
+      "*",
+      "hash"
+    ],
+    [
+      "controlplane",
+      "sentry"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "password"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "ports",
+      "https"
+    ],
+    [
+      "postgresql",
+      "auth",
+      "database"
+    ],
+    [
+      "vault",
+      "server",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "dex",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "cas",
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "secretsBackend",
+      "azureKeyVault"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "selfSigned"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "pathType"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "hpa",
+      "targetMemory"
+    ],
+    [
+      "cas",
+      "ingress"
+    ],
+    [
+      "controlplane",
+      "pdb",
+      "enabled"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "sessionAffinityConfig"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "path"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "service",
+      "clusterIP"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "controlplane",
+      "image",
+      "repository"
+    ],
+    [
+      "controlplane",
+      "image",
+      "digest"
+    ],
+    [
+      "dex",
+      "service",
+      "extraPorts"
+    ],
+    [
+      "cas",
+      "ingress",
+      "annotations"
+    ],
+    [
+      "extraDeploy"
+    ],
+    [
+      "cas",
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "secrets"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "annotations"
+    ],
+    [
+      "controlplane",
+      "auth"
+    ],
+    [
+      "secretsBackend",
+      "awsSecretManager",
+      "secretKey"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "nodePorts",
+      "https"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image",
+      "repository"
+    ],
+    [
+      "cas",
+      "autoscaling"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "maxAllowed"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "controlplane",
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "controlplane",
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "controlplane",
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "vault",
+      "server",
+      "config"
+    ],
+    [
+      "controlplane",
+      "schedulerName"
+    ],
+    [
+      "cas",
+      "ingress",
+      "enabled"
+    ],
+    [
+      "secretsBackend",
+      "awsSecretManager",
+      "accessKey"
+    ],
+    [
+      "cas",
+      "containerPorts"
+    ],
+    [
+      "commonLabels"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "oidc",
+      "loginURLOverride"
+    ],
+    [
+      "kubeVersion"
+    ],
+    [
+      "dex",
+      "pdb"
+    ],
+    [
+      "rbac"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraHosts",
+      "*"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "dex",
+      "extraEnvVars"
+    ],
+    [
+      "commonAnnotations"
+    ],
+    [
+      "cas",
+      "service",
+      "port"
+    ],
+    [
+      "controlplane",
+      "service",
+      "port"
+    ],
+    [
+      "controlplane",
+      "pdb"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image",
+      "tag"
+    ],
+    [
+      "cas",
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "controlplane",
+      "tls"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "tls"
+    ],
+    [
+      "vault",
+      "server",
+      "extraEnvVars"
+    ],
+    [
+      "controlplane",
+      "extraVolumeMounts"
+    ],
+    [
+      "dex",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "controlplane",
+      "customCAs",
+      "*"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "cas",
+      "sentry"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "controlplane",
+      "replicaCount"
+    ],
+    [
+      "dex",
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "cas",
+      "podAntiAffinityPreset"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "cas",
+      "serviceAccount"
+    ],
+    [
+      "dex",
+      "shareProcessNamespace"
+    ],
+    [
+      "dex",
+      "args"
+    ],
+    [
+      "dex",
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "dex",
+      "customLivenessProbe"
+    ],
+    [
+      "cas",
+      "extraEnvVars"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "annotations",
+      "nginx.ingress.kubernetes.io/backend-protocol"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "hostname"
+    ],
+    [
+      "dex",
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "honorLabels"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "extraPorts"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "annotations"
+    ],
+    [
+      "controlplane",
+      "keylessSigning"
+    ],
+    [
+      "controlplane",
+      "service",
+      "nodePorts"
+    ],
+    [
+      "secretsBackend",
+      "awsSecretManager",
+      "region"
+    ],
+    [
+      "cas",
+      "resources"
+    ],
+    [
+      "dex",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "updatePolicy"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "minAllowed"
+    ],
+    [
+      "dex",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "dex",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "cas",
+      "service",
+      "nodePorts"
+    ],
+    [
+      "dex",
+      "containerSecurityContext"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "port"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "ejbcaCA",
+      "caName"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "ejbcaCA",
+      "clientKey"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "dex",
+      "service",
+      "nodePorts",
+      "grpc"
+    ],
+    [
+      "cas",
+      "automountServiceAccountToken"
+    ],
+    [
+      "cas",
+      "initContainers",
+      "*"
+    ],
+    [
+      "dex",
+      "service",
+      "ports",
+      "grpc"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraHosts"
+    ],
+    [
+      "controlplane",
+      "containerPorts"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraTls",
+      "*"
+    ],
+    [
+      "dex",
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "cas",
+      "hostAliases"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "controlplane",
+      "autoscaling"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "service",
+      "ports"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "tls"
+    ],
+    [
+      "apiVersions"
+    ],
+    [
+      "dex",
+      "livenessProbe"
+    ],
+    [
+      "cas",
+      "service",
+      "ports",
+      "http"
+    ],
+    [
+      "cas",
+      "sentry",
+      "dsn"
+    ],
+    [
+      "dex",
+      "affinity"
+    ],
+    [
+      "controlplane",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "controlplane",
+      "sidecars"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraPaths",
+      "*"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa"
+    ],
+    [
+      "controlplane",
+      "pluginsDir"
+    ],
+    [
+      "dex",
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "extraDeploy",
+      "*"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "controlplane",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "cas",
+      "containerPorts",
+      "http"
+    ],
+    [
+      "dex",
+      "image",
+      "registry"
+    ],
+    [
+      "controlplane",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraRules"
+    ],
+    [
+      "controlplane",
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "dex",
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "cas",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "controlplane",
+      "ingressAPI"
+    ],
+    [
+      "dex",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "controlplane",
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraPaths",
+      "*"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraRules",
+      "*"
+    ],
+    [
+      "controlplane",
+      "networkPolicy"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "ejbcaCA",
+      "endEntityProfileName"
+    ],
+    [
+      "cas",
+      "extraEnvVarsCM"
+    ],
+    [
+      "dex",
+      "automountServiceAccountToken"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "enabled"
+    ],
+    [
+      "dex",
+      "podLabels"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "global",
+      "compatibility"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "enabled"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "hpa"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "hpa",
+      "minReplicas"
+    ],
+    [
+      "controlplane",
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "cas",
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext"
+    ],
+    [
+      "dex",
+      "extraVolumes"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "pathType"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "relabelings",
+      "*"
+    ],
+    [
+      "dex",
+      "service",
+      "nodePorts"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "loadBalancerIP"
+    ],
+    [
+      "dex",
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "cas",
+      "image",
+      "tag"
+    ],
+    [
+      "secretsBackend",
+      "azureKeyVault",
+      "tenantID"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "type"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "annotations"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "annotations"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "clusterIP"
+    ],
+    [
+      "cas",
+      "existingConfigMap"
+    ],
+    [
+      "vault",
+      "server",
+      "extraEnvVars",
+      "*",
+      "value"
+    ],
+    [
+      "controlplane",
+      "onboarding",
+      "*"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "dex",
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "enabled"
+    ],
+    [
+      "cas",
+      "service",
+      "type"
+    ],
+    [
+      "cas",
+      "ingress",
+      "secrets",
+      "*"
+    ],
+    [
+      "dex",
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "extraEnvVars"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "cas",
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "cas",
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "dex",
+      "command",
+      "*"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "hostname"
+    ],
+    [
+      "cas",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "cas",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "controlplane",
+      "resources"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "annotations"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraTls"
+    ],
+    [
+      "cas",
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "vault",
+      "server",
+      "args"
+    ],
+    [
+      "dex",
+      "customStartupProbe"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "oidc",
+      "clientID"
+    ],
+    [
+      "dex",
+      "hostAliases"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "sessionAffinity"
+    ],
+    [
+      "cas",
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "controlplane",
+      "service",
+      "nodePorts",
+      "https"
+    ],
+    [
+      "secretsBackend",
+      "vault",
+      "token"
+    ],
+    [
+      "apiVersions",
+      "*"
+    ],
+    [
+      "dex",
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "nodePorts",
+      "http"
+    ],
+    [
+      "vault",
+      "server",
+      "extraEnvVars",
+      "*",
+      "name"
+    ],
+    [
+      "controlplane",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "dex",
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "cas",
+      "service",
+      "annotations"
+    ],
+    [
+      "controlplane",
+      "auth",
+      "oidc",
+      "clientSecret"
+    ],
+    [
+      "controlplane",
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraTls"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "relabelings"
+    ],
+    [
+      "controlplane",
+      "tolerations"
+    ],
+    [
+      "controlplane",
+      "service",
+      "nodePorts",
+      "http"
+    ],
+    [
+      "controlplane",
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraRules",
+      "*"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "nodePorts",
+      "https"
+    ],
+    [
+      "dex",
+      "tolerations"
+    ],
+    [
+      "dex",
+      "sidecars",
+      "*"
+    ],
+    [
+      "dex",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "controlplane",
+      "image",
+      "tag"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "secrets"
+    ],
+    [
+      "controlplane",
+      "initContainers"
+    ],
+    [
+      "fullnameOverride"
+    ],
+    [
+      "controlplane",
+      "onboarding"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service"
+    ],
+    [
+      "dex",
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "dex",
+      "readinessProbe"
+    ],
+    [
+      "controlplane",
+      "deploymentAnnotations"
+    ],
+    [
+      "cas",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraHosts",
+      "*"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "ports"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "vault",
+      "server",
+      "args",
+      "*"
+    ],
+    [
+      "cas",
+      "service",
+      "ports",
+      "https"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "nodePorts"
+    ],
+    [
+      "dex",
+      "containerPorts",
+      "http"
+    ],
+    [
+      "dex",
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraHosts"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraPaths"
+    ],
+    [
+      "cas",
+      "initContainers"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraPaths"
+    ],
+    [
+      "controlplane",
+      "service",
+      "type"
+    ],
+    [
+      "dex",
+      "service"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraRules",
+      "*"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "annotations",
+      "traefik.ingress.kubernetes.io/service.serversscheme"
+    ],
+    [
+      "global"
+    ],
+    [
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "cas",
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "global",
+      "security"
+    ],
+    [
+      "cas",
+      "image",
+      "repository"
+    ],
+    [
+      "controlplane",
+      "sentry",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "cas",
+      "service",
+      "nodePorts",
+      "https"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "vpa",
+      "updatePolicy"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "fileCA"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "cas",
+      "resourcesPreset"
+    ],
+    [
+      "dex",
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "dex",
+      "customReadinessProbe"
+    ],
+    [
+      "cas",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "ejbcaCA",
+      "serverURL"
+    ],
+    [
+      "cas",
+      "podAffinityPreset"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "controlplane",
+      "tls",
+      "existingSecret"
+    ],
+    [
+      "cas",
+      "lifecycleHooks"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "controlplane",
+      "image"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "loadBalancerIP"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "externalTrafficPolicy"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "pathType"
+    ],
+    [
+      "dex",
+      "service",
+      "nodePorts",
+      "http"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "ports",
+      "http"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "ingressClassName"
+    ],
+    [
+      "controlplane",
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "dex",
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "controlplane",
+      "referrerSharedIndex",
+      "allowedOrgs"
+    ],
+    [
+      "dex",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "cas",
+      "deploymentAnnotations"
+    ],
+    [
+      "dex",
+      "staticUsers"
+    ],
+    [
+      "dex",
+      "podAnnotations"
+    ],
+    [
+      "controlplane",
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "annotations"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraPaths",
+      "*"
+    ],
+    [
+      "cas",
+      "ingressAPI"
+    ],
+    [
+      "cas",
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "cas",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "dex",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "dex",
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "cas",
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "controlplane",
+      "extraVolumes"
+    ],
+    [
+      "controlplane",
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "controlplane",
+      "serviceAPI"
+    ],
+    [
+      "dex",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "controlplane",
+      "podAffinityPreset"
+    ],
+    [
+      "postgresql",
+      "enabled"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "path"
+    ],
+    [
+      "dex",
+      "metrics"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "hpa",
+      "maxReplicas"
+    ],
+    [
+      "dex",
+      "serviceAccount"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "controlplane",
+      "prometheus_org_metrics"
+    ],
+    [
+      "dex",
+      "podSecurityContext"
+    ],
+    [
+      "controlplane",
+      "containerPorts",
+      "http"
+    ],
+    [
+      "controlplane",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "cas",
+      "service",
+      "extraPorts"
+    ],
+    [
+      "controlplane",
+      "keylessSigning",
+      "backend"
+    ],
+    [
+      "dex",
+      "schedulerName"
+    ],
+    [
+      "dex",
+      "tolerations",
+      "*"
+    ],
+    [
+      "dex",
+      "metrics",
+      "service",
+      "ports",
+      "metrics"
+    ],
+    [
+      "controlplane",
+      "serviceAccount"
+    ],
+    [
+      "cas",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "cas",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "controlplane",
+      "referrerSharedIndex",
+      "enabled"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "controlplane",
+      "migration",
+      "image",
+      "digest"
+    ],
+    [
+      "cas",
+      "ingressAPI",
+      "extraRules"
+    ],
+    [
+      "cas",
+      "priorityClassName"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "enabled"
+    ],
+    [
+      "cas",
+      "autoscaling",
+      "vpa",
+      "maxAllowed"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "extraPorts"
+    ],
+    [
+      "cas",
+      "service"
+    ],
+    [
+      "controlplane",
+      "autoscaling",
+      "hpa",
+      "targetCPU"
+    ],
+    [
+      "cas",
+      "ingress",
+      "extraHosts"
+    ],
+    [
+      "nameOverride"
+    ],
+    [
+      "controlplane",
+      "ingressAPI",
+      "extraTls",
+      "*"
+    ],
+    [
+      "controlplane",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "cas",
+      "extraVolumes"
+    ],
+    [
+      "global",
+      "security",
+      "allowInsecureImages"
+    ],
+    [
+      "controlplane",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "controlplane",
+      "ingress",
+      "extraHosts"
+    ],
+    [
+      "cas",
+      "serviceAPI",
+      "clusterIP"
+    ],
+    [
+      "controlplane",
+      "sentry",
+      "environment"
+    ],
+    [
+      "cas",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "cas",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "controlplane",
+      "topologySpreadConstraints"
+    ],
+    [
+      "dex",
+      "metrics",
+      "serviceMonitor",
+      "selector"
+    ],
+    [
+      "controlplane",
+      "serviceAPI",
+      "annotations",
+      "traefik.ingress.kubernetes.io/service.serversscheme"
+    ],
+    [
+      "dex",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "dex",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 72,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 73,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 74,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 75,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 6,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 7,
+      "message": "unresolved dot context: .Values.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 11,
+      "message": "unresolved dot context: .Values.vault"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 18,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 19,
+      "message": "unresolved dot context: .Values.development"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "unresolved dot context: .Values.casJWTPrivateKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 22,
+      "message": "unresolved dot context: .Values.casJWTPrivateKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Values.development"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 32,
+      "message": "unresolved dot context: .Values.casJWTPublicKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 32,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 32,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 34,
+      "message": "unresolved dot context: .Values.casJWTPublicKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 42,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 55,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 65,
+      "message": "unresolved dot context: .Values.secretsBackend"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 66,
+      "message": "unresolved dot context: .secretPrefix"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 67,
+      "message": "unresolved dot context: .backend"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 69,
+      "message": "unresolved variable context: $.Values.vault.server.extraEnvVars"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 70,
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 71,
+      "message": "unresolved dot context: .value"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 71,
+      "message": "variable reassignment requires review: $tokenEnvVar = .value"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "unresolved variable context: $.Values.development"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "unresolved dot context: .vault"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "unresolved dot context: .vault.address"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 76,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 80,
+      "message": "unresolved variable context: $.Values.vault.server.extraEnvVars"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 80,
+      "message": "unresolved lookup target: required \"VAULT_DEV_ROOT_TOKEN_ID environment variable is required when development mode is enabled\" (index $.Values.vault.server.extraEnvVars \"VAULT_DEV_ROOT_TOKEN_ID\")"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 82,
+      "message": "unresolved dot context: .vault"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 83,
+      "message": "unresolved dot context: .vault.address"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 84,
+      "message": "unresolved dot context: .vault.token"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 67,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 87,
+      "message": "unresolved dot context: .backend"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 89,
+      "message": "unresolved dot context: .awsSecretManager.region"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 91,
+      "message": "unresolved dot context: .awsSecretManager.accessKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 92,
+      "message": "unresolved dot context: .awsSecretManager.secretKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 94,
+      "message": "unresolved dot context: .backend"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 96,
+      "message": "unresolved dot context: .gcpSecretManager.projectId"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 98,
+      "message": "unresolved dot context: .gcpSecretManager.serviceAccountKey"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 101,
+      "message": "unresolved dot context: .backend"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 103,
+      "message": "unresolved dot context: .azureKeyVault.tenantID"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 104,
+      "message": "unresolved dot context: .azureKeyVault.clientID"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 105,
+      "message": "unresolved dot context: .azureKeyVault.clientSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 106,
+      "message": "unresolved dot context: .azureKeyVault.vaultURI"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 111,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 112,
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 112,
+      "message": "unresolved dot context: .nodePorts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 112,
+      "message": "unresolved dot context: .nodePorts.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 113,
+      "message": "unresolved dot context: .nodePorts.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 125,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 126,
+      "message": "unresolved dot context: .Values.controlplane.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 126,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 126,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 132,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 133,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 133,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 139,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 140,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 140,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 146,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 147,
+      "message": "unresolved dot context: .Values.commonLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 147,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 147,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 154,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 155,
+      "message": "unresolved dot context: .Values.controlplane.podLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 155,
+      "message": "unresolved dot context: .Values.commonLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 155,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 155,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 156,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 156,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 160,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 161,
+      "message": "unresolved dot context: .Values.controlplane.migration.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 161,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 161,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 167,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 168,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 168,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 176,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 177,
+      "message": "unresolved dot context: .Values.development"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 178,
+      "message": "unresolved dot context: .Values.controlplane.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 179,
+      "message": "unresolved dot context: .oidc.url"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 179,
+      "message": "unresolved variable context: $.Values.dex.service.ports.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 179,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 180,
+      "message": "unresolved dot context: .oidc.clientID"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 181,
+      "message": "unresolved dot context: .oidc.clientSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 182,
+      "message": "unresolved dot context: .oidc.loginURLOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 183,
+      "message": "unresolved dot context: .oidc.loginURLOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 177,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 187,
+      "message": "unresolved dot context: .Values.controlplane.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 188,
+      "message": "unresolved dot context: .oidc.url"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 189,
+      "message": "unresolved dot context: .oidc.clientID"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 190,
+      "message": "unresolved dot context: .oidc.clientSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 191,
+      "message": "unresolved dot context: .oidc.loginURLOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 192,
+      "message": "unresolved dot context: .oidc.loginURLOverride"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 201,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 202,
+      "message": "unresolved dot context: .Values.controlplane.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 203,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 203,
+      "message": "unresolved dot context: .Values.controlplane.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 203,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 205,
+      "message": "unresolved dot context: .Values.controlplane.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 212,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 213,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 213,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 219,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 220,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 220,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 221,
+      "message": "unresolved dot context: .Values.controlplane.migration.ssl"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 227,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 228,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 228,
+      "message": "unresolved dot context: .Values.controlplane.externalDatabase.host"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 228,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 228,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 234,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 235,
+      "message": "unresolved dot context: .Values.controlplane.externalDatabase.port"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 235,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 241,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 242,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 243,
+      "message": "unresolved dot context: .Values.global.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 244,
+      "message": "unresolved dot context: .Values.global.postgresql.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 245,
+      "message": "unresolved dot context: .Values.global.postgresql.auth.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 245,
+      "message": "unresolved dot context: .Values.postgresql.auth.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 247,
+      "message": "unresolved dot context: .Values.postgresql.auth.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 250,
+      "message": "unresolved dot context: .Values.postgresql.auth.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 253,
+      "message": "unresolved dot context: .Values.controlplane.externalDatabase.password"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 261,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 262,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 262,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 268,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 269,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 270,
+      "message": "unresolved dot context: .Values.global.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 271,
+      "message": "unresolved dot context: .Values.global.postgresql.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 272,
+      "message": "unresolved dot context: .Values.global.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 272,
+      "message": "unresolved dot context: .Values.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 274,
+      "message": "unresolved dot context: .Values.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 277,
+      "message": "unresolved dot context: .Values.postgresql.auth.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 280,
+      "message": "unresolved dot context: .Values.controlplane.externalDatabase.database"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 287,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 288,
+      "message": "unresolved dot context: .Values.postgresql.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 289,
+      "message": "unresolved dot context: .Values.global.postgresql"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 290,
+      "message": "unresolved dot context: .Values.global.postgresql.auth"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 291,
+      "message": "unresolved dot context: .Values.global.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 291,
+      "message": "unresolved dot context: .Values.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 293,
+      "message": "unresolved dot context: .Values.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 296,
+      "message": "unresolved dot context: .Values.postgresql.auth.username"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 299,
+      "message": "unresolved dot context: .Values.controlplane.externalDatabase.user"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 308,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 309,
+      "message": "unresolved dot context: .Values.controlplane.service"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 310,
+      "message": "unresolved dot context: .Values.controlplane.ingress"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 312,
+      "message": "unresolved dot context: .Values.controlplane.auth.oidc.externalURL"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 313,
+      "message": "unresolved dot context: .Values.controlplane.auth.oidc.externalURL"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 312,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 314,
+      "message": "unresolved variable context: $ingress.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 314,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 315,
+      "message": "unresolved variable context: $ingress.tls"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 315,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 316,
+      "message": "unresolved variable context: $service.type"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 316,
+      "message": "unresolved variable context: $service.nodePorts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 316,
+      "message": "unresolved variable context: $service.nodePorts.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 317,
+      "message": "unresolved variable context: $service.nodePorts.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 326,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 327,
+      "message": "unresolved dot context: .Values.controlplane.serviceAPI"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 328,
+      "message": "unresolved dot context: .Values.controlplane.ingress"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 330,
+      "message": "unresolved variable context: $ingress.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 330,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 331,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 330,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 332,
+      "message": "unresolved variable context: $service.ports.https"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 333,
+      "message": "unresolved variable context: $service.ports.https"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 335,
+      "message": "unresolved variable context: $service.ports.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 339,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 342,
+      "message": "unresolved dot context: .dsn"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 343,
+      "message": "unresolved dot context: .environment"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 352,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 353,
+      "message": "unresolved dot context: .Values.cas.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 353,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 353,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 359,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 360,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 360,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 366,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 367,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 367,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 373,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 374,
+      "message": "unresolved dot context: .Values.commonLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 374,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 374,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 381,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 382,
+      "message": "unresolved dot context: .Values.cas.podLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 382,
+      "message": "unresolved dot context: .Values.commonLabels"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 382,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 382,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 383,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 383,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 390,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 391,
+      "message": "unresolved dot context: .Values.cas.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 392,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 392,
+      "message": "unresolved dot context: .Values.cas.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 392,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 394,
+      "message": "unresolved dot context: .Values.cas.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 403,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 404,
+      "message": "unresolved dot context: .Values.cas.service"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 405,
+      "message": "unresolved dot context: .Values.cas.ingress"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 407,
+      "message": "unresolved variable context: $ingress.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 407,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 408,
+      "message": "unresolved variable context: $ingress.tls"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 408,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 407,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 409,
+      "message": "unresolved variable context: $service.type"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 409,
+      "message": "unresolved variable context: $service.nodePorts"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 409,
+      "message": "unresolved variable context: $service.nodePorts.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 410,
+      "message": "unresolved variable context: $service.nodePorts.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 417,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 418,
+      "message": "unresolved dot context: .Values.cas.serviceAPI"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 419,
+      "message": "unresolved dot context: .Values.cas.ingress"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 421,
+      "message": "unresolved variable context: $ingress.enabled"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 421,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 422,
+      "message": "unresolved variable context: $ingress.hostname"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 421,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 423,
+      "message": "unresolved variable context: $service.ports.https"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 424,
+      "message": "unresolved variable context: $service.ports.https"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 426,
+      "message": "unresolved variable context: $service.ports.http"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 439,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 440,
+      "message": "unresolved dot context: .Values.dex.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 440,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 440,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 446,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 447,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 447,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 453,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 454,
+      "message": "unresolved dot context: .Values.dex.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 455,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 455,
+      "message": "unresolved dot context: .Values.dex.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 455,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 457,
+      "message": "unresolved dot context: .Values.dex.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 464,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 465,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 465,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/configmap.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/configmap.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/configmap.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/configmap.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 44,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 76,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 102,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 104,
+      "message": "unresolved dot context: .Values.cas.resourcesPreset"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 105,
+      "message": "unresolved dot context: .Values.cas.resourcesPreset"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 105,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 108,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 112,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 117,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 121,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 144,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 147,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 154,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 156,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 159,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 168,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 175,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/deployment.yaml",
+      "line": 178,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/hpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/hpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/hpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/hpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/hpa.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/hpa.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/hpa.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress-grpc.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/ingress.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/networkpolicy.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/pdb.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/pdb.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/pdb.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/pdb.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/pdb.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-config.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-config.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-config.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-config.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-config.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-config.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-customcas.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-customcas.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-gcp-secret-manager.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-gcp-secret-manager.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-jwt-public-key.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-jwt-public-key.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/secret-jwt-public-key.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-account.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-account.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-account.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-account.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-account.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 44,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 46,
+      "message": "unresolved dot context: .Values.cas.serviceAPI.type"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-grpc.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 44,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 46,
+      "message": "unresolved dot context: .Values.cas.service.type"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/service-http.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/cas/vpa.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/configmap.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/configmap.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/configmap.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/configmap.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/configmap.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/configmap.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/configmap.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 62,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 65,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 72,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 75,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 92,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 97,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 99,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 126,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 130,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 135,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 139,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 141,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 143,
+      "message": "unresolved dot context: .Values.controlplane.resourcesPreset"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 144,
+      "message": "unresolved dot context: .Values.controlplane.resourcesPreset"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 144,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 177,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 180,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 187,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 189,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 195,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 202,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 211,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 216,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 221,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/deployment.yaml",
+      "line": 224,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/hpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/hpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/hpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/hpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/hpa.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/hpa.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/hpa.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress-grpc.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/ingress.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/networkpolicy.yaml",
+      "line": 72,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/pdb.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/pdb.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/pdb.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/pdb.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/pdb.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-config.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-customcas.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-customcas.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-ejbca-ca.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-ejbca-ca.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-file-ca.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-file-ca.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-gcp-secret-manager.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-gcp-secret-manager.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-jwt-cas-private-key.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-jwt-cas-private-key.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/secret-jwt-cas-private-key.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-account.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-account.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-account.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-account.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-account.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 44,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 46,
+      "message": "unresolved dot context: .Values.controlplane.serviceAPI.type"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-grpc.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 44,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 46,
+      "message": "unresolved dot context: .Values.controlplane.service.type"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/service-http.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/controlplane/vpa.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 54,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 72,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 76,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 80,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 83,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 86,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 89,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 96,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 95,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 100,
+      "message": "unresolved dot context: .Values.dex.extraArgs"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 101,
+      "message": "unresolved dot context: .Values.dex.extraArgs"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 101,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 116,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 121,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 125,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 127,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 129,
+      "message": "unresolved dot context: .Values.dex.resourcesPreset"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 130,
+      "message": "unresolved dot context: .Values.dex.resourcesPreset"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 130,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 133,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 132,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 134,
+      "message": "unresolved dot context: .Values.dex.startupProbe.enabled"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 139,
+      "message": "unresolved dot context: .Values.dex.startupProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 140,
+      "message": "unresolved dot context: .Values.dex.startupProbe.periodSeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 141,
+      "message": "unresolved dot context: .Values.dex.startupProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 142,
+      "message": "unresolved dot context: .Values.dex.startupProbe.successThreshold"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 143,
+      "message": "unresolved dot context: .Values.dex.startupProbe.failureThreshold"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 146,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 145,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 147,
+      "message": "unresolved dot context: .Values.dex.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 152,
+      "message": "unresolved dot context: .Values.dex.livenessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 153,
+      "message": "unresolved dot context: .Values.dex.livenessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 154,
+      "message": "unresolved dot context: .Values.dex.livenessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 155,
+      "message": "unresolved dot context: .Values.dex.livenessProbe.successThreshold"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 156,
+      "message": "unresolved dot context: .Values.dex.livenessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 159,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 158,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 160,
+      "message": "unresolved dot context: .Values.dex.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 165,
+      "message": "unresolved dot context: .Values.dex.readinessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 166,
+      "message": "unresolved dot context: .Values.dex.readinessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 167,
+      "message": "unresolved dot context: .Values.dex.readinessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 168,
+      "message": "unresolved dot context: .Values.dex.readinessProbe.successThreshold"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 169,
+      "message": "unresolved dot context: .Values.dex.readinessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 181,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 184,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 191,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/deployment.yaml",
+      "line": 193,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 45,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 47,
+      "message": "unresolved dot context: .Values.dex.metrics.service.type"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/metrics-svc.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 69,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/networkpolicy.yaml",
+      "line": 86,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/pdb.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/pdb.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/pdb.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/pdb.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/pdb.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/role.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/role.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/role.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/role.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/role.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/role.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/role.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/rolebinding.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/secret.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/secret.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/secret.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/secret.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/secret.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/secret.yaml",
+      "line": 35,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/secret.yaml",
+      "line": 43,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service-account.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service-account.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service-account.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service-account.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service-account.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service-account.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service-account.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 45,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 47,
+      "message": "unresolved dot context: .Values.dex.service.type"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 54,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 56,
+      "message": "unresolved dot context: .Values.dex.service.type"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 62,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/service.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 44,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/dex/servicemonitor.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/extra-list.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "path": [
+        "extraDeploy",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "customCAs",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "service",
+        "port"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "cas",
+        "serviceAPI",
+        "port"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "controlplane",
+        "customCAs",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "service",
+        "port"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "controlplane",
+        "serviceAPI",
+        "port"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "cas",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "dex",
+        "metrics",
+        "service",
+        "nodePort"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "dex",
+        "metrics",
+        "service",
+        "port"
+      ],
+      "message": "no unambiguous default; null placeholder, type from schema if available"
+    },
+    {
+      "path": [
+        "dex",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "dex",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "dex",
+        "networkPolicy",
+        "kubeAPIServerPorts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "cas",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cas",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cas",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cas",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cas",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cas",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cas",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "cas",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingress",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingress",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingress",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "name"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "path"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "ingressAPI",
+        "extraHosts",
+        "*",
+        "pathType"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "controlplane",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "dex",
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "dex",
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}
