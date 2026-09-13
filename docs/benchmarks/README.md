@@ -65,8 +65,8 @@ checked against an independent oracle, and exact-equivalent renders are skipped.
 Use each script's `--help` for options.
 
 The figures below use local Python workers and the [standard chart](standard-chart).
-In this Helm 4 run, pruning completed **170,944 checks with 256 renders**, compared
-with **11,362 checks** without pruning, within each nine-minute budget.
+In this Helm 4 run, pruning completed **163,122 checks with 256 renders**, compared
+with **11,583 checks** without pruning, within each nine-minute budget.
 [Raw measurements](results.json), [CSV](results.csv), and
 [refresh provenance](refresh/README.md) include the host and run details.
 These are single-run measurements; they do not establish timing variability.

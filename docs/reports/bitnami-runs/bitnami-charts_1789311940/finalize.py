@@ -168,7 +168,7 @@ def generated_delta_supported(value, baseline):
     """
     Check changed text and new keys without rejecting untouched supplied defaults.
     """
-    if type(value) is type(baseline) and value == baseline:
+    if value == baseline and (type(value) is type(baseline) or isinstance(value, str) and isinstance(baseline, str)):
         return True
     if isinstance(value, dict):
         original = baseline if isinstance(baseline, dict) else {}

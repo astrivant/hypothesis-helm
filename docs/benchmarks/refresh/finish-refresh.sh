@@ -20,10 +20,10 @@ bash "$root/retry-topologies.sh" "$root" >> "$root/logs/topology-retries.log" 2>
 .venv/bin/python "$root/verify-topologies.py" "$root" > "$root/logs/verify-topologies.log" 2>&1
 .venv/bin/python "$root/publish.py" "$root" > "$root/logs/publish.log" 2>&1
 printf '%s\n' bitnami > "$root/postprocess-current.txt"
-bash docs/reports/bitnami-runs/bitnami-charts_1789304252/run.sh docs/reports/bitnami-runs/bitnami-charts_1789304252 || true
-.venv/bin/python docs/reports/bitnami-runs/bitnami-charts_1789304252/finalize.py docs/reports/bitnami-runs/bitnami-charts_1789304252 bitnami > "$root/logs/bitnami-finalize.log" 2>&1
+bash docs/reports/bitnami-runs/bitnami-charts_1789311940/run.sh docs/reports/bitnami-runs/bitnami-charts_1789311940 || true
+.venv/bin/python docs/reports/bitnami-runs/bitnami-charts_1789311940/finalize.py docs/reports/bitnami-runs/bitnami-charts_1789311940 bitnami > "$root/logs/bitnami-finalize.log" 2>&1
 printf '%s\n' prometheus > "$root/postprocess-current.txt"
-bash docs/reports/prometheus-runs/prometheus-charts_1789304252/run.sh docs/reports/prometheus-runs/prometheus-charts_1789304252 || true
-.venv/bin/python docs/reports/prometheus-runs/prometheus-charts_1789304252/finalize.py docs/reports/prometheus-runs/prometheus-charts_1789304252 prometheus > "$root/logs/prometheus-finalize.log" 2>&1
+bash docs/reports/prometheus-runs/prometheus-charts_1789311940/run.sh docs/reports/prometheus-runs/prometheus-charts_1789311940 || true
+.venv/bin/python docs/reports/prometheus-runs/prometheus-charts_1789311940/finalize.py docs/reports/prometheus-runs/prometheus-charts_1789311940 prometheus > "$root/logs/prometheus-finalize.log" 2>&1
 printf '%s\n' complete > "$root/postprocess-current.txt"
 date +%s > "$root/all-finished-epoch.txt"

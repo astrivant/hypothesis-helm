@@ -3,40 +3,11 @@ Validate completed study ledgers before publication.
 """
 
 import json
-import shutil
-import subprocess
 import sys
-import time
 from collections import Counter
 from pathlib import Path
 
 root = Path(sys.argv[1])
-# The retained legacy study points to a fixture prepared separately from run.sh.
-if not (root / "outputs/discovery/results.json").exists():
-    subprocess.run([sys.executable, str(root / "prepare-discovery.py"), str(root)], check=True)
-    shutil.copy2(root / "logs/discovery.log", root / "logs/discovery-initial.log")
-    shutil.copy2(root / "status.tsv", root / "initial-status.tsv")
-    shutil.copy2(root / "finished-epoch.txt", root / "initial-finished-epoch.txt")
-    with (root / "logs/discovery.log").open("w") as stream:
-        subprocess.run(
-            [
-                ".venv/bin/hypothesis-helm-benchmark",
-                "discovery",
-                "--chart",
-                str(root / "outputs/discovery/chart"),
-                "--max-strength",
-                "6",
-                "--time-limit",
-                "9m",
-                "--output",
-                str(root / "outputs/discovery"),
-            ],
-            stdout=stream,
-            stderr=subprocess.STDOUT,
-            check=True,
-        )
-    (root / "status.tsv").write_text((root / "status.tsv").read_text().replace("discovery\t1\n", "discovery\t0\n"))
-    (root / "finished-epoch.txt").write_text(str(int(time.time())) + "\n")
 expected = json.loads((root / "provenance.json").read_text())["code_sha256"]
 summary = {}
 for study in [

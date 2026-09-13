@@ -1,6 +1,6 @@
 {
-  "started_epoch": 1789304252,
-  "code_sha256": "5d6cf76c47c1e09d0b0889dd101fda15dcdb1b54e619459bec2fefc80bdf0c28",
+  "started_epoch": 1789312921,
+  "code_sha256": "a8906717ea561b4054868c0ea8d7227cedd97107acb65dcce779a6e2692581d8",
   "helm": "v4.3.0+gbec5b06",
   "execution": "sequential synthetic studies, then topology exports and repository scans",
   "time_limit_seconds": 540,
@@ -8,12 +8,16 @@
     "bitnami": "6a8cccf3c29a1faabf0c34c8276a09ed14f3c5b3",
     "prometheus": "732bf3642c931946f1962fbd2e1b694ce8827e77"
   },
-  "generated_text_policy": "Exclude generated C0/C1 controls except tab, LF, CR; preserve other Unicode; explicit finite domains unchanged",
+  "generated_text_policy": "Exclude generated C0/C1 controls except LF and CR; preserve other Unicode; explicit finite domains unchanged",
   "post_measurement_changes": "None. Application code is held fixed throughout regeneration.",
   "python": "3.13.12",
   "platform": "macOS-15.7.4-arm64-arm-64bit-Mach-O",
   "repository_scans": {
-    "bitnami": "docs/reports/bitnami-runs/bitnami-charts_1789304252",
-    "prometheus": "docs/reports/prometheus-runs/prometheus-charts_1789304252"
-  }
+    "bitnami": "docs/reports/bitnami-runs/bitnami-charts_1789311940",
+    "prometheus": "docs/reports/prometheus-runs/prometheus-charts_1789311940"
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "selection_order": "discover, filter, traverse, execute",
+  "prior_attempt": "interrupted-deadline-attempt: renderer timeout at the execution deadline was misclassified; preserved but not published"
 }

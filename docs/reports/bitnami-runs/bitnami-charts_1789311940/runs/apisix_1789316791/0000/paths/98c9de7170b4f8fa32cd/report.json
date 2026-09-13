@@ -1,0 +1,4427 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 369,
+    "present_fields": [
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "controlPlane",
+        "affinity"
+      ],
+      [
+        "controlPlane",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "adminAPI"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "configServer"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "control"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "controlPlane",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "customLivenessProbe"
+      ],
+      [
+        "controlPlane",
+        "customReadinessProbe"
+      ],
+      [
+        "controlPlane",
+        "customStartupProbe"
+      ],
+      [
+        "controlPlane",
+        "dashboardEnabled"
+      ],
+      [
+        "controlPlane",
+        "defaultConfig"
+      ],
+      [
+        "controlPlane",
+        "dnsPolicy"
+      ],
+      [
+        "controlPlane",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "existingConfigMap"
+      ],
+      [
+        "controlPlane",
+        "existingSecret"
+      ],
+      [
+        "controlPlane",
+        "extraConfig"
+      ],
+      [
+        "controlPlane",
+        "extraConfigExistingConfigMap"
+      ],
+      [
+        "controlPlane",
+        "extraEnvVars"
+      ],
+      [
+        "controlPlane",
+        "extraEnvVarsCM"
+      ],
+      [
+        "controlPlane",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "controlPlane",
+        "extraVolumeMounts"
+      ],
+      [
+        "controlPlane",
+        "extraVolumes"
+      ],
+      [
+        "controlPlane",
+        "hostAliases"
+      ],
+      [
+        "controlPlane",
+        "hostNetwork"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "path"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "tls"
+      ],
+      [
+        "controlPlane",
+        "initContainers"
+      ],
+      [
+        "controlPlane",
+        "lifecycleHooks"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "controlPlane",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "controlPlane",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "controlPlane",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "controlPlane",
+        "nodeSelector"
+      ],
+      [
+        "controlPlane",
+        "pdb",
+        "create"
+      ],
+      [
+        "controlPlane",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "controlPlane",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "controlPlane",
+        "podAffinityPreset"
+      ],
+      [
+        "controlPlane",
+        "podAnnotations"
+      ],
+      [
+        "controlPlane",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "controlPlane",
+        "podLabels"
+      ],
+      [
+        "controlPlane",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "priorityClassName"
+      ],
+      [
+        "controlPlane",
+        "rbac",
+        "create"
+      ],
+      [
+        "controlPlane",
+        "rbac",
+        "rules"
+      ],
+      [
+        "controlPlane",
+        "replicaCount"
+      ],
+      [
+        "controlPlane",
+        "resources"
+      ],
+      [
+        "controlPlane",
+        "schedulerName"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "nodePorts",
+        "adminAPI"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "nodePorts",
+        "configServer"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "nodePorts",
+        "metrics"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "ports",
+        "adminAPI"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "ports",
+        "configServer"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "type"
+      ],
+      [
+        "controlPlane",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controlPlane",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "controlPlane",
+        "sidecars"
+      ],
+      [
+        "controlPlane",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "autoGenerated"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "certCAFilename"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "controlPlane",
+        "tolerations"
+      ],
+      [
+        "controlPlane",
+        "topologySpreadConstraints"
+      ],
+      [
+        "controlPlane",
+        "updateStrategy"
+      ],
+      [
+        "controlPlane",
+        "useDaemonSet"
+      ],
+      [
+        "dataPlane",
+        "affinity"
+      ],
+      [
+        "dataPlane",
+        "automountServiceAccountToken"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "control"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "https"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "dataPlane",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "customLivenessProbe"
+      ],
+      [
+        "dataPlane",
+        "customReadinessProbe"
+      ],
+      [
+        "dataPlane",
+        "customStartupProbe"
+      ],
+      [
+        "dataPlane",
+        "defaultConfig"
+      ],
+      [
+        "dataPlane",
+        "dnsPolicy"
+      ],
+      [
+        "dataPlane",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "existingConfigMap"
+      ],
+      [
+        "dataPlane",
+        "extraConfig"
+      ],
+      [
+        "dataPlane",
+        "extraConfigExistingConfigMap"
+      ],
+      [
+        "dataPlane",
+        "extraEnvVars"
+      ],
+      [
+        "dataPlane",
+        "extraEnvVarsCM"
+      ],
+      [
+        "dataPlane",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "dataPlane",
+        "extraVolumeMounts"
+      ],
+      [
+        "dataPlane",
+        "extraVolumes"
+      ],
+      [
+        "dataPlane",
+        "hostAliases"
+      ],
+      [
+        "dataPlane",
+        "hostNetwork"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "path"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "tls"
+      ],
+      [
+        "dataPlane",
+        "initContainers"
+      ],
+      [
+        "dataPlane",
+        "lifecycleHooks"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "dataPlane",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "dataPlane",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "dataPlane",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "dataPlane",
+        "nodeSelector"
+      ],
+      [
+        "dataPlane",
+        "pdb",
+        "create"
+      ],
+      [
+        "dataPlane",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "dataPlane",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "dataPlane",
+        "podAffinityPreset"
+      ],
+      [
+        "dataPlane",
+        "podAnnotations"
+      ],
+      [
+        "dataPlane",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "dataPlane",
+        "podLabels"
+      ],
+      [
+        "dataPlane",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "priorityClassName"
+      ],
+      [
+        "dataPlane",
+        "rbac",
+        "create"
+      ],
+      [
+        "dataPlane",
+        "rbac",
+        "rules"
+      ],
+      [
+        "dataPlane",
+        "replicaCount"
+      ],
+      [
+        "dataPlane",
+        "resources"
+      ],
+      [
+        "dataPlane",
+        "schedulerName"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "nodePorts",
+        "metrics"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "type"
+      ],
+      [
+        "dataPlane",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "dataPlane",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "dataPlane",
+        "sidecars"
+      ],
+      [
+        "dataPlane",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "autoGenerated"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "certCAFilename"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "dataPlane",
+        "tolerations"
+      ],
+      [
+        "dataPlane",
+        "topologySpreadConstraints"
+      ],
+      [
+        "dataPlane",
+        "updateStrategy"
+      ],
+      [
+        "dataPlane",
+        "useDaemonSet"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "etcd",
+        "enabled"
+      ],
+      [
+        "externalEtcd",
+        "existingSecret"
+      ],
+      [
+        "externalEtcd",
+        "password"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingressController",
+        "affinity"
+      ],
+      [
+        "ingressController",
+        "automountServiceAccountToken"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "ingressController",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "ingressController",
+        "containerPorts",
+        "https"
+      ],
+      [
+        "ingressController",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "customLivenessProbe"
+      ],
+      [
+        "ingressController",
+        "customReadinessProbe"
+      ],
+      [
+        "ingressController",
+        "customStartupProbe"
+      ],
+      [
+        "ingressController",
+        "defaultConfig"
+      ],
+      [
+        "ingressController",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "existingConfigMap"
+      ],
+      [
+        "ingressController",
+        "extraConfig"
+      ],
+      [
+        "ingressController",
+        "extraConfigExistingConfigMap"
+      ],
+      [
+        "ingressController",
+        "extraEnvVars"
+      ],
+      [
+        "ingressController",
+        "extraEnvVarsCM"
+      ],
+      [
+        "ingressController",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "ingressController",
+        "extraVolumeMounts"
+      ],
+      [
+        "ingressController",
+        "extraVolumes"
+      ],
+      [
+        "ingressController",
+        "hostAliases"
+      ],
+      [
+        "ingressController",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "path"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "tls"
+      ],
+      [
+        "ingressController",
+        "ingressClass",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "ingressClass",
+        "create"
+      ],
+      [
+        "ingressController",
+        "ingressClass",
+        "name"
+      ],
+      [
+        "ingressController",
+        "initContainers"
+      ],
+      [
+        "ingressController",
+        "lifecycleHooks"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "ingressController",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "ingressController",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "ingressController",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "ingressController",
+        "nodeSelector"
+      ],
+      [
+        "ingressController",
+        "pdb",
+        "create"
+      ],
+      [
+        "ingressController",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "ingressController",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "ingressController",
+        "podAffinityPreset"
+      ],
+      [
+        "ingressController",
+        "podAnnotations"
+      ],
+      [
+        "ingressController",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "ingressController",
+        "podLabels"
+      ],
+      [
+        "ingressController",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "priorityClassName"
+      ],
+      [
+        "ingressController",
+        "rbac",
+        "create"
+      ],
+      [
+        "ingressController",
+        "rbac",
+        "rules"
+      ],
+      [
+        "ingressController",
+        "replicaCount"
+      ],
+      [
+        "ingressController",
+        "resources"
+      ],
+      [
+        "ingressController",
+        "schedulerName"
+      ],
+      [
+        "ingressController",
+        "service",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "ingressController",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "ingressController",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "ingressController",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "ingressController",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "ingressController",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "ingressController",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "ingressController",
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "ingressController",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "ingressController",
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "ingressController",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "ingressController",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "ingressController",
+        "service",
+        "type"
+      ],
+      [
+        "ingressController",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "ingressController",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "ingressController",
+        "sidecars"
+      ],
+      [
+        "ingressController",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "autoGenerated"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "certCAFilename"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "ingressController",
+        "tolerations"
+      ],
+      [
+        "ingressController",
+        "topologySpreadConstraints"
+      ],
+      [
+        "ingressController",
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "waitContainer",
+        "image"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "controlPlane",
+        "extraConfigExistingConfigMap"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "controlPlane",
+        "affinity"
+      ],
+      [
+        "controlPlane",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "controlPlane",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "adminAPI"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "configServer"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "control"
+      ],
+      [
+        "controlPlane",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "controlPlane",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "customLivenessProbe"
+      ],
+      [
+        "controlPlane",
+        "customReadinessProbe"
+      ],
+      [
+        "controlPlane",
+        "customStartupProbe"
+      ],
+      [
+        "controlPlane",
+        "dashboardEnabled"
+      ],
+      [
+        "controlPlane",
+        "defaultConfig"
+      ],
+      [
+        "controlPlane",
+        "dnsPolicy"
+      ],
+      [
+        "controlPlane",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "existingConfigMap"
+      ],
+      [
+        "controlPlane",
+        "existingSecret"
+      ],
+      [
+        "controlPlane",
+        "extraConfig"
+      ],
+      [
+        "controlPlane",
+        "extraEnvVars"
+      ],
+      [
+        "controlPlane",
+        "extraEnvVarsCM"
+      ],
+      [
+        "controlPlane",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "controlPlane",
+        "extraVolumeMounts"
+      ],
+      [
+        "controlPlane",
+        "extraVolumes"
+      ],
+      [
+        "controlPlane",
+        "hostAliases"
+      ],
+      [
+        "controlPlane",
+        "hostNetwork"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "path"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "controlPlane",
+        "ingress",
+        "tls"
+      ],
+      [
+        "controlPlane",
+        "initContainers"
+      ],
+      [
+        "controlPlane",
+        "lifecycleHooks"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "controlPlane",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "controlPlane",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "controlPlane",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "controlPlane",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "controlPlane",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "controlPlane",
+        "nodeSelector"
+      ],
+      [
+        "controlPlane",
+        "pdb",
+        "create"
+      ],
+      [
+        "controlPlane",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "controlPlane",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "controlPlane",
+        "podAffinityPreset"
+      ],
+      [
+        "controlPlane",
+        "podAnnotations"
+      ],
+      [
+        "controlPlane",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "controlPlane",
+        "podLabels"
+      ],
+      [
+        "controlPlane",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "priorityClassName"
+      ],
+      [
+        "controlPlane",
+        "rbac",
+        "create"
+      ],
+      [
+        "controlPlane",
+        "rbac",
+        "rules"
+      ],
+      [
+        "controlPlane",
+        "replicaCount"
+      ],
+      [
+        "controlPlane",
+        "resources"
+      ],
+      [
+        "controlPlane",
+        "schedulerName"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "nodePorts",
+        "adminAPI"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "nodePorts",
+        "configServer"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "nodePorts",
+        "metrics"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "ports",
+        "adminAPI"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "ports",
+        "configServer"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "controlPlane",
+        "service",
+        "type"
+      ],
+      [
+        "controlPlane",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "controlPlane",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "controlPlane",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "controlPlane",
+        "sidecars"
+      ],
+      [
+        "controlPlane",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "autoGenerated"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "certCAFilename"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "enabled"
+      ],
+      [
+        "controlPlane",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "controlPlane",
+        "tolerations"
+      ],
+      [
+        "controlPlane",
+        "topologySpreadConstraints"
+      ],
+      [
+        "controlPlane",
+        "updateStrategy"
+      ],
+      [
+        "controlPlane",
+        "useDaemonSet"
+      ],
+      [
+        "dataPlane",
+        "affinity"
+      ],
+      [
+        "dataPlane",
+        "automountServiceAccountToken"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "dataPlane",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "control"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "https"
+      ],
+      [
+        "dataPlane",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "dataPlane",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "customLivenessProbe"
+      ],
+      [
+        "dataPlane",
+        "customReadinessProbe"
+      ],
+      [
+        "dataPlane",
+        "customStartupProbe"
+      ],
+      [
+        "dataPlane",
+        "defaultConfig"
+      ],
+      [
+        "dataPlane",
+        "dnsPolicy"
+      ],
+      [
+        "dataPlane",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "existingConfigMap"
+      ],
+      [
+        "dataPlane",
+        "extraConfig"
+      ],
+      [
+        "dataPlane",
+        "extraConfigExistingConfigMap"
+      ],
+      [
+        "dataPlane",
+        "extraEnvVars"
+      ],
+      [
+        "dataPlane",
+        "extraEnvVarsCM"
+      ],
+      [
+        "dataPlane",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "dataPlane",
+        "extraVolumeMounts"
+      ],
+      [
+        "dataPlane",
+        "extraVolumes"
+      ],
+      [
+        "dataPlane",
+        "hostAliases"
+      ],
+      [
+        "dataPlane",
+        "hostNetwork"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "path"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "dataPlane",
+        "ingress",
+        "tls"
+      ],
+      [
+        "dataPlane",
+        "initContainers"
+      ],
+      [
+        "dataPlane",
+        "lifecycleHooks"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "dataPlane",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "dataPlane",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "dataPlane",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "dataPlane",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "dataPlane",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "dataPlane",
+        "nodeSelector"
+      ],
+      [
+        "dataPlane",
+        "pdb",
+        "create"
+      ],
+      [
+        "dataPlane",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "dataPlane",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "dataPlane",
+        "podAffinityPreset"
+      ],
+      [
+        "dataPlane",
+        "podAnnotations"
+      ],
+      [
+        "dataPlane",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "dataPlane",
+        "podLabels"
+      ],
+      [
+        "dataPlane",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "priorityClassName"
+      ],
+      [
+        "dataPlane",
+        "rbac",
+        "create"
+      ],
+      [
+        "dataPlane",
+        "rbac",
+        "rules"
+      ],
+      [
+        "dataPlane",
+        "replicaCount"
+      ],
+      [
+        "dataPlane",
+        "resources"
+      ],
+      [
+        "dataPlane",
+        "schedulerName"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "nodePorts",
+        "metrics"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "dataPlane",
+        "service",
+        "type"
+      ],
+      [
+        "dataPlane",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "dataPlane",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "dataPlane",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "dataPlane",
+        "sidecars"
+      ],
+      [
+        "dataPlane",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "autoGenerated"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "certCAFilename"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "enabled"
+      ],
+      [
+        "dataPlane",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "dataPlane",
+        "tolerations"
+      ],
+      [
+        "dataPlane",
+        "topologySpreadConstraints"
+      ],
+      [
+        "dataPlane",
+        "updateStrategy"
+      ],
+      [
+        "dataPlane",
+        "useDaemonSet"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "etcd",
+        "enabled"
+      ],
+      [
+        "externalEtcd",
+        "existingSecret"
+      ],
+      [
+        "externalEtcd",
+        "password"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingressController",
+        "affinity"
+      ],
+      [
+        "ingressController",
+        "automountServiceAccountToken"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "targetCPU"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "hpa",
+        "targetMemory"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "ingressController",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "ingressController",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "ingressController",
+        "containerPorts",
+        "https"
+      ],
+      [
+        "ingressController",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "customLivenessProbe"
+      ],
+      [
+        "ingressController",
+        "customReadinessProbe"
+      ],
+      [
+        "ingressController",
+        "customStartupProbe"
+      ],
+      [
+        "ingressController",
+        "defaultConfig"
+      ],
+      [
+        "ingressController",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "existingConfigMap"
+      ],
+      [
+        "ingressController",
+        "extraConfig"
+      ],
+      [
+        "ingressController",
+        "extraConfigExistingConfigMap"
+      ],
+      [
+        "ingressController",
+        "extraEnvVars"
+      ],
+      [
+        "ingressController",
+        "extraEnvVarsCM"
+      ],
+      [
+        "ingressController",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "ingressController",
+        "extraVolumeMounts"
+      ],
+      [
+        "ingressController",
+        "extraVolumes"
+      ],
+      [
+        "ingressController",
+        "hostAliases"
+      ],
+      [
+        "ingressController",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "path"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingressController",
+        "ingress",
+        "tls"
+      ],
+      [
+        "ingressController",
+        "ingressClass",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "ingressClass",
+        "create"
+      ],
+      [
+        "ingressController",
+        "ingressClass",
+        "name"
+      ],
+      [
+        "ingressController",
+        "initContainers"
+      ],
+      [
+        "ingressController",
+        "lifecycleHooks"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "ingressController",
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "ingressController",
+        "networkPolicy",
+        "kubeAPIServerPorts"
+      ],
+      [
+        "ingressController",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "ingressController",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "ingressController",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "ingressController",
+        "nodeSelector"
+      ],
+      [
+        "ingressController",
+        "pdb",
+        "create"
+      ],
+      [
+        "ingressController",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "ingressController",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "ingressController",
+        "podAffinityPreset"
+      ],
+      [
+        "ingressController",
+        "podAnnotations"
+      ],
+      [
+        "ingressController",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "ingressController",
+        "podLabels"
+      ],
+      [
+        "ingressController",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "priorityClassName"
+      ],
+      [
+        "ingressController",
+        "rbac",
+        "create"
+      ],
+      [
+        "ingressController",
+        "rbac",
+        "rules"
+      ],
+      [
+        "ingressController",
+        "replicaCount"
+      ],
+      [
+        "ingressController",
+        "resources"
+      ],
+      [
+        "ingressController",
+        "schedulerName"
+      ],
+      [
+        "ingressController",
+        "service",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "ingressController",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "ingressController",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "ingressController",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "ingressController",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "ingressController",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "ingressController",
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "ingressController",
+        "service",
+        "nodePorts",
+        "https"
+      ],
+      [
+        "ingressController",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "ingressController",
+        "service",
+        "ports",
+        "https"
+      ],
+      [
+        "ingressController",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "ingressController",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "ingressController",
+        "service",
+        "type"
+      ],
+      [
+        "ingressController",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "ingressController",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "ingressController",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "ingressController",
+        "sidecars"
+      ],
+      [
+        "ingressController",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "autoGenerated"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "certCAFilename"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "certFilename"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "certKeyFilename"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "enabled"
+      ],
+      [
+        "ingressController",
+        "tls",
+        "existingSecret"
+      ],
+      [
+        "ingressController",
+        "tolerations"
+      ],
+      [
+        "ingressController",
+        "topologySpreadConstraints"
+      ],
+      [
+        "ingressController",
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "waitContainer",
+        "image"
+      ]
+    ],
+    "present_count": 369,
+    "varied_count": 1,
+    "varied_fraction": 0.0027100271002710027,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-q4f_m_zw/chart",
+  "seed": 0,
+  "attempts": 36,
+  "error": "Error: YAML parse error on apisix/templates/control-plane/dep-ds.yaml: error converting YAML to JSON: yaml: line 329: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "apiVersions": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/apisix",
+      "tag": "3.13.0-debian-12-r4",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "dataPlane": {
+      "enabled": true,
+      "useDaemonSet": false,
+      "replicaCount": 1,
+      "hostNetwork": false,
+      "dnsPolicy": "ClusterFirst",
+      "containerPorts": {
+        "http": 9080,
+        "https": 9443,
+        "control": 9090,
+        "metrics": 9099
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "automountServiceAccountToken": true,
+      "hostAliases": [],
+      "defaultConfig": "{{- if .Values.dataPlane.metrics.enabled }}\nplugin_attr:\n  prometheus:\n    export_uri: /apisix/prometheus/metrics\n    metric_prefix: apisix_\n    enable_export_server: true\n    export_addr:\n      ip: 0.0.0.0\n      port: {{ .Values.dataPlane.containerPorts.metrics }}\n{{- end }}\napisix:\n  node_listen: {{ .Values.dataPlane.containerPorts.http }}\n  enable_admin: false\n  {{- if .Values.dataPlane.tls.enabled }}\n  ssl:\n    enable: true\n    listen:\n      - port: {{ .Values.dataPlane.containerPorts.https }}\n    ssl_trusted_certificate: /bitnami/certs/{{ .Values.dataPlane.tls.certCAFilename }}\n  enable_http2: true\n  {{- end }}\n  control:\n    ip: 0.0.0.0\n    port: {{ .Values.dataPlane.containerPorts.control }}\nnginx_config:\n  error_log: /dev/stderr\n  stream:\n    access_log: /dev/stdout\n  http:\n    access_log: /dev/stdout\n  http_configuration_snippet: |\n    proxy_buffering off;\ndeployment:\n  role: data_plane\n  role_data_plane:\n    config_provider: etcd\n    {{- if .Values.controlPlane.enabled }}\n    control_plane:\n      host:\n        - {{ ternary \"https\" \"http\" .Values.controlPlane.tls.enabled }}://{{ include \"apisix.control-plane.fullname\" . }}:{{ .Values.controlPlane.service.ports.configServer }}\n      prefix: /apisix\n      timeout: 30\n    {{- end }}\n  {{- if or .Values.etcd.enabled .Values.externalEtcd.servers }}\n  etcd:\n    host:\n      {{- if .Values.etcd.enabled  }}\n        {{- $replicas := $.Values.etcd.replicaCount | int }}\n        {{- range $i, $_e := until $replicas }}\n      - {{ printf \"%s://%s-%d.%s:%v\" (ternary \"https\" \"http\" $.Values.etcd.auth.client.secureTransport) (include \"apisix.etcd.fullname\" $ ) $i (include \"apisix.etcd.headlessServiceName\" $) ( include \"apisix.etcd.port\" $ ) }}\n        {{- end }}\n      {{- else }}\n      {{- range $node := .Values.externalEtcd.servers }}\n      - {{ ternary \"https\" \"http\" $.Values.externalEtcd.secureTransport }}://{{ printf \"%s:%v\" $node (include \"apisix.etcd.port\" $) }}\n      {{- end }}\n      {{- end }}\n    prefix: /apisix\n    timeout: 30\n    use_grpc: false\n    startup_retry: 60\n    {{- if (include \"apisix.etcd.authEnabled\" .) }}\n    user: \"{{ print \"{{APISIX_ETCD_USER}}\" }}\"\n    password: \"{{ print \"{{APISIX_ETCD_PASSWORD}}\" }}\"\n    {{- end }}\n  {{- end }}\n  {{- if .Values.dataPlane.tls.enabled }}\n  certs:\n    {{- if .Values.dataPlane.tls.enabled }}\n    cert: /bitnami/certs/{{ .Values.dataPlane.tls.certFilename }}\n    cert_key: /bitnami/certs/{{ .Values.dataPlane.tls.certKeyFilename }}\n    {{- if .Values.dataPlane.tls.certCAFilename }}\n    client_ca_cert: /bitnami/certs/{{ .Values.dataPlane.tls.certCAFilename }}\n    {{- end }}\n    {{- end }}\n  {{- end }}\ndiscovery:\n  kubernetes:\n    service:\n      # apiserver schema, options [http, https]\n      schema: https #default https\n\n      # apiserver host, options [ipv4, ipv6, domain, environment variable]\n      host: ${KUBERNETES_SERVICE_HOST} #default ${KUBERNETES_SERVICE_HOST}\n\n      # apiserver port, options [port number, environment variable]\n      port: ${KUBERNETES_SERVICE_PORT}  #default ${KUBERNETES_SERVICE_PORT}\n\n    client:\n      # serviceaccount token or token_file\n      token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n\n    default_weight: 50 # weight assigned to each discovered endpoint. default 50, minimum 0\n",
+      "extraConfig": {},
+      "existingConfigMap": "",
+      "extraConfigExistingConfigMap": "",
+      "tls": {
+        "enabled": true,
+        "autoGenerated": true,
+        "existingSecret": "",
+        "certFilename": "tls.crt",
+        "certKeyFilename": "tls.key",
+        "certCAFilename": "ca.crt",
+        "cert": "",
+        "key": "",
+        "ca": ""
+      },
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "service": {
+        "type": "LoadBalancer",
+        "ports": {
+          "http": 80,
+          "https": 443,
+          "metrics": 8080
+        },
+        "nodePorts": {
+          "http": "",
+          "https": "",
+          "metrics": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerSourceRanges": [],
+        "externalIPs": [],
+        "externalTrafficPolicy": "Cluster",
+        "annotations": {},
+        "extraPorts": [],
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "kubeAPIServerPorts": [
+          443,
+          6443,
+          8443
+        ],
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "ingress": {
+        "enabled": false,
+        "pathType": "ImplementationSpecific",
+        "apiVersion": "",
+        "hostname": "apisix-data-plane.local",
+        "ingressClassName": "",
+        "path": "/",
+        "annotations": {},
+        "tls": false,
+        "selfSigned": false,
+        "extraHosts": [],
+        "extraPaths": [],
+        "extraTls": [],
+        "secrets": [],
+        "extraRules": []
+      },
+      "autoscaling": {
+        "vpa": {
+          "enabled": false,
+          "annotations": {},
+          "controlledResources": [],
+          "maxAllowed": {},
+          "minAllowed": {},
+          "updatePolicy": {
+            "updateMode": "Auto"
+          }
+        },
+        "hpa": {
+          "enabled": false,
+          "minReplicas": "",
+          "maxReplicas": "",
+          "targetCPU": "",
+          "targetMemory": ""
+        }
+      },
+      "rbac": {
+        "create": true,
+        "rules": []
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "annotations": {},
+        "automountServiceAccountToken": false
+      },
+      "metrics": {
+        "enabled": false,
+        "annotations": {
+          "prometheus.io/scrape": "true",
+          "prometheus.io/port": "{{ .Values.dataPlane.service.ports.metrics }}",
+          "prometheus.io/path": "/apisix/prometheus/metrics"
+        },
+        "serviceMonitor": {
+          "enabled": false,
+          "namespace": "",
+          "annotations": {},
+          "labels": {},
+          "jobLabel": "",
+          "honorLabels": false,
+          "interval": "",
+          "scrapeTimeout": "",
+          "metricRelabelings": [],
+          "relabelings": [],
+          "selector": {}
+        }
+      }
+    },
+    "controlPlane": {
+      "enabled": true,
+      "replicaCount": 1,
+      "hostNetwork": false,
+      "dnsPolicy": "ClusterFirst",
+      "useDaemonSet": false,
+      "dashboardEnabled": true,
+      "containerPorts": {
+        "adminAPI": 9180,
+        "configServer": 9280,
+        "control": 9090,
+        "metrics": 9099
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "automountServiceAccountToken": true,
+      "hostAliases": [],
+      "apiTokenAdmin": "",
+      "apiTokenViewer": "",
+      "existingSecret": "",
+      "existingSecretAdminTokenKey": "",
+      "existingSecretViewerTokenKey": "",
+      "defaultConfig": "{{- if .Values.controlPlane.metrics.enabled }}\nplugin_attr:\n  prometheus:\n    export_uri: /apisix/prometheus/metrics\n    metric_prefix: apisix_\n    enable_export_server: true\n    export_addr:\n      ip: 0.0.0.0\n      port: {{ .Values.controlPlane.containerPorts.metrics }}\n{{- end }}\nnginx_config:\n  error_log: /dev/stderr\n  stream:\n    access_log: /dev/stdout\n  http:\n    access_log: /dev/stdout\n  http_configuration_snippet: |\n    proxy_buffering off;\napisix:\n  control:\n    ip: 0.0.0.0\n    port: {{ .Values.controlPlane.containerPorts.control }}\ndeployment:\n  role: control_plane\n  role_control_plane:\n      config_provider: etcd\n      conf_server:\n        listen: 0.0.0.0:{{ .Values.controlPlane.containerPorts.configServer }}\n        cert: /bitnami/certs/{{ .Values.controlPlane.tls.certFilename }}\n        cert_key: /bitnami/certs/{{ .Values.controlPlane.tls.certKeyFilename }}\n  etcd:\n    host:\n      {{- if .Values.etcd.enabled  }}\n        {{- $replicas := $.Values.etcd.replicaCount | int }}\n        {{- range $i, $_e := until $replicas }}\n      - {{ printf \"%s://%s-%d.%s:%v\" (ternary \"https\" \"http\" $.Values.etcd.auth.client.secureTransport) (include \"apisix.etcd.fullname\" $ ) $i (include \"apisix.etcd.headlessServiceName\" $) ( include \"apisix.etcd.port\" $ ) }}          {{- end }}\n      {{- else }}\n      {{- range $node := .Values.externalEtcd.servers }}\n      - {{ ternary \"https\" \"http\" $.Values.externalEtcd.secureTransport }}://{{ printf \"%s:%v\" $node (include \"apisix.etcd.port\" $) }}\n      {{- end }}\n      {{- end }}\n    prefix: /apisix\n    timeout: 30\n    use_grpc: false\n    startup_retry: 60\n    {{- if (include \"apisix.etcd.authEnabled\" .) }}\n    user: \"{{ print \"{{APISIX_ETCD_USER}}\" }}\"\n    password: \"{{ print \"{{APISIX_ETCD_PASSWORD}}\" }}\"\n    {{- end }}\n  {{- if .Values.controlPlane.tls.enabled }}\n  certs:\n    {{- if .Values.controlPlane.tls.enabled }}\n    cert: /bitnami/certs/{{ .Values.controlPlane.tls.certFilename }}\n    cert_key: /bitnami/certs/{{ .Values.controlPlane.tls.certKeyFilename }}\n    {{- if .Values.controlPlane.tls.certCAFilename }}\n    client_ca_cert: /bitnami/certs/{{ .Values.controlPlane.tls.certCAFilename }}\n    {{- end }}\n    {{- end }}\n  {{- end }}\n  admin:\n    {{- if .Values.controlPlane.tls.enabled }}\n    https_admin: true\n    admin_api_mtls:\n      admin_ssl_cert: /bitnami/certs/{{ .Values.controlPlane.tls.certFilename }}\n      admin_ssl_cert_key: /bitnami/certs/{{ .Values.controlPlane.tls.certKeyFilename }}\n    {{- end }}\n    allow_admin:\n      - 0.0.0.0/0\n    admin_key:\n      - name: admin\n        key: \"{{ print \"{{APISIX_ADMIN_API_TOKEN}}\" }}\"\n        role: admin\n      - name: viewer\n        key: \"{{ print \"{{APISIX_VIEWER_API_TOKEN}}\" }}\"\n        role: viewer\n    admin_listen:\n        port: {{ .Values.controlPlane.containerPorts.adminAPI }}\n    enable_admin_cors: true         # Admin API support CORS response headers.\n    enable_admin_ui: {{ ternary \"true\" \"false\" .Values.controlPlane.dashboardEnabled }}\ndiscovery:\n  kubernetes:\n    service:\n      schema: https #default https\n      # apiserver host, options [ipv4, ipv6, domain, environment variable]\n      host: ${KUBERNETES_SERVICE_HOST}\n      # apiserver port, options [port number, environment variable]\n      port: ${KUBERNETES_SERVICE_PORT}\n    client:\n      # serviceaccount token or token_file\n      token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n    default_weight: 50 # weight assigned to each discovered endpoint. default 50, minimum 0\n",
+      "extraConfig": {},
+      "existingConfigMap": "",
+      "extraConfigExistingConfigMap": ">0",
+      "tls": {
+        "enabled": true,
+        "autoGenerated": true,
+        "existingSecret": "",
+        "certFilename": "tls.crt",
+        "certKeyFilename": "tls.key",
+        "certCAFilename": "ca.crt",
+        "cert": "",
+        "key": "",
+        "ca": ""
+      },
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "adminAPI": 9180,
+          "configServer": 9280,
+          "metrics": 8080
+        },
+        "nodePorts": {
+          "adminAPI": "",
+          "configServer": "",
+          "metrics": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerSourceRanges": [],
+        "externalIPs": [],
+        "externalTrafficPolicy": "Cluster",
+        "annotations": {},
+        "extraPorts": [],
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "kubeAPIServerPorts": [
+          443,
+          6443,
+          8443
+        ],
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "ingress": {
+        "enabled": false,
+        "pathType": "ImplementationSpecific",
+        "apiVersion": "",
+        "hostname": "apisix-control-plane.local",
+        "ingressClassName": "",
+        "path": "/",
+        "annotations": {},
+        "tls": false,
+        "selfSigned": false,
+        "extraHosts": [],
+        "extraPaths": [],
+        "extraTls": [],
+        "secrets": [],
+        "extraRules": []
+      },
+      "autoscaling": {
+        "vpa": {
+          "enabled": false,
+          "annotations": {},
+          "controlledResources": [],
+          "maxAllowed": {},
+          "minAllowed": {},
+          "updatePolicy": {
+            "updateMode": "Auto"
+          }
+        },
+        "hpa": {
+          "enabled": false,
+          "minReplicas": "",
+          "maxReplicas": "",
+          "targetCPU": "",
+          "targetMemory": ""
+        }
+      },
+      "rbac": {
+        "create": true,
+        "rules": []
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "annotations": {},
+        "automountServiceAccountToken": false
+      },
+      "metrics": {
+        "enabled": false,
+        "annotations": {
+          "prometheus.io/scrape": "true",
+          "prometheus.io/port": "{{ .Values.controlPlane.service.ports.metrics }}",
+          "prometheus.io/path": "/apisix/prometheus/metrics"
+        },
+        "serviceMonitor": {
+          "enabled": false,
+          "namespace": "",
+          "annotations": {},
+          "labels": {},
+          "jobLabel": "",
+          "honorLabels": false,
+          "interval": "",
+          "scrapeTimeout": "",
+          "metricRelabelings": [],
+          "relabelings": [],
+          "selector": {}
+        }
+      }
+    },
+    "ingressController": {
+      "enabled": true,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/apisix-ingress-controller",
+        "tag": "1.8.4-debian-12-r14",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [],
+        "debug": false
+      },
+      "replicaCount": 1,
+      "containerPorts": {
+        "http": 8080,
+        "https": 8443
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "automountServiceAccountToken": true,
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "ingressClass": {
+        "create": true,
+        "name": "apisix",
+        "annotations": {}
+      },
+      "defaultConfig": "# log options\nlog_level: \"info\"\nlog_output: \"stderr\"\n{{- if .Values.ingressController.tls.enabled }}\nhttps_listen: \":{{ .Values.ingressController.containerPorts.https }}\"\ncert_file: \"/bitnami/certs/{{ .Values.ingressController.tls.certFilename }}\"\nkey_file: \"/bitnami/certs/{{ .Values.ingressController.tls.certKeyFilename }}\"\n{{- end }}\nhttp_listen: \":{{ .Values.ingressController.containerPorts.http }}\"\ningress_publish_service: \"{{ include \"common.names.namespace\" . }}/{{ ternary (include \"apisix.data-plane.fullname\" .) (include \"apisix.control-plane.fullname\" .) .Values.dataPlane.enabled }}\"\nenable_profiling: true\napisix-resource-sync-interval: 1h\nkubernetes:\n  kubeconfig: \"\"\n  resync_interval: \"6h\"\n  election_id: \"{{ include \"apisix.ingress-controller.fullname\" . }}-leader\"\n  ingress_class: {{ .Values.ingressController.ingressClass.name | quote }}\n  ingress_version: \"networking/v1\"\n  watch_endpointslices: false\n  apisix_route_version: \"apisix.apache.org/v2\"\n  enable_gateway_api: false\n  apisix_version: \"apisix.apache.org/v2\"\n  plugin_metadata_cm: \"\"\napisix:\n  admin_api_version: \"v3\"\n  default_cluster_base_url: {{ ternary \"https\" \"http\" .Values.controlPlane.tls.enabled }}://{{ include \"apisix.control-plane.fullname\" . }}:{{ .Values.controlPlane.service.ports.adminAPI }}/apisix/admin\n  default_cluster_admin_key: \"{{ print \"{{APISIX_ADMIN_API_TOKEN}}\" }}\"\n  default_cluster_name: \"default\"\n",
+      "extraConfig": {},
+      "existingConfigMap": "",
+      "extraConfigExistingConfigMap": "",
+      "tls": {
+        "enabled": true,
+        "autoGenerated": true,
+        "existingSecret": "",
+        "certFilename": "tls.crt",
+        "certKeyFilename": "tls.key",
+        "certCAFilename": "ca.crt",
+        "cert": "",
+        "key": "",
+        "ca": ""
+      },
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "http": 80,
+          "https": 443
+        },
+        "nodePorts": {
+          "http": "",
+          "https": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerSourceRanges": [],
+        "externalIPs": [],
+        "externalTrafficPolicy": "Cluster",
+        "annotations": {},
+        "extraPorts": [],
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "kubeAPIServerPorts": [
+          443,
+          6443,
+          8443
+        ],
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "ingress": {
+        "enabled": false,
+        "pathType": "ImplementationSpecific",
+        "apiVersion": "",
+        "hostname": "apisix-ingress-controller.local",
+        "ingressClassName": "",
+        "path": "/",
+        "annotations": {},
+        "tls": false,
+        "selfSigned": false,
+        "extraHosts": [],
+        "extraPaths": [],
+        "extraTls": [],
+        "secrets": [],
+        "extraRules": []
+      },
+      "autoscaling": {
+        "vpa": {
+          "enabled": false,
+          "annotations": {},
+          "controlledResources": [],
+          "maxAllowed": {},
+          "minAllowed": {},
+          "updatePolicy": {
+            "updateMode": "Auto"
+          }
+        },
+        "hpa": {
+          "enabled": false,
+          "minReplicas": "",
+          "maxReplicas": "",
+          "targetCPU": "",
+          "targetMemory": ""
+        }
+      },
+      "rbac": {
+        "create": true,
+        "rules": []
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "annotations": {},
+        "automountServiceAccountToken": false
+      },
+      "metrics": {
+        "enabled": false,
+        "annotations": {
+          "prometheus.io/scrape": "true",
+          "prometheus.io/port": "{{ .Values.ingressController.service.ports.http }}"
+        },
+        "serviceMonitor": {
+          "enabled": false,
+          "namespace": "",
+          "annotations": {},
+          "labels": {},
+          "jobLabel": "",
+          "honorLabels": false,
+          "interval": "",
+          "scrapeTimeout": "",
+          "metricRelabelings": [],
+          "relabelings": [],
+          "selector": {}
+        }
+      }
+    },
+    "waitContainer": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      }
+    },
+    "externalEtcd": {
+      "servers": [],
+      "port": 2379,
+      "user": "root",
+      "password": "",
+      "existingSecret": "",
+      "existingSecretPasswordKey": "etcd-root-password",
+      "secureTransport": false
+    },
+    "etcd": {
+      "enabled": true,
+      "replicaCount": 3,
+      "containerPorts": {
+        "client": 2379
+      },
+      "auth": {
+        "rbac": {
+          "create": false,
+          "rootPassword": ""
+        },
+        "client": {
+          "secureTransport": false
+        }
+      },
+      "resourcesPreset": "micro",
+      "resources": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 24,
+    "unique_bundles": 24,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 24
+  },
+  "phase": "$.controlPlane.extraConfigExistingConfigMap",
+  "kind": "value-path",
+  "path": [
+    "controlPlane",
+    "extraConfigExistingConfigMap"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/apisix_1789316791/0000/paths/98c9de7170b4f8fa32cd"
+}
