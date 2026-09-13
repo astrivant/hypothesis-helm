@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "featureEnabled",
+    "backendEnabled",
+    "routingEnabled",
+    "storageEnabled",
+    "metricsEnabled",
+    "alternateBackend",
+    "boundaryLowerHalf",
+    "boundaryUpperHalf",
+    "equivalentChoiceA",
+    "equivalentChoiceB",
+    "equivalentChoiceC",
+    "equivalentChoiceD"
+  ],
+  "properties": {
+    "featureEnabled": {
+      "type": "boolean"
+    },
+    "backendEnabled": {
+      "type": "boolean"
+    },
+    "routingEnabled": {
+      "type": "boolean"
+    },
+    "storageEnabled": {
+      "type": "boolean"
+    },
+    "metricsEnabled": {
+      "type": "boolean"
+    },
+    "alternateBackend": {
+      "type": "boolean"
+    },
+    "boundaryLowerHalf": {
+      "type": "boolean"
+    },
+    "boundaryUpperHalf": {
+      "type": "boolean"
+    },
+    "equivalentChoiceA": {
+      "type": "boolean"
+    },
+    "equivalentChoiceB": {
+      "type": "boolean"
+    },
+    "equivalentChoiceC": {
+      "type": "boolean"
+    },
+    "equivalentChoiceD": {
+      "type": "boolean"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "featureEnabled": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "backendEnabled": {
+            "const": true
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "backendEnabled": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "routingEnabled": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "storageEnabled": {
+            "const": true
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "storageEnabled": {
+            "const": false
+          }
+        }
+      }
+    }
+  ]
+}

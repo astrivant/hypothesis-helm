@@ -162,7 +162,7 @@ These are graphs of the compiler's available evidence. Potential references and
 baseline observations do not prove exact causal influence; opaque access remains
 explicitly unresolved.
 
-The [topology catalog](../benchmarks/chart-topologies/README.md) contains rendered
+The [topology catalog](../../benchmarks/chart-topologies/README.md) contains rendered
 graphs for the synthetic fixtures and the Bitnami and Prometheus chart collections.
 
 ## Deterministic type constants
@@ -211,3 +211,29 @@ Exports record whether API validation passed, was not confirmed, or did not run.
 The GitHub action reuses API validation when `kubeconform` or `kubesec` is enabled.
 API schema checks still omit some server-side checks; see
 [Kubeconform's documented limits](https://github.com/yannh/kubeconform#limits-of-kubeconform-validation).
+
+## Potential output complexity
+
+`helm hypothesis audit ./chart` includes a `complexity` result. It searches the complete finite values domain
+within the existing compiler's supported template subset and scores each valid manifest tree as **breadth × depth**.
+Breadth is the most nodes at any depth; depth is the longest path from the synthetic bundle root. Resource roots,
+field values and array entries are nodes. Field names label edges; scalar text length does not change the score.
+
+The result concerns the largest possible output, including resources disabled by defaults. It does not score the
+source tree or estimate bugs, runtime or test count. A wide branch and a deep branch may be mutually exclusive;
+the reported maximum must be attained by one allowed configuration.
+
+- `compiled-maximum`: every declared finite configuration was analyzed in the supported compiler contract.
+  `maximum_score`, `maximum_output` and `maximizing_values` record the greatest output and a configuration attaining it.
+- `unknown`: an open-ended domain, unsupported operation, dependency, source change or analysis limit prevented a maximum.
+  `lower_bound` records the greatest supported output examined so far, if any. It is not an estimated maximum.
+- `no-valid-output`: the complete supported domain produced no valid resource envelopes.
+
+Analysis uses at most 4,096 configurations and checks a five-second budget between candidates. It does not call Helm
+or validate downstream Kubernetes APIs. The full finite domain must fit the case limit; it is never silently truncated.
+The `verification`, `reason` and `limits` fields state the scope of the result.
+
+The installed `hypothesis-helm-complexity` command repeats the analysis with adjustable `--chart`, `--max-cases` and
+`--time-limit` settings. Its `--nodes N` mode calculates only the mathematical tree ceiling for a given output size:
+`floor((N + 1)² / 4)`, or zero when N is zero. This follows from `breadth + depth - 1 <= N`. The maximizing output's
+`size_ceiling` uses that formula; it is not a claim that the chart can produce every tree shape of that size.

@@ -3,7 +3,6 @@ Publish nesting-depth matrices and PCA frames shared across depth profiles.
 """
 
 import csv
-import json
 import os
 import tempfile
 from collections import Counter
@@ -12,6 +11,7 @@ from textwrap import dedent
 
 import numpy as np
 
+from hypothesis_helm.benchmarking.fixture import read_spec
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -242,7 +242,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         |---|---|---|
         """).lstrip("\n")
     for ref in references:
-        spec = mapping(json.loads((output / "charts" / str(ref["structure"]) / "benchmark.json").read_text()))
+        spec = read_spec(output / "charts" / str(ref["structure"]))
         components = sequence(mapping(spec["structure"])["components"])
         depths = ", ".join(str(mapping(component)["gate_depth"]) for component in components)
         text += f"| {ref['structure']} | {depths} | {mapping(ref['planning'])['planned_inputs']}/{ref['valid_inputs']} |\n"

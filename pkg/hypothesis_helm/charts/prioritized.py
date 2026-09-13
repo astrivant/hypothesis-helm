@@ -9,7 +9,8 @@ import logging
 import time
 from pathlib import Path
 
-from hypothesis_helm.charts.runner import Chart, check_chart
+from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.schemas.priority import PriorityInputs

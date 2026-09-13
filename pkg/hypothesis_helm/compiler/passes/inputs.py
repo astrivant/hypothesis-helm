@@ -23,7 +23,7 @@ from hypothesis_helm.schemas.contracts import configuration_key, json_value
 from hypothesis_helm.schemas.model import ValueReference, ValuesModel
 
 if TYPE_CHECKING:
-    from hypothesis_helm.charts.runner import Chart
+    from hypothesis_helm.charts.model import Chart
 
 
 def load_input_chart(path: Path) -> Chart:
@@ -36,7 +36,7 @@ def load_input_chart(path: Path) -> Chart:
     Returns:
         Chart: Original defaults with the declared schema or an open object contract.
     """
-    from hypothesis_helm.charts.runner import Chart
+    from hypothesis_helm.charts.model import Chart
     from hypothesis_helm.schemas.contracts import mapping
 
     path = path.resolve()
@@ -114,8 +114,8 @@ class InputInventory:
         Returns:
             InputInventory: Named-field baseline with explicit uncertainty regions.
         """
-        from hypothesis_helm.charts.generate import enumerate_paths
-        from hypothesis_helm.charts.runner import _default_paths, _schema_nodes
+        from hypothesis_helm.charts.model import _default_paths, _schema_nodes
+        from hypothesis_helm.schemas.paths import enumerate_paths
 
         references, warnings = discover(chart.path, prune_literals=True)
         dependency_graph = chart.dependency_model or Dependencies.build(chart.path)

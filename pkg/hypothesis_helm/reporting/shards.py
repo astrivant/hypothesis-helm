@@ -72,6 +72,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
         records: list[dict[str, object]] = []
         signatures: set[str] = set()
         traversal: set[tuple[str, str]] = set()
+        sampling_policies: set[str] = set()
         inventories: set[str] = set()
         selected: set[str] = set()
         matched: set[int] = set()
@@ -100,6 +101,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             if not isinstance(signature, str) or not isinstance(inventory, str):
                 raise ValueError(f"Shard {index}/{total} lacks suite or collection identity")
             signatures.add(signature)
+            sampling_policies.add(json.dumps(record.get("sampling"), sort_keys=True))
             traversal.add((str(record.get("traversal_strategy", "linear")), str(record.get("traversal_algorithm", "legacy"))))
             inventories.add(inventory)
             matched.add(int(str(assignment["matched"])))
@@ -138,6 +140,8 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             records.append(record)
             input_hash.update(raw)
             input_hash.update(junit)
+        if len(sampling_policies) != 1:
+            raise ValueError("Shards used different random sampling policies or populations")
         if len(traversal) != 1:
             raise ValueError("Shards used different traversal strategies or algorithms")
         if len(signatures) != 1 or len(inventories) != 1 or matched != {len(selected)}:
@@ -174,6 +178,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
         ]
         record = {
             "chart": Path(str(records[0]["suite"])).name,
+            "sampling": json.loads(next(iter(sampling_policies))),
             "status": outcome,
             "result": "PASS" if status == 0 else "FAIL" if status == 1 else "N/A",
             "coverage": f"{len(selected)} selected properties across {total} shards",
@@ -199,6 +204,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             "settings": {
                 "shards": total,
                 "jobs_per_shard": [item["jobs"] for item in records],
+                "sampling": json.loads(next(iter(sampling_policies))),
                 "traversal_strategy": next(iter(traversal))[0],
                 "traversal_algorithm": next(iter(traversal))[1],
             },

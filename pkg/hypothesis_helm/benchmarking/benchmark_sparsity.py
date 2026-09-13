@@ -14,6 +14,7 @@ from collections import Counter
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.benchmark_helm import ROOT, code_digest
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace
 from hypothesis_helm.benchmarking.plots import finish
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.runner import Job, execute_worker
@@ -155,23 +156,27 @@ def plot(output: Path, rows: list[dict[str, object]], reference: dict[str, int])
     )
 
 
-def run() -> int:
+def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Execute consecutive sparse samples and retain reproducible measurements.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for a completed study, one for failure, or 124 at the deadline.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--chart", type=Path, default=Path("benchmark-chart"))
-    parser.add_argument("--output", type=Path, default=ROOT / "reports/benchmarks/sparsity")
+    parser.add_argument("--chart", type=Path, default=Path("benchmarks/runs/chart"))
+    parser.add_argument("--output", type=Path, default=ROOT / "benchmarks/runs/sparsity")
     parser.add_argument("--count", type=int, default=32768, help="initial distinct-input count")
     parser.add_argument("--retain", type=float, default=0.25, help="fraction retained per run")
     parser.add_argument("--levels", type=int, default=8)
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if not math.isfinite(args.time_limit) or not 0 < args.time_limit <= 540:
         parser.error("time limit must be positive and at most 540 seconds per run")
     try:

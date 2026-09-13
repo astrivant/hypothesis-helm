@@ -27,7 +27,8 @@ from hypothesis_helm.benchmarking.workload import (
     partition_indices,
     standard_values,
 )
-from hypothesis_helm.charts.runner import Chart, RenderFailure, merge_values, render
+from hypothesis_helm.charts.model import Chart, merge_values
+from hypothesis_helm.charts.rendering import RenderFailure, render
 from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.execution.render_hashes import RenderHashes
 from hypothesis_helm.integrations.sharding import Shard
@@ -113,6 +114,8 @@ def execute_worker(job: Job) -> dict[str, object]:
                         int(str(spec["output_bins"])) if spec else 256,
                     )
                 )
+                if inputs is None and spec is not None and isinstance(spec.get("input_names"), list):
+                    values = {str(name): values[f"input{index:03d}"] for index, name in enumerate(sequence(spec["input_names"]))}
                 effective = merge_values(chart.defaults, values)
                 attempted += 1
                 validator.validate(json_value(effective))

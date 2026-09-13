@@ -12,17 +12,21 @@ from pathlib import Path
 from hypothesis import strategies as st
 from jsonschema import validators
 
-from hypothesis_helm.charts.generate import Model, ValuePath, coalesce, enumerate_paths
+from hypothesis_helm.charts.generate import Model, coalesce
 from hypothesis_helm.charts.generated import path_values
-from hypothesis_helm.charts.runner import Chart, RenderFailure, _default_paths, check_chart, merge_values, render
+from hypothesis_helm.charts.model import Chart, _default_paths, merge_values
+from hypothesis_helm.charts.rendering import RenderFailure, render
+from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.compiler.asts.contracts import Contracts
 from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.passes.rejections import RejectionPolicy
+from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.traversal import ALGORITHM, order_paths, validate_strategy
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.progress import format_path
 from hypothesis_helm.schemas.contracts import json_value, schema_strategy
+from hypothesis_helm.schemas.paths import ValuePath, enumerate_paths
 from hypothesis_helm.schemas.priority import PriorityInputs
 
 LOGGER = logging.getLogger(__name__)
@@ -83,6 +87,7 @@ def check_paths(
     artifacts: Path,
     filtering: bool = False,
     traversal_strategy: str = "random",
+    sampling: Sampling = DEFAULT_SAMPLING,
     fail_fast: bool = False,
     release: str = "hypothesis",
     namespace: str = "default",
@@ -106,6 +111,7 @@ def check_paths(
         artifacts (Path): Root for path findings and the complete traversal inventory.
         filtering (bool): Apply known-input generation restrictions before ordering.
         traversal_strategy (str): Random, linear, root-first, or leaf-first path traversal.
+        sampling (Sampling): Optional retained percentage and minimum sample after filtering.
         fail_fast (bool): Stop after the first observed failure without shrinking.
         release (str): Helm release name for every input.
         namespace (str): Helm release namespace.
@@ -131,6 +137,9 @@ def check_paths(
     unique = {entry.path: entry for entry in model.paths}
     linear = list(dict.fromkeys([*map(tuple, _default_paths(chart.defaults)), *unique]))
     selected = [unique[path] for path in linear if path in unique]
+    eligible_paths = [list(entry.path) for entry in selected]
+    selected, sampling_report = sampling.select(selected, lambda entry: json.dumps(list(entry.path)), seed)
+    sampling_report["unit"] = "path property"
     ordered = order_paths(selected, lambda entry: entry.path, strategy=traversal_strategy, seed=seed)
     planned_paths = [list(entry.path) for entry in ordered]
     planning_seconds = time.monotonic() - planning_started
@@ -138,9 +147,11 @@ def check_paths(
     (artifacts / "path-inventory.json").write_text(
         json.dumps(
             {
+                "sampling": sampling_report,
                 "seed": seed,
                 "traversal_strategy": traversal_strategy,
                 "traversal_algorithm": ALGORITHM,
+                "eligible_paths": eligible_paths,
                 "paths": planned_paths,
                 "diagnostics": model.diagnostics,
             },
@@ -251,7 +262,8 @@ def check_paths(
             "remaining_paths": len(ordered) - len(phases),
             "visited_order": [phase["path"] for phase in phases],
             "remaining_order": planned_paths[len(phases) :],
-            "path_targets_complete": completed == len(ordered) and baseline["status"] == "passed",
+            "sampled_out_paths": sampling_report["omitted"],
+            "path_targets_complete": completed == len(unique) and baseline["status"] == "passed",
         },
         "baseline": baseline,
         "phases": phases,
@@ -264,11 +276,12 @@ def check_paths(
         "input_inventory": inventory.report(),
         "dependency_activation": inventory.dependencies.report(chart.defaults),
         "field_coverage": measured.statistics,
+        "sampling": sampling_report,
         "filtering": {
             "requested": filtering,
             "applied": filtering,
             "method": "known-path-generation" if filtering else "unrestricted-path-generation",
-            "order": "discover, filter, traverse, execute",
+            "order": "discover, filter, sample, traverse, execute",
             "generated_text_policy": "C0/C1 controls excluded, except LF and CR; supplied defaults are unchanged",
         },
         "scope": "One property per discovered path; multiple values and shrinking within a property; joint input coverage is incomplete",

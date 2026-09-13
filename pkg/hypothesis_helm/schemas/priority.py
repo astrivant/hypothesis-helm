@@ -11,7 +11,7 @@ from hypothesis.strategies import SearchStrategy
 from jsonschema import validators
 
 from hypothesis_helm.charts.generate import coalesce
-from hypothesis_helm.charts.runner import Chart, merge_values
+from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.charts.templates import discover
 from hypothesis_helm.schemas.contracts import json_value, mapping, schema_strategy
 from hypothesis_helm.schemas.model import ValueNode, ValuesModel

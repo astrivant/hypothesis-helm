@@ -19,13 +19,16 @@ from contextlib import ExitStack
 from pathlib import Path
 
 from hypothesis_helm.charts import yamlio
+from hypothesis_helm.charts.audit import audit
+from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.paths import check_paths
 from hypothesis_helm.charts.registry import prepare_helm_source
 from hypothesis_helm.charts.repository import RepositorySource, remote_name
-from hypothesis_helm.charts.runner import Chart, audit, check_chart
+from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.compiler.passes.graph import export_graph
 from hypothesis_helm.compiler.passes.inputs import load_input_chart
 from hypothesis_helm.compiler.passes.minimum import export_minimal
+from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.errors import chart_errors, deduplicate_errors
 from hypothesis_helm.reporting.repository import write_reports
@@ -158,6 +161,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
             fail_fast=args.fail,
             filtering=args.filter,
             traversal_strategy=args.traversal_strategy,
+            sampling=Sampling(getattr(args, "sample_random", 100), getattr(args, "sample_min_cases", 128)),
             release=getattr(args, "release", "hypothesis"),
             namespace=getattr(args, "namespace", "default"),
             kube_version=getattr(args, "kube_version", None),
@@ -175,6 +179,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         max_examples=args.max_examples,
         random_seed=args.seed,
         traversal_strategy=args.traversal_strategy,
+        sampling=Sampling(getattr(args, "sample_random", 100), getattr(args, "sample_min_cases", 128)),
         helm=args.helm,
         timeout=args.timeout,
         time_limit=min(args.chart_timeout, max(0.000001, args.scan_deadline - time.monotonic()))
@@ -492,6 +497,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
             "helm": args.helm,
             "seed": args.seed,
             "traversal_strategy": args.traversal_strategy,
+            "sampling": {"percent": getattr(args, "sample_random", 100), "minimum": getattr(args, "sample_min_cases", 128)},
             "build_dependencies": args.build_dependencies,
             "values": str(args.values),
             "clone_timeout_seconds": args.clone_timeout,

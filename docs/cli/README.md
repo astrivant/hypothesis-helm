@@ -142,6 +142,7 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--permutations PERMUTATIONS] [--filter] [--fail]
                             [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
+                            [--sample-random PERCENT] [--sample-min-cases N]
                             [--traversal-strategy {random,linear,root-first,leaf-first}]
                             [--export-topological-graph [FILENAME]]
                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
@@ -182,6 +183,11 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
+  --sample-random PERCENT
+                        retain this percentage after filtering; default: 100
+                        (disabled); no bug-recall guarantee
+  --sample-min-cases N  retain at least N eligible cases, or all when fewer exist
+                        (default: 128)
   --traversal-strategy {random,linear,root-first,leaf-first}
                         value-path order: seeded random (default), original linear,
                         root-first, or leaf-first
@@ -266,7 +272,8 @@ options:
 
 ~~~text
 usage: helm hypothesis run [-h] [--seed SEED] [--match MATCH] [--collect-only]
-                           [--artifact-dir ARTIFACT_DIR]
+                           [--artifact-dir ARTIFACT_DIR] [--sample-random PERCENT]
+                           [--sample-min-cases N]
                            [--traversal-strategy {random,linear,root-first,leaf-first}]
                            [--kubeconform] [--schema-version SCHEMA_VERSION]
                            [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
@@ -287,6 +294,11 @@ options:
   --collect-only
   --artifact-dir ARTIFACT_DIR
                         report directory for a saved suite
+  --sample-random PERCENT
+                        retain this percentage after filtering; default: 100
+                        (disabled); no bug-recall guarantee
+  --sample-min-cases N  retain at least N eligible cases, or all when fewer exist
+                        (default: 128)
   --traversal-strategy {random,linear,root-first,leaf-first}
                         value-path order: seeded random (default), original linear,
                         root-first, or leaf-first
@@ -338,6 +350,7 @@ usage: helm hypothesis test [-h] [--report [PATH]] [--values VALUES]
                             [--exhaustive-threshold EXHAUSTIVE_THRESHOLD]
                             [--exhaustive-group PATH,PATH] [--no-infer-groups]
                             [--max-group-cases MAX_GROUP_CASES] [--seed SEED]
+                            [--sample-random PERCENT] [--sample-min-cases N]
                             [--traversal-strategy {random,linear,root-first,leaf-first}]
                             [--timeout TIMEOUT] [--helm HELM] [--release RELEASE]
                             [--namespace NAMESPACE] [--kube-version KUBE_VERSION]
@@ -400,6 +413,11 @@ options:
   --max-group-cases MAX_GROUP_CASES
                         bound automatically inferred group domains
   --seed SEED
+  --sample-random PERCENT
+                        retain this percentage after filtering; default: 100
+                        (disabled); no bug-recall guarantee
+  --sample-min-cases N  retain at least N eligible cases, or all when fewer exist
+                        (default: 128)
   --traversal-strategy {random,linear,root-first,leaf-first}
                         value-path order: seeded random (default), original linear,
                         root-first, or leaf-first

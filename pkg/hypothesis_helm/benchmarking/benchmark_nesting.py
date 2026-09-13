@@ -12,9 +12,10 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.benchmark_expansion import compare
 from hypothesis_helm.benchmarking.benchmark_helm import code_digest
 from hypothesis_helm.benchmarking.benchmark_pca import run_case, selections
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.pca import project
 from hypothesis_helm.benchmarking.profiling import profile_settings
-from hypothesis_helm.charts.runner import Chart
+from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, number, sequence
@@ -101,20 +102,24 @@ def pooled_projection(references: list[dict[str, object]]) -> list[dict[str, obj
     return frames
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Render new depth-distribution references and publish matched policy and PCA comparisons.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for complete comparisons; one for an execution deadline.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("reports/benchmarks/nesting"))
+    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/nesting"))
     parser.add_argument("--permutations", type=int, default=8)
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     from hypothesis_helm.benchmarking.nesting_plots import plot
 
     if args.plot_only:
@@ -168,10 +173,11 @@ def main() -> int:
                 topology_seed=2026,
                 topology_weights={"dependencies": 1, "interactions": 1, "equivalence": 1} if family == "supported" else None,
                 topology_depth_weights=weights,
+                workspace=workspace,
             )
             reference.update({"family": family, "profile": profile})
             if reference["status"] == "complete":
-                chart = Chart.load(args.output / "charts" / name)
+                chart = Chart.load(chart_path(args.output / "charts" / name, workspace=workspace))
                 reference = select_plan(chart, reference, args.permutations, 2, 2026)
                 rows.extend(
                     compare(

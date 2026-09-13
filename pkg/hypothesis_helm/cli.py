@@ -13,15 +13,18 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Literal
 
+from hypothesis_helm.charts.audit import audit
 from hypothesis_helm.charts.generate import generate_tests
 from hypothesis_helm.charts.generated import RenderOptions
-from hypothesis_helm.charts.runner import Chart, audit, check_chart
+from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.charts.scan import discover_charts, scan
 from hypothesis_helm.compiler.passes.exports import export_repository
 from hypothesis_helm.compiler.passes.graph import export_graph
 from hypothesis_helm.compiler.passes.inputs import load_input_chart
 from hypothesis_helm.compiler.passes.minimum import export_minimal
 from hypothesis_helm.execution.estimate import estimate_suite
+from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.execution.traversal import STRATEGIES, validate_strategy
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
@@ -306,6 +309,20 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     test.add_argument("--seed", type=int, default=0)
     for testing in (run, test, repository):
         testing.add_argument(
+            "--sample-random",
+            type=float,
+            default=100,
+            metavar="PERCENT",
+            help="retain this percentage after filtering; default: 100 (disabled); no bug-recall guarantee",
+        )
+        testing.add_argument(
+            "--sample-min-cases",
+            type=int,
+            default=128,
+            metavar="N",
+            help="retain at least N eligible cases, or all when fewer exist (default: 128)",
+        )
+        testing.add_argument(
             "--traversal-strategy",
             type=validate_strategy,
             choices=STRATEGIES,
@@ -480,6 +497,8 @@ def main(argv: list[str] | None = None) -> int:
         int: Process exit status, zero on success.
     """
     args = argument_parser().parse_args(argv)
+    if hasattr(args, "sample_random"):
+        Sampling(args.sample_random, args.sample_min_cases)
     logger = logging.getLogger("hypothesis_helm")
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
@@ -694,6 +713,7 @@ def main(argv: list[str] | None = None) -> int:
                     suite_location=logical,
                     seed=args.seed,
                     traversal_strategy=args.traversal_strategy,
+                    sampling=Sampling(args.sample_random, args.sample_min_cases),
                     match=args.match,
                     jobs=args.jobs,
                     shard=args.shard,
@@ -711,6 +731,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.suite,
                 seed=args.seed,
                 traversal_strategy=args.traversal_strategy,
+                sampling=Sampling(args.sample_random, args.sample_min_cases),
                 match=args.match,
                 collect_only=args.collect_only,
                 jobs=args.jobs,
@@ -757,6 +778,7 @@ def main(argv: list[str] | None = None) -> int:
                 generated,
                 seed=args.seed,
                 traversal_strategy=args.traversal_strategy,
+                sampling=Sampling(args.sample_random, args.sample_min_cases),
                 match=args.match,
                 collect_only=args.collect_only,
                 jobs=args.jobs,
@@ -781,6 +803,7 @@ def main(argv: list[str] | None = None) -> int:
                 max_examples=args.max_examples,
                 random_seed=args.seed,
                 traversal_strategy=args.traversal_strategy,
+                sampling=Sampling(args.sample_random, args.sample_min_cases),
                 timeout=args.timeout,
                 helm=args.helm,
                 release=args.release,

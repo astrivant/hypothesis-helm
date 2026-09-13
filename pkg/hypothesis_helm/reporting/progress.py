@@ -17,6 +17,9 @@ from hypothesis_helm.execution.render_hashes import (
     reset_process_hashes,
     save_process_statistics,
 )
+from hypothesis_helm.execution.sampling import ENVIRONMENT as SAMPLING_ENVIRONMENT
+from hypothesis_helm.execution.sampling import REPORT as SAMPLING_REPORT
+from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.execution.traversal import order_paths
 from hypothesis_helm.integrations.sharding import parse_shard
 from hypothesis_helm.reporting.display import start_progress
@@ -179,6 +182,17 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
         marker = item.get_closest_marker("hypothesis_helm_path")
         return cast(tuple[str | int, ...], marker.args[0]) if marker is not None else ()
 
+    if SAMPLING_ENVIRONMENT in os.environ:
+        policy = Sampling(**json.loads(os.environ[SAMPLING_ENVIRONMENT]))
+        retained, evidence = policy.select(items, lambda item: item.nodeid, int(os.environ.get("HYPOTHESIS_HELM_TRAVERSAL_SEED", "0")))
+        retained_ids = {item.nodeid for item in retained}
+        omitted = [item for item in items if item.nodeid not in retained_ids]
+        items[:] = retained
+        config.hook.pytest_deselected(items=omitted)
+        if destination := os.environ.get(SAMPLING_REPORT):
+            Path(destination).write_text(
+                json.dumps({**evidence, "unit": "path property", "scope": "global before sharding"}, indent=2) + "\n"
+            )
     items[:] = order_paths(
         items,
         path,

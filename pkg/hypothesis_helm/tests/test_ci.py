@@ -407,6 +407,10 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, 
         "HH_JOBS": "auto",
         "HH_MAX_EXAMPLES": "50",
         "HH_SEED": "0",
+        "SAMPLE_RANDOM": "70",
+        "SAMPLE_MIN_CASES": "32",
+        "HH_SAMPLE_RANDOM": "70",
+        "HH_SAMPLE_MIN_CASES": "32",
         "HH_ARTIFACT_DIR": "reports/hypothesis-helm",
         "CI_PIPELINE_ID": "123",
         "CIRCLE_WORKFLOW_ID": "workflow-123",
@@ -428,6 +432,8 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, 
     calls = [json.loads(line) for line in capture.read_text().splitlines()]
     command = calls[0]
     assert command[:4] == ["helm", "hypothesis", "test", chart]
+    assert command[command.index("--sample-random") + 1] == "70"
+    assert command[command.index("--sample-min-cases") + 1] == "32"
     assert ("--kubeconform" in command) is (not security)
     assert "--schema-offline" in command
     assert command[command.index("--shard") + 1] == "2/3"

@@ -21,6 +21,8 @@ exec helm hypothesis test "${HH_CHART:-.}" \
   ${HH_RUN_ID:+--run-id "$HH_RUN_ID"} \
   --max-examples "${HH_MAX_EXAMPLES:-100}" \
   --seed "${HH_SEED:-0}" \
+  --sample-random "${HH_SAMPLE_RANDOM:-100}" \
+  --sample-min-cases "${HH_SAMPLE_MIN_CASES:-128}" \
   --timeout "${HH_TIMEOUT:-30}" \
   --artifact-dir "$HH_ARTIFACT_DIR" \
   --output json \

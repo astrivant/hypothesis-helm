@@ -13,6 +13,12 @@ commands:
       max-examples:
         type: integer
         default: 100
+      sample-random:
+        type: string
+        default: "100"
+      sample-min-cases:
+        type: integer
+        default: 128
       seed:
         type: integer
         default: 0
@@ -50,6 +56,8 @@ commands:
             HH_JOBS: << parameters.jobs >>
             HH_MAX_EXAMPLES: << parameters.max-examples >>
             HH_SEED: << parameters.seed >>
+            HH_SAMPLE_RANDOM: << parameters.sample-random >>
+            HH_SAMPLE_MIN_CASES: << parameters.sample-min-cases >>
             HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: << parameters.schema-memory-dir >>
             HH_SCHEMA_VERSION: << parameters.schema-version >>
             HH_SCHEMA_CACHE_DIR: << parameters.schema-cache-dir >>
@@ -62,6 +70,7 @@ commands:
             if [[ "$HH_KUBESEC" == "true" ]]; then
               helm hypothesis test "$HH_CHART" \
                 --jobs "$HH_JOBS" --max-examples "$HH_MAX_EXAMPLES" --seed "$HH_SEED" \
+                --sample-random "$HH_SAMPLE_RANDOM" --sample-min-cases "$HH_SAMPLE_MIN_CASES" \
                 --schema-version "$HH_SCHEMA_VERSION" --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
                 --schema-offline --shard "$((${CIRCLE_NODE_INDEX:-0} + 1))/${CIRCLE_NODE_TOTAL:-1}" --rerun all \
                 --run-id "${CIRCLE_WORKFLOW_ID}-${HH_REPORT_GROUP}" \
@@ -78,6 +87,7 @@ commands:
             else
               helm hypothesis test "$HH_CHART" \
                 --jobs "$HH_JOBS" --max-examples "$HH_MAX_EXAMPLES" --seed "$HH_SEED" \
+                --sample-random "$HH_SAMPLE_RANDOM" --sample-min-cases "$HH_SAMPLE_MIN_CASES" \
                 --schema-version "$HH_SCHEMA_VERSION" --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
                 --kubeconform --schema-offline --shard "$((${CIRCLE_NODE_INDEX:-0} + 1))/${CIRCLE_NODE_TOTAL:-1}" --rerun all \
                 --run-id "${CIRCLE_WORKFLOW_ID}-${HH_REPORT_GROUP}" \
@@ -114,6 +124,12 @@ jobs:
       max-examples:
         type: integer
         default: 100
+      sample-random:
+        type: string
+        default: "100"
+      sample-min-cases:
+        type: integer
+        default: 128
       seed:
         type: integer
         default: 0
@@ -209,6 +225,8 @@ jobs:
           jobs: << parameters.jobs >>
           max-examples: << parameters.max-examples >>
           seed: << parameters.seed >>
+          sample-random: << parameters.sample-random >>
+          sample-min-cases: << parameters.sample-min-cases >>
           artifact-dir: << parameters.artifact-dir >>
       - run:
           name: Stage this shard for aggregation

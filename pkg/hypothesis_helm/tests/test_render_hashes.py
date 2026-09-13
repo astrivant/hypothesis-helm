@@ -146,9 +146,9 @@ def test_render_reuse_preserves_properties_and_stream(monkeypatch: pytest.Monkey
     validator = Mock()
     stream = Mock()
     prop = Mock(side_effect=[None, AssertionError("custom failure")])
-    monkeypatch.setattr("hypothesis_helm.charts.runner.subprocess.run", helm)
-    monkeypatch.setattr("hypothesis_helm.charts.runner.validate", validator)
-    monkeypatch.setattr("hypothesis_helm.charts.runner.emit_manifest", stream)
+    monkeypatch.setattr("hypothesis_helm.charts.rendering.subprocess.run", helm)
+    monkeypatch.setattr("hypothesis_helm.charts.rendering.validate", validator)
+    monkeypatch.setattr("hypothesis_helm.charts.rendering.emit_manifest", stream)
     chart = Chart(
         tmp_path,
         {

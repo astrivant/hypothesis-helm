@@ -14,11 +14,14 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.benchmark_helm import ROOT, code_digest
 from hypothesis_helm.benchmarking.faults import Fault as Fault
 from hypothesis_helm.benchmarking.faults import write_faults
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace
+from hypothesis_helm.benchmarking.fixture import chart_path as resolve_chart
 from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
 from hypothesis_helm.benchmarking.plots import finish
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.workload import source_digest
-from hypothesis_helm.charts.runner import Chart, render
+from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions
 from hypothesis_helm.schemas.contracts import mapping, sequence
@@ -52,7 +55,7 @@ def faults(complexity: int, maximum: int, per_order: int, seed: int) -> list[Fau
     return result
 
 
-def fixture(path: Path, complexity: int, defects: list[Fault]) -> Chart:
+def fixture(path: Path, complexity: int, defects: list[Fault], *, workspace: FixtureWorkspace | None = None) -> Chart:
     """
     Add conditional semantic defects to a generated Helm chart.
 
@@ -60,13 +63,14 @@ def fixture(path: Path, complexity: int, defects: list[Fault]) -> Chart:
         path (Path): New chart directory.
         complexity (int): Number of independent Boolean schema factors.
         defects (list[Fault]): Seeded triggers for incorrect ConfigMap fields.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         Chart: Renderable fixture whose contract requires every field to equal expected.
     """
-    generate(path, input_complexity=complexity)
-    write_faults(path, defects)
-    return Chart.load(path)
+    generate(path, input_complexity=complexity, workspace=workspace)
+    write_faults(path, defects, workspace=workspace)
+    return Chart.load(resolve_chart(path, workspace=workspace))
 
 
 def plot(output: Path, rows: list[dict[str, object]], defects: list[Fault]) -> None:
@@ -132,9 +136,13 @@ def plot(output: Path, rows: list[dict[str, object]], defects: list[Fault]) -> N
     )
 
 
-def run() -> int:
+def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Execute independently planned strengths against a fixed faulty chart.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for complete measurements or 124 for an execution-budget stop.
@@ -147,8 +155,8 @@ def run() -> int:
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
-    parser.add_argument("--output", type=Path, default=ROOT / "reports/benchmarks/bug-density")
-    args = parser.parse_args()
+    parser.add_argument("--output", type=Path, default=ROOT / "benchmarks/runs/bug-density")
+    args = parser.parse_args(argv)
     if not 2 <= args.max_strength <= args.input_complexity <= 16:
         parser.error("require 2 <= max-strength <= input-complexity <= 16")
     if not 0 < args.time_limit <= 540:
@@ -159,14 +167,10 @@ def run() -> int:
     args.output.mkdir(parents=True, exist_ok=True)
     if args.chart is None:
         chart_path = args.output / "chart"
-        generate(
-            chart_path,
-            input_complexity=args.input_complexity,
-            bug_percent=args.bug_percent,
-            bug_seed=args.seed,
-        )
+        generate(chart_path, input_complexity=args.input_complexity, bug_percent=args.bug_percent, bug_seed=args.seed, workspace=workspace)
     else:
         chart_path = args.chart
+    chart_path = resolve_chart(chart_path, workspace=workspace)
     chart = Chart.load(chart_path)
     spec = mapping(json.loads((chart_path / "benchmark.json").read_text()))
     bug_spec = mapping(spec.get("bugs"))

@@ -298,3 +298,14 @@ fast-forward updates. Pull-request merge refs do not commit back.
 Verified examples can be reduced while preserving valid, nonempty output.
 Invalid examples are also exported, with the validation failure recorded for review.
 The exporter does not claim a global minimum. See [verification and limits](../inputs/README.md).
+
+## Optional percentage sampling
+
+Set the GitHub action inputs `sample-random: '70'` and `sample-min-cases: '128'`
+to opt in. The CircleCI command/job exposes the same parameter names. The GitLab
+include uses `SAMPLE_RANDOM` and `SAMPLE_MIN_CASES`. Defaults retain all eligible
+cases. Use identical settings and seeds on every shard; aggregation checks that
+they used the same policy and population.
+
+The [sampling guide](../execution/README.md#percentage-sampling) explains selection
+units, protected cases, and why this does not guarantee a particular bug recall.

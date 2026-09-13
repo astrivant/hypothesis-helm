@@ -29,6 +29,9 @@ from hypothesis_helm.execution.render_hashes import (
     STATISTICS_DIRECTORY,
     summarize_process_statistics,
 )
+from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
+from hypothesis_helm.execution.sampling import ENVIRONMENT as SAMPLING_ENVIRONMENT
+from hypothesis_helm.execution.sampling import REPORT as SAMPLING_REPORT
 from hypothesis_helm.execution.structure import inspect_structure
 from hypothesis_helm.execution.traversal import ALGORITHM, validate_strategy
 from hypothesis_helm.integrations.sharding import Shard
@@ -40,6 +43,7 @@ def run_suite(
     *,
     seed: int = 0,
     traversal_strategy: str = "random",
+    sampling: Sampling = DEFAULT_SAMPLING,
     match: str | None = None,
     collect_only: bool = False,
     jobs: int | Literal["auto"] = "auto",
@@ -63,6 +67,7 @@ def run_suite(
         directory (Path): Directory containing the generated test module.
         seed (int): Hypothesis seed applied to every property in this invocation.
         traversal_strategy (str): Seeded random, original linear, root-first, or leaf-first path order.
+        sampling (Sampling): Optional retained percentage and minimum sample after filtering.
         match (str | None): Optional pytest keyword expression selecting value paths.
         collect_only (bool): Whether to list tests without invoking Helm rendering.
         jobs (int | Literal["auto"]): Fixed worker count or automatic PID throughput tuning.
@@ -142,6 +147,9 @@ def run_suite(
         environment = dict(os.environ)
         environment["HYPOTHESIS_HELM_TRAVERSAL_STRATEGY"] = traversal_strategy
         environment["HYPOTHESIS_HELM_TRAVERSAL_SEED"] = str(seed)
+        environment[SAMPLING_ENVIRONMENT] = json.dumps({"percent": sampling.percent, "minimum": sampling.minimum})
+        environment[SAMPLING_REPORT] = str(results / "sampling.json")
+        (results / "sampling.json").unlink(missing_ok=True)
         environment.pop("HYPOTHESIS_HELM_CACHE_READ", None)
         environment.pop("HYPOTHESIS_HELM_CACHE_RESULTS", None)
         cache_workspace = TemporaryDirectory(prefix="path-results-", dir=results)
@@ -282,6 +290,7 @@ def run_suite(
             "cache": str(cache_file) if cache_file else None,
             "rerun": "failed" if retry else "all",
             "seed": seed,
+            "sampling": json.loads((results / "sampling.json").read_text()) if (results / "sampling.json").exists() else None,
             "traversal_strategy": traversal_strategy,
             "traversal_algorithm": ALGORITHM,
             "workers": workers,

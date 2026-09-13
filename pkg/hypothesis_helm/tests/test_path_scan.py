@@ -12,6 +12,7 @@ from hypothesis import given, settings
 from hypothesis_helm.charts.generate import ValuePath
 from hypothesis_helm.charts.paths import check_paths, path_strategy
 from hypothesis_helm.charts.runner import Chart
+from hypothesis_helm.execution.sampling import Sampling
 
 
 @pytest.fixture
@@ -47,7 +48,8 @@ def chart(tmp_path: Path) -> Chart:
 
 
 @pytest.mark.parametrize("strategy", ["random", "linear", "root-first", "leaf-first"])
-def test_scan_visits_each_path_once(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, strategy: str) -> None:
+@pytest.mark.parametrize("percent", [50, 100])
+def test_scan_visits_each_path_once(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, strategy: str, percent: int) -> None:
     """
     Visit the entire finite path inventory without mutating its original contract.
 
@@ -56,6 +58,7 @@ def test_scan_visits_each_path_once(chart: Chart, tmp_path: Path, monkeypatch: p
         tmp_path (Path): Artifact root.
         monkeypatch (pytest.MonkeyPatch): Substitute successful property execution.
         strategy (str): Requested traversal order.
+        percent (int): Percentage of discovered paths selected for execution.
 
     Returns:
         None: Each selected path has exactly one property result and no remaining work.
@@ -91,12 +94,15 @@ def test_scan_visits_each_path_once(chart: Chart, tmp_path: Path, monkeypatch: p
         artifacts=tmp_path / "results",
         filtering=True,
         traversal_strategy=strategy,
+        sampling=Sampling(percent, 1),
     )
     traversal = result["traversal"]
     assert isinstance(traversal, dict)
     visited = [tuple(path) for path in traversal["visited_order"]]
-    assert len(visited) == len(set(visited)) == len(calls) == 6
-    assert traversal["remaining_paths"] == 0 and traversal["path_targets_complete"]
+    assert len(visited) == len(set(visited)) == len(calls) == 6 * percent // 100
+    assert traversal["discovered_paths"] == 6
+    assert traversal["sampled_out_paths"] == 6 - len(visited)
+    assert traversal["remaining_paths"] == 0 and traversal["path_targets_complete"] is (percent == 100)
     if strategy in {"root-first", "leaf-first"}:
         assert [len(path) for path in visited] == sorted(map(len, visited), reverse=strategy == "leaf-first")
     assert (chart.schema, chart.defaults) == original

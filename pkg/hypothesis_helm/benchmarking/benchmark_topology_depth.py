@@ -12,9 +12,10 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.benchmark_expansion import compare
 from hypothesis_helm.benchmarking.benchmark_helm import code_digest
 from hypothesis_helm.benchmarking.benchmark_pca import run_case
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES
-from hypothesis_helm.charts.runner import Chart
+from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.compiler.passes.topology import trim_topology
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, number, sequence
@@ -74,15 +75,19 @@ def sweep(
     return rows
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Generate a matched depth sweep while preserving complete references and partial-run statistics.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for complete plots, one for execution-budget censoring.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("reports/benchmarks/topology-depth"))
+    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/topology-depth"))
     parser.add_argument("--depths", type=int, nargs="+", default=list(range(6)))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--error-percent", type=float, default=5)
@@ -93,7 +98,7 @@ def main() -> int:
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     from hypothesis_helm.benchmarking.depth_plots import plot
 
     if args.plot_only:
@@ -153,12 +158,13 @@ def main() -> int:
             topology_components=args.topology_components if structure.startswith("mixed-") else 0,
             topology_weights={"dependencies": 1, "interactions": 1, "equivalence": 1} if structure == "mixed-supported" else None,
             topology_seed=args.topology_seed,
+            workspace=workspace,
         )
         references.append(reference)
         if reference["status"] == "complete":
             rows.extend(
                 sweep(
-                    Chart.load(args.output / "charts" / structure),
+                    Chart.load(chart_path(args.output / "charts" / structure, workspace=workspace)),
                     reference,
                     args.depths,
                     args.seed,

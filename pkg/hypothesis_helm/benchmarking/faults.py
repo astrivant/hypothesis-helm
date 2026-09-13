@@ -2,12 +2,15 @@
 Generate reproducible semantic faults with an explicit interaction-population denominator.
 """
 
+import json
 import math
 import random
 from fractions import Fraction
 from pathlib import Path
 
 from attrs import asdict, frozen
+
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path, record_change
 
 
 @frozen
@@ -36,22 +39,38 @@ class Fault:
         return all(values[key] == expected for key, expected in self.terms.items())
 
 
-def write_faults(path: Path, defects: list[Fault]) -> None:
+def write_faults(path: Path, defects: list[Fault], *, workspace: FixtureWorkspace | None = None) -> None:
     """
     Write conditional wrong-output fields into an existing generated chart.
 
     Args:
         path (Path): Chart root with an existing templates directory.
         defects (list[Fault]): Independent wrong-output trigger specifications.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         None: The generated fault template records correct or incorrect per-defect fields.
     """
+    logical = path
+    path = chart_path(path, workspace=workspace)
+    metadata_path = path / "benchmark.json"
+    if metadata_path.exists():
+        metadata = json.loads(metadata_path.read_text())
+        names = metadata.get("input_names", [])
+        replacements = {f"input{index:03d}": str(name) for index, name in enumerate(names)}
+        defects = [Fault(defect.name, {replacements.get(key, key): value for key, value in defect.terms.items()}) for defect in defects]
+        metadata["bugs"] = {
+            "definition": "explicit fixed defect triggers",
+            "total_faults": len(defects),
+            "faults": [asdict(item) for item in defects],
+        }
+        metadata_path.write_text(json.dumps(metadata, indent=2) + "\n")
     lines = ["apiVersion: v1", "kind: ConfigMap", "metadata:", "  name: injected-faults", "data:"]
     for defect in defects:
         terms = " ".join(f"(eq .Values.{key} {str(value).lower()})" for key, value in defect.terms.items())
         lines.append(f'  {defect.name}: "{{{{ if and {terms} }}}}incorrect{{{{ else }}}}expected{{{{ end }}}}"')
     (path / "templates/faults.yaml").write_text("\n".join(lines) + "\n")
+    record_change(logical, "faults", {"faults": [asdict(defect) for defect in defects]}, workspace=workspace)
 
 
 def select_faults(complexity: int, orders: tuple[int, ...], percent: float, seed: int, limit: int) -> tuple[list[Fault], dict[str, object]]:

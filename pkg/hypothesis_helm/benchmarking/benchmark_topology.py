@@ -13,6 +13,8 @@ from pathlib import Path
 from textwrap import dedent
 from typing import NotRequired, TypedDict
 
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace
+
 
 class GraphNode(TypedDict):
     """
@@ -246,9 +248,13 @@ def plot(graph: Graph, output: Path, title: str) -> dict[str, object]:
     return metrics
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Plot an existing compiler graph without rerunning chart tests.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero when the full graph and its mathematical summary were saved.
@@ -257,7 +263,7 @@ def main() -> int:
     parser.add_argument("--graph", type=Path, required=True, help="JSON from --export-topological-graph")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--title", default="Helm chart topology")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     metrics = plot(json.loads(args.graph.read_text()), args.output, args.title)
     print(json.dumps(metrics))
     return 0

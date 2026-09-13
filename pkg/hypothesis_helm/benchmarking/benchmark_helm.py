@@ -17,10 +17,11 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.runner import measure
 from hypothesis_helm.benchmarking.workload import MULTIPLICITY, VERSION, load_inputs, source_digest
-from hypothesis_helm.charts.runner import Chart
+from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, sequence
@@ -55,9 +56,9 @@ def parser() -> argparse.ArgumentParser:
         argparse.ArgumentParser: Workload, sharding, replication and plotting controls.
     """
     result = argparse.ArgumentParser(description=__doc__)
-    result.add_argument("--chart", type=Path, default=Path("benchmark-chart"))
+    result.add_argument("--chart", type=Path, default=Path("benchmarks/runs/chart"))
     result.add_argument("--values", type=Path, help="distinct JSONL overrides for a custom chart")
-    result.add_argument("--output", type=Path, default=ROOT / "reports/benchmarks")
+    result.add_argument("--output", type=Path, default=ROOT / "benchmarks/runs")
     result.add_argument("--helm", default="helm")
     result.add_argument(
         "--time-limit",
@@ -147,12 +148,13 @@ def save(output: Path, document: dict[str, object]) -> None:
         writer.writerows(points)
 
 
-def run(argv: list[str] | None = None) -> int:
+def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Execute progressive and scaling matrices without mixing shards or workload identities.
 
     Args:
         argv (list[str] | None): CLI arguments or process arguments.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for successful measurements, one for chart failures or incomplete matrices.

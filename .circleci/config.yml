@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: pip install poetry==2.1.3 pre-commit==4.6.0
-      - run: poetry install
+      - run: poetry install --extras benchmarking
       - run: sudo apt-get update && sudo apt-get install -y parallel
       - run:
           name: Install Helm for chart integration tests
@@ -16,6 +16,9 @@ jobs:
             tar -xzf /tmp/helm.tar.gz -C /tmp
             sudo install /tmp/linux-amd64/helm /usr/local/bin/helm
       - run: bash scripts/check.sh --junitxml=reports/pytest.xml
+      - run:
+          name: Exercise the shared benchmark chart and stress plots
+          command: bash benchmarks/smoke.sh
       - run: poetry build
       - run:
           name: Verify end-user Helm testing commands
@@ -29,6 +32,8 @@ jobs:
           path: reports
       - store_artifacts:
           path: dist
+      - store_artifacts:
+          path: benchmarks/runs/smoke
 
 workflows:
   verify-all:

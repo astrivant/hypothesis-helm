@@ -8,32 +8,13 @@ Unknown contexts are represented by None, never silently treated as the root.
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 
-from attrs import define, field
+from attrs import define
 
 from hypothesis_helm.charts import tpl, yamlio
-
-
-@define
-class Action:
-    """
-    Represent a parsed template action and its nested branches.
-
-    Attributes:
-        text (str): Original template action text.
-        line (int): One-based source line number.
-        tokens (list[str]): Lexed action tokens.
-        children (list[Action]): Actions in the primary branch.
-        otherwise (list[Action]): Actions in the alternative branch.
-    """
-
-    text: str
-    line: int
-    tokens: list[str]
-    children: list[Action] = field(factory=list)
-    otherwise: list[Action] = field(factory=list)
+from hypothesis_helm.compiler.asts.actions import Action as Action
+from hypothesis_helm.compiler.asts.actions import parse as parse
 
 
 @define(frozen=True)
@@ -68,86 +49,6 @@ class Diagnostic:
     file: str
     line: int
     message: str
-
-
-TOKEN = re.compile(r'"(?:\\.|[^"\\])*"|`[^`]*`|\x27(?:\\.|[^\x27\\])*\x27|:=|[()|,=]|[^\s()|,=]+')
-
-
-def parse(source: str) -> list[Action]:
-    """
-    Parse actions and block nesting, respecting quoted delimiters and comments.
-
-    Args:
-        source (str): Source chart location or template text.
-
-    Returns:
-        list[Action]: Result of the documented operation.
-    """
-    root: list[Action] = []
-    current = root
-    stack: list[tuple[Action, list[Action]]] = []
-    pos = 0
-    while (start := source.find("{{", pos)) >= 0:
-        i = start + 2
-        quote = None
-        comment = False
-        while i < len(source):
-            if comment:
-                if source.startswith("*/", i):
-                    comment = False
-                    i += 2
-                else:
-                    i += 1
-                continue
-            char = source[i]
-            if quote:
-                if char == "\\" and quote != "`":
-                    i += 2
-                    continue
-                if char == quote:
-                    quote = None
-            elif source.startswith("/*", i):
-                comment = True
-                i += 2
-                continue
-            elif char in ('"', "`", "'"):
-                quote = char
-            elif source.startswith("}}", i):
-                break
-            i += 1
-        if i >= len(source):
-            raise ValueError(f"unterminated template action at line {source.count(chr(10), 0, start) + 1}")
-        text = source[start + 2 : i].strip()
-        if text.startswith("-"):
-            text = text[1:].lstrip()
-        if text.endswith("-"):
-            text = text[:-1].rstrip()
-        pos = i + 2
-        if text.startswith("/*"):
-            continue
-        tokens = TOKEN.findall(text)
-        if not tokens:
-            continue
-        node = Action(text, source.count("\n", 0, start) + 1, tokens)
-        if tokens[0] == "end":
-            if not stack:
-                raise ValueError(f"unmatched end at line {node.line}")
-            _, current = stack.pop()
-        elif tokens[0] == "else":
-            if not stack:
-                raise ValueError(f"unmatched else at line {node.line}")
-            current = stack[-1][0].otherwise
-            if len(tokens) > 1:
-                # Keep chained conditions visible; their dot context is conservatively unknown.
-                current.append(Action(" ".join(tokens[1:]), node.line, tokens[1:]))
-        else:
-            current.append(node)
-            if tokens[0] in ("if", "with", "range", "define", "block"):
-                stack.append((node, current))
-                current = node.children
-    if stack:
-        raise ValueError(f"unclosed block at line {stack[-1][0].line}")
-    return root
 
 
 def discover(path: Path, *, prune_literals: bool = False) -> tuple[list[Reference], list[Diagnostic]]:

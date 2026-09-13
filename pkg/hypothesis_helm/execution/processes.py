@@ -51,6 +51,7 @@ class Processes:
 
     _interrupt_grace: float = 2.0
     _lock: threading.Lock = field(factory=threading.Lock)
+    _shutdown_lock: threading.Lock = field(factory=threading.Lock)
     _stopping: threading.Event = field(factory=threading.Event)
     _children: set[subprocess.Popen[str]] = field(factory=set)
 
@@ -98,16 +99,71 @@ class Processes:
             self._children.add(child)
         try:
             output, errors = child.communicate()
-            result = subprocess.CompletedProcess(command, child.returncode, output, errors)
-            if check:
-                result.check_returncode()
-            return result
-        except KeyboardInterrupt:
+            with self._shutdown_lock:
+                # A completed parent can leave descendants in its owned session.
+                # Ownership ends only after the complete group has been stopped.
+                with self._lock:
+                    owned = child in self._children
+                if owned:
+                    self._reap([child])
+        except BaseException:
             self.stop()
             raise
-        finally:
-            with self._lock:
-                self._children.discard(child)
+        result = subprocess.CompletedProcess(command, child.returncode, output, errors)
+        if check:
+            result.check_returncode()
+        return result
+
+    def _reap(self, children: list[subprocess.Popen[str]]) -> None:
+        """
+        Stop owned descendants and join every parent before releasing its registry entry.
+
+        Args:
+            children (list[subprocess.Popen[str]]): Snapshot protected by the shutdown lock.
+
+        Returns:
+            None: Every group is gone and every direct child has been joined.
+        """
+        groups = set(children)
+        failures: dict[subprocess.Popen[str], Exception] = {}
+        for sig, grace in (
+            (signal.SIGINT, self._interrupt_grace),
+            (signal.SIGTERM, 1.0),
+            (signal.SIGKILL, 1.0),
+        ):
+            for child in list(groups):
+                try:
+                    if not _signal_group(child, sig):
+                        groups.remove(child)
+                except OSError as exc:
+                    failures[child] = exc
+            deadline = time.monotonic() + grace
+            while groups and time.monotonic() < deadline:
+                for child in list(groups):
+                    try:
+                        child.poll()
+                        if not _signal_group(child, 0):
+                            groups.remove(child)
+                    except OSError as exc:
+                        failures[child] = exc
+                if groups:
+                    time.sleep(0.02)
+        errors = []
+        for child in children:
+            try:
+                child.wait(timeout=2.0)
+                if child in groups:
+                    raise failures.get(child, RuntimeError(f"owned process group {child.pid} did not stop"))
+                for stream in (child.stdin, child.stdout, child.stderr):
+                    if stream is not None:
+                        stream.close()
+            except Exception as exc:
+                errors.append(exc)
+            else:
+                with self._lock:
+                    self._children.discard(child)
+        if errors:
+            raise ExceptionGroup("Failed to release owned worker process groups", errors)
 
     def stop(self) -> None:
         """
@@ -121,27 +177,10 @@ class Processes:
         try:
             with self._lock:
                 self._stopping.set()
-                children = list(self._children)
-            groups = set(children)
-            for sig, grace in (
-                (signal.SIGINT, self._interrupt_grace),
-                (signal.SIGTERM, 1.0),
-                (signal.SIGKILL, 0.0),
-            ):
-                for child in list(groups):
-                    if not _signal_group(child, sig):
-                        groups.remove(child)
-                deadline = time.monotonic() + grace
-                while time.monotonic() < deadline:
-                    for child in list(groups):
-                        child.poll()
-                        if not _signal_group(child, 0):
-                            groups.remove(child)
-                    if not groups:
-                        break
-                    time.sleep(0.02)
-            for child in children:
-                child.wait()
+            with self._shutdown_lock:
+                with self._lock:
+                    children = list(self._children)
+                self._reap(children)
         finally:
             if main_thread and previous is not None:
                 signal.signal(signal.SIGINT, previous)

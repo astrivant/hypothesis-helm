@@ -379,5 +379,45 @@ without discovering a different erroneous output. It does not infer failures for
 unexecuted inputs, and cannot recover an entirely missed failure region.
 Unsupported regions have no automatic expansion membership.
 
-See the [paired failure-expansion matrix](../benchmarks/expansion/README.md).
+See the [paired failure-expansion matrix](../../benchmarks/expansion/README.md).
 Dry runs report a bound on additional work; the actual count depends on failures.
+
+## Percentage sampling
+
+`--sample-random 70 --sample-min-cases 128` retains 70% of eligible cases, rounded
+upward, with a floor of 128. Smaller populations run in full. The default is
+`--sample-random 100`, which disables sampling. The floor is a policy choice;
+it is not a guarantee of defect recall.
+
+```sh
+helm hypothesis test ./chart --filter --sample-random 70 --sample-min-cases 128 --seed 2026
+helm hypothesis scan bitnami/nginx --sample-random 70 --sample-min-cases 128 --seed 2026
+helm hypothesis run ./generated-tests --sample-random 70 --sample-min-cases 128 --seed 2026
+```
+
+For finite plans, sampling selects complete configurations. For generated suites
+and nonfinite chart scans, it selects path properties; each property can generate
+many values. Benchmark configuration recall does not predict path-property recall.
+Unbounded `--whole-chart` generation has no enumerated population and rejects this option.
+
+Existing filters run first, percentage sampling runs next, then traversal and
+sharding. Chart plans and scans still test defaults before the selected cases.
+With topology filtering, unknown cases and one
+representative per region remain protected, so more than the requested percentage
+may run. Failure expansion may subsequently add cases. Combining this option with
+`--trim-random` applies both reductions; the minimum applies to the population left
+by preceding filters and does not restore cases they already removed.
+
+A fixed seed chooses the same identities independently of traversal order. Increasing
+the percentage keeps previously selected cases and adds more, provided the eligible
+population and protected cases have not changed.
+All shards choose the global sample before partitioning it; workers do not sample
+again. Dry runs, JSON reports, scan summaries, and aggregate reports include the
+eligible, retained, omitted, and protected counts. Omissions are not successful tests.
+
+For N eligible cases, sampling uses O(N log N) time to rank stable case identities
+and O(N) memory. When every case is retained, it skips ranking and takes O(N) time.
+
+See the [measured sample-size study](../../benchmarks/sampling/README.md). Repeated
+bugs can be found from a small sample. An error that occurs for only one input
+requires sampling most of the population to obtain a high discovery probability.

@@ -197,6 +197,16 @@ def write_reports(report: dict[str, object], stem: Path, *, publication: Publica
                 "",
             ]
         )
+        sampling = chart.get("sampling")
+        if isinstance(sampling, dict) and sampling.get("applied"):
+            lines.extend(
+                [
+                    f"Random sample: {sampling['retained']} / {sampling['eligible']} eligible cases retained; "
+                    f"{sampling['omitted']} omitted. Minimum: {sampling['minimum']}. Seed: {sampling['seed']}. "
+                    "Bug recall is not guaranteed.",
+                    "",
+                ]
+            )
         rejections = chart.get("configuration_rejections")
         if isinstance(rejections, dict) and (rejections.get("rejected_candidates") or rejections.get("schema_conflicts")):
             lines.extend(

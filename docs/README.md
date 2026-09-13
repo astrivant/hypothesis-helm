@@ -12,7 +12,7 @@ Run repository command examples from the checkout root unless stated otherwise.
 - [Architecture](architecture/README.md): input discovery, test generation, rendering, and validation.
 - [Execution](execution/README.md): parallelism, sharding, dry runs, and execution budgets.
 - [CI examples](ci/README.md): GitHub Action, CircleCI, and GitLab configuration.
-- [Benchmarking](benchmarks/README.md): local shards, generated charts, and plots.
+- [Benchmarking](../benchmarks/README.md): local shards, generated charts, and plots.
 - [CLI reference](cli/README.md): generated command help.
 - [Development](development.md): environment, checks, and repository layout.
 
@@ -22,4 +22,3 @@ Run repository command examples from the checkout root unless stated otherwise.
 - [CI integration](ci.md): provider detection, action inputs, artifacts, and publishing.
 - [Safe pruning](safe-pruning.md): supported templates and exact-equivalence proofs.
 - [Generated suite](../examples/generated-workload/test_chart_values.py): emitted Python tests.
-- [Astrivant observation](../examples/astrivant-observation.md): a schema/template mismatch.

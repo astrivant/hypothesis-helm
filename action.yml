@@ -44,6 +44,12 @@ inputs:
   max-examples:
     description: Maximum Hypothesis examples per property.
     default: '100'
+  sample-random:
+    description: Percentage of eligible path properties to retain; 100 disables sampling.
+    default: '100'
+  sample-min-cases:
+    description: Minimum retained sample; smaller suites run in full.
+    default: '128'
   seed:
     description: Shared Hypothesis seed for reproducible runs.
     default: '0'
@@ -246,6 +252,8 @@ runs:
         HH_RUN_ID: ${{ inputs.run-id }}
         HH_MAX_EXAMPLES: ${{ inputs.max-examples }}
         HH_SEED: ${{ inputs.seed }}
+        HH_SAMPLE_RANDOM: ${{ inputs.sample-random }}
+        HH_SAMPLE_MIN_CASES: ${{ inputs.sample-min-cases }}
         HH_TIMEOUT: ${{ inputs.timeout }}
         HH_MATCH: ${{ inputs.match }}
         HH_KUBECONFORM: ${{ inputs.kubeconform }}

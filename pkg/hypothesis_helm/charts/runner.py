@@ -9,409 +9,43 @@ import json
 import logging
 import math
 import os
-import subprocess
-import tempfile
 import time
-from collections.abc import Callable, Iterator, Sequence
+from collections.abc import Callable, Sequence
 from pathlib import Path
 
-from attrs import define
 from hypothesis import HealthCheck, Phase, assume, given, seed, settings
 from hypothesis.errors import Unsatisfiable
 from hypothesis.strategies import SearchStrategy
-from jsonschema import validators
-from ruamel.yaml.error import YAMLError
 
 from hypothesis_helm.charts import yamlio
-from hypothesis_helm.charts.presence import has_path
-from hypothesis_helm.charts.templates import discover
+from hypothesis_helm.charts.audit import audit as audit
+from hypothesis_helm.charts.candidates import CandidateChecks
+from hypothesis_helm.charts.model import Chart as Chart
+from hypothesis_helm.charts.model import _default_paths as _default_paths
+from hypothesis_helm.charts.model import _schema_nodes as _schema_nodes
+from hypothesis_helm.charts.model import merge_values as merge_values
+from hypothesis_helm.charts.planning import PlanningOptions, build_plan
+from hypothesis_helm.charts.rendering import RenderFailure as RenderFailure
+from hypothesis_helm.charts.rendering import render as render
+from hypothesis_helm.charts.rendering import validate_resources as validate_resources
 from hypothesis_helm.compiler.asts.contracts import Contracts
-from hypothesis_helm.compiler.passes.dependencies import Dependencies
-from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.passes.pruning import Pruner
-from hypothesis_helm.compiler.passes.rejections import RejectionPolicy, matches_rejection
-from hypothesis_helm.compiler.passes.topology import trim_topology as topology_trim
-from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
-from hypothesis_helm.execution.traversal import ALGORITHM, order_configurations, validate_strategy
-from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+from hypothesis_helm.compiler.passes.rejections import RejectionPolicy
+from hypothesis_helm.execution.render_hashes import RenderHashes
+from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
+from hypothesis_helm.execution.traversal import order_configurations, validate_strategy
+from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.reporting.changes import compare
-from hypothesis_helm.reporting.output import emit_manifest
-from hypothesis_helm.reporting.permutations import PermutationStatistics
-from hypothesis_helm.reporting.progress import format_path
-from hypothesis_helm.reporting.progressive import estimate_progression
 from hypothesis_helm.reporting.reproductions import changed_values
-from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
-from hypothesis_helm.schemas.conformity import ENVIRONMENT, validate
 from hypothesis_helm.schemas.contracts import (
     configuration_key,
-    json_value,
     mapping,
-    schema_strategy,
-    sequence,
 )
-from hypothesis_helm.schemas.finite import enumerate_values
-from hypothesis_helm.schemas.groups import ExhaustiveGroup, infer_groups
+from hypothesis_helm.schemas.groups import ExhaustiveGroup
 from hypothesis_helm.schemas.model import ValuesModel
 
 LOGGER = logging.getLogger(__name__)
-
-
-@define
-class Chart:
-    """
-    Hold the chart location, documented schema, and round-trip defaults.
-
-    Attributes:
-        path (Path): Resolved value path or chart location.
-        schema (dict[str, object]): Schema describing accepted values.
-        defaults (dict[str, object]): Values loaded from the source chart.
-        dependency_model (Dependencies | None): Optional dependency snapshot for an isolated generated suite.
-    """
-
-    path: Path
-    schema: dict[str, object]
-    defaults: dict[str, object]
-    dependency_model: Dependencies | None = None
-
-    @classmethod
-    def load(cls, path: str | Path) -> Chart:
-        """
-        Check load.
-
-        Args:
-            path (str | Path): Value path or chart location to inspect.
-
-        Returns:
-            Chart: Result of the documented operation.
-        """
-        path = Path(path).resolve()
-        metadata = yamlio.load((path / "Chart.yaml").read_text())
-        if not isinstance(metadata, dict) or not metadata.get("name"):
-            raise ValueError("Chart.yaml must contain a chart name")
-        schema = json.loads((path / "values.schema.json").read_text())
-        if not isinstance(schema, dict) or schema.get("type") != "object":
-            raise ValueError("values.schema.json must declare type: object")
-
-        # Do not allow implicit network resolution or files outside the chart.
-        def refs(node: object) -> None:
-            """
-            Reject external schema references before strategy construction.
-
-            Args:
-                node (object): Current schema or template node.
-
-            Returns:
-                None: None. The operation completes through its documented side effects.
-            """
-            if isinstance(node, dict):
-                if "$ref" in node and not node["$ref"].startswith("#"):
-                    raise ValueError("only local JSON Pointer schema references are supported")
-                for value in node.values():
-                    refs(value)
-            elif isinstance(node, list):
-                for value in node:
-                    refs(value)
-
-        refs(schema)
-        validators.validator_for(schema).check_schema(schema)
-        defaults = yamlio.load((path / "values.yaml").read_text()) or {}
-        if not isinstance(defaults, dict):
-            raise ValueError("values.yaml must contain an object")
-        return cls(path, schema, defaults)
-
-    def strategy(self) -> SearchStrategy[dict[str, object]]:
-        """
-        Generate schema-valid overrides; Helm still merges chart defaults.
-
-        Returns:
-            SearchStrategy[dict[str, object]]: Result of the documented operation.
-        """
-        return schema_strategy(self.schema).map(mapping)
-
-
-def merge_values(defaults: dict[str, object], overrides: dict[str, object]) -> dict[str, object]:
-    """
-    Model ordinary Helm map merging and null deletion for schema preflight.
-
-    Helm is authoritative, especially for dependency coalescing and globals.
-
-    Args:
-        defaults (dict[str, object]): Existing chart defaults that take precedence during
-            coalescing.
-        overrides (dict[str, object]): Incoming Helm overrides, including null deletion markers.
-
-    Returns:
-        dict[str, object]: Resulting schema, values mapping, or structured report.
-    """
-    result = copy.deepcopy(defaults)
-    for key, value in overrides.items():
-        if value is None:
-            result.pop(key, None)
-        elif isinstance(value, dict) and isinstance(result.get(key), dict):
-            result[key] = merge_values(mapping(result[key]), value)
-        else:
-            result[key] = copy.deepcopy(value)
-    return result
-
-
-def _schema_nodes(
-    schema: object,
-    path: tuple[str, ...],
-    root: dict[str, object],
-    seen: frozenset[tuple[int, tuple[str, ...]]] = frozenset(),
-) -> list[dict[str, object]]:
-    """
-    Check  schema nodes.
-
-    Args:
-        schema (object): JSON Schema defining the accepted value domain.
-        path (tuple[str, ...]): Value path or chart location to inspect.
-        root (dict[str, object]): Root schema used to resolve local references.
-        seen (frozenset[tuple[int, tuple[str, ...]]]): References already visited while resolving
-            this schema.
-
-    Returns:
-        list[dict[str, object]]: Result of the documented operation.
-    """
-    if not isinstance(schema, dict):
-        return []
-    marker = (id(schema), path)
-    if marker in seen:
-        return []
-    seen = seen | {marker}
-    found = []
-    if "$ref" in schema:
-        target = root
-        for part in schema["$ref"].removeprefix("#/").split("/"):
-            if schema["$ref"] == "#":
-                break
-            target = mapping(target[part.replace("~1", "/").replace("~0", "~")])
-        found += _schema_nodes(target, path, root, seen)
-    for keyword in ("allOf", "anyOf", "oneOf"):
-        for branch in schema.get(keyword, []):
-            found += _schema_nodes(branch, path, root, seen)
-    if not path:
-        return found + [schema]
-    key, *rest = path
-    if key in schema.get("properties", {}):
-        found += _schema_nodes(schema["properties"][key], tuple(rest), root, seen)
-    if key == "*" and isinstance(schema.get("items"), dict):
-        found += _schema_nodes(schema["items"], tuple(rest), root, seen)
-    # Explicitly typed map entries count as documentation; open maps do not.
-    if isinstance(schema.get("additionalProperties"), dict):
-        found += _schema_nodes(schema["additionalProperties"], tuple(rest), root, seen)
-    import re
-
-    for pattern, branch in schema.get("patternProperties", {}).items():
-        if key == "*" or re.search(pattern, key):
-            found += _schema_nodes(branch, tuple(rest), root, seen)
-    return found
-
-
-def _default_paths(value: object, prefix: tuple[str, ...] = ()) -> Iterator[tuple[str, ...]]:
-    """
-    Check  default paths.
-
-    Args:
-        value (object): Candidate value supplied by the property strategy.
-        prefix (tuple[str, ...]): Resolved parent path for the current value.
-
-    Yields:
-        tuple[str, ...]: Next value path in the document.
-    """
-    if isinstance(value, dict):
-        for key, child in value.items():
-            path = prefix + (str(key),)
-            yield path
-            yield from _default_paths(child, path)
-    elif isinstance(value, list):
-        for child in value:
-            yield from _default_paths(child, prefix + ("*",))
-
-
-def audit(chart: Chart) -> dict[str, object]:
-    """
-    Inventory schema, template, and default paths against the original values document.
-
-    Args:
-        chart (Chart): Loaded chart and its schema and defaults.
-
-    Returns:
-        dict[str, object]: Resulting schema, values mapping, or structured report.
-    """
-    from attrs import asdict
-
-    from hypothesis_helm.charts.generate import enumerate_paths
-
-    references, diagnostics = discover(chart.path, prune_literals=True)
-    defaults = set(_default_paths(chart.defaults))
-    declared = {entry.path: entry.schema for entry in enumerate_paths(chart.schema)}
-    paths = defaults | {r.path for r in references if r.path} | declared.keys()
-    findings = []
-    for path in sorted(paths, key=repr):
-        LOGGER.info("Auditing path %s", format_path(path))
-        nodes = _schema_nodes(chart.schema, tuple(str(segment) for segment in path), chart.schema)
-        if not nodes and path in declared:
-            nodes = [declared[path]]
-        locations = [asdict(r) for r in references if r.path == path]
-        if not nodes:
-            findings.append({"path": list(path), "issue": "undocumented", "references": locations})
-        elif not any("type" in n or "enum" in n or "const" in n for n in nodes):
-            findings.append({"path": list(path), "issue": "untyped", "references": locations})
-        elif not any(n.get("description") for n in nodes):
-            findings.append({"path": list(path), "issue": "missing-description", "references": locations})
-        if not has_path(chart.defaults, path):
-            findings.append(
-                {
-                    "path": list(path),
-                    "issue": "no-default",
-                    "references": locations,
-                    "message": "Configurable field is absent from the original values.yaml",
-                }
-            )
-    return {
-        "chart": str(chart.path),
-        "references": [asdict(r) for r in references],
-        "findings": findings,
-        "unresolved": [asdict(d) for d in diagnostics],
-        "input_inventory": InputInventory.build(chart).report(),
-    }
-
-
-class RenderFailure(AssertionError):
-    """
-    A reproducible values input failed the rendering contract.
-
-    Attributes:
-        resources (list[object] | None): Parsed output available before a manifest validation failure.
-    """
-
-    resources: list[object] | None = None
-
-
-def validate_resources(resources: Sequence[object]) -> None:
-    """
-    Check resource envelopes; callers can add Kubernetes or domain validation.
-
-    Args:
-        resources (Sequence[object]): Rendered Kubernetes resource documents.
-
-    Returns:
-        None: None. The operation completes through its documented side effects.
-    """
-    identities = set()
-    for resource in resources:
-        if not isinstance(resource, dict):
-            raise RenderFailure("rendered document is not an object")
-        for key in ("apiVersion", "kind"):
-            if not isinstance(resource.get(key), str) or not resource[key]:
-                raise RenderFailure(f"resource has no nonempty {key}")
-        if resource["kind"] == "List":
-            if not isinstance(resource.get("items"), list):
-                raise RenderFailure("List resource has no items array")
-            validate_resources(sequence(resource["items"]))
-            continue
-        metadata = resource.get("metadata")
-        if not isinstance(metadata, dict) or not isinstance(metadata.get("name"), str) or not metadata["name"]:
-            raise RenderFailure("resource has no metadata.name")
-        identity = (
-            resource["apiVersion"],
-            resource["kind"],
-            metadata.get("namespace"),
-            metadata["name"],
-        )
-        if identity in identities:
-            raise RenderFailure(f"duplicate resource: {identity}")
-        identities.add(identity)
-
-
-def render(
-    chart: Chart,
-    values: dict[str, object],
-    *,
-    helm: str = "helm",
-    timeout: float = 30.0,
-    release: str = "hypothesis",
-    namespace: str = "default",
-    kube_version: str | None = None,
-    hashes: RenderHashes | None = None,
-    stream: bool = True,
-) -> list[dict[str, object]]:
-    """
-    Render locally with Helm schema checks enabled and a subprocess deadline.
-
-    Args:
-        chart (Chart): Loaded chart and its schema and defaults.
-        values (dict[str, object]): Values document used as the rendering baseline.
-        helm (str): Helm executable used to render the chart.
-        timeout (float): Maximum seconds allowed for each Helm invocation.
-        release (str): Release name supplied to Helm.
-        namespace (str): Release namespace supplied to Helm.
-        kube_version (str | None): Optional Kubernetes capability version supplied to Helm.
-
-        hashes (RenderHashes | None): Run index, or the current process index by default.
-        stream (bool): Emit manifests to the configured output stream.
-
-    Returns:
-        list[dict[str, object]]: Result of the documented operation.
-    """
-    with tempfile.TemporaryDirectory(prefix="hypothesis-helm-") as directory:
-        value_file = Path(directory) / "values.json"
-        value_file.write_text(yamlio.json_for_helm(values), encoding="utf-8")
-        command = [
-            helm,
-            "template",
-            release,
-            str(chart.path),
-            "--namespace",
-            namespace,
-            "--values",
-            str(value_file),
-        ]
-        if kube_version:
-            command += ["--kube-version", kube_version]
-        try:
-            process = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
-        except subprocess.TimeoutExpired as exc:
-            raise RenderFailure(f"helm exceeded {timeout}s") from exc
-        if process.returncode:
-            raise RenderFailure(process.stderr.strip() or f"helm exited {process.returncode}")
-        try:
-            resources = [item for item in yamlio.load_all(process.stdout) if item is not None]
-        except YAMLError as exc:
-            raise RenderFailure(f"invalid rendered YAML: {exc}") from exc
-    if stream:
-        for resource in resources:
-            emit_manifest(resource)
-
-    def validate_bundle() -> None:
-        """
-        Validate the complete output before committing a successful cache entry.
-
-        Returns:
-            None: Manifest checks pass or their failure propagates.
-        """
-        validate_resources(resources)
-        try:
-            validate(process.stdout, timeout)
-        except AssertionError as exc:
-            raise RenderFailure(str(exc)) from exc
-
-    context = json.dumps(
-        {"resource_contract": 1, "conformity": os.environ.get(ENVIRONMENT), "timeout": timeout},
-        sort_keys=True,
-    )
-    try:
-        (hashes if hashes is not None else process_hashes()).check(resources, context, validate_bundle)
-    except RenderFailure as exc:
-        exc.resources = resources
-        raise
-    except (TypeError, ValueError) as exc:
-        failure = RenderFailure(f"invalid rendered manifest: {exc}")
-        failure.resources = resources
-        raise failure from exc
-    return [mapping(resource) for resource in resources]
 
 
 def check_chart(
@@ -420,6 +54,7 @@ def check_chart(
     max_examples: int = 100,
     random_seed: int = 0,
     traversal_strategy: str = "random",
+    sampling: Sampling = DEFAULT_SAMPLING,
     timeout: float = 30.0,
     helm: str = "helm",
     release: str = "hypothesis",
@@ -462,6 +97,7 @@ def check_chart(
         max_examples (int): Maximum number of generated examples per property.
         random_seed (int): Seed for reproducible property generation.
         traversal_strategy (str): Order retained finite configurations after filtering.
+        sampling (Sampling): Optional retained percentage and minimum sample after filtering.
         timeout (float): Maximum seconds allowed for each Helm invocation.
         helm (str): Helm executable used to render the chart.
         release (str): Release name supplied to Helm.
@@ -508,6 +144,8 @@ def check_chart(
         chart = Chart.load(chart)
     if max_examples < 1 or timeout <= 0:
         raise ValueError("max_examples and timeout must be positive")
+    if sampling.percent < 100 and permutations is None and not exhaustive:
+        raise ValueError("--sample-random requires a finite plan or path-based testing")
     if permutations is not None and exhaustive:
         raise ValueError("permutations and exhaustive are mutually exclusive")
     if expand_failures and permutations is None:
@@ -524,7 +162,6 @@ def check_chart(
         or ((trim or trim_topology) and permutations is None)
     ):
         raise ValueError("trim must be nonnegative and requires finite permutation planning")
-    planning_started = time.perf_counter()
     policy = (
         rejection_policy
         if rejection_policy is not None
@@ -544,245 +181,55 @@ def check_chart(
     pruner = Pruner(chart.path, chart.defaults, model) if prune_equivalent and model is not None else None
     if pruner is not None and (not release or not namespace):
         pruner.disabled = "empty release or namespace is outside the fixed-context proof contract"
-    interaction_plan = None
-    group_diagnostics: list[dict[str, object]] = []
-    if permutations is not None:
-        LOGGER.info(
-            "Planning %d-way permutations (max cases %d, max candidates %d)",
-            permutations,
-            max_cases,
-            max_candidates,
-        )
-        validator = validators.validator_for(chart.schema)(chart.schema)
-        assert model is not None
-        inferred: list[ExhaustiveGroup] = []
-        if infer_exhaustive_groups:
-            inferred, group_diagnostics = infer_groups(chart.path, model)
-        interaction_plan = plan_interactions(
-            model,
-            permutations,
+    plan = build_plan(
+        chart,
+        model,
+        PlanningOptions(
+            random_seed=random_seed,
+            traversal_strategy=traversal_strategy,
+            sampling=sampling,
+            timeout=timeout,
+            helm=helm,
+            release=release,
+            namespace=namespace,
+            kube_version=kube_version,
+            allow_empty=allow_empty,
+            artifact_dir=artifact_dir,
+            exhaustive=exhaustive,
             max_cases=max_cases,
+            permutations=permutations,
+            trim=trim,
+            trim_topology=trim_topology,
+            expand_failures=expand_failures,
             max_candidates=max_candidates,
-            accept=lambda values: validator.is_valid(json_value(merge_values(chart.defaults, values))),
             exhaustive_threshold=exhaustive_threshold,
-            exhaustive_groups=(*exhaustive_groups, *inferred),
+            exhaustive_groups=exhaustive_groups,
+            infer_exhaustive_groups=infer_exhaustive_groups,
             max_group_cases=max_group_cases,
-        )
-    finite_values = enumerate_values(chart.schema, max_cases) if exhaustive else None
-    finite_domain_size = len(finite_values) if finite_values is not None else None
-    duplicate_cases_removed = 0
-    if interaction_plan is not None:
-        finite_values = interaction_plan.values
-    if finite_values is not None:
-        seen = {configuration_key(chart.defaults)}
-        distinct: list[dict[str, object]] = []
-        for values in finite_values:
-            identity = configuration_key(merge_values(chart.defaults, values))
-            if identity in seen:
-                duplicate_cases_removed += 1
-            else:
-                seen.add(identity)
-                distinct.append(values)
-        finite_values = distinct
-        if interaction_plan is not None:
-            interaction_plan.values = distinct
-            interaction_plan.duplicate_cases_removed = duplicate_cases_removed
-    topology: dict[str, object] = {}
-
-    def select_cases(values: list[dict[str, object]]) -> list[dict[str, object]]:
-        """
-        Apply composable sampling controls with topology representatives protected.
-
-        Args:
-            values (list[dict[str, object]]): Distinct non-default planned overrides.
-
-        Returns:
-            list[dict[str, object]]: Retained overrides ordered only after selection.
-        """
-        nonlocal topology
-        if trim_topology:
-            selected, topology = topology_trim(
-                chart.path,
-                chart.defaults,
-                values,
-                [merge_values(chart.defaults, item) for item in values],
-                trim_topology,
-                random_seed,
-                random_steps=trim,
-                fixed_names=bool(release and namespace),
-            )
-        else:
-            selected = trim_values(values, trim, random_seed)
-        return order_configurations(
-            selected,
-            lambda value: merge_values(chart.defaults, value),
-            chart.defaults,
-            strategy=traversal_strategy,
-            seed=random_seed,
-        )
-
-    expansion_values = [{}, *(finite_values or [])] if expand_failures else []
-    untrimmed_cases = len(finite_values) if finite_values is not None else 0
-    if interaction_plan is not None:
-        interaction_plan.values = select_cases(interaction_plan.values)
-    elif finite_values is not None:
-        finite_values = order_configurations(
-            finite_values,
-            lambda value: merge_values(chart.defaults, value),
-            chart.defaults,
-            strategy=traversal_strategy,
-            seed=random_seed,
-        )
-    trimmed_cases = untrimmed_cases - len(interaction_plan.values) if interaction_plan else 0
-    expansion = None
-    expansion_positions = {configuration_key(value): index for index, value in enumerate(expansion_values)}
-    if expand_failures and interaction_plan is not None:
-        expansion = FailureExpansion.build(
-            chart.path,
-            chart.defaults,
-            expansion_values,
-            [merge_values(chart.defaults, value) for value in expansion_values],
-            [
-                0,
-                *(expansion_positions[configuration_key(value)] for value in interaction_plan.values),
-            ],
-            fixed_names=bool(release and namespace),
-        )
+            dry_run=dry_run,
+            time_limit=time_limit,
+            prune_equivalent=prune_equivalent,
+            properties=properties,
+        ),
+        inventory_report=inputs.report(),
+        field_coverage_report=field_coverage.statistics,
+        policy_enabled=policy is not None,
+        clock=time.perf_counter,
+    )
+    if plan.dry_report is not None:
+        return {**plan.dry_report, "render_hashes": hashes.snapshot(), **({"pruning": pruner.report()} if pruner is not None else {})}
+    finite_values = plan.finite_values
+    finite_domain_size = plan.finite_domain_size
+    duplicate_cases_removed = plan.duplicate_cases_removed
+    trimmed_cases = plan.trimmed_cases
+    expansion = plan.expansion
+    expansion_values = plan.expansion_values
+    expansion_positions = plan.expansion_positions
+    coverage = plan.coverage
+    statistics = plan.statistics
     expansion_failures: list[dict[str, object]] = []
     expansion_checked = 0
     expansion_executed = 0
-    coverage: dict[str, object] = {
-        "input_inventory": inputs.report(),
-        "field_coverage": field_coverage.statistics,
-        "traversal_strategy": traversal_strategy,
-        "traversal_algorithm": ALGORITHM,
-        "traversal_unit": "configuration" if finite_values is not None else "Hypothesis samples",
-    }
-    statistics = None
-    if interaction_plan is not None:
-        finite_values = interaction_plan.values
-        coverage = {
-            **coverage,
-            "mode": "permutations",
-            "trim": trim,
-            "trim_random": trim,
-            "trim_topology": trim_topology,
-            "expand_failures": expand_failures,
-            "topology": topology,
-            "trim_seed": random_seed,
-            "untrimmed_iterations": untrimmed_cases + 1,
-            "trimmed_iterations": trimmed_cases,
-            "retained_fraction": (len(interaction_plan.values) / untrimmed_cases) if untrimmed_cases else 1.0,
-            "coverage_guaranteed_by_plan": not bool(trimmed_cases),
-            "coverage_strategy": "trimmed" if trimmed_cases else interaction_plan.strategy,
-            "untrimmed_coverage_strategy": interaction_plan.strategy,
-            "exhaustive_groups_scope": "untrimmed plan",
-            "requested_strength": permutations,
-            "effective_strength": interaction_plan.strength,
-            "factors": [list(path) for path in interaction_plan.factors],
-            "factor_domains": interaction_plan.domains,
-            "planned_cases": len(interaction_plan.values),
-            "valid_interactions": interaction_plan.interactions,
-            "planning_candidates": interaction_plan.candidates,
-            "exhaustive_groups": interaction_plan.group_reports,
-            "group_diagnostics": group_diagnostics,
-            "coverage_complete": False,
-            "proof_of_totality": False,
-            "scope": "schema-valid finite factor interactions with schema-valid merged values",
-        }
-        statistics = PermutationStatistics(
-            chart.path,
-            interaction_plan,
-            artifact_dir,
-            time.perf_counter() - planning_started,
-            {
-                "trim": trim,
-                "trim_topology": trim_topology,
-                "expand_failures": expand_failures,
-                "trim_seed": random_seed,
-                "traversal_strategy": traversal_strategy,
-                "helm": helm,
-                "release": release,
-                "namespace": namespace,
-                "kube_version": kube_version,
-                "timeout": timeout,
-                "allow_empty": allow_empty,
-                "conformity": os.environ.get(ENVIRONMENT),
-                "custom_properties": bool(properties),
-                "prune_equivalent": prune_equivalent,
-                "filter_rejections": policy is not None,
-            },
-        )
-        LOGGER.info("Coverage strategy: %s", coverage["coverage_strategy"])
-        if trim or trim_topology:
-            LOGGER.info(
-                "Trim random=%d, topology=%d: %d non-default cases retained, %d omitted; "
-                "defaults retained; "
-                "interaction and group coverage are not guaranteed when cases are omitted",
-                trim,
-                trim_topology,
-                len(interaction_plan.values),
-                trimmed_cases,
-            )
-        for group in interaction_plan.group_reports:
-            LOGGER.info(
-                "Planned exhaustive group %s: %s (%s candidate assignments)%s",
-                group["source"],
-                group["status"],
-                group["candidate_assignments"],
-                f"; {group['reason']}" if group["reason"] else "",
-            )
-        for diagnostic in group_diagnostics:
-            LOGGER.info("Group inference needs review: %s", diagnostic)
-        if dry_run:
-            assert model is not None
-            progression = estimate_progression(
-                chart.path,
-                chart.defaults,
-                model,
-                interaction_plan,
-                lambda strength: plan_interactions(
-                    model,
-                    strength,
-                    max_cases=max_cases,
-                    max_candidates=max_candidates,
-                    accept=lambda values: validator.is_valid(json_value(merge_values(chart.defaults, values))),
-                    exhaustive_threshold=0,
-                    exhaustive_groups=(*exhaustive_groups, *inferred),
-                    max_group_cases=max_group_cases,
-                ),
-                lambda values: merge_values(chart.defaults, values),
-                pruning=prune_equivalent,
-                max_cases=max_cases,
-                max_candidates=max_candidates,
-                history=statistics.previous if statistics.previous.get("context") == statistics.context and not properties else {},
-                selector=select_cases,
-                trim_topology=trim_topology,
-                trim=trim,
-                random_seed=random_seed,
-                fixed_names=bool(release and namespace),
-                time_limit=time_limit,
-            )
-            return {
-                "failure_expansion": {
-                    "enabled": expand_failures,
-                    "maximum_additional_iterations": trimmed_cases,
-                    "actual_additions": "depend on observed failures",
-                },
-                "progressive_estimate": progression,
-                **coverage,
-                **statistics.snapshot(),
-                "time_limit_seconds": time_limit,
-                "status": "dry-run",
-                "exit_code": 0,
-                "chart": str(chart.path),
-                "attempts": 0,
-                "render_hashes": hashes.snapshot(),
-                **({"pruning": pruner.report()} if pruner is not None else {}),
-            }
-    count = 0
-    completed_count = 0
-    last_failure = None
     baseline_documents = copy.deepcopy(list(baseline_resources)) if baseline_resources is not None else None
     execution_started = time.perf_counter()
     if statistics is not None:
@@ -799,6 +246,78 @@ def check_chart(
         if remaining <= 0:
             raise TimeLimitReached()
         return remaining
+
+    def render_candidate(values: dict[str, object], record_hashes: bool) -> list[dict[str, object]]:
+        """
+        Render within the coordinator's remaining budget and fixed Helm context.
+
+        Args:
+            values (dict[str, object]): Overrides to render.
+            record_hashes (bool): Record ordinary renders, excluding rejection probes.
+
+        Returns:
+            list[dict[str, object]]: Validated rendered resources.
+        """
+        if record_hashes:
+            return render(
+                chart,
+                values,
+                helm=helm,
+                timeout=min(timeout, remaining_time()),
+                release=release,
+                namespace=namespace,
+                kube_version=kube_version,
+                hashes=hashes,
+            )
+        return render(
+            chart,
+            values,
+            helm=helm,
+            timeout=min(timeout, remaining_time()),
+            release=release,
+            namespace=namespace,
+            kube_version=kube_version,
+        )
+
+    def pruning_context() -> str:
+        """
+        Capture the current environment as part of the exact-equivalence contract.
+
+        Returns:
+            str: Stable configuration identity for this rendering context.
+        """
+        return configuration_key(
+            {
+                "helm": helm,
+                "release": release,
+                "namespace": namespace,
+                "kube_version": kube_version,
+                "timeout": timeout,
+                "allow_empty": allow_empty,
+                "environment": dict(os.environ),
+            }
+        )
+
+    checks = CandidateChecks(
+        chart=chart,
+        inputs=inputs,
+        policy=policy,
+        pruner=pruner,
+        statistics=statistics,
+        field_coverage=field_coverage,
+        dependency_attempts=dependency_attempts,
+        hashes=hashes,
+        protected_paths=protected_paths,
+        properties=properties,
+        clock=time.perf_counter,
+        remaining_time=remaining_time,
+        render_candidate=render_candidate,
+        pruning_context=pruning_context,
+        finite_values=finite_values,
+        allow_empty=allow_empty,
+        baseline_documents=baseline_documents,
+    )
+    check = checks.check
 
     def expansion_report(result: dict[str, object]) -> None:
         """
@@ -831,10 +350,10 @@ def check_chart(
             if evidence["rejected_candidates"]:
                 result["coverage_complete"] = False
                 result["scope"] = "Sample of inputs accepted by analyzed chart validation; rejected configurations are reported separately"
-                if result["status"] == "passed" and completed_count <= int(check_defaults):
+                if result["status"] == "passed" and checks.completed_count <= int(check_defaults):
                     result["status"] = "configuration-rejected"
             if finite_values is not None:
-                result["remaining_iterations"] = max(0, len(finite_values) + 1 - count - int(str(evidence["filtered_candidates"])))
+                result["remaining_iterations"] = max(0, len(finite_values) + 1 - checks.count - int(str(evidence["filtered_candidates"])))
                 result["unattempted_iterations"] = result["remaining_iterations"]
         if expansion is None:
             return
@@ -851,12 +370,12 @@ def check_chart(
                     "inferred_failures": 0,
                 },
                 "completed_iterations": expansion_checked,
-                "successful_iterations": completed_count,
+                "successful_iterations": checks.completed_count,
                 "failed_iterations": len(expansion_failures),
                 "planned_iterations": total,
                 "remaining_iterations": total - expansion_checked,
                 "unattempted_iterations": total
-                - count
+                - checks.count
                 - (policy.filtered - int(str(initial_rejections.get("filtered_candidates", 0))) if policy is not None else 0),
             }
         )
@@ -875,12 +394,12 @@ def check_chart(
             "exit_code": 124,
             "chart": str(chart.path),
             "seed": random_seed,
-            "attempts": count,
-            "attempted_iterations": count,
-            "completed_iterations": completed_count,
+            "attempts": checks.count,
+            "attempted_iterations": checks.count,
+            "completed_iterations": checks.completed_count,
             "planned_iterations": total,
-            "remaining_iterations": total - completed_count if total is not None else None,
-            "unattempted_iterations": total - count if total is not None else None,
+            "remaining_iterations": total - checks.completed_count if total is not None else None,
+            "unattempted_iterations": total - checks.count if total is not None else None,
             "coverage_complete": False,
             "proof_of_totality": False,
             "time_limit_seconds": time_limit,
@@ -899,160 +418,6 @@ def check_chart(
             (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
-    def check(values: dict[str, object], *, force_render: bool = False, baseline: bool = False) -> bool:
-        """
-        Render one candidate and retain failure details for replay.
-
-        Args:
-            values (dict[str, object]): Values document used as the rendering baseline.
-            force_render (bool): Execute Helm for an explicitly expanded input.
-            baseline (bool): Always test supplied defaults without excluding or changing them.
-
-        Returns:
-            bool: Whether this candidate reached manifest testing rather than configuration exclusion.
-        """
-        nonlocal count, completed_count, last_failure, baseline_documents
-        remaining_time()
-        attempted = False
-        iteration_started = time.perf_counter()
-        passed = False
-        rendered = False
-        render_seconds = 0.0
-        observed: list[object] | None = None
-        try:
-            with execution_timer(remaining_time()):
-                effective = merge_values(chart.defaults, values)
-                # Helm coalesces child defaults and imports before validating dependency charts.
-                # A parent-only merge cannot authoritatively reject those configurations.
-                if not inputs.dependencies.nodes:
-                    validators.validator_for(chart.schema)(chart.schema).validate(json_value(effective))
-                rejection = policy.predict(effective) if policy is not None and not baseline and not policy.declared_schema else None
-                if rejection is not None and policy is not None:
-                    if policy.needs_probe(rejection, effective):
-                        policy.probes += 1
-                        try:
-                            render(
-                                chart,
-                                values,
-                                helm=helm,
-                                timeout=min(timeout, remaining_time()),
-                                release=release,
-                                namespace=namespace,
-                                kube_version=kube_version,
-                            )
-                        except RenderFailure as exc:
-                            if not matches_rejection(str(exc), rejection):
-                                policy.disabled.add(rejection.key)
-                                policy.contradictions += 1
-                                raise
-                            policy.verified(rejection, effective)
-                        else:
-                            policy.disabled.add(rejection.key)
-                            policy.contradictions += 1
-                            rejection = None
-                    if rejection is not None:
-                        policy.candidates += 1
-                        record = policy.records[rejection.key]
-                        record["occurrences"] = int(str(record["occurrences"])) + 1
-                        replacement = policy.repair(
-                            values,
-                            rejection,
-                            protected_paths if finite_values is None else ((),),
-                            lambda candidate: (
-                                validators.validator_for(chart.schema)(chart.schema).is_valid(
-                                    json_value(merge_values(chart.defaults, candidate))
-                                )
-                                and policy.predict(merge_values(chart.defaults, candidate)) is None
-                            ),
-                        )
-                        if replacement is None:
-                            policy.filtered += 1
-                            return False
-                        policy.adjusted += 1
-                        values = replacement
-                        effective = merge_values(chart.defaults, values)
-                count += 1
-                attempted = True
-                witness = None
-                resources = None
-                if pruner is not None:
-                    context = configuration_key(
-                        {
-                            "helm": helm,
-                            "release": release,
-                            "namespace": namespace,
-                            "kube_version": kube_version,
-                            "timeout": timeout,
-                            "allow_empty": allow_empty,
-                            "environment": dict(os.environ),
-                        }
-                    )
-                    witness = pruner.candidate(values, effective, context)
-                    resources = pruner.lookup(None if force_render else witness, count)
-                if resources is None:
-                    field_coverage.observe(effective)
-                    for path, state in inputs.dependencies.states(chart.defaults, values).items():
-                        dependency_attempts[path]["unknown" if state is None else "enabled" if state else "disabled"] += 1
-                    render_started = time.perf_counter()
-                    rendered = True
-                    resources = render(
-                        chart,
-                        values,
-                        helm=helm,
-                        timeout=min(timeout, remaining_time()),
-                        release=release,
-                        namespace=namespace,
-                        kube_version=kube_version,
-                        hashes=hashes,
-                    )
-                    render_seconds = time.perf_counter() - render_started
-                else:
-                    for resource in resources:
-                        emit_manifest(resource)
-                pristine = copy.deepcopy(resources) if pruner is not None or properties else resources
-                observed = list(pristine)
-                if not resources and not allow_empty:
-                    raise RenderFailure("chart rendered no resources (use allow_empty explicitly)")
-                for prop in properties:
-                    remaining_time()
-                    prop(resources)
-                passed = True
-                if baseline:
-                    baseline_documents = copy.deepcopy(observed)
-                completed_count += 1
-                if pruner is not None:
-                    pruner.remember(witness, count, pristine)
-                return True
-        except RenderFailure as exc:
-            if not attempted:
-                count += 1
-                attempted = True
-            if isinstance(exc.__cause__, subprocess.TimeoutExpired):
-                remaining_time()
-            if policy is not None and policy.declared_schema:
-                declared_rejection = policy.predict(merge_values(chart.defaults, values))
-                if declared_rejection is not None and matches_rejection(str(exc), declared_rejection):
-                    policy.schema_conflicts += 1
-                    policy.verified(declared_rejection, merge_values(chart.defaults, values))
-                    conflict_record = policy.records[declared_rejection.key]
-                    conflict_record["occurrences"] = int(str(conflict_record["occurrences"])) + 1
-            last_failure = (values, str(exc), observed if observed is not None else exc.resources)
-            raise
-        except (Exception, KeyboardInterrupt) as exc:
-            if not attempted:
-                count += 1
-                attempted = True
-            last_failure = (values, str(exc), observed)
-            raise
-        finally:
-            if statistics is not None and attempted:
-                statistics.advance(
-                    passed,
-                    time.perf_counter() - iteration_started,
-                    rendered=rendered,
-                    render_seconds=render_seconds,
-                )
-
     def comparisons(values: dict[str, object], documents: list[object] | None) -> dict[str, object]:
         """
         Compare observed inputs and outputs without rendering extra cases or masking failures.
@@ -1068,7 +433,7 @@ def check_chart(
         for name, before, after in (
             ("overrides", {}, values),
             ("values", chart.defaults, merge_values(chart.defaults, values)),
-            ("manifests", baseline_documents, documents),
+            ("manifests", checks.baseline_documents, documents),
         ):
             if before is None or after is None:
                 records[name] = {"unavailable": "No parsed failing output or successful baseline is available."}
@@ -1096,13 +461,13 @@ def check_chart(
                 pruner.rendered,
                 len(pruner.certificates),
             )
-        values, message, documents = last_failure or ({}, str(exc), None)
+        values, message, documents = checks.last_failure or ({}, str(exc), None)
         result = {
             **coverage,
             "status": "interrupted" if isinstance(exc, KeyboardInterrupt) else "failed",
             "chart": str(chart.path),
             "seed": random_seed,
-            "attempts": count,
+            "attempts": checks.count,
             "error": message,
             "values": values,
             "input_changes": changed_values(values, chart.defaults),
@@ -1123,7 +488,7 @@ def check_chart(
             if "unavailable" not in mapping(records["values"]):
                 (artifact_dir / "values-baseline.json").write_text(json.dumps(chart.defaults, indent=2) + "\n")
             if "unavailable" not in mapping(records["manifests"]):
-                (artifact_dir / "manifests-baseline.json").write_text(json.dumps(baseline_documents, indent=2) + "\n")
+                (artifact_dir / "manifests-baseline.json").write_text(json.dumps(checks.baseline_documents, indent=2) + "\n")
             (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
@@ -1142,7 +507,7 @@ def check_chart(
                 save_failure(exc)
                 raise
             except Exception as exc:
-                failed_values, message, documents = last_failure or (values, str(exc), None)
+                failed_values, message, documents = checks.last_failure or (values, str(exc), None)
                 expansion_failures.append(
                     {
                         "values": failed_values,
@@ -1156,7 +521,7 @@ def check_chart(
                     expansion_executed += int(position >= initial_count)
                     return save_failure(exc)
                 if first_error is None:
-                    first_error, first_failure = exc, last_failure
+                    first_error, first_failure = exc, checks.last_failure
                 added = expansion.failed(expansion_positions[configuration_key(values)])
                 additional = order_configurations(
                     [expansion_values[index] for index in added],
@@ -1175,7 +540,7 @@ def check_chart(
             expansion_checked += 1
             expansion_executed += int(position >= initial_count)
         if first_error is not None:
-            last_failure = first_failure
+            checks.last_failure = first_failure
             return save_failure(first_error)
         # Successful opt-in runs share the usual finite report below, without repeating checks.
 
@@ -1219,15 +584,17 @@ def check_chart(
             "execution_seconds": time.perf_counter() - execution_started,
             "chart": str(chart.path),
             "seed": random_seed,
-            "attempts": count,
+            "attempts": checks.count,
             "mode": "exhaustive",
             **({"domain_size": finite_domain_size} if exhaustive else {}),
             "unique_configurations": len(finite_values) + 1,
             "duplicate_cases_removed": duplicate_cases_removed,
-            "scope": "all schema-valid overrides in this finite domain, current Helm environment",
+            "scope": "selected subset of finite overrides; random sampling omits inputs"
+            if trimmed_cases
+            else "all schema-valid overrides in this finite domain, current Helm environment",
             "proof_of_totality": False,
             **coverage,
-            **({"coverage_complete": not bool(trimmed_cases)} if interaction_plan is not None else {}),
+            "coverage_complete": not bool(trimmed_cases),
         }
         if statistics is not None:
             result.update(statistics.finish("passed"))
@@ -1284,14 +651,14 @@ def check_chart(
         if (
             policy is None
             or policy.filtered == int(str(initial_rejections.get("filtered_candidates", 0)))
-            or completed_count > int(check_defaults)
+            or checks.completed_count > int(check_defaults)
         ):
             return save_failure(exc)
         result = {
             **coverage,
             "status": "configuration-rejected",
             "chart": str(chart.path),
-            "attempts": count,
+            "attempts": checks.count,
             "seed": random_seed,
             "coverage_complete": False,
             "proof_of_totality": False,
@@ -1317,7 +684,7 @@ def check_chart(
         "status": "passed",
         "chart": str(chart.path),
         "seed": random_seed,
-        "attempts": count,
+        "attempts": checks.count,
         "time_limit_seconds": time_limit,
         "execution_seconds": time.perf_counter() - execution_started,
         "max_examples": max_examples,

@@ -8,7 +8,7 @@ import random
 from pathlib import Path
 from statistics import NormalDist
 
-from hypothesis_helm.charts.runner import Chart, merge_values
+from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.schemas.contracts import configuration_key, mapping
 
@@ -98,9 +98,9 @@ def load_inputs(chart: Chart, source: Path | None) -> list[dict[str, object]] | 
         spec = mapping(json.loads(spec_path.read_text()))
         complexity = int(str(spec["input_complexity"]))
         properties = mapping(chart.schema.get("properties"))
-        if set(properties) != {f"input{index:03d}" for index in range(complexity)} or any(
-            mapping(value).get("type") != "boolean" for value in properties.values()
-        ):
+        names = spec.get("input_names", [f"input{index:03d}" for index in range(complexity)])
+        assert isinstance(names, list)
+        if set(properties) != set(names) or any(mapping(value).get("type") != "boolean" for value in properties.values()):
             raise ValueError("custom charts require --values with distinct JSONL overrides")
         return None
     values = [mapping(json.loads(line)) for line in source.read_text().splitlines() if line.strip()]
@@ -143,7 +143,11 @@ def expected_output(values: dict[str, object], spec: dict[str, object]) -> str:
         str: Exact rounded scalar required from the rendered ConfigMap.
     """
     active = int(str(spec["active_inputs"]))
-    index = sum(int(bool(values[f"input{bit:03d}"])) << bit for bit in range(active))
+    names = spec.get("input_names", [f"input{bit:03d}" for bit in range(active)])
+    assert isinstance(names, list)
+    index = sum(
+        int(bool(values[str(names[bit])] if str(names[bit]) in values else values[f"input{bit:03d}"])) << bit for bit in range(active)
+    )
     normal = NormalDist(float(str(spec["mean"])), float(str(spec["stddev"])))
     lower, upper = spec["lower"], spec["upper"]
     start = normal.cdf(float(str(lower))) if lower is not None else 0.0

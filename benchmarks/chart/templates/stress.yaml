@@ -1,0 +1,115 @@
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: defect-constraints
+data:
+  status: "{{ if .Values.featureEnabled }}{{ if .Values.backendEnabled }}incorrect{{ else }}expected{{ end }}{{ else }}expected{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: defect-control-flow
+data:
+  status: "{{ if .Values.featureEnabled }}{{ if .Values.routingEnabled }}{{ if .Values.metricsEnabled }}incorrect{{ else }}expected{{ end }}{{ else }}expected{{ end }}{{ else }}expected{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: defect-dependencies
+data:
+  status: "{{ if .Values.backendEnabled }}{{ if .Values.alternateBackend }}incorrect{{ else }}expected{{ end }}{{ else }}expected{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: defect-interactions
+data:
+  status: "{{ if .Values.featureEnabled }}{{ if .Values.backendEnabled }}{{ if .Values.routingEnabled }}{{ if .Values.storageEnabled }}{{ if .Values.metricsEnabled }}incorrect{{ else }}expected{{ end }}{{ else }}expected{{ end }}{{ else }}expected{{ end }}{{ else }}expected{{ end }}{{ else }}expected{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: defect-equivalence
+data:
+  status: "{{ if .Values.storageEnabled }}{{ if .Values.alternateBackend }}incorrect{{ else }}expected{{ end }}{{ else }}expected{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: defect-boundaries
+data:
+  status: "{{ if .Values.boundaryLowerHalf }}{{ if .Values.boundaryUpperHalf }}incorrect{{ else }}expected{{ end }}{{ else }}expected{{ end }}"
+{{ if .Values.featureEnabled }}
+{{ if .Values.backendEnabled }}
+{{ if .Values.routingEnabled }}
+{{ if .Values.storageEnabled }}
+{{ if .Values.metricsEnabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nested-resource
+data:
+  region: enabled
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shared-consumer-0
+data:
+  backend: "{{ if .Values.alternateBackend }}alternate{{ else }}primary{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shared-consumer-1
+data:
+  backend: "{{ if .Values.alternateBackend }}alternate{{ else }}primary{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shared-consumer-2
+data:
+  backend: "{{ if .Values.alternateBackend }}alternate{{ else }}primary{{ end }}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shared-consumer-3
+data:
+  backend: "{{ if .Values.alternateBackend }}alternate{{ else }}primary{{ end }}"
+
+{{ if .Values.featureEnabled }}{{ if .Values.backendEnabled }}{{ if .Values.routingEnabled }}{{ if .Values.storageEnabled }}{{ if .Values.metricsEnabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: interaction-resource
+data:
+  region: rare
+{{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: boundary-region
+data:
+  region: "{{ if .Values.boundaryUpperHalf }}{{ if .Values.boundaryLowerHalf }}3{{ else }}2{{ end }}{{ else }}{{ if .Values.boundaryLowerHalf }}1{{ else }}0{{ end }}{{ end }}"

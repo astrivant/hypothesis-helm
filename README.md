@@ -66,9 +66,13 @@ pip install "hypothesis-helm[benchmarking]"
 hypothesis-helm-benchmark --help
 ```
 
-See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot commands.
+See [Benchmarking](benchmarks/README.md) for chart generation and plot commands.
+The [configurable stress chart](benchmarks/chart) combines known defects and topology
+controls in one fixture; its [guide](benchmarks/fixture/README.md) explains how to reduce them one step at a time.
+See [random sampling results](benchmarks/sampling/README.md) for the measured
+tradeoff between sample size and known defect discovery.
 To rerun all project checks, benchmarks, plots, and repository reports, see the
-[full refresh command](docs/benchmarks/README.md#reproduce-the-full-project-run).
+[full refresh command](benchmarks/README.md#reproduce-the-full-project-run).
 
 ## Examples: failures hidden by defaults
 
@@ -91,7 +95,7 @@ The same idea applies beyond quoting:
 
 | Command | Use it for | What it does |
 | --- | --- | --- |
-| `audit ./chart` | Understanding one chart's input contract. | Statically compares values, schema, and template references. Reports missing defaults, undocumented fields, and unresolved access as JSON. Renders only when an export option requests verification or output observation. |
+| `audit ./chart` | Understanding one chart's input contract. | Statically compares values, schema, and template references. Reports missing defaults, undocumented fields, unresolved access, and potential output complexity as JSON. Renders only when an export option requests verification or output observation. |
 | `test PATH` | Testing a local chart or directory of charts. | Discovers local charts recursively, generates inputs, renders them with Helm, and records failures. `--report` writes combined Markdown/PDF results. |
 | `scan SOURCE` | Testing charts fetched from remote repositories. | Fetches a Git repository, Helm repository/chart, public Helm index, or OCI chart, then discovers and tests its charts. Local paths use `test`. |
 
@@ -99,6 +103,10 @@ The same idea applies beyond quoting:
 Recursive testing builds dependencies in isolated copies; single-chart suite controls
 use dependencies already available in the chart. `audit` also works without a schema. `--filter` restricts
 generation before traversal. Skipped charts and incomplete coverage remain explicit.
+
+The audit's [complexity score](docs/inputs/README.md#potential-output-complexity) describes the largest
+manifest tree across the allowed values, including resources disabled by defaults. Unsupported or oversized
+input spaces have an unknown maximum, with any supported evidence reported separately.
 
 Use `--export-minimal-values` to save example values with validation status, or
 `--export-topological-graph` to inspect the input-to-output map. See
@@ -143,7 +151,7 @@ See [Repository scanning](docs/scanning/README.md) for authentication, public in
 | [Architecture](docs/architecture/README.md) | Input discovery, test generation, rendering, and validation. |
 | [Execution](docs/execution/README.md) | Parallel workers, sharding, estimates, and time limits. |
 | [CI examples](docs/ci/README.md) | GitHub Action, CircleCI, and GitLab setup. |
-| [Benchmarking](docs/benchmarks/README.md) | Local shard commands, chart generation, and measured plots. |
+| [Benchmarking](benchmarks/README.md) | Local shard commands, chart generation, and measured plots. |
 | [CLI reference](docs/cli/README.md) | Generated command and option reference. |
 | [Development](docs/development.md) | Contributor setup, checks, and repository map. |
 
@@ -159,7 +167,7 @@ validation rejections, and tooling limitations; confirmed chart bugs require tri
 Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
 reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
 the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789311940/README.md).
-The [chart topology catalog](docs/benchmarks/chart-topologies/README.md) includes
+The [chart topology catalog](benchmarks/chart-topologies/README.md) includes
 directed dependency graphs and their mathematical measurements.
 
 ## Test case: Prometheus Community charts
@@ -171,7 +179,7 @@ observed input failures, blocked checks, and incomplete coverage.
 Read the [scan results](docs/reports/prometheus.md), download the
 [combined PDF](docs/reports/prometheus.pdf), or inspect the
 [retained logs and data](docs/reports/prometheus-runs/prometheus-charts_1789311940/README.md).
-Its dependency graphs are also in the [topology catalog](docs/benchmarks/chart-topologies/README.md).
+Its dependency graphs are also in the [topology catalog](benchmarks/chart-topologies/README.md).
 
 ## Development
 

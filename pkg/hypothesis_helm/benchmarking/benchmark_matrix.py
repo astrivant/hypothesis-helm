@@ -18,11 +18,13 @@ from jsonschema import validators
 
 from hypothesis_helm.benchmarking.benchmark_helm import code_digest
 from hypothesis_helm.benchmarking.benchmark_sparsity import quality
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES, expected_manifests, valid_assignment
 from hypothesis_helm.benchmarking.workload import source_digest
-from hypothesis_helm.charts.runner import Chart, render
+from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.compiler.passes.topology import trim_topology
 from hypothesis_helm.execution.render_hashes import RenderHashes
@@ -141,6 +143,8 @@ def measure(
     hashes = RenderHashes(scope="matrix-run-local")
     ledger: list[tuple[str, bool]] = []
     attempted = invocations = 0
+    found_defects: set[str] = set()
+    erroneous_inputs = rendered_erroneous_inputs = 0
     error = None
     status = "passed"
     context = configuration_key({"helm": helm, "release": "matrix", "namespace": "default"})
@@ -174,11 +178,23 @@ def measure(
                     raise AssertionError("Helm output differs from the independent manifest oracle")
                 if compiler:
                     compiler.remember(witness, attempted, resources)
+                defects = {
+                    str(mapping(resource.get("metadata", {})).get("name", ""))
+                    for resource in resources
+                    if str(mapping(resource.get("metadata", {})).get("name", "")).startswith("defect-")
+                    and mapping(resource.get("data", {})).get("status") == "incorrect"
+                }
+                found_defects.update(defects)
+                erroneous_inputs += bool(defects)
+                rendered_erroneous_inputs += bool(defects) and not reused
                 ledger.append((actual, reused))
     except TimeLimitReached:
         status = "time-limit"
     except Exception as exc:
-        status, error = "failed", f"{type(exc).__name__}: {exc}"
+        if isinstance(exc.__cause__, subprocess.TimeoutExpired) and time.perf_counter() - started >= seconds:
+            status = "time-limit"
+        else:
+            status, error = "failed", f"{type(exc).__name__}: {exc}"
     execution_seconds = time.perf_counter() - started
     received = Counter(actual for actual, _ in ledger)
     completed = len(ledger)
@@ -204,6 +220,9 @@ def measure(
         "remaining": len(candidates) - completed,
         "render_invocations": invocations,
         "proved_equivalent": skipped,
+        "defects_found": sorted(found_defects),
+        "erroneous_inputs_evaluated": erroneous_inputs,
+        "erroneous_inputs_rendered": rendered_erroneous_inputs,
         "observed_outcomes": len(received),
         "distribution": distribution,
         "planning_seconds": planning_seconds,
@@ -220,15 +239,19 @@ def measure(
     }
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Run every strategy against every structural case with a common nine-minute ceiling.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for completed or deadline-censored measurements; one for incorrect renders.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("reports/benchmarks/matrix"))
+    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/matrix"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--max-cases", type=int, default=4096)
     parser.add_argument("--trim-level", type=int, default=2)
@@ -236,7 +259,7 @@ def main() -> int:
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     from hypothesis_helm.benchmarking.matrix_plots import plot
 
     if args.plot_only:
@@ -273,8 +296,8 @@ def main() -> int:
     }
     for structure in STRUCTURES:
         path = args.output / "charts" / structure
-        spec = generate(path, input_complexity=args.input_complexity, output_bins=4, structure=structure)
-        chart = Chart.load(path)
+        spec = generate(path, input_complexity=args.input_complexity, output_bins=4, structure=structure, workspace=workspace)
+        chart = Chart.load(chart_path(path, workspace=workspace))
         truth = reference_space(chart, spec, args.max_cases)
         for strategy in STRATEGIES:
             print(

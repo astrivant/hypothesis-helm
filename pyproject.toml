@@ -40,6 +40,7 @@ numpy = ">=2,<3"
 
 [tool.poetry.scripts]
 hypothesis-helm = "hypothesis_helm.cli:main"
+hypothesis-helm-complexity = "hypothesis_helm.compiler.complexity:main"
 hypothesis-helm-benchmark = "hypothesis_helm.benchmarking.cli:main"
 hypothesis-helm-kubesec = "hypothesis_helm.integrations.kubesec:main"
 hypothesis-helm-github-action = "hypothesis_helm.integrations.github_action:main"

@@ -96,6 +96,8 @@ def run_parallel(
         lock.touch()
         worker_environment = dict(environment, HYPOTHESIS_HELM_MANIFEST_LOCK=str(lock))
         worker_environment.pop("HYPOTHESIS_HELM_SHARD_REPORT", None)
+        worker_environment.pop("HYPOTHESIS_HELM_SAMPLING", None)
+        worker_environment.pop("HYPOTHESIS_HELM_SAMPLING_REPORT", None)
         report_index = command.index("--junitxml") + 1
         reports = [workspace / f"junit-{index}.xml" for index in range(len(nodes))]
 

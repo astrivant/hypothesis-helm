@@ -137,7 +137,7 @@ def test_invalid_zero_stays_in_example(tmp_path: Path, monkeypatch: pytest.Monke
         raise AssertionError("API index must be at least 1")
 
     if downstream_rejects:
-        monkeypatch.setattr("hypothesis_helm.charts.runner.validate", reject)
+        monkeypatch.setattr("hypothesis_helm.charts.rendering.validate", reject)
     chart = Chart(tmp_path, schema, {})
     target = tmp_path / "values-minimal.yaml"
     result = export_minimal(chart, target)

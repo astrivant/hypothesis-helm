@@ -45,7 +45,7 @@ def test_local_shards(tmp_path: Path, shards: int) -> None:
     result = subprocess.run(
         [
             "bash",
-            str(ROOT / "scripts/benchmark-shards.sh"),
+            str(ROOT / "benchmarks/shards.sh"),
             "--shards",
             str(shards),
             "--output-dir",

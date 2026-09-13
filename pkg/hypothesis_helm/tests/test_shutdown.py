@@ -9,6 +9,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from typing import cast
 from unittest.mock import Mock
 
 import pytest
@@ -195,3 +196,84 @@ def test_shutdown_prevents_new_children(tmp_path: Path) -> None:
     )
     assert result.returncode == 130
     assert not (tmp_path / "unexpected").exists()
+
+
+def test_communication_failure_reaps_owned_worker(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Retain ownership when communicate fails before the subprocess has exited.
+
+    Args:
+        tmp_path (Path): Isolated worker directory.
+        monkeypatch (pytest.MonkeyPatch): Inject a pipe-read failure after a real spawn.
+
+    Returns:
+        None: The original error propagates after the worker is joined and pipes are closed.
+    """
+    children: list[subprocess.Popen[str]] = []
+    create = subprocess.Popen
+
+    def spawn(*args: object, **kwargs: object) -> subprocess.Popen[str]:
+        """
+        Record a real process before simulating a communication failure.
+
+        Args:
+            *args (object): Arguments passed through to Popen.
+            **kwargs (object): Keyword arguments passed through to Popen.
+
+        Returns:
+            subprocess.Popen[str]: Real worker with an injected read error.
+        """
+        child = cast(subprocess.Popen[str], create(*args, **kwargs))  # type: ignore[call-overload]
+        children.append(child)
+        monkeypatch.setattr(child, "communicate", Mock(side_effect=OSError("pipe read failed")))
+        return child
+
+    monkeypatch.setattr(subprocess, "Popen", spawn)
+    processes = Processes(interrupt_grace=0.1)
+    with pytest.raises(OSError, match="pipe read failed"):
+        processes.run([sys.executable, "-c", "import time; time.sleep(30)"], cwd=tmp_path, env=dict(os.environ), capture_output=True)
+    assert len(children) == 1
+    child = children[0]
+    assert child.returncode is not None
+    assert child.stdout is not None and child.stdout.closed
+    assert child.stderr is not None and child.stderr.closed
+    assert not processes._children
+    assert not _signal_group(child, 0)
+
+
+def test_one_cleanup_failure_does_not_skip_other_children(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Join other workers even when one process group cannot be released.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Supply deterministic process-group responses.
+
+    Returns:
+        None: Failed ownership remains visible; successfully joined workers are released.
+    """
+    blocked = Mock(spec=subprocess.Popen, pid=10001, stdin=None, stdout=None, stderr=None)
+    finished = Mock(spec=subprocess.Popen, pid=10002, stdin=None, stdout=None, stderr=None)
+
+    def signal_group(child: subprocess.Popen[str], sig: int) -> bool:
+        """
+        Refuse access to one group and report the other already gone.
+
+        Args:
+            child (subprocess.Popen[str]): Mock child whose group is being inspected.
+            sig (int): Signal or probe number.
+
+        Returns:
+            bool: False for the released group.
+        """
+        if child is blocked:
+            raise PermissionError("cannot signal owned group")
+        return False
+
+    monkeypatch.setattr("hypothesis_helm.execution.processes._signal_group", signal_group)
+    processes = Processes(interrupt_grace=0)
+    processes._children.update((blocked, finished))
+    with pytest.raises(ExceptionGroup, match="Failed to release"):
+        processes.stop()
+    blocked.wait.assert_called_once()
+    finished.wait.assert_called_once()
+    assert processes._children == {blocked}

@@ -8,6 +8,7 @@ import json
 import math
 from pathlib import Path
 
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace
 from hypothesis_helm.benchmarking.profiling import Frame
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -206,9 +207,13 @@ def render_profiles(source: Path, output: Path, *, max_depth: int = 30, min_perc
     return summary
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Redraw saved call stacks without rerunning benchmark workloads.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero after saving figures and their index.
@@ -218,7 +223,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, help="figure directory; defaults to SOURCE/flamegraphs")
     parser.add_argument("--max-depth", type=int, default=30)
     parser.add_argument("--min-percent", type=float, default=0.1)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     result = render_profiles(
         args.source, args.output or args.source / "flamegraphs", max_depth=args.max_depth, min_percent=args.min_percent
     )

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from textwrap import dedent
 
+from hypothesis_helm.benchmarking.manifests import configmap as configmap
 from hypothesis_helm.benchmarking.workload import expected_output
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -194,6 +195,12 @@ def valid_assignment(values: dict[str, object], spec: dict[str, object]) -> bool
         bool: Assignment is allowed by the fixture contract.
     """
     structure = mapping(spec["structure"])
+    if structure["name"] == "stress":
+        import cattrs
+
+        from hypothesis_helm.benchmarking.stress import Stress, valid_stress
+
+        return valid_stress(values, cattrs.structure(structure["settings"], Stress))
     if structure["name"] == "mixed":
         components = structure["components"]
         assert isinstance(components, list)
@@ -201,20 +208,6 @@ def valid_assignment(values: dict[str, object], spec: dict[str, object]) -> bool
     paths = structure["paths"]
     assert isinstance(paths, list)
     return structure["name"] != "constraints" or values[str(paths[0])] == values[str(paths[1])]
-
-
-def configmap(name: str, data: dict[str, object]) -> dict[str, object]:
-    """
-    Construct an oracle ConfigMap without inspecting the template.
-
-    Args:
-        name (str): Fixed resource name.
-        data (dict[str, object]): Expected scalar fields.
-
-    Returns:
-        dict[str, object]: Complete expected resource.
-    """
-    return {"apiVersion": "v1", "kind": "ConfigMap", "metadata": {"name": name}, "data": data}
 
 
 def expected_manifests(values: dict[str, object], spec: dict[str, object]) -> list[dict[str, object]]:
@@ -229,6 +222,15 @@ def expected_manifests(values: dict[str, object], spec: dict[str, object]) -> li
         list[dict[str, object]]: Full expected manifest bundle, independent of Helm and compiler.
     """
     structure = mapping(spec["structure"])
+    if structure["name"] == "stress":
+        import cattrs
+
+        from hypothesis_helm.benchmarking.stress import Stress, stress_manifests
+
+        return [
+            configmap("matrix", {"value": expected_output(values, spec)}),
+            *stress_manifests(values, cattrs.structure(structure["settings"], Stress)),
+        ]
     if any(not values[str(path)] for path in sequence(structure.get("gate_paths", []))):
         return [configmap("matrix", {"value": expected_output(values, spec)})]
     if structure["name"] == "mixed":

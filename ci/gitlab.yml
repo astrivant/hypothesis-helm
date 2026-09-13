@@ -1,6 +1,8 @@
 # Remote include: test every version/shard, then publish one verified report per version.
 variables:
   SHARD_TOTAL: "3"
+  SAMPLE_RANDOM: "100"
+  SAMPLE_MIN_CASES: "128"
   HYPOTHESIS_HELM_REF: main
 helm-properties:
   image: python:3.13-slim
@@ -54,6 +56,7 @@ helm-properties:
         helm hypothesis test "$HELM_CHART" \
           --run-id "${CI_PIPELINE_ID}-${K8S_VERSION}" \
           --shard "$SHARD_INDEX/$SHARD_TOTAL" --jobs auto --max-examples 50 --seed 0 --rerun all \
+          --sample-random "$SAMPLE_RANDOM" --sample-min-cases "$SAMPLE_MIN_CASES" \
           --schema-version "$K8S_VERSION" \
           --schema-cache-dir "$SCHEMA_CACHE_DIR" --schema-offline \
           --artifact-dir "$HH_ARTIFACT_DIR" --output json \
@@ -62,6 +65,7 @@ helm-properties:
         helm hypothesis test "$HELM_CHART" \
           --run-id "${CI_PIPELINE_ID}-${K8S_VERSION}" \
           --shard "$SHARD_INDEX/$SHARD_TOTAL" --jobs auto --max-examples 50 --seed 0 --rerun all \
+          --sample-random "$SAMPLE_RANDOM" --sample-min-cases "$SAMPLE_MIN_CASES" \
           --kubeconform --schema-version "$K8S_VERSION" \
           --schema-cache-dir "$SCHEMA_CACHE_DIR" --schema-offline \
           --artifact-dir "$HH_ARTIFACT_DIR" --output json \

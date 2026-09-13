@@ -10,10 +10,13 @@ from textwrap import dedent
 import numpy as np
 from numpy.typing import NDArray
 
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path, record_change
 from hypothesis_helm.schemas.contracts import configuration_key, mapping
 
 
-def inject_errors(chart: Path, values: list[dict[str, object]], percent: float, seed: int) -> set[int]:
+def inject_errors(
+    chart: Path, values: list[dict[str, object]], percent: float, seed: int, *, workspace: FixtureWorkspace | None = None
+) -> set[int]:
     """
     Add a visible error projection at uniformly sampled valid input assignments.
 
@@ -22,12 +25,16 @@ def inject_errors(chart: Path, values: list[dict[str, object]], percent: float, 
         values (list[dict[str, object]]): Complete ordered valid input domain.
         percent (float): Percentage of valid assignments to mark faulty, rounded down.
         seed (int): Reproducible error placement seed, independent from selection.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         set[int]: Exact failing input indices, serving as an independent oracle.
     """
     if not math.isfinite(percent) or not 0 <= percent <= 100 or not values:
         raise ValueError("require a nonempty domain and finite error percentage in 0..100")
+    percent = float(percent)
+    record_change(chart, "uniform_errors", {"percent": percent, "seed": seed}, workspace=workspace)
+    chart = chart_path(chart, workspace=workspace)
     faulty = set(random.Random(seed).sample(range(len(values)), math.floor(len(values) * percent / 100)))
     paths = sorted(values[0])
 

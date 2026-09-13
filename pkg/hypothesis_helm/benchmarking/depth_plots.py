@@ -7,6 +7,7 @@ import os
 import tempfile
 from pathlib import Path
 
+from hypothesis_helm.benchmarking.fixture import read_spec
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -120,9 +121,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     for reference in references:
         name = str(reference["structure"])
         if name.startswith("mixed-"):
-            import json
-
-            spec = mapping(json.loads((output / "charts" / name / "benchmark.json").read_text()))
+            spec = read_spec(output / "charts" / name)
             counts = mapping(mapping(spec["structure"])["realized_counts"])
             lines.append("| " + name + " | " + ", ".join(f"{key}: {value}" for key, value in counts.items()) + " |")
     lines += [

@@ -5,15 +5,24 @@ Generate a finite Helm chart whose emitted scalar follows discretized normal qua
 import argparse
 import json
 import math
-import re
+import sys
 from pathlib import Path
 from statistics import NormalDist, mean, pstdev
 from textwrap import dedent
 
+from attrs import asdict
+from cattrs import Converter
+
 from hypothesis_helm.benchmarking.faults import select_faults, write_faults
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace
 from hypothesis_helm.benchmarking.mixtures import normalized_weights, write_mixture
+from hypothesis_helm.benchmarking.names import name_inputs
+from hypothesis_helm.benchmarking.parameters import Parameters
+from hypothesis_helm.benchmarking.stress import SIGNALS, Stress, write_stress
 from hypothesis_helm.benchmarking.structures import STRUCTURES, write_structure
 from hypothesis_helm.benchmarking.topology import write_topology
+from hypothesis_helm.charts import yamlio
+from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
 def generate(
@@ -37,7 +46,10 @@ def generate(
     topology_depth_weights: dict[int, float] | None = None,
     topology: bool = False,
     topology_opaque: bool = False,
+    stress: Stress | None = None,
+    readable_inputs: bool = False,
     force: bool = False,
+    workspace: FixtureWorkspace | None = None,
 ) -> dict[str, object]:
     """
     Build a generic Boolean-input chart using only compiler-supported template branches.
@@ -65,11 +77,27 @@ def generate(
         topology_depth_weights (dict[int, float] | None): Added gate depth distribution.
         topology (bool): Generate six additional live Boolean roles and resource projections.
         topology_opaque (bool): Add a loop to exercise conservative unknown-region handling.
+        stress (Stress | None): Combined worst-case topology controls over twelve fixed inputs.
+        readable_inputs (bool): Use downstream role names instead of legacy numeric selectors.
         force (bool): Explicitly allow replacing generated files in an existing directory.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         dict[str, object]: Complete generator settings and actual finite distribution statistics.
     """
+    mean_value, stddev, bug_percent = float(mean_value), float(stddev), float(bug_percent)
+    lower = float(lower) if lower is not None else None
+    upper = float(upper) if upper is not None else None
+    topology_weights = {name: float(weight) for name, weight in topology_weights.items()} if topology_weights is not None else None
+    topology_depth_weights = (
+        {depth: float(weight) for depth, weight in topology_depth_weights.items()} if topology_depth_weights is not None else None
+    )
+    if stress is not None:
+        if structure is not None or topology_components or topology or topology_opaque or bug_percent:
+            raise ValueError("stress controls replace isolated structures and random fault injection")
+        input_complexity, output_bins, readable_inputs = len(SIGNALS), 4, True
+    if workspace is not None:
+        readable_inputs = True
     if not 1 <= input_complexity <= 1024:
         raise ValueError("input complexity must be between 1 and 1024")
     defects, bug_spec = select_faults(
@@ -177,13 +205,43 @@ def generate(
             + "{{ end }}"
         )
 
+    logical = output
+    parameters: dict[str, object] = {
+        "input_complexity": input_complexity,
+        "mean_value": mean_value,
+        "stddev": stddev,
+        "output_bins": output_bins,
+        "precision": precision,
+        "lower": lower,
+        "upper": upper,
+        "bug_percent": bug_percent,
+        "bug_orders": list(bug_orders) if bug_orders is not None else None,
+        "bug_seed": bug_seed,
+        "max_bugs": max_bugs,
+        "structure": structure,
+        "topology_components": topology_components,
+        "topology_weights": topology_weights,
+        "topology_seed": topology_seed,
+        "topology_depth_weights": topology_depth_weights,
+        "topology": topology,
+        "topology_opaque": topology_opaque,
+        "stress": asdict(stress) if stress is not None else None,
+        "readable_inputs": readable_inputs,
+    }
+    if workspace is not None:
+        output = workspace.prepare(logical)
     if output.exists() and any(output.iterdir()) and not force:
         raise ValueError(f"{output} is not empty; choose another directory or use --force")
     (output / "templates").mkdir(parents=True, exist_ok=True)
     if force:
+        (output / "benchmark.json").unlink(missing_ok=True)
         for previous in (output / "templates").glob("structure-component-*.yaml"):
             previous.unlink()
-    name = re.sub("[^a-z0-9-]", "-", output.name.lower()).strip("-") or "benchmark"
+    if force:
+        (output / "templates/stress.yaml").unlink(missing_ok=True)
+        (output / "templates/benchmark-error.yaml").unlink(missing_ok=True)
+        (output / "topology-parameters.yaml").unlink(missing_ok=True)
+    name = "benchmark"
     (output / "Chart.yaml").write_text(
         dedent(
             f"""
@@ -260,25 +318,76 @@ def generate(
     if bug_percent:
         spec["bugs"] = bug_spec
     if defects:
-        write_faults(output, defects)
+        write_faults(output, defects, workspace=workspace)
     elif force:
         (output / "templates/faults.yaml").unlink(missing_ok=True)
+    if stress is not None:
+        spec["structure"] = write_stress(output, stress)
+        spec["unused_inputs"] = stress.equivalent_inputs
+    if readable_inputs:
+        spec = name_inputs(output, spec, list(SIGNALS) if stress is not None else None)
     (output / "benchmark.json").write_text(json.dumps(spec, indent=2) + "\n")
+    (output / "benchmark-parameters.yaml").write_text(yamlio.dump({"parameters": parameters}))
+    if workspace is not None:
+        workspace.record(logical, parameters, spec)
     return spec
 
 
-def main(argv: list[str] | None = None) -> int:
+def reproduce(source: Path, output: Path, *, force: bool = False, workspace: FixtureWorkspace | None = None) -> dict[str, object]:
+    """
+    Compile the shared chart and repeat the recorded fault operations.
+
+    Args:
+        source (Path): Human-readable YAML parameters or a retained case record.
+        output (Path): Destination for the explicitly requested chart export.
+        force (bool): Allow replacing existing generated chart files.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
+
+    Returns:
+        dict[str, object]: Independent oracle metadata for the exported configuration.
+    """
+    from hypothesis_helm.benchmarking.faults import Fault, write_faults
+    from hypothesis_helm.benchmarking.fixture import chart_path
+    from hypothesis_helm.benchmarking.pca import inject_errors
+    from hypothesis_helm.charts.model import Chart
+    from hypothesis_helm.schemas.combinations import plan_interactions
+    from hypothesis_helm.schemas.contracts import configuration_key
+    from hypothesis_helm.schemas.model import ValuesModel
+
+    document = mapping(yamlio.load(source.read_text()))
+    converter = Converter(forbid_extra_keys=True)
+    converter.register_structure_hook(Stress, lambda value, _: Stress(**value))
+    parameters = converter.structure(document.get("parameters", document), Parameters)
+    generate(output, **asdict(parameters, recurse=False), force=force, workspace=workspace)
+    operations = mapping(document.get("operations", {}))
+    if "faults" in operations:
+        faults = converter.structure(sequence(mapping(operations["faults"])["faults"]), list[Fault])
+        write_faults(output, faults, workspace=workspace)
+    if "uniform_errors" in operations:
+        operation = mapping(operations["uniform_errors"])
+        chart = Chart.load(chart_path(output, workspace=workspace))
+        plan = plan_interactions(ValuesModel.from_schema(chart.schema), len(chart.defaults), max_cases=8192, max_candidates=8192)
+        baseline = configuration_key(chart.defaults)
+        values = [chart.defaults, *(value for value in plan.values if configuration_key(value) != baseline)]
+        inject_errors(output, values, float(str(operation["percent"])), int(str(operation["seed"])), workspace=workspace)
+    return mapping(json.loads((chart_path(output, workspace=workspace) / "benchmark.json").read_text()))
+
+
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Generate a chart from user-controlled input complexity and distribution parameters.
 
     Args:
         argv (list[str] | None): CLI arguments or process arguments.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero after writing a complete chart and distribution metadata.
     """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--parameters", type=Path, help="compile the common chart from a YAML parameter file or retained case")
+    parser.add_argument("--worst-case", action="store_true", help="include all six topology families and fixed known defects")
     parser.add_argument("--input-complexity", type=int, default=100)
     parser.add_argument("--mean", type=float, default=0)
     parser.add_argument("--stddev", type=float, default=1)
@@ -335,6 +444,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args(argv)
+    if args.parameters is not None:
+        supplied = {item.split("=", 1)[0] for item in (argv if argv is not None else sys.argv[1:]) if item.startswith("--")}
+        if supplied - {"--parameters", "--output", "--force"}:
+            parser.error("--parameters supplies all chart settings; combine it only with --output and --force")
+        spec = reproduce(args.parameters, args.output, force=args.force, workspace=workspace)
+        print(json.dumps({key: value for key, value in spec.items() if key not in ("output_strings", "histogram_edges")}, indent=2))
+        return 0
     spec = generate(
         args.output,
         input_complexity=args.input_complexity,
@@ -361,7 +477,10 @@ def main(argv: list[str] | None = None) -> int:
         else None,
         topology=args.topology,
         topology_opaque=args.topology_opaque,
+        stress=Stress() if args.worst_case else None,
+        readable_inputs=True,
         force=args.force,
+        workspace=workspace,
     )
     print(
         json.dumps(

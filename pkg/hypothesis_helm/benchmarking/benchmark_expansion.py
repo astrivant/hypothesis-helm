@@ -12,9 +12,11 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.benchmark_helm import code_digest
 from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key
 from hypothesis_helm.benchmarking.benchmark_pca import run_case
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES
-from hypothesis_helm.charts.runner import Chart, render
+from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
@@ -140,15 +142,19 @@ def compare(chart: Chart, reference: dict[str, object], helm: str, seconds: floa
     return rows
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Produce a paired six-category matrix under a shared nine-minute execution ceiling per category.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for a complete comparison; one for a censored reference or expansion.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("reports/benchmarks/expansion"))
+    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/expansion"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--error-percent", type=float, default=5)
     parser.add_argument("--error-seed", type=int, default=1729)
@@ -157,7 +163,7 @@ def main() -> int:
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     from hypothesis_helm.benchmarking.expansion_plots import plot
 
     if args.plot_only:
@@ -208,12 +214,13 @@ def main() -> int:
             args.trim_level,
             helm,
             args.time_limit,
+            workspace=workspace,
         )
         references.append(reference)
         if reference["status"] == "complete":
             rows.extend(
                 compare(
-                    Chart.load(args.output / "charts" / structure),
+                    Chart.load(chart_path(args.output / "charts" / structure, workspace=workspace)),
                     reference,
                     helm,
                     args.time_limit - number(reference["execution_seconds"]),

@@ -13,12 +13,14 @@ from pathlib import Path
 
 from hypothesis_helm.benchmarking.benchmark_helm import code_digest
 from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key, reference_space
+from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
 from hypothesis_helm.benchmarking.pca import inject_errors, project
 from hypothesis_helm.benchmarking.profiling import profile_settings
 from hypothesis_helm.benchmarking.structures import STRUCTURES, configmap, expected_manifests
 from hypothesis_helm.benchmarking.workload import source_digest
-from hypothesis_helm.charts.runner import Chart, render
+from hypothesis_helm.charts.model import Chart
+from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.passes.topology import trim_topology
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
@@ -76,6 +78,7 @@ def run_case(
     topology_weights: dict[str, float] | None = None,
     topology_seed: int = 2026,
     topology_depth_weights: dict[int, float] | None = None,
+    workspace: FixtureWorkspace | None = None,
 ) -> dict[str, object]:
     """
     Render the complete faulty fixture once, then compare selector subsets in a fixed projection.
@@ -94,6 +97,7 @@ def run_case(
         topology_weights (dict[str, float] | None): Mixture category weights, or uniform.
         topology_seed (int): Seed for mixture type and wiring placement.
         topology_depth_weights (dict[int, float] | None): Distribution of added gate depths.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         dict[str, object]: Exact observations, fitted basis, selection statistics and provenance.
@@ -108,8 +112,9 @@ def run_case(
         topology_weights=topology_weights,
         topology_seed=topology_seed,
         topology_depth_weights=topology_depth_weights,
+        workspace=workspace,
     )
-    chart = Chart.load(path)
+    chart = Chart.load(chart_path(path, workspace=workspace))
     truth, _ = reference_space(chart, spec, 8192)
     plan = plan_interactions(ValuesModel.from_schema(chart.schema), complexity, max_cases=8192, max_candidates=8192)
     baseline = configuration_key(chart.defaults)
@@ -119,8 +124,8 @@ def run_case(
     ]
     if {configuration_key(value) for value in values} != truth or len(values) != len(truth):
         raise AssertionError("planner and independent finite-domain oracle disagree")
-    faulty = inject_errors(path, values, percent, error_seed)
-    chart = Chart.load(path)
+    faulty = inject_errors(path, values, percent, error_seed, workspace=workspace)
+    chart = Chart.load(chart_path(path, workspace=workspace))
     selected, evidence = selections(chart, values, level, seed)
     bundles: list[list[dict[str, object]]] = []
     started = time.perf_counter()
@@ -157,7 +162,7 @@ def run_case(
         "time_limit_seconds": seconds,
         "faulty_indices": sorted(faulty),
         "actual_error_percent": 100 * len(faulty) / len(values),
-        "chart_sha256": source_digest(path),
+        "chart_sha256": source_digest(chart.path),
         "topology": evidence,
         "values": values,
         "selected_indices": selected,
@@ -189,15 +194,19 @@ def run_case(
     return row
 
 
-def main() -> int:
+def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = None) -> int:
     """
     Generate measured PCA comparisons without changing historical benchmark results.
+
+    Args:
+        argv (list[str] | None): Explicit command arguments or the process command line.
+        workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
 
     Returns:
         int: Zero for a complete study; one when a reference population hits its deadline.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("reports/benchmarks/pca"))
+    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/pca"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--error-percent", type=float, default=5.0)
     parser.add_argument("--error-seed", type=int, default=1729)
@@ -206,7 +215,7 @@ def main() -> int:
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     from hypothesis_helm.benchmarking.pca_plots import plot
 
     if args.plot_only:
@@ -267,6 +276,7 @@ def main() -> int:
             args.trim_level,
             helm,
             args.time_limit,
+            workspace=workspace,
         )
         rows.append(row)
         temporary = args.output / "results.tmp"

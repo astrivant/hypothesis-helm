@@ -36,10 +36,19 @@ A property can test multiple inputs and render multiple manifests. JUnit records
 the property's result; execution reports retain the input and render counts.
 Selection, caching, traversal, and sharding determine which properties execute.
 
+The chart runner coordinates separate modules: `charts/model.py` owns loaded contracts,
+`charts/planning.py` builds finite plans and estimates, `charts/candidates.py` evaluates one candidate,
+`charts/rendering.py` owns Helm rendering, and `charts/audit.py` assembles audit findings.
+
+`execution/processes.py` owns worker process groups until descendants have stopped and direct children
+have been joined. Communication errors trigger cleanup; a failed cleanup retains the unresolved ownership
+record while other children are still joined. Benchmark commands pass arguments and chart workspace owners
+explicitly, without changing the process command line or selecting a workspace through ambient context.
+
 ## Syntax trees and compiler passes
 
 `pkg/hypothesis_helm/compiler/asts/` holds template nodes, expression trees, helper
-definitions, and conservative evaluators. Template syntax forms a tree; named
+definitions, and conservative evaluators. Discovery and symbolic compilation share one lexer. Template syntax forms a tree; named
 helper calls connect those trees into a graph. Source filenames and line numbers
 connect analysis results back to chart code.
 

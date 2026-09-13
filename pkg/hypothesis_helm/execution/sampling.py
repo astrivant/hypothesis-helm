@@ -1,0 +1,84 @@
+"""
+Select reproducible random subsets with explicit sample floors and protected cases.
+"""
+
+import hashlib
+import math
+from collections.abc import Callable, Sequence
+from typing import TypeVar
+
+from attrs import frozen
+
+T = TypeVar("T")
+ENVIRONMENT = "HYPOTHESIS_HELM_SAMPLING"
+REPORT = "HYPOTHESIS_HELM_SAMPLING_REPORT"
+
+
+@frozen
+class Sampling:
+    """
+    Configure optional sampling without claiming a bug-recall guarantee.
+
+    Attributes:
+        percent (float): Percentage of eligible cases to retain; 100 disables sampling.
+        minimum (int): Minimum retained sample, or all cases when fewer exist.
+    """
+
+    percent: float = 100.0
+    minimum: int = 128
+
+    def __attrs_post_init__(self) -> None:
+        """
+        Reject invalid percentages and floors before planning or execution.
+
+        Returns:
+            None: Sampling settings are finite and positive.
+        """
+        if not math.isfinite(self.percent) or not 0 < self.percent <= 100:
+            raise ValueError("--sample-random must be greater than 0 and at most 100 (percentage retained)")
+        if type(self.minimum) is not int or self.minimum < 1:
+            raise ValueError("--sample-min-cases must be a positive integer")
+
+    def select(  # noqa: UP047 - pinned pydocstyle cannot parse PEP 695 type parameters.
+        self, values: Sequence[T], key: Callable[[T], str], seed: int, *, protected: set[str] | None = None
+    ) -> tuple[list[T], dict[str, object]]:
+        """
+        Sample without replacement, preserving input order and mandatory representatives.
+
+        Args:
+            values (Sequence[T]): Eligible cases after preceding filters.
+            key (Callable[[T], str]): Unique stable identity independent of traversal and shard.
+            seed (int): Reproducible selection seed.
+            protected (set[str] | None): Identities that must survive sampling.
+
+        Returns:
+            tuple[list[T], dict[str, object]]: Selected cases and explicit omission statistics.
+        """
+        identities = [key(value) for value in values]
+        if len(set(identities)) != len(identities):
+            raise ValueError("sampling requires unique case identities")
+        required = set(identities) & (protected or set())
+        count = min(len(values), max(self.minimum, math.ceil(len(values) * self.percent / 100), len(required)))
+        selected = list(values)
+        if count < len(values):
+            ranked = sorted(
+                (identity for identity in identities if identity not in required),
+                key=lambda identity: (hashlib.sha256(f"sample-v1:{seed}:{identity}".encode()).digest(), identity),
+            )
+            retained = required | set(ranked[: count - len(required)])
+            selected = [value for value, identity in zip(values, identities, strict=True) if identity in retained]
+        return selected, {
+            "algorithm": "sha256-identity-sample-v1",
+            "percent": self.percent,
+            "minimum": self.minimum,
+            "seed": seed,
+            "eligible": len(values),
+            "retained": count,
+            "omitted": len(values) - count,
+            "protected": len(required),
+            "applied": count < len(values),
+            "bug_recall_guaranteed": False,
+        }
+
+
+DEFAULT_SAMPLING = Sampling()
