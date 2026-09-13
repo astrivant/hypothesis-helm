@@ -1,0 +1,1200 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 119,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "auth",
+        "kafka",
+        "jksSecret"
+      ],
+      [
+        "auth",
+        "kafka",
+        "keystorePassword"
+      ],
+      [
+        "auth",
+        "kafka",
+        "saslMechanism"
+      ],
+      [
+        "auth",
+        "kafka",
+        "tlsEndpointIdentificationAlgorithm"
+      ],
+      [
+        "auth",
+        "kafka",
+        "truststorePassword"
+      ],
+      [
+        "auth",
+        "tls",
+        "clientAuthentication"
+      ],
+      [
+        "auth",
+        "tls",
+        "enabled"
+      ],
+      [
+        "auth",
+        "tls",
+        "jksSecret"
+      ],
+      [
+        "auth",
+        "tls",
+        "keystorePassword"
+      ],
+      [
+        "auth",
+        "tls",
+        "truststorePassword"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "customPodMetrics"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPU"
+      ],
+      [
+        "autoscaling",
+        "targetMemory"
+      ],
+      [
+        "avroCompatibilityLevel"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configuration"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingConfigmap"
+      ],
+      [
+        "existingLog4jConfigMap"
+      ],
+      [
+        "externalKafka",
+        "brokers"
+      ],
+      [
+        "externalKafka",
+        "listener",
+        "protocol"
+      ],
+      [
+        "externalKafka",
+        "sasl",
+        "existingSecret"
+      ],
+      [
+        "externalKafka",
+        "sasl",
+        "user"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "httpRoutes"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "kafka",
+        "controller",
+        "replicaCount"
+      ],
+      [
+        "kafka",
+        "enabled"
+      ],
+      [
+        "kafka",
+        "listeners",
+        "client",
+        "protocol"
+      ],
+      [
+        "kafka",
+        "sasl",
+        "client",
+        "users"
+      ],
+      [
+        "kafka",
+        "service",
+        "ports",
+        "client"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "listeners"
+      ],
+      [
+        "log4j"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "auth",
+        "kafka",
+        "jksSecret"
+      ],
+      [
+        "auth",
+        "kafka",
+        "keystorePassword"
+      ],
+      [
+        "auth",
+        "kafka",
+        "saslMechanism"
+      ],
+      [
+        "auth",
+        "kafka",
+        "tlsEndpointIdentificationAlgorithm"
+      ],
+      [
+        "auth",
+        "kafka",
+        "truststorePassword"
+      ],
+      [
+        "auth",
+        "tls",
+        "clientAuthentication"
+      ],
+      [
+        "auth",
+        "tls",
+        "enabled"
+      ],
+      [
+        "auth",
+        "tls",
+        "jksSecret"
+      ],
+      [
+        "auth",
+        "tls",
+        "keystorePassword"
+      ],
+      [
+        "auth",
+        "tls",
+        "truststorePassword"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "customPodMetrics"
+      ],
+      [
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "targetCPU"
+      ],
+      [
+        "autoscaling",
+        "targetMemory"
+      ],
+      [
+        "avroCompatibilityLevel"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configuration"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingConfigmap"
+      ],
+      [
+        "existingLog4jConfigMap"
+      ],
+      [
+        "externalKafka",
+        "brokers"
+      ],
+      [
+        "externalKafka",
+        "listener",
+        "protocol"
+      ],
+      [
+        "externalKafka",
+        "sasl",
+        "existingSecret"
+      ],
+      [
+        "externalKafka",
+        "sasl",
+        "user"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "httpRoutes"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "kafka",
+        "broker",
+        "replicaCount"
+      ],
+      [
+        "kafka",
+        "controller",
+        "controllerOnly"
+      ],
+      [
+        "kafka",
+        "controller",
+        "replicaCount"
+      ],
+      [
+        "kafka",
+        "enabled"
+      ],
+      [
+        "kafka",
+        "listeners",
+        "client",
+        "protocol"
+      ],
+      [
+        "kafka",
+        "sasl",
+        "client",
+        "users"
+      ],
+      [
+        "kafka",
+        "service",
+        "ports",
+        "client"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "listeners"
+      ],
+      [
+        "log4j"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePort"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "userPasswordFiles"
+      ]
+    ],
+    "present_count": 114,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ascmdn_p/chart",
+  "seed": 0,
+  "attempts": 49,
+  "error": "Error: YAML parse error on schema-registry/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 32: block sequence entries are not allowed in this context\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/schema-registry",
+      "tag": "8.0.0-debian-12-r4",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [
+        [
+          null
+        ]
+      ],
+      "debug": false
+    },
+    "command": [],
+    "args": [],
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "configuration": {},
+    "existingConfigmap": "",
+    "log4j": {},
+    "existingLog4jConfigMap": "",
+    "auth": {
+      "tls": {
+        "enabled": false,
+        "jksSecret": "",
+        "keystorePassword": "",
+        "truststorePassword": "",
+        "clientAuthentication": "NONE"
+      },
+      "kafka": {
+        "jksSecret": "",
+        "tlsEndpointIdentificationAlgorithm": "https",
+        "keystorePassword": "",
+        "truststorePassword": "",
+        "saslMechanism": "PLAIN"
+      }
+    },
+    "listeners": "http://0.0.0.0:8081",
+    "avroCompatibilityLevel": "backward",
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "replicaCount": 1,
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "podManagementPolicy": "OrderedReady",
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "priorityClassName": "",
+    "topologySpreadConstraints": {},
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "supplementalGroups": [],
+      "fsGroup": 1001,
+      "sysctls": []
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "resourcesPreset": "small",
+    "resources": {},
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "timeoutSeconds": 1,
+      "periodSeconds": 20,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "timeoutSeconds": 1,
+      "periodSeconds": 20,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 10,
+      "timeoutSeconds": 1,
+      "periodSeconds": 5,
+      "failureThreshold": 20,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "initContainers": [],
+    "sidecars": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "autoscaling": {
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 11,
+      "targetCPU": "",
+      "targetMemory": "",
+      "customPodMetrics": []
+    },
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "http": 8081
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "externalTrafficPolicy": "Cluster",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "annotations": {},
+      "labels": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "headless": {
+        "annotations": {}
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "hostname": "schema-registry.local",
+      "ingressClassName": "",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "httpRoutes": [],
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "kafka": {
+      "enabled": true,
+      "controller": {
+        "replicaCount": 1
+      },
+      "listeners": {
+        "client": {
+          "protocol": "PLAINTEXT"
+        }
+      },
+      "service": {
+        "ports": {
+          "client": 9092
+        }
+      },
+      "overrideConfiguration": {
+        "offsets.topic.replication.factor": 1
+      },
+      "sasl": {
+        "client": {
+          "users": [
+            "user"
+          ],
+          "passwords": ""
+        }
+      }
+    },
+    "externalKafka": {
+      "brokers": [
+        "PLAINTEXT://localhost:9092"
+      ],
+      "listener": {
+        "protocol": "PLAINTEXT"
+      },
+      "sasl": {
+        "user": "user",
+        "password": "",
+        "existingSecret": ""
+      }
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 33,
+    "unique_bundles": 33,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 33
+  },
+  "phase": "$.image.pullSecrets",
+  "kind": "value-path",
+  "path": [
+    "image",
+    "pullSecrets"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/schema-registry_1789323957/0000/paths/a4a0ea6ab697189bb963"
+}

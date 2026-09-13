@@ -1,0 +1,1932 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 175,
+    "present_fields": [
+      [
+        "cluster",
+        "externalAccess",
+        "enabled"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "hostMode"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "annotations"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "disableLoadBalancerIP"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerIPAnnotaion"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "port"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "type"
+      ],
+      [
+        "cluster",
+        "nodes"
+      ],
+      [
+        "cluster",
+        "replicas"
+      ],
+      [
+        "cluster",
+        "update",
+        "addNodes"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "extraEnvVars"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "podLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "labels"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "appProtocol"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "metrics",
+        "service",
+        "type"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "labels"
+      ],
+      [
+        "persistence",
+        "matchExpressions"
+      ],
+      [
+        "persistence",
+        "matchLabels"
+      ],
+      [
+        "persistence",
+        "path"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "persistence",
+        "subPath"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "enabled"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenDeleted"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenScaled"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "podSecurityPolicy",
+        "create"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "role",
+        "rules"
+      ],
+      [
+        "redis",
+        "affinity"
+      ],
+      [
+        "redis",
+        "automountServiceAccountToken"
+      ],
+      [
+        "redis",
+        "configmap"
+      ],
+      [
+        "redis",
+        "containerPorts",
+        "bus"
+      ],
+      [
+        "redis",
+        "containerPorts",
+        "redis"
+      ],
+      [
+        "redis",
+        "customLivenessProbe"
+      ],
+      [
+        "redis",
+        "customReadinessProbe"
+      ],
+      [
+        "redis",
+        "customStartupProbe"
+      ],
+      [
+        "redis",
+        "defaultConfigOverride"
+      ],
+      [
+        "redis",
+        "extraEnvVars"
+      ],
+      [
+        "redis",
+        "extraEnvVarsCM"
+      ],
+      [
+        "redis",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "redis",
+        "extraVolumeMounts"
+      ],
+      [
+        "redis",
+        "extraVolumes"
+      ],
+      [
+        "redis",
+        "hostAliases"
+      ],
+      [
+        "redis",
+        "hostNetwork"
+      ],
+      [
+        "redis",
+        "initContainers"
+      ],
+      [
+        "redis",
+        "lifecycleHooks"
+      ],
+      [
+        "redis",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "redis",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "redis",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "redis",
+        "nodeSelector"
+      ],
+      [
+        "redis",
+        "podAffinityPreset"
+      ],
+      [
+        "redis",
+        "podAnnotations"
+      ],
+      [
+        "redis",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "redis",
+        "podLabels"
+      ],
+      [
+        "redis",
+        "podManagementPolicy"
+      ],
+      [
+        "redis",
+        "priorityClassName"
+      ],
+      [
+        "redis",
+        "resources"
+      ],
+      [
+        "redis",
+        "schedulerName"
+      ],
+      [
+        "redis",
+        "shareProcessNamespace"
+      ],
+      [
+        "redis",
+        "sidecars"
+      ],
+      [
+        "redis",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "redis",
+        "tolerations"
+      ],
+      [
+        "redis",
+        "topologySpreadConstraints"
+      ],
+      [
+        "redis",
+        "updateStrategy"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceBindings",
+        "enabled"
+      ],
+      [
+        "sysctlImage",
+        "command"
+      ],
+      [
+        "sysctlImage",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "sysctlImage",
+        "enabled"
+      ],
+      [
+        "sysctlImage",
+        "mountHostSys"
+      ],
+      [
+        "sysctlImage",
+        "pullPolicy"
+      ],
+      [
+        "sysctlImage",
+        "resources"
+      ],
+      [
+        "tls",
+        "authClients"
+      ],
+      [
+        "tls",
+        "certificatesSecret"
+      ],
+      [
+        "tls",
+        "dhParamsFilename"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "updateJob",
+        "activeDeadlineSeconds"
+      ],
+      [
+        "updateJob",
+        "affinity"
+      ],
+      [
+        "updateJob",
+        "annotations"
+      ],
+      [
+        "updateJob",
+        "automountServiceAccountToken"
+      ],
+      [
+        "updateJob",
+        "extraEnvVars"
+      ],
+      [
+        "updateJob",
+        "extraEnvVarsCM"
+      ],
+      [
+        "updateJob",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "updateJob",
+        "extraVolumeMounts"
+      ],
+      [
+        "updateJob",
+        "extraVolumes"
+      ],
+      [
+        "updateJob",
+        "helmHook"
+      ],
+      [
+        "updateJob",
+        "hostAliases"
+      ],
+      [
+        "updateJob",
+        "initContainers"
+      ],
+      [
+        "updateJob",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "updateJob",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "updateJob",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "updateJob",
+        "nodeSelector"
+      ],
+      [
+        "updateJob",
+        "podAffinityPreset"
+      ],
+      [
+        "updateJob",
+        "podAnnotations"
+      ],
+      [
+        "updateJob",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "updateJob",
+        "podLabels"
+      ],
+      [
+        "updateJob",
+        "priorityClassName"
+      ],
+      [
+        "updateJob",
+        "resources"
+      ],
+      [
+        "updateJob",
+        "tolerations"
+      ],
+      [
+        "usePassword"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "cluster",
+        "externalAccess",
+        "enabled"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "hostMode"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "annotations"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "disableLoadBalancerIP"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerIPAnnotaion"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "port"
+      ],
+      [
+        "cluster",
+        "externalAccess",
+        "service",
+        "type"
+      ],
+      [
+        "cluster",
+        "nodes"
+      ],
+      [
+        "cluster",
+        "replicas"
+      ],
+      [
+        "cluster",
+        "update",
+        "addNodes"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "extraEnvVars"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "podLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "labels"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "appProtocol"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "metrics",
+        "service",
+        "type"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "labels"
+      ],
+      [
+        "persistence",
+        "matchExpressions"
+      ],
+      [
+        "persistence",
+        "matchLabels"
+      ],
+      [
+        "persistence",
+        "path"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "persistence",
+        "subPath"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "enabled"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenDeleted"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenScaled"
+      ],
+      [
+        "podDisruptionBudget"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "podSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "podSecurityPolicy",
+        "create"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "role",
+        "rules"
+      ],
+      [
+        "redis",
+        "affinity"
+      ],
+      [
+        "redis",
+        "automountServiceAccountToken"
+      ],
+      [
+        "redis",
+        "configmap"
+      ],
+      [
+        "redis",
+        "containerPorts",
+        "bus"
+      ],
+      [
+        "redis",
+        "containerPorts",
+        "redis"
+      ],
+      [
+        "redis",
+        "customLivenessProbe"
+      ],
+      [
+        "redis",
+        "customReadinessProbe"
+      ],
+      [
+        "redis",
+        "customStartupProbe"
+      ],
+      [
+        "redis",
+        "defaultConfigOverride"
+      ],
+      [
+        "redis",
+        "extraEnvVars"
+      ],
+      [
+        "redis",
+        "extraEnvVarsCM"
+      ],
+      [
+        "redis",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "redis",
+        "extraVolumeMounts"
+      ],
+      [
+        "redis",
+        "extraVolumes"
+      ],
+      [
+        "redis",
+        "hostAliases"
+      ],
+      [
+        "redis",
+        "hostNetwork"
+      ],
+      [
+        "redis",
+        "initContainers"
+      ],
+      [
+        "redis",
+        "lifecycleHooks"
+      ],
+      [
+        "redis",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "redis",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "redis",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "redis",
+        "nodeSelector"
+      ],
+      [
+        "redis",
+        "podAffinityPreset"
+      ],
+      [
+        "redis",
+        "podAnnotations"
+      ],
+      [
+        "redis",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "redis",
+        "podLabels"
+      ],
+      [
+        "redis",
+        "podManagementPolicy"
+      ],
+      [
+        "redis",
+        "priorityClassName"
+      ],
+      [
+        "redis",
+        "resources"
+      ],
+      [
+        "redis",
+        "schedulerName"
+      ],
+      [
+        "redis",
+        "shareProcessNamespace"
+      ],
+      [
+        "redis",
+        "sidecars"
+      ],
+      [
+        "redis",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "redis",
+        "tolerations"
+      ],
+      [
+        "redis",
+        "topologySpreadConstraints"
+      ],
+      [
+        "redis",
+        "updateStrategy"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceBindings",
+        "enabled"
+      ],
+      [
+        "sysctlImage",
+        "command"
+      ],
+      [
+        "sysctlImage",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "sysctlImage",
+        "enabled"
+      ],
+      [
+        "sysctlImage",
+        "mountHostSys"
+      ],
+      [
+        "sysctlImage",
+        "pullPolicy"
+      ],
+      [
+        "sysctlImage",
+        "resources"
+      ],
+      [
+        "tls",
+        "authClients"
+      ],
+      [
+        "tls",
+        "certificatesSecret"
+      ],
+      [
+        "tls",
+        "dhParamsFilename"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "updateJob",
+        "activeDeadlineSeconds"
+      ],
+      [
+        "updateJob",
+        "affinity"
+      ],
+      [
+        "updateJob",
+        "annotations"
+      ],
+      [
+        "updateJob",
+        "automountServiceAccountToken"
+      ],
+      [
+        "updateJob",
+        "extraEnvVars"
+      ],
+      [
+        "updateJob",
+        "extraEnvVarsCM"
+      ],
+      [
+        "updateJob",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "updateJob",
+        "extraVolumeMounts"
+      ],
+      [
+        "updateJob",
+        "extraVolumes"
+      ],
+      [
+        "updateJob",
+        "helmHook"
+      ],
+      [
+        "updateJob",
+        "hostAliases"
+      ],
+      [
+        "updateJob",
+        "initContainers"
+      ],
+      [
+        "updateJob",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "updateJob",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "updateJob",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "updateJob",
+        "nodeSelector"
+      ],
+      [
+        "updateJob",
+        "podAffinityPreset"
+      ],
+      [
+        "updateJob",
+        "podAnnotations"
+      ],
+      [
+        "updateJob",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "updateJob",
+        "podLabels"
+      ],
+      [
+        "updateJob",
+        "priorityClassName"
+      ],
+      [
+        "updateJob",
+        "resources"
+      ],
+      [
+        "updateJob",
+        "tolerations"
+      ],
+      [
+        "usePassword"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "present_count": 174,
+    "varied_count": 2,
+    "varied_fraction": 0.011428571428571429,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-s4emn2no/chart",
+  "seed": 0,
+  "attempts": 40,
+  "error": "Error: YAML parse error on redis-cluster/templates/redis-statefulset.yaml: error converting YAML to JSON: yaml: line 64: mapping values are not allowed in this context\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "redis": {
+        "password": ""
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "clusterDomain": "cluster.local",
+    "commonAnnotations": {},
+    "commonLabels": {},
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "tag": ""
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "rbac": {
+      "create": false,
+      "role": {
+        "rules": []
+      }
+    },
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "supplementalGroups": [],
+      "fsGroup": 1001,
+      "sysctls": []
+    },
+    "podDisruptionBudget": {},
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "usePassword": true,
+    "password": "",
+    "existingSecret": "",
+    "existingSecretPasswordKey": "",
+    "usePasswordFiles": true,
+    "tls": {
+      "enabled": false,
+      "authClients": true,
+      "autoGenerated": false,
+      "existingSecret": "",
+      "certificatesSecret": "",
+      "certFilename": "",
+      "certKeyFilename": "",
+      "certCAFilename": "",
+      "dhParamsFilename": ""
+    },
+    "service": {
+      "ports": {
+        "redis": 6379
+      },
+      "nodePorts": {
+        "redis": ""
+      },
+      "extraPorts": [],
+      "annotations": {},
+      "labels": {},
+      "type": "ClusterIP",
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerClass": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "headless": {
+        "annotations": {}
+      }
+    },
+    "persistence": {
+      "enabled": true,
+      "path": "/bitnami/redis/data",
+      "subPath": "",
+      "storageClass": "",
+      "annotations": {},
+      "labels": {},
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "matchLabels": {},
+      "matchExpressions": {}
+    },
+    "persistentVolumeClaimRetentionPolicy": {
+      "enabled": false,
+      "whenScaled": "Retain",
+      "whenDeleted": "Retain"
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 0,
+        "privileged": false
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "serviceBindings": {
+      "enabled": false
+    },
+    "podSecurityPolicy": {
+      "create": false
+    },
+    "redis": {
+      "command": [],
+      "args": [],
+      "updateStrategy": {
+        "type": "RollingUpdate",
+        "rollingUpdate": {
+          "partition": 0
+        }
+      },
+      "podManagementPolicy": "Parallel",
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "hostNetwork": false,
+      "useAOFPersistence": "yes",
+      "containerPorts": {
+        "redis": 6379,
+        "bus": 16379
+      },
+      "lifecycleHooks": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "initContainers": [],
+      "sidecars": [],
+      "podLabels": {},
+      "priorityClassName": "",
+      "defaultConfigOverride": "",
+      "configmap": "",
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "podAnnotations": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "schedulerName": "",
+      "shareProcessNamespace": false,
+      "terminationGracePeriodSeconds": 30,
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "startupProbe": {
+        "enabled": false,
+        "path": "/",
+        "initialDelaySeconds": 300,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 6,
+        "successThreshold": 1
+      },
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": []
+    },
+    "updateJob": {
+      "activeDeadlineSeconds": 600,
+      "command": [],
+      "args": [],
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "helmHook": "post-upgrade",
+      "annotations": {},
+      "podAnnotations": {},
+      "podLabels": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "initContainers": [],
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "priorityClassName": "",
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "cluster": {
+      "init": true,
+      "nodes": 6,
+      "replicas": 1,
+      "externalAccess": {
+        "enabled": false,
+        "hostMode": false,
+        "service": {
+          "disableLoadBalancerIP": false,
+          "loadBalancerIPAnnotaion": "",
+          "type": "LoadBalancer",
+          "port": 6379,
+          "loadBalancerIP": [],
+          "loadBalancerClass": "",
+          "loadBalancerSourceRanges": [],
+          "annotations": {}
+        }
+      },
+      "update": {
+        "addNodes": false,
+        "currentNumberOfNodes": 6,
+        "currentNumberOfReplicas": 1,
+        "newExternalIPs": []
+      }
+    },
+    "metrics": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/redis-exporter",
+        "tag": "1.76.0-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "extraArgs": {},
+      "extraEnvVars": [],
+      "containerPorts": {
+        "http": 9121
+      },
+      "podAnnotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "9121"
+      },
+      "podLabels": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "interval": "",
+        "scrapeTimeout": "",
+        "selector": {},
+        "labels": {},
+        "annotations": {},
+        "jobLabel": "",
+        "relabelings": [],
+        "metricRelabelings": []
+      },
+      "prometheusRule": {
+        "enabled": false,
+        "additionalLabels": {},
+        "namespace": "",
+        "rules": []
+      },
+      "priorityClassName": "",
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "http": 9121,
+          "appProtocol": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerClass": "",
+        "annotations": {},
+        "labels": {}
+      }
+    },
+    "sysctlImage": {
+      "enabled": false,
+      "command": [],
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r51",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "mountHostSys": false,
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 0,
+        "privileged": true
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 23,
+    "unique_bundles": 23,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 23
+  },
+  "phase": "$.image",
+  "kind": "value-path",
+  "path": [
+    "image"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redis-cluster_1789323660/0000/paths/8e79b7dd85a286cfaddb"
+}

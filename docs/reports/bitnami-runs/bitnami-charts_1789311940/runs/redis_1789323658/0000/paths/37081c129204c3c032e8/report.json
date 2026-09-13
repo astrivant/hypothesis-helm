@@ -1,0 +1,3992 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 350,
+    "present_fields": [
+      [
+        "architecture"
+      ],
+      [
+        "auth",
+        "acl",
+        "enabled"
+      ],
+      [
+        "auth",
+        "acl",
+        "sentinel"
+      ],
+      [
+        "auth",
+        "acl",
+        "userSecret"
+      ],
+      [
+        "auth",
+        "acl",
+        "users"
+      ],
+      [
+        "auth",
+        "enabled"
+      ],
+      [
+        "auth",
+        "existingSecret"
+      ],
+      [
+        "auth",
+        "sentinel"
+      ],
+      [
+        "auth",
+        "usePasswordFileFromSecret"
+      ],
+      [
+        "auth",
+        "usePasswordFiles"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonConfiguration"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configmapChecksumAnnotations"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "kubectl",
+        "command"
+      ],
+      [
+        "kubectl",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "kubectl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "kubectl",
+        "resources"
+      ],
+      [
+        "master",
+        "affinity"
+      ],
+      [
+        "master",
+        "annotations"
+      ],
+      [
+        "master",
+        "automountServiceAccountToken"
+      ],
+      [
+        "master",
+        "configuration"
+      ],
+      [
+        "master",
+        "containerPorts",
+        "redis"
+      ],
+      [
+        "master",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "master",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "master",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "master",
+        "count"
+      ],
+      [
+        "master",
+        "customLivenessProbe"
+      ],
+      [
+        "master",
+        "customReadinessProbe"
+      ],
+      [
+        "master",
+        "customStartupProbe"
+      ],
+      [
+        "master",
+        "disableCommands"
+      ],
+      [
+        "master",
+        "dnsConfig"
+      ],
+      [
+        "master",
+        "dnsPolicy"
+      ],
+      [
+        "master",
+        "enableServiceLinks"
+      ],
+      [
+        "master",
+        "extraEnvVars"
+      ],
+      [
+        "master",
+        "extraEnvVarsCM"
+      ],
+      [
+        "master",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "master",
+        "extraPodSpec"
+      ],
+      [
+        "master",
+        "extraVolumeMounts"
+      ],
+      [
+        "master",
+        "extraVolumes"
+      ],
+      [
+        "master",
+        "hostAliases"
+      ],
+      [
+        "master",
+        "initContainers"
+      ],
+      [
+        "master",
+        "kind"
+      ],
+      [
+        "master",
+        "lifecycleHooks"
+      ],
+      [
+        "master",
+        "minReadySeconds"
+      ],
+      [
+        "master",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "master",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "master",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "master",
+        "nodeSelector"
+      ],
+      [
+        "master",
+        "pdb"
+      ],
+      [
+        "master",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "master",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "master",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "master",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "master",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "master",
+        "persistence",
+        "labels"
+      ],
+      [
+        "master",
+        "persistence",
+        "medium"
+      ],
+      [
+        "master",
+        "persistence",
+        "path"
+      ],
+      [
+        "master",
+        "persistence",
+        "selector"
+      ],
+      [
+        "master",
+        "persistence",
+        "size"
+      ],
+      [
+        "master",
+        "persistence",
+        "sizeLimit"
+      ],
+      [
+        "master",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "master",
+        "podAffinityPreset"
+      ],
+      [
+        "master",
+        "podAnnotations"
+      ],
+      [
+        "master",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "master",
+        "podLabels"
+      ],
+      [
+        "master",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "master",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "master",
+        "priorityClassName"
+      ],
+      [
+        "master",
+        "resources"
+      ],
+      [
+        "master",
+        "revisionHistoryLimit"
+      ],
+      [
+        "master",
+        "schedulerName"
+      ],
+      [
+        "master",
+        "service",
+        "annotations"
+      ],
+      [
+        "master",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "master",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "master",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "master",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "master",
+        "service",
+        "internalTrafficPolicy"
+      ],
+      [
+        "master",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "master",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "master",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "master",
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "master",
+        "service",
+        "portNames",
+        "redis"
+      ],
+      [
+        "master",
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "master",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "master",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "master",
+        "service",
+        "type"
+      ],
+      [
+        "master",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "master",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "master",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "master",
+        "shareProcessNamespace"
+      ],
+      [
+        "master",
+        "sidecars"
+      ],
+      [
+        "master",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "master",
+        "tolerations"
+      ],
+      [
+        "master",
+        "topologySpreadConstraints"
+      ],
+      [
+        "master",
+        "updateStrategy"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "metrics",
+        "customLivenessProbe"
+      ],
+      [
+        "metrics",
+        "customReadinessProbe"
+      ],
+      [
+        "metrics",
+        "customStartupProbe"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "extraEnvVars"
+      ],
+      [
+        "metrics",
+        "extraVolumeMounts"
+      ],
+      [
+        "metrics",
+        "extraVolumes"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "podLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "additionalEndpoints"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "port"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "relabellings"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "sampleLimit"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "targetLimit"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "redisTargetHost"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "metrics",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "metrics",
+        "service",
+        "type"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalEndpoints"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "port"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabellings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "sampleLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "nameResolutionThreshold"
+      ],
+      [
+        "nameResolutionTimeout"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "metrics",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "metrics",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "metrics",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "pdb"
+      ],
+      [
+        "podSecurityPolicy",
+        "create"
+      ],
+      [
+        "podSecurityPolicy",
+        "enabled"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "rules"
+      ],
+      [
+        "replica",
+        "affinity"
+      ],
+      [
+        "replica",
+        "annotations"
+      ],
+      [
+        "replica",
+        "automountServiceAccountToken"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "targetCPU"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "targetMemory"
+      ],
+      [
+        "replica",
+        "command"
+      ],
+      [
+        "replica",
+        "configuration"
+      ],
+      [
+        "replica",
+        "containerPorts",
+        "redis"
+      ],
+      [
+        "replica",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "replica",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "replica",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "replica",
+        "customLivenessProbe"
+      ],
+      [
+        "replica",
+        "customReadinessProbe"
+      ],
+      [
+        "replica",
+        "customStartupProbe"
+      ],
+      [
+        "replica",
+        "disableCommands"
+      ],
+      [
+        "replica",
+        "dnsConfig"
+      ],
+      [
+        "replica",
+        "dnsPolicy"
+      ],
+      [
+        "replica",
+        "enableServiceLinks"
+      ],
+      [
+        "replica",
+        "externalMaster",
+        "enabled"
+      ],
+      [
+        "replica",
+        "externalMaster",
+        "host"
+      ],
+      [
+        "replica",
+        "externalMaster",
+        "port"
+      ],
+      [
+        "replica",
+        "extraEnvVars"
+      ],
+      [
+        "replica",
+        "extraEnvVarsCM"
+      ],
+      [
+        "replica",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "replica",
+        "extraFlags"
+      ],
+      [
+        "replica",
+        "extraPodSpec"
+      ],
+      [
+        "replica",
+        "extraVolumeMounts"
+      ],
+      [
+        "replica",
+        "extraVolumes"
+      ],
+      [
+        "replica",
+        "hostAliases"
+      ],
+      [
+        "replica",
+        "initContainers"
+      ],
+      [
+        "replica",
+        "kind"
+      ],
+      [
+        "replica",
+        "lifecycleHooks"
+      ],
+      [
+        "replica",
+        "minReadySeconds"
+      ],
+      [
+        "replica",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "replica",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "replica",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "replica",
+        "nodeSelector"
+      ],
+      [
+        "replica",
+        "pdb"
+      ],
+      [
+        "replica",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "replica",
+        "persistence",
+        "medium"
+      ],
+      [
+        "replica",
+        "persistence",
+        "path"
+      ],
+      [
+        "replica",
+        "persistence",
+        "sizeLimit"
+      ],
+      [
+        "replica",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "replica",
+        "podAffinityPreset"
+      ],
+      [
+        "replica",
+        "podAnnotations"
+      ],
+      [
+        "replica",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "replica",
+        "podLabels"
+      ],
+      [
+        "replica",
+        "podManagementPolicy"
+      ],
+      [
+        "replica",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "replica",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "replica",
+        "preExecCmds"
+      ],
+      [
+        "replica",
+        "priorityClassName"
+      ],
+      [
+        "replica",
+        "replicaCount"
+      ],
+      [
+        "replica",
+        "resources"
+      ],
+      [
+        "replica",
+        "revisionHistoryLimit"
+      ],
+      [
+        "replica",
+        "schedulerName"
+      ],
+      [
+        "replica",
+        "service",
+        "annotations"
+      ],
+      [
+        "replica",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "replica",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "replica",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "replica",
+        "service",
+        "internalTrafficPolicy"
+      ],
+      [
+        "replica",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "replica",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "replica",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "replica",
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "replica",
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "replica",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "replica",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "replica",
+        "service",
+        "type"
+      ],
+      [
+        "replica",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "replica",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "replica",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "replica",
+        "shareProcessNamespace"
+      ],
+      [
+        "replica",
+        "sidecars"
+      ],
+      [
+        "replica",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "replica",
+        "tolerations"
+      ],
+      [
+        "replica",
+        "topologySpreadConstraints"
+      ],
+      [
+        "replica",
+        "updateStrategy"
+      ],
+      [
+        "secretAnnotations"
+      ],
+      [
+        "secretChecksumAnnotations"
+      ],
+      [
+        "sentinel",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "automateClusterRecovery"
+      ],
+      [
+        "sentinel",
+        "configuration"
+      ],
+      [
+        "sentinel",
+        "containerPorts",
+        "sentinel"
+      ],
+      [
+        "sentinel",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "sentinel",
+        "customLivenessProbe"
+      ],
+      [
+        "sentinel",
+        "customReadinessProbe"
+      ],
+      [
+        "sentinel",
+        "customStartupProbe"
+      ],
+      [
+        "sentinel",
+        "downAfterMilliseconds"
+      ],
+      [
+        "sentinel",
+        "enableServiceLinks"
+      ],
+      [
+        "sentinel",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerIPAnnotaion"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "redisPort"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "sentinelPort"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "type"
+      ],
+      [
+        "sentinel",
+        "externalMaster",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "externalMaster",
+        "host"
+      ],
+      [
+        "sentinel",
+        "externalMaster",
+        "port"
+      ],
+      [
+        "sentinel",
+        "extraEnvVars"
+      ],
+      [
+        "sentinel",
+        "extraEnvVarsCM"
+      ],
+      [
+        "sentinel",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "sentinel",
+        "extraPodSpec"
+      ],
+      [
+        "sentinel",
+        "extraVolumeMounts"
+      ],
+      [
+        "sentinel",
+        "extraVolumes"
+      ],
+      [
+        "sentinel",
+        "failoverTimeout"
+      ],
+      [
+        "sentinel",
+        "getMasterTimeout"
+      ],
+      [
+        "sentinel",
+        "image",
+        "debug"
+      ],
+      [
+        "sentinel",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sentinel",
+        "lifecycleHooks"
+      ],
+      [
+        "sentinel",
+        "masterService",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "masterSet"
+      ],
+      [
+        "sentinel",
+        "parallelSyncs"
+      ],
+      [
+        "sentinel",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "persistence",
+        "medium"
+      ],
+      [
+        "sentinel",
+        "persistence",
+        "sizeLimit"
+      ],
+      [
+        "sentinel",
+        "preExecCmds"
+      ],
+      [
+        "sentinel",
+        "quorum"
+      ],
+      [
+        "sentinel",
+        "redisShutdownWaitFailover"
+      ],
+      [
+        "sentinel",
+        "replicaSyncCheck"
+      ],
+      [
+        "sentinel",
+        "resources"
+      ],
+      [
+        "sentinel",
+        "service",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "sentinel",
+        "service",
+        "createMaster"
+      ],
+      [
+        "sentinel",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "sentinel",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "sentinel",
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "service",
+        "headless",
+        "extraPorts"
+      ],
+      [
+        "sentinel",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "sentinel",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "sentinel",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "sentinel",
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "sentinel",
+        "service",
+        "nodePorts",
+        "sentinel"
+      ],
+      [
+        "sentinel",
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "sentinel",
+        "service",
+        "ports",
+        "sentinel"
+      ],
+      [
+        "sentinel",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "sentinel",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "sentinel",
+        "service",
+        "type"
+      ],
+      [
+        "sentinel",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceBindings",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "command"
+      ],
+      [
+        "sysctl",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sysctl",
+        "mountHostSys"
+      ],
+      [
+        "sysctl",
+        "resources"
+      ],
+      [
+        "tls",
+        "authClients"
+      ],
+      [
+        "tls",
+        "dhParamsFilename"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "useExternalDNS",
+        "enabled"
+      ],
+      [
+        "useHostnames"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "extraEnvVars"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "auth",
+        "acl",
+        "enabled"
+      ],
+      [
+        "auth",
+        "acl",
+        "sentinel"
+      ],
+      [
+        "auth",
+        "acl",
+        "userSecret"
+      ],
+      [
+        "auth",
+        "acl",
+        "users"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "architecture"
+      ],
+      [
+        "auth",
+        "enabled"
+      ],
+      [
+        "auth",
+        "existingSecret"
+      ],
+      [
+        "auth",
+        "sentinel"
+      ],
+      [
+        "auth",
+        "usePasswordFileFromSecret"
+      ],
+      [
+        "auth",
+        "usePasswordFiles"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonConfiguration"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configmapChecksumAnnotations"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "kubectl",
+        "command"
+      ],
+      [
+        "kubectl",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "kubectl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "kubectl",
+        "resources"
+      ],
+      [
+        "master",
+        "affinity"
+      ],
+      [
+        "master",
+        "annotations"
+      ],
+      [
+        "master",
+        "automountServiceAccountToken"
+      ],
+      [
+        "master",
+        "configuration"
+      ],
+      [
+        "master",
+        "containerPorts",
+        "redis"
+      ],
+      [
+        "master",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "master",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "master",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "master",
+        "count"
+      ],
+      [
+        "master",
+        "customLivenessProbe"
+      ],
+      [
+        "master",
+        "customReadinessProbe"
+      ],
+      [
+        "master",
+        "customStartupProbe"
+      ],
+      [
+        "master",
+        "disableCommands"
+      ],
+      [
+        "master",
+        "dnsConfig"
+      ],
+      [
+        "master",
+        "dnsPolicy"
+      ],
+      [
+        "master",
+        "enableServiceLinks"
+      ],
+      [
+        "master",
+        "extraEnvVars"
+      ],
+      [
+        "master",
+        "extraEnvVarsCM"
+      ],
+      [
+        "master",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "master",
+        "extraPodSpec"
+      ],
+      [
+        "master",
+        "extraVolumeMounts"
+      ],
+      [
+        "master",
+        "extraVolumes"
+      ],
+      [
+        "master",
+        "hostAliases"
+      ],
+      [
+        "master",
+        "initContainers"
+      ],
+      [
+        "master",
+        "kind"
+      ],
+      [
+        "master",
+        "lifecycleHooks"
+      ],
+      [
+        "master",
+        "minReadySeconds"
+      ],
+      [
+        "master",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "master",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "master",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "master",
+        "nodeSelector"
+      ],
+      [
+        "master",
+        "pdb"
+      ],
+      [
+        "master",
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "master",
+        "persistence",
+        "annotations"
+      ],
+      [
+        "master",
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "master",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "master",
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "master",
+        "persistence",
+        "labels"
+      ],
+      [
+        "master",
+        "persistence",
+        "medium"
+      ],
+      [
+        "master",
+        "persistence",
+        "path"
+      ],
+      [
+        "master",
+        "persistence",
+        "selector"
+      ],
+      [
+        "master",
+        "persistence",
+        "size"
+      ],
+      [
+        "master",
+        "persistence",
+        "sizeLimit"
+      ],
+      [
+        "master",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "master",
+        "podAffinityPreset"
+      ],
+      [
+        "master",
+        "podAnnotations"
+      ],
+      [
+        "master",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "master",
+        "podLabels"
+      ],
+      [
+        "master",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "master",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "master",
+        "priorityClassName"
+      ],
+      [
+        "master",
+        "resources"
+      ],
+      [
+        "master",
+        "revisionHistoryLimit"
+      ],
+      [
+        "master",
+        "schedulerName"
+      ],
+      [
+        "master",
+        "service",
+        "annotations"
+      ],
+      [
+        "master",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "master",
+        "service",
+        "externalIPs"
+      ],
+      [
+        "master",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "master",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "master",
+        "service",
+        "internalTrafficPolicy"
+      ],
+      [
+        "master",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "master",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "master",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "master",
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "master",
+        "service",
+        "portNames",
+        "redis"
+      ],
+      [
+        "master",
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "master",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "master",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "master",
+        "service",
+        "type"
+      ],
+      [
+        "master",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "master",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "master",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "master",
+        "shareProcessNamespace"
+      ],
+      [
+        "master",
+        "sidecars"
+      ],
+      [
+        "master",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "master",
+        "tolerations"
+      ],
+      [
+        "master",
+        "topologySpreadConstraints"
+      ],
+      [
+        "master",
+        "updateStrategy"
+      ],
+      [
+        "metrics",
+        "containerPorts",
+        "http"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "metrics",
+        "customLivenessProbe"
+      ],
+      [
+        "metrics",
+        "customReadinessProbe"
+      ],
+      [
+        "metrics",
+        "customStartupProbe"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "extraEnvVars"
+      ],
+      [
+        "metrics",
+        "extraVolumeMounts"
+      ],
+      [
+        "metrics",
+        "extraVolumes"
+      ],
+      [
+        "metrics",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "podLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "additionalEndpoints"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "port"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "relabellings"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "sampleLimit"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "podMonitor",
+        "targetLimit"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "redisTargetHost"
+      ],
+      [
+        "metrics",
+        "resources"
+      ],
+      [
+        "metrics",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "metrics",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "metrics",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "metrics",
+        "service",
+        "port"
+      ],
+      [
+        "metrics",
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "metrics",
+        "service",
+        "type"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalEndpoints"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "podTargetLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "port"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabellings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "sampleLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "targetLimit"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "tlsConfig"
+      ],
+      [
+        "nameResolutionThreshold"
+      ],
+      [
+        "nameResolutionTimeout"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "metrics",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "metrics",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "metrics",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "pdb"
+      ],
+      [
+        "podSecurityPolicy",
+        "create"
+      ],
+      [
+        "podSecurityPolicy",
+        "enabled"
+      ],
+      [
+        "rbac",
+        "create"
+      ],
+      [
+        "rbac",
+        "rules"
+      ],
+      [
+        "replica",
+        "affinity"
+      ],
+      [
+        "replica",
+        "annotations"
+      ],
+      [
+        "replica",
+        "automountServiceAccountToken"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "enabled"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "maxReplicas"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "minReplicas"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "targetCPU"
+      ],
+      [
+        "replica",
+        "autoscaling",
+        "targetMemory"
+      ],
+      [
+        "replica",
+        "command"
+      ],
+      [
+        "replica",
+        "configuration"
+      ],
+      [
+        "replica",
+        "containerPorts",
+        "redis"
+      ],
+      [
+        "replica",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "replica",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "replica",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "replica",
+        "customLivenessProbe"
+      ],
+      [
+        "replica",
+        "customReadinessProbe"
+      ],
+      [
+        "replica",
+        "customStartupProbe"
+      ],
+      [
+        "replica",
+        "disableCommands"
+      ],
+      [
+        "replica",
+        "dnsConfig"
+      ],
+      [
+        "replica",
+        "dnsPolicy"
+      ],
+      [
+        "replica",
+        "enableServiceLinks"
+      ],
+      [
+        "replica",
+        "externalMaster",
+        "enabled"
+      ],
+      [
+        "replica",
+        "externalMaster",
+        "host"
+      ],
+      [
+        "replica",
+        "externalMaster",
+        "port"
+      ],
+      [
+        "replica",
+        "extraEnvVars"
+      ],
+      [
+        "replica",
+        "extraEnvVarsCM"
+      ],
+      [
+        "replica",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "replica",
+        "extraFlags"
+      ],
+      [
+        "replica",
+        "extraPodSpec"
+      ],
+      [
+        "replica",
+        "extraVolumeMounts"
+      ],
+      [
+        "replica",
+        "extraVolumes"
+      ],
+      [
+        "replica",
+        "hostAliases"
+      ],
+      [
+        "replica",
+        "initContainers"
+      ],
+      [
+        "replica",
+        "kind"
+      ],
+      [
+        "replica",
+        "lifecycleHooks"
+      ],
+      [
+        "replica",
+        "minReadySeconds"
+      ],
+      [
+        "replica",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "replica",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "replica",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "replica",
+        "nodeSelector"
+      ],
+      [
+        "replica",
+        "pdb"
+      ],
+      [
+        "replica",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "replica",
+        "persistence",
+        "medium"
+      ],
+      [
+        "replica",
+        "persistence",
+        "path"
+      ],
+      [
+        "replica",
+        "persistence",
+        "sizeLimit"
+      ],
+      [
+        "replica",
+        "persistence",
+        "subPath"
+      ],
+      [
+        "replica",
+        "podAffinityPreset"
+      ],
+      [
+        "replica",
+        "podAnnotations"
+      ],
+      [
+        "replica",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "replica",
+        "podLabels"
+      ],
+      [
+        "replica",
+        "podManagementPolicy"
+      ],
+      [
+        "replica",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "replica",
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "replica",
+        "preExecCmds"
+      ],
+      [
+        "replica",
+        "priorityClassName"
+      ],
+      [
+        "replica",
+        "replicaCount"
+      ],
+      [
+        "replica",
+        "resources"
+      ],
+      [
+        "replica",
+        "revisionHistoryLimit"
+      ],
+      [
+        "replica",
+        "schedulerName"
+      ],
+      [
+        "replica",
+        "service",
+        "annotations"
+      ],
+      [
+        "replica",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "replica",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "replica",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "replica",
+        "service",
+        "internalTrafficPolicy"
+      ],
+      [
+        "replica",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "replica",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "replica",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "replica",
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "replica",
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "replica",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "replica",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "replica",
+        "service",
+        "type"
+      ],
+      [
+        "replica",
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "replica",
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "replica",
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "replica",
+        "shareProcessNamespace"
+      ],
+      [
+        "replica",
+        "sidecars"
+      ],
+      [
+        "replica",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "replica",
+        "tolerations"
+      ],
+      [
+        "replica",
+        "topologySpreadConstraints"
+      ],
+      [
+        "replica",
+        "updateStrategy"
+      ],
+      [
+        "secretAnnotations"
+      ],
+      [
+        "secretChecksumAnnotations"
+      ],
+      [
+        "sentinel",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "automateClusterRecovery"
+      ],
+      [
+        "sentinel",
+        "commonAnnotations"
+      ],
+      [
+        "sentinel",
+        "commonLabels"
+      ],
+      [
+        "sentinel",
+        "configuration"
+      ],
+      [
+        "sentinel",
+        "containerPorts",
+        "sentinel"
+      ],
+      [
+        "sentinel",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "sentinel",
+        "customLivenessProbe"
+      ],
+      [
+        "sentinel",
+        "customReadinessProbe"
+      ],
+      [
+        "sentinel",
+        "customStartupProbe"
+      ],
+      [
+        "sentinel",
+        "downAfterMilliseconds"
+      ],
+      [
+        "sentinel",
+        "enableServiceLinks"
+      ],
+      [
+        "sentinel",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "disableLoadBalancerIP"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerIPAnnotaion"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "redisPort"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "sentinelPort"
+      ],
+      [
+        "sentinel",
+        "externalAccess",
+        "service",
+        "type"
+      ],
+      [
+        "sentinel",
+        "externalMaster",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "externalMaster",
+        "host"
+      ],
+      [
+        "sentinel",
+        "externalMaster",
+        "port"
+      ],
+      [
+        "sentinel",
+        "extraEnvVars"
+      ],
+      [
+        "sentinel",
+        "extraEnvVarsCM"
+      ],
+      [
+        "sentinel",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "sentinel",
+        "extraPodSpec"
+      ],
+      [
+        "sentinel",
+        "extraVolumeMounts"
+      ],
+      [
+        "sentinel",
+        "extraVolumes"
+      ],
+      [
+        "sentinel",
+        "failoverTimeout"
+      ],
+      [
+        "sentinel",
+        "getMasterTimeout"
+      ],
+      [
+        "sentinel",
+        "image",
+        "debug"
+      ],
+      [
+        "sentinel",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sentinel",
+        "lifecycleHooks"
+      ],
+      [
+        "sentinel",
+        "masterService",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "masterSet"
+      ],
+      [
+        "sentinel",
+        "parallelSyncs"
+      ],
+      [
+        "sentinel",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "sentinel",
+        "persistence",
+        "medium"
+      ],
+      [
+        "sentinel",
+        "persistence",
+        "sizeLimit"
+      ],
+      [
+        "sentinel",
+        "preExecCmds"
+      ],
+      [
+        "sentinel",
+        "quorum"
+      ],
+      [
+        "sentinel",
+        "redisShutdownWaitFailover"
+      ],
+      [
+        "sentinel",
+        "replicaSyncCheck"
+      ],
+      [
+        "sentinel",
+        "resources"
+      ],
+      [
+        "sentinel",
+        "service",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "sentinel",
+        "service",
+        "createMaster"
+      ],
+      [
+        "sentinel",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "sentinel",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "sentinel",
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "sentinel",
+        "service",
+        "headless",
+        "extraPorts"
+      ],
+      [
+        "sentinel",
+        "service",
+        "loadBalancerClass"
+      ],
+      [
+        "sentinel",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "sentinel",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "sentinel",
+        "service",
+        "nodePorts",
+        "redis"
+      ],
+      [
+        "sentinel",
+        "service",
+        "nodePorts",
+        "sentinel"
+      ],
+      [
+        "sentinel",
+        "service",
+        "ports",
+        "redis"
+      ],
+      [
+        "sentinel",
+        "service",
+        "ports",
+        "sentinel"
+      ],
+      [
+        "sentinel",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "sentinel",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "sentinel",
+        "service",
+        "type"
+      ],
+      [
+        "sentinel",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "serviceBindings",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "command"
+      ],
+      [
+        "sysctl",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sysctl",
+        "mountHostSys"
+      ],
+      [
+        "sysctl",
+        "resources"
+      ],
+      [
+        "tls",
+        "authClients"
+      ],
+      [
+        "tls",
+        "dhParamsFilename"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "useExternalDNS",
+        "enabled"
+      ],
+      [
+        "useHostnames"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "readOnlyRootFilesystem"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "extraEnvVars"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "present_count": 344,
+    "varied_count": 4,
+    "varied_fraction": 0.011428571428571429,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-4khnwnfc/chart",
+  "seed": 0,
+  "attempts": 73,
+  "error": "Error: redis/templates/replicas/application.yaml:49:38\n  executing \"redis/templates/replicas/application.yaml\" at <include (print $.Template.BasePath \"/configmap.yaml\") .>:\n    error calling include:\nredis/templates/configmap.yaml:61:25\n  executing \"redis/templates/configmap.yaml\" at <.password>:\n    nil pointer evaluating interface {}.password\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "redis": {
+        "password": ""
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "configmapChecksumAnnotations": true,
+    "secretChecksumAnnotations": true,
+    "secretAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "useHostnames": true,
+    "nameResolutionThreshold": 5,
+    "nameResolutionTimeout": 5,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/redis",
+      "tag": "8.2.1-debian-12-r0",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "architecture": "replication",
+    "auth": {
+      "enabled": true,
+      "sentinel": true,
+      "password": "",
+      "existingSecret": "",
+      "existingSecretPasswordKey": "",
+      "usePasswordFiles": true,
+      "usePasswordFileFromSecret": true,
+      "acl": {
+        "enabled": true,
+        "users": [
+          null
+        ]
+      }
+    },
+    "commonConfiguration": "# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly yes\n# Disable RDB persistence, AOF persistence already enabled.\nsave \"\"",
+    "existingConfigmap": "",
+    "master": {
+      "count": 1,
+      "revisionHistoryLimit": 10,
+      "configuration": "",
+      "disableCommands": [
+        "FLUSHDB",
+        "FLUSHALL"
+      ],
+      "command": [],
+      "args": [],
+      "enableServiceLinks": true,
+      "preExecCmds": [],
+      "extraFlags": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "containerPorts": {
+        "redis": 6379
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 5,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 5,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 5,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        },
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        }
+      },
+      "kind": "StatefulSet",
+      "schedulerName": "",
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "minReadySeconds": 0,
+      "priorityClassName": "",
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "shareProcessNamespace": false,
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "dnsPolicy": "",
+      "dnsConfig": {},
+      "lifecycleHooks": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "persistence": {
+        "enabled": true,
+        "medium": "",
+        "sizeLimit": "",
+        "path": "/data",
+        "subPath": "",
+        "subPathExpr": "",
+        "storageClass": "",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "annotations": {},
+        "labels": {},
+        "selector": {},
+        "dataSource": {},
+        "existingClaim": ""
+      },
+      "persistentVolumeClaimRetentionPolicy": {
+        "enabled": false,
+        "whenScaled": "Retain",
+        "whenDeleted": "Retain"
+      },
+      "service": {
+        "type": "ClusterIP",
+        "portNames": {
+          "redis": "tcp-redis"
+        },
+        "ports": {
+          "redis": 6379
+        },
+        "nodePorts": {
+          "redis": ""
+        },
+        "externalTrafficPolicy": "Cluster",
+        "extraPorts": [],
+        "internalTrafficPolicy": "Cluster",
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerClass": "",
+        "loadBalancerSourceRanges": [],
+        "externalIPs": [],
+        "annotations": {},
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "terminationGracePeriodSeconds": 30,
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "extraPodSpec": {},
+      "annotations": {}
+    },
+    "replica": {
+      "kind": "StatefulSet",
+      "replicaCount": 3,
+      "revisionHistoryLimit": 10,
+      "configuration": "",
+      "disableCommands": [
+        "FLUSHDB",
+        "FLUSHALL"
+      ],
+      "command": [],
+      "args": [],
+      "enableServiceLinks": true,
+      "preExecCmds": [],
+      "extraFlags": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "externalMaster": {
+        "enabled": false,
+        "host": "",
+        "port": 6379
+      },
+      "containerPorts": {
+        "redis": 6379
+      },
+      "startupProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 22
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 5,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 5,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        },
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        }
+      },
+      "schedulerName": "",
+      "updateStrategy": {
+        "type": "RollingUpdate"
+      },
+      "minReadySeconds": 0,
+      "priorityClassName": "",
+      "podManagementPolicy": "",
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "shareProcessNamespace": false,
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "type": "",
+        "key": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "topologySpreadConstraints": [],
+      "dnsPolicy": "",
+      "dnsConfig": {},
+      "lifecycleHooks": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "persistence": {
+        "enabled": true,
+        "medium": "",
+        "sizeLimit": "",
+        "path": "/data",
+        "subPath": "",
+        "subPathExpr": "",
+        "storageClass": "",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "annotations": {},
+        "labels": {},
+        "selector": {},
+        "dataSource": {},
+        "existingClaim": ""
+      },
+      "persistentVolumeClaimRetentionPolicy": {
+        "enabled": false,
+        "whenScaled": "Retain",
+        "whenDeleted": "Retain"
+      },
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "redis": 6379
+        },
+        "nodePorts": {
+          "redis": ""
+        },
+        "externalTrafficPolicy": "Cluster",
+        "internalTrafficPolicy": "Cluster",
+        "extraPorts": [],
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerClass": "",
+        "loadBalancerSourceRanges": [],
+        "annotations": {},
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "terminationGracePeriodSeconds": 30,
+      "autoscaling": {
+        "enabled": false,
+        "minReplicas": 1,
+        "maxReplicas": 11,
+        "targetCPU": "",
+        "targetMemory": ""
+      },
+      "serviceAccount": {
+        "create": true,
+        "name": "",
+        "automountServiceAccountToken": false,
+        "annotations": {}
+      },
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "extraPodSpec": {},
+      "annotations": {}
+    },
+    "sentinel": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/redis-sentinel",
+        "tag": "8.2.1-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [],
+        "debug": false
+      },
+      "annotations": {},
+      "masterSet": "mymaster",
+      "quorum": 2,
+      "getMasterTimeout": 90,
+      "automateClusterRecovery": false,
+      "redisShutdownWaitFailover": true,
+      "downAfterMilliseconds": 60000,
+      "failoverTimeout": 180000,
+      "parallelSyncs": 1,
+      "replicaSyncCheck": false,
+      "configuration": "",
+      "command": [],
+      "args": [],
+      "enableServiceLinks": true,
+      "preExecCmds": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "externalMaster": {
+        "enabled": false,
+        "host": "",
+        "port": 6379
+      },
+      "containerPorts": {
+        "sentinel": 26379
+      },
+      "startupProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 22
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 6
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 20,
+        "periodSeconds": 5,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 6
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "persistence": {
+        "enabled": false,
+        "storageClass": "",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "100Mi",
+        "annotations": {},
+        "labels": {},
+        "selector": {},
+        "dataSource": {},
+        "medium": "",
+        "sizeLimit": ""
+      },
+      "persistentVolumeClaimRetentionPolicy": {
+        "enabled": false,
+        "whenScaled": "Retain",
+        "whenDeleted": "Retain"
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        },
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        }
+      },
+      "lifecycleHooks": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "redis": 6379,
+          "sentinel": 26379
+        },
+        "nodePorts": {
+          "redis": "",
+          "sentinel": ""
+        },
+        "externalTrafficPolicy": "Cluster",
+        "extraPorts": [],
+        "clusterIP": "",
+        "createMaster": false,
+        "loadBalancerIP": "",
+        "loadBalancerClass": "",
+        "loadBalancerSourceRanges": [],
+        "annotations": {},
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {},
+        "headless": {
+          "annotations": {},
+          "extraPorts": []
+        }
+      },
+      "masterService": {
+        "enabled": false,
+        "type": "ClusterIP",
+        "ports": {
+          "redis": 6379
+        },
+        "nodePorts": {
+          "redis": ""
+        },
+        "externalTrafficPolicy": "",
+        "extraPorts": [],
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerClass": "",
+        "loadBalancerSourceRanges": [],
+        "annotations": {},
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {}
+      },
+      "terminationGracePeriodSeconds": 30,
+      "extraPodSpec": {},
+      "externalAccess": {
+        "enabled": false,
+        "service": {
+          "loadBalancerIPAnnotaion": "",
+          "type": "LoadBalancer",
+          "redisPort": 6379,
+          "sentinelPort": 26379,
+          "loadBalancerIP": [],
+          "loadBalancerClass": "",
+          "loadBalancerSourceRanges": [],
+          "annotations": {}
+        }
+      }
+    },
+    "serviceBindings": {
+      "enabled": false
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {},
+      "metrics": {
+        "allowExternal": true,
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      }
+    },
+    "podSecurityPolicy": {
+      "create": false,
+      "enabled": false
+    },
+    "rbac": {
+      "create": false,
+      "rules": []
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    },
+    "pdb": {},
+    "tls": {
+      "enabled": false,
+      "authClients": true,
+      "autoGenerated": false,
+      "existingSecret": "",
+      "certificatesSecret": "",
+      "certFilename": "",
+      "certKeyFilename": "",
+      "certCAFilename": "",
+      "dhParamsFilename": ""
+    },
+    "metrics": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/redis-exporter",
+        "tag": "1.76.0-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "containerPorts": {
+        "http": 9121
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "successThreshold": 1,
+        "failureThreshold": 5
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 1,
+        "successThreshold": 1,
+        "failureThreshold": 3
+      },
+      "customStartupProbe": {},
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "command": [],
+      "redisTargetHost": "localhost",
+      "extraArgs": {},
+      "extraEnvVars": [],
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        },
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        }
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "resourcesPreset": "nano",
+      "resources": {},
+      "podLabels": {},
+      "podAnnotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "9121"
+      },
+      "service": {
+        "enabled": true,
+        "type": "ClusterIP",
+        "ports": {
+          "http": 9121
+        },
+        "externalTrafficPolicy": "Cluster",
+        "extraPorts": [],
+        "loadBalancerIP": "",
+        "loadBalancerClass": "",
+        "loadBalancerSourceRanges": [],
+        "annotations": {},
+        "clusterIP": ""
+      },
+      "serviceMonitor": {
+        "port": "http-metrics",
+        "enabled": false,
+        "namespace": "",
+        "tlsConfig": {},
+        "interval": "30s",
+        "scrapeTimeout": "",
+        "relabelings": [],
+        "relabellings": [],
+        "metricRelabelings": [],
+        "honorLabels": false,
+        "additionalLabels": {},
+        "podTargetLabels": [],
+        "sampleLimit": false,
+        "targetLimit": false,
+        "additionalEndpoints": []
+      },
+      "podMonitor": {
+        "port": "metrics",
+        "enabled": false,
+        "namespace": "",
+        "tlsConfig": {},
+        "interval": "30s",
+        "scrapeTimeout": "",
+        "relabelings": [],
+        "relabellings": [],
+        "metricRelabelings": [],
+        "honorLabels": false,
+        "additionalLabels": {},
+        "podTargetLabels": [],
+        "sampleLimit": false,
+        "targetLimit": false,
+        "additionalEndpoints": []
+      },
+      "prometheusRule": {
+        "enabled": false,
+        "namespace": "",
+        "additionalLabels": {},
+        "rules": []
+      }
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "containerSecurityContext": {
+        "seLinuxOptions": {},
+        "runAsUser": 0
+      },
+      "extraEnvVars": []
+    },
+    "kubectl": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/kubectl",
+        "tag": "1.33.4-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "command": [
+        "/opt/bitnami/scripts/kubectl-scripts/update-master-label.sh"
+      ],
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        },
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        }
+      },
+      "resources": {
+        "limits": {},
+        "requests": {}
+      }
+    },
+    "sysctl": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "command": [],
+      "mountHostSys": false,
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "useExternalDNS": {
+      "enabled": false,
+      "suffix": "",
+      "annotationKey": "external-dns.alpha.kubernetes.io/",
+      "additionalAnnotations": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 43,
+    "unique_bundles": 43,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 43
+  },
+  "phase": "$.auth.acl",
+  "kind": "value-path",
+  "path": [
+    "auth",
+    "acl"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/redis_1789323658/0000/paths/37081c129204c3c032e8"
+}

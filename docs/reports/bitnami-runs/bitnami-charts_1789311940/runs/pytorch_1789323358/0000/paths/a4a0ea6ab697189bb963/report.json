@@ -1,0 +1,868 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 87,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "architecture"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "cloneFilesFromGit",
+        "enabled"
+      ],
+      [
+        "cloneFilesFromGit",
+        "extraVolumeMounts"
+      ],
+      [
+        "cloneFilesFromGit",
+        "repository"
+      ],
+      [
+        "cloneFilesFromGit",
+        "revision"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "pytorch"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "git",
+        "pullPolicy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "pytorch"
+      ],
+      [
+        "service",
+        "ports",
+        "pytorch"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "worldSize"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "architecture"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "cloneFilesFromGit",
+        "enabled"
+      ],
+      [
+        "cloneFilesFromGit",
+        "extraVolumeMounts"
+      ],
+      [
+        "cloneFilesFromGit",
+        "repository"
+      ],
+      [
+        "cloneFilesFromGit",
+        "revision"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configMap"
+      ],
+      [
+        "containerPorts",
+        "pytorch"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "git",
+        "pullPolicy"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "mode"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "port"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "rts",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "securityContext",
+        "fsGroup"
+      ],
+      [
+        "securityContext",
+        "runAsUser"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePort"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "pytorch"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "ports",
+        "pytorch"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "worldSize"
+      ]
+    ],
+    "present_count": 79,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-25jgvfo2/chart",
+  "seed": 0,
+  "attempts": 67,
+  "error": "Error: YAML parse error on pytorch/templates/deployment.yaml: error converting YAML to JSON: yaml: line 32: did not find expected ',' or ']'\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "fullnameOverride": "",
+    "extraDeploy": [],
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/pytorch",
+      "tag": "2.8.0-debian-12-r2",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [
+        [
+          {}
+        ]
+      ]
+    },
+    "worldSize": 1,
+    "containerPorts": {
+      "pytorch": 49875
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 20,
+      "timeoutSeconds": 20,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5,
+      "timeoutSeconds": 20,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "startupProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5,
+      "timeoutSeconds": 20,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "resourcesPreset": "small",
+    "resources": {},
+    "entrypoint": {
+      "file": "",
+      "args": []
+    },
+    "architecture": "standalone",
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "command": [],
+    "args": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "existingConfigmap": "",
+    "cloneFilesFromGit": {
+      "enabled": false,
+      "repository": "",
+      "revision": "",
+      "extraVolumeMounts": []
+    },
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "podManagementPolicy": "OrderedReady",
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    },
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "pytorch": 49875
+      },
+      "nodePorts": {
+        "pytorch": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "headless": {
+        "annotations": {}
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "git": {
+      "registry": "docker.io",
+      "repository": "bitnami/git",
+      "tag": "2.51.0-debian-12-r0",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r50",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "persistence": {
+      "enabled": true,
+      "mountPath": "/bitnami/pytorch",
+      "subPath": "",
+      "storageClass": "",
+      "annotations": {},
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "existingClaim": "",
+      "selector": {},
+      "dataSource": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 50,
+    "unique_bundles": 18,
+    "duplicate_bundles": 32,
+    "validation_cache_hits": 32,
+    "validated_entries": 18
+  },
+  "phase": "$.image.pullSecrets",
+  "kind": "value-path",
+  "path": [
+    "image",
+    "pullSecrets"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/pytorch_1789323358/0000/paths/a4a0ea6ab697189bb963"
+}

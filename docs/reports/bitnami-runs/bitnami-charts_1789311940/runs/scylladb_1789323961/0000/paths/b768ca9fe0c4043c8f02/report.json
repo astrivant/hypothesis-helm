@@ -1,0 +1,1758 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 161,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "behavior"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "customRules"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetMemoryUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "cluster",
+        "datacenter"
+      ],
+      [
+        "cluster",
+        "enableUDF"
+      ],
+      [
+        "cluster",
+        "endpointSnitch"
+      ],
+      [
+        "cluster",
+        "name"
+      ],
+      [
+        "cluster",
+        "numTokens"
+      ],
+      [
+        "cluster",
+        "rack"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "api"
+      ],
+      [
+        "containerPorts",
+        "cql"
+      ],
+      [
+        "containerPorts",
+        "cqlShard"
+      ],
+      [
+        "containerPorts",
+        "intra"
+      ],
+      [
+        "containerPorts",
+        "jmx"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerPorts",
+        "tls"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "dbUser",
+        "existingSecret"
+      ],
+      [
+        "dbUser",
+        "forcePassword"
+      ],
+      [
+        "dbUser",
+        "password"
+      ],
+      [
+        "dbUser",
+        "user"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingConfiguration"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "initDBConfigMap"
+      ],
+      [
+        "initDBSecret"
+      ],
+      [
+        "jmxProxy",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "jmxProxy",
+        "customLivenessProbe"
+      ],
+      [
+        "jmxProxy",
+        "customReadinessProbe"
+      ],
+      [
+        "jmxProxy",
+        "customStartupProbe"
+      ],
+      [
+        "jmxProxy",
+        "enabled"
+      ],
+      [
+        "jmxProxy",
+        "extraContainerPorts"
+      ],
+      [
+        "jmxProxy",
+        "extraEnvVars"
+      ],
+      [
+        "jmxProxy",
+        "extraEnvVarsCM"
+      ],
+      [
+        "jmxProxy",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "jmxProxy",
+        "extraVolumeMounts"
+      ],
+      [
+        "jmxProxy",
+        "lifecycleHooks"
+      ],
+      [
+        "jmxProxy",
+        "resources"
+      ],
+      [
+        "jvm",
+        "extraOpts"
+      ],
+      [
+        "jvm",
+        "maxHeapSize"
+      ],
+      [
+        "jvm",
+        "newHeapSize"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "commitLog",
+        "mountPath"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "internal",
+        "annotations"
+      ],
+      [
+        "service",
+        "internal",
+        "enabled"
+      ],
+      [
+        "service",
+        "internal",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "cql"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "cqlShard"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "metrics"
+      ],
+      [
+        "service",
+        "ports",
+        "cql"
+      ],
+      [
+        "service",
+        "ports",
+        "cqlShard"
+      ],
+      [
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "statefulsetAnnotations"
+      ],
+      [
+        "statefulsetLabels"
+      ],
+      [
+        "sysctl",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sysctl",
+        "resources"
+      ],
+      [
+        "sysctl",
+        "sysctls"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "tls",
+        "clientEncryption"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "volumePermissions",
+        "securityContext",
+        "runAsUser"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "service",
+        "internal",
+        "annotations"
+      ],
+      [
+        "service",
+        "internal",
+        "enabled"
+      ],
+      [
+        "service",
+        "internal",
+        "extraPorts"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "behavior"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "customRules"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "maxReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "minReplicas"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetCPUUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "hpa",
+        "targetMemoryUtilizationPercentage"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "cluster",
+        "datacenter"
+      ],
+      [
+        "cluster",
+        "enableUDF"
+      ],
+      [
+        "cluster",
+        "endpointSnitch"
+      ],
+      [
+        "cluster",
+        "name"
+      ],
+      [
+        "cluster",
+        "numTokens"
+      ],
+      [
+        "cluster",
+        "rack"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "api"
+      ],
+      [
+        "containerPorts",
+        "cql"
+      ],
+      [
+        "containerPorts",
+        "cqlShard"
+      ],
+      [
+        "containerPorts",
+        "intra"
+      ],
+      [
+        "containerPorts",
+        "jmx"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerPorts",
+        "tls"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "dbUser",
+        "existingSecret"
+      ],
+      [
+        "dbUser",
+        "forcePassword"
+      ],
+      [
+        "dbUser",
+        "password"
+      ],
+      [
+        "dbUser",
+        "user"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingConfiguration"
+      ],
+      [
+        "extraContainerPorts"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "hostNetwork"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "initDBConfigMap"
+      ],
+      [
+        "initDBSecret"
+      ],
+      [
+        "jmxProxy",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "jmxProxy",
+        "customLivenessProbe"
+      ],
+      [
+        "jmxProxy",
+        "customReadinessProbe"
+      ],
+      [
+        "jmxProxy",
+        "customStartupProbe"
+      ],
+      [
+        "jmxProxy",
+        "enabled"
+      ],
+      [
+        "jmxProxy",
+        "extraContainerPorts"
+      ],
+      [
+        "jmxProxy",
+        "extraEnvVars"
+      ],
+      [
+        "jmxProxy",
+        "extraEnvVarsCM"
+      ],
+      [
+        "jmxProxy",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "jmxProxy",
+        "extraVolumeMounts"
+      ],
+      [
+        "jmxProxy",
+        "lifecycleHooks"
+      ],
+      [
+        "jmxProxy",
+        "resources"
+      ],
+      [
+        "jvm",
+        "extraOpts"
+      ],
+      [
+        "jvm",
+        "maxHeapSize"
+      ],
+      [
+        "jvm",
+        "newHeapSize"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "commitLog",
+        "mountPath"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "cql"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "cqlShard"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "metrics"
+      ],
+      [
+        "service",
+        "ports",
+        "cql"
+      ],
+      [
+        "service",
+        "ports",
+        "cqlShard"
+      ],
+      [
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "statefulsetAnnotations"
+      ],
+      [
+        "statefulsetLabels"
+      ],
+      [
+        "sysctl",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sysctl",
+        "resources"
+      ],
+      [
+        "sysctl",
+        "sysctls"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "tls",
+        "clientEncryption"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ],
+      [
+        "volumePermissions",
+        "securityContext",
+        "runAsUser"
+      ]
+    ],
+    "present_count": 161,
+    "varied_count": 3,
+    "varied_fraction": 0.018633540372670808,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-mu4w4aud/chart",
+  "seed": 0,
+  "attempts": 16,
+  "error": "Error: YAML parse error on scylladb/templates/individual-svc.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "apiVersions": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "kubeVersion": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/scylladb",
+      "tag": "2025.2.2-debian-12-r2",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "dbUser": {
+      "user": "cassandra",
+      "forcePassword": false,
+      "password": "",
+      "existingSecret": ""
+    },
+    "initDBConfigMap": "",
+    "initDBSecret": "",
+    "existingConfiguration": "",
+    "cluster": {
+      "name": "scylladb",
+      "seedCount": 1,
+      "numTokens": 256,
+      "datacenter": "dc1",
+      "rack": "rack1",
+      "endpointSnitch": "SimpleSnitch",
+      "extraSeeds": [],
+      "enableUDF": false
+    },
+    "jvm": {
+      "extraOpts": "",
+      "maxHeapSize": "",
+      "newHeapSize": ""
+    },
+    "command": [],
+    "args": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "replicaCount": 1,
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "nameResolutionThreshold": 5,
+    "nameResolutionTimeout": 5,
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podManagementPolicy": "OrderedReady",
+    "priorityClassName": "",
+    "podAnnotations": {},
+    "statefulsetLabels": {},
+    "statefulsetAnnotations": {},
+    "podLabels": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "topologySpreadConstraints": [],
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      },
+      "readOnlyRootFilesystem": true
+    },
+    "resourcesPreset": "large",
+    "resources": {},
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 100,
+      "periodSeconds": 30,
+      "timeoutSeconds": 30,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 60,
+      "periodSeconds": 10,
+      "timeoutSeconds": 30,
+      "successThreshold": 1,
+      "failureThreshold": 5
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 0,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "successThreshold": 1,
+      "failureThreshold": 60
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "lifecycleHooks": {},
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "initContainers": [],
+    "sidecars": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "hostNetwork": false,
+    "containerPorts": {
+      "intra": 7000,
+      "tls": 7001,
+      "jmx": 7199,
+      "cql": 9042,
+      "cqlShard": 19042,
+      "api": 10000,
+      "metrics": 9180
+    },
+    "extraContainerPorts": [],
+    "hostPorts": {
+      "intra": "",
+      "tls": "",
+      "jmx": "",
+      "cql": "",
+      "cqlShard": "",
+      "api": "",
+      "metrics": ""
+    },
+    "jmxProxy": {
+      "enabled": false,
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "command": [],
+      "args": [],
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 20,
+        "timeoutSeconds": 30,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 5,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "micro",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "lifecycleHooks": {},
+      "extraVolumeMounts": [],
+      "extraContainerPorts": []
+    },
+    "autoscaling": {
+      "vpa": {
+        "enabled": false,
+        "annotations": {},
+        "controlledResources": [],
+        "maxAllowed": {},
+        "minAllowed": {},
+        "updatePolicy": {
+          "updateMode": "Auto"
+        }
+      },
+      "hpa": {
+        "annotations": {},
+        "enabled": false,
+        "minReplicas": 1,
+        "maxReplicas": 3,
+        "targetCPUUtilizationPercentage": 75,
+        "targetMemoryUtilizationPercentage": "",
+        "customRules": [],
+        "behavior": {}
+      }
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "cql": 9042,
+        "cqlShard": 19042,
+        "metrics": 8080
+      },
+      "nodePorts": {
+        "cql": "",
+        "cqlShard": "",
+        "metrics": ""
+      },
+      "extraPorts": [],
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "clusterIP": "",
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "headless": {
+        "annotations": {}
+      },
+      "internal": {
+        "annotations": {
+          "": []
+        }
+      }
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "persistence": {
+      "enabled": true,
+      "existingClaim": "",
+      "storageClass": "",
+      "commitStorageClass": "",
+      "annotations": {},
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "mountPath": "/bitnami/scylladb",
+      "size": "8Gi",
+      "commitLog": {
+        "storageClass": "",
+        "annotations": {},
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "2Gi",
+        "mountPath": ""
+      }
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "nano",
+      "resources": {},
+      "securityContext": {
+        "seLinuxOptions": {},
+        "runAsUser": 0
+      }
+    },
+    "metrics": {
+      "enabled": false,
+      "podAnnotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "{{ .Values.containerPorts.metrics }}"
+      },
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "monitoring",
+        "interval": "",
+        "scrapeTimeout": "",
+        "selector": {},
+        "metricRelabelings": [],
+        "relabelings": [],
+        "honorLabels": false,
+        "jobLabel": "",
+        "labels": {}
+      }
+    },
+    "tls": {
+      "internodeEncryption": "none",
+      "clientEncryption": false,
+      "existingSecret": "",
+      "existingCASecret": "",
+      "certFilename": "tls.crt",
+      "certKeyFilename": "tls.key",
+      "certCAFilename": "",
+      "autoGenerated": {
+        "enabled": true,
+        "engine": "helm",
+        "certManager": {
+          "existingIssuer": "",
+          "existingIssuerKind": "",
+          "keySize": 2048,
+          "keyAlgorithm": "RSA",
+          "duration": "2160h",
+          "renewBefore": "360h"
+        }
+      }
+    },
+    "sysctl": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "sysctls": {
+        "fs.aio-max-nr": "30000000"
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 9,
+    "unique_bundles": 9,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 9
+  },
+  "phase": "$.service.internal",
+  "kind": "value-path",
+  "path": [
+    "service",
+    "internal"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/scylladb_1789323961/0000/paths/b768ca9fe0c4043c8f02"
+}

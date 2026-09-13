@@ -269,3 +269,26 @@
 [INFO] Render hashes (run-local): 100 observed, 99 unique, 1 duplicate bundles; 1 successful validations reused
 [INFO] Testing path $.server.nodeAffinityPreset.type (2/510)
 [INFO] Compiler input baseline: 230 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 99 successful validations reused
+[INFO] Testing path $.server.customLivenessProbe (3/510)
+[INFO] Compiler input baseline: 230 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 98 unique, 2 duplicate bundles; 2 successful validations reused
+[INFO] Testing path $.alertmanager.readinessProbe.periodSeconds (4/510)
+[INFO] Compiler input baseline: 230 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 99 unique, 1 duplicate bundles; 1 successful validations reused
+[INFO] Testing path $.alertmanager.pdb.maxUnavailable (5/510)
+[INFO] Compiler input baseline: 230 statically named fields
+/Users/emmadoyle/projects/personal/hypothesis-helm/.venv/lib/python3.13/site-packages/hypothesis/core.py:1072: HypothesisWarning: Generating overly large repr. This is an expensive operation, and with a length of 35 kB is unlikely to be useful. Use -Wignore to ignore the warning, or -Werror to get a traceback.
+  text_repr = repr_call(test, args, kwargs)
+[INFO] Render hashes (run-local): 24 observed, 21 unique, 3 duplicate bundles; 3 successful validations reused
+[INFO] Testing path $.server.readinessProbe (6/510)
+[INFO] Compiler input baseline: 230 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 67 unique, 33 duplicate bundles; 33 successful validations reused
+[INFO] Testing path $.alertmanager.ingress.extraHosts[*] (7/510)
+[INFO] Compiler input baseline: 230 statically named fields
+[INFO] Render hashes (run-local): 100 observed, 1 unique, 99 duplicate bundles; 96 successful validations reused
+[INFO] Testing path $.alertmanager.podManagementPolicy (8/510)
+[INFO] Compiler input baseline: 230 statically named fields
+[INFO] Execution stopped at the 28.6697s time limit; coverage is incomplete
+[INFO] Render hashes (run-local): 71 observed, 71 unique, 0 duplicate bundles; 0 successful validations reused
+[INFO] .: failed; testing 301.07s; dependency preparation 0.53s; 0 charts remain

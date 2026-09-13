@@ -1,0 +1,1815 @@
+{
+  "field_coverage": {
+    "lower_bound_fields": 165,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "caCerts",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "caCerts",
+        "enabled"
+      ],
+      [
+        "caCerts",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "caCerts",
+        "resources"
+      ],
+      [
+        "caCerts",
+        "secret"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "elastic"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraProperties"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "ldap",
+        "StartTLS"
+      ],
+      [
+        "ldap",
+        "authentication"
+      ],
+      [
+        "ldap",
+        "bindDn"
+      ],
+      [
+        "ldap",
+        "bindPassword"
+      ],
+      [
+        "ldap",
+        "contextFactoryClass"
+      ],
+      [
+        "ldap",
+        "followReferrals"
+      ],
+      [
+        "ldap",
+        "group",
+        "baseDn"
+      ],
+      [
+        "ldap",
+        "group",
+        "idAttribute"
+      ],
+      [
+        "ldap",
+        "group",
+        "request"
+      ],
+      [
+        "ldap",
+        "realm"
+      ],
+      [
+        "ldap",
+        "url"
+      ],
+      [
+        "ldap",
+        "user",
+        "baseDn"
+      ],
+      [
+        "ldap",
+        "user",
+        "emailAttribute"
+      ],
+      [
+        "ldap",
+        "user",
+        "realNameAttribute"
+      ],
+      [
+        "ldap",
+        "user",
+        "request"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "maxHeapSize"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "configuration"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "resources"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "minHeapSize"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "plugins",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "plugins",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "plugins",
+        "install"
+      ],
+      [
+        "plugins",
+        "netrcCreds"
+      ],
+      [
+        "plugins",
+        "noCheckCertificate"
+      ],
+      [
+        "plugins",
+        "resources"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "postgresql",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "provisioningFolder"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "elastic"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "elastic"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "smtpExistingSecret"
+      ],
+      [
+        "smtpHost"
+      ],
+      [
+        "smtpPassword"
+      ],
+      [
+        "smtpPort"
+      ],
+      [
+        "smtpProtocol"
+      ],
+      [
+        "smtpUser"
+      ],
+      [
+        "sonarAuthenticatorDowncase"
+      ],
+      [
+        "sonarSecurityRealm"
+      ],
+      [
+        "sonarqubeEmail"
+      ],
+      [
+        "sonarqubePassword"
+      ],
+      [
+        "sonarqubeSkipInstall"
+      ],
+      [
+        "sonarqubeUsername"
+      ],
+      [
+        "startTimeout"
+      ],
+      [
+        "sysctl",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sysctl",
+        "resources"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "smtpExistingSecret"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "caCerts",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "caCerts",
+        "enabled"
+      ],
+      [
+        "caCerts",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "caCerts",
+        "resources"
+      ],
+      [
+        "caCerts",
+        "secret"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "containerPorts",
+        "elastic"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "containerSecurityContext",
+        "runAsUser"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "existingSecret"
+      ],
+      [
+        "externalDatabase",
+        "password"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraProperties"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "labels"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "ldap",
+        "StartTLS"
+      ],
+      [
+        "ldap",
+        "authentication"
+      ],
+      [
+        "ldap",
+        "bindDn"
+      ],
+      [
+        "ldap",
+        "bindPassword"
+      ],
+      [
+        "ldap",
+        "contextFactoryClass"
+      ],
+      [
+        "ldap",
+        "followReferrals"
+      ],
+      [
+        "ldap",
+        "group",
+        "baseDn"
+      ],
+      [
+        "ldap",
+        "group",
+        "idAttribute"
+      ],
+      [
+        "ldap",
+        "group",
+        "request"
+      ],
+      [
+        "ldap",
+        "realm"
+      ],
+      [
+        "ldap",
+        "url"
+      ],
+      [
+        "ldap",
+        "user",
+        "baseDn"
+      ],
+      [
+        "ldap",
+        "user",
+        "emailAttribute"
+      ],
+      [
+        "ldap",
+        "user",
+        "realNameAttribute"
+      ],
+      [
+        "ldap",
+        "user",
+        "request"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "maxHeapSize"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "configuration"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "resources"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "service",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "jmx",
+        "service",
+        "ports",
+        "metrics"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "minHeapSize"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "plugins",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "plugins",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "plugins",
+        "install"
+      ],
+      [
+        "plugins",
+        "netrcCreds"
+      ],
+      [
+        "plugins",
+        "noCheckCertificate"
+      ],
+      [
+        "plugins",
+        "resources"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "podSecurityContext",
+        "fsGroup"
+      ],
+      [
+        "postgresql",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "provisioningFolder"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "clusterIP"
+      ],
+      [
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "service",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "elastic"
+      ],
+      [
+        "service",
+        "nodePorts",
+        "http"
+      ],
+      [
+        "service",
+        "ports",
+        "elastic"
+      ],
+      [
+        "service",
+        "ports",
+        "http"
+      ],
+      [
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "smtpHost"
+      ],
+      [
+        "smtpPassword"
+      ],
+      [
+        "smtpPort"
+      ],
+      [
+        "smtpProtocol"
+      ],
+      [
+        "smtpUser"
+      ],
+      [
+        "sonarAuthenticatorDowncase"
+      ],
+      [
+        "sonarSecurityRealm"
+      ],
+      [
+        "sonarqubeEmail"
+      ],
+      [
+        "sonarqubePassword"
+      ],
+      [
+        "sonarqubeSkipInstall"
+      ],
+      [
+        "sonarqubeUsername"
+      ],
+      [
+        "startTimeout"
+      ],
+      [
+        "sysctl",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "enabled"
+      ],
+      [
+        "sysctl",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "sysctl",
+        "resources"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "volumePermissions",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "volumePermissions",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "volumePermissions",
+        "resources"
+      ]
+    ],
+    "present_count": 165,
+    "varied_count": 1,
+    "varied_fraction": 0.006060606060606061,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-hs9ohuqn/chart",
+  "seed": 0,
+  "attempts": 36,
+  "error": "Error: YAML parse error on sonarqube/templates/deployment.yaml: error converting YAML to JSON: yaml: line 243: found an indentation indicator equal to 0\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "storageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/sonarqube",
+      "tag": "25.8.0-debian-12-r2",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "sonarqubeUsername": "user",
+    "sonarqubePassword": "",
+    "provisioningFolder": "/bitnami/sonarqube-provisioning",
+    "existingSecret": "",
+    "sonarqubeEmail": "user@example.com",
+    "minHeapSize": "1024m",
+    "maxHeapSize": "2048m",
+    "jvmOpts": "",
+    "jvmCeOpts": "",
+    "startTimeout": 300,
+    "extraProperties": [],
+    "sonarqubeSkipInstall": false,
+    "sonarSecurityRealm": "",
+    "sonarAuthenticatorDowncase": "",
+    "ldap": {
+      "url": "",
+      "bindDn": "",
+      "bindPassword": "",
+      "authentication": "simple",
+      "realm": "",
+      "contextFactoryClass": "com.sun.jndi.ldap.LdapCtxFactory",
+      "StartTLS": false,
+      "followReferrals": true,
+      "user": {
+        "baseDn": "",
+        "request": "(&(objectClass=inetOrgPerson)(uid={login}))",
+        "realNameAttribute": "cn",
+        "emailAttribute": "mail"
+      },
+      "group": {
+        "baseDn": "",
+        "request": "(&(objectClass=groupOfUniqueNames)(uniqueMember={dn}))",
+        "idAttribute": "cn"
+      }
+    },
+    "smtpHost": "",
+    "smtpPort": "",
+    "smtpUser": "",
+    "smtpPassword": "",
+    "smtpProtocol": "",
+    "smtpExistingSecret": ">0",
+    "command": [],
+    "args": [],
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "replicaCount": 1,
+    "containerPorts": {
+      "http": 9000,
+      "elastic": 9001
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 100,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 100,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 1,
+      "failureThreshold": 15,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "xlarge",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "readOnlyRootFilesystem": true,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "schedulerName": "",
+    "lifecycleHooks": {},
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "service": {
+      "type": "LoadBalancer",
+      "ports": {
+        "http": 80,
+        "elastic": 9001
+      },
+      "nodePorts": {
+        "http": "",
+        "elastic": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "ingressClassName": "",
+      "hostname": "sonarqube.local",
+      "path": "/",
+      "annotations": {},
+      "labels": {},
+      "tls": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "caCerts": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "secret": "ca-certs-secret",
+      "resourcesPreset": "none",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      }
+    },
+    "plugins": {
+      "install": [],
+      "netrcCreds": "",
+      "noCheckCertificate": true,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "none",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "readOnlyRootFilesystem": true,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      }
+    },
+    "persistence": {
+      "enabled": false,
+      "storageClass": "",
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "10Gi",
+      "dataSource": {},
+      "existingClaim": "",
+      "annotations": {}
+    },
+    "volumePermissions": {
+      "enabled": false,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "none",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 0
+      }
+    },
+    "sysctl": {
+      "enabled": true,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/os-shell",
+        "tag": "12-debian-12-r51",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "resourcesPreset": "none",
+      "resources": {},
+      "containerSecurityContext": {
+        "enabled": true,
+        "privileged": true,
+        "runAsUser": 0,
+        "seLinuxOptions": {}
+      }
+    },
+    "rbac": {
+      "create": false
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "automountServiceAccountToken": false,
+      "annotations": {}
+    },
+    "autoscaling": {
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 11,
+      "targetCPU": 50,
+      "targetMemory": 50
+    },
+    "metrics": {
+      "jmx": {
+        "enabled": false,
+        "image": {
+          "registry": "docker.io",
+          "repository": "bitnami/jmx-exporter",
+          "tag": "1.4.0-debian-12-r0",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": []
+        },
+        "containerPorts": {
+          "metrics": 10445
+        },
+        "resourcesPreset": "none",
+        "resources": {},
+        "livenessProbe": {
+          "enabled": true,
+          "initialDelaySeconds": 60,
+          "periodSeconds": 10,
+          "timeoutSeconds": 10,
+          "successThreshold": 1,
+          "failureThreshold": 3
+        },
+        "readinessProbe": {
+          "enabled": true,
+          "initialDelaySeconds": 30,
+          "periodSeconds": 10,
+          "timeoutSeconds": 10,
+          "successThreshold": 1,
+          "failureThreshold": 3
+        },
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "privileged": false,
+          "readOnlyRootFilesystem": true,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "whitelistObjectNames": [
+          "java.lang:*",
+          "SonarQube:*",
+          "Tomcat:*"
+        ],
+        "configuration": "jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:10443/jmxrmi\nlowercaseOutputName: true\nlowercaseOutputLabelNames: true\nssl: false\n{{- if .Values.metrics.jmx.whitelistObjectNames }}\nwhitelistObjectNames: [\"{{ join \"\\\",\\\"\" .Values.metrics.jmx.whitelistObjectNames }}\"]\n{{- end }}\nrules:\n- pattern: java.lang<type=(.+), name=(.+)><(.+)>(\\w+)\n  name: java_lang_$1_$4_$3_$2\n- pattern: java.lang<type=(.+), name=(.+)><>(\\w+)\n  name: java_lang_$1_$3_$2\n- pattern: java.lang<type=(.*)>\n- pattern: SonarQube<name=(.+)><>(\\w+)\n  name: sonarqube_$1_$2\n- pattern: Tomcat<type=(.+), name=(.+)><>(\\w+)\n  name: tomcat_$1_$3_$2",
+        "service": {
+          "ports": {
+            "metrics": 10443
+          },
+          "annotations": {
+            "prometheus.io/scrape": "true",
+            "prometheus.io/port": "{{ .Values.metrics.jmx.service.ports.metrics }}",
+            "prometheus.io/path": "/"
+          }
+        }
+      },
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "labels": {},
+        "jobLabel": "",
+        "interval": "",
+        "scrapeTimeout": "",
+        "metricRelabelings": [],
+        "relabelings": [],
+        "selector": {}
+      }
+    },
+    "postgresql": {
+      "enabled": true,
+      "nameOverride": "",
+      "auth": {
+        "existingSecret": "",
+        "password": "",
+        "username": "bn_sonarqube",
+        "database": "bitnami_sonarqube"
+      },
+      "primary": {
+        "service": {
+          "ports": {
+            "postgresql": 5432
+          }
+        },
+        "persistence": {
+          "enabled": true,
+          "existingClaim": "",
+          "storageClass": "",
+          "accessMode": "ReadWriteOnce",
+          "size": "8Gi"
+        }
+      }
+    },
+    "externalDatabase": {
+      "host": "",
+      "user": "postgres",
+      "password": "",
+      "existingSecret": "",
+      "database": "sonarqube",
+      "port": 5432
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 24,
+    "unique_bundles": 24,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 24
+  },
+  "phase": "$.smtpExistingSecret",
+  "kind": "value-path",
+  "path": [
+    "smtpExistingSecret"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789311940/runs/sonarqube_1789324263/0000/paths/5787f0eface5fec9a681"
+}
