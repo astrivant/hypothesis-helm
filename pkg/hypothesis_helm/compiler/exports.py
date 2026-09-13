@@ -22,7 +22,7 @@ def export_repository(
     files_list: Path | None = None,
 ) -> int:
     """
-    Export each chart independently and optionally record its YAML path for staging.
+    Export each chart independently and optionally record its YAML and proof paths for staging.
 
     Args:
         source (Path): Local repository or chart directory.
@@ -30,7 +30,7 @@ def export_repository(
         helm (str): Helm executable.
         timeout (float): Per-command timeout in seconds.
         budget (float): Verification budget per chart in seconds.
-        files_list (Path | None): NUL-delimited absolute YAML paths for safe Git pathspec input.
+        files_list (Path | None): NUL-delimited absolute YAML and proof paths for safe Git pathspec input.
 
     Returns:
         int: Zero when every application chart exports successfully, one otherwise.
@@ -50,6 +50,7 @@ def export_repository(
         raise ValueError(f"No Chart.yaml files found under {source}")
     exported: list[Path] = []
     failed = False
+    exported_charts = 0
     for record in records:
         if record["status"] != "pending":
             failed = True
@@ -64,12 +65,13 @@ def export_repository(
                 raise ValueError("Minimal-values destination must not be a symbolic link")
             result = export_minimal(load_input_chart(chart_path), target, helm=helm, timeout=timeout, budget=budget)
             record.update(status="exported", export=result)
-            exported.append(target.resolve())
+            exported.extend((target.resolve(), Path(str(result["proof"])).resolve()))
+            exported_charts += 1
         except Exception as exc:
             record.update(status="failed", error=str(exc))
             failed = True
     if files_list is not None:
         files_list.parent.mkdir(parents=True, exist_ok=True)
         files_list.write_bytes(b"".join(str(path).encode() + b"\0" for path in exported))
-    print(json.dumps({"charts": records, "exported": len(exported)}, indent=2))
+    print(json.dumps({"charts": records, "exported": exported_charts}, indent=2))
     return int(failed)

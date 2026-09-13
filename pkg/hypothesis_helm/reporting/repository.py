@@ -17,6 +17,50 @@ from hypothesis_helm.schemas.contracts import mapping, sequence
 HELM_DEBUG_HINT = re.compile(r"(?m)^[ \t]*Use --debug flag to render out invalid YAML[ \t]*\r?$\n?")
 
 
+def wrap_markdown(content: str) -> str:
+    """
+    Wrap report prose to 140 columns without changing code blocks or link targets.
+
+    Headings, tables, indented code, and indivisible tokens may exceed the limit.
+
+    Args:
+        content (str): Generated Markdown report.
+
+    Returns:
+        str: Wrapped Markdown with a final newline.
+    """
+    lines: list[str] = []
+    fence = ""
+    for line in content.splitlines():
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
+        if fence:
+            lines.append(line)
+            if re.fullmatch(r" {0,3}" + re.escape(fence[0]) + "{" + str(len(fence)) + r",}\s*", line):
+                fence = ""
+            continue
+        if marker:
+            fence = marker[1]
+        if marker or len(line) <= 140 or line.startswith(("#", "|", "    ", "\t")):
+            lines.append(line)
+            continue
+        bullet = re.match(r"^(\s*(?:[-+*]|\d+[.)])\s+)", line)
+        prefix = bullet[0] if bullet else ""
+        continuation = " " * len(prefix)
+        # Keep inline code and complete links together, including paths with spaces.
+        tokens = re.findall(r"(?:!?\[[^\]]*\]\((?:<[^>]*>|[^)\s]*)\)|`+[^`]*`+|\S)+", line[len(prefix) :])
+        current = prefix
+        width = 138 if line.endswith("  ") else 140
+        for token in tokens:
+            separator = " " if current.strip() and current != prefix else ""
+            if len(current) + len(separator) + len(token) > width and current.strip() and current != prefix:
+                lines.append(current)
+                current = continuation
+                separator = ""
+            current += separator + token
+        lines.append(current + ("  " if line.endswith("  ") else ""))
+    return "\n".join(lines) + "\n"
+
+
 def display_error(error: object) -> str:
     """
     Present useful diagnostics while leaving raw errors in the JSON artifacts.
@@ -60,7 +104,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         "",
         f"Directory: {report['directory']}",
         f"Started (Unix epoch): {report['started_epoch']}",
-        f"Elapsed: {float(str(report['elapsed_seconds'])):.2f} seconds",
+        f"Elapsed (wall clock): {float(str(report['elapsed_seconds'])):.2f} seconds",
         f"Charts discovered: {report['charts_discovered']}",
         f"Scan status: {report.get('scan_status', 'not recorded')}",
         f"Discovery complete: {report.get('discovery_complete', 'not recorded')}",
@@ -82,6 +126,11 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         "```",
         "",
     ]
+    if "testing_seconds" in report:
+        lines[5:5] = [
+            f"Chart testing: {float(str(report['testing_seconds'])):.2f} seconds",
+            f"Dependency preparation: {float(str(report['dependency_preparation_seconds'])):.2f} seconds (excluded from testing budgets)",
+        ]
     summary = report.get("summary", [])
     if isinstance(summary, list):
         lines[2:2] = [str(line) for line in summary] + [""]
@@ -125,6 +174,15 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         assert isinstance(chart, dict)
         title = str(chart["chart"]).replace("\n", " ")
         lines.extend([f"### {title}", ""])
+        package = chart.get("package")
+        if isinstance(package, dict):
+            lines.extend(
+                [
+                    f"Package: {package['reference']} | Version: {package['version']}",
+                    f"Package SHA-256: `{package['sha256']}`",
+                    "",
+                ]
+            )
         remaining = chart.get("remaining_iterations")
         artifacts = str(chart.get("artifacts", "none"))
         lines.extend(
@@ -136,6 +194,15 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
                 "",
             ]
         )
+        if "testing_seconds" in chart:
+            lines.extend(
+                [
+                    f"Chart testing: {float(str(chart['testing_seconds'])):.2f} seconds | "
+                    f"Dependency preparation: {float(str(chart.get('dependency_preparation_seconds', 0))):.2f} seconds | "
+                    f"Wall clock: {float(str(chart.get('elapsed_seconds', 0))):.2f} seconds",
+                    "",
+                ]
+            )
         filtering = chart.get("filtering")
         if isinstance(filtering, dict) and filtering.get("requested"):
             lines.extend(
@@ -165,6 +232,9 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         if isinstance(dumped, dict):
             destination = str(dumped["yaml"])
             lines.extend([f"Minimal values: [{destination}](<{destination}>)", ""])
+            if dumped.get("proof"):
+                proof = str(dumped["proof"])
+                lines.extend([f"Verification record: [{proof}](<{proof}>)", ""])
         if isinstance(phases, list):
             for phase in phases:
                 if isinstance(phase, dict):
@@ -197,7 +267,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
             content = json.dumps(values, indent=2, ensure_ascii=True)
             fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
             lines.extend([f"Reproducing values ({phase_name}):", "", f"{fence}json", content, fence, ""])
-    markdown.write_text("\n".join(lines) + "\n")
+    markdown.write_text(wrap_markdown("\n".join(lines)))
     canvas = Canvas(str(pdf), pagesize=(612, 792))
     canvas.setTitle(str(report.get("title", "Helm chart scan")))
     y = 750

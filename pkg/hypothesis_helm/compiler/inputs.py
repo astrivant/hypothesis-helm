@@ -7,6 +7,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import tempfile
 import time
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -192,7 +193,7 @@ class InputInventory:
         verification: dict[str, object] | None = None,
     ) -> dict[str, object]:
         """
-        Export baseline values, a second YAML document of missing fields, and full JSON evidence.
+        Export example values, missing-field metadata, and a stable JSON proof record.
 
         Args:
             chart (Chart): Original values and authoritative validation schema.
@@ -235,19 +236,9 @@ class InputInventory:
             "missing_values": inventory["missing_values"],
             "schema_fields_without_values": inventory["schema_fields_without_values"],
         }
-        if verification is not None:
-            missing["verification"] = {
-                key: value for key, value in verification.items() if key not in {"elapsed_seconds", "budget_seconds", "candidates_checked"}
-            }
         content = (
-            (
-                "# Render-verified input baseline; missing fields follow in document 2.\n"
-                if verification is not None and verification.get("verified")
-                else "# Configuration example; validation status follows in document 2.\n"
-                if verification is not None
-                else "# Conservative input baseline; missing fields follow in document 2.\n"
-            )
-            + "# See the adjacent .inventory.json for full evidence and limits.\n"
+            "# Minimal input example; missing fields follow in document 2.\n"
+            + "# See the companion .proof for verification evidence and limits.\n"
             + yamlio.dump(values, explicit_null=verification is not None)
             + "---\n"
             + "# Missing input fields: diagnostic metadata, not chart values.\n"
@@ -259,9 +250,14 @@ class InputInventory:
             target = directory / f"values-minimal-{checksum}-{epoch}.yaml"
         if target.resolve() in {(chart.path / name).resolve() for name in ("values.yaml", "values.schema.json", "Chart.yaml")}:
             raise ValueError("Minimal-values output must not overwrite source chart inputs")
+        proof = target.with_suffix(".proof")
+        if target.resolve() == proof.resolve():
+            raise ValueError("Values filename must differ from its .proof companion")
+        if target.is_symlink() or proof.is_symlink():
+            raise ValueError("Minimal-values outputs must not overwrite symbolic links")
         result = {
             "yaml": str(target),
-            "inventory": str(target.with_suffix(".inventory.json")),
+            "proof": str(proof),
             "sha256": checksum,
             "exported_epoch": epoch,
             "values_document": 1,
@@ -279,9 +275,20 @@ class InputInventory:
                 if verification.get("verified")
                 else "Configuration example; validation did not pass"
             )
+        # Only stable evidence belongs in a committed proof. Runtime timing stays in CLI reports.
+        evidence = {key: value for key, value in result.items() if key not in {"yaml", "proof", "exported_epoch", "verification"}}
+        evidence.update(format_version=1, yaml=target.name)
+        if verification is not None:
+            evidence["verification"] = {key: value for key, value in verification.items() if key != "elapsed_seconds"}
+        else:
+            evidence["verification"] = {"verified": False, "checks": [], "reason": "Static inventory only; verification not run"}
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(content)
-        target.with_suffix(".inventory.json").write_text(json.dumps(result, indent=2) + "\n")
+        with tempfile.TemporaryDirectory(prefix=".minimal-values-", dir=target.parent) as temporary:
+            staged = Path(temporary)
+            (staged / "values").write_bytes(content)
+            (staged / "proof").write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
+            (staged / "values").replace(target)
+            (staged / "proof").replace(proof)
         return result
 
 

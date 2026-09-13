@@ -15,7 +15,7 @@ from contextlib import ExitStack
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from attrs import define
+from attrs import define, field
 
 LOGGER = logging.getLogger(__name__)
 
@@ -96,10 +96,13 @@ class RepositorySource:
         location (str): Original repository URL or resolved local directory.
         root (Path): Local directory used for chart discovery.
         name (str): Basename used for retained reports and artifacts.
-        remote (bool): Whether this source required a Git checkout.
+        remote (bool): Whether this source required a Git checkout or Helm download.
         revision (str | None): Resolved remote commit, when checkout succeeded.
         status (str): Ready, failed, timed out, or interrupted checkout.
         diagnostic (str): Checkout output or failure details retained in the report.
+        kind (str): Git, local, or Helm package source.
+        packages (list[dict[str, object]]): Requested Helm packages and download outcomes.
+        inventory_complete (bool): Whether Helm finished enumerating the requested source.
     """
 
     location: str
@@ -109,6 +112,9 @@ class RepositorySource:
     revision: str | None = None
     status: str = "ready"
     diagnostic: str = ""
+    kind: str = "git"
+    packages: list[dict[str, object]] = field(factory=list)
+    inventory_complete: bool = False
 
     @classmethod
     def prepare(cls, location: str, scope: ExitStack, timeout: float, deadline: float | None) -> RepositorySource:
@@ -127,7 +133,7 @@ class RepositorySource:
         name = remote_name(location)
         if name is None:
             root = Path(location).expanduser().resolve()
-            return cls(str(root), root, root.name, False)
+            return cls(str(root), root, root.name, False, kind="local")
         temporary = scope.enter_context(tempfile.TemporaryDirectory(prefix="hypothesis-helm-repo-"))
         source = cls(location, Path(temporary) / name, name, True)
         LOGGER.info("Cloning repository: %s", location)

@@ -16,6 +16,7 @@ COMMANDS = {
     "expansion": "benchmark_expansion",
     "topology-depth": "benchmark_topology_depth",
     "nesting": "benchmark_nesting",
+    "topology": "benchmark_topology",
 }
 
 

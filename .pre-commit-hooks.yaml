@@ -8,7 +8,7 @@
   files: (^|/)(Chart\.yaml|values[^/]*\.ya?ml|values\.schema\.json|templates/.*|charts/.*)$
 - id: helm-hypothesis-minimal-values
   name: Export minimal example Helm values
-  description: Write values-minimal.yaml examples and record their validation status beside each chart.
+  description: Write values-minimal.yaml examples and values-minimal.proof verification records beside each chart.
   entry: helm hypothesis export-minimal-values
   language: system
   pass_filenames: false

@@ -20,6 +20,7 @@ from pathlib import Path
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.prioritized import check_prioritized
+from hypothesis_helm.charts.registry import prepare_helm_source
 from hypothesis_helm.charts.repository import RepositorySource
 from hypothesis_helm.charts.runner import Chart, check_chart, render
 from hypothesis_helm.compiler.graph import export_graph
@@ -212,7 +213,19 @@ def scan(args: argparse.Namespace) -> int:
     scan_started = time.monotonic()
     args.scan_deadline = scan_started + args.scan_timeout if args.scan_timeout is not None else None
     with ExitStack() as scope:
-        source = RepositorySource.prepare(str(args.directory), scope, args.clone_timeout, args.scan_deadline)
+        source = prepare_helm_source(
+            str(args.directory),
+            scope,
+            helm=args.helm,
+            timeout=args.clone_timeout,
+            deadline=args.scan_deadline,
+            force=args.helm_repository,
+            version=args.chart_version,
+        )
+        if source is None:
+            if args.chart_version is not None:
+                raise ValueError("--chart-version requires a Helm repository or OCI chart source")
+            source = RepositorySource.prepare(str(args.directory), scope, args.clone_timeout, args.scan_deadline)
         return scan_checkout(args, source, started, scan_started)
 
 
@@ -231,8 +244,17 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
     """
     root = source.root
     records = discover_charts(root, deadline=args.scan_deadline) if source.status == "ready" else []
+    if source.kind == "helm":
+        for package in source.packages:
+            matches = [record for record in records if str(record["chart"]).split("/")[0] == package["chart"]]
+            for record in matches:
+                record["package"] = package
+            if not matches:
+                records.append({**package, "status": "pending" if package["status"] == "downloaded" else package["status"]})
     discovery_complete = source.status == "ready" and (args.scan_deadline is None or time.monotonic() < args.scan_deadline)
-    timed_out = source.status in {"clone-timeout", "scan-timeout"} or (source.status == "ready" and not discovery_complete)
+    timed_out = source.status in {"clone-timeout", "source-timeout", "scan-timeout"} or (
+        source.status == "ready" and not discovery_complete
+    )
     output = args.artifact_dir.resolve() / f"{source.name}_{int(started)}"
     output.mkdir(parents=True, exist_ok=True)
     if source.remote:
@@ -240,6 +262,8 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
     interrupted = source.status == "interrupted"
     failed_early = False
     for index, record in enumerate(records):
+        if source.status != "ready":
+            break
         if args.scan_deadline is not None and time.monotonic() >= args.scan_deadline:
             timed_out = True
             break
@@ -284,12 +308,27 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
                         str(selected.relative_to(root)) if source.remote and selected.is_relative_to(root) else str(selected)
                     )
                     if args.build_dependencies:
-                        built = subprocess.run(
-                            [args.helm, "dependency", "build", str(copy)],
-                            capture_output=True,
-                            text=True,
-                            timeout=args.timeout,
-                        )
+                        # Suspend our scan alarm; dependency preparation has its own command timeout.
+                        scope.close()
+                        LOGGER.info("Preparing dependencies for %s (excluded from testing budgets)", record["chart"])
+                        preparation_started = time.monotonic()
+                        try:
+                            built = subprocess.run(
+                                [args.helm, "dependency", "build", str(copy)],
+                                capture_output=True,
+                                text=True,
+                                timeout=args.timeout,
+                            )
+                        finally:
+                            preparation_seconds = time.monotonic() - preparation_started
+                            record["dependency_preparation_seconds"] = preparation_seconds
+                            if args.scan_deadline is not None:
+                                args.scan_deadline += preparation_seconds
+                        if args.scan_deadline is not None:
+                            remaining = args.scan_deadline - time.monotonic()
+                            if remaining <= 0:
+                                raise TimeLimitReached()
+                            scope.enter_context(execution_timer(remaining))
                         artifacts.mkdir(parents=True, exist_ok=True)
                         (artifacts / "dependencies.txt").write_text(built.stdout + built.stderr)
                         if built.returncode:
@@ -340,7 +379,11 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
                             helm=args.helm,
                             timeout=args.timeout,
                         )
-                    result = exercise_chart(copy, args, artifacts)
+                    testing_started = time.monotonic()
+                    try:
+                        result = exercise_chart(copy, args, artifacts)
+                    finally:
+                        record["testing_seconds"] = time.monotonic() - testing_started
                     result.pop("chart", None)
                     record.update(result)
                     record["error_diagnostics"] = chart_errors(record, copy)
@@ -363,9 +406,11 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
                 if record["status"] in {"time-limit", "timeout"}:
                     record.update(status="scan-timeout", error="Total scan deadline reached")
             LOGGER.info(
-                "%s: %s; %d charts remain",
+                "%s: %s; testing %.2fs; dependency preparation %.2fs; %d charts remain",
                 record["chart"],
                 record["status"],
+                record.get("testing_seconds", 0.0),
+                record.get("dependency_preparation_seconds", 0.0),
                 len(records) - index - 1,
             )
         if args.fail and record["status"] in {"baseline-failed", "failed", "error"}:
@@ -373,10 +418,14 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
             LOGGER.info("Stopping scan after failure in %s (--fail)", record["chart"])
             break
     for record in records:
+        record.setdefault("dependency_preparation_seconds", 0.0)
+        record.setdefault("testing_seconds", 0.0)
         if failed_early and record["status"] == "pending":
             record["error"] = "Not started: --fail stopped the scan after a chart failure"
         if timed_out and record["status"] == "pending":
             record["error"] = "Not started: total scan deadline reached"
+        if source.status != "ready" and record["status"] == "pending":
+            record["error"] = "Not started: source preparation did not complete"
         record.setdefault(
             "filtering",
             {
@@ -394,6 +443,8 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         "directory": source.location,
         "started_epoch": int(started),
         "elapsed_seconds": time.monotonic() - scan_started,
+        "dependency_preparation_seconds": sum(float(str(record["dependency_preparation_seconds"])) for record in records),
+        "testing_seconds": sum(float(str(record["testing_seconds"])) for record in records),
         "scan_status": source.status
         if source.status != "ready"
         else "interrupted"
@@ -415,11 +466,13 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
             "permutations": args.permutations,
             "chart_timeout_seconds": args.chart_timeout,
             "scan_timeout_seconds": args.scan_timeout,
+            "scan_timeout_excludes_dependency_preparation": True,
             "helm": args.helm,
             "seed": args.seed,
             "build_dependencies": args.build_dependencies,
             "values": str(args.values),
             "clone_timeout_seconds": args.clone_timeout,
+            "chart_version": args.chart_version,
         },
     }
     if source.remote:
@@ -435,6 +488,20 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
                 "Repository checkout did not complete; chart discovery was not performed.",
                 source.diagnostic,
             ]
+        if source.kind == "helm":
+            report["source"] = {
+                "url": source.location,
+                "kind": "helm",
+                "preparation_status": source.status,
+                "inventory_complete": source.inventory_complete,
+                "packages": source.packages,
+            }
+            report["summary"] = [
+                "Helm packages: latest stable release per chart unless --chart-version selects another version.",
+                "Package versions and SHA-256 checksums are recorded in the JSON report.",
+            ]
+            if source.status != "ready":
+                report["summary"] = ["Helm source preparation did not complete; available results are retained.", source.diagnostic]
     deduplicate_errors(report)
     (output / "scan.json").write_text(json.dumps(report, indent=2) + "\n")
     if args.report is not None:
@@ -445,7 +512,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         return 130
     if timed_out:
         return 124
-    if source.status == "clone-failed":
+    if source.status in {"clone-failed", "source-failed"}:
         return 1
     if len(records) == 1 and records[0]["status"] == "missing-values":
         return 1

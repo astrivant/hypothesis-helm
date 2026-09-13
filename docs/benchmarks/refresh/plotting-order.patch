@@ -1,0 +1,70 @@
+--- a/pkg/hypothesis_helm/benchmarking/benchmark_topology.py
++++ b/pkg/hypothesis_helm/benchmarking/benchmark_topology.py
+@@ -15,7 +15,13 @@
+ 
+ 
+ class GraphNode(TypedDict):
+-    """Identify one compiler graph vertex."""
++    """
++    Identify one compiler graph vertex.
++
++    Attributes:
++        id (str): Stable vertex identity.
++        kind (str): Compiler vertex category.
++    """
+ 
+     id: str
+     kind: str
+@@ -25,7 +31,16 @@
+ 
+ 
+ class Graph(TypedDict):
+-    """Describe the exported graph fields used by the visualization."""
++    """
++    Describe the exported graph fields used by the visualization.
++
++    Attributes:
++        nodes (list[GraphNode]): Complete exported vertices.
++        edges (list[GraphEdge]): Directed references, including parallel edges.
++        baseline (dict[str, object]): Baseline render observation.
++        unresolved (NotRequired[list[dict[str, object]]]): Unresolved access evidence.
++        complete_influence_map_proven (NotRequired[bool]): Whether completeness was established.
++    """
+ 
+     nodes: list[GraphNode]
+     edges: list[GraphEdge]
+@@ -49,7 +64,7 @@
+     Compute graph invariants and a deterministic longest-path layered layout.
+ 
+     Args:
+-        graph (dict): Exported compiler nodes and directed edges, including parallel edges.
++        graph (Graph): Exported compiler nodes and directed edges, including parallel edges.
+ 
+     Returns:
+         tuple[dict[str, object], dict[str, tuple[float, float]]]: Metrics and positions keyed by original node IDs.
+@@ -105,7 +120,9 @@
+         layer = [identifier for identifier in nodes if rank[identifier] == level]
+         layer.sort(
+             key=lambda identifier: (
+-                sum(positions[parent][1] for parent in incoming[identifier]) / len(incoming[identifier]) if incoming[identifier] else 0,
++                sum(positions[parent][1] for parent in sorted(incoming[identifier])) / len(incoming[identifier])
++                if incoming[identifier]
++                else 0,
+                 identifier,
+             )
+         )
+@@ -141,12 +158,12 @@
+     Save all vertices and edges as PNG/SVG, with graph invariants and layout coordinates.
+ 
+     Args:
+-        graph (dict): Compiler dependency graph; no sampled or inferred edges are added.
++        graph (Graph): Compiler dependency graph; no sampled or inferred edges are added.
+         output (Path): Destination for figures, mathematical metrics, and positions.
+         title (str): Chart identity shown above the plot.
+ 
+     Returns:
+-        dict: Verified graph invariants and baseline observation status.
++        dict[str, object]: Verified graph invariants and baseline observation status.
+     """
+     import numpy as np
+     from matplotlib import pyplot as plt

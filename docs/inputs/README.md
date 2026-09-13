@@ -42,7 +42,8 @@ Generated path suites record the inventory and planned known fields in
 `--export-minimal-values [FILENAME]` is available on `audit`, `generate`, `test`,
 and `scan`. The default filename is `values-minimal-<checksum>-<epoch>.yaml`:
 `checksum` is the full SHA-256 of the exported YAML bytes, and `epoch` is the Unix
-export time in seconds. Both are recorded in the adjacent inventory file.
+export time in seconds. The checksum is recorded in the companion proof; the
+export time is included in the CLI report.
 
 Single-chart commands write to the current working directory; an optional filename
 or path overrides the destination. Scans default to each chart's artifact directory.
@@ -56,8 +57,8 @@ document when supplying values to Helm; the second is diagnostic metadata. The
 filename checksum covers both documents. Missing-field metadata describes the
 original source values, before any typed gaps are filled in the example.
 
-An adjacent `.inventory.json` retains the full lower-bound field list, source
-locations, and reasons for retained values. `audit` also works without a values schema.
+An adjacent `.proof` file replaces the former `.inventory.json` sidecar. It retains
+the full lower-bound field list, source locations, and reasons for retained values. `audit` also works without a values schema.
 During scans, the selected
 `--values` file supplies the original baseline being inspected.
 
@@ -73,7 +74,7 @@ Kubeconform validation also applies. If the example passes, the existing bounded
 reduction removes unnecessary entries while keeping valid, nonempty output.
 
 If validation fails, **the illustrative YAML is still exported**, with
-`verified: false` and the error in document 2 and the JSON sidecar. For example,
+`verified: false` and the error in the `.proof` file. For example,
 an integer without a supplied value or declared default gets `0`, even when a
 schema requires at least `1`; validation flags that mismatch for the engineer.
 This file demonstrates configuration and is not a deployment certificate.
@@ -82,8 +83,26 @@ This file demonstrates configuration and is not a deployment certificate.
 verified reduction establishes deletion-minimality under the observed checks,
 not a global minimum over every value assignment or resource configuration.
 A timeout preserves the last verified candidate, or the deterministic example
-if verification never completed. Volatile timing statistics stay in JSON so
-repeated completed YAML exports remain stable. Original chart inputs are untouched.
+if verification never completed. Elapsed time stays in the CLI/run report so
+repeated completed YAML and proof exports remain stable. Original chart inputs are untouched.
+
+## Verification record
+
+`values-minimal.yaml` has a companion **`values-minimal.proof`** containing JSON.
+A custom YAML basename produces a matching `.proof` basename. The proof records:
+
+- The exported YAML's SHA-256 checksum, covering both YAML documents.
+- Validation success or failure, completed checks, and validation errors.
+- The search budget, number of candidates checked, and whether reduction completed.
+- Deletion-minimality and explicit limits on global minimality and render equivalence.
+- The full input-field inventory and source references.
+
+Verification metadata lives in the proof; missing-field metadata remains after
+`---` in the YAML. The proof is an evidence record, not an assertion that every
+export is valid or globally minimal. It uses a versioned JSON format and is
+published after the YAML, with the checksum binding it to those exact YAML bytes.
+Export timestamps and elapsed time remain in the CLI/run report, outside the
+committed proof. Pre-commit and optional CI commit-back keep both files together.
 
 ## Export beside every chart
 
@@ -115,7 +134,36 @@ observed baseline. The graph does not claim exact per-field causality or complet
 output-space coverage. It records paths and types rather than manifest values.
 If the baseline cannot render, static evidence is still exported with output
 observation marked unavailable. Default names are
-`topological-graph-<checksum>-<epoch>.json`; scans keep each chart’s graph separate.
+`topological-graph-<checksum>-<epoch>.json`; scans keep each chart's graph separate.
+
+### Render the mathematical graph
+
+Install `hypothesis-helm[benchmarking]`, then render the exported graph with Matplotlib:
+
+```sh
+hypothesis-helm-benchmark topology --graph ./review/topology.json \
+  --output ./review/topology --title "My chart"
+```
+
+This writes `topology.png`, `topology.svg`, `metrics.json`, and `positions.csv`.
+The figure represents a directed multigraph: every compiler vertex and edge is
+retained, including parallel references. Vertex kinds distinguish values,
+conditions, opaque control flow, templates, manifests, and manifest fields.
+The JSON/DOT export retains their identities and edge types; the coordinate CSV
+maps every vertex to the drawing.
+
+Horizontal rank is the longest directed dependency path from a source. Vertical
+placement is a deterministic layout, not an output-distance measurement or PCA.
+Reported graph invariants include degrees, weak components, isolates, and longest
+dependency-chain length. The latter is not template nesting depth. A cycle is
+reported as an error rather than silently forced into an acyclic layout.
+
+These are graphs of the compiler's available evidence. Potential references and
+baseline observations do not prove exact causal influence; opaque access remains
+explicitly unresolved.
+
+The [topology catalog](../benchmarks/chart-topologies/README.md) contains rendered
+graphs for the synthetic fixtures and the Bitnami and Prometheus chart collections.
 
 ## Deterministic type constants
 
@@ -136,6 +184,20 @@ Supplied values—including `false`, `0`, `""` and explicit null—are preserved
 Explicit schema defaults and constants take precedence over these type constants.
 This policy is deterministic; it does not invent strings, choose enum alternatives,
 or solve downstream constraints. Further validation catches invalid examples.
+
+### Why can minimal values be invalid?
+
+A type-correct constant is not necessarily valid for the chart or Kubernetes API.
+For example, `0` may violate a field's minimum of `1`, and `""` may violate a
+required name's length or pattern. Supplied values and explicit schema defaults
+can also be invalid. The exporter does not search for a replacement in these
+cases; its reduction search removes unnecessary entries from a verified baseline.
+
+If no candidate passes verification, the deterministic example is still written
+with `verified: false` and the validation error in its `.proof` file. Check that
+record, provide an appropriate value in the source values file or a default in
+the values schema, and rerun the export. Only checks that actually ran can flag
+invalid values; enable Kubeconform to include Kubernetes API schema validation.
 
 Export-only workflows can use the existing local Kubernetes schema validation:
 

@@ -12,7 +12,7 @@ inputs:
     description: Export deterministic concrete values beside each chart after testing (shard 1 only).
     default: 'false'
   commit-minimal-values:
-    description: Export example values and commit those YAML files to the checked-out branch.
+    description: Export example values and commit the YAML and verification proof files to the checked-out branch.
     default: 'false'
   minimal-values-filename:
     description: YAML basename in every discovered chart directory; directory overrides are rejected.
@@ -110,6 +110,9 @@ inputs:
   artifact-name:
     description: Artifact name prefix; job name and shard identifier are appended.
     default: hypothesis-helm
+  artifact-retention-days:
+    description: Report retention in days, subject to repository policy; does not change CI cache eviction.
+    default: '30'
 outputs:
   report-dir:
     description: Absolute path to this shard's artifact directory.
@@ -288,3 +291,4 @@ runs:
           ${{ steps.test.outputs.report-dir }}
           ${{ steps.test.outputs.kubesec-report-dir }}
         if-no-files-found: warn
+        retention-days: ${{ inputs.artifact-retention-days }}

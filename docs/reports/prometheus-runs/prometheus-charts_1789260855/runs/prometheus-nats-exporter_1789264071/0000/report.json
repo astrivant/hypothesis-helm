@@ -1,0 +1,8093 @@
+{
+  "status": "failed",
+  "attempts": 146,
+  "phases": [
+    {
+      "input_inventory": {
+        "fields": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 90,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 92,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 22,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 23,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "config",
+              "metrics"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "accstatz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "accstatz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 38,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 41,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz_detailed"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz_detailed"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 44,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "gatewayz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "gatewayz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 53,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "healthz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "healthz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 56,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "jsz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "jsz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 59,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "leafz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "leafz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 62,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "routez"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "routez"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 47,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "subz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "subz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 50,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "varz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "varz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 35,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "namespace"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "port"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "service"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "service"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "extraContainers"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 98,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 99,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 26,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 28,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 67,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": true
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 77,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 76,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 86,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 88,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 83,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 82,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 11,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "resources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "resources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 85,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "service",
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "annotations"
+                ],
+                "file": "templates/service.yaml",
+                "line": 5,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 12,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 13,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "port"
+                ],
+                "file": "templates/service.yaml",
+                "line": 18,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 70,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/service.yaml",
+                "line": 19,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/NOTES.txt",
+                "line": 2,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/service.yaml",
+                "line": 16,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 14,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 15,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "enabled"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 1,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 21,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 22,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 6,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 7,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 24,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 25,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 36,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 94,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 96,
+                "fallback": false
+              }
+            ]
+          }
+        ],
+        "known_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "annotations"
+          ],
+          [
+            "config",
+            "metrics",
+            "accstatz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz_detailed"
+          ],
+          [
+            "config",
+            "metrics",
+            "gatewayz"
+          ],
+          [
+            "config",
+            "metrics",
+            "healthz"
+          ],
+          [
+            "config",
+            "metrics",
+            "jsz"
+          ],
+          [
+            "config",
+            "metrics",
+            "leafz"
+          ],
+          [
+            "config",
+            "metrics",
+            "routez"
+          ],
+          [
+            "config",
+            "metrics",
+            "subz"
+          ],
+          [
+            "config",
+            "metrics",
+            "varz"
+          ],
+          [
+            "config",
+            "nats",
+            "namespace"
+          ],
+          [
+            "config",
+            "nats",
+            "port"
+          ],
+          [
+            "config",
+            "nats",
+            "service"
+          ],
+          [
+            "extraVolumes"
+          ],
+          [
+            "image",
+            "imagePullSecrets"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "livenessProbe",
+            "periodSeconds"
+          ],
+          [
+            "livenessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "readinessProbe",
+            "periodSeconds"
+          ],
+          [
+            "readinessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "annotations"
+          ],
+          [
+            "service",
+            "labels"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "targetPort"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceMonitor",
+            "additionalLabels"
+          ],
+          [
+            "serviceMonitor",
+            "enabled"
+          ],
+          [
+            "serviceMonitor",
+            "interval"
+          ],
+          [
+            "serviceMonitor",
+            "namespace"
+          ],
+          [
+            "serviceMonitor",
+            "scrapeTimeout"
+          ],
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "lower_bound_fields": 39,
+        "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+        "inventory_complete": false,
+        "output_influence_proven": false,
+        "missing_values": [],
+        "undocumented_template_fields": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 90,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 92,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 22,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 23,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "accstatz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "accstatz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 38,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 41,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz_detailed"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz_detailed"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 44,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "gatewayz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "gatewayz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 53,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "healthz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "healthz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 56,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "jsz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "jsz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 59,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "leafz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "leafz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 62,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "routez"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "routez"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 47,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "subz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "subz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 50,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "varz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "varz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 35,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "namespace"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "port"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "service"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "service"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 98,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 99,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 26,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 28,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 67,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": true
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 77,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 76,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 86,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 88,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 83,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 82,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 11,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "resources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "resources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 85,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "annotations"
+                ],
+                "file": "templates/service.yaml",
+                "line": 5,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 12,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 13,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "port"
+                ],
+                "file": "templates/service.yaml",
+                "line": 18,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 70,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/service.yaml",
+                "line": 19,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/NOTES.txt",
+                "line": 2,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/service.yaml",
+                "line": 16,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 14,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 15,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "enabled"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 1,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 21,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 22,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 6,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 7,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 24,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 25,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 36,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 94,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 96,
+                "fallback": false
+              }
+            ]
+          }
+        ],
+        "template_only_fields": [],
+        "schema_fields_without_values": [],
+        "unreferenced_values": [
+          [
+            "extraContainers"
+          ]
+        ],
+        "unreferenced_usage": "unknown",
+        "dynamic_regions": [
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ]
+        ],
+        "unresolved": [
+          {
+            "file": "templates/NOTES.txt",
+            "line": 3,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 2,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 6,
+            "message": "unresolved dot context: .Values.service.type"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 8,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 9,
+            "message": "unresolved dot context: .Release.Namespace"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 9,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 9,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 10,
+            "message": "unresolved dot context: .Values.service.port"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 11,
+            "message": "unresolved dot context: .Values.service.type"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "unresolved dot context: .Release.Namespace"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 13,
+            "message": "unresolved dot context: .Values.service.targetPort"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 14,
+            "message": "unresolved dot context: .Values.service.targetPort"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 5,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Values.nameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 14,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 15,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 16,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 18,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 18,
+            "message": "unresolved dot context: .Values.nameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 19,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 20,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 22,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 30,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 31,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 31,
+            "message": "unresolved dot context: .Chart.Version"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 4,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 6,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 9,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 6,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 5,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 32,
+            "message": "dynamic template/context or mutation requires review: include"
+          }
+        ]
+      },
+      "field_coverage": {
+        "lower_bound_fields": 39,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "annotations"
+          ],
+          [
+            "config",
+            "metrics",
+            "accstatz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz_detailed"
+          ],
+          [
+            "config",
+            "metrics",
+            "gatewayz"
+          ],
+          [
+            "config",
+            "metrics",
+            "healthz"
+          ],
+          [
+            "config",
+            "metrics",
+            "jsz"
+          ],
+          [
+            "config",
+            "metrics",
+            "leafz"
+          ],
+          [
+            "config",
+            "metrics",
+            "routez"
+          ],
+          [
+            "config",
+            "metrics",
+            "subz"
+          ],
+          [
+            "config",
+            "metrics",
+            "varz"
+          ],
+          [
+            "config",
+            "nats",
+            "namespace"
+          ],
+          [
+            "config",
+            "nats",
+            "port"
+          ],
+          [
+            "config",
+            "nats",
+            "service"
+          ],
+          [
+            "extraVolumes"
+          ],
+          [
+            "image",
+            "imagePullSecrets"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "livenessProbe",
+            "periodSeconds"
+          ],
+          [
+            "livenessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "readinessProbe",
+            "periodSeconds"
+          ],
+          [
+            "readinessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "annotations"
+          ],
+          [
+            "service",
+            "labels"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "targetPort"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceMonitor",
+            "additionalLabels"
+          ],
+          [
+            "serviceMonitor",
+            "enabled"
+          ],
+          [
+            "serviceMonitor",
+            "interval"
+          ],
+          [
+            "serviceMonitor",
+            "namespace"
+          ],
+          [
+            "serviceMonitor",
+            "scrapeTimeout"
+          ],
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "annotations"
+          ],
+          [
+            "config",
+            "metrics",
+            "accstatz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz"
+          ],
+          [
+            "config",
+            "metrics",
+            "gatewayz"
+          ],
+          [
+            "config",
+            "metrics",
+            "healthz"
+          ],
+          [
+            "extraVolumes"
+          ],
+          [
+            "readinessProbe",
+            "periodSeconds"
+          ],
+          [
+            "readinessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceMonitor",
+            "additionalLabels"
+          ],
+          [
+            "serviceMonitor",
+            "enabled"
+          ],
+          [
+            "serviceMonitor",
+            "interval"
+          ],
+          [
+            "serviceMonitor",
+            "namespace"
+          ],
+          [
+            "serviceMonitor",
+            "scrapeTimeout"
+          ],
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "config",
+            "metrics",
+            "connz_detailed"
+          ],
+          [
+            "config",
+            "metrics",
+            "jsz"
+          ],
+          [
+            "config",
+            "metrics",
+            "leafz"
+          ],
+          [
+            "config",
+            "metrics",
+            "routez"
+          ],
+          [
+            "config",
+            "metrics",
+            "subz"
+          ],
+          [
+            "config",
+            "metrics",
+            "varz"
+          ],
+          [
+            "config",
+            "nats",
+            "namespace"
+          ],
+          [
+            "config",
+            "nats",
+            "port"
+          ],
+          [
+            "config",
+            "nats",
+            "service"
+          ],
+          [
+            "image",
+            "imagePullSecrets"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "livenessProbe",
+            "periodSeconds"
+          ],
+          [
+            "livenessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "service",
+            "annotations"
+          ],
+          [
+            "service",
+            "labels"
+          ],
+          [
+            "service",
+            "targetPort"
+          ]
+        ],
+        "present_count": 39,
+        "varied_count": 20,
+        "varied_fraction": 0.5128205128205128,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "status": "failed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ukxja68z/chart",
+      "seed": 0,
+      "attempts": 45,
+      "error": "Error: YAML parse error on prometheus-nats-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+      "values": {
+        "extraVolumes": "0"
+      },
+      "failure_type": "RenderFailure",
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 30,
+        "unique_bundles": 9,
+        "duplicate_bundles": 21,
+        "validation_cache_hits": 21,
+        "validated_entries": 9
+      },
+      "phase": "known-inputs"
+    },
+    {
+      "input_inventory": {
+        "fields": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 90,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 92,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 22,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 23,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "config",
+              "metrics"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "accstatz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "accstatz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 38,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 41,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz_detailed"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz_detailed"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 44,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "gatewayz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "gatewayz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 53,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "healthz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "healthz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 56,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "jsz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "jsz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 59,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "leafz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "leafz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 62,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "routez"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "routez"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 47,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "subz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "subz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 50,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "varz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "varz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 35,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "namespace"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "port"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "service"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "service"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "extraContainers"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 98,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 99,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 26,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 28,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 67,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": true
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 77,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 76,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 86,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 88,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 83,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 82,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 11,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "resources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "resources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 85,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "service",
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "annotations"
+                ],
+                "file": "templates/service.yaml",
+                "line": 5,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 12,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 13,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "port"
+                ],
+                "file": "templates/service.yaml",
+                "line": 18,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 70,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/service.yaml",
+                "line": 19,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/NOTES.txt",
+                "line": 2,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/service.yaml",
+                "line": 16,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 14,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 15,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "enabled"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 1,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 21,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 22,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 6,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 7,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 24,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 25,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 36,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 94,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 96,
+                "fallback": false
+              }
+            ]
+          }
+        ],
+        "known_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "annotations"
+          ],
+          [
+            "config",
+            "metrics",
+            "accstatz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz_detailed"
+          ],
+          [
+            "config",
+            "metrics",
+            "gatewayz"
+          ],
+          [
+            "config",
+            "metrics",
+            "healthz"
+          ],
+          [
+            "config",
+            "metrics",
+            "jsz"
+          ],
+          [
+            "config",
+            "metrics",
+            "leafz"
+          ],
+          [
+            "config",
+            "metrics",
+            "routez"
+          ],
+          [
+            "config",
+            "metrics",
+            "subz"
+          ],
+          [
+            "config",
+            "metrics",
+            "varz"
+          ],
+          [
+            "config",
+            "nats",
+            "namespace"
+          ],
+          [
+            "config",
+            "nats",
+            "port"
+          ],
+          [
+            "config",
+            "nats",
+            "service"
+          ],
+          [
+            "extraVolumes"
+          ],
+          [
+            "image",
+            "imagePullSecrets"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "livenessProbe",
+            "periodSeconds"
+          ],
+          [
+            "livenessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "readinessProbe",
+            "periodSeconds"
+          ],
+          [
+            "readinessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "annotations"
+          ],
+          [
+            "service",
+            "labels"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "targetPort"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceMonitor",
+            "additionalLabels"
+          ],
+          [
+            "serviceMonitor",
+            "enabled"
+          ],
+          [
+            "serviceMonitor",
+            "interval"
+          ],
+          [
+            "serviceMonitor",
+            "namespace"
+          ],
+          [
+            "serviceMonitor",
+            "scrapeTimeout"
+          ],
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "lower_bound_fields": 39,
+        "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+        "inventory_complete": false,
+        "output_influence_proven": false,
+        "missing_values": [],
+        "undocumented_template_fields": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 90,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "affinity"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 92,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 22,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "annotations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 23,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "accstatz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "accstatz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 38,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 41,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz_detailed"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "connz_detailed"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 44,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "gatewayz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "gatewayz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 53,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "healthz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "healthz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 56,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "jsz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "jsz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 59,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "leafz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "leafz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 62,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "routez"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "routez"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 47,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "subz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "subz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 50,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "metrics",
+              "varz"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "metrics",
+                  "varz"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 35,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "namespace"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "port"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "config",
+              "nats",
+              "service"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "config",
+                  "nats",
+                  "service"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 65,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 98,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "extraVolumes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 99,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 26,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "image",
+                  "imagePullSecrets"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 28,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 67,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 66,
+                "fallback": true
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 77,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "livenessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "livenessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 76,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 86,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 88,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "periodSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "periodSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 83,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "readinessProbe",
+              "timeoutSeconds"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "readinessProbe",
+                  "timeoutSeconds"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 82,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 11,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "resources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "resources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 85,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "annotations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "annotations"
+                ],
+                "file": "templates/service.yaml",
+                "line": 5,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 12,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "labels"
+                ],
+                "file": "templates/service.yaml",
+                "line": 13,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "port"
+                ],
+                "file": "templates/service.yaml",
+                "line": 18,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 70,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "targetPort"
+                ],
+                "file": "templates/service.yaml",
+                "line": 19,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/NOTES.txt",
+                "line": 2,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "service",
+                  "type"
+                ],
+                "file": "templates/service.yaml",
+                "line": 16,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 14,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "additionalLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 15,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "enabled"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 1,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 21,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "interval"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 22,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 6,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "namespace"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 7,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 24,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "scrapeTimeout"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 25,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 34,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "serviceMonitor",
+                  "targetLabels"
+                ],
+                "file": "templates/servicemonitor.yaml",
+                "line": 36,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 94,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 96,
+                "fallback": false
+              }
+            ]
+          }
+        ],
+        "template_only_fields": [],
+        "schema_fields_without_values": [],
+        "unreferenced_values": [
+          [
+            "extraContainers"
+          ]
+        ],
+        "unreferenced_usage": "unknown",
+        "dynamic_regions": [
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ]
+        ],
+        "unresolved": [
+          {
+            "file": "templates/NOTES.txt",
+            "line": 3,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 2,
+            "message": "chained else context requires review"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 6,
+            "message": "unresolved dot context: .Values.service.type"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 8,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 9,
+            "message": "unresolved dot context: .Release.Namespace"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 9,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 9,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 10,
+            "message": "unresolved dot context: .Values.service.port"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 11,
+            "message": "unresolved dot context: .Values.service.type"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "unresolved dot context: .Release.Namespace"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "unresolved dot context: ."
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 12,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 13,
+            "message": "unresolved dot context: .Values.service.targetPort"
+          },
+          {
+            "file": "templates/NOTES.txt",
+            "line": 14,
+            "message": "unresolved dot context: .Values.service.targetPort"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 5,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Values.nameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 14,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 15,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 16,
+            "message": "unresolved dot context: .Values.fullnameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 18,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 18,
+            "message": "unresolved dot context: .Values.nameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 19,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 20,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 22,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 30,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 31,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 31,
+            "message": "unresolved dot context: .Chart.Version"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 4,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 6,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 9,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 6,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 8,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 11,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/service.yaml",
+            "line": 23,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 5,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 10,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 13,
+            "message": "dynamic template/context or mutation requires review: include"
+          },
+          {
+            "file": "templates/servicemonitor.yaml",
+            "line": 32,
+            "message": "dynamic template/context or mutation requires review: include"
+          }
+        ]
+      },
+      "field_coverage": {
+        "lower_bound_fields": 39,
+        "present_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "annotations"
+          ],
+          [
+            "config",
+            "metrics",
+            "accstatz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz_detailed"
+          ],
+          [
+            "config",
+            "metrics",
+            "gatewayz"
+          ],
+          [
+            "config",
+            "metrics",
+            "healthz"
+          ],
+          [
+            "config",
+            "metrics",
+            "jsz"
+          ],
+          [
+            "config",
+            "metrics",
+            "leafz"
+          ],
+          [
+            "config",
+            "metrics",
+            "routez"
+          ],
+          [
+            "config",
+            "metrics",
+            "subz"
+          ],
+          [
+            "config",
+            "metrics",
+            "varz"
+          ],
+          [
+            "config",
+            "nats",
+            "namespace"
+          ],
+          [
+            "config",
+            "nats",
+            "port"
+          ],
+          [
+            "config",
+            "nats",
+            "service"
+          ],
+          [
+            "extraVolumes"
+          ],
+          [
+            "image",
+            "imagePullSecrets"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "livenessProbe",
+            "periodSeconds"
+          ],
+          [
+            "livenessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "readinessProbe",
+            "periodSeconds"
+          ],
+          [
+            "readinessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "annotations"
+          ],
+          [
+            "service",
+            "labels"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "targetPort"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceMonitor",
+            "additionalLabels"
+          ],
+          [
+            "serviceMonitor",
+            "enabled"
+          ],
+          [
+            "serviceMonitor",
+            "interval"
+          ],
+          [
+            "serviceMonitor",
+            "namespace"
+          ],
+          [
+            "serviceMonitor",
+            "scrapeTimeout"
+          ],
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [],
+        "unvaried_fields": [
+          [
+            "affinity"
+          ],
+          [
+            "annotations"
+          ],
+          [
+            "config",
+            "metrics",
+            "accstatz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz"
+          ],
+          [
+            "config",
+            "metrics",
+            "connz_detailed"
+          ],
+          [
+            "config",
+            "metrics",
+            "gatewayz"
+          ],
+          [
+            "config",
+            "metrics",
+            "healthz"
+          ],
+          [
+            "config",
+            "metrics",
+            "jsz"
+          ],
+          [
+            "config",
+            "metrics",
+            "leafz"
+          ],
+          [
+            "config",
+            "metrics",
+            "routez"
+          ],
+          [
+            "config",
+            "metrics",
+            "subz"
+          ],
+          [
+            "config",
+            "metrics",
+            "varz"
+          ],
+          [
+            "config",
+            "nats",
+            "namespace"
+          ],
+          [
+            "config",
+            "nats",
+            "port"
+          ],
+          [
+            "config",
+            "nats",
+            "service"
+          ],
+          [
+            "extraVolumes"
+          ],
+          [
+            "image",
+            "imagePullSecrets"
+          ],
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "livenessProbe",
+            "periodSeconds"
+          ],
+          [
+            "livenessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "readinessProbe",
+            "periodSeconds"
+          ],
+          [
+            "readinessProbe",
+            "timeoutSeconds"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "service",
+            "annotations"
+          ],
+          [
+            "service",
+            "labels"
+          ],
+          [
+            "service",
+            "port"
+          ],
+          [
+            "service",
+            "targetPort"
+          ],
+          [
+            "service",
+            "type"
+          ],
+          [
+            "serviceMonitor",
+            "additionalLabels"
+          ],
+          [
+            "serviceMonitor",
+            "enabled"
+          ],
+          [
+            "serviceMonitor",
+            "interval"
+          ],
+          [
+            "serviceMonitor",
+            "namespace"
+          ],
+          [
+            "serviceMonitor",
+            "scrapeTimeout"
+          ],
+          [
+            "serviceMonitor",
+            "targetLabels"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 39,
+        "varied_count": 0,
+        "varied_fraction": 0.0,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "render_hashes": {
+        "algorithm": "sha256-canonical-json-v1",
+        "scope": "run-local",
+        "observed_bundles": 101,
+        "unique_bundles": 1,
+        "duplicate_bundles": 100,
+        "validation_cache_hits": 100,
+        "validated_entries": 1
+      },
+      "status": "passed",
+      "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-ukxja68z/chart",
+      "seed": 0,
+      "attempts": 101,
+      "time_limit_seconds": 296.6925506251864,
+      "execution_seconds": 7.405783500056714,
+      "max_examples": 100,
+      "mode": "sampled",
+      "proof_of_totality": false,
+      "phase": "robustness"
+    }
+  ],
+  "time_limit_seconds": 300.0,
+  "execution_seconds": 10.718135624658316,
+  "coverage_complete": false,
+  "proof_of_totality": false,
+  "phase_targets_complete": true,
+  "filtering": {
+    "requested": true,
+    "applied": true,
+    "method": "known-inputs-first",
+    "topology_applied": false,
+    "reason": "Generation order only; original-schema cases run last, not removed",
+    "known_input_budget_fraction": 0.9,
+    "deferred_objects": [
+      [
+        "image"
+      ],
+      [
+        "livenessProbe"
+      ],
+      [
+        "readinessProbe"
+      ],
+      [
+        "service"
+      ],
+      [
+        "serviceMonitor"
+      ],
+      [
+        "config",
+        "metrics"
+      ],
+      [
+        "config",
+        "nats"
+      ],
+      [
+        "config"
+      ],
+      []
+    ],
+    "dynamic_objects": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ]
+    ],
+    "diagnostics": [
+      {
+        "file": "templates/NOTES.txt",
+        "line": 3,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 2,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 6,
+        "message": "unresolved dot context: .Values.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 8,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 9,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 9,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 10,
+        "message": "unresolved dot context: .Values.service.port"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 11,
+        "message": "unresolved dot context: .Values.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 13,
+        "message": "unresolved dot context: .Values.service.targetPort"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 14,
+        "message": "unresolved dot context: .Values.service.targetPort"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 5,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 14,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 15,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 16,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 20,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 22,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 30,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Version"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 4,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 14,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 23,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 13,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 32,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "targetLabels",
+          "*"
+        ],
+        "message": "wildcard resolved by schema/item tests; no invented key or item"
+      }
+    ]
+  },
+  "error": "known-inputs: Error: YAML parse error on prometheus-nats-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 60: could not find expected ':'\n\nUse --debug flag to render out invalid YAML",
+  "input_inventory": {
+    "fields": [
+      {
+        "path": [
+          "affinity"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 90,
+            "fallback": false
+          },
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 92,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "annotations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 22,
+            "fallback": false
+          },
+          {
+            "path": [
+              "annotations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 23,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "config",
+          "metrics"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "accstatz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "accstatz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 38,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "connz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 41,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "connz_detailed"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz_detailed"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 44,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "gatewayz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "gatewayz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 53,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "healthz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "healthz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 56,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "jsz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "jsz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 59,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "leafz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "leafz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 62,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "routez"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "routez"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 47,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "subz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "subz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 50,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "varz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "varz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 35,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "nats"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "config",
+          "nats",
+          "namespace"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "nats",
+              "namespace"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 65,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "nats",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "nats",
+              "port"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 65,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "nats",
+          "service"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "nats",
+              "service"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 65,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "extraContainers"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "extraVolumes"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 98,
+            "fallback": false
+          },
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 99,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "image",
+          "imagePullSecrets"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 26,
+            "fallback": false
+          },
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 28,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "pullPolicy"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 67,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "repository"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 66,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "tag"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 66,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "livenessProbe"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "periodSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "livenessProbe",
+              "periodSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 77,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "timeoutSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "livenessProbe",
+              "timeoutSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 76,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "nodeSelector"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 86,
+            "fallback": false
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 88,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "readinessProbe"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "periodSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "readinessProbe",
+              "periodSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 83,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "timeoutSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "readinessProbe",
+              "timeoutSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 82,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "replicaCount"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "resources"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 85,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "service",
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "annotations"
+            ],
+            "file": "templates/service.yaml",
+            "line": 5,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "labels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "file": "templates/service.yaml",
+            "line": 12,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "file": "templates/service.yaml",
+            "line": 13,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "file": "templates/service.yaml",
+            "line": 18,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "targetPort"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 34,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 70,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "file": "templates/service.yaml",
+            "line": 19,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "type"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 2,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "file": "templates/service.yaml",
+            "line": 16,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "additionalLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 14,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 15,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "interval"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 21,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 22,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "namespace"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 7,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "scrapeTimeout"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 24,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 25,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "targetLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 34,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 36,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "tolerations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 94,
+            "fallback": false
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 96,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "known_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config",
+        "metrics",
+        "accstatz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz_detailed"
+      ],
+      [
+        "config",
+        "metrics",
+        "gatewayz"
+      ],
+      [
+        "config",
+        "metrics",
+        "healthz"
+      ],
+      [
+        "config",
+        "metrics",
+        "jsz"
+      ],
+      [
+        "config",
+        "metrics",
+        "leafz"
+      ],
+      [
+        "config",
+        "metrics",
+        "routez"
+      ],
+      [
+        "config",
+        "metrics",
+        "subz"
+      ],
+      [
+        "config",
+        "metrics",
+        "varz"
+      ],
+      [
+        "config",
+        "nats",
+        "namespace"
+      ],
+      [
+        "config",
+        "nats",
+        "port"
+      ],
+      [
+        "config",
+        "nats",
+        "service"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "imagePullSecrets"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "lower_bound_fields": 39,
+    "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+    "inventory_complete": false,
+    "output_influence_proven": false,
+    "missing_values": [],
+    "undocumented_template_fields": [
+      {
+        "path": [
+          "affinity"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 90,
+            "fallback": false
+          },
+          {
+            "path": [
+              "affinity"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 92,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "annotations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 22,
+            "fallback": false
+          },
+          {
+            "path": [
+              "annotations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 23,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "accstatz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "accstatz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 38,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "connz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 41,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "connz_detailed"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "connz_detailed"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 44,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "gatewayz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "gatewayz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 53,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "healthz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "healthz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 56,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "jsz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "jsz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 59,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "leafz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "leafz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 62,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "routez"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "routez"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 47,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "subz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "subz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 50,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "metrics",
+          "varz"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "metrics",
+              "varz"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 35,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "nats",
+          "namespace"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "nats",
+              "namespace"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 65,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "nats",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "nats",
+              "port"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 65,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "config",
+          "nats",
+          "service"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "config",
+              "nats",
+              "service"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 65,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "extraVolumes"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 98,
+            "fallback": false
+          },
+          {
+            "path": [
+              "extraVolumes"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 99,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "imagePullSecrets"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 26,
+            "fallback": false
+          },
+          {
+            "path": [
+              "image",
+              "imagePullSecrets"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 28,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "pullPolicy"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 67,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "repository"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 66,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "tag"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 66,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "periodSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "livenessProbe",
+              "periodSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 77,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "timeoutSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "livenessProbe",
+              "timeoutSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 76,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "nodeSelector"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 86,
+            "fallback": false
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 88,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "periodSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "readinessProbe",
+              "periodSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 83,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "timeoutSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "readinessProbe",
+              "timeoutSeconds"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 82,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "replicaCount"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 11,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "resources"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 85,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "annotations"
+            ],
+            "file": "templates/service.yaml",
+            "line": 5,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "labels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "file": "templates/service.yaml",
+            "line": 12,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "labels"
+            ],
+            "file": "templates/service.yaml",
+            "line": 13,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "file": "templates/service.yaml",
+            "line": 18,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "targetPort"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 34,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 70,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "targetPort"
+            ],
+            "file": "templates/service.yaml",
+            "line": 19,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "type"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 2,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "file": "templates/service.yaml",
+            "line": 16,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "additionalLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 14,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "additionalLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 15,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "interval"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 21,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 22,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "namespace"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 7,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "scrapeTimeout"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 24,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 25,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "targetLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 34,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 36,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "tolerations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 94,
+            "fallback": false
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/deployment.yaml",
+            "line": 96,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "template_only_fields": [],
+    "schema_fields_without_values": [],
+    "unreferenced_values": [
+      [
+        "extraContainers"
+      ]
+    ],
+    "unreferenced_usage": "unknown",
+    "dynamic_regions": [
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ]
+    ],
+    "unresolved": [
+      {
+        "file": "templates/NOTES.txt",
+        "line": 3,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 2,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 6,
+        "message": "unresolved dot context: .Values.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 8,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 9,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 9,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 10,
+        "message": "unresolved dot context: .Values.service.port"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 11,
+        "message": "unresolved dot context: .Values.service.type"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 12,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 13,
+        "message": "unresolved dot context: .Values.service.targetPort"
+      },
+      {
+        "file": "templates/NOTES.txt",
+        "line": 14,
+        "message": "unresolved dot context: .Values.service.targetPort"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 5,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 14,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 15,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 16,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 20,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 22,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 30,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Version"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 4,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 9,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 14,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 11,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 23,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 13,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 32,
+        "message": "dynamic template/context or mutation requires review: include"
+      }
+    ]
+  },
+  "field_coverage": {
+    "lower_bound_fields": 39,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config",
+        "metrics",
+        "accstatz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz_detailed"
+      ],
+      [
+        "config",
+        "metrics",
+        "gatewayz"
+      ],
+      [
+        "config",
+        "metrics",
+        "healthz"
+      ],
+      [
+        "config",
+        "metrics",
+        "jsz"
+      ],
+      [
+        "config",
+        "metrics",
+        "leafz"
+      ],
+      [
+        "config",
+        "metrics",
+        "routez"
+      ],
+      [
+        "config",
+        "metrics",
+        "subz"
+      ],
+      [
+        "config",
+        "metrics",
+        "varz"
+      ],
+      [
+        "config",
+        "nats",
+        "namespace"
+      ],
+      [
+        "config",
+        "nats",
+        "port"
+      ],
+      [
+        "config",
+        "nats",
+        "service"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "image",
+        "imagePullSecrets"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "targetPort"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "annotations"
+      ],
+      [
+        "config",
+        "metrics",
+        "accstatz"
+      ],
+      [
+        "config",
+        "metrics",
+        "connz"
+      ],
+      [
+        "config",
+        "metrics",
+        "gatewayz"
+      ],
+      [
+        "config",
+        "metrics",
+        "healthz"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "additionalLabels"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "config",
+        "metrics",
+        "connz_detailed"
+      ],
+      [
+        "config",
+        "metrics",
+        "jsz"
+      ],
+      [
+        "config",
+        "metrics",
+        "leafz"
+      ],
+      [
+        "config",
+        "metrics",
+        "routez"
+      ],
+      [
+        "config",
+        "metrics",
+        "subz"
+      ],
+      [
+        "config",
+        "metrics",
+        "varz"
+      ],
+      [
+        "config",
+        "nats",
+        "namespace"
+      ],
+      [
+        "config",
+        "nats",
+        "port"
+      ],
+      [
+        "config",
+        "nats",
+        "service"
+      ],
+      [
+        "image",
+        "imagePullSecrets"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "labels"
+      ],
+      [
+        "service",
+        "targetPort"
+      ]
+    ],
+    "present_count": 39,
+    "varied_count": 20,
+    "varied_fraction": 0.5128205128205128,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  }
+}

@@ -9,7 +9,7 @@ helm hypothesis scan git@github.com:my-org/charts.git --report
 helm hypothesis scan ./charts --values ci/test-values.yaml --report reports/charts
 ```
 
-The source can be a local directory, an HTTPS Git repository URL, or an SSH URL
+The source can be a local directory, a Helm repository/chart (see below), an HTTPS Git repository URL, or an SSH URL
 (`git@host:owner/repo.git` or `ssh://git@host/owner/repo.git`). Remote sources
 require Git and use a shallow checkout of the default branch. Reports retain
 the original URL and resolved commit; the temporary checkout is removed after
@@ -25,6 +25,57 @@ URLs without embedded HTTPS credentials, query strings, or fragments.
 `--scan-timeout` also includes this time and takes precedence when shorter.
 Failed clones produce a report with incomplete discovery and exit **1**;
 checkout timeouts exit **124**, and interruption exits **130**.
+
+## Helm repositories and registries
+
+```sh
+# Use a repository already configured in helm repo list.
+helm hypothesis scan prometheus-community/prometheus --filter --report
+helm hypothesis scan prometheus-community --filter --report
+helm hypothesis scan prometheus-community/prometheus --chart-version 27.0.0 --report
+
+# Scan every chart in a public repository index.
+helm hypothesis scan https://prometheus-community.github.io/helm-charts/index.yaml --filter --report
+helm hypothesis scan https://prometheus-community.github.io/helm-charts --helm-repository --filter --report
+
+# Fetch one OCI chart using the existing Helm registry login.
+helm hypothesis scan oci://registry.example.com/charts/service --chart-version 1.2.3 --filter --report
+```
+
+A configured repository name scans the latest stable release of each chart in its
+index. `repo/chart` selects only that chart. `--chart-version` accepts a version or
+Helm semantic version constraint and selects the latest matching release per chart;
+it does not scan every historical version. Pre-release-only charts require a
+constraint that includes pre-releases. Selection follows [Helm search](https://helm.sh/docs/helm/helm_search_repo/).
+
+Registered repositories use Helm's existing authentication and TLS configuration.
+Configure private repositories with `helm repo add` before scanning; OCI charts use
+`helm registry login`. The scanner inherits `HELM_REPOSITORY_CONFIG` and
+`HELM_REGISTRY_CONFIG`. Credentials are not copied into reports or CLI arguments.
+Indexes and downloaded chart caches are isolated per scan, so concurrent source
+downloads do not write to the same caches. A public index URL is added only to a
+temporary repository configuration, leaving `helm repo list` unchanged.
+
+Existing local paths take precedence over repository names. Use `--helm-repository`
+to select a repository when its name also identifies a local directory, or to
+distinguish a public HTTP(S) repository base URL from an HTTPS Git clone URL.
+OCI sources must identify an individual chart: OCI registries do not expose Helm
+`index.yaml` inventories, so this command does not enumerate an entire OCI registry.
+
+`--source-timeout 3m` (also spelled `--clone-timeout`) bounds index refresh and all
+chart downloads together. Source preparation also counts toward `--scan-timeout`,
+as Git checkout does; dependency builds remain excluded from testing budgets.
+Increase the source timeout for large repositories.
+
+Downloaded charts enter the same recursive discovery, dependency preparation, and
+testing flow as local charts. Reports retain the original source, selected versions,
+and downloaded package SHA-256 checksums. Temporary packages are removed after
+reporting. An unavailable package is recorded as **download-failed / N/A** while
+other charts continue; this produces exit **2** unless a chart test fails. Failed
+source discovery exits **1**; preparation timeout exits **124** and interruption
+exits **130**, with an incomplete report and the available package inventory.
+
+## Discovery and testing
 
 The scanner finds `Chart.yaml` at the root and in child directories, including
 nested charts. It checks the required `apiVersion`, `name`, and `version` fields
@@ -82,10 +133,19 @@ Configure Helm repositories and registry credentials as for a normal dependency 
 planning and dependency preparation. `--time-limit` remains a compatibility alias.
 `--timeout 30` bounds each Helm command.
 
-Add `--scan-timeout 9m` to cap the entire scan, including cloning, discovery, dependency
-builds, linting, planning, and property tests. The scan deadline takes precedence
-over a longer chart budget. Its default is unlimited. Cleanup and report writing
-finish after testing stops, so total process lifetime can exceed the deadline slightly.
+Add `--scan-timeout 9m` to cap scanning time, including cloning, discovery, linting,
+planning, and property tests. The budget pauses during dependency builds, which
+remain bounded by `--timeout`. The scan deadline takes precedence over a longer
+chart budget. Its default is unlimited. Dependency preparation, cleanup, and report
+writing can make total process lifetime exceed the scan budget.
+
+Reports separate `dependency_preparation_seconds`, `testing_seconds`, and
+`elapsed_seconds` (wall-clock duration), both per chart and for the scan.
+Chart testing includes baseline checks, input planning, and property tests;
+the runner's `execution_seconds` retains its narrower execution measurement.
+Dependency time is excluded even when a build fails, times out, or is interrupted.
+Historical reports without these measurements retain their wall-clock duration;
+their testing time is not inferred.
 
 ```sh
 helm hypothesis scan ./charts --chart-timeout 3m --scan-timeout 9m --report
@@ -143,3 +203,6 @@ Initialize the Prometheus source with:
 git submodule update --init third_party/prometheus-community-helm-charts
 helm hypothesis scan third_party/prometheus-community-helm-charts/charts --filter --report
 ```
+
+The [retained Prometheus Community scan](../reports/prometheus.md) includes all
+46 discovered charts, a combined PDF, and per-chart findings and reproducing values.

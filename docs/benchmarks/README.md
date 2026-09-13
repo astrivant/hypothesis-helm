@@ -17,6 +17,17 @@ needed. Results default to `reports/benchmarks/` under the working directory.
 Use `hypothesis-helm-benchmark --help` to list studies, or append `--help` to a
 study such as `hypothesis-helm-benchmark nesting --help`.
 
+Render an exported compiler dependency graph with Matplotlib:
+
+```sh
+hypothesis-helm-benchmark topology --graph topology.json --output reports/topology
+```
+
+The PNG/SVG plots retain all vertices and directed edges. See
+[graph invariants and layout semantics](../inputs/README.md#render-the-mathematical-graph).
+Browse the [synthetic and real-chart topology catalog](chart-topologies/README.md)
+for complete graphs, per-chart measurements, and downloadable graph data.
+
 ## Local shard wrapper
 
 Run saved suites with 1–4 local GNU Parallel shards:
@@ -53,11 +64,12 @@ has a nine-minute execution budget; the complete study takes longer. Outputs are
 checked against an independent oracle, and exact-equivalent renders are skipped.
 Use each script's `--help` for options.
 
-The figures below use local Python workers and the [standard chart](../../examples/benchmark).
-In one recorded run, pruning completed **164,285 checks with 256 renders**, compared
-with **11,682 checks** without pruning. [Raw measurements](results.json)
-and [CSV](results.csv) include the host and run details. These measurements predate
-the Helm 4 migration; recorded tool versions remain in the raw results.
+The figures below use local Python workers and the [standard chart](standard-chart).
+In this Helm 4 run, pruning completed **169,070 checks with 256 renders**, compared
+with **11,831 checks** without pruning, within each nine-minute budget.
+[Raw measurements](results.json), [CSV](results.csv), and
+[refresh provenance](refresh/README.md) include the host and run details.
+These are single-run measurements; they do not establish timing variability.
 
 Progressive checkpoints share one execution. Dashed tails mark unfinished targets
 at the deadline.

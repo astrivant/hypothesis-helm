@@ -1,0 +1,3145 @@
+{
+  "input_inventory": {
+    "fields": [
+      {
+        "path": [
+          "additionalAnnotations"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "affinity"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "clusterDomain"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "configSecret"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "configSecret",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "configSecret",
+              "enabled"
+            ],
+            "file": "templates/configmap.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "configSecret",
+          "key"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "configSecret",
+          "name"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "containerSecurityContext"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "extraArgs"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "extraArgs",
+          "*"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "extraVolumeMounts"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "extraVolumeMounts",
+          "*"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "extraVolumes"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "extraVolumes",
+          "*"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "image"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "image",
+          "pullPolicy"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "image",
+          "repository"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "image",
+          "tag"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "failureThreshold"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "httpGet"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "httpGet",
+          "path"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "httpGet",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "httpGet",
+          "scheme"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "initialDelaySeconds"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "periodSeconds"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "livenessProbe",
+          "timeoutSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "modules"
+            ],
+            "file": "templates/configmap.yaml",
+            "line": 12,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "modules",
+          "advanced"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "collector_cmd"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "collector_cmd",
+          "ipmi"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "collector_cmd",
+          "sel"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "collectors"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "custom_args"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "custom_args",
+          "ipmi"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "custom_args",
+          "sel"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "driver"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "pass"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "privilege"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "advanced",
+          "user"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "dcmi"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "dcmi",
+          "collectors"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "dcmi",
+          "driver"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "dcmi",
+          "pass"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "dcmi",
+          "privilege"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "dcmi",
+          "user"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default",
+          "collectors"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default",
+          "driver"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default",
+          "exclude_sensor_ids"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default",
+          "pass"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default",
+          "privilege"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default",
+          "timeout"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "default",
+          "user"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "collectors"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "custom_args"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "custom_args",
+          "ipmi"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "driver"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "pass"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "privilege"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "user"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "modules",
+          "thatspecialhost",
+          "workaround_flags"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "nativeIPMI"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "nativeIPMI",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "nodeSelector"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "priorityClassName"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "failureThreshold"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "httpGet"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "httpGet",
+          "path"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "httpGet",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "httpGet",
+          "scheme"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "initialDelaySeconds"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "periodSeconds"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "readinessProbe",
+          "timeoutSeconds"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "replicaCount"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "resources"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "resources"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 15,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources",
+          "limits"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "resources",
+          "limits",
+          "cpu"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "resources",
+              "limits",
+              "cpu"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 20,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources",
+          "limits",
+          "memory"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "resources",
+              "limits",
+              "memory"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 21,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources",
+          "requests"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "resources",
+          "requests",
+          "cpu"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "resources",
+              "requests",
+              "cpu"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 18,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources",
+          "requests",
+          "memory"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "resources",
+              "requests",
+              "memory"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 19,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "enabled"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 2,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "fileSDConfigs"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 4,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 9,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 44,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 46,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "fileSDConfigs",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "jobName"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "jobName"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 24,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "labels"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "labels"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 15,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "labels"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 17,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "metricRelabelings"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "metricRelabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 67,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "metricRelabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 69,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "metricRelabelings",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "metricsPath"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "metricsPath"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 36,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "metricsPath"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 37,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "mode"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "mode"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 5,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "modules"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "modules"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 25,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "modules"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 28,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "modules",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "namespace"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "namespace"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 20,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "namespace"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 21,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "relabelings"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "relabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 52,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "relabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 54,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "relabelings",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "scheme"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "scheme"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 43,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "scrapeInterval"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "scrapeInterval"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 34,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "scrapeTimeout"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "scrapeTimeout"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 35,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "staticConfigs"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 3,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 9,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 48,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 50,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "staticConfigs",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "service"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "service",
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "service",
+              "annotations"
+            ],
+            "file": "templates/service.yaml",
+            "line": 8,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "port"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "file": "templates/service.yaml",
+            "line": 12,
+            "fallback": false
+          },
+          {
+            "path": [
+              "service",
+              "port"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 16,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "service",
+          "type"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "service",
+              "type"
+            ],
+            "file": "templates/service.yaml",
+            "line": 10,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "file": "templates/NOTES.txt",
+            "line": 9,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "enabled"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 2,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "interval"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 17,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 18,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "labels"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "labels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "labels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 8,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "metricRelabelings"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 26,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 28,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "metricRelabelings",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "namespace"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 11,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 12,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "targetLabels"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 37,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 39,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "targetLabels",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels",
+              "*"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 40,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "telemetryPath"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "telemetryPath"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 20,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "telemetryPath"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 21,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "timeout"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "timeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 23,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "timeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 24,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "tolerations"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      },
+      {
+        "path": [
+          "tolerations",
+          "*"
+        ],
+        "in_values": true,
+        "in_schema": true,
+        "references": []
+      }
+    ],
+    "known_fields": [
+      [
+        "configSecret",
+        "enabled"
+      ],
+      [
+        "modules"
+      ],
+      [
+        "resources",
+        "limits",
+        "cpu"
+      ],
+      [
+        "resources",
+        "limits",
+        "memory"
+      ],
+      [
+        "resources",
+        "requests",
+        "cpu"
+      ],
+      [
+        "resources",
+        "requests",
+        "memory"
+      ],
+      [
+        "scrapeConfig",
+        "enabled"
+      ],
+      [
+        "scrapeConfig",
+        "fileSDConfigs"
+      ],
+      [
+        "scrapeConfig",
+        "jobName"
+      ],
+      [
+        "scrapeConfig",
+        "labels"
+      ],
+      [
+        "scrapeConfig",
+        "metricRelabelings"
+      ],
+      [
+        "scrapeConfig",
+        "metricsPath"
+      ],
+      [
+        "scrapeConfig",
+        "mode"
+      ],
+      [
+        "scrapeConfig",
+        "modules"
+      ],
+      [
+        "scrapeConfig",
+        "namespace"
+      ],
+      [
+        "scrapeConfig",
+        "relabelings"
+      ],
+      [
+        "scrapeConfig",
+        "scheme"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeInterval"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeTimeout"
+      ],
+      [
+        "scrapeConfig",
+        "staticConfigs"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ]
+    ],
+    "lower_bound_fields": 31,
+    "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+    "inventory_complete": false,
+    "output_influence_proven": false,
+    "missing_values": [
+      {
+        "path": [
+          "scrapeConfig",
+          "fileSDConfigs"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 4,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 9,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 44,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "fileSDConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 46,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "jobName"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "jobName"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 24,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "labels"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "labels"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 15,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "labels"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 17,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "metricRelabelings"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "metricRelabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 67,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "metricRelabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 69,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "metricsPath"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "metricsPath"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 36,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "metricsPath"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 37,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "modules"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "modules"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 25,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "modules"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 28,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "namespace"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "namespace"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 20,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "namespace"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 21,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "relabelings"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "relabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 52,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "relabelings"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 54,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "scheme"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "scheme"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 43,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "scrapeInterval"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "scrapeInterval"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 34,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "scrapeTimeout"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "scrapeTimeout"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 35,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "scrapeConfig",
+          "staticConfigs"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 3,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 9,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 48,
+            "fallback": false
+          },
+          {
+            "path": [
+              "scrapeConfig",
+              "staticConfigs"
+            ],
+            "file": "templates/scrapeconfig.yaml",
+            "line": 50,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "interval"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 17,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "interval"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 18,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "labels"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "labels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 6,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "labels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 8,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "metricRelabelings"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 26,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 28,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "namespace"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 11,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "namespace"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 12,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "targetLabels"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 37,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 39,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "targetLabels",
+          "*"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "targetLabels",
+              "*"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 40,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "telemetryPath"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "telemetryPath"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 20,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "telemetryPath"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 21,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceMonitor",
+          "timeout"
+        ],
+        "in_values": false,
+        "in_schema": true,
+        "references": [
+          {
+            "path": [
+              "serviceMonitor",
+              "timeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 23,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceMonitor",
+              "timeout"
+            ],
+            "file": "templates/servicemonitor.yaml",
+            "line": 24,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "undocumented_template_fields": [],
+    "template_only_fields": [],
+    "schema_fields_without_values": [
+      [
+        "livenessProbe",
+        "httpGet",
+        "scheme"
+      ],
+      [
+        "livenessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "livenessProbe",
+        "periodSeconds"
+      ],
+      [
+        "readinessProbe",
+        "failureThreshold"
+      ],
+      [
+        "readinessProbe",
+        "httpGet",
+        "scheme"
+      ],
+      [
+        "readinessProbe",
+        "initialDelaySeconds"
+      ],
+      [
+        "readinessProbe",
+        "periodSeconds"
+      ],
+      [
+        "scrapeConfig",
+        "fileSDConfigs"
+      ],
+      [
+        "scrapeConfig",
+        "fileSDConfigs",
+        "*"
+      ],
+      [
+        "scrapeConfig",
+        "jobName"
+      ],
+      [
+        "scrapeConfig",
+        "labels"
+      ],
+      [
+        "scrapeConfig",
+        "metricRelabelings"
+      ],
+      [
+        "scrapeConfig",
+        "metricRelabelings",
+        "*"
+      ],
+      [
+        "scrapeConfig",
+        "metricsPath"
+      ],
+      [
+        "scrapeConfig",
+        "modules"
+      ],
+      [
+        "scrapeConfig",
+        "modules",
+        "*"
+      ],
+      [
+        "scrapeConfig",
+        "namespace"
+      ],
+      [
+        "scrapeConfig",
+        "relabelings"
+      ],
+      [
+        "scrapeConfig",
+        "relabelings",
+        "*"
+      ],
+      [
+        "scrapeConfig",
+        "scheme"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeInterval"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeTimeout"
+      ],
+      [
+        "scrapeConfig",
+        "staticConfigs"
+      ],
+      [
+        "scrapeConfig",
+        "staticConfigs",
+        "*"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings",
+        "*"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels",
+        "*"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ]
+    ],
+    "unreferenced_values": [
+      [
+        "additionalAnnotations"
+      ],
+      [
+        "affinity"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "configSecret",
+        "key"
+      ],
+      [
+        "configSecret",
+        "name"
+      ],
+      [
+        "containerSecurityContext"
+      ],
+      [
+        "extraArgs",
+        "*"
+      ],
+      [
+        "extraVolumeMounts",
+        "*"
+      ],
+      [
+        "extraVolumes",
+        "*"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "livenessProbe",
+        "failureThreshold"
+      ],
+      [
+        "livenessProbe",
+        "httpGet",
+        "path"
+      ],
+      [
+        "livenessProbe",
+        "httpGet",
+        "port"
+      ],
+      [
+        "livenessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "nativeIPMI",
+        "enabled"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "readinessProbe",
+        "httpGet",
+        "path"
+      ],
+      [
+        "readinessProbe",
+        "httpGet",
+        "port"
+      ],
+      [
+        "readinessProbe",
+        "timeoutSeconds"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "tolerations",
+        "*"
+      ]
+    ],
+    "unreferenced_usage": "unknown",
+    "dynamic_regions": [
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ]
+    ],
+    "unresolved": [
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 5,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 6,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 14,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 15,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 16,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 20,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 22,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 30,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 31,
+        "message": "unresolved dot context: .Chart.Version"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 37,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 38,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 38,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 39,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 39,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 40,
+        "message": "unresolved dot context: .Chart.AppVersion"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 41,
+        "message": "unresolved dot context: .Chart.AppVersion"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 43,
+        "message": "unresolved dot context: .Release.Service"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 49,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 50,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 50,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 51,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 57,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 58,
+        "message": "unresolved dot context: .Values.serviceAccount.create"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 59,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 59,
+        "message": "unresolved dot context: .Values.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 59,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 61,
+        "message": "unresolved dot context: .Values.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 68,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 69,
+        "message": "unresolved dot context: .Capabilities.APIVersions.Has"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 79,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 80,
+        "message": "unresolved dot context: .Values.existingSecret.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 81,
+        "message": "unresolved dot context: .Values.existingSecret.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 83,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 83,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/configmap.yaml",
+        "line": 2,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/configmap.yaml",
+        "line": 8,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "line": 1,
+        "message": "unmatched end at line 48"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 19,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 25,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 36,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 52,
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 64,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 64,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 64,
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 64,
+        "message": "unresolved dot context: .Values.clusterDomain"
+      },
+      {
+        "file": "templates/scrapeconfig.yaml",
+        "line": 64,
+        "message": "unresolved dot context: .Values.service.port"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 4,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/service.yaml",
+        "line": 17,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 30,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/servicemonitor.yaml",
+        "line": 36,
+        "message": "dynamic template/context or mutation requires review: include"
+      }
+    ]
+  },
+  "field_coverage": {
+    "lower_bound_fields": 31,
+    "present_fields": [
+      [
+        "configSecret",
+        "enabled"
+      ],
+      [
+        "modules"
+      ],
+      [
+        "resources",
+        "limits",
+        "cpu"
+      ],
+      [
+        "resources",
+        "limits",
+        "memory"
+      ],
+      [
+        "resources",
+        "requests",
+        "cpu"
+      ],
+      [
+        "resources",
+        "requests",
+        "memory"
+      ],
+      [
+        "scrapeConfig",
+        "enabled"
+      ],
+      [
+        "scrapeConfig",
+        "mode"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ]
+    ],
+    "varied_fields": [
+      [
+        "service",
+        "port"
+      ],
+      [
+        "service",
+        "type"
+      ]
+    ],
+    "unvaried_fields": [
+      [
+        "configSecret",
+        "enabled"
+      ],
+      [
+        "modules"
+      ],
+      [
+        "resources",
+        "limits",
+        "cpu"
+      ],
+      [
+        "resources",
+        "limits",
+        "memory"
+      ],
+      [
+        "resources",
+        "requests",
+        "cpu"
+      ],
+      [
+        "resources",
+        "requests",
+        "memory"
+      ],
+      [
+        "scrapeConfig",
+        "enabled"
+      ],
+      [
+        "scrapeConfig",
+        "fileSDConfigs"
+      ],
+      [
+        "scrapeConfig",
+        "jobName"
+      ],
+      [
+        "scrapeConfig",
+        "labels"
+      ],
+      [
+        "scrapeConfig",
+        "metricRelabelings"
+      ],
+      [
+        "scrapeConfig",
+        "metricsPath"
+      ],
+      [
+        "scrapeConfig",
+        "mode"
+      ],
+      [
+        "scrapeConfig",
+        "modules"
+      ],
+      [
+        "scrapeConfig",
+        "namespace"
+      ],
+      [
+        "scrapeConfig",
+        "relabelings"
+      ],
+      [
+        "scrapeConfig",
+        "scheme"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeInterval"
+      ],
+      [
+        "scrapeConfig",
+        "scrapeTimeout"
+      ],
+      [
+        "scrapeConfig",
+        "staticConfigs"
+      ],
+      [
+        "service",
+        "annotations"
+      ],
+      [
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "serviceMonitor",
+        "targetLabels"
+      ],
+      [
+        "serviceMonitor",
+        "telemetryPath"
+      ],
+      [
+        "serviceMonitor",
+        "timeout"
+      ]
+    ],
+    "present_count": 12,
+    "varied_count": 2,
+    "varied_fraction": 0.06451612903225806,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "status": "failed",
+  "chart": "/private/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-yai4moqs/chart",
+  "seed": 0,
+  "attempts": 33,
+  "error": "Error: YAML parse error on prometheus-ipmi-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "image": {
+      "pullPolicy": "Never",
+      "repository": "\u001f"
+    },
+    "replicaCount": 0,
+    "resources": {},
+    "service": {
+      "port": 1,
+      "type": "NodePort"
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 15,
+    "unique_bundles": 15,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 15
+  },
+  "phase": "known-inputs"
+}

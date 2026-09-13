@@ -1,0 +1,2014 @@
+{
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/prometheus-community-helm-charts/charts/prometheus-to-sd",
+  "started_epoch": 1789264230,
+  "elapsed_seconds": 8.617399625014514,
+  "scan_status": "completed",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "failed": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "failed",
+      "name": "prometheus-to-sd",
+      "version": "0.5.1",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789260855/runs/prometheus-to-sd_1789264230/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/prometheus-community-helm-charts/charts/prometheus-to-sd/values.yaml",
+      "attempts": 134,
+      "phases": [
+        {
+          "input_inventory": {
+            "fields": [
+              {
+                "path": [
+                  "image"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": []
+              },
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "pullPolicy"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 25,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "repository"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "tag"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": true
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "metricsSources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "metricsSources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 32,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "metricsSources",
+                  "kube-state-metrics"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": []
+              },
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 35,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 36,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 40,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 42,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "port"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "port"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 28,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "replicaCount"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 11,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "resources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "resources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 39,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 44,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 46,
+                    "fallback": false
+                  }
+                ]
+              }
+            ],
+            "known_fields": [
+              [
+                "image",
+                "pullPolicy"
+              ],
+              [
+                "image",
+                "repository"
+              ],
+              [
+                "image",
+                "tag"
+              ],
+              [
+                "metricsSources"
+              ],
+              [
+                "monitoredResourceTypes"
+              ],
+              [
+                "nodeSelector"
+              ],
+              [
+                "port"
+              ],
+              [
+                "replicaCount"
+              ],
+              [
+                "resources"
+              ],
+              [
+                "tolerations"
+              ]
+            ],
+            "lower_bound_fields": 10,
+            "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+            "inventory_complete": false,
+            "output_influence_proven": false,
+            "missing_values": [],
+            "undocumented_template_fields": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "pullPolicy"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 25,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "repository"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "tag"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": true
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "metricsSources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "metricsSources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 32,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 35,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 36,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 40,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 42,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "port"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "port"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 28,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "replicaCount"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 11,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "resources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "resources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 39,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 44,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 46,
+                    "fallback": false
+                  }
+                ]
+              }
+            ],
+            "template_only_fields": [],
+            "schema_fields_without_values": [],
+            "unreferenced_values": [],
+            "unreferenced_usage": "unknown",
+            "dynamic_regions": [
+              [
+                "metricsSources"
+              ]
+            ],
+            "unresolved": [
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 5,
+                "message": "named template context is resolved only at runtime"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 6,
+                "message": "unresolved dot context: .Chart.Name"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 6,
+                "message": "unresolved dot context: .Values.nameOverride"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 13,
+                "message": "named template context is resolved only at runtime"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 14,
+                "message": "unresolved dot context: .Release.Name"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 4,
+                "message": "dynamic template/context or mutation requires review: template"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 6,
+                "message": "dynamic template/context or mutation requires review: template"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 14,
+                "message": "dynamic template/context or mutation requires review: template"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 19,
+                "message": "dynamic template/context or mutation requires review: template"
+              }
+            ]
+          },
+          "field_coverage": {
+            "lower_bound_fields": 10,
+            "present_fields": [
+              [
+                "image",
+                "pullPolicy"
+              ],
+              [
+                "image",
+                "repository"
+              ],
+              [
+                "image",
+                "tag"
+              ],
+              [
+                "metricsSources"
+              ],
+              [
+                "monitoredResourceTypes"
+              ],
+              [
+                "nodeSelector"
+              ],
+              [
+                "port"
+              ],
+              [
+                "replicaCount"
+              ],
+              [
+                "resources"
+              ],
+              [
+                "tolerations"
+              ]
+            ],
+            "varied_fields": [
+              [
+                "image",
+                "pullPolicy"
+              ],
+              [
+                "image",
+                "repository"
+              ],
+              [
+                "image",
+                "tag"
+              ]
+            ],
+            "unvaried_fields": [
+              [
+                "metricsSources"
+              ],
+              [
+                "monitoredResourceTypes"
+              ],
+              [
+                "nodeSelector"
+              ],
+              [
+                "port"
+              ],
+              [
+                "replicaCount"
+              ],
+              [
+                "resources"
+              ],
+              [
+                "tolerations"
+              ]
+            ],
+            "present_count": 10,
+            "varied_count": 3,
+            "varied_fraction": 0.3,
+            "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+            "branch_coverage_proven": false
+          },
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-p0i3g180/chart",
+          "seed": 0,
+          "attempts": 33,
+          "error": "Error: YAML parse error on prometheus-to-sd/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+          "values": {
+            "image": {
+              "pullPolicy": "\u001f"
+            }
+          },
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 16,
+            "unique_bundles": 10,
+            "duplicate_bundles": 6,
+            "validation_cache_hits": 6,
+            "validated_entries": 10
+          },
+          "phase": "known-inputs"
+        },
+        {
+          "input_inventory": {
+            "fields": [
+              {
+                "path": [
+                  "image"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": []
+              },
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "pullPolicy"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 25,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "repository"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "tag"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": true
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "metricsSources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "metricsSources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 32,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "metricsSources",
+                  "kube-state-metrics"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": []
+              },
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 35,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 36,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 40,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 42,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "port"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "port"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 28,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "replicaCount"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 11,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "resources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "resources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 39,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 44,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 46,
+                    "fallback": false
+                  }
+                ]
+              }
+            ],
+            "known_fields": [
+              [
+                "image",
+                "pullPolicy"
+              ],
+              [
+                "image",
+                "repository"
+              ],
+              [
+                "image",
+                "tag"
+              ],
+              [
+                "metricsSources"
+              ],
+              [
+                "monitoredResourceTypes"
+              ],
+              [
+                "nodeSelector"
+              ],
+              [
+                "port"
+              ],
+              [
+                "replicaCount"
+              ],
+              [
+                "resources"
+              ],
+              [
+                "tolerations"
+              ]
+            ],
+            "lower_bound_fields": 10,
+            "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+            "inventory_complete": false,
+            "output_influence_proven": false,
+            "missing_values": [],
+            "undocumented_template_fields": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "pullPolicy"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 25,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "repository"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "image",
+                      "tag"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 24,
+                    "fallback": true
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "metricsSources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "metricsSources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 32,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 35,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "monitoredResourceTypes"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 36,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 40,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "nodeSelector"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 42,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "port"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "port"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 28,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "replicaCount"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 11,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "resources"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "resources"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 39,
+                    "fallback": false
+                  }
+                ]
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": [
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 44,
+                    "fallback": false
+                  },
+                  {
+                    "path": [
+                      "tolerations"
+                    ],
+                    "file": "templates/deployment.yaml",
+                    "line": 46,
+                    "fallback": false
+                  }
+                ]
+              }
+            ],
+            "template_only_fields": [],
+            "schema_fields_without_values": [],
+            "unreferenced_values": [],
+            "unreferenced_usage": "unknown",
+            "dynamic_regions": [
+              [
+                "metricsSources"
+              ]
+            ],
+            "unresolved": [
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 5,
+                "message": "named template context is resolved only at runtime"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 6,
+                "message": "unresolved dot context: .Chart.Name"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 6,
+                "message": "unresolved dot context: .Values.nameOverride"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 13,
+                "message": "named template context is resolved only at runtime"
+              },
+              {
+                "file": "templates/_helpers.tpl",
+                "line": 14,
+                "message": "unresolved dot context: .Release.Name"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 4,
+                "message": "dynamic template/context or mutation requires review: template"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 6,
+                "message": "dynamic template/context or mutation requires review: template"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 14,
+                "message": "dynamic template/context or mutation requires review: template"
+              },
+              {
+                "file": "templates/deployment.yaml",
+                "line": 19,
+                "message": "dynamic template/context or mutation requires review: template"
+              }
+            ]
+          },
+          "field_coverage": {
+            "lower_bound_fields": 10,
+            "present_fields": [
+              [
+                "image",
+                "pullPolicy"
+              ],
+              [
+                "image",
+                "repository"
+              ],
+              [
+                "image",
+                "tag"
+              ],
+              [
+                "metricsSources"
+              ],
+              [
+                "monitoredResourceTypes"
+              ],
+              [
+                "nodeSelector"
+              ],
+              [
+                "port"
+              ],
+              [
+                "replicaCount"
+              ],
+              [
+                "resources"
+              ],
+              [
+                "tolerations"
+              ]
+            ],
+            "varied_fields": [],
+            "unvaried_fields": [
+              [
+                "image",
+                "pullPolicy"
+              ],
+              [
+                "image",
+                "repository"
+              ],
+              [
+                "image",
+                "tag"
+              ],
+              [
+                "metricsSources"
+              ],
+              [
+                "monitoredResourceTypes"
+              ],
+              [
+                "nodeSelector"
+              ],
+              [
+                "port"
+              ],
+              [
+                "replicaCount"
+              ],
+              [
+                "resources"
+              ],
+              [
+                "tolerations"
+              ]
+            ],
+            "present_count": 10,
+            "varied_count": 0,
+            "varied_fraction": 0.0,
+            "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+            "branch_coverage_proven": false
+          },
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 101,
+            "unique_bundles": 1,
+            "duplicate_bundles": 100,
+            "validation_cache_hits": 100,
+            "validated_entries": 1
+          },
+          "status": "passed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-p0i3g180/chart",
+          "seed": 0,
+          "attempts": 101,
+          "time_limit_seconds": 298.02798183308914,
+          "execution_seconds": 6.5131839998066425,
+          "max_examples": 100,
+          "mode": "sampled",
+          "proof_of_totality": false,
+          "phase": "robustness"
+        }
+      ],
+      "time_limit_seconds": 300.0,
+      "execution_seconds": 8.49013858428225,
+      "coverage_complete": false,
+      "proof_of_totality": false,
+      "phase_targets_complete": true,
+      "filtering": {
+        "requested": true,
+        "applied": true,
+        "method": "known-inputs-first",
+        "topology_applied": false,
+        "reason": "Generation order only; original-schema cases run last, not removed",
+        "known_input_budget_fraction": 0.9,
+        "deferred_objects": [
+          [
+            "image"
+          ],
+          []
+        ],
+        "dynamic_objects": [
+          [
+            "metricsSources"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "resources"
+          ]
+        ],
+        "diagnostics": [
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 5,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Values.nameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 13,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 14,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 4,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 6,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "path": [
+              "metricsSources",
+              "*"
+            ],
+            "message": "wildcard resolved by schema/item tests; no invented key or item"
+          },
+          {
+            "path": [
+              "metricsSources",
+              "*"
+            ],
+            "message": "no schema for referenced path; generated unconstrained path test"
+          }
+        ]
+      },
+      "error": "known-inputs: Error: YAML parse error on prometheus-to-sd/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+      "input_inventory": {
+        "fields": [
+          {
+            "path": [
+              "image"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 25,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 24,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 24,
+                "fallback": true
+              }
+            ]
+          },
+          {
+            "path": [
+              "metricsSources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "metricsSources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 32,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "metricsSources",
+              "kube-state-metrics"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          },
+          {
+            "path": [
+              "monitoredResourceTypes"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 35,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 36,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 40,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 42,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "port"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 28,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 11,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "resources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "resources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 39,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 44,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 46,
+                "fallback": false
+              }
+            ]
+          }
+        ],
+        "known_fields": [
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "metricsSources"
+          ],
+          [
+            "monitoredResourceTypes"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "port"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "lower_bound_fields": 10,
+        "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+        "inventory_complete": false,
+        "output_influence_proven": false,
+        "missing_values": [],
+        "undocumented_template_fields": [
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "pullPolicy"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 25,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "repository"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 24,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "image",
+                  "tag"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 24,
+                "fallback": true
+              }
+            ]
+          },
+          {
+            "path": [
+              "metricsSources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "metricsSources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 32,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "monitoredResourceTypes"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 35,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "monitoredResourceTypes"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 36,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 40,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "nodeSelector"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 42,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "port"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "port"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 28,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "replicaCount"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "replicaCount"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 11,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "resources"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "resources"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 39,
+                "fallback": false
+              }
+            ]
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": [
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 44,
+                "fallback": false
+              },
+              {
+                "path": [
+                  "tolerations"
+                ],
+                "file": "templates/deployment.yaml",
+                "line": 46,
+                "fallback": false
+              }
+            ]
+          }
+        ],
+        "template_only_fields": [],
+        "schema_fields_without_values": [],
+        "unreferenced_values": [],
+        "unreferenced_usage": "unknown",
+        "dynamic_regions": [
+          [
+            "metricsSources"
+          ]
+        ],
+        "unresolved": [
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 5,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Chart.Name"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 6,
+            "message": "unresolved dot context: .Values.nameOverride"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 13,
+            "message": "named template context is resolved only at runtime"
+          },
+          {
+            "file": "templates/_helpers.tpl",
+            "line": 14,
+            "message": "unresolved dot context: .Release.Name"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 4,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 6,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 14,
+            "message": "dynamic template/context or mutation requires review: template"
+          },
+          {
+            "file": "templates/deployment.yaml",
+            "line": 19,
+            "message": "dynamic template/context or mutation requires review: template"
+          }
+        ]
+      },
+      "field_coverage": {
+        "lower_bound_fields": 10,
+        "present_fields": [
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ],
+          [
+            "metricsSources"
+          ],
+          [
+            "monitoredResourceTypes"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "port"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "varied_fields": [
+          [
+            "image",
+            "pullPolicy"
+          ],
+          [
+            "image",
+            "repository"
+          ],
+          [
+            "image",
+            "tag"
+          ]
+        ],
+        "unvaried_fields": [
+          [
+            "metricsSources"
+          ],
+          [
+            "monitoredResourceTypes"
+          ],
+          [
+            "nodeSelector"
+          ],
+          [
+            "port"
+          ],
+          [
+            "replicaCount"
+          ],
+          [
+            "resources"
+          ],
+          [
+            "tolerations"
+          ]
+        ],
+        "present_count": 10,
+        "varied_count": 3,
+        "varied_fraction": 0.3,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "coverage": "known inputs, then original-schema robustness sampling",
+      "schema_source": "inferred generation; no values schema",
+      "lint": "passed",
+      "error_diagnostics": [
+        {
+          "phase": "known-inputs",
+          "status": "failed",
+          "failure_type": "RenderFailure",
+          "error": "Error: YAML parse error on prometheus-to-sd/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+          "source": null
+        }
+      ],
+      "elapsed_seconds": 8.614062166772783,
+      "result": "FAIL",
+      "error_refs": [
+        "E001"
+      ]
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "fail": false,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "helm": "/tmp/hh-helm4/darwin-arm64/helm",
+    "seed": 0,
+    "build_dependencies": true,
+    "values": "values.yaml",
+    "clone_timeout_seconds": 180
+  },
+  "error_groups": [
+    {
+      "status": "failed",
+      "failure_type": "RenderFailure",
+      "error": "Error: YAML parse error on prometheus-to-sd/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed\n\nUse --debug flag to render out invalid YAML",
+      "source": null,
+      "occurrences": [
+        {
+          "chart": ".",
+          "phase": "known-inputs",
+          "status": "failed",
+          "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/prometheus-runs/prometheus-charts_1789260855/runs/prometheus-to-sd_1789264230/0000"
+        }
+      ],
+      "id": "E001",
+      "occurrence_count": 1,
+      "affected_charts": [
+        "."
+      ]
+    }
+  ],
+  "error_summary": {
+    "unique_errors": 1,
+    "occurrences": 1,
+    "duplicates": 0
+  }
+}

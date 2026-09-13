@@ -12,19 +12,24 @@ from combinations of Helm chart inputs to reproducible examples.
 - Choose permutation coverage, with exhaustive testing for small finite spaces.
 - Skip provably equivalent renders or opt into sampling to reduce test volume.
 - Preview coverage and runtime estimates; set execution budgets and shard tests across workers.
-- Scan chart repositories, build dependencies, and export Markdown/PDF reports.
+- Scan local, Git, and authenticated Helm repositories; build dependencies and export Markdown/PDF reports.
 - Integrate Kubernetes schema validation and optional security checks into CI.
 - Generate benchmark charts and compare coverage, bug discovery, and scaling with plots.
 
-## Use case: Bitnami charts
+We recommend a **manual CI check on trunk before tagging a service release**, to
+exercise the sprint's accumulated changes. Run fresh tests, review the report,
+and tag the tested commit. See the [release-check workflow and cache retention](docs/ci/README.md).
 
-We scanned **115 Bitnami charts**, recording **19,846 test attempts** with filtering
-and a five-minute budget per chart. The results include render failures, chart
-validation rejections, and tooling limitations; confirmed chart bugs require triage.
+## Table of contents
 
-Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
-reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
-the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789251211/README.md).
+- [Install](#install)
+- [Audit, test, or scan?](#audit-test-or-scan)
+- [Quick start](#quick-start)
+- [Guides](#guides)
+- [Test case: Bitnami charts](#test-case-bitnami-charts)
+- [Test case: Prometheus Community charts](#test-case-prometheus-community-charts)
+- [Development](#development)
+- [License](#license)
 
 ## Install
 
@@ -51,7 +56,7 @@ See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot comm
 | --- | --- | --- |
 | `audit ./chart` | Understanding one chart's input contract. | Statically compares values, schema, and template references. Reports missing defaults, undocumented fields, and unresolved access as JSON. Renders only when an export option requests verification or output observation. |
 | `test ./chart` | Finding failures in one chart. | Generates inputs, renders them with Helm, checks the manifests, and shrinks failures into reproducible examples. Saves test results and failing values. |
-| `scan SOURCE` | Reviewing every chart in a repository. | Recursively discovers charts, builds dependencies in isolated copies, runs Helm lint and chart tests, and records each chart's outcome. `--report` adds combined Markdown/PDF reports. Accepts local directories and HTTPS/SSH Git URLs. |
+| `scan SOURCE` | Reviewing charts from local, Git, or Helm repositories. | Discovers charts, builds dependencies in isolated copies, runs Helm lint and chart tests, and records each chart's outcome. `--report` adds combined Markdown/PDF reports. Also accepts individual repository/OCI charts and public Helm indexes. |
 
 `test` requires a values schema and dependencies already available in the chart.
 `audit` also works without a schema. For schema-less charts, `scan` runs baseline
@@ -88,9 +93,11 @@ Scan a repository and write Markdown/PDF summaries:
 ```sh
 helm hypothesis scan ./charts --report
 helm hypothesis scan https://github.com/bitnami/charts.git --filter --report
+helm hypothesis scan prometheus-community/prometheus --filter --report
+helm hypothesis scan prometheus-community --filter --report
 ```
 
-See [Repository scanning](docs/scanning/README.md) for values files and dependency handling.
+See [Repository scanning](docs/scanning/README.md) for authentication, public indexes, version selection, and dependency handling.
 
 ## Guides
 
@@ -105,6 +112,29 @@ See [Repository scanning](docs/scanning/README.md) for values files and dependen
 
 [All documentation](docs/README.md) includes detailed behavior and the
 [exact-equivalence pruning contract](docs/safe-pruning.md).
+
+## Test case: Bitnami charts
+
+We scanned **115 Bitnami charts**, recording **19,612 test attempts** with filtering
+and a five-minute budget per chart. The results include render failures, chart
+validation rejections, and tooling limitations; confirmed chart bugs require triage.
+
+Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
+reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
+the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789260948/README.md).
+The [chart topology catalog](docs/benchmarks/chart-topologies/README.md) includes
+directed dependency graphs and their mathematical measurements.
+
+## Test case: Prometheus Community charts
+
+We scanned **46 Prometheus Community charts**, recording **6,515 test attempts**
+with the same filtering and five-minute budget per chart. Results include input-test
+failures, a baseline configuration failure, missing values, and incomplete coverage.
+
+Read the [scan results](docs/reports/prometheus.md), download the
+[combined PDF](docs/reports/prometheus.pdf), or inspect the
+[retained logs and data](docs/reports/prometheus-runs/prometheus-charts_1789260855/README.md).
+Its dependency graphs are also in the [topology catalog](docs/benchmarks/chart-topologies/README.md).
 
 ## Development
 

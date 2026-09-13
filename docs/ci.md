@@ -1,5 +1,9 @@
 # CI integration
 
+For a final release check, run manually on trunk before tagging, using `--rerun all`
+to refresh results for the selected tests. See the [manual CI examples and retention
+policy](ci/README.md#recommended-release-check); keep the tested commit as the release candidate.
+
 `helm hypothesis test` and `helm hypothesis run` default to `--shard auto`.
 Parallel pipeline jobs automatically select a deterministic partition, while
 each runner keeps its own `--jobs auto` worker controller.
@@ -106,6 +110,7 @@ or versions and want full coverage for each combination, pass an explicit
 | `artifact-dir` | `reports/hypothesis-helm` | Root for generated tests and reports |
 | `upload-artifacts` | `true` | Upload the resulting directory |
 | `artifact-name` | `hypothesis-helm` | Upload prefix; job and shard IDs are appended |
+| `artifact-retention-days` | `30` | Report retention, subject to repository policy; independent of cache lifetime |
 | `python-version` | `3.13` | Python version, at least 3.13 |
 | `helm-version` | `v4.3.0` | Helm 4 version |
 
@@ -149,7 +154,10 @@ provider's cache facility. Save it even when tests fail so failed path results s
 Use a distinct outer cache key per runner environment and shard; the framework uses
 content-derived keys inside that directory. Restore a previous run's directory to
 reuse its results. Local cache entries are also included in uploaded report artifacts
-when using the default cache location.
+when using the default cache location and the upload includes hidden files. Use the
+[release-check example](ci/README.md#github-actions) for explicit outcome cache
+restore/save and a 30-day snapshot fallback. Provider cache retention differs from
+artifact retention; see [retention between sprints](ci/README.md#retention-between-sprints).
 
 CI still tests the full selection by default. Set `rerun: failed` explicitly to retry
 only failed or incomplete paths from a compatible cache. Previously passing paths
@@ -216,7 +224,7 @@ and appear in scan artifacts rather than the Helm JUnit report.
 | --- | --- | --- |
 | `run-id` | empty | Common pipeline and attempt identity for shard aggregation. |
 | `export-minimal-values` | `false` | Export deterministic concrete values after tests. |
-| `commit-minimal-values` | `false` | Export and commit only the exported YAML files. |
+| `commit-minimal-values` | `false` | Export and commit the YAML and matching `.proof` files. |
 | `minimal-values-filename` | `values-minimal.yaml` | Basename written inside each discovered chart. |
 | `minimal-values-timeout` | `30s` | Search budget per chart. |
 

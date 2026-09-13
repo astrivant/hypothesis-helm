@@ -112,14 +112,19 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     exports.add_argument("--helm", default="helm")
     exports.add_argument("--timeout", type=parse_time_limit, default=30)
     exports.add_argument("--minimal-values-timeout", type=parse_time_limit, default=30)
-    exports.add_argument("--files-list", type=Path, help="write NUL-delimited exported YAML paths")
-    repository = commands.add_parser("scan", help="recursively test charts in a directory or Git repository")
-    repository.add_argument("directory", metavar="SOURCE", help="local directory, HTTPS repository URL, or Git SSH URL")
+    exports.add_argument("--files-list", type=Path, help="write NUL-delimited exported YAML and proof paths")
+    repository = commands.add_parser("scan", help="test charts from a directory, Git, or Helm repository")
+    repository.add_argument(
+        "directory", metavar="SOURCE", help="directory, Git URL, Helm repo[/chart], public index.yaml URL, or OCI chart"
+    )
+    repository.add_argument("--helm-repository", action="store_true", help="interpret SOURCE as a Helm repository name or HTTP(S) base URL")
+    repository.add_argument("--chart-version", help="Helm chart version or constraint; default: latest stable release per chart")
     repository.add_argument(
         "--clone-timeout",
+        "--source-timeout",
         type=parse_time_limit,
         default=180,
-        help="repository checkout budget, also bounded by --scan-timeout (default: 3m)",
+        help="Git checkout or Helm source preparation budget, also bounded by --scan-timeout (default: 3m)",
     )
     repository.add_argument(
         "--report",
@@ -153,7 +158,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     repository.add_argument(
         "--scan-timeout",
         type=parse_time_limit,
-        help="total scan deadline including discovery and preparation; default: unlimited",
+        help="scan budget excluding dependency preparation; default: unlimited",
     )
     repository.add_argument("--max-examples", type=int, default=100)
     repository.add_argument(

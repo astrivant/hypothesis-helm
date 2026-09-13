@@ -53,6 +53,7 @@ markers = ["integration: requires Helm", "astrivant: optional neighboring Astriv
 [tool.ruff]
 line-length = 140
 target-version = "py313"
+extend-exclude = ["third_party"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "D"]

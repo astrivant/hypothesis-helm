@@ -14,7 +14,6 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.runner import Chart, check_chart
 from hypothesis_helm.cli import main
 from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory
-from hypothesis_helm.schemas.contracts import mapping
 
 
 @pytest.fixture
@@ -99,7 +98,7 @@ def test_input_discrepancies_and_projection(chart: Chart, tmp_path: Path) -> Non
     assert result["render_equivalence_proven"] is False
     assert result["globally_minimal_proven"] is False
     assert (chart.path / "values.yaml").read_bytes() == original
-    assert json.loads(target.with_suffix(".inventory.json").read_text())["input_inventory"]["lower_bound_fields"] == 2
+    assert json.loads(target.with_suffix(".proof").read_text())["input_inventory"]["lower_bound_fields"] == 2
     with pytest.raises(ValueError, match="overwrite"):
         inventory.dump(chart, chart.path / "values.yaml")
 
@@ -197,7 +196,7 @@ def test_audit_dump_without_schema(chart: Chart, capsys: pytest.CaptureFixture[s
     assert report["input_inventory"]["lower_bound_fields"] == 2
     assert report["minimal_values"]["yaml"] == str(target)
     assert yamlio.load_all(target.read_text())[0] == {}
-    assert mapping(mapping(yamlio.load_all(target.read_text())[1])["verification"])["verified"]
+    assert json.loads(target.with_suffix(".proof").read_text())["verification"]["verified"]
 
 
 def test_export_default_filename(
@@ -227,9 +226,12 @@ def test_export_default_filename(
     assert target.name == f"values-minimal-{digest}-1234567890.yaml"
     assert exported["sha256"] == digest
     assert exported["exported_epoch"] == 1234567890
-    assert json.loads(Path(exported["inventory"]).read_text()) == exported
+    proof = json.loads(Path(exported["proof"]).read_text())
+    assert proof["sha256"] == exported["sha256"]
+    assert proof["yaml"] == target.name
+    assert "exported_epoch" not in proof
     assert yamlio.load_all(target.read_text())[0] == {}
-    assert mapping(mapping(yamlio.load_all(target.read_text())[1])["verification"])["verified"]
+    assert json.loads(target.with_suffix(".proof").read_text())["verification"]["verified"]
 
 
 @pytest.mark.parametrize("override", [False, True])
@@ -298,6 +300,7 @@ def test_scan_exports_each_chart(
             assert target.parent == Path(item["artifacts"])
             assert target.name == f"values-minimal-{digest}-{exported['exported_epoch']}.yaml"
     assert "Identified input fields" in (tmp_path / "scan.md").read_text()
+    assert "Verification record:" in (tmp_path / "scan.md").read_text()
 
 
 def test_scan_export_cannot_overwrite_original_values(chart: Chart, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:

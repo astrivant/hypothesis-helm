@@ -8,6 +8,7 @@ import math
 import platform
 import random
 import shutil
+import subprocess
 import time
 from collections import Counter
 from pathlib import Path
@@ -167,10 +168,11 @@ def run() -> int:
     parser.add_argument("--retain", type=float, default=0.25, help="fraction retained per run")
     parser.add_argument("--levels", type=int, default=8)
     parser.add_argument("--seed", type=int, default=2026)
-    parser.add_argument("--time-limit", type=parse_time_limit, default=180.0)
+    parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
+    parser.add_argument("--helm", default="helm")
     args = parser.parse_args()
-    if not math.isfinite(args.time_limit) or not 0 < args.time_limit <= 180:
-        parser.error("time limit must be positive and at most 180 seconds per run")
+    if not math.isfinite(args.time_limit) or not 0 < args.time_limit <= 540:
+        parser.error("time limit must be positive and at most 540 seconds per run")
     try:
         stages = samples(args.count, args.retain, args.levels, args.seed)
     except ValueError as exc:
@@ -190,13 +192,14 @@ def run() -> int:
         for assignment in range(2 ** len(roles)):
             values: dict[str, object] = {str(path): bool(assignment & (1 << bit)) for bit, path in enumerate(roles)}
             topology_reference[configuration_key(expected_topology(values, spec))] += 1
-    helm = shutil.which("helm")
+    helm = shutil.which(args.helm)
     if helm is None:
         parser.error("Helm is required")
     args.output.mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, object]] = []
     document: dict[str, object] = {
         "metadata": {
+            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
             "seed": args.seed,
             "count": args.count,
             "retain": args.retain,

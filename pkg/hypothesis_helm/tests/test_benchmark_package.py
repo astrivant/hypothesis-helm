@@ -69,6 +69,7 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         "expansion",
         "topology-depth",
         "nesting",
+        "topology",
     ):
         result = subprocess.run(
             [*command, name, "--help"],

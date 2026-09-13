@@ -38,7 +38,7 @@ positional arguments:
     aggregate           verify piped shard reports and write one final report
     export-minimal-values
                         write example values beside each discovered chart
-    scan                recursively test charts in a directory or Git repository
+    scan                test charts from a directory, Git, or Helm repository
     generate            generate one typed Python property test per values path
     audit               discover value references and schema gaps
     run                 run a saved generated Python suite
@@ -96,7 +96,7 @@ options:
   --timeout TIMEOUT
   --minimal-values-timeout MINIMAL_VALUES_TIMEOUT
   --files-list FILES_LIST
-                        write NUL-delimited exported YAML paths
+                        write NUL-delimited exported YAML and proof paths
   --kubeconform         validate Kubernetes API schemas
   --schema-version SCHEMA_VERSION
                         Kubernetes schema version: latest or X.Y.Z
@@ -111,7 +111,8 @@ options:
 <summary>helm hypothesis scan</summary>
 
 ~~~text
-usage: helm hypothesis scan [-h] [--clone-timeout CLONE_TIMEOUT] [--report [PATH]]
+usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERSION]
+                            [--clone-timeout CLONE_TIMEOUT] [--report [PATH]]
                             [--artifact-dir ARTIFACT_DIR] [--helm HELM]
                             [--values VALUES] [--timeout TIMEOUT]
                             [--chart-timeout CHART_TIMEOUT]
@@ -126,13 +127,18 @@ usage: helm hypothesis scan [-h] [--clone-timeout CLONE_TIMEOUT] [--report [PATH
                             SOURCE
 
 positional arguments:
-  SOURCE                local directory, HTTPS repository URL, or Git SSH URL
+  SOURCE                directory, Git URL, Helm repo[/chart], public index.yaml URL,
+                        or OCI chart
 
 options:
   -h, --help            show this help message and exit
-  --clone-timeout CLONE_TIMEOUT
-                        repository checkout budget, also bounded by --scan-timeout
-                        (default: 3m)
+  --helm-repository     interpret SOURCE as a Helm repository name or HTTP(S) base URL
+  --chart-version CHART_VERSION
+                        Helm chart version or constraint; default: latest stable
+                        release per chart
+  --clone-timeout, --source-timeout CLONE_TIMEOUT
+                        Git checkout or Helm source preparation budget, also bounded
+                        by --scan-timeout (default: 3m)
   --report [PATH]       write Markdown and PDF; default: <dir>_<epoch>_report
   --artifact-dir ARTIFACT_DIR
   --helm HELM
@@ -141,8 +147,8 @@ options:
   --chart-timeout, --time-limit CHART_TIMEOUT
                         property-test execution budget per chart (default: 3m)
   --scan-timeout SCAN_TIMEOUT
-                        total scan deadline including discovery and preparation;
-                        default: unlimited
+                        scan budget excluding dependency preparation; default:
+                        unlimited
   --max-examples MAX_EXAMPLES
   --permutations PERMUTATIONS
                         finite interaction strength; default: automatic finite

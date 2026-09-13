@@ -10,7 +10,7 @@ import pytest
 
 from hypothesis_helm.charts.scan import discover_charts
 from hypothesis_helm.cli import argument_parser, main
-from hypothesis_helm.reporting.repository import write_reports
+from hypothesis_helm.reporting.repository import wrap_markdown, write_reports
 
 
 def test_discovery(tmp_path: Path) -> None:
@@ -84,14 +84,44 @@ def test_report_paths_and_pagination(tmp_path: Path) -> None:
         "charts_discovered": 2,
         "counts": {"failed": 2},
         "settings": {},
+        "summary": ["Scan findings need triage before being called chart defects. " * 8],
         "charts": [{"chart": "demo", "status": "failed", "error": "failure\n" * 2000}],
     }
     md, pdf = write_reports(report, tmp_path / "custom.pdf")
     assert md.name == "custom.md"
     assert pdf.name == "custom.pdf"
     assert "failure" in md.read_text()
+    assert all(len(line) <= 140 for line in md.read_text().splitlines())
     assert pdf.read_bytes().startswith(b"%PDF-")
     assert pdf.read_bytes().count(b"/Type /Page\n") >= 2
+
+
+def test_report_wrapping_preserves_markdown() -> None:
+    """
+    Preserve reproductions, fenced diagnostics, links, and list continuation.
+
+    Returns:
+        None: Prose wraps without altering diagnostic or Markdown structure.
+    """
+    prose = "Observed failures require triage. " * 10
+    link = "[chart artifacts](<runs/" + "long-chart-name-" * 12 + " with spaces/values.json>)"
+    code = json.dumps({"value": "a " * 150})
+    fenced = f"````text\n{code}\n```\n{prose}\n````\n"
+    assert wrap_markdown(fenced) == fenced
+    assert wrap_markdown(f"~~~json\n{code}\n~~~\n") == f"~~~json\n{code}\n~~~\n"
+    wrapped = wrap_markdown(prose)
+    assert all(len(line) <= 140 for line in wrapped.splitlines())
+    assert wrapped.split() == prose.split()
+    listed = wrap_markdown("- " + prose).splitlines()
+    assert listed[0].startswith("- ")
+    assert all(line.startswith("  ") and len(line) <= 140 for line in listed[1:])
+    linked = wrap_markdown(prose + link + "\n")
+    assert link in linked.splitlines()
+    assert wrap_markdown(linked) == linked
+    assert link + "." in wrap_markdown(prose + link + ".").splitlines()
+    inline = "`" + "a b " * 40 + "`"
+    assert inline in wrap_markdown(prose + inline)
+    assert wrap_markdown(prose.rstrip() + "  ").endswith("  \n")
 
 
 def test_scan_execution(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
@@ -395,16 +425,16 @@ def test_interrupt_preserves_remaining_charts(tmp_path: Path, monkeypatch: pytes
     assert (tmp_path / "partial.pdf").exists()
 
 
-def test_scan_timeout_stops_dependency_process(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+def test_scan_timeout_pauses_for_dependencies(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """
-    Interrupt a dependency subprocess and preserve the unstarted chart and reports.
+    Allow dependency preparation past the scan budget, then interrupt active testing.
 
     Args:
         tmp_path (Path): Fake Helm executable and two charts.
         capsys (pytest.CaptureFixture[str]): Capture the partial JSON report.
 
     Returns:
-        None: Scan deadlines stop active work and return incomplete results.
+        None: Dependency time is separate and the restored scan alarm stops testing.
     """
     import os
     import shlex
@@ -412,7 +442,19 @@ def test_scan_timeout_stops_dependency_process(tmp_path: Path, capsys: pytest.Ca
 
     pid = tmp_path / "helm.pid"
     helm = tmp_path / "helm"
-    helm.write_text(f"#!/bin/sh\nprintf '%s' \"$$\" > {shlex.quote(str(pid))}\nexec sleep 10\n")
+    helm.write_text(
+        dedent(
+            f"""
+            #!/bin/sh
+            if [ "$1" = dependency ]; then
+                sleep 0.4
+                exit 0
+            fi
+            printf '%s' "$$" > {shlex.quote(str(pid))}
+            exec sleep 10
+            """
+        ).lstrip()
+    )
     helm.chmod(0o755)
     for name in ("a", "b"):
         path = tmp_path / name
@@ -445,7 +487,15 @@ def test_scan_timeout_stops_dependency_process(tmp_path: Path, capsys: pytest.Ca
     assert report["unstarted_charts"] == 1
     assert report["discovery_complete"] is True
     assert report["settings"]["chart_timeout_seconds"] == 2
-    assert "scan-timeout" in (tmp_path / "partial.md").read_text()
+    assert report["dependency_preparation_seconds"] >= 0.4
+    assert report["dependency_preparation_seconds"] == report["charts"][0]["dependency_preparation_seconds"]
+    assert report["testing_seconds"] > 0
+    assert report["elapsed_seconds"] >= report["dependency_preparation_seconds"] + report["testing_seconds"]
+    text = (tmp_path / "partial.md").read_text()
+    assert "scan-timeout" in text
+    assert "Dependency preparation:" in text
+    assert "Chart testing:" in text
+    assert "Elapsed (wall clock):" in text
     assert (tmp_path / "partial.pdf").exists()
     with pytest.raises(ProcessLookupError):
         os.kill(int(pid.read_text()), 0)
@@ -485,6 +535,104 @@ def test_timeout_during_discovery(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     report = json.loads(capsys.readouterr().out)
     assert report["discovery_complete"] is False
     assert report["scan_status"] == "scan-timeout"
+
+
+@pytest.mark.parametrize("outcome", ["passed", "failed", "timeout", "interrupted"])
+def test_dependency_timing_accounting(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], outcome: str
+) -> None:
+    """
+    Pause cumulative scan accounting for every dependency result without resetting test budgets.
+
+    Args:
+        tmp_path (Path): Two-chart repository.
+        monkeypatch (pytest.MonkeyPatch): Replace Helm and the scanner's local clock.
+        capsys (pytest.CaptureFixture[str]): Capture the final report.
+        outcome (str): Dependency completion, failure, timeout, or interruption.
+
+    Returns:
+        None: Preparation and testing totals remain disjoint, including partial scans.
+    """
+    import argparse
+    import subprocess
+    import time
+    from types import SimpleNamespace
+
+    import hypothesis_helm.charts.scan as module
+
+    for name in ("a", "b"):
+        chart = tmp_path / name
+        chart.mkdir()
+        (chart / "Chart.yaml").write_text(f"apiVersion: v2\nname: {name}\nversion: '1.0.0'\n")
+        (chart / "values.yaml").write_text("{}\n")
+    clock = [time.monotonic()]
+    monkeypatch.setattr(module, "time", SimpleNamespace(monotonic=lambda: clock[0], time=time.time))
+    remaining = []
+
+    def prepare(argv: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        """
+        Spend more preparation time than the entire scan budget.
+
+        Args:
+            argv (list[str]): Dependency command.
+            **kwargs (object): Independent command timeout and capture settings.
+
+        Returns:
+            subprocess.CompletedProcess[str]: Simulated successful or failed preparation.
+
+        Raises:
+            subprocess.TimeoutExpired: The dependency command timed out.
+            KeyboardInterrupt: The user interrupted preparation.
+        """
+        assert argv[1:3] == ["dependency", "build"]
+        assert kwargs["timeout"] == 30
+        clock[0] += 4
+        if outcome == "timeout":
+            raise subprocess.TimeoutExpired(argv, 30)
+        if outcome == "interrupted":
+            raise KeyboardInterrupt
+        return subprocess.CompletedProcess(argv, int(outcome == "failed"), "prepared", "")
+
+    def exercise(path: Path, args: argparse.Namespace, artifacts: Path) -> dict[str, object]:
+        """
+        Consume a quarter second of the remaining scan budget.
+
+        Args:
+            path (Path): Prepared chart.
+            args (argparse.Namespace): Cumulative scan and chart budgets.
+            artifacts (Path): Result destination.
+
+        Returns:
+            dict[str, object]: Successful property-test result.
+        """
+        assert args.chart_timeout == 1
+        remaining.append(args.scan_deadline - clock[0])
+        clock[0] += 0.25
+        return {"status": "passed", "attempts": 1, "execution_seconds": 0.2}
+
+    monkeypatch.setattr("hypothesis_helm.charts.scan.subprocess.run", prepare)
+    monkeypatch.setattr(module, "exercise_chart", exercise)
+    code = main(
+        [
+            "scan",
+            str(tmp_path),
+            "--helm",
+            "/usr/bin/true",
+            "--chart-timeout",
+            "1s",
+            "--scan-timeout",
+            "2s",
+            "--artifact-dir",
+            str(tmp_path / "out"),
+        ]
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert code == {"passed": 0, "failed": 2, "timeout": 2, "interrupted": 130}[outcome]
+    assert report["dependency_preparation_seconds"] == (4 if outcome == "interrupted" else 8)
+    assert report["testing_seconds"] == (0.5 if outcome == "passed" else 0)
+    assert report["elapsed_seconds"] == report["dependency_preparation_seconds"] + report["testing_seconds"]
+    assert remaining == ([2, 1.75] if outcome == "passed" else [])
+    assert report["scan_status"] == ("interrupted" if outcome == "interrupted" else "completed")
 
 
 def test_scan_timeout_arguments() -> None:

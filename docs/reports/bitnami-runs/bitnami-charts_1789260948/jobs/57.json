@@ -1,0 +1,272 @@
+{
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/kube-prometheus/charts/kube-prometheus-crds",
+  "started_epoch": 1789262163,
+  "elapsed_seconds": 0.3847635411657393,
+  "scan_status": "completed",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "failed": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "failed",
+      "name": "kube-prometheus-crds",
+      "version": "0.1.0",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/kube-prometheus/charts/kube-prometheus-crds/values.yaml",
+      "attempts": 2,
+      "phases": [
+        {
+          "input_inventory": {
+            "fields": [
+              {
+                "path": [
+                  "exampleValue"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": []
+              }
+            ],
+            "known_fields": [],
+            "lower_bound_fields": 0,
+            "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+            "inventory_complete": false,
+            "output_influence_proven": false,
+            "missing_values": [],
+            "undocumented_template_fields": [],
+            "template_only_fields": [],
+            "schema_fields_without_values": [],
+            "unreferenced_values": [
+              [
+                "exampleValue"
+              ]
+            ],
+            "unreferenced_usage": "possibly unused; not proven",
+            "dynamic_regions": [],
+            "unresolved": []
+          },
+          "field_coverage": {
+            "lower_bound_fields": 0,
+            "present_fields": [],
+            "varied_fields": [],
+            "unvaried_fields": [],
+            "present_count": 0,
+            "varied_count": 0,
+            "varied_fraction": null,
+            "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+            "branch_coverage_proven": false
+          },
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-n4_xrg5_/chart",
+          "seed": 0,
+          "attempts": 1,
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "values": {},
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 1,
+            "unique_bundles": 1,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 1
+          },
+          "phase": "known-inputs"
+        },
+        {
+          "input_inventory": {
+            "fields": [
+              {
+                "path": [
+                  "exampleValue"
+                ],
+                "in_values": true,
+                "in_schema": false,
+                "references": []
+              }
+            ],
+            "known_fields": [],
+            "lower_bound_fields": 0,
+            "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+            "inventory_complete": false,
+            "output_influence_proven": false,
+            "missing_values": [],
+            "undocumented_template_fields": [],
+            "template_only_fields": [],
+            "schema_fields_without_values": [],
+            "unreferenced_values": [
+              [
+                "exampleValue"
+              ]
+            ],
+            "unreferenced_usage": "possibly unused; not proven",
+            "dynamic_regions": [],
+            "unresolved": []
+          },
+          "field_coverage": {
+            "lower_bound_fields": 0,
+            "present_fields": [],
+            "varied_fields": [],
+            "unvaried_fields": [],
+            "present_count": 0,
+            "varied_count": 0,
+            "varied_fraction": null,
+            "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+            "branch_coverage_proven": false
+          },
+          "status": "failed",
+          "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-n4_xrg5_/chart",
+          "seed": 0,
+          "attempts": 1,
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "values": {},
+          "failure_type": "RenderFailure",
+          "render_hashes": {
+            "algorithm": "sha256-canonical-json-v1",
+            "scope": "run-local",
+            "observed_bundles": 1,
+            "unique_bundles": 1,
+            "duplicate_bundles": 0,
+            "validation_cache_hits": 0,
+            "validated_entries": 1
+          },
+          "phase": "robustness"
+        }
+      ],
+      "time_limit_seconds": 300.0,
+      "execution_seconds": 0.14023145893588662,
+      "coverage_complete": false,
+      "proof_of_totality": false,
+      "phase_targets_complete": true,
+      "filtering": {
+        "requested": true,
+        "applied": true,
+        "method": "known-inputs-first",
+        "topology_applied": false,
+        "reason": "Generation order only; original-schema cases run last, not removed",
+        "known_input_budget_fraction": 0.9,
+        "deferred_objects": [
+          []
+        ],
+        "dynamic_objects": [],
+        "diagnostics": []
+      },
+      "error": "known-inputs: chart rendered no resources (use allow_empty explicitly)\n\nrobustness: chart rendered no resources (use allow_empty explicitly)",
+      "input_inventory": {
+        "fields": [
+          {
+            "path": [
+              "exampleValue"
+            ],
+            "in_values": true,
+            "in_schema": false,
+            "references": []
+          }
+        ],
+        "known_fields": [],
+        "lower_bound_fields": 0,
+        "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+        "inventory_complete": false,
+        "output_influence_proven": false,
+        "missing_values": [],
+        "undocumented_template_fields": [],
+        "template_only_fields": [],
+        "schema_fields_without_values": [],
+        "unreferenced_values": [
+          [
+            "exampleValue"
+          ]
+        ],
+        "unreferenced_usage": "possibly unused; not proven",
+        "dynamic_regions": [],
+        "unresolved": []
+      },
+      "field_coverage": {
+        "lower_bound_fields": 0,
+        "present_fields": [],
+        "varied_fields": [],
+        "unvaried_fields": [],
+        "present_count": 0,
+        "varied_count": 0,
+        "varied_fraction": null,
+        "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+        "branch_coverage_proven": false
+      },
+      "coverage": "known inputs, then original-schema robustness sampling",
+      "schema_source": "inferred generation; no values schema",
+      "lint": "passed",
+      "error_diagnostics": [
+        {
+          "phase": "known-inputs",
+          "status": "failed",
+          "failure_type": "RenderFailure",
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "source": null
+        },
+        {
+          "phase": "robustness",
+          "status": "failed",
+          "failure_type": "RenderFailure",
+          "error": "chart rendered no resources (use allow_empty explicitly)",
+          "source": null
+        }
+      ],
+      "elapsed_seconds": 0.380712625104934,
+      "result": "FAIL",
+      "error_refs": [
+        "E001"
+      ]
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "fail": false,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "helm": "/tmp/hh-helm4/darwin-arm64/helm",
+    "seed": 0,
+    "build_dependencies": true,
+    "values": "values.yaml",
+    "clone_timeout_seconds": 180
+  },
+  "error_groups": [
+    {
+      "status": "failed",
+      "failure_type": "RenderFailure",
+      "error": "chart rendered no resources (use allow_empty explicitly)",
+      "source": null,
+      "occurrences": [
+        {
+          "chart": ".",
+          "phase": "known-inputs",
+          "status": "failed",
+          "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000"
+        },
+        {
+          "chart": ".",
+          "phase": "robustness",
+          "status": "failed",
+          "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000"
+        }
+      ],
+      "id": "E001",
+      "occurrence_count": 2,
+      "affected_charts": [
+        "."
+      ]
+    }
+  ],
+  "error_summary": {
+    "unique_errors": 1,
+    "occurrences": 2,
+    "duplicates": 1
+  }
+}

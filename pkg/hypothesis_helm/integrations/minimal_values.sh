@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Export beside charts; optionally commit only exported YAML files in one CI job.
+# Export beside charts; optionally commit exported YAML and proof files in one CI job.
 set -euo pipefail
 case "${HH_RESOLVED_SHARD:-none}" in
   none|1/*) ;;
@@ -39,5 +39,5 @@ fi
 git --literal-pathspecs -c user.name='github-actions[bot]' \
   -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
   commit --only --pathspec-from-file="$files_list" --pathspec-file-nul \
-  -m 'Update verified minimal Helm values'
+  -m 'Update minimal Helm values and verification proof'
 git push origin "HEAD:$HH_COMMIT_BRANCH"

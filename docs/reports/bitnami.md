@@ -1,33 +1,32 @@
 # Bitnami Helm chart scan
 
-Completed all 115 discovered charts with **--filter**, four workers, and a **five-minute test budget per chart**. No scan-wide deadline was imposed.
+Visited all **115 discovered charts** with **--filter**, four workers, and a **five-minute test budget per chart**. No scan-wide deadline
+was imposed.
 
-Recorded **19,846 test attempts across the 115 primary chart records** in **41.0 minutes** of wall time, including dependency preparation. Attempts include baseline checks and counterexample shrinking; they are not a count of unique inputs or bugs.
+Recorded **19,612 test attempts** in **42.3 minutes**. Attempts include shrinking and repeated inputs; they are not counts of unique inputs
+or confirmed bugs.
 
-The kube-prometheus worker also recursively tested its nested CRD chart. That additional result is retained in supplemental-recursive-results.json; the 115-chart totals use each chart's dedicated job once.
+**Findings:** 113 failed; 1 skipped-library; 1 time-limit.
 
-**Findings:** 112 failed; 1 skipped-library; 2 time-limit.
+**known-inputs:** 113 failed; 1 time-limit.
 
-**Known-input phase:** 112 failed; 2 time-limit.
-**Deferred robustness phase:** 13 failed; 95 passed; 6 time-limit.
+**robustness:** 12 failed; 96 passed; 6 time-limit.
 
-Known fields receive up to 90% of each chart budget; deferred original-contract cases run afterward using the remainder. A phase can finish early after finding and shrinking a counterexample. Dynamic and schema-defined maps remain open; the generation preference does not change the original validation contract or prove deferred inputs irrelevant.
+Observed failures include chart validation rejections, rendering failures, and possible tooling limitations. Inferred inputs are not an
+authoritative chart contract. Findings need triage before being called chart defects; time-limited coverage remains incomplete.
 
-Failure diagnostics across both phases: 13 explicit chart validation rejection; 6 manifest processing; 11 other; inspect diagnostic; 76 rendered YAML; 15 template evaluation; 4 values transport. These categories are based on diagnostic text and are not confirmed root causes.
+Checks: dependency build in isolated copies, Helm lint, Helm template with values-schema checks, and built-in manifest checks. External
+kubeconform/kubesec validation was not configured.
 
-Failures are observed render/manifest-check failures, including deliberate chart validation rejections and manifest-processing limitations. They need triage before being classified as chart defects. Charts without a values schema use inferred generation, not an authoritative input specification. A passed sample or completed scan does not establish exhaustive coverage.
+Source: `third_party/bitnami-charts` at `6a8cccf3c29a1faabf0c34c8276a09ed14f3c5b3`; Helm 4.3.0. Per-worker dependency caches are isolated.
+Each primary chart has one dedicated job; nested results from parent jobs are retained separately and excluded from totals.
 
-Checks: dependency build in isolated copies, Helm lint, Helm template with values-schema checks, and built-in manifest checks. External kubeconform/kubesec validation was not configured for this run.
-
-Source: `third_party/bitnami-charts` at `6a8cccf3c29a1faabf0c34c8276a09ed14f3c5b3`. The source checkout is retained.
-A post-run serializer correction keeps ordinary Unicode keys literal instead of unnecessarily escaping every character. The original production findings remain unchanged; the four values-transport diagnostics are not evidence of chart-template defects. See transport-triage.json for the isolated reproduction.
-
-
-[Combined PDF](bitnami.pdf) · [Aggregate data](bitnami-runs/bitnami-charts_1789251211/scan.json) · [Raw logs and provenance](bitnami-runs/bitnami-charts_1789251211/README.md)
+[Combined PDF](bitnami.pdf) · [Aggregate data](bitnami-runs/bitnami-charts_1789260948/scan.json.gz) ·
+[Raw logs and provenance](bitnami-runs/bitnami-charts_1789260948/README.md)
 
 Directory: third_party/bitnami-charts
-Started (Unix epoch): 1789251228
-Elapsed: 2461.80 seconds
+Started (Unix epoch): 1789260967
+Elapsed: 2539.00 seconds
 Charts discovered: 115
 Scan status: completed
 Discovery complete: True
@@ -40,9 +39,9 @@ Baseline-only, skipped, blocked, and incomplete charts are not property-test pas
 
 ```json
 {
-  "failed": 112,
+  "failed": 113,
   "skipped-library": 1,
-  "time-limit": 2
+  "time-limit": 1
 }
 ```
 
@@ -52,6 +51,7 @@ Baseline-only, skipped, blocked, and incomplete charts are not property-test pas
 {
   "max_examples": 100,
   "filter": true,
+  "fail": false,
   "permutations": null,
   "chart_timeout_seconds": 300.0,
   "scan_timeout_seconds": null,
@@ -59,137 +59,136 @@ Baseline-only, skipped, blocked, and incomplete charts are not property-test pas
   "seed": 0,
   "build_dependencies": true,
   "values": "values.yaml",
+  "clone_timeout_seconds": 180,
   "workers": 4,
-  "max_examples_per_phase": 100,
-  "known_input_budget_fraction": 0.9,
   "external_conformity": false
 }
 ```
 
 ## Errors
 
-113 distinct diagnostics across 125 occurrences; 12 repeats grouped.
+115 distinct diagnostics across 125 occurrences; 10 repeats grouped.
 Matching diagnostics do not establish a shared root cause.
 
 ### E001
 
 ```text
-Error: YAML parse error on apache/templates/svc.yaml: error converting YAML to JSON: yaml: line 13: mapping values are not allowed in this context
+Error: YAML parse error on apache/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/apache (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/apache_1789251228/0000>)
+- [bitnami/apache (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000>)
 
 ### E002
+
+```text
+Error: YAML parse error on apache/templates/svc.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/apache (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000>)
+
+### E003
 
 ```text
 Error: YAML parse error on apisix/templates/control-plane/api-token-secret.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/apisix (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/apisix_1789251228/0000>)
+- [bitnami/apisix (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/apisix_1789260968/0000>)
 
-### E003
+### E004
 
 ```text
 Error: YAML parse error on appsmith/templates/backend/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/appsmith (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/appsmith_1789251228/0000>)
+- [bitnami/appsmith (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/appsmith_1789260968/0000>)
 
-### E004
+### E005
 
 ```text
 Error: YAML parse error on argo-cd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/argo-cd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/argo-cd_1789251295/0000>)
+- [bitnami/argo-cd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/argo-cd_1789261025/0000>)
 
-### E005
+### E006
 
 ```text
 Error: YAML parse error on argo-workflows/templates/controller/deployment.yaml: error converting YAML to JSON: yaml: line 30: mapping values are not allowed in this context
 ```
 
-- [bitnami/argo-workflows (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/argo-workflows_1789251302/0000>)
+- [bitnami/argo-workflows (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/argo-workflows_1789261054/0000>)
 
-### E006
+### E007
 
 ```text
 Error: YAML parse error on cassandra/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/cassandra (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cassandra_1789251382/0000>)
+- [bitnami/cassandra (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cassandra_1789261132/0000>)
 
-### E007
+### E008
 
 ```text
 Error: YAML parse error on cert-manager/templates/cainjector/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/cert-manager (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cert-manager_1789251391/0000>)
-
-### E008
-
-```text
-Error: YAML parse error on clickhouse/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 178: mapping values are not allowed in this context
-```
-
-- [bitnami/clickhouse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/clickhouse_1789251452/0000>)
+- [bitnami/cert-manager (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cert-manager_1789261145/0000>)
 
 ### E009
+
+```text
+Error: YAML parse error on clickhouse/templates/configd-configmap.yaml: error converting YAML to JSON: yaml: line 14: did not find expected key
+```
+
+- [bitnami/clickhouse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse_1789261201/0000>)
+
+### E010
 
 ```text
 Error: YAML parse error on cloudnative-pg/templates/operator/clusterrolebinding.yaml: error converting YAML to JSON: yaml: line 4: did not find expected comment or line break
 ```
 
-- [bitnami/cloudnative-pg (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cloudnative-pg_1789251513/0000>)
+- [bitnami/cloudnative-pg (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cloudnative-pg_1789261278/0000>)
 
-### E010
+### E011
 
 ```text
 Error: YAML parse error on consul/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/consul (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/consul_1789251533/0000>)
+- [bitnami/consul (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/consul_1789261319/0000>)
 
-### E011
+### E012
 
 ```text
 Error: YAML parse error on contour/templates/certgen/serviceaccount.yaml: error converting YAML to JSON: yaml: line 15: did not find expected key
 ```
 
-- [bitnami/contour (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/contour_1789251558/0000>)
+- [bitnami/contour (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/contour_1789261328/0000>)
 
-### E012
+### E013
 
 ```text
 Error: YAML parse error on deepspeed/templates/client/client-dep-job.yaml: error converting YAML to JSON: yaml: line 31: did not find expected key
 ```
 
-- [bitnami/deepspeed (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/deepspeed_1789251584/0000>)
+- [bitnami/deepspeed (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/deepspeed_1789261342/0000>)
 
-### E013
+### E014
 
 ```text
 Error: YAML parse error on discourse/templates/service.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
 ```
 
-- [bitnami/discourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/discourse_1789251597/0000>)
+- [bitnami/discourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/discourse_1789261349/0000>)
 
-### E014
+### E015
 
 ```text
 Error: YAML parse error on dremio/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/dremio (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/dremio_1789251625/0000>)
-
-### E015
-
-```text
-Error: YAML parse error on drupal/templates/svc.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/drupal (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/drupal_1789251652/0000>)
+- [bitnami/dremio (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/dremio_1789261357/0000>)
 
 ### E016
 
@@ -197,7 +196,7 @@ Error: YAML parse error on drupal/templates/svc.yaml: error converting YAML to J
 Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/ejbca (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/ejbca_1789251723/0000>)
+- [bitnami/ejbca (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/ejbca_1789261434/0000>)
 
 ### E017
 
@@ -205,7 +204,7 @@ Error: YAML parse error on ejbca/templates/deployment.yaml: error converting YAM
 Error: YAML parse error on elasticsearch/templates/coordinating/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/elasticsearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/elasticsearch_1789251725/0000>)
+- [bitnami/elasticsearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/elasticsearch_1789261468/0000>)
 
 ### E018
 
@@ -213,751 +212,534 @@ Error: YAML parse error on elasticsearch/templates/coordinating/statefulset.yaml
 Error: YAML parse error on envoy-gateway/templates/deployment.yaml: error converting YAML to JSON: yaml: line 37: did not find expected key
 ```
 
-- [bitnami/envoy-gateway (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/envoy-gateway_1789251751/0000>)
+- [bitnami/envoy-gateway (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/envoy-gateway_1789261488/0000>)
 
 ### E019
+
+```text
+Error: YAML parse error on etcd/templates/svc-headless.yaml: error converting YAML to JSON: yaml: line 14: did not find expected key
+```
+
+- [bitnami/etcd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/etcd_1789261495/0000>)
+
+### E020
 
 ```text
 Error: YAML parse error on external-dns/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/external-dns (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/external-dns_1789251819/0000>)
-
-### E020
-
-```text
-Error: YAML parse error on flink/templates/jobmanager/deployment.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
-```
-
-- [bitnami/flink (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/flink_1789251853/0000>)
+- [bitnami/external-dns (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/external-dns_1789261550/0000>)
 
 ### E021
+
+```text
+Error: YAML parse error on flink/templates/taskmanager/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/flink (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/flink_1789261585/0000>)
+
+### E022
+
+```text
+Error: YAML parse error on fluent-bit/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/fluent-bit (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/fluent-bit_1789261621/0000>)
+
+### E023
 
 ```text
 Error: YAML parse error on fluentd/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/fluentd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/fluentd_1789251891/0000>)
+- [bitnami/fluentd (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/fluentd_1789261647/0000>)
 
-### E022
+### E024
 
 ```text
 Error: YAML parse error on flux/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/flux (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/flux_1789251919/0000>)
+- [bitnami/flux (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/flux_1789261654/0000>)
 
-### E023
-
-```text
-Error: YAML parse error on ghost/templates/svc.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
-```
-
-- [bitnami/ghost (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/ghost_1789251929/0000>)
-
-### E024
+### E025
 
 ```text
 Error: YAML parse error on gitea/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/gitea (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/gitea_1789251952/0000>)
-
-### E025
-
-```text
-Error: YAML parse error on gitlab-runner/templates/cluster-role.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/gitlab-runner (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/gitlab-runner_1789251987/0000>)
+- [bitnami/gitea (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/gitea_1789261682/0000>)
 
 ### E026
 
 ```text
-Error: YAML parse error on grafana-alloy/templates/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Error: YAML parse error on gitlab-runner/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/grafana-alloy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-alloy_1789252023/0000>)
+- [bitnami/gitlab-runner (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/gitlab-runner_1789261710/0000>)
 
 ### E027
+
+```text
+Error: YAML parse error on grafana-k6-operator/templates/deployment.yaml: error converting YAML to JSON: yaml: line 85: mapping keys are not allowed in this context
+```
+
+- [bitnami/grafana-k6-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-k6-operator_1789261748/0000>)
+
+### E028
 
 ```text
 Error: YAML parse error on grafana-loki/templates/gateway/configmap-http.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/grafana-loki (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-loki_1789252062/0000>)
+- [bitnami/grafana-loki (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-loki_1789261775/0000>)
 
-### E028
+### E029
 
 ```text
 Error: YAML parse error on grafana-operator/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/grafana-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-operator_1789252073/0000>)
+- [bitnami/grafana-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-operator_1789261806/0000>)
 
-### E029
+### E030
 
 ```text
 Error: YAML parse error on grafana-tempo/templates/tempo-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/grafana-tempo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-tempo_1789252105/0000>)
+- [bitnami/grafana-tempo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-tempo_1789261832/0000>)
 
-### E030
+### E031
+
+```text
+Error: YAML parse error on grafana/templates/application.yaml: error converting YAML to JSON: yaml: line 138: mapping keys are not allowed in this context
+```
+
+- [bitnami/grafana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana_1789261713/0000>)
+
+### E032
 
 ```text
 Error: YAML parse error on haproxy/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/haproxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/haproxy_1789252206/0000>)
+- [bitnami/haproxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/haproxy_1789261927/0000>)
 
-### E031
+### E033
 
 ```text
 Error: YAML parse error on harbor/templates/core/core-dpl.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/harbor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/harbor_1789252208/0000>)
+- [bitnami/harbor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/harbor_1789261928/0000>)
 
-### E032
+### E034
 
 ```text
-Error: YAML parse error on influxdb/templates/pdb.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Error: YAML parse error on jaeger/templates/collector/configmap.yaml: error converting YAML to JSON: yaml: line 86: found unexpected end of stream
 ```
 
-- [bitnami/influxdb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/influxdb_1789252221/0000>)
+- [bitnami/jaeger (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jaeger_1789261953/0000>)
 
-### E033
+### E035
 
 ```text
 Error: YAML parse error on janusgraph/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/janusgraph (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/janusgraph_1789252257/0000>)
+- [bitnami/janusgraph (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/janusgraph_1789261985/0000>)
 
-### E034
+### E036
+
+```text
+Error: YAML parse error on jenkins/templates/controller-svc.yaml: error converting YAML to JSON: yaml: line 13: mapping values are not allowed in this context
+```
+
+- [bitnami/jenkins (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000>)
+
+### E037
 
 ```text
 Error: YAML parse error on kafka/templates/controller-eligible/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/kafka (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kafka_1789252297/0000>)
+- [bitnami/kafka (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kafka_1789262019/0000>)
 
-### E035
+### E038
+
+```text
+Error: YAML parse error on kibana/templates/ingress.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/kibana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kibana_1789262084/0000>)
+
+### E039
+
+```text
+Error: YAML parse error on kong/templates/dep-ds.yaml: error converting YAML to JSON: yaml: line 58: block sequence entries are not allowed in this context
+```
+
+- [bitnami/kong (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kong_1789262120/0000>)
+
+### E040
 
 ```text
 Error: YAML parse error on kube-arangodb/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/kube-arangodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-arangodb_1789252412/0000>)
+- [bitnami/kube-arangodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-arangodb_1789262121/0000>)
 
-### E036
+### E041
 
 ```text
 Error: YAML parse error on kuberay/templates/apiserver/clusterrolebinding.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
 ```
 
-- [bitnami/kuberay (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kuberay_1789252452/0000>)
+- [bitnami/kuberay (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kuberay_1789262165/0000>)
 
-### E037
+### E042
 
 ```text
-Error: YAML parse error on kubernetes-event-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Error: YAML parse error on kubernetes-event-exporter/templates/deployment.yaml: error converting YAML to JSON: yaml: line 27: did not find expected key
 ```
 
-- [bitnami/kubernetes-event-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kubernetes-event-exporter_1789252461/0000>)
+- [bitnami/kubernetes-event-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kubernetes-event-exporter_1789262168/0000>)
 
-### E038
+### E043
 
 ```text
 Error: YAML parse error on logstash/templates/sts.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/logstash (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/logstash_1789252473/0000>)
+- [bitnami/logstash (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/logstash_1789262184/0000>)
 
-### E039
-
-```text
-Error: YAML parse error on mariadb-galera/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/mariadb-galera (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb-galera_1789252506/0000>)
-
-### E040
-
-```text
-Error: YAML parse error on mastodon/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/mastodon (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mastodon_1789252506/0000>)
-
-### E041
+### E044
 
 ```text
 Error: YAML parse error on matomo/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/matomo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/matomo_1789252549/0000>)
+- [bitnami/matomo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/matomo_1789262257/0000>)
 
-### E042
+### E045
+
+```text
+Error: YAML parse error on metallb/templates/controller/configmap.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+- [bitnami/metallb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/metallb_1789262350/0000>)
+
+### E046
 
 ```text
 Error: YAML parse error on metrics-server/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/metrics-server (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/metrics-server_1789252645/0000>)
+- [bitnami/metrics-server (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/metrics-server_1789262363/0000>)
 
-### E043
+### E047
 
 ```text
 Error: YAML parse error on mlflow/templates/run/dep-job.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/mlflow (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mlflow_1789252697/0000>)
+- [bitnami/mlflow (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000>)
 
-### E044
-
-```text
-Error: YAML parse error on mlflow/templates/run/dep-job.yaml: error converting YAML to JSON: yaml: line 29: did not find expected key
-```
-
-- [bitnami/mlflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mlflow_1789252697/0000>)
-
-### E045
+### E048
 
 ```text
 Error: YAML parse error on mongodb-sharded/templates/config-server/config-server-statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/mongodb-sharded (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mongodb-sharded_1789252809/0000>)
+- [bitnami/mongodb-sharded (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb-sharded_1789262509/0000>)
 
-### E046
+### E049
 
 ```text
 Error: YAML parse error on mongodb/templates/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/mongodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mongodb_1789252761/0000>)
+- [bitnami/mongodb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb_1789262443/0000>)
 
-### E047
+### E050
 
 ```text
 Error: YAML parse error on moodle/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/moodle (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/moodle_1789252874/0000>)
+- [bitnami/moodle (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/moodle_1789262603/0000>)
 
-### E048
+### E051
 
 ```text
 Error: YAML parse error on multus-cni/templates/daemonset.yaml: error converting YAML to JSON: yaml: line 73: did not find expected comment or line break
 ```
 
-- [bitnami/multus-cni (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/multus-cni_1789252902/0000>)
+- [bitnami/multus-cni (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/multus-cni_1789262612/0000>)
 
-### E049
+### E052
 
 ```text
 Error: YAML parse error on mysql/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/mysql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mysql_1789252935/0000>)
+- [bitnami/mysql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mysql_1789262639/0000>)
 
-### E050
+### E053
 
 ```text
-Error: YAML parse error on nessie/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Error: YAML parse error on nats/templates/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/nessie (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nessie_1789252998/0000>)
+- [bitnami/nats (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nats_1789262668/0000>)
 
-### E051
+### E054
+
+```text
+Error: YAML parse error on nessie/templates/networkpolicy.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go struct field .metadata.annotations. of type string
+```
+
+- [bitnami/nessie (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nessie_1789262730/0000>)
+
+### E055
 
 ```text
 Error: YAML parse error on nginx/templates/context-includes-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/nginx (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nginx_1789253009/0000>)
+- [bitnami/nginx (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000>)
 
-### E052
+### E056
 
 ```text
 Error: YAML parse error on nginx/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/nginx (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nginx_1789253009/0000>)
+- [bitnami/nginx (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000>)
 
-### E053
+### E057
 
 ```text
-Error: YAML parse error on node-exporter/templates/daemonset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Error: YAML parse error on opensearch/templates/coordinating/statefulset.yaml: error converting YAML to JSON: yaml: line 184: mapping values are not allowed in this context
 ```
 
-- [bitnami/node-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/node-exporter_1789253016/0000>)
+- [bitnami/opensearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/opensearch_1789262840/0000>)
 
-### E054
+### E058
 
 ```text
 Error: YAML parse error on parse/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/parse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/parse_1789253081/0000>)
+- [bitnami/parse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/parse_1789262841/0000>)
 
-### E055
-
-```text
-Error: YAML parse error on phpmyadmin/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
-```
-
-- [bitnami/phpmyadmin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/phpmyadmin_1789253091/0000>)
-
-### E056
+### E059
 
 ```text
 Error: YAML parse error on pinniped/templates/concierge/apiservice-identity.yaml: error converting YAML to JSON: yaml: line 23: found unexpected end of stream
 ```
 
-- [bitnami/pinniped (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/pinniped_1789253122/0000>)
+- [bitnami/pinniped (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/pinniped_1789262910/0000>)
 
-### E057
+### E060
+
+```text
+Error: YAML parse error on postgresql-ha/templates/pgpool/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/postgresql-ha (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql-ha_1789262929/0000>)
+
+### E061
+
+```text
+Error: YAML parse error on postgresql/templates/primary/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/postgresql (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000>)
+
+### E062
 
 ```text
 Error: YAML parse error on prometheus/templates/alertmanager/networkpolicy.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/prometheus_1789253175/0000>)
+- [bitnami/prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000>)
 
-### E058
+### E063
 
 ```text
 Error: YAML parse error on prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/prometheus (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/prometheus_1789253175/0000>)
+- [bitnami/prometheus (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000>)
 
-### E059
+### E064
+
+```text
+Error: YAML parse error on rabbitmq-cluster-operator/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
+```
+
+- [bitnami/rabbitmq-cluster-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq-cluster-operator_1789263004/0000>)
+
+### E065
 
 ```text
 Error: YAML parse error on rabbitmq/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/rabbitmq (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq_1789253191/0000>)
+- [bitnami/rabbitmq (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq_1789262993/0000>)
 
-### E060
+### E066
+
+```text
+Error: YAML parse error on redis-cluster/templates/redis-statefulset.yaml: error converting YAML to JSON: yaml: line 177: block sequence entries are not allowed in this context
+```
+
+- [bitnami/redis-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redis-cluster_1789263038/0000>)
+
+### E067
 
 ```text
 Error: YAML parse error on redmine/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/redmine (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redmine_1789253293/0000>)
+- [bitnami/redmine (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000>)
 
-### E061
+### E068
+
+```text
+Error: YAML parse error on redmine/templates/svc.yaml: error converting YAML to JSON: yaml: line 14: block sequence entries are not allowed in this context
+```
+
+- [bitnami/redmine (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000>)
+
+### E069
 
 ```text
 Error: YAML parse error on seaweedfs/templates/filer/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/seaweedfs (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/seaweedfs_1789253341/0000>)
+- [bitnami/seaweedfs (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/seaweedfs_1789263116/0000>)
 
-### E062
+### E070
 
 ```text
-Error: YAML parse error on solr/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 180: did not find expected key
+Error: YAML parse error on solr/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/solr (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/solr_1789253352/0000>)
+- [bitnami/solr (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/solr_1789263147/0000>)
 
-### E063
+### E071
 
 ```text
 Error: YAML parse error on sonarqube/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/sonarqube (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/sonarqube_1789253377/0000>)
+- [bitnami/sonarqube (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/sonarqube_1789263200/0000>)
 
-### E064
-
-```text
-Error: YAML parse error on spark/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
-```
-
-- [bitnami/spark (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/spark_1789253392/0000>)
-
-### E065
+### E072
 
 ```text
 Error: YAML parse error on superset/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/superset (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/superset_1789253412/0000>)
+- [bitnami/superset (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/superset_1789263238/0000>)
 
-### E066
+### E073
 
 ```text
-Error: YAML parse error on tensorflow-resnet/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+Error: YAML parse error on tensorflow-resnet/templates/service.yaml: error converting YAML to JSON: yaml: line 15: mapping values are not allowed in this context
 ```
 
-- [bitnami/tensorflow-resnet (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/tensorflow-resnet_1789253441/0000>)
+- [bitnami/tensorflow-resnet (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/tensorflow-resnet_1789263255/0000>)
 
-### E067
+### E074
 
 ```text
 Error: YAML parse error on thanos/templates/storegateway/configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/thanos (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/thanos_1789253463/0000>)
+- [bitnami/thanos (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/thanos_1789263263/0000>)
 
-### E068
+### E075
 
 ```text
 Error: YAML parse error on tomcat/templates/deployment.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/tomcat (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/tomcat_1789253463/0000>)
+- [bitnami/tomcat (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/tomcat_1789263266/0000>)
 
-### E069
+### E076
 
 ```text
 Error: YAML parse error on valkey-cluster/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/valkey-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/valkey-cluster_1789253483/0000>)
+- [bitnami/valkey-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/valkey-cluster_1789263288/0000>)
 
-### E070
+### E077
 
 ```text
 Error: YAML parse error on valkey/templates/replicas/application.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/valkey (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/valkey_1789253482/0000>)
+- [bitnami/valkey (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/valkey_1789263282/0000>)
 
-### E071
+### E078
 
 ```text
 Error: YAML parse error on vault/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/vault (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/vault_1789253486/0000>)
+- [bitnami/vault (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/vault_1789263307/0000>)
 
-### E072
+### E079
 
 ```text
 Error: YAML parse error on victoriametrics/templates/vmagent/dep-ds.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/victoriametrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/victoriametrics_1789253519/0000>)
+- [bitnami/victoriametrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/victoriametrics_1789263322/0000>)
 
-### E073
+### E080
 
 ```text
 Error: YAML parse error on wordpress/templates/httpd-configmap.yaml: error converting YAML to JSON: yaml: control characters are not allowed
 ```
 
-- [bitnami/wordpress (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/wordpress_1789253554/0000>)
-
-### E074
-
-```text
-Error: execution error at (airflow/templates/NOTES.txt:129:3): 
-VALUES VALIDATION:
-
-airflow: executors
-    You need to provide at least one value for the '.executor' parameter.
-```
-
-- [bitnami/airflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/airflow_1789251228/0000>)
-
-### E075
-
-```text
-Error: execution error at (aspnet-core/templates/NOTES.txt:58:4): 
-VALUES VALIDATION:
-aspnet-core: missing-extra-volume-mounts
-    You specified extra volumes but not mount points for them.
-    Please also set the extraVolumeMounts parameter.
-```
-
-- [bitnami/aspnet-core (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/aspnet-core_1789251350/0000>)
-
-### E076
-
-```text
-Error: execution error at (cadvisor/templates/daemonset.yaml:155:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
-```
-
-- [bitnami/cadvisor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cadvisor_1789251373/0000>)
-
-### E077
-
-```text
-Error: execution error at (chainloop/templates/controlplane/secret-jwt-cas-private-key.yaml:14:22): Authentication Private Key "casJWTPrivateKey" required
-```
-
-- [bitnami/chainloop (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/chainloop_1789251406/0000>)
-
-### E078
-
-```text
-Error: execution error at (drupal/charts/mariadb/templates/NOTES.txt:74:4): 
-VALUES VALIDATION:
-mariadb: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/drupal (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/drupal_1789251652/0000>)
-
-### E079
-
-```text
-Error: execution error at (fluent-bit/templates/NOTES.txt:30:4): 
-
-⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
-
-Unrecognized images:
-  - 00/bitnami/fluent-bit:4.0.8-debian-12-r0
-
-If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
-Further information can be obtained at https://github.com/bitnami/charts/issues/30850
-```
-
-- [bitnami/fluent-bit (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/fluent-bit_1789251880/0000>)
-
-### E080
-
-```text
-Error: execution error at (grafana-mimir/charts/memcachedchunks/templates/NOTES.txt:46:4): 
-VALUES VALIDATION:
-memcached: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "high-availability". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/grafana-mimir (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-mimir_1789252066/0000>)
+- [bitnami/wordpress (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000>)
 
 ### E081
 
 ```text
-Error: execution error at (jaeger/templates/collector/deployment.yaml:199:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
+Error: YAML parse error on wordpress/templates/svc.yaml: error converting YAML to JSON: yaml: line 13: mapping keys are not allowed in this context
 ```
 
-- [bitnami/jaeger (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jaeger_1789252233/0000>)
+- [bitnami/wordpress (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000>)
 
 ### E082
 
 ```text
-Error: execution error at (jenkins/templates/NOTES.txt:54:4): 
-
-⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
-
-Unrecognized images:
-  - 00/bitnami/jenkins:2.516.2-debian-12-r0
-  - 00/bitnami/jenkins-agent:0.3327.0-debian-12-r1
-  - 00/bitnami/os-shell:12-debian-12-r51
-
-If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
-Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+Error: YAML parse error on zookeeper/templates/statefulset.yaml: error converting YAML to JSON: yaml: line 181: block sequence entries are not allowed in this context
 ```
 
-- [bitnami/jenkins (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jenkins_1789252283/0000>)
+- [bitnami/zookeeper (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/zookeeper_1789263392/0000>)
 
 ### E083
 
 ```text
-Error: execution error at (jupyterhub/templates/proxy/deployment.yaml:32:32): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
+Error: mlflow/templates/tracking/deployment.yaml:105:12
+  executing "mlflow/templates/tracking/deployment.yaml" at <include "mlflow.v0.volumePermissionsInitContainer" .>:
+    error calling include:
+mlflow/templates/_helpers.tpl:553:12
+  executing "mlflow.v0.volumePermissionsInitContainer" at <include>:
+    wrong number of args for include: want 2 got 1
 ```
 
-- [bitnami/jupyterhub (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jupyterhub_1789252291/0000>)
+- [bitnami/mlflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000>)
 
 ### E084
-
-```text
-Error: execution error at (kube-state-metrics/templates/deployment.yaml:205:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
-```
-
-- [bitnami/kube-state-metrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-state-metrics_1789252452/0000>)
-
-### E085
-
-```text
-Error: execution error at (mariadb/templates/NOTES.txt:74:4): 
-VALUES VALIDATION:
-mariadb: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/mariadb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb_1789252495/0000>)
-- [bitnami/mariadb (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb_1789252495/0000>)
-
-### E086
-
-```text
-Error: execution error at (memcached/templates/NOTES.txt:46:4): 
-VALUES VALIDATION:
-memcached: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "high-availability". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/memcached (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/memcached_1789252601/0000>)
-
-### E087
-
-```text
-Error: execution error at (nats/templates/NOTES.txt:176:4): 
-VALUES VALIDATION:
-nats: resourceType
-    Invalid resourceType selected. Valid values are "deployment" and
-    "statefulset". Please set a valid mode (--set resourceType="xxxx")
-```
-
-- [bitnami/nats (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/nats_1789252944/0000>)
-
-### E088
-
-```text
-Error: execution error at (oauth2-proxy/charts/redis/templates/NOTES.txt:202:4): 
-VALUES VALIDATION:
-redis: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/oauth2-proxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/oauth2-proxy_1789253043/0000>)
-
-### E089
-
-```text
-Error: execution error at (odoo/templates/deployment.yaml:270:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
-```
-
-- [bitnami/odoo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/odoo_1789253062/0000>)
-
-### E090
-
-```text
-Error: execution error at (opensearch/templates/ingest/statefulset.yaml:90:12): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
-```
-
-- [bitnami/opensearch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/opensearch_1789253064/0000>)
-
-### E091
-
-```text
-Error: execution error at (postgresql/templates/NOTES.txt:118:4): 
-VALUES VALIDATION:
-postgresql: psp.create, rbac.create
-    RBAC should be enabled if PSP is enabled in order for PSP to work.
-    More info at https://kubernetes.io/docs/concepts/policy/pod-security-policy/#authorizing-policies
-```
-
-- [bitnami/postgresql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/postgresql_1789253136/0000>)
-
-### E092
-
-```text
-Error: execution error at (pytorch/templates/NOTES.txt:69:3): 
-VALUES VALIDATION:
-pytorch: architecture
-    Invalid architecture selected. Valid values are "distributed" and
-    "standalone". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/pytorch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/pytorch_1789253187/0000>)
-
-### E093
-
-```text
-Error: execution error at (redis/templates/NOTES.txt:202:4): 
-VALUES VALIDATION:
-redis: architecture
-    Invalid architecture selected. Valid values are "standalone" and
-    "replication". Please set a valid architecture (--set architecture="xxxx")
-```
-
-- [bitnami/redis (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redis_1789253220/0000>)
-- [bitnami/redis (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redis_1789253220/0000>)
-
-### E094
-
-```text
-Error: execution error at (sealed-secrets/templates/deployment.yaml:172:25): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
-```
-
-- [bitnami/sealed-secrets (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/sealed-secrets_1789253315/0000>)
-
-### E095
-
-```text
-Error: execution error at (whereabouts/templates/daemonset.yaml:164:25): ERROR: Preset key '' invalid. Allowed values are small,medium,large,xlarge,2xlarge,nano,micro
-```
-
-- [bitnami/whereabouts (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/whereabouts_1789253539/0000>)
-
-### E096
-
-```text
-Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-aswf0y7m/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
-```
-
-- [bitnami/jenkins (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/jenkins_1789252283/0000>)
-
-### E097
-
-```text
-Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-i22elfg5/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
-```
-
-- [bitnami/redmine (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redmine_1789253293/0000>)
-
-### E098
-
-```text
-Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-if0kaa5a/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
-```
-
-- [bitnami/ghost (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/ghost_1789251929/0000>)
-
-### E099
-
-```text
-Error: failed to parse /var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-rtvpkvk8/values.json: cannot unmarshal yaml document: error converting YAML to JSON: yaml: did not find expected ',' or '}'
-```
-
-- [bitnami/rabbitmq (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq_1789253191/0000>)
-
-### E100
-
-```text
-Error: grafana/templates/application.yaml:225:72
-  executing "grafana/templates/application.yaml" at <.configMapName>:
-    nil pointer evaluating interface {}.configMapName
-```
-
-- [bitnami/grafana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana_1789252005/0000>)
-
-### E101
-
-```text
-Error: kibana/templates/ingress.yaml:33:64
-  executing "kibana/templates/ingress.yaml" at <.name>:
-    nil pointer evaluating interface {}.name
-```
-
-- [bitnami/kibana (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kibana_1789252366/0000>)
-
-### E102
-
-```text
-Error: neo4j/templates/networkpolicy.yaml:47:19
-  executing "neo4j/templates/networkpolicy.yaml" at <.containerPort>:
-    nil pointer evaluating interface {}.containerPort
-```
-
-- [bitnami/neo4j (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/neo4j_1789252975/0000>)
-
-### E103
 
 ```text
 Error: schema-registry/templates/http-route.yaml:7:13
@@ -965,58 +747,307 @@ Error: schema-registry/templates/http-route.yaml:7:13
     nil pointer evaluating interface {}.enabled
 ```
 
-- [bitnami/schema-registry (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/schema-registry_1789253309/0000>)
+- [bitnami/schema-registry (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/schema-registry_1789263074/0000>)
 
-### E104
-
-```text
-Error: template: cilium/templates/agent/daemonset.yaml:30:15: executing "cilium/templates/agent/daemonset.yaml" at <semverCompare "<1.30-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
-```
-
-- [bitnami/cilium (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/cilium_1789251449/0000>)
-
-### E105
+### E085
 
 ```text
-Error: template: concourse/templates/worker/rolebinding.yaml:27:22: executing "concourse/templates/worker/rolebinding.yaml" at <semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
+Error: scylladb/templates/networkpolicy.yaml:62:19
+  executing "scylladb/templates/networkpolicy.yaml" at <.containerPort>:
+    nil pointer evaluating interface {}.containerPort
 ```
 
-- [bitnami/concourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/concourse_1789251532/0000>)
+- [bitnami/scylladb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/scylladb_1789263109/0000>)
 
-### E106
+### E086
 
 ```text
-Error: template: metallb/templates/speaker/rbac.yaml:44:14: executing "metallb/templates/speaker/rbac.yaml" at <include "common.capabilities.psp.supported" .>: error calling include: template: metallb/charts/common/templates/_capabilities.tpl:131:32: executing "common.capabilities.psp.supported" at <semverCompare "<1.25-0" $kubeVersion>: error calling semverCompare: invalid semantic version
+Error: values don't meet the specifications of the schema(s) in the following chart(s):
+mysql:
+- at '/architecture': value must be one of 'standalone', 'replication'
 ```
 
-- [bitnami/metallb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/metallb_1789252639/0000>)
+- [bitnami/ghost (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/ghost_1789261679/0000>)
 
-### E107
-
-```text
-Error: template: rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml:14:13: executing "rabbitmq-cluster-operator/templates/messaging-topology-operator/validating-webhook-configuration.yaml" at <genSignedCert (include "rmqco.msgTopologyOperator.fullname" .) nil (list (printf "%s.%s.svc" (include "rmqco.msgTopologyOperator.webhook.fullname" .) (include "common.names.namespace" .)) (printf "%s.%s.svc.%s" (include "rmqco.msgTopologyOperator.webhook.fullname" .) (include "common.names.namespace" .) .Values.clusterDomain)) 365 $ca>: error calling genSignedCert: error creating certificate: x509: "hypothesis-rabbitmq-messaging-topology-operator-webhook.default.svc.\u0080" cannot be encoded as an IA5String
-```
-
-- [bitnami/rabbitmq-cluster-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq-cluster-operator_1789253208/0000>)
-
-### E108
+### E087
 
 ```text
 chart rendered no resources (use allow_empty explicitly)
 ```
 
-- [bitnami/kube-prometheus/charts/kube-prometheus-crds (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus-crds_1789252451/0000>)
-- [bitnami/kube-prometheus/charts/kube-prometheus-crds (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus-crds_1789252451/0000>)
+- [bitnami/kube-prometheus/charts/kube-prometheus-crds (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000>)
+- [bitnami/kube-prometheus/charts/kube-prometheus-crds (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000>)
 
-### E109
+### E088
 
 ```text
 duplicate resource: ('rbac.authorization.k8s.io/v1', 'Role', None, 'hypothesis-clickhouse-operator')
 ```
 
-- [bitnami/clickhouse-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/clickhouse-operator_1789251497/0000>)
+- [bitnami/clickhouse-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse-operator_1789261238/0000>)
 
-### E110
+### E089
+
+Source: airflow 25.1.0 / templates/NOTES.txt
+
+```text
+execution error at (airflow/templates/NOTES.txt:129:3):
+VALUES VALIDATION:
+
+airflow: executors
+    You need to provide at least one value for the '.executor' parameter.
+```
+
+- [bitnami/airflow (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/airflow_1789260968/0000>)
+
+### E090
+
+Source: aspnet-core 8.0.0 / templates/NOTES.txt
+
+```text
+execution error at (aspnet-core/templates/NOTES.txt:58:4):
+VALUES VALIDATION:
+aspnet-core: missing-extra-volume-mounts
+    You specified extra volumes but not mount points for them.
+    Please also set the extraVolumeMounts parameter.
+```
+
+- [bitnami/aspnet-core (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/aspnet-core_1789261101/0000>)
+
+### E091
+
+Source: cadvisor 0.1.14 / templates/daemonset.yaml
+
+```text
+execution error at (cadvisor/templates/daemonset.yaml:155:25): ERROR: Preset key '' invalid. Allowed values are xlarge,2xlarge,nano,micro,small,medium,large
+```
+
+- [bitnami/cadvisor (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cadvisor_1789261127/0000>)
+
+### E092
+
+Source: chainloop 4.0.76 / templates/controlplane/secret-jwt-cas-private-key.yaml
+
+```text
+execution error at (chainloop/templates/controlplane/secret-jwt-cas-private-key.yaml:14:22): Authentication Private Key "casJWTPrivateKey" required
+```
+
+- [bitnami/chainloop (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/chainloop_1789261157/0000>)
+
+### E093
+
+Source: grafana-alloy 1.0.8 / templates/NOTES.txt
+
+```text
+execution error at (grafana-alloy/templates/NOTES.txt:71:4):
+
+⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Unrecognized images:
+  - 00/bitnami/grafana-alloy:1.10.2-debian-12-r0
+  - 00/bitnami/configmap-reload:0.15.0-debian-12-r12
+
+If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
+Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+- [bitnami/grafana-alloy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-alloy_1789261741/0000>)
+
+### E094
+
+Source: influxdb 7.1.21 / templates/NOTES.txt
+
+```text
+execution error at (influxdb/templates/NOTES.txt:146:4):
+
+⚠ ERROR: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Unrecognized images:
+  - 00/bitnami/influxdb:3.4.1-debian-12-r0
+  - 00/bitnami/os-shell:12-debian-12-r51
+  - 00/bitnami/kubectl:1.33.4-debian-12-r0
+
+If you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.
+Further information can be obtained at https://github.com/bitnami/charts/issues/30850
+```
+
+- [bitnami/influxdb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/influxdb_1789261931/0000>)
+
+### E095
+
+Source: jupyterhub 10.0.6 / templates/proxy/deployment.yaml
+
+```text
+execution error at (jupyterhub/templates/proxy/deployment.yaml:32:32): ERROR: Preset key '' invalid. Allowed values are medium,large,xlarge,2xlarge,nano,micro,small
+```
+
+- [bitnami/jupyterhub (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jupyterhub_1789262019/0000>)
+
+### E096
+
+Source: kube-state-metrics 5.1.1 / templates/deployment.yaml
+
+```text
+execution error at (kube-state-metrics/templates/deployment.yaml:205:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
+```
+
+- [bitnami/kube-state-metrics (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-state-metrics_1789262164/0000>)
+
+### E097
+
+Source: mariadb-galera 16.0.2 / templates/statefulset.yaml
+
+```text
+execution error at (mariadb-galera/templates/statefulset.yaml:78:25): ERROR: Preset key '' invalid. Allowed values are nano,micro,small,medium,large,xlarge,2xlarge
+```
+
+- [bitnami/mariadb-galera (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb-galera_1789262206/0000>)
+
+### E098
+
+Source: mariadb 22.0.0 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4):
+VALUES VALIDATION:
+mariadb: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/drupal (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/drupal_1789261399/0000>)
+
+### E099
+
+Source: mariadb 23.0.1 / templates/NOTES.txt
+
+```text
+execution error at (mariadb/templates/NOTES.txt:74:4):
+VALUES VALIDATION:
+mariadb: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/mariadb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000>)
+- [bitnami/mariadb (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000>)
+
+### E100
+
+Source: memcached 7.9.7 / templates/NOTES.txt
+
+```text
+execution error at (memcached/templates/NOTES.txt:46:4):
+VALUES VALIDATION:
+memcached: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "high-availability". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/grafana-mimir (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-mimir_1789261802/0000>)
+
+### E101
+
+Source: memcached 8.0.0 / templates/NOTES.txt
+
+```text
+execution error at (memcached/templates/NOTES.txt:46:4):
+VALUES VALIDATION:
+memcached: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "high-availability". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/memcached (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/memcached_1789262312/0000>)
+
+### E102
+
+Source: odoo 28.2.11 / templates/deployment.yaml
+
+```text
+execution error at (odoo/templates/deployment.yaml:270:25): ERROR: Preset key '' invalid. Allowed values are large,xlarge,2xlarge,nano,micro,small,medium
+```
+
+- [bitnami/odoo (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/odoo_1789262798/0000>)
+
+### E103
+
+Source: postgresql 17.1.2 / templates/NOTES.txt
+
+```text
+execution error at (postgresql/templates/NOTES.txt:118:4):
+VALUES VALIDATION:
+postgresql: psp.create, rbac.create
+    RBAC should be enabled if PSP is enabled in order for PSP to work.
+    More info at https://kubernetes.io/docs/concepts/policy/pod-security-policy/#authorizing-policies
+```
+
+- [bitnami/postgresql (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000>)
+
+### E104
+
+Source: pytorch 5.0.0 / templates/NOTES.txt
+
+```text
+execution error at (pytorch/templates/NOTES.txt:69:3):
+VALUES VALIDATION:
+pytorch: architecture
+    Invalid architecture selected. Valid values are "distributed" and
+    "standalone". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/pytorch (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/pytorch_1789262979/0000>)
+
+### E105
+
+Source: redis 22.0.4 / templates/NOTES.txt
+
+```text
+execution error at (redis/templates/NOTES.txt:202:4):
+VALUES VALIDATION:
+redis: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/oauth2-proxy (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/oauth2-proxy_1789262793/0000>)
+
+### E106
+
+Source: redis 23.1.1 / templates/NOTES.txt
+
+```text
+execution error at (redis/templates/NOTES.txt:202:4):
+VALUES VALIDATION:
+redis: architecture
+    Invalid architecture selected. Valid values are "standalone" and
+    "replication". Please set a valid architecture (--set architecture="xxxx")
+```
+
+- [bitnami/redis (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000>)
+- [bitnami/redis (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000>)
+
+### E107
+
+Source: sealed-secrets 2.5.20 / templates/deployment.yaml
+
+```text
+execution error at (sealed-secrets/templates/deployment.yaml:172:25): ERROR: Preset key '' invalid. Allowed values are nano,micro,small,medium,large,xlarge,2xlarge
+```
+
+- [bitnami/sealed-secrets (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/sealed-secrets_1789263115/0000>)
+
+### E108
+
+Source: whereabouts 1.2.20 / templates/daemonset.yaml
+
+```text
+execution error at (whereabouts/templates/daemonset.yaml:164:25): ERROR: Preset key '' invalid. Allowed values are nano,micro,small,medium,large,xlarge,2xlarge
+```
+
+- [bitnami/whereabouts (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/whereabouts_1789263358/0000>)
+
+### E109
 
 ```text
 invalid rendered YAML: more indented follow up line than first in a block scalar
@@ -1025,41 +1056,70 @@ invalid rendered YAML: more indented follow up line than first in a block scalar
                   ^ (line: 474)
 ```
 
-- [bitnami/zipkin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/zipkin_1789253576/0000>)
-- [bitnami/zipkin (robustness; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/zipkin_1789253576/0000>)
+- [bitnami/zipkin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000>)
+- [bitnami/zipkin (robustness; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000>)
 
-### E111
-
-```text
-The test tool could not convert a YAML-tagged value to JSON. See this chart's reproducing values. This diagnostic alone does not establish a chart defect.
-```
-
-- [bitnami/apache (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/apache_1789251228/0000>)
-- [bitnami/grafana-k6-operator (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-k6-operator_1789252042/0000>)
-- [bitnami/kong (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kong_1789252404/0000>)
-- [bitnami/redis-cluster (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/redis-cluster_1789253276/0000>)
-- [bitnami/scylladb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/scylladb_1789253311/0000>)
-- [bitnami/zookeeper (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/zookeeper_1789253580/0000>)
-
-### E112
+### E110
 
 ```text
 level=INFO msg="warning: destination for kube-state-metrics.rbac.rules is a table. Ignoring non-table value ([])"
 Error: YAML parse error on kube-prometheus/templates/extra-list.yaml: error unmarshaling JSON: while decoding JSON: json: cannot unmarshal array into Go value of type util.SimpleHead
 ```
 
-- [bitnami/kube-prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus_1789252419/0000>)
+- [bitnami/kube-prometheus (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus_1789262132/0000>)
 
-### E113
+### E111
+
+```text
+level=INFO msg="warning: destination for postgresql.tls.autoGenerated is a table. Ignoring non-table value (false)"
+Error: YAML parse error on keycloak/templates/statefulset.yaml: error converting YAML to JSON: yaml: control characters are not allowed
+```
+
+- [bitnami/keycloak (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/keycloak_1789262075/0000>)
+
+### E112
 
 ```text
 resource has no metadata.name
 ```
 
-- [bitnami/keycloak (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/keycloak_1789252350/0000>)
-- [bitnami/keydb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/keydb_1789252362/0000>)
-- [bitnami/postgresql-ha (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/postgresql-ha_1789253152/0000>)
-- [bitnami/wildfly (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789251211/runs/wildfly_1789253553/0000>)
+- [bitnami/jenkins (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000>)
+- [bitnami/keydb (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/keydb_1789262081/0000>)
+- [bitnami/mastodon (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/mastodon_1789262219/0000>)
+- [bitnami/neo4j (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/neo4j_1789262693/0000>)
+- [bitnami/phpmyadmin (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/phpmyadmin_1789262890/0000>)
+- [bitnami/spark (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/spark_1789263236/0000>)
+- [bitnami/wildfly (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/wildfly_1789263365/0000>)
+
+### E113
+
+Source: cilium 3.1.10 / templates/agent/daemonset.yaml
+
+```text
+template: cilium/templates/agent/daemonset.yaml:30:15: executing "cilium/templates/agent/daemonset.yaml" at <semverCompare "<1.30-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
+```
+
+- [bitnami/cilium (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/cilium_1789261173/0000>)
+
+### E114
+
+Source: common 2.31.4 / templates/_capabilities.tpl
+
+```text
+template: common/templates/_capabilities.tpl:131:32: executing "common.capabilities.psp.supported" at <semverCompare "<1.25-0" $kubeVersion>: error calling semverCompare: invalid semantic version
+```
+
+- [bitnami/node-exporter (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/node-exporter_1789262746/0000>)
+
+### E115
+
+Source: concourse 5.1.47 / templates/worker/rolebinding.yaml
+
+```text
+template: concourse/templates/worker/rolebinding.yaml:27:22: executing "concourse/templates/worker/rolebinding.yaml" at <semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)>: error calling semverCompare: invalid semantic version
+```
+
+- [bitnami/concourse (known-inputs; failed)](<bitnami-runs/bitnami-charts_1789260948/runs/concourse_1789261279/0000>)
 
 ## Charts
 
@@ -1068,16 +1128,22 @@ resource has no metadata.name
 Result: FAIL | Status: failed
 Attempts: 145 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/airflow_1789251228/0000](<bitnami-runs/bitnami-charts_1789251211/runs/airflow_1789251228/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/airflow_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/airflow_1789260968/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 506 | Varied in render attempts: 3
+Missing values: 6 | Undocumented template fields: 534
+Unreferenced values: 280 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 44
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E074](#e074)
+Errors: [E089](#e089)
 
 Reproducing values (known-inputs):
 
@@ -1090,24 +1156,30 @@ Reproducing values (known-inputs):
 ### bitnami/apache
 
 Result: FAIL | Status: failed
-Attempts: 411 | Remaining iterations: unknown
+Attempts: 212 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/apache_1789251228/0000](<bitnami-runs/bitnami-charts_1789251211/runs/apache_1789251228/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/apache_1789260968/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 119
+Identified input fields (lower bound): 116 | Varied in render attempts: 30
+Missing values: 2 | Undocumented template fields: 116
+Unreferenced values: 41 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 292
+Phase known-inputs: failed | Attempts: 115
 
-Errors: [E111](#e111), [E001](#e001)
+Phase robustness: failed | Attempts: 97
+
+Errors: [E001](#e001), [E002](#e002)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraEnvVarsCM": "="
+  "nameOverride": "\u001f"
 }
 ```
 
@@ -1115,9 +1187,9 @@ Reproducing values (robustness):
 
 ```json
 {
-  "": [],
   "service": {
-    "type": ":"
+    "": [],
+    "type": "\u001f"
   }
 }
 ```
@@ -1125,18 +1197,24 @@ Reproducing values (robustness):
 ### bitnami/apisix
 
 Result: FAIL | Status: failed
-Attempts: 83 | Remaining iterations: unknown
+Attempts: 85 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/apisix_1789251228/0000](<bitnami-runs/bitnami-charts_1789251211/runs/apisix_1789251228/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/apisix_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/apisix_1789260968/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
+Identified input fields (lower bound): 369 | Varied in render attempts: 17
+Missing values: 0 | Undocumented template fields: 37
+Unreferenced values: 114 (unknown)
+Field variation does not prove branch or output coverage.
+
 Phase known-inputs: failed | Attempts: 52
 
-Phase robustness: time-limit | Attempts: 31
+Phase robustness: time-limit | Attempts: 33
 
-Errors: [E002](#e002)
+Errors: [E003](#e003)
 
 Reproducing values (known-inputs):
 
@@ -1151,16 +1229,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 136 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/appsmith_1789251228/0000](<bitnami-runs/bitnami-charts_1789251211/runs/appsmith_1789251228/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/appsmith_1789260968/0000](<bitnami-runs/bitnami-charts_1789260948/runs/appsmith_1789260968/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 229 | Varied in render attempts: 2
+Missing values: 0 | Undocumented template fields: 240
+Unreferenced values: 120 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 35
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E003](#e003)
+Errors: [E004](#e004)
 
 Reproducing values (known-inputs):
 
@@ -1175,16 +1259,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 162 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/argo-cd_1789251295/0000](<bitnami-runs/bitnami-charts_1789251211/runs/argo-cd_1789251295/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/argo-cd_1789261025/0000](<bitnami-runs/bitnami-charts_1789260948/runs/argo-cd_1789261025/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 631 | Varied in render attempts: 7
+Missing values: 26 | Undocumented template fields: 647
+Unreferenced values: 240 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 61
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E004](#e004)
+Errors: [E005](#e005)
 
 Reproducing values (known-inputs):
 
@@ -1199,18 +1289,24 @@ Reproducing values (known-inputs):
 ### bitnami/argo-workflows
 
 Result: FAIL | Status: failed
-Attempts: 130 | Remaining iterations: unknown
+Attempts: 131 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/argo-workflows_1789251302/0000](<bitnami-runs/bitnami-charts_1789251211/runs/argo-workflows_1789251302/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/argo-workflows_1789261054/0000](<bitnami-runs/bitnami-charts_1789260948/runs/argo-workflows_1789261054/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 29
+Identified input fields (lower bound): 176 | Varied in render attempts: 0
+Missing values: 0 | Undocumented template fields: 184
+Unreferenced values: 91 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 30
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E005](#e005)
+Errors: [E006](#e006)
 
 Reproducing values (known-inputs):
 
@@ -1225,18 +1321,24 @@ Reproducing values (known-inputs):
 ### bitnami/aspnet-core
 
 Result: FAIL | Status: failed
-Attempts: 186 | Remaining iterations: unknown
+Attempts: 206 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/aspnet-core_1789251350/0000](<bitnami-runs/bitnami-charts_1789251211/runs/aspnet-core_1789251350/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/aspnet-core_1789261101/0000](<bitnami-runs/bitnami-charts_1789260948/runs/aspnet-core_1789261101/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 85
+Identified input fields (lower bound): 111 | Varied in render attempts: 38
+Missing values: 5 | Undocumented template fields: 116
+Unreferenced values: 33 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 105
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E075](#e075)
+Errors: [E090](#e090)
 
 Reproducing values (known-inputs):
 
@@ -1253,16 +1355,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 126 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/cadvisor_1789251373/0000](<bitnami-runs/bitnami-charts_1789251211/runs/cadvisor_1789251373/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/cadvisor_1789261127/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cadvisor_1789261127/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 98 | Varied in render attempts: 2
+Missing values: 3 | Undocumented template fields: 102
+Unreferenced values: 34 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 25
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E076](#e076)
+Errors: [E091](#e091)
 
 Reproducing values (known-inputs):
 
@@ -1277,16 +1385,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 135 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/cassandra_1789251382/0000](<bitnami-runs/bitnami-charts_1789251211/runs/cassandra_1789251382/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/cassandra_1789261132/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cassandra_1789261132/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 131 | Varied in render attempts: 1
+Missing values: 1 | Undocumented template fields: 137
+Unreferenced values: 53 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 34
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E006](#e006)
+Errors: [E007](#e007)
 
 Reproducing values (known-inputs):
 
@@ -1299,18 +1413,24 @@ Reproducing values (known-inputs):
 ### bitnami/cert-manager
 
 Result: FAIL | Status: failed
-Attempts: 170 | Remaining iterations: unknown
+Attempts: 168 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/cert-manager_1789251391/0000](<bitnami-runs/bitnami-charts_1789251211/runs/cert-manager_1789251391/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/cert-manager_1789261145/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cert-manager_1789261145/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 69
+Identified input fields (lower bound): 186 | Varied in render attempts: 51
+Missing values: 4 | Undocumented template fields: 195
+Unreferenced values: 66 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 67
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E007](#e007)
+Errors: [E008](#e008)
 
 Reproducing values (known-inputs):
 
@@ -1325,18 +1445,24 @@ Reproducing values (known-inputs):
 ### bitnami/chainloop
 
 Result: FAIL | Status: failed
-Attempts: 165 | Remaining iterations: unknown
+Attempts: 147 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/chainloop_1789251406/0000](<bitnami-runs/bitnami-charts_1789251211/runs/chainloop_1789251406/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/chainloop_1789261157/0000](<bitnami-runs/bitnami-charts_1789260948/runs/chainloop_1789261157/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 64
+Identified input fields (lower bound): 331 | Varied in render attempts: 6
+Missing values: 6 | Undocumented template fields: 346
+Unreferenced values: 81 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 46
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E077](#e077)
+Errors: [E092](#e092)
 
 Reproducing values (known-inputs):
 
@@ -1351,16 +1477,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 187 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/cilium_1789251449/0000](<bitnami-runs/bitnami-charts_1789251211/runs/cilium_1789251449/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/cilium_1789261173/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cilium_1789261173/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 456 | Varied in render attempts: 11
+Missing values: 0 | Undocumented template fields: 478
+Unreferenced values: 310 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 86
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E104](#e104)
+Errors: [E113](#e113)
 
 Reproducing values (known-inputs):
 
@@ -1373,42 +1505,56 @@ Reproducing values (known-inputs):
 ### bitnami/clickhouse
 
 Result: FAIL | Status: failed
-Attempts: 193 | Remaining iterations: unknown
+Attempts: 181 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/clickhouse_1789251452/0000](<bitnami-runs/bitnami-charts_1789251211/runs/clickhouse_1789251452/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/clickhouse_1789261201/0000](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse_1789261201/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 92
+Identified input fields (lower bound): 243 | Varied in render attempts: 24
+Missing values: 0 | Undocumented template fields: 255
+Unreferenced values: 84 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 80
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E008](#e008)
+Errors: [E009](#e009)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "startdbScriptsSecret": ":"
+  "configdFiles": {
+    "": null
+  }
 }
 ```
 
 ### bitnami/clickhouse-operator
 
 Result: FAIL | Status: failed
-Attempts: 157 | Remaining iterations: unknown
+Attempts: 172 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/clickhouse-operator_1789251497/0000](<bitnami-runs/bitnami-charts_1789251211/runs/clickhouse-operator_1789251497/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/clickhouse-operator_1789261238/0000](<bitnami-runs/bitnami-charts_1789260948/runs/clickhouse-operator_1789261238/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 56
+Identified input fields (lower bound): 117 | Varied in render attempts: 10
+Missing values: 0 | Undocumented template fields: 124
+Unreferenced values: 56 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 71
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E109](#e109)
+Errors: [E088](#e088)
 
 Reproducing values (known-inputs):
 
@@ -1426,16 +1572,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 152 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/cloudnative-pg_1789251513/0000](<bitnami-runs/bitnami-charts_1789251211/runs/cloudnative-pg_1789251513/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/cloudnative-pg_1789261278/0000](<bitnami-runs/bitnami-charts_1789260948/runs/cloudnative-pg_1789261278/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 227 | Varied in render attempts: 1
+Missing values: 0 | Undocumented template fields: 235
+Unreferenced values: 50 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 51
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E009](#e009)
+Errors: [E010](#e010)
 
 Reproducing values (known-inputs):
 
@@ -1450,7 +1602,8 @@ Reproducing values (known-inputs):
 Result: N/A | Status: skipped-library
 Attempts: N/A | Remaining iterations: unknown
 Coverage: not a standalone application
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/common_1789251532/0000](<bitnami-runs/bitnami-charts_1789251211/runs/common_1789251532/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/common_1789261278/0000](<bitnami-runs/bitnami-charts_1789260948/runs/common_1789261278/0000>)
 
 Filtering applied: False
 Chart did not enter finite permutation testing
@@ -1460,16 +1613,22 @@ Chart did not enter finite permutation testing
 Result: FAIL | Status: failed
 Attempts: 158 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/concourse_1789251532/0000](<bitnami-runs/bitnami-charts_1789251211/runs/concourse_1789251532/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/concourse_1789261279/0000](<bitnami-runs/bitnami-charts_1789260948/runs/concourse_1789261279/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 229 | Varied in render attempts: 1
+Missing values: 5 | Undocumented template fields: 236
+Unreferenced values: 76 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 57
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E105](#e105)
+Errors: [E115](#e115)
 
 Reproducing values (known-inputs):
 
@@ -1484,16 +1643,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 140 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/consul_1789251533/0000](<bitnami-runs/bitnami-charts_1789251211/runs/consul_1789251533/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/consul_1789261319/0000](<bitnami-runs/bitnami-charts_1789260948/runs/consul_1789261319/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 123 | Varied in render attempts: 3
+Missing values: 2 | Undocumented template fields: 129
+Unreferenced values: 38 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 39
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E010](#e010)
+Errors: [E011](#e011)
 
 Reproducing values (known-inputs):
 
@@ -1508,16 +1673,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 120 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/contour_1789251558/0000](<bitnami-runs/bitnami-charts_1789251211/runs/contour_1789251558/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/contour_1789261328/0000](<bitnami-runs/bitnami-charts_1789260948/runs/contour_1789261328/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 262 | Varied in render attempts: 3
+Missing values: 3 | Undocumented template fields: 274
+Unreferenced values: 141 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E011](#e011)
+Errors: [E012](#e012)
 
 Reproducing values (known-inputs):
 
@@ -1532,18 +1703,24 @@ Reproducing values (known-inputs):
 ### bitnami/deepspeed
 
 Result: FAIL | Status: failed
-Attempts: 101 | Remaining iterations: unknown
+Attempts: 107 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/deepspeed_1789251584/0000](<bitnami-runs/bitnami-charts_1789251211/runs/deepspeed_1789251584/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/deepspeed_1789261342/0000](<bitnami-runs/bitnami-charts_1789260948/runs/deepspeed_1789261342/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
+Identified input fields (lower bound): 145 | Varied in render attempts: 9
+Missing values: 1 | Undocumented template fields: 13
+Unreferenced values: 71 (unknown)
+Field variation does not prove branch or output coverage.
+
 Phase known-inputs: failed | Attempts: 12
 
-Phase robustness: time-limit | Attempts: 89
+Phase robustness: time-limit | Attempts: 95
 
-Errors: [E012](#e012)
+Errors: [E013](#e013)
 
 Reproducing values (known-inputs):
 
@@ -1560,16 +1737,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 162 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/discourse_1789251597/0000](<bitnami-runs/bitnami-charts_1789251211/runs/discourse_1789251597/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/discourse_1789261349/0000](<bitnami-runs/bitnami-charts_1789260948/runs/discourse_1789261349/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 129 | Varied in render attempts: 12
+Missing values: 1 | Undocumented template fields: 136
+Unreferenced values: 74 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 61
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E013](#e013)
+Errors: [E014](#e014)
 
 Reproducing values (known-inputs):
 
@@ -1586,18 +1769,24 @@ Reproducing values (known-inputs):
 ### bitnami/dremio
 
 Result: FAIL | Status: failed
-Attempts: 133 | Remaining iterations: unknown
+Attempts: 147 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/dremio_1789251625/0000](<bitnami-runs/bitnami-charts_1789251211/runs/dremio_1789251625/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/dremio_1789261357/0000](<bitnami-runs/bitnami-charts_1789260948/runs/dremio_1789261357/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 32
+Identified input fields (lower bound): 304 | Varied in render attempts: 28
+Missing values: 7 | Undocumented template fields: 326
+Unreferenced values: 137 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 46
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E014](#e014)
+Errors: [E015](#e015)
 
 Reproducing values (known-inputs):
 
@@ -1612,18 +1801,24 @@ Reproducing values (known-inputs):
 ### bitnami/drupal
 
 Result: FAIL | Status: failed
-Attempts: 252 | Remaining iterations: unknown
+Attempts: 131 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/drupal_1789251652/0000](<bitnami-runs/bitnami-charts_1789251211/runs/drupal_1789251652/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/drupal_1789261399/0000](<bitnami-runs/bitnami-charts_1789260948/runs/drupal_1789261399/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 29
+Identified input fields (lower bound): 149 | Varied in render attempts: 21
+Missing values: 6 | Undocumented template fields: 143
+Unreferenced values: 48 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 223
+Phase known-inputs: failed | Attempts: 30
 
-Errors: [E078](#e078), [E015](#e015)
+Phase robustness: passed | Attempts: 101
+
+Errors: [E098](#e098)
 
 Reproducing values (known-inputs):
 
@@ -1635,26 +1830,21 @@ Reproducing values (known-inputs):
 }
 ```
 
-Reproducing values (robustness):
-
-```json
-{
-  "": [],
-  "service": {
-    "type": "\u001f"
-  }
-}
-```
-
 ### bitnami/ejbca
 
 Result: FAIL | Status: failed
 Attempts: 147 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/ejbca_1789251723/0000](<bitnami-runs/bitnami-charts_1789251211/runs/ejbca_1789251723/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/ejbca_1789261434/0000](<bitnami-runs/bitnami-charts_1789260948/runs/ejbca_1789261434/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 100 | Varied in render attempts: 4
+Missing values: 4 | Undocumented template fields: 103
+Unreferenced values: 52 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 46
 
@@ -1673,14 +1863,20 @@ Reproducing values (known-inputs):
 ### bitnami/elasticsearch
 
 Result: FAIL | Status: failed
-Attempts: 180 | Remaining iterations: unknown
+Attempts: 143 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/elasticsearch_1789251725/0000](<bitnami-runs/bitnami-charts_1789251211/runs/elasticsearch_1789251725/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/elasticsearch_1789261468/0000](<bitnami-runs/bitnami-charts_1789260948/runs/elasticsearch_1789261468/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 79
+Identified input fields (lower bound): 382 | Varied in render attempts: 5
+Missing values: 0 | Undocumented template fields: 396
+Unreferenced values: 180 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 42
 
 Phase robustness: passed | Attempts: 101
 
@@ -1697,14 +1893,20 @@ Reproducing values (known-inputs):
 ### bitnami/envoy-gateway
 
 Result: FAIL | Status: failed
-Attempts: 157 | Remaining iterations: unknown
+Attempts: 156 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/envoy-gateway_1789251751/0000](<bitnami-runs/bitnami-charts_1789251211/runs/envoy-gateway_1789251751/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/envoy-gateway_1789261488/0000](<bitnami-runs/bitnami-charts_1789260948/runs/envoy-gateway_1789261488/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 56
+Identified input fields (lower bound): 147 | Varied in render attempts: 9
+Missing values: 0 | Undocumented template fields: 153
+Unreferenced values: 55 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 55
 
 Phase robustness: passed | Attempts: 101
 
@@ -1722,33 +1924,57 @@ Reproducing values (known-inputs):
 
 ### bitnami/etcd
 
-Result: N/A | Status: time-limit
-Attempts: 105 | Remaining iterations: unknown
+Result: FAIL | Status: failed
+Attempts: 108 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/etcd_1789251756/0000](<bitnami-runs/bitnami-charts_1789251211/runs/etcd_1789251756/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/etcd_1789261495/0000](<bitnami-runs/bitnami-charts_1789260948/runs/etcd_1789261495/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: time-limit | Attempts: 95
+Identified input fields (lower bound): 190 | Varied in render attempts: 26
+Missing values: 1 | Undocumented template fields: 199
+Unreferenced values: 58 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: time-limit | Attempts: 10
+Phase known-inputs: failed | Attempts: 62
+
+Phase robustness: time-limit | Attempts: 46
+
+Errors: [E019](#e019)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "commonAnnotations": {
+    "": null
+  }
+}
+```
 
 ### bitnami/external-dns
 
 Result: FAIL | Status: failed
 Attempts: 148 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/external-dns_1789251819/0000](<bitnami-runs/bitnami-charts_1789251211/runs/external-dns_1789251819/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/external-dns_1789261550/0000](<bitnami-runs/bitnami-charts_1789260948/runs/external-dns_1789261550/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 235 | Varied in render attempts: 9
+Missing values: 10 | Undocumented template fields: 238
+Unreferenced values: 58 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 47
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E019](#e019)
+Errors: [E020](#e020)
 
 Reproducing values (known-inputs):
 
@@ -1761,70 +1987,84 @@ Reproducing values (known-inputs):
 ### bitnami/flink
 
 Result: FAIL | Status: failed
-Attempts: 120 | Remaining iterations: unknown
+Attempts: 188 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/flink_1789251853/0000](<bitnami-runs/bitnami-charts_1789251211/runs/flink_1789251853/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/flink_1789261585/0000](<bitnami-runs/bitnami-charts_1789260948/runs/flink_1789261585/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 19
+Identified input fields (lower bound): 134 | Varied in render attempts: 35
+Missing values: 0 | Undocumented template fields: 139
+Unreferenced values: 53 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 87
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E020](#e020)
+Errors: [E021](#e021)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "commonAnnotations": {
-    "": []
-  }
+  "clusterDomain": "\b"
 }
 ```
 
 ### bitnami/fluent-bit
 
 Result: FAIL | Status: failed
-Attempts: 245 | Remaining iterations: unknown
+Attempts: 217 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/fluent-bit_1789251880/0000](<bitnami-runs/bitnami-charts_1789251211/runs/fluent-bit_1789251880/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/fluent-bit_1789261621/0000](<bitnami-runs/bitnami-charts_1789260948/runs/fluent-bit_1789261621/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 144
+Identified input fields (lower bound): 121 | Varied in render attempts: 39
+Missing values: 0 | Undocumented template fields: 126
+Unreferenced values: 35 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 116
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E079](#e079)
+Errors: [E022](#e022)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "global": {
-    "imageRegistry": "00"
-  }
+  "nameOverride": "\u001f"
 }
 ```
 
 ### bitnami/fluentd
 
 Result: FAIL | Status: failed
-Attempts: 129 | Remaining iterations: unknown
+Attempts: 128 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/fluentd_1789251891/0000](<bitnami-runs/bitnami-charts_1789251211/runs/fluentd_1789251891/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/fluentd_1789261647/0000](<bitnami-runs/bitnami-charts_1789260948/runs/fluentd_1789261647/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 28
+Identified input fields (lower bound): 208 | Varied in render attempts: 16
+Missing values: 7 | Undocumented template fields: 217
+Unreferenced values: 64 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 27
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E021](#e021)
+Errors: [E023](#e023)
 
 Reproducing values (known-inputs):
 
@@ -1839,18 +2079,24 @@ Reproducing values (known-inputs):
 ### bitnami/flux
 
 Result: FAIL | Status: failed
-Attempts: 119 | Remaining iterations: unknown
+Attempts: 120 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/flux_1789251919/0000](<bitnami-runs/bitnami-charts_1789251211/runs/flux_1789251919/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/flux_1789261654/0000](<bitnami-runs/bitnami-charts_1789260948/runs/flux_1789261654/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 18
+Identified input fields (lower bound): 543 | Varied in render attempts: 20
+Missing values: 9 | Undocumented template fields: 565
+Unreferenced values: 163 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E022](#e022)
+Errors: [E024](#e024)
 
 Reproducing values (known-inputs):
 
@@ -1865,37 +2111,31 @@ Reproducing values (known-inputs):
 ### bitnami/ghost
 
 Result: FAIL | Status: failed
-Attempts: 396 | Remaining iterations: unknown
+Attempts: 152 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/ghost_1789251929/0000](<bitnami-runs/bitnami-charts_1789251211/runs/ghost_1789251929/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/ghost_1789261679/0000](<bitnami-runs/bitnami-charts_1789260948/runs/ghost_1789261679/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 154
+Identified input fields (lower bound): 121 | Varied in render attempts: 25
+Missing values: 4 | Undocumented template fields: 114
+Unreferenced values: 43 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 242
+Phase known-inputs: failed | Attempts: 51
 
-Errors: [E023](#e023), [E098](#e098)
+Phase robustness: passed | Attempts: 101
+
+Errors: [E086](#e086)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "service": {
-    "annotations": {
-      "": []
-    }
-  }
-}
-```
-
-Reproducing values (robustness):
-
-```json
-{
-  "": {
-    "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
+  "mysql": {
+    "architecture": ""
   }
 }
 ```
@@ -1905,16 +2145,22 @@ Reproducing values (robustness):
 Result: FAIL | Status: failed
 Attempts: 147 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/gitea_1789251952/0000](<bitnami-runs/bitnami-charts_1789251211/runs/gitea_1789251952/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/gitea_1789261682/0000](<bitnami-runs/bitnami-charts_1789260948/runs/gitea_1789261682/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 113 | Varied in render attempts: 5
+Missing values: 0 | Undocumented template fields: 118
+Unreferenced values: 40 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 46
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E024](#e024)
+Errors: [E025](#e025)
 
 Reproducing values (known-inputs):
 
@@ -1927,64 +2173,20 @@ Reproducing values (known-inputs):
 ### bitnami/gitlab-runner
 
 Result: FAIL | Status: failed
-Attempts: 213 | Remaining iterations: unknown
+Attempts: 248 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/gitlab-runner_1789251987/0000](<bitnami-runs/bitnami-charts_1789251211/runs/gitlab-runner_1789251987/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/gitlab-runner_1789261710/0000](<bitnami-runs/bitnami-charts_1789260948/runs/gitlab-runner_1789261710/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 112
+Identified input fields (lower bound): 142 | Varied in render attempts: 44
+Missing values: 0 | Undocumented template fields: 145
+Unreferenced values: 48 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: passed | Attempts: 101
-
-Errors: [E025](#e025)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "nameOverride": "\u001f"
-}
-```
-
-### bitnami/grafana
-
-Result: FAIL | Status: failed
-Attempts: 197 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/grafana_1789252005/0000](<bitnami-runs/bitnami-charts_1789251211/runs/grafana_1789252005/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 96
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E100](#e100)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "dashboardsConfigMaps": [
-    null
-  ]
-}
-```
-
-### bitnami/grafana-alloy
-
-Result: FAIL | Status: failed
-Attempts: 239 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/grafana-alloy_1789252023/0000](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-alloy_1789252023/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 138
+Phase known-inputs: failed | Attempts: 147
 
 Phase robustness: passed | Attempts: 101
 
@@ -1994,49 +2196,127 @@ Reproducing values (known-inputs):
 
 ```json
 {
-  "nameOverride": "\u001f"
+  "helperImage": {
+    "digest": "\u001f"
+  }
+}
+```
+
+### bitnami/grafana
+
+Result: FAIL | Status: failed
+Attempts: 164 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/grafana_1789261713/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana_1789261713/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 151 | Varied in render attempts: 15
+Missing values: 5 | Undocumented template fields: 156
+Unreferenced values: 52 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 63
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E031](#e031)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "admin": {
+    "existingSecret": "?"
+  }
+}
+```
+
+### bitnami/grafana-alloy
+
+Result: FAIL | Status: failed
+Attempts: 368 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/grafana-alloy_1789261741/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-alloy_1789261741/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 132 | Varied in render attempts: 88
+Missing values: 3 | Undocumented template fields: 138
+Unreferenced values: 61 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 267
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E093](#e093)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "global": {
+    "imageRegistry": "00"
+  }
 }
 ```
 
 ### bitnami/grafana-k6-operator
 
 Result: FAIL | Status: failed
-Attempts: 187 | Remaining iterations: unknown
+Attempts: 173 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/grafana-k6-operator_1789252042/0000](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-k6-operator_1789252042/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/grafana-k6-operator_1789261748/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-k6-operator_1789261748/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 86
+Identified input fields (lower bound): 91 | Varied in render attempts: 5
+Missing values: 0 | Undocumented template fields: 95
+Unreferenced values: 32 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 72
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E111](#e111)
+Errors: [E027](#e027)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraEnvVarsCM": "="
+  "extraEnvVarsCM": "?"
 }
 ```
 
 ### bitnami/grafana-loki
 
 Result: FAIL | Status: failed
-Attempts: 149 | Remaining iterations: unknown
+Attempts: 148 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/grafana-loki_1789252062/0000](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-loki_1789252062/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/grafana-loki_1789261775/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-loki_1789261775/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 48
+Identified input fields (lower bound): 671 | Varied in render attempts: 7
+Missing values: 6 | Undocumented template fields: 696
+Unreferenced values: 287 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 47
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E027](#e027)
+Errors: [E028](#e028)
 
 Reproducing values (known-inputs):
 
@@ -2051,16 +2331,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 125 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/grafana-mimir_1789252066/0000](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-mimir_1789252066/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/grafana-mimir_1789261802/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-mimir_1789261802/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 703 | Varied in render attempts: 1
+Missing values: 6 | Undocumented template fields: 729
+Unreferenced values: 335 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 24
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E080](#e080)
+Errors: [E100](#e100)
 
 Reproducing values (known-inputs):
 
@@ -2075,18 +2361,24 @@ Reproducing values (known-inputs):
 ### bitnami/grafana-operator
 
 Result: FAIL | Status: failed
-Attempts: 162 | Remaining iterations: unknown
+Attempts: 143 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/grafana-operator_1789252073/0000](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-operator_1789252073/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/grafana-operator_1789261806/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-operator_1789261806/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 61
+Identified input fields (lower bound): 120 | Varied in render attempts: 25
+Missing values: 1 | Undocumented template fields: 127
+Unreferenced values: 44 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 42
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E028](#e028)
+Errors: [E029](#e029)
 
 Reproducing values (known-inputs):
 
@@ -2103,16 +2395,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 138 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/grafana-tempo_1789252105/0000](<bitnami-runs/bitnami-charts_1789251211/runs/grafana-tempo_1789252105/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/grafana-tempo_1789261832/0000](<bitnami-runs/bitnami-charts_1789260948/runs/grafana-tempo_1789261832/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 469 | Varied in render attempts: 3
+Missing values: 2 | Undocumented template fields: 489
+Unreferenced values: 204 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 37
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E029](#e029)
+Errors: [E030](#e030)
 
 Reproducing values (known-inputs):
 
@@ -2127,18 +2425,24 @@ Reproducing values (known-inputs):
 ### bitnami/haproxy
 
 Result: FAIL | Status: failed
-Attempts: 193 | Remaining iterations: unknown
+Attempts: 192 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/haproxy_1789252206/0000](<bitnami-runs/bitnami-charts_1789251211/runs/haproxy_1789252206/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/haproxy_1789261927/0000](<bitnami-runs/bitnami-charts_1789260948/runs/haproxy_1789261927/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 92
+Identified input fields (lower bound): 87 | Varied in render attempts: 56
+Missing values: 0 | Undocumented template fields: 91
+Unreferenced values: 34 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 91
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E030](#e030)
+Errors: [E032](#e032)
 
 Reproducing values (known-inputs):
 
@@ -2155,16 +2459,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 137 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/harbor_1789252208/0000](<bitnami-runs/bitnami-charts_1789251211/runs/harbor_1789252208/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/harbor_1789261928/0000](<bitnami-runs/bitnami-charts_1789260948/runs/harbor_1789261928/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 554 | Varied in render attempts: 2
+Missing values: 4 | Undocumented template fields: 586
+Unreferenced values: 294 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 36
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E031](#e031)
+Errors: [E033](#e033)
 
 Reproducing values (known-inputs):
 
@@ -2177,25 +2487,31 @@ Reproducing values (known-inputs):
 ### bitnami/influxdb
 
 Result: FAIL | Status: failed
-Attempts: 344 | Remaining iterations: unknown
+Attempts: 380 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/influxdb_1789252221/0000](<bitnami-runs/bitnami-charts_1789251211/runs/influxdb_1789252221/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/influxdb_1789261931/0000](<bitnami-runs/bitnami-charts_1789260948/runs/influxdb_1789261931/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 243
+Identified input fields (lower bound): 167 | Varied in render attempts: 119
+Missing values: 0 | Undocumented template fields: 174
+Unreferenced values: 51 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 279
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E032](#e032)
+Errors: [E094](#e094)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "pdb": {
-    "maxUnavailable": "\u001f"
+  "global": {
+    "imageRegistry": "00"
   }
 }
 ```
@@ -2203,26 +2519,30 @@ Reproducing values (known-inputs):
 ### bitnami/jaeger
 
 Result: FAIL | Status: failed
-Attempts: 207 | Remaining iterations: unknown
+Attempts: 220 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/jaeger_1789252233/0000](<bitnami-runs/bitnami-charts_1789251211/runs/jaeger_1789252233/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/jaeger_1789261953/0000](<bitnami-runs/bitnami-charts_1789260948/runs/jaeger_1789261953/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 106
+Identified input fields (lower bound): 155 | Varied in render attempts: 7
+Missing values: 0 | Undocumented template fields: 160
+Unreferenced values: 101 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 119
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E081](#e081)
+Errors: [E034](#e034)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "collector": {
-    "resourcesPreset": ""
-  }
+  "fullnameOverride": "'"
 }
 ```
 
@@ -2231,16 +2551,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 139 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/janusgraph_1789252257/0000](<bitnami-runs/bitnami-charts_1789251211/runs/janusgraph_1789252257/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/janusgraph_1789261985/0000](<bitnami-runs/bitnami-charts_1789260948/runs/janusgraph_1789261985/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 125 | Varied in render attempts: 2
+Missing values: 6 | Undocumented template fields: 134
+Unreferenced values: 52 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 38
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E033](#e033)
+Errors: [E035](#e035)
 
 Reproducing values (known-inputs):
 
@@ -2253,26 +2579,30 @@ Reproducing values (known-inputs):
 ### bitnami/jenkins
 
 Result: FAIL | Status: failed
-Attempts: 405 | Remaining iterations: unknown
+Attempts: 426 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/jenkins_1789252283/0000](<bitnami-runs/bitnami-charts_1789251211/runs/jenkins_1789252283/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000](<bitnami-runs/bitnami-charts_1789260948/runs/jenkins_1789261998/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 136
+Identified input fields (lower bound): 172 | Varied in render attempts: 15
+Missing values: 0 | Undocumented template fields: 171
+Unreferenced values: 43 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 269
+Phase known-inputs: failed | Attempts: 118
 
-Errors: [E082](#e082), [E096](#e096)
+Phase robustness: failed | Attempts: 308
+
+Errors: [E112](#e112), [E036](#e036)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "global": {
-    "imageRegistry": "00"
-  }
+  "fullnameOverride": "0"
 }
 ```
 
@@ -2280,8 +2610,9 @@ Reproducing values (robustness):
 
 ```json
 {
-  "": {
-    "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
+  "": [],
+  "service": {
+    "type": ":"
   }
 }
 ```
@@ -2289,18 +2620,24 @@ Reproducing values (robustness):
 ### bitnami/jupyterhub
 
 Result: FAIL | Status: failed
-Attempts: 126 | Remaining iterations: unknown
+Attempts: 125 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/jupyterhub_1789252291/0000](<bitnami-runs/bitnami-charts_1789251211/runs/jupyterhub_1789252291/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/jupyterhub_1789262019/0000](<bitnami-runs/bitnami-charts_1789260948/runs/jupyterhub_1789262019/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 25
+Identified input fields (lower bound): 252 | Varied in render attempts: 1
+Missing values: 4 | Undocumented template fields: 262
+Unreferenced values: 102 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 24
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E083](#e083)
+Errors: [E095](#e095)
 
 Reproducing values (known-inputs):
 
@@ -2317,16 +2654,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 141 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kafka_1789252297/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kafka_1789252297/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kafka_1789262019/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kafka_1789262019/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 356 | Varied in render attempts: 2
+Missing values: 3 | Undocumented template fields: 372
+Unreferenced values: 154 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 40
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E034](#e034)
+Errors: [E037](#e037)
 
 Reproducing values (known-inputs):
 
@@ -2339,24 +2682,30 @@ Reproducing values (known-inputs):
 ### bitnami/keycloak
 
 Result: FAIL | Status: failed
-Attempts: 240 | Remaining iterations: unknown
+Attempts: 214 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/keycloak_1789252350/0000](<bitnami-runs/bitnami-charts_1789251211/runs/keycloak_1789252350/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/keycloak_1789262075/0000](<bitnami-runs/bitnami-charts_1789260948/runs/keycloak_1789262075/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 139
+Identified input fields (lower bound): 232 | Varied in render attempts: 93
+Missing values: 0 | Undocumented template fields: 239
+Unreferenced values: 64 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 113
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E113](#e113)
+Errors: [E111](#e111)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "fullnameOverride": "0"
+  "dnsPolicy": "\u001f"
 }
 ```
 
@@ -2365,16 +2714,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 127 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/keydb_1789252362/0000](<bitnami-runs/bitnami-charts_1789251211/runs/keydb_1789252362/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/keydb_1789262081/0000](<bitnami-runs/bitnami-charts_1789260948/runs/keydb_1789262081/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 207 | Varied in render attempts: 4
+Missing values: 3 | Undocumented template fields: 218
+Unreferenced values: 119 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 26
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E113](#e113)
+Errors: [E112](#e112)
 
 Reproducing values (known-inputs):
 
@@ -2387,18 +2742,24 @@ Reproducing values (known-inputs):
 ### bitnami/kibana
 
 Result: FAIL | Status: failed
-Attempts: 317 | Remaining iterations: unknown
+Attempts: 254 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kibana_1789252366/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kibana_1789252366/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kibana_1789262084/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kibana_1789262084/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 216
+Identified input fields (lower bound): 139 | Varied in render attempts: 42
+Missing values: 1 | Undocumented template fields: 144
+Unreferenced values: 30 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 153
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E101](#e101)
+Errors: [E038](#e038)
 
 Reproducing values (known-inputs):
 
@@ -2406,9 +2767,7 @@ Reproducing values (known-inputs):
 {
   "ingress": {
     "enabled": true,
-    "extraHosts": [
-      null
-    ]
+    "hostname": "\u001f"
   }
 }
 ```
@@ -2416,24 +2775,30 @@ Reproducing values (known-inputs):
 ### bitnami/kong
 
 Result: FAIL | Status: failed
-Attempts: 142 | Remaining iterations: unknown
+Attempts: 140 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kong_1789252404/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kong_1789252404/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kong_1789262120/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kong_1789262120/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 41
+Identified input fields (lower bound): 156 | Varied in render attempts: 1
+Missing values: 9 | Undocumented template fields: 160
+Unreferenced values: 84 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 39
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E111](#e111)
+Errors: [E039](#e039)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "terminationGracePeriodSeconds": "="
+  "terminationGracePeriodSeconds": "-"
 }
 ```
 
@@ -2442,16 +2807,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 163 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kube-arangodb_1789252412/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kube-arangodb_1789252412/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kube-arangodb_1789262121/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-arangodb_1789262121/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 153 | Varied in render attempts: 4
+Missing values: 0 | Undocumented template fields: 158
+Unreferenced values: 61 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 62
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E035](#e035)
+Errors: [E040](#e040)
 
 Reproducing values (known-inputs):
 
@@ -2464,18 +2835,24 @@ Reproducing values (known-inputs):
 ### bitnami/kube-prometheus
 
 Result: FAIL | Status: failed
-Attempts: 119 | Remaining iterations: unknown
+Attempts: 120 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus_1789252419/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus_1789252419/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus_1789262132/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus_1789262132/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 18
+Identified input fields (lower bound): 691 | Varied in render attempts: 18
+Missing values: 6 | Undocumented template fields: 711
+Unreferenced values: 83 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E112](#e112)
+Errors: [E110](#e110)
 
 Reproducing values (known-inputs):
 
@@ -2492,16 +2869,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 2 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus-crds_1789252451/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kube-prometheus-crds_1789252451/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-prometheus-crds_1789262163/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 0 | Varied in render attempts: 0
+Missing values: 0 | Undocumented template fields: 0
+Unreferenced values: 1 (possibly unused; not proven)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 1
 
 Phase robustness: failed | Attempts: 1
 
-Errors: [E108](#e108)
+Errors: [E087](#e087)
 
 Reproducing values (known-inputs):
 
@@ -2520,16 +2903,22 @@ Reproducing values (robustness):
 Result: FAIL | Status: failed
 Attempts: 118 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kube-state-metrics_1789252452/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kube-state-metrics_1789252452/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kube-state-metrics_1789262164/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kube-state-metrics_1789262164/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 117 | Varied in render attempts: 2
+Missing values: 1 | Undocumented template fields: 120
+Unreferenced values: 32 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 17
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E084](#e084)
+Errors: [E096](#e096)
 
 Reproducing values (known-inputs):
 
@@ -2542,18 +2931,24 @@ Reproducing values (known-inputs):
 ### bitnami/kuberay
 
 Result: FAIL | Status: failed
-Attempts: 132 | Remaining iterations: unknown
+Attempts: 134 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kuberay_1789252452/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kuberay_1789252452/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kuberay_1789262165/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kuberay_1789262165/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 31
+Identified input fields (lower bound): 283 | Varied in render attempts: 2
+Missing values: 0 | Undocumented template fields: 295
+Unreferenced values: 64 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 33
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E036](#e036)
+Errors: [E041](#e041)
 
 Reproducing values (known-inputs):
 
@@ -2568,25 +2963,31 @@ Reproducing values (known-inputs):
 ### bitnami/kubernetes-event-exporter
 
 Result: FAIL | Status: failed
-Attempts: 331 | Remaining iterations: unknown
+Attempts: 191 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/kubernetes-event-exporter_1789252461/0000](<bitnami-runs/bitnami-charts_1789251211/runs/kubernetes-event-exporter_1789252461/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/kubernetes-event-exporter_1789262168/0000](<bitnami-runs/bitnami-charts_1789260948/runs/kubernetes-event-exporter_1789262168/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 230
+Identified input fields (lower bound): 82 | Varied in render attempts: 23
+Missing values: 2 | Undocumented template fields: 87
+Unreferenced values: 33 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 90
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E037](#e037)
+Errors: [E042](#e042)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "image": {
-    "digest": "\u001f"
+  "commonAnnotations": {
+    "": null
   }
 }
 ```
@@ -2596,16 +2997,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 141 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/logstash_1789252473/0000](<bitnami-runs/bitnami-charts_1789251211/runs/logstash_1789252473/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/logstash_1789262184/0000](<bitnami-runs/bitnami-charts_1789260948/runs/logstash_1789262184/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 110 | Varied in render attempts: 4
+Missing values: 5 | Undocumented template fields: 119
+Unreferenced values: 27 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 40
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E038](#e038)
+Errors: [E043](#e043)
 
 Reproducing values (known-inputs):
 
@@ -2618,18 +3025,24 @@ Reproducing values (known-inputs):
 ### bitnami/mariadb
 
 Result: FAIL | Status: failed
-Attempts: 127 | Remaining iterations: unknown
+Attempts: 132 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/mariadb_1789252495/0000](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb_1789252495/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb_1789262195/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
+Identified input fields (lower bound): 242 | Varied in render attempts: 72
+Missing values: 12 | Undocumented template fields: 22
+Unreferenced values: 81 (unknown)
+Field variation does not prove branch or output coverage.
+
 Phase known-inputs: failed | Attempts: 5
 
-Phase robustness: failed | Attempts: 122
+Phase robustness: failed | Attempts: 127
 
-Errors: [E085](#e085)
+Errors: [E099](#e099)
 
 Reproducing values (known-inputs):
 
@@ -2651,52 +3064,62 @@ Reproducing values (robustness):
 ### bitnami/mariadb-galera
 
 Result: FAIL | Status: failed
-Attempts: 90 | Remaining iterations: unknown
+Attempts: 128 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/mariadb-galera_1789252506/0000](<bitnami-runs/bitnami-charts_1789251211/runs/mariadb-galera_1789252506/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/mariadb-galera_1789262206/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mariadb-galera_1789262206/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 68
+Identified input fields (lower bound): 139 | Varied in render attempts: 38
+Missing values: 10 | Undocumented template fields: 127
+Unreferenced values: 50 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: time-limit | Attempts: 22
+Phase known-inputs: failed | Attempts: 100
 
-Errors: [E039](#e039)
+Phase robustness: time-limit | Attempts: 28
+
+Errors: [E097](#e097)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraDeploy": [
-    []
-  ]
+  "resourcesPreset": ""
 }
 ```
 
 ### bitnami/mastodon
 
 Result: FAIL | Status: failed
-Attempts: 200 | Remaining iterations: unknown
+Attempts: 160 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/mastodon_1789252506/0000](<bitnami-runs/bitnami-charts_1789251211/runs/mastodon_1789252506/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/mastodon_1789262219/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mastodon_1789262219/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 99
+Identified input fields (lower bound): 284 | Varied in render attempts: 16
+Missing values: 5 | Undocumented template fields: 300
+Unreferenced values: 150 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 59
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E040](#e040)
+Errors: [E112](#e112)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraDeploy": [
-    []
-  ]
+  "serviceAccount": {
+    "name": "0"
+  }
 }
 ```
 
@@ -2705,16 +3128,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 134 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/matomo_1789252549/0000](<bitnami-runs/bitnami-charts_1789251211/runs/matomo_1789252549/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/matomo_1789262257/0000](<bitnami-runs/bitnami-charts_1789260948/runs/matomo_1789262257/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 160 | Varied in render attempts: 3
+Missing values: 0 | Undocumented template fields: 170
+Unreferenced values: 53 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 33
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E041](#e041)
+Errors: [E044](#e044)
 
 Reproducing values (known-inputs):
 
@@ -2727,18 +3156,24 @@ Reproducing values (known-inputs):
 ### bitnami/memcached
 
 Result: FAIL | Status: failed
-Attempts: 161 | Remaining iterations: unknown
+Attempts: 146 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/memcached_1789252601/0000](<bitnami-runs/bitnami-charts_1789251211/runs/memcached_1789252601/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/memcached_1789262312/0000](<bitnami-runs/bitnami-charts_1789260948/runs/memcached_1789262312/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 60
+Identified input fields (lower bound): 122 | Varied in render attempts: 27
+Missing values: 1 | Undocumented template fields: 129
+Unreferenced values: 46 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 45
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E086](#e086)
+Errors: [E101](#e101)
 
 Reproducing values (known-inputs):
 
@@ -2751,48 +3186,62 @@ Reproducing values (known-inputs):
 ### bitnami/metallb
 
 Result: FAIL | Status: failed
-Attempts: 225 | Remaining iterations: unknown
+Attempts: 160 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/metallb_1789252639/0000](<bitnami-runs/bitnami-charts_1789251211/runs/metallb_1789252639/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/metallb_1789262350/0000](<bitnami-runs/bitnami-charts_1789260948/runs/metallb_1789262350/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 124
+Identified input fields (lower bound): 166 | Varied in render attempts: 7
+Missing values: 3 | Undocumented template fields: 174
+Unreferenced values: 75 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 59
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E106](#e106)
+Errors: [E045](#e045)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "kubeVersion": ":"
+  "commonAnnotations": {
+    "": []
+  }
 }
 ```
 
 ### bitnami/metrics-server
 
 Result: FAIL | Status: failed
-Attempts: 248 | Remaining iterations: unknown
+Attempts: 199 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/metrics-server_1789252645/0000](<bitnami-runs/bitnami-charts_1789251211/runs/metrics-server_1789252645/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/metrics-server_1789262363/0000](<bitnami-runs/bitnami-charts_1789260948/runs/metrics-server_1789262363/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 147
+Identified input fields (lower bound): 72 | Varied in render attempts: 13
+Missing values: 0 | Undocumented template fields: 75
+Unreferenced values: 32 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 98
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E042](#e042)
+Errors: [E046](#e046)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "terminationGracePeriodSeconds": "\u001f"
+  "dnsPolicy": "\u001f"
 }
 ```
 
@@ -2801,10 +3250,16 @@ Reproducing values (known-inputs):
 Result: N/A | Status: time-limit
 Attempts: 30 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/milvus_1789252691/0000](<bitnami-runs/bitnami-charts_1789251211/runs/milvus_1789252691/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/milvus_1789262386/0000](<bitnami-runs/bitnami-charts_1789260948/runs/milvus_1789262386/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 601 | Varied in render attempts: 3
+Missing values: 1 | Undocumented template fields: 32
+Unreferenced values: 227 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: time-limit | Attempts: 23
 
@@ -2813,25 +3268,31 @@ Phase robustness: time-limit | Attempts: 7
 ### bitnami/mlflow
 
 Result: FAIL | Status: failed
-Attempts: 193 | Remaining iterations: unknown
+Attempts: 251 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/mlflow_1789252697/0000](<bitnami-runs/bitnami-charts_1789251211/runs/mlflow_1789252697/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mlflow_1789262402/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 66
+Identified input fields (lower bound): 217 | Varied in render attempts: 20
+Missing values: 3 | Undocumented template fields: 18
+Unreferenced values: 110 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 127
+Phase known-inputs: failed | Attempts: 120
 
-Errors: [E044](#e044), [E043](#e043)
+Phase robustness: failed | Attempts: 131
+
+Errors: [E083](#e083), [E047](#e047)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "commonAnnotations": {
-    "": null
+  "volumePermissions": {
+    "enabled": true
   }
 }
 ```
@@ -2848,18 +3309,24 @@ Reproducing values (robustness):
 ### bitnami/mongodb
 
 Result: FAIL | Status: failed
-Attempts: 87 | Remaining iterations: unknown
+Attempts: 101 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/mongodb_1789252761/0000](<bitnami-runs/bitnami-charts_1789251211/runs/mongodb_1789252761/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/mongodb_1789262443/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb_1789262443/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
+Identified input fields (lower bound): 348 | Varied in render attempts: 7
+Missing values: 5 | Undocumented template fields: 348
+Unreferenced values: 141 (unknown)
+Field variation does not prove branch or output coverage.
+
 Phase known-inputs: failed | Attempts: 43
 
-Phase robustness: time-limit | Attempts: 44
+Phase robustness: time-limit | Attempts: 58
 
-Errors: [E046](#e046)
+Errors: [E049](#e049)
 
 Reproducing values (known-inputs):
 
@@ -2874,16 +3341,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 145 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/mongodb-sharded_1789252809/0000](<bitnami-runs/bitnami-charts_1789251211/runs/mongodb-sharded_1789252809/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/mongodb-sharded_1789262509/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mongodb-sharded_1789262509/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 280 | Varied in render attempts: 2
+Missing values: 2 | Undocumented template fields: 306
+Unreferenced values: 7 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 44
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E045](#e045)
+Errors: [E048](#e048)
 
 Reproducing values (known-inputs):
 
@@ -2896,24 +3369,30 @@ Reproducing values (known-inputs):
 ### bitnami/moodle
 
 Result: FAIL | Status: failed
-Attempts: 184 | Remaining iterations: unknown
+Attempts: 242 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/moodle_1789252874/0000](<bitnami-runs/bitnami-charts_1789251211/runs/moodle_1789252874/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/moodle_1789262603/0000](<bitnami-runs/bitnami-charts_1789260948/runs/moodle_1789262603/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 83
+Identified input fields (lower bound): 140 | Varied in render attempts: 45
+Missing values: 3 | Undocumented template fields: 147
+Unreferenced values: 51 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 141
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E047](#e047)
+Errors: [E050](#e050)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "existingSecret": "\u001f"
+  "extraEnvVarsCM": "\u001f"
 }
 ```
 
@@ -2922,16 +3401,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 135 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/multus-cni_1789252902/0000](<bitnami-runs/bitnami-charts_1789251211/runs/multus-cni_1789252902/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/multus-cni_1789262612/0000](<bitnami-runs/bitnami-charts_1789260948/runs/multus-cni_1789262612/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 51 | Varied in render attempts: 2
+Missing values: 1 | Undocumented template fields: 54
+Unreferenced values: 36 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 34
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E048](#e048)
+Errors: [E051](#e051)
 
 Reproducing values (known-inputs):
 
@@ -2944,18 +3429,24 @@ Reproducing values (known-inputs):
 ### bitnami/mysql
 
 Result: FAIL | Status: failed
-Attempts: 234 | Remaining iterations: unknown
+Attempts: 239 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/mysql_1789252935/0000](<bitnami-runs/bitnami-charts_1789251211/runs/mysql_1789252935/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/mysql_1789262639/0000](<bitnami-runs/bitnami-charts_1789260948/runs/mysql_1789262639/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 133
+Identified input fields (lower bound): 235 | Varied in render attempts: 40
+Missing values: 6 | Undocumented template fields: 226
+Unreferenced values: 86 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 138
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E049](#e049)
+Errors: [E052](#e052)
 
 Reproducing values (known-inputs):
 
@@ -2970,74 +3461,92 @@ Reproducing values (known-inputs):
 ### bitnami/nats
 
 Result: FAIL | Status: failed
-Attempts: 152 | Remaining iterations: unknown
+Attempts: 327 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/nats_1789252944/0000](<bitnami-runs/bitnami-charts_1789251211/runs/nats_1789252944/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/nats_1789262668/0000](<bitnami-runs/bitnami-charts_1789260948/runs/nats_1789262668/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 51
+Identified input fields (lower bound): 129 | Varied in render attempts: 51
+Missing values: 0 | Undocumented template fields: 135
+Unreferenced values: 70 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 226
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E087](#e087)
+Errors: [E053](#e053)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "resourceType": ""
+  "nameOverride": "\u001f"
 }
 ```
 
 ### bitnami/neo4j
 
 Result: FAIL | Status: failed
-Attempts: 188 | Remaining iterations: unknown
+Attempts: 137 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/neo4j_1789252975/0000](<bitnami-runs/bitnami-charts_1789251211/runs/neo4j_1789252975/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/neo4j_1789262693/0000](<bitnami-runs/bitnami-charts_1789260948/runs/neo4j_1789262693/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 87
+Identified input fields (lower bound): 123 | Varied in render attempts: 9
+Missing values: 0 | Undocumented template fields: 131
+Unreferenced values: 32 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 36
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E102](#e102)
+Errors: [E112](#e112)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraContainerPorts": [
-    null
-  ]
+  "fullnameOverride": "0"
 }
 ```
 
 ### bitnami/nessie
 
 Result: FAIL | Status: failed
-Attempts: 252 | Remaining iterations: unknown
+Attempts: 184 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/nessie_1789252998/0000](<bitnami-runs/bitnami-charts_1789251211/runs/nessie_1789252998/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/nessie_1789262730/0000](<bitnami-runs/bitnami-charts_1789260948/runs/nessie_1789262730/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 151
+Identified input fields (lower bound): 141 | Varied in render attempts: 29
+Missing values: 1 | Undocumented template fields: 147
+Unreferenced values: 59 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 83
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E050](#e050)
+Errors: [E054](#e054)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "existingConfigmap": "\u001f"
+  "annotations": {
+    "": []
+  }
 }
 ```
 
@@ -3046,16 +3555,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 325 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/nginx_1789253009/0000](<bitnami-runs/bitnami-charts_1789251211/runs/nginx_1789253009/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000](<bitnami-runs/bitnami-charts_1789260948/runs/nginx_1789262745/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 81
+Identified input fields (lower bound): 170 | Varied in render attempts: 108
+Missing values: 2 | Undocumented template fields: 159
+Unreferenced values: 58 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 244
+Phase known-inputs: failed | Attempts: 84
 
-Errors: [E052](#e052), [E051](#e051)
+Phase robustness: failed | Attempts: 241
+
+Errors: [E056](#e056), [E055](#e055)
 
 Reproducing values (known-inputs):
 
@@ -3081,24 +3596,30 @@ Reproducing values (robustness):
 ### bitnami/node-exporter
 
 Result: FAIL | Status: failed
-Attempts: 190 | Remaining iterations: unknown
+Attempts: 240 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/node-exporter_1789253016/0000](<bitnami-runs/bitnami-charts_1789251211/runs/node-exporter_1789253016/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/node-exporter_1789262746/0000](<bitnami-runs/bitnami-charts_1789260948/runs/node-exporter_1789262746/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 89
+Identified input fields (lower bound): 85 | Varied in render attempts: 23
+Missing values: 1 | Undocumented template fields: 88
+Unreferenced values: 35 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 139
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E053](#e053)
+Errors: [E114](#e114)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraEnvVarsCM": "\u001f"
+  "kubeVersion": ":"
 }
 ```
 
@@ -3107,16 +3628,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 130 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/oauth2-proxy_1789253043/0000](<bitnami-runs/bitnami-charts_1789251211/runs/oauth2-proxy_1789253043/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/oauth2-proxy_1789262793/0000](<bitnami-runs/bitnami-charts_1789260948/runs/oauth2-proxy_1789262793/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 103 | Varied in render attempts: 23
+Missing values: 0 | Undocumented template fields: 106
+Unreferenced values: 50 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 29
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E088](#e088)
+Errors: [E105](#e105)
 
 Reproducing values (known-inputs):
 
@@ -3133,16 +3660,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 128 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/odoo_1789253062/0000](<bitnami-runs/bitnami-charts_1789251211/runs/odoo_1789253062/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/odoo_1789262798/0000](<bitnami-runs/bitnami-charts_1789260948/runs/odoo_1789262798/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 122 | Varied in render attempts: 12
+Missing values: 4 | Undocumented template fields: 127
+Unreferenced values: 42 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 27
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E089](#e089)
+Errors: [E102](#e102)
 
 Reproducing values (known-inputs):
 
@@ -3155,26 +3688,30 @@ Reproducing values (known-inputs):
 ### bitnami/opensearch
 
 Result: FAIL | Status: failed
-Attempts: 183 | Remaining iterations: unknown
+Attempts: 206 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/opensearch_1789253064/0000](<bitnami-runs/bitnami-charts_1789251211/runs/opensearch_1789253064/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/opensearch_1789262840/0000](<bitnami-runs/bitnami-charts_1789260948/runs/opensearch_1789262840/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 82
+Identified input fields (lower bound): 523 | Varied in render attempts: 17
+Missing values: 17 | Undocumented template fields: 546
+Unreferenced values: 217 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 105
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E090](#e090)
+Errors: [E057](#e057)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "ingest": {
-    "resourcesPreset": ""
-  }
+  "extraEnvVarsCM": ":"
 }
 ```
 
@@ -3183,16 +3720,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 120 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/parse_1789253081/0000](<bitnami-runs/bitnami-charts_1789251211/runs/parse_1789253081/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/parse_1789262841/0000](<bitnami-runs/bitnami-charts_1789260948/runs/parse_1789262841/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 165 | Varied in render attempts: 21
+Missing values: 0 | Undocumented template fields: 173
+Unreferenced values: 61 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E054](#e054)
+Errors: [E058](#e058)
 
 Reproducing values (known-inputs):
 
@@ -3207,24 +3750,32 @@ Reproducing values (known-inputs):
 ### bitnami/phpmyadmin
 
 Result: FAIL | Status: failed
-Attempts: 301 | Remaining iterations: unknown
+Attempts: 234 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/phpmyadmin_1789253091/0000](<bitnami-runs/bitnami-charts_1789251211/runs/phpmyadmin_1789253091/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/phpmyadmin_1789262890/0000](<bitnami-runs/bitnami-charts_1789260948/runs/phpmyadmin_1789262890/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 200
+Identified input fields (lower bound): 120 | Varied in render attempts: 27
+Missing values: 5 | Undocumented template fields: 124
+Unreferenced values: 36 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 133
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E055](#e055)
+Errors: [E112](#e112)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraEnvVarsCM": "\u001f"
+  "serviceAccount": {
+    "name": "0"
+  }
 }
 ```
 
@@ -3233,16 +3784,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 160 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/pinniped_1789253122/0000](<bitnami-runs/bitnami-charts_1789251211/runs/pinniped_1789253122/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/pinniped_1789262910/0000](<bitnami-runs/bitnami-charts_1789260948/runs/pinniped_1789262910/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 173 | Varied in render attempts: 1
+Missing values: 0 | Undocumented template fields: 180
+Unreferenced values: 56 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 59
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E056](#e056)
+Errors: [E059](#e059)
 
 Reproducing values (known-inputs):
 
@@ -3255,18 +3812,24 @@ Reproducing values (known-inputs):
 ### bitnami/postgresql
 
 Result: FAIL | Status: failed
-Attempts: 116 | Remaining iterations: unknown
+Attempts: 280 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/postgresql_1789253136/0000](<bitnami-runs/bitnami-charts_1789251211/runs/postgresql_1789253136/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql_1789262926/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
+Identified input fields (lower bound): 310 | Varied in render attempts: 21
+Missing values: 7 | Undocumented template fields: 314
+Unreferenced values: 106 (unknown)
+Field variation does not prove branch or output coverage.
+
 Phase known-inputs: failed | Attempts: 15
 
-Phase robustness: passed | Attempts: 101
+Phase robustness: failed | Attempts: 265
 
-Errors: [E091](#e091)
+Errors: [E103](#e103), [E061](#e061)
 
 Reproducing values (known-inputs):
 
@@ -3278,45 +3841,68 @@ Reproducing values (known-inputs):
 }
 ```
 
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "auth": {
+    "database": "\u001f"
+  }
+}
+```
+
 ### bitnami/postgresql-ha
 
 Result: FAIL | Status: failed
-Attempts: 156 | Remaining iterations: unknown
+Attempts: 157 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/postgresql-ha_1789253152/0000](<bitnami-runs/bitnami-charts_1789251211/runs/postgresql-ha_1789253152/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/postgresql-ha_1789262929/0000](<bitnami-runs/bitnami-charts_1789260948/runs/postgresql-ha_1789262929/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 55
+Identified input fields (lower bound): 371 | Varied in render attempts: 18
+Missing values: 3 | Undocumented template fields: 386
+Unreferenced values: 121 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 56
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E113](#e113)
+Errors: [E060](#e060)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "fullnameOverride": "0"
+  "clusterDomain": "\u001f"
 }
 ```
 
 ### bitnami/prometheus
 
 Result: FAIL | Status: failed
-Attempts: 318 | Remaining iterations: unknown
+Attempts: 345 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/prometheus_1789253175/0000](<bitnami-runs/bitnami-charts_1789251211/runs/prometheus_1789253175/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000](<bitnami-runs/bitnami-charts_1789260948/runs/prometheus_1789262960/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 75
+Identified input fields (lower bound): 230 | Varied in render attempts: 18
+Missing values: 0 | Undocumented template fields: 10
+Unreferenced values: 86 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 243
+Phase known-inputs: failed | Attempts: 93
 
-Errors: [E057](#e057), [E058](#e058)
+Phase robustness: failed | Attempts: 252
+
+Errors: [E062](#e062), [E063](#e063)
 
 Reproducing values (known-inputs):
 
@@ -3340,18 +3926,24 @@ Reproducing values (robustness):
 ### bitnami/pytorch
 
 Result: FAIL | Status: failed
-Attempts: 143 | Remaining iterations: unknown
+Attempts: 179 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/pytorch_1789253187/0000](<bitnami-runs/bitnami-charts_1789251211/runs/pytorch_1789253187/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/pytorch_1789262979/0000](<bitnami-runs/bitnami-charts_1789260948/runs/pytorch_1789262979/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 42
+Identified input fields (lower bound): 87 | Varied in render attempts: 17
+Missing values: 8 | Undocumented template fields: 92
+Unreferenced values: 38 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 78
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E092](#e092)
+Errors: [E104](#e104)
 
 Reproducing values (known-inputs):
 
@@ -3364,38 +3956,31 @@ Reproducing values (known-inputs):
 ### bitnami/rabbitmq
 
 Result: FAIL | Status: failed
-Attempts: 539 | Remaining iterations: unknown
+Attempts: 185 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq_1789253191/0000](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq_1789253191/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq_1789262993/0000](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq_1789262993/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 274
+Identified input fields (lower bound): 215 | Varied in render attempts: 28
+Missing values: 1 | Undocumented template fields: 213
+Unreferenced values: 94 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 265
+Phase known-inputs: failed | Attempts: 84
 
-Errors: [E099](#e099), [E059](#e059)
+Phase robustness: passed | Attempts: 101
+
+Errors: [E065](#e065)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "args": [
-    {
-      "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
-    }
-  ]
-}
-```
-
-Reproducing values (robustness):
-
-```json
-{
-  "": [],
-  "auth": {
-    "username": "\u001f"
+  "hostPorts": {
+    "amqp": "\u001f"
   }
 }
 ```
@@ -3403,42 +3988,56 @@ Reproducing values (robustness):
 ### bitnami/rabbitmq-cluster-operator
 
 Result: FAIL | Status: failed
-Attempts: 173 | Remaining iterations: unknown
+Attempts: 230 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq-cluster-operator_1789253208/0000](<bitnami-runs/bitnami-charts_1789251211/runs/rabbitmq-cluster-operator_1789253208/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq-cluster-operator_1789263004/0000](<bitnami-runs/bitnami-charts_1789260948/runs/rabbitmq-cluster-operator_1789263004/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 72
+Identified input fields (lower bound): 206 | Varied in render attempts: 90
+Missing values: 3 | Undocumented template fields: 212
+Unreferenced values: 53 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 129
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E107](#e107)
+Errors: [E064](#e064)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "clusterDomain": "\u0080"
+  "extraDeploy": [
+    []
+  ]
 }
 ```
 
 ### bitnami/redis
 
 Result: FAIL | Status: failed
-Attempts: 145 | Remaining iterations: unknown
+Attempts: 134 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/redis_1789253220/0000](<bitnami-runs/bitnami-charts_1789251211/runs/redis_1789253220/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000](<bitnami-runs/bitnami-charts_1789260948/runs/redis_1789263022/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
+Identified input fields (lower bound): 350 | Varied in render attempts: 67
+Missing values: 6 | Undocumented template fields: 29
+Unreferenced values: 133 (unknown)
+Field variation does not prove branch or output coverage.
+
 Phase known-inputs: failed | Attempts: 5
 
-Phase robustness: failed | Attempts: 140
+Phase robustness: failed | Attempts: 129
 
-Errors: [E093](#e093)
+Errors: [E106](#e106)
 
 Reproducing values (known-inputs):
 
@@ -3460,48 +4059,60 @@ Reproducing values (robustness):
 ### bitnami/redis-cluster
 
 Result: FAIL | Status: failed
-Attempts: 150 | Remaining iterations: unknown
+Attempts: 148 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/redis-cluster_1789253276/0000](<bitnami-runs/bitnami-charts_1789251211/runs/redis-cluster_1789253276/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/redis-cluster_1789263038/0000](<bitnami-runs/bitnami-charts_1789260948/runs/redis-cluster_1789263038/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 49
+Identified input fields (lower bound): 175 | Varied in render attempts: 4
+Missing values: 1 | Undocumented template fields: 184
+Unreferenced values: 51 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 47
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E111](#e111)
+Errors: [E066](#e066)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "existingSecret": "="
+  "existingSecret": "-"
 }
 ```
 
 ### bitnami/redmine
 
 Result: FAIL | Status: failed
-Attempts: 304 | Remaining iterations: unknown
+Attempts: 516 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/redmine_1789253293/0000](<bitnami-runs/bitnami-charts_1789251211/runs/redmine_1789253293/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000](<bitnami-runs/bitnami-charts_1789260948/runs/redmine_1789263074/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 62
+Identified input fields (lower bound): 157 | Varied in render attempts: 50
+Missing values: 9 | Undocumented template fields: 153
+Unreferenced values: 66 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: failed | Attempts: 242
+Phase known-inputs: failed | Attempts: 104
 
-Errors: [E060](#e060), [E097](#e097)
+Phase robustness: failed | Attempts: 412
+
+Errors: [E067](#e067), [E068](#e068)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "extraEnvVarsCM": "\u001f"
+  "terminationGracePeriodSeconds": "\u001f"
 }
 ```
 
@@ -3510,25 +4121,33 @@ Reproducing values (robustness):
 ```json
 {
   "": [],
-  "\u1e70\u033a\u033a\u0315o\u035e \u0337i\u0332\u032c\u0347\u032a\u0359n\u031d\u0317\u0355v\u031f\u031c\u0318\u0326\u035fo\u0336\u0319\u0330\u0320k\u00e8\u035a\u032e\u033a\u032a\u0339\u0331\u0324 \u0316t\u031d\u0355\u0333\u0323\u033b\u032a\u035eh\u033c\u0353\u0332\u0326\u0333\u0318\u0332e\u0347\u0323\u0330\u0326\u032c\u034e \u0322\u033c\u033b\u0331\u0318h\u035a\u034e\u0359\u031c\u0323\u0332\u0345i\u0326\u0332\u0323\u0330\u0324v\u033b\u034de\u033a\u032d\u0333\u032a\u0330-m\u0322i\u0345n\u0316\u033a\u031e\u0332\u032f\u0330d\u0335\u033c\u031f\u0359\u0329\u033c\u0318\u0333 \u031e\u0325\u0331\u0333\u032dr\u031b\u0317\u0318e\u0359p\u0360r\u033c\u031e\u033b\u032d\u0317e\u033a\u0320\u0323\u035fs\u0318\u0347\u0333\u034d\u031d\u0349e\u0349\u0325\u032f\u031e\u0332\u035a\u032c\u035c\u01f9\u032c\u034e\u034e\u031f\u0316\u0347\u0324t\u034d\u032c\u0324\u0353\u033c\u032d\u0358\u0345i\u032a\u0331n\u0360g\u0334\u0349 \u034f\u0349\u0345c\u032c\u031fh\u0361a\u032b\u033b\u032f\u0358o\u032b\u031f\u0316\u034d\u0319\u031d\u0349s\u0317": null
+  "service": {
+    "type": "-"
+  }
 }
 ```
 
 ### bitnami/schema-registry
 
 Result: FAIL | Status: failed
-Attempts: 172 | Remaining iterations: unknown
+Attempts: 171 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/schema-registry_1789253309/0000](<bitnami-runs/bitnami-charts_1789251211/runs/schema-registry_1789253309/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/schema-registry_1789263074/0000](<bitnami-runs/bitnami-charts_1789260948/runs/schema-registry_1789263074/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 71
+Identified input fields (lower bound): 119 | Varied in render attempts: 35
+Missing values: 5 | Undocumented template fields: 122
+Unreferenced values: 35 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 70
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E103](#e103)
+Errors: [E084](#e084)
 
 Reproducing values (known-inputs):
 
@@ -3543,24 +4162,32 @@ Reproducing values (known-inputs):
 ### bitnami/scylladb
 
 Result: FAIL | Status: failed
-Attempts: 247 | Remaining iterations: unknown
+Attempts: 209 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/scylladb_1789253311/0000](<bitnami-runs/bitnami-charts_1789251211/runs/scylladb_1789253311/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/scylladb_1789263109/0000](<bitnami-runs/bitnami-charts_1789260948/runs/scylladb_1789263109/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 146
+Identified input fields (lower bound): 161 | Varied in render attempts: 79
+Missing values: 0 | Undocumented template fields: 169
+Unreferenced values: 82 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 108
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E111](#e111)
+Errors: [E085](#e085)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "initDBConfigMap": "="
+  "extraContainerPorts": [
+    null
+  ]
 }
 ```
 
@@ -3569,16 +4196,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 164 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/sealed-secrets_1789253315/0000](<bitnami-runs/bitnami-charts_1789251211/runs/sealed-secrets_1789253315/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/sealed-secrets_1789263115/0000](<bitnami-runs/bitnami-charts_1789260948/runs/sealed-secrets_1789263115/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 114 | Varied in render attempts: 4
+Missing values: 0 | Undocumented template fields: 117
+Unreferenced values: 33 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 63
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E094](#e094)
+Errors: [E107](#e107)
 
 Reproducing values (known-inputs):
 
@@ -3593,16 +4226,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 135 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/seaweedfs_1789253341/0000](<bitnami-runs/bitnami-charts_1789251211/runs/seaweedfs_1789253341/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/seaweedfs_1789263116/0000](<bitnami-runs/bitnami-charts_1789260948/runs/seaweedfs_1789263116/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 578 | Varied in render attempts: 3
+Missing values: 6 | Undocumented template fields: 610
+Unreferenced values: 250 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 34
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E061](#e061)
+Errors: [E069](#e069)
 
 Reproducing values (known-inputs):
 
@@ -3615,188 +4254,20 @@ Reproducing values (known-inputs):
 ### bitnami/solr
 
 Result: FAIL | Status: failed
-Attempts: 166 | Remaining iterations: unknown
+Attempts: 213 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/solr_1789253352/0000](<bitnami-runs/bitnami-charts_1789251211/runs/solr_1789253352/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/solr_1789263147/0000](<bitnami-runs/bitnami-charts_1789260948/runs/solr_1789263147/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 65
+Identified input fields (lower bound): 168 | Varied in render attempts: 71
+Missing values: 1 | Undocumented template fields: 176
+Unreferenced values: 66 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: passed | Attempts: 101
-
-Errors: [E062](#e062)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "'"
-}
-```
-
-### bitnami/sonarqube
-
-Result: FAIL | Status: failed
-Attempts: 128 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/sonarqube_1789253377/0000](<bitnami-runs/bitnami-charts_1789251211/runs/sonarqube_1789253377/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 27
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E063](#e063)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
-```
-
-### bitnami/spark
-
-Result: FAIL | Status: failed
-Attempts: 220 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/spark_1789253392/0000](<bitnami-runs/bitnami-charts_1789251211/runs/spark_1789253392/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 119
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E064](#e064)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
-```
-
-### bitnami/superset
-
-Result: FAIL | Status: failed
-Attempts: 137 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/superset_1789253412/0000](<bitnami-runs/bitnami-charts_1789251211/runs/superset_1789253412/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 36
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E065](#e065)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraDeploy": [
-    []
-  ]
-}
-```
-
-### bitnami/tensorflow-resnet
-
-Result: FAIL | Status: failed
-Attempts: 179 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/tensorflow-resnet_1789253441/0000](<bitnami-runs/bitnami-charts_1789251211/runs/tensorflow-resnet_1789253441/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 78
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E066](#e066)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "\u001f"
-}
-```
-
-### bitnami/thanos
-
-Result: FAIL | Status: failed
-Attempts: 132 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/thanos_1789253463/0000](<bitnami-runs/bitnami-charts_1789251211/runs/thanos_1789253463/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 31
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E067](#e067)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "bucketCacheConfig": "\u001f"
-}
-```
-
-### bitnami/tomcat
-
-Result: FAIL | Status: failed
-Attempts: 144 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/tomcat_1789253463/0000](<bitnami-runs/bitnami-charts_1789251211/runs/tomcat_1789253463/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 43
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E068](#e068)
-
-Reproducing values (known-inputs):
-
-```json
-{
-  "extraEnvVarsCM": "\u001f"
-}
-```
-
-### bitnami/valkey
-
-Result: FAIL | Status: failed
-Attempts: 140 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/valkey_1789253482/0000](<bitnami-runs/bitnami-charts_1789251211/runs/valkey_1789253482/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 39
+Phase known-inputs: failed | Attempts: 112
 
 Phase robustness: passed | Attempts: 101
 
@@ -3806,47 +4277,29 @@ Reproducing values (known-inputs):
 
 ```json
 {
-  "clusterDomain": "\u001f"
-}
-```
-
-### bitnami/valkey-cluster
-
-Result: FAIL | Status: failed
-Attempts: 134 | Remaining iterations: unknown
-Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/valkey-cluster_1789253483/0000](<bitnami-runs/bitnami-charts_1789251211/runs/valkey-cluster_1789253483/0000>)
-
-Filtering applied: True
-Generation order only; original-schema cases run last, not removed
-
-Phase known-inputs: failed | Attempts: 33
-
-Phase robustness: passed | Attempts: 101
-
-Errors: [E069](#e069)
-
-Reproducing values (known-inputs):
-
-```json
-{
   "extraDeploy": [
     []
   ]
 }
 ```
 
-### bitnami/vault
+### bitnami/sonarqube
 
 Result: FAIL | Status: failed
-Attempts: 167 | Remaining iterations: unknown
+Attempts: 129 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/vault_1789253486/0000](<bitnami-runs/bitnami-charts_1789251211/runs/vault_1789253486/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/sonarqube_1789263200/0000](<bitnami-runs/bitnami-charts_1789260948/runs/sonarqube_1789263200/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 66
+Identified input fields (lower bound): 165 | Varied in render attempts: 8
+Missing values: 0 | Undocumented template fields: 181
+Unreferenced values: 55 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 28
 
 Phase robustness: passed | Attempts: 101
 
@@ -3862,21 +4315,275 @@ Reproducing values (known-inputs):
 }
 ```
 
-### bitnami/victoriametrics
+### bitnami/spark
 
 Result: FAIL | Status: failed
-Attempts: 171 | Remaining iterations: unknown
+Attempts: 129 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/victoriametrics_1789253519/0000](<bitnami-runs/bitnami-charts_1789251211/runs/victoriametrics_1789253519/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/spark_1789263236/0000](<bitnami-runs/bitnami-charts_1789260948/runs/spark_1789263236/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 70
+Identified input fields (lower bound): 180 | Varied in render attempts: 1
+Missing values: 0 | Undocumented template fields: 185
+Unreferenced values: 57 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 28
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E112](#e112)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "fullnameOverride": "0"
+}
+```
+
+### bitnami/superset
+
+Result: FAIL | Status: failed
+Attempts: 137 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/superset_1789263238/0000](<bitnami-runs/bitnami-charts_1789260948/runs/superset_1789263238/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 299 | Varied in render attempts: 6
+Missing values: 1 | Undocumented template fields: 313
+Unreferenced values: 161 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 36
 
 Phase robustness: passed | Attempts: 101
 
 Errors: [E072](#e072)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
+```
+
+### bitnami/tensorflow-resnet
+
+Result: FAIL | Status: failed
+Attempts: 215 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/tensorflow-resnet_1789263255/0000](<bitnami-runs/bitnami-charts_1789260948/runs/tensorflow-resnet_1789263255/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 73 | Varied in render attempts: 30
+Missing values: 4 | Undocumented template fields: 77
+Unreferenced values: 30 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 114
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E073](#e073)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "service": {
+    "loadBalancerIP": ":"
+  }
+}
+```
+
+### bitnami/thanos
+
+Result: FAIL | Status: failed
+Attempts: 155 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/thanos_1789263263/0000](<bitnami-runs/bitnami-charts_1789260948/runs/thanos_1789263263/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 971 | Varied in render attempts: 36
+Missing values: 62 | Undocumented template fields: 992
+Unreferenced values: 242 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 54
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E074](#e074)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "bucketCacheConfig": "\u001f"
+}
+```
+
+### bitnami/tomcat
+
+Result: FAIL | Status: failed
+Attempts: 144 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/tomcat_1789263266/0000](<bitnami-runs/bitnami-charts_1789260948/runs/tomcat_1789263266/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 80 | Varied in render attempts: 0
+Missing values: 5 | Undocumented template fields: 82
+Unreferenced values: 93 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 43
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E075](#e075)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraEnvVarsCM": "\u001f"
+}
+```
+
+### bitnami/valkey
+
+Result: FAIL | Status: failed
+Attempts: 140 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/valkey_1789263282/0000](<bitnami-runs/bitnami-charts_1789260948/runs/valkey_1789263282/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 311 | Varied in render attempts: 13
+Missing values: 1 | Undocumented template fields: 314
+Unreferenced values: 132 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 39
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E077](#e077)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "clusterDomain": "\u001f"
+}
+```
+
+### bitnami/valkey-cluster
+
+Result: FAIL | Status: failed
+Attempts: 134 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/valkey-cluster_1789263288/0000](<bitnami-runs/bitnami-charts_1789260948/runs/valkey-cluster_1789263288/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 168 | Varied in render attempts: 51
+Missing values: 0 | Undocumented template fields: 177
+Unreferenced values: 49 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 33
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E076](#e076)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
+```
+
+### bitnami/vault
+
+Result: FAIL | Status: failed
+Attempts: 168 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/vault_1789263307/0000](<bitnami-runs/bitnami-charts_1789260948/runs/vault_1789263307/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 259 | Varied in render attempts: 7
+Missing values: 1 | Undocumented template fields: 273
+Unreferenced values: 94 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 67
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E078](#e078)
+
+Reproducing values (known-inputs):
+
+```json
+{
+  "extraDeploy": [
+    []
+  ]
+}
+```
+
+### bitnami/victoriametrics
+
+Result: FAIL | Status: failed
+Attempts: 174 | Remaining iterations: unknown
+Coverage: known inputs, then original-schema robustness sampling
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/victoriametrics_1789263322/0000](<bitnami-runs/bitnami-charts_1789260948/runs/victoriametrics_1789263322/0000>)
+
+Filtering applied: True
+Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 591 | Varied in render attempts: 4
+Missing values: 0 | Undocumented template fields: 617
+Unreferenced values: 129 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 73
+
+Phase robustness: passed | Attempts: 101
+
+Errors: [E079](#e079)
 
 Reproducing values (known-inputs):
 
@@ -3891,16 +4598,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 120 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/whereabouts_1789253539/0000](<bitnami-runs/bitnami-charts_1789251211/runs/whereabouts_1789253539/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/whereabouts_1789263358/0000](<bitnami-runs/bitnami-charts_1789260948/runs/whereabouts_1789263358/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 48 | Varied in render attempts: 4
+Missing values: 0 | Undocumented template fields: 51
+Unreferenced values: 33 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 19
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E095](#e095)
+Errors: [E108](#e108)
 
 Reproducing values (known-inputs):
 
@@ -3915,16 +4628,22 @@ Reproducing values (known-inputs):
 Result: FAIL | Status: failed
 Attempts: 145 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/wildfly_1789253553/0000](<bitnami-runs/bitnami-charts_1789251211/runs/wildfly_1789253553/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/wildfly_1789263365/0000](<bitnami-runs/bitnami-charts_1789260948/runs/wildfly_1789263365/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 110 | Varied in render attempts: 2
+Missing values: 6 | Undocumented template fields: 116
+Unreferenced values: 36 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 44
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E113](#e113)
+Errors: [E112](#e112)
 
 Reproducing values (known-inputs):
 
@@ -3937,18 +4656,24 @@ Reproducing values (known-inputs):
 ### bitnami/wordpress
 
 Result: FAIL | Status: failed
-Attempts: 213 | Remaining iterations: unknown
+Attempts: 395 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/wordpress_1789253554/0000](<bitnami-runs/bitnami-charts_1789251211/runs/wordpress_1789253554/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000](<bitnami-runs/bitnami-charts_1789260948/runs/wordpress_1789263373/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 112
+Identified input fields (lower bound): 177 | Varied in render attempts: 41
+Missing values: 5 | Undocumented template fields: 170
+Unreferenced values: 84 (unknown)
+Field variation does not prove branch or output coverage.
 
-Phase robustness: passed | Attempts: 101
+Phase known-inputs: failed | Attempts: 122
 
-Errors: [E073](#e073)
+Phase robustness: failed | Attempts: 273
+
+Errors: [E080](#e080), [E081](#e081)
 
 Reproducing values (known-inputs):
 
@@ -3958,21 +4683,38 @@ Reproducing values (known-inputs):
 }
 ```
 
+Reproducing values (robustness):
+
+```json
+{
+  "": [],
+  "service": {
+    "type": "?"
+  }
+}
+```
+
 ### bitnami/zipkin
 
 Result: FAIL | Status: failed
 Attempts: 2 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/zipkin_1789253576/0000](<bitnami-runs/bitnami-charts_1789251211/runs/zipkin_1789253576/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000](<bitnami-runs/bitnami-charts_1789260948/runs/zipkin_1789263388/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
+
+Identified input fields (lower bound): 135 | Varied in render attempts: 0
+Missing values: 1 | Undocumented template fields: 140
+Unreferenced values: 77 (unknown)
+Field variation does not prove branch or output coverage.
 
 Phase known-inputs: failed | Attempts: 1
 
 Phase robustness: failed | Attempts: 1
 
-Errors: [E110](#e110)
+Errors: [E109](#e109)
 
 Reproducing values (known-inputs):
 
@@ -3989,24 +4731,30 @@ Reproducing values (robustness):
 ### bitnami/zookeeper
 
 Result: FAIL | Status: failed
-Attempts: 133 | Remaining iterations: unknown
+Attempts: 131 | Remaining iterations: unknown
 Coverage: known inputs, then original-schema robustness sampling
-Artifacts: [bitnami-runs/bitnami-charts_1789251211/runs/zookeeper_1789253580/0000](<bitnami-runs/bitnami-charts_1789251211/runs/zookeeper_1789253580/0000>)
+Artifacts:
+[bitnami-runs/bitnami-charts_1789260948/runs/zookeeper_1789263392/0000](<bitnami-runs/bitnami-charts_1789260948/runs/zookeeper_1789263392/0000>)
 
 Filtering applied: True
 Generation order only; original-schema cases run last, not removed
 
-Phase known-inputs: failed | Attempts: 32
+Identified input fields (lower bound): 166 | Varied in render attempts: 1
+Missing values: 2 | Undocumented template fields: 173
+Unreferenced values: 46 (unknown)
+Field variation does not prove branch or output coverage.
+
+Phase known-inputs: failed | Attempts: 30
 
 Phase robustness: passed | Attempts: 101
 
-Errors: [E111](#e111)
+Errors: [E082](#e082)
 
 Reproducing values (known-inputs):
 
 ```json
 {
-  "dataLogDir": "="
+  "dataLogDir": "-"
 }
 ```
 

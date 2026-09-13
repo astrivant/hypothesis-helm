@@ -1,0 +1,37 @@
+{
+  "vertices": 284,
+  "edges": 249,
+  "unique_directed_pairs": 219,
+  "parallel_edges": 30,
+  "weak_components": 71,
+  "isolates": 68,
+  "acyclic": true,
+  "longest_dependency_chain_edges": 4,
+  "max_in_degree": 62,
+  "max_out_degree": 107,
+  "node_kinds": {
+    "value": 110,
+    "template": 7,
+    "opaque": 25,
+    "if": 7,
+    "manifest": 2,
+    "manifest-field": 133
+  },
+  "edge_kinds": {
+    "potential-reference": 77,
+    "control-flow": 32,
+    "condition": 5,
+    "observed-render": 2,
+    "contains": 133
+  },
+  "baseline": {
+    "status": "rendered",
+    "resources": 2
+  },
+  "unresolved_accesses": 109,
+  "complete_influence_map_proven": false,
+  "layout": "longest directed path rank; parent barycenter ordering; no node or edge filtering",
+  "interpretation": "Degree counts include parallel edges. DAG depth is dependency-chain length, not template nesting depth. Geometry is a layout, not output distance. Reachability does not prove causal influence.",
+  "underlying_undirected_multigraph_cycle_rank": 36,
+  "cycle_rank_contract": "E - V + C for the one-dimensional underlying undirected multigraph; parallel references count separately. This is not template branch count or evidence of a bug."
+}

@@ -1,2 +1,5 @@
 # Python's CSV writer emits standard CRLF record separators.
 docs/benchmarks/*.csv whitespace=cr-at-eol
+*.pdf binary
+# Matplotlib vector exports are generated artifacts.
+docs/benchmarks/**/*.svg binary

@@ -1,0 +1,82 @@
+[INFO] Chart 1/1: .
+[INFO] Finite filtering unavailable: permutations need closed objects at (); set additionalProperties: false; prioritizing known inputs before robustness sampling
+[INFO] Coalescing path $.affinity
+[INFO] Coalescing path $.command
+[INFO] Coalescing path $.config
+[INFO] Coalescing path $.containerPort
+[INFO] Coalescing path $.containerSecurityContext
+[INFO] Coalescing path $.extraEnv
+[INFO] Coalescing path $.nodeSelector
+[INFO] Coalescing path $.priorityClassName
+[INFO] Coalescing path $.replicaCount
+[INFO] Coalescing path $.resources
+[INFO] Coalescing path $.securityContext
+[INFO] Coalescing path $.tolerations
+[INFO] Coalescing path $.aws.aws_access_key_id
+[INFO] Coalescing path $.aws.aws_secret_access_key
+[INFO] Coalescing path $.aws.role
+[INFO] Coalescing path $.deployment.annotations
+[INFO] Coalescing path $.deployment.labels
+[INFO] Coalescing path $.image.pullPolicy
+[INFO] Coalescing path $.image.pullSecrets
+[INFO] Coalescing path $.image.repository
+[INFO] Coalescing path $.image.tag
+[INFO] Coalescing path $.ingress.annotations
+[INFO] Coalescing path $.ingress.enabled
+[INFO] Coalescing path $.ingress.hosts
+[INFO] Coalescing path $.ingress.ingressClassName
+[INFO] Coalescing path $.ingress.labels
+[INFO] Coalescing path $.ingress.path
+[INFO] Coalescing path $.ingress.pathType
+[INFO] Coalescing path $.ingress.tls
+[INFO] Coalescing path $.livenessProbe.failureThreshold
+[INFO] Coalescing path $.livenessProbe.initialDelaySeconds
+[INFO] Coalescing path $.livenessProbe.path
+[INFO] Coalescing path $.livenessProbe.periodSeconds
+[INFO] Coalescing path $.livenessProbe.successThreshold
+[INFO] Coalescing path $.livenessProbe.timeoutSeconds
+[INFO] Coalescing path $.pod.annotations
+[INFO] Coalescing path $.pod.labels
+[INFO] Coalescing path $.podDisruptionBudget.enabled
+[INFO] Coalescing path $.podDisruptionBudget.maxUnavailable
+[INFO] Coalescing path $.podDisruptionBudget.minAvailable
+[INFO] Coalescing path $.prometheusRule.enabled
+[INFO] Coalescing path $.prometheusRule.labels
+[INFO] Coalescing path $.prometheusRule.namespace
+[INFO] Coalescing path $.prometheusRule.rules
+[INFO] Coalescing path $.rbac.create
+[INFO] Coalescing path $.readinessProbe.failureThreshold
+[INFO] Coalescing path $.readinessProbe.initialDelaySeconds
+[INFO] Coalescing path $.readinessProbe.path
+[INFO] Coalescing path $.readinessProbe.periodSeconds
+[INFO] Coalescing path $.readinessProbe.successThreshold
+[INFO] Coalescing path $.readinessProbe.timeoutSeconds
+[INFO] Coalescing path $.service.annotations
+[INFO] Coalescing path $.service.labels
+[INFO] Coalescing path $.service.port
+[INFO] Coalescing path $.service.portName
+[INFO] Coalescing path $.service.type
+[INFO] Coalescing path $.serviceAccount.annotations
+[INFO] Coalescing path $.serviceAccount.automountServiceAccountToken
+[INFO] Coalescing path $.serviceAccount.create
+[INFO] Coalescing path $.serviceMonitor.enabled
+[INFO] Coalescing path $.serviceMonitor.interval
+[INFO] Coalescing path $.serviceMonitor.labels
+[INFO] Coalescing path $.serviceMonitor.metricRelabelings
+[INFO] Coalescing path $.serviceMonitor.namespace
+[INFO] Coalescing path $.serviceMonitor.relabelings
+[INFO] Coalescing path $.serviceMonitor.telemetryPath
+[INFO] Coalescing path $.serviceMonitor.timeout
+[INFO] Coalescing path $.aws.secret.includesSessionToken
+[INFO] Coalescing path $.aws.secret.name
+[INFO] Coalescing path $.ingress.hosts[*]
+[INFO] Coalescing path $.ingress.tls[*].hosts
+[INFO] Coalescing path $.ingress.tls[*].secretName
+[INFO] Coalescing path $.ingress.tls[*].hosts[*]
+[INFO] Testing known inputs first; arbitrary extra-key cases are deferred
+[INFO] Compiler input baseline: 69 statically named fields
+[INFO] Render hashes (run-local): 21 observed, 14 unique, 7 duplicate bundles; 7 successful validations reused
+[INFO] Testing deferred arbitrary-key and original-schema robustness cases
+[INFO] Compiler input baseline: 69 statically named fields
+[INFO] Render hashes (run-local): 101 observed, 1 unique, 100 duplicate bundles; 100 successful validations reused
+[INFO] .: failed; 0 charts remain

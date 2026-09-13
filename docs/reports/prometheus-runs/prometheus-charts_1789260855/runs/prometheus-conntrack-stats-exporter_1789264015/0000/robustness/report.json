@@ -1,0 +1,1619 @@
+{
+  "input_inventory": {
+    "fields": [
+      {
+        "path": [
+          "commonLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "fullnameOverride"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "image"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "image",
+          "pullPolicy"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 36,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "repository"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 35,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "tag"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 35,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "imagePullSecrets"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "imagePullSecrets"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 24,
+            "fallback": false
+          },
+          {
+            "path": [
+              "imagePullSecrets"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 26,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "nameOverride"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "nodeSelector"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 50,
+            "fallback": false
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 52,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podAnnotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podAnnotations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 13,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podAnnotations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 15,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podAnnotations",
+          "prometheus.io/port"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "podAnnotations",
+          "prometheus.io/scrape"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "podLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podLabels"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 19,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podLabels"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 20,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "podMonitor",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "enabled"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "honorLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "honorLabels"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 24,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "interval"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "interval"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 18,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "interval"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 19,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "labels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "labels"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 8,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "labels"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 9,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "metricRelabelings"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 27,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 29,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "relabelings"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "relabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 31,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "relabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 33,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "scrapeTimeout"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 21,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 22,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "selectorOverride"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "selectorOverride"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 37,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "selectorOverride"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 38,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podSecurityContext"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podSecurityContext"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 30,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "resources"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 49,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "securityContext"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "securityContext"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 34,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "securityContext",
+          "capabilities"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "securityContext",
+          "capabilities",
+          "drop"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "securityContext",
+          "privileged"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "securityContext",
+          "readOnlyRootFilesystem"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "securityContext",
+          "seccompProfile"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "securityContext",
+          "seccompProfile",
+          "type"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "serviceAccount"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceAccount",
+              "annotations"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 8,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceAccount",
+              "annotations"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 10,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "create"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceAccount",
+              "create"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "name"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": []
+      },
+      {
+        "path": [
+          "tolerations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 54,
+            "fallback": false
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 56,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "known_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "podMonitor",
+        "labels"
+      ],
+      [
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "podMonitor",
+        "selectorOverride"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "lower_bound_fields": 21,
+    "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
+    "inventory_complete": false,
+    "output_influence_proven": false,
+    "missing_values": [],
+    "undocumented_template_fields": [
+      {
+        "path": [
+          "image",
+          "pullPolicy"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "pullPolicy"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 36,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "repository"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "repository"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 35,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "image",
+          "tag"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "image",
+              "tag"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 35,
+            "fallback": true
+          }
+        ]
+      },
+      {
+        "path": [
+          "imagePullSecrets"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "imagePullSecrets"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 24,
+            "fallback": false
+          },
+          {
+            "path": [
+              "imagePullSecrets"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 26,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "nodeSelector"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 50,
+            "fallback": false
+          },
+          {
+            "path": [
+              "nodeSelector"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 52,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podAnnotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podAnnotations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 13,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podAnnotations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 15,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podLabels"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 19,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podLabels"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 20,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "enabled"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "enabled"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "honorLabels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "honorLabels"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 24,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "interval"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "interval"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 18,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "interval"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 19,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "labels"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "labels"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 8,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "labels"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 9,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "metricRelabelings"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 27,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "metricRelabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 29,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "relabelings"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "relabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 31,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "relabelings"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 33,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "scrapeTimeout"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 21,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "scrapeTimeout"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 22,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podMonitor",
+          "selectorOverride"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podMonitor",
+              "selectorOverride"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 37,
+            "fallback": false
+          },
+          {
+            "path": [
+              "podMonitor",
+              "selectorOverride"
+            ],
+            "file": "templates/podmonitor.yaml",
+            "line": 38,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "podSecurityContext"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "podSecurityContext"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 30,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "resources"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "resources"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 49,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "securityContext"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "securityContext"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 34,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "annotations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceAccount",
+              "annotations"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 8,
+            "fallback": false
+          },
+          {
+            "path": [
+              "serviceAccount",
+              "annotations"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 10,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "serviceAccount",
+          "create"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "serviceAccount",
+              "create"
+            ],
+            "file": "templates/serviceaccount.yaml",
+            "line": 1,
+            "fallback": false
+          }
+        ]
+      },
+      {
+        "path": [
+          "tolerations"
+        ],
+        "in_values": true,
+        "in_schema": false,
+        "references": [
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 54,
+            "fallback": false
+          },
+          {
+            "path": [
+              "tolerations"
+            ],
+            "file": "templates/daemonset.yaml",
+            "line": 56,
+            "fallback": false
+          }
+        ]
+      }
+    ],
+    "template_only_fields": [],
+    "schema_fields_without_values": [],
+    "unreferenced_values": [
+      [
+        "commonLabels"
+      ],
+      [
+        "fullnameOverride"
+      ],
+      [
+        "nameOverride"
+      ],
+      [
+        "serviceAccount",
+        "name"
+      ]
+    ],
+    "unreferenced_usage": "unknown",
+    "dynamic_regions": [],
+    "unresolved": [
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 4,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 5,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 5,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 13,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 14,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 15,
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 17,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 17,
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 18,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 19,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 21,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 29,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 30,
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 30,
+        "message": "unresolved dot context: .Chart.Version"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 36,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 37,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 37,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 38,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 38,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 39,
+        "message": "unresolved dot context: .Chart.AppVersion"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 40,
+        "message": "unresolved dot context: .Chart.AppVersion"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 42,
+        "message": "unresolved dot context: .Release.Service"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 43,
+        "message": "unresolved dot context: .Values.commonLabels"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 44,
+        "message": "unresolved dot context: .Values.commonLabels"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 51,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 52,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 52,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 53,
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 59,
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 60,
+        "message": "unresolved dot context: .Values.serviceAccount.create"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 61,
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 61,
+        "message": "unresolved dot context: .Values.serviceAccount.name"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 61,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/_helpers.tpl",
+        "line": 63,
+        "message": "unresolved dot context: .Values.serviceAccount.name"
+      },
+      {
+        "file": "templates/daemonset.yaml",
+        "line": 4,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/daemonset.yaml",
+        "line": 6,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/daemonset.yaml",
+        "line": 10,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/daemonset.yaml",
+        "line": 18,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/daemonset.yaml",
+        "line": 28,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/podmonitor.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "templates/podmonitor.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/podmonitor.yaml",
+        "line": 40,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/serviceaccount.yaml",
+        "line": 5,
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "templates/serviceaccount.yaml",
+        "line": 7,
+        "message": "dynamic template/context or mutation requires review: include"
+      }
+    ]
+  },
+  "field_coverage": {
+    "lower_bound_fields": 21,
+    "present_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "podMonitor",
+        "labels"
+      ],
+      [
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "podMonitor",
+        "selectorOverride"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "image",
+        "repository"
+      ],
+      [
+        "image",
+        "tag"
+      ],
+      [
+        "imagePullSecrets"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podMonitor",
+        "enabled"
+      ],
+      [
+        "podMonitor",
+        "honorLabels"
+      ],
+      [
+        "podMonitor",
+        "interval"
+      ],
+      [
+        "podMonitor",
+        "labels"
+      ],
+      [
+        "podMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "podMonitor",
+        "relabelings"
+      ],
+      [
+        "podMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "podMonitor",
+        "selectorOverride"
+      ],
+      [
+        "podSecurityContext"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "securityContext"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "tolerations"
+      ]
+    ],
+    "present_count": 21,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 101,
+    "unique_bundles": 1,
+    "duplicate_bundles": 100,
+    "validation_cache_hits": 100,
+    "validated_entries": 1
+  },
+  "status": "passed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-3qbz_zir/chart",
+  "seed": 0,
+  "attempts": 101,
+  "time_limit_seconds": 298.3948829998262,
+  "execution_seconds": 7.42348025040701,
+  "max_examples": 100,
+  "mode": "sampled",
+  "proof_of_totality": false,
+  "phase": "robustness"
+}

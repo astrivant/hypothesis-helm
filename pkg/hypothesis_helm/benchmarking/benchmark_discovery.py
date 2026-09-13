@@ -6,6 +6,8 @@ import argparse
 import itertools
 import json
 import random
+import shutil
+import subprocess
 import time
 from pathlib import Path
 
@@ -142,13 +144,17 @@ def run() -> int:
     parser.add_argument("--bug-percent", type=float, default=5)
     parser.add_argument("--chart", type=Path, help="existing chart with generated fault metadata")
     parser.add_argument("--seed", type=int, default=2026)
-    parser.add_argument("--time-limit", type=parse_time_limit, default=180.0)
+    parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
+    parser.add_argument("--helm", default="helm")
     parser.add_argument("--output", type=Path, default=ROOT / "reports/benchmarks/bug-density")
     args = parser.parse_args()
     if not 2 <= args.max_strength <= args.input_complexity <= 16:
         parser.error("require 2 <= max-strength <= input-complexity <= 16")
-    if not 0 < args.time_limit <= 180:
-        parser.error("a time limit up to 180 seconds is required")
+    if not 0 < args.time_limit <= 540:
+        parser.error("a time limit up to 540 seconds is required")
+    helm = shutil.which(args.helm)
+    if helm is None:
+        parser.error("Helm is required")
     args.output.mkdir(parents=True, exist_ok=True)
     if args.chart is None:
         chart_path = args.output / "chart"
@@ -178,6 +184,7 @@ def run() -> int:
     rows: list[dict[str, object]] = []
     document: dict[str, object] = {
         "metadata": {
+            "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
             "seed": args.seed,
             "input_complexity": complexity,
             "bugs": bug_spec,
@@ -200,7 +207,7 @@ def run() -> int:
         try:
             with execution_timer(args.time_limit):
                 for index, values in enumerate(plan.values):
-                    resources = render(chart, values, release="discovery", timeout=min(30.0, args.time_limit))
+                    resources = render(chart, values, helm=helm, release="discovery", timeout=min(30.0, args.time_limit))
                     data = mapping(
                         next(resource for resource in resources if mapping(resource["metadata"])["name"] == "injected-faults")["data"]
                     )

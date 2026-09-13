@@ -97,8 +97,16 @@ def test_verified_concrete_replacement(chart: Chart, tmp_path: Path) -> None:
     assert not verification["globally_minimal_proven"]
     assert (chart.path / "values.yaml").read_bytes() == original
     first = target.read_bytes()
+    proof_path = target.with_suffix(".proof")
+    proof_bytes = proof_path.read_bytes()
+    proof = json.loads(proof_bytes)
+    assert proof["verification"]["verified"]
+    assert "elapsed_seconds" not in proof["verification"]
+    assert proof["verification"]["candidates_checked"] == verification["candidates_checked"]
+    assert "verification" not in mapping(documents[1])
     export_minimal(chart, target)
     assert target.read_bytes() == first
+    assert proof_path.read_bytes() == proof_bytes
     (chart.path / "values.yaml").write_text(yamlio.dump(documents[0]))
     assert len(render(Chart.load(chart.path), {}, stream=False)) == 1
 
@@ -162,7 +170,7 @@ def test_repository_exports_basename_only(chart: Chart, tmp_path: Path, capsys: 
         capsys (pytest.CaptureFixture[str]): CLI output capture.
 
     Returns:
-        None: Only successful concrete YAML exports appear in the staging inventory.
+        None: Exported YAML files and their proofs appear together in the staging inventory.
     """
     nested = tmp_path / "nested"
     shutil.copytree(chart.path, nested, ignore=shutil.ignore_patterns("nested"))
@@ -170,7 +178,9 @@ def test_repository_exports_basename_only(chart: Chart, tmp_path: Path, capsys: 
     assert main(["export-minimal-values", str(chart.path), "--files-list", str(listing)]) == 0
     summary = json.loads(capsys.readouterr().out)
     assert summary["exported"] == 2
-    assert set(listing.read_bytes().split(b"\0")[:-1]) == {str(path / "values-minimal.yaml").encode() for path in (chart.path, nested)}
+    assert set(listing.read_bytes().split(b"\0")[:-1]) == {
+        str(path / ("values-minimal" + suffix)).encode() for path in (chart.path, nested) for suffix in (".yaml", ".proof")
+    }
     assert main(["export-minimal-values", str(chart.path), "--filename", "../outside.yaml"]) == 2
     assert "basename" in capsys.readouterr().out
 
@@ -237,7 +247,7 @@ def test_explicit_null_is_a_value_without_changing_other_writers() -> None:
 
 def test_ci_commit_only_exported_files(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
-    Commit back verified YAML through a local bare remote without staging diagnostics or other work.
+    Commit back the YAML and its proof through a local bare remote without staging other work.
 
     Args:
         chart (Chart): Chart whose defaults will be reduced.
@@ -245,7 +255,7 @@ def test_ci_commit_only_exported_files(chart: Chart, tmp_path: Path, monkeypatch
         monkeypatch (pytest.MonkeyPatch): Isolate Git author and commit settings.
 
     Returns:
-        None: One writer pushes only the exported YAML and a repeat makes no new commit.
+        None: One writer pushes the exported pair and a repeat makes no new commit.
     """
     import os
     import subprocess
@@ -318,7 +328,10 @@ def test_ci_commit_only_exported_files(chart: Chart, tmp_path: Path, monkeypatch
             text=True,
         )
     assert git("rev-list", "--count", "HEAD") == "2"
-    assert git("diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD") == "values-[review].yaml"
+    assert set(git("diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").splitlines()) == {
+        "values-[review].yaml",
+        "values-[review].proof",
+    }
     assert "unrelated.txt" not in git("ls-files")
     assert ".inventory.json" not in git("ls-files")
     assert git("rev-parse", "HEAD") == git("rev-parse", "origin/main")
@@ -351,3 +364,31 @@ def test_invalid_supplied_values_are_not_replaced(chart: Chart, tmp_path: Path) 
     result = export_minimal(Chart(chart.path, chart.schema, defaults), target, budget=10)
     assert not mapping(result["verification"])["verified"]
     assert yamlio.load_all(target.read_text())[0] == defaults
+
+
+def test_proof_cannot_overwrite_symlinks_or_values(chart: Chart, tmp_path: Path) -> None:
+    """
+    Reject colliding or redirected proof paths before changing either output file.
+
+    Args:
+        chart (Chart): Source chart fixture.
+        tmp_path (Path): Output destination.
+
+    Returns:
+        None: Existing source and output bytes remain intact on validation errors.
+    """
+    from hypothesis_helm.compiler.inputs import InputInventory
+
+    inventory = InputInventory.build(chart)
+    target = tmp_path / "values-minimal.yaml"
+    target.write_text("keep this output")
+    proof = target.with_suffix(".proof")
+    proof.symlink_to(chart.path / "values.yaml")
+    source = (chart.path / "values.yaml").read_bytes()
+    with pytest.raises(ValueError, match="symbolic"):
+        inventory.dump(chart, target)
+    assert target.read_text() == "keep this output"
+    assert (chart.path / "values.yaml").read_bytes() == source
+    with pytest.raises(ValueError, match="differ"):
+        inventory.dump(chart, tmp_path / "same.proof")
+    assert not (tmp_path / "same.proof").exists()
