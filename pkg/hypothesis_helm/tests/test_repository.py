@@ -25,9 +25,7 @@ from hypothesis_helm.cli import main
         "ssh://git@github.com/example/charts.git",
     ],
 )
-def test_remote_scan(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], url: str
-) -> None:
+def test_remote_scan(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], url: str) -> None:
     """
     Clone with real Git through a local URL rewrite and scan the resulting chart.
 
@@ -76,9 +74,7 @@ def test_remote_scan(
         check=True,
         capture_output=True,
     )
-    revision = subprocess.check_output(
-        ["git", "-C", str(origin), "rev-parse", "HEAD"], text=True
-    ).strip()
+    revision = subprocess.check_output(["git", "-C", str(origin), "rev-parse", "HEAD"], text=True).strip()
     monkeypatch.setenv("GIT_CONFIG_COUNT", "1")
     monkeypatch.setenv("GIT_CONFIG_KEY_0", f"url.{origin.as_uri()}.insteadOf")
     monkeypatch.setenv("GIT_CONFIG_VALUE_0", url)
@@ -101,9 +97,7 @@ def test_remote_scan(
         return discover(root, deadline=deadline)
 
     monkeypatch.setattr(scanner, "discover_charts", inspect)
-    monkeypatch.setattr(
-        scanner, "exercise_chart", lambda *args: {"status": "passed", "attempts": 3}
-    )
+    monkeypatch.setattr(scanner, "exercise_chart", lambda *args: {"status": "passed", "attempts": 3})
     monkeypatch.chdir(tmp_path)
     assert (
         main(
@@ -133,9 +127,7 @@ def test_remote_scan(
     assert list((tmp_path / "artifacts").glob("charts_*/checkout.txt"))
 
 
-@pytest.mark.parametrize(
-    "failure", ["authentication", "clone-timeout", "scan-timeout", "interrupted"]
-)
+@pytest.mark.parametrize("failure", ["authentication", "clone-timeout", "scan-timeout", "interrupted"])
 def test_checkout_failure_reports(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -192,12 +184,7 @@ def test_checkout_failure_reports(
     if failure == "scan-timeout":
         arguments.extend(["--scan-timeout", "0.05s"])
     code = main(arguments)
-    assert (
-        code
-        == {"authentication": 1, "clone-timeout": 124, "scan-timeout": 124, "interrupted": 130}[
-            failure
-        ]
-    )
+    assert code == {"authentication": 1, "clone-timeout": 124, "scan-timeout": 124, "interrupted": 130}[failure]
     report = json.loads(capsys.readouterr().out)
     assert report["scan_status"] == ("clone-failed" if failure == "authentication" else failure)
     assert report["discovery_complete"] is False

@@ -130,12 +130,9 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         lines.extend(
             [
                 f"Result: {chart.get('result', 'N/A')} | Status: {chart['status']}",
-                f"Attempts: {chart.get('attempts', 'N/A')} | "
-                f"Remaining iterations: {remaining if remaining is not None else 'unknown'}",
+                f"Attempts: {chart.get('attempts', 'N/A')} | Remaining iterations: {remaining if remaining is not None else 'unknown'}",
                 f"Coverage: {chart.get('coverage', 'not exercised')}",
-                f"Artifacts: [{artifacts}](<{artifacts}>)"
-                if artifacts != "none"
-                else "Artifacts: none",
+                f"Artifacts: [{artifacts}](<{artifacts}>)" if artifacts != "none" else "Artifacts: none",
                 "",
             ]
         )
@@ -152,20 +149,14 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         inventory = chart.get("input_inventory")
         if isinstance(inventory, dict):
             measured = chart.get("field_coverage", {})
-            varied = (
-                measured.get("varied_count", "not measured")
-                if isinstance(measured, dict)
-                else "not measured"
-            )
+            varied = measured.get("varied_count", "not measured") if isinstance(measured, dict) else "not measured"
             lines.extend(
                 [
-                    f"Identified input fields (lower bound): {inventory.get('lower_bound_fields')} "
-                    f"| Varied in render attempts: {varied}",
+                    f"Identified input fields (lower bound): {inventory.get('lower_bound_fields')} | Varied in render attempts: {varied}",
                     f"Missing values: {len(inventory.get('missing_values', []))} "
                     "| Undocumented template fields: "
                     f"{len(inventory.get('undocumented_template_fields', []))}",
-                    f"Unreferenced values: {len(inventory.get('unreferenced_values', []))} "
-                    f"({inventory.get('unreferenced_usage')})",
+                    f"Unreferenced values: {len(inventory.get('unreferenced_values', []))} ({inventory.get('unreferenced_usage')})",
                     "Field variation does not prove branch or output coverage.",
                     "",
                 ]
@@ -179,8 +170,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
                 if isinstance(phase, dict):
                     lines.extend(
                         [
-                            f"Phase {phase.get('phase')}: {phase.get('status')} | "
-                            f"Attempts: {phase.get('attempts', 'unknown')}",
+                            f"Phase {phase.get('phase')}: {phase.get('status')} | Attempts: {phase.get('attempts', 'unknown')}",
                             "",
                         ]
                     )
@@ -188,10 +178,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         if references:
             lines.extend(
                 [
-                    "Errors: "
-                    + ", ".join(
-                        f"[{reference}](#{str(reference).lower()})" for reference in references
-                    ),
+                    "Errors: " + ", ".join(f"[{reference}](#{str(reference).lower()})" for reference in references),
                     "",
                 ]
             )
@@ -209,9 +196,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
         for phase_name, values in counterexamples:
             content = json.dumps(values, indent=2, ensure_ascii=True)
             fence = "`" * max(3, max(map(len, re.findall(r"`+", content)), default=0) + 1)
-            lines.extend(
-                [f"Reproducing values ({phase_name}):", "", f"{fence}json", content, fence, ""]
-            )
+            lines.extend([f"Reproducing values ({phase_name}):", "", f"{fence}json", content, fence, ""])
     markdown.write_text("\n".join(lines) + "\n")
     canvas = Canvas(str(pdf), pagesize=(612, 792))
     canvas.setTitle(str(report.get("title", "Helm chart scan")))
@@ -238,9 +223,7 @@ def write_reports(report: dict[str, object], stem: Path) -> tuple[Path, Path]:
                 canvas.showPage()
                 y = 750
             canvas.setFont(font, size)
-            canvas.drawString(
-                36, y, wrapped.encode("latin-1", "backslashreplace").decode("latin-1")
-            )
+            canvas.drawString(36, y, wrapped.encode("latin-1", "backslashreplace").decode("latin-1"))
             y -= size + 4
     canvas.save()
     return markdown, pdf

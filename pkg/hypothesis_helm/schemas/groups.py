@@ -42,9 +42,7 @@ def parse_group(value: str) -> ExhaustiveGroup:
     for selector in value.split(","):
         selector = selector.strip()
         if selector.startswith("/"):
-            path = tuple(
-                part.replace("~1", "/").replace("~0", "~") for part in selector[1:].split("/")
-            )
+            path = tuple(part.replace("~1", "/").replace("~0", "~") for part in selector[1:].split("/"))
         else:
             path = tuple(selector.removeprefix("$.").split("."))
         if not selector or any(not part for part in path):
@@ -56,9 +54,7 @@ def parse_group(value: str) -> ExhaustiveGroup:
     return ExhaustiveGroup(tuple(paths), f"user: {value}", True)
 
 
-def infer_groups(
-    chart: Path, schema: dict[str, object] | ValuesModel
-) -> tuple[list[ExhaustiveGroup], list[dict[str, object]]]:
+def infer_groups(chart: Path, schema: dict[str, object] | ValuesModel) -> tuple[list[ExhaustiveGroup], list[dict[str, object]]]:
     """
     Propose local hyperedges without merging overlapping groups transitively.
 
@@ -85,21 +81,10 @@ def infer_groups(
             None: A candidate group is appended when multiple references remain.
         """
         precise = tuple(
-            sorted(
-                path
-                for path in paths
-                if path
-                and not any(
-                    len(other) > len(path) and other[: len(path)] == path for other in paths
-                )
-            )
+            sorted(path for path in paths if path and not any(len(other) > len(path) and other[: len(path)] == path for other in paths))
         )
         if len(precise) >= 2:
-            groups.append(
-                ExhaustiveGroup(
-                    precise, source, references=tuple(model.reference(path) for path in precise)
-                )
-            )
+            groups.append(ExhaustiveGroup(precise, source, references=tuple(model.reference(path) for path in precise)))
 
     for relationship in model.relationships:
         add({reference.path for reference in relationship.references}, relationship.source)
@@ -144,7 +129,5 @@ def infer_groups(
             return subtree
 
         walk(nodes)
-    unresolved = [
-        {"file": item.file, "line": item.line, "message": item.message} for item in diagnostics
-    ]
+    unresolved = [{"file": item.file, "line": item.line, "message": item.message} for item in diagnostics]
     return list(dict.fromkeys(groups)), unresolved

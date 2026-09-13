@@ -13,9 +13,7 @@ from numpy.typing import NDArray
 from hypothesis_helm.schemas.contracts import configuration_key, mapping
 
 
-def inject_errors(
-    chart: Path, values: list[dict[str, object]], percent: float, seed: int
-) -> set[int]:
+def inject_errors(chart: Path, values: list[dict[str, object]], percent: float, seed: int) -> set[int]:
     """
     Add a visible error projection at uniformly sampled valid input assignments.
 
@@ -30,9 +28,7 @@ def inject_errors(
     """
     if not math.isfinite(percent) or not 0 <= percent <= 100 or not values:
         raise ValueError("require a nonempty domain and finite error percentage in 0..100")
-    faulty = set(
-        random.Random(seed).sample(range(len(values)), math.floor(len(values) * percent / 100))
-    )
+    faulty = set(random.Random(seed).sample(range(len(values)), math.floor(len(values) * percent / 100)))
     paths = sorted(values[0])
 
     def branch(indices: list[int], depth: int) -> str:
@@ -63,15 +59,7 @@ def inject_errors(
                 condition = f".Values.{path}" if value else f"not .Values.{path}"
             else:
                 condition = f"eq (int .Values.{path}) {value}"
-            result = (
-                "{{ if "
-                + condition
-                + " }}"
-                + branch(group, depth + 1)
-                + "{{ else }}"
-                + result
-                + "{{ end }}"
-            )
+            result = "{{ if " + condition + " }}" + branch(group, depth + 1) + "{{ else }}" + result + "{{ end }}"
         return result
 
     template = dedent(
@@ -186,9 +174,6 @@ def project(
         "components": basis.tolist(),
         "explained_variance_ratio": variance.tolist(),
         "weighting": "one row per valid input, including repeated outputs",
-        "encoding": (
-            "resource presence, numeric leaves, typed "
-            "one-hot categories; numeric strings remain categorical"
-        ),
+        "encoding": ("resource presence, numeric leaves, typed one-hot categories; numeric strings remain categorical"),
         "fit": "complete faulty chart population once per category; no refit after trimming",
     }

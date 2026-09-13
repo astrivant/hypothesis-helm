@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Export beside charts; optionally commit only verified YAML files in one CI job.
+# Export beside charts; optionally commit only exported YAML files in one CI job.
 set -euo pipefail
 case "${HH_RESOLVED_SHARD:-none}" in
   none|1/*) ;;
@@ -7,10 +7,19 @@ case "${HH_RESOLVED_SHARD:-none}" in
 esac
 files_list="$(mktemp "${RUNNER_TEMP:-${TMPDIR:-/tmp}}/helm-minimal-files.XXXXXX")"
 trap 'rm -f "$files_list"' EXIT
-helm hypothesis export-minimal-values "$HH_CHART" \
-  --filename "${HH_MINIMAL_VALUES_FILENAME:-values-minimal.yaml}" \
-  --minimal-values-timeout "${HH_MINIMAL_VALUES_TIMEOUT:-30s}" \
-  --files-list "$files_list"
+if [[ "${HH_KUBECONFORM:-false}" == true || "${HH_KUBESEC:-false}" == true ]]; then
+  helm hypothesis export-minimal-values "$HH_CHART" \
+    --filename "${HH_MINIMAL_VALUES_FILENAME:-values-minimal.yaml}" \
+    --minimal-values-timeout "${HH_MINIMAL_VALUES_TIMEOUT:-30s}" \
+    --files-list "$files_list" --kubeconform \
+    --schema-version "$HH_SCHEMA_VERSION" --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
+    --kubeconform-binary "$HH_KUBECONFORM_BINARY" --schema-offline
+else
+  helm hypothesis export-minimal-values "$HH_CHART" \
+    --filename "${HH_MINIMAL_VALUES_FILENAME:-values-minimal.yaml}" \
+    --minimal-values-timeout "${HH_MINIMAL_VALUES_TIMEOUT:-30s}" \
+    --files-list "$files_list"
+fi
 if [[ "${HH_COMMIT_MINIMAL_VALUES:-false}" != true || ! -s "$files_list" ]]; then
   exit 0
 fi

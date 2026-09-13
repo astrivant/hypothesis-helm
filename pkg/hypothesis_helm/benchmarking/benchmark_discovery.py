@@ -43,10 +43,7 @@ def faults(complexity: int, maximum: int, per_order: int, seed: int) -> list[Fau
             result.append(
                 Fault(
                     f"bug{len(result):03d}",
-                    {
-                        f"input{bit:03d}": bool(pattern & (1 << position))
-                        for position, bit in enumerate(subsets[subset])
-                    },
+                    {f"input{bit:03d}": bool(pattern & (1 << position)) for position, bit in enumerate(subsets[subset])},
                 )
             )
     return result
@@ -91,9 +88,7 @@ def plot(output: Path, rows: list[dict[str, object]], defects: list[Fault]) -> N
         "o-",
         label="Defects found in this run",
     )
-    axes[0].axhline(
-        len(defects), linestyle="--", color="gray", label=f"{len(defects)} injected defects"
-    )
+    axes[0].axhline(len(defects), linestyle="--", color="gray", label=f"{len(defects)} injected defects")
     axes[0].set(ylabel="Distinct injected defects discovered", ylim=(0, len(defects) * 1.1))
     axes[0].legend()
     axes[1].plot(strengths, [row["completed"] for row in rows], "o-", color="#d97706")
@@ -106,8 +101,7 @@ def plot(output: Path, rows: list[dict[str, object]], defects: list[Fault]) -> N
         figure,
         output,
         "bug-discovery",
-        "Real Helm renders; fixed seeded faults. "
-        "Automatic enumeration and inferred groups disabled to isolate strength.",
+        "Real Helm renders; fixed seeded faults. Automatic enumeration and inferred groups disabled to isolate strength.",
     )
     figure, axis = plt.subplots(figsize=(10, 4.5))
     for order in sorted({len(defect.terms) for defect in defects}):
@@ -131,8 +125,7 @@ def plot(output: Path, rows: list[dict[str, object]], defects: list[Fault]) -> N
         figure,
         output,
         "bug-order",
-        "Rates describe this synthetic fault population, "
-        "not a probability guarantee for defects in other charts.",
+        "Rates describe this synthetic fault population, not a probability guarantee for defects in other charts.",
     )
 
 
@@ -207,22 +200,14 @@ def run() -> int:
         try:
             with execution_timer(args.time_limit):
                 for index, values in enumerate(plan.values):
-                    resources = render(
-                        chart, values, release="discovery", timeout=min(30.0, args.time_limit)
-                    )
+                    resources = render(chart, values, release="discovery", timeout=min(30.0, args.time_limit))
                     data = mapping(
-                        next(
-                            resource
-                            for resource in resources
-                            if mapping(resource["metadata"])["name"] == "injected-faults"
-                        )["data"]
+                        next(resource for resource in resources if mapping(resource["metadata"])["name"] == "injected-faults")["data"]
                     )
                     exposed = {defect.name for defect in defects if data[defect.name] != "expected"}
                     expected = {defect.name for defect in defects if defect.active(values)}
                     if exposed != expected:
-                        raise AssertionError(
-                            "fault fixture differs from independent trigger oracle"
-                        )
+                        raise AssertionError("fault fixture differs from independent trigger oracle")
                     for name in exposed:
                         found.setdefault(name, {"case": index + 1, "values": values})
                     completed += 1

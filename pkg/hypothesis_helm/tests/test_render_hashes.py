@@ -130,9 +130,7 @@ def test_cache_only_commits_success_in_same_context() -> None:
     assert hashes.snapshot()["duplicate_bundles"] == 3
 
 
-def test_render_reuse_preserves_properties_and_stream(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
+def test_render_reuse_preserves_properties_and_stream(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     """
     Exercise distinct inputs with identical renders without suppressing custom assertions.
 

@@ -21,9 +21,7 @@ from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import configuration_key, mapping
 
 
-def quality(
-    observed: dict[str, int], reference: dict[str, int], *, ordered: bool = True
-) -> dict[str, float]:
+def quality(observed: dict[str, int], reference: dict[str, int], *, ordered: bool = True) -> dict[str, float]:
     """
     Compare discrete frequencies against the exact rounded chart distribution.
 
@@ -36,16 +34,10 @@ def quality(
         dict[str, float]: Support coverage, total variation and maximum CDF error.
     """
     total, population = sum(observed.values()), sum(reference.values())
-    if (
-        total <= 0
-        or population <= 0
-        or any(n < 0 for n in (*observed.values(), *reference.values()))
-    ):
+    if total <= 0 or population <= 0 or any(n < 0 for n in (*observed.values(), *reference.values())):
         raise ValueError("distributions require nonnegative counts and positive totals")
     keys = sorted(set(observed) | set(reference), key=float if ordered else str)
-    differences = [
-        observed.get(key, 0) / total - reference.get(key, 0) / population for key in keys
-    ]
+    differences = [observed.get(key, 0) / total - reference.get(key, 0) / population for key in keys]
     cumulative = 0.0
     maximum = 0.0
     for difference in differences:
@@ -115,8 +107,7 @@ def plot(output: Path, rows: list[dict[str, object]], reference: dict[str, int])
         figure,
         output,
         "sparsity-quality",
-        "Nested random samples; fresh caches per run. "
-        "One seed; errors need not increase monotonically.",
+        "Nested random samples; fresh caches per run. One seed; errors need not increase monotonically.",
     )
     figure, axes = plt.subplots(2, 2, figsize=(12, 7))
     chosen = sorted({round(i * (len(rows) - 1) / 3) for i in range(4)})
@@ -158,8 +149,7 @@ def plot(output: Path, rows: list[dict[str, object]], reference: dict[str, int])
         figure,
         output,
         "sparsity-distributions",
-        "Discrete normal-quantile outcomes. Each panel uses its own probability scale; "
-        "32 equal-width histogram bins.",
+        "Discrete normal-quantile outcomes. Each panel uses its own probability scale; 32 equal-width histogram bins.",
     )
 
 
@@ -191,22 +181,14 @@ def run() -> int:
     if args.count > 2**complexity:
         parser.error("initial count exceeds the finite input domain")
     reference = Counter(
-        str(
-            float(
-                expected_output(
-                    {f"input{bit:03d}": bool(index & (1 << bit)) for bit in range(complexity)}, spec
-                )
-            )
-        )
+        str(float(expected_output({f"input{bit:03d}": bool(index & (1 << bit)) for bit in range(complexity)}, spec)))
         for index in range(bins)
     )
     topology_reference: Counter[str] = Counter()
     if "topology" in spec:
         roles = list(mapping(mapping(spec["topology"])["roles"]).values())
         for assignment in range(2 ** len(roles)):
-            values: dict[str, object] = {
-                str(path): bool(assignment & (1 << bit)) for bit, path in enumerate(roles)
-            }
+            values: dict[str, object] = {str(path): bool(assignment & (1 << bit)) for bit, path in enumerate(roles)}
             topology_reference[configuration_key(expected_topology(values, spec))] += 1
     helm = shutil.which("helm")
     if helm is None:
@@ -246,21 +228,13 @@ def run() -> int:
         result["stage"] = stage
         result["retained_fraction"] = len(indices) / args.count
         if result["status"] == "passed":
-            counts = {
-                key: int(str(value)) for key, value in mapping(result["received_counts"]).items()
-            }
-            if (
-                sum(counts.values()) != result["completed"]
-                or result["oracle_checks"] != result["completed"]
-            ):
+            counts = {key: int(str(value)) for key, value in mapping(result["received_counts"]).items()}
+            if sum(counts.values()) != result["completed"] or result["oracle_checks"] != result["completed"]:
                 raise AssertionError("incomplete output assertion ledger")
             result["quality"] = quality(counts, dict(reference))
             if topology_reference:
                 result["topology_quality"] = quality(
-                    {
-                        key: int(str(value))
-                        for key, value in mapping(result["topology_counts"]).items()
-                    },
+                    {key: int(str(value)) for key, value in mapping(result["topology_counts"]).items()},
                     dict(topology_reference),
                     ordered=False,
                 )

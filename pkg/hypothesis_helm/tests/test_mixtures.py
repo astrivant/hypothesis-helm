@@ -16,9 +16,7 @@ from hypothesis_helm.charts.runner import Chart, render
 from hypothesis_helm.schemas.contracts import mapping
 
 
-@pytest.mark.parametrize(
-    "weights", [None, {"dependencies": 1, "interactions": 1, "equivalence": 1}]
-)
+@pytest.mark.parametrize("weights", [None, {"dependencies": 1, "interactions": 1, "equivalence": 1}])
 def test_mixed_oracle(tmp_path: Path, weights: dict[str, float] | None) -> None:
     """
     Independently verify every valid assignment of a small reproducible mixed chart.
@@ -79,9 +77,7 @@ def test_invalid_mixture_weights(weights: dict[str, float]) -> None:
         normalized_weights(weights)
 
 
-@pytest.mark.parametrize(
-    "weights", [None, {"dependencies": 1, "interactions": 1, "equivalence": 1}]
-)
+@pytest.mark.parametrize("weights", [None, {"dependencies": 1, "interactions": 1, "equivalence": 1}])
 def test_nested_components(tmp_path: Path, weights: dict[str, float] | None) -> None:
     """
     Keep component wiring fixed while added gate depths change actual resource visibility.
@@ -116,9 +112,7 @@ def test_nested_components(tmp_path: Path, weights: dict[str, float] | None) -> 
         )
         chart = Chart.load(tmp_path / label)
         truth, _ = reference_space(chart, spec, 1536)
-        components = [
-            mapping(component) for component in sequence(mapping(spec["structure"])["components"])
-        ]
+        components = [mapping(component) for component in sequence(mapping(spec["structure"])["components"])]
         if previous is not None:
             for first, current in zip(previous, components, strict=True):
                 assert first["paths"] == current["paths"] and first["name"] == current["name"]
@@ -130,19 +124,13 @@ def test_nested_components(tmp_path: Path, weights: dict[str, float] | None) -> 
         samples = random.Random(42).sample(sorted(truth), 12) + [sorted(truth)[-1]]
         for encoded in samples:
             values = json.loads(encoded)
-            assert bundle_key(render(chart, values, helm=helm, release="matrix")) == bundle_key(
-                expected_manifests(values, spec)
-            )
+            assert bundle_key(render(chart, values, helm=helm, release="matrix")) == bundle_key(expected_manifests(values, spec))
         from hypothesis_helm.benchmarking.benchmark_nesting import select_plan
 
         reference: dict[str, object] = {
             "values": [
                 chart.defaults,
-                *[
-                    json.loads(value)
-                    for value in sorted(truth)
-                    if json.loads(value) != chart.defaults
-                ],
+                *[json.loads(value) for value in sorted(truth) if json.loads(value) != chart.defaults],
             ]
         }
         planned = select_plan(chart, reference, 8, 2, 2026)

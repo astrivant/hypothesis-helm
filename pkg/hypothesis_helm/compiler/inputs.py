@@ -43,9 +43,7 @@ def load_input_chart(path: Path) -> Chart:
     metadata = yamlio.load((path / "Chart.yaml").read_text())
     if not isinstance(metadata, dict) or not metadata.get("name"):
         raise ValueError("Chart.yaml must contain a chart name")
-    return Chart(
-        path, {"type": "object"}, mapping(yamlio.load((path / "values.yaml").read_text()) or {})
-    )
+    return Chart(path, {"type": "object"}, mapping(yamlio.load((path / "values.yaml").read_text()) or {}))
 
 
 def leaves(paths: set[tuple[str, ...]]) -> set[tuple[str, ...]]:
@@ -120,9 +118,7 @@ class InputInventory:
         model = ValuesModel.from_schema(chart.schema)
         defaults = set(_default_paths(chart.defaults))
         try:
-            declared = {
-                tuple(str(part) for part in item.path) for item in enumerate_paths(chart.schema)
-            }
+            declared = {tuple(str(part) for part in item.path) for item in enumerate_paths(chart.schema)}
         except (ValueError, KeyError, TypeError) as exc:
             declared = {node.path for node in model.root.walk() if node.path}
             unresolved.append({"message": f"Schema inventory incomplete: {exc}"})
@@ -145,9 +141,7 @@ class InputInventory:
         metadata = chart.path / "Chart.yaml"
         dependencies = yamlio.load(metadata.read_text()) if metadata.is_file() else {}
         if isinstance(dependencies, dict) and dependencies.get("dependencies"):
-            unresolved.append(
-                {"message": "Dependency value forwarding requires downstream analysis"}
-            )
+            unresolved.append({"message": "Dependency value forwarding requires downstream analysis"})
         unknown = bool(unresolved) or () in dynamic
         return cls(model, fields, leaves(named), dynamic, unresolved, unknown)
 
@@ -161,12 +155,7 @@ class InputInventory:
         supplied = leaves({item.reference.path for item in self.fields if item.in_values})
         referenced = {item.reference.path for item in self.fields if item.locations}
         unmatched = {
-            path
-            for path in supplied
-            if not any(
-                path[: len(ref)] == ref or ref[: len(path)] == path
-                for ref in referenced | self.dynamic
-            )
+            path for path in supplied if not any(path[: len(ref)] == ref or ref[: len(path)] == path for ref in referenced | self.dynamic)
         }
         rows = [
             {
@@ -181,26 +170,15 @@ class InputInventory:
             "fields": rows,
             "known_fields": [list(path) for path in sorted(self.known)],
             "lower_bound_fields": len(self.known),
-            "bound_scope": "identified leaf-most named template selectors "
-            "after literal dead-branch elimination",
+            "bound_scope": "identified leaf-most named template selectors after literal dead-branch elimination",
             "inventory_complete": False,
             "output_influence_proven": False,
             "missing_values": [row for row in rows if row["references"] and not row["in_values"]],
-            "undocumented_template_fields": [
-                row for row in rows if row["references"] and not row["in_schema"]
-            ],
-            "template_only_fields": [
-                row
-                for row in rows
-                if row["references"] and not row["in_schema"] and not row["in_values"]
-            ],
-            "schema_fields_without_values": [
-                row["path"] for row in rows if row["in_schema"] and not row["in_values"]
-            ],
+            "undocumented_template_fields": [row for row in rows if row["references"] and not row["in_schema"]],
+            "template_only_fields": [row for row in rows if row["references"] and not row["in_schema"] and not row["in_values"]],
+            "schema_fields_without_values": [row["path"] for row in rows if row["in_schema"] and not row["in_values"]],
             "unreferenced_values": [list(path) for path in sorted(unmatched)],
-            "unreferenced_usage": "unknown"
-            if self.usage_unknown
-            else "possibly unused; not proven",
+            "unreferenced_usage": "unknown" if self.usage_unknown else "possibly unused; not proven",
             "dynamic_regions": [list(path) for path in sorted(self.dynamic)],
             "unresolved": self.unresolved,
         }
@@ -246,16 +224,8 @@ class InputInventory:
                 if any(ref[: len(path) + 1] == (*path, str(key)) for ref in retained)
             }
 
-        values = (
-            copy.deepcopy(chart.defaults)
-            if self.usage_unknown or verification is not None
-            else project(chart.defaults, ())
-        )
-        reason = (
-            "Unresolved access prevents reduction"
-            if self.usage_unknown
-            else "Known references and dynamic subtrees retained"
-        )
+        values = copy.deepcopy(chart.defaults) if self.usage_unknown or verification is not None else project(chart.defaults, ())
+        reason = "Unresolved access prevents reduction" if self.usage_unknown else "Known references and dynamic subtrees retained"
         validator = validators.validator_for(chart.schema)(chart.schema)
         if not validator.is_valid(json_value(values)):
             values = copy.deepcopy(chart.defaults)
@@ -267,13 +237,13 @@ class InputInventory:
         }
         if verification is not None:
             missing["verification"] = {
-                key: value
-                for key, value in verification.items()
-                if key not in {"elapsed_seconds", "budget_seconds", "candidates_checked"}
+                key: value for key, value in verification.items() if key not in {"elapsed_seconds", "budget_seconds", "candidates_checked"}
             }
         content = (
             (
                 "# Render-verified input baseline; missing fields follow in document 2.\n"
+                if verification is not None and verification.get("verified")
+                else "# Configuration example; validation status follows in document 2.\n"
                 if verification is not None
                 else "# Conservative input baseline; missing fields follow in document 2.\n"
             )
@@ -281,16 +251,13 @@ class InputInventory:
             + yamlio.dump(values, explicit_null=verification is not None)
             + "---\n"
             + "# Missing input fields: diagnostic metadata, not chart values.\n"
-            + yamlio.dump(missing)
+            + yamlio.dump(missing, explicit_null=verification is not None)
         ).encode("utf-8")
         checksum = hashlib.sha256(content).hexdigest()
         epoch = int(time.time())
         if target is None:
             target = directory / f"values-minimal-{checksum}-{epoch}.yaml"
-        if target.resolve() in {
-            (chart.path / name).resolve()
-            for name in ("values.yaml", "values.schema.json", "Chart.yaml")
-        }:
+        if target.resolve() in {(chart.path / name).resolve() for name in ("values.yaml", "values.schema.json", "Chart.yaml")}:
             raise ValueError("Minimal-values output must not overwrite source chart inputs")
         result = {
             "yaml": str(target),
@@ -309,6 +276,8 @@ class InputInventory:
             result["verification"] = verification
             result["reason"] = (
                 "Concrete baseline verified with Helm; see the scoped minimality result"
+                if verification.get("verified")
+                else "Configuration example; validation did not pass"
             )
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(content)
@@ -357,14 +326,11 @@ class FieldCoverage:
                 "lower_bound_fields": count,
                 "present_fields": [list(path) for path in sorted(self.present)],
                 "varied_fields": [list(path) for path in sorted(self.varied)],
-                "unvaried_fields": [
-                    list(path) for path in sorted(self.inventory.known - self.varied)
-                ],
+                "unvaried_fields": [list(path) for path in sorted(self.inventory.known - self.varied)],
                 "present_count": len(self.present),
                 "varied_count": len(self.varied),
                 "varied_fraction": len(self.varied) / count if count else None,
-                "scope": "render inputs; includes failed renders, "
-                "excludes equivalence-pruned candidates",
+                "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
                 "branch_coverage_proven": False,
             }
         )

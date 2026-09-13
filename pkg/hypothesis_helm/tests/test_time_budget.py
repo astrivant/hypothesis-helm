@@ -20,9 +20,7 @@ from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
-@pytest.mark.parametrize(
-    ("value", "seconds"), [("180", 180), ("3m", 180), ("0.5h", 1800), ("0.01s", 0.01)]
-)
+@pytest.mark.parametrize(("value", "seconds"), [("180", 180), ("3m", 180), ("0.5h", 1800), ("0.01s", 0.01)])
 def test_duration_units(value: str, seconds: float) -> None:
     """
     Accept explicit duration units and fractional positive seconds.

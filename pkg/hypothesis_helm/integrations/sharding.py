@@ -145,9 +145,7 @@ def parse_shard(value: str) -> Shard:
         index, total = value.split("/")
         return Shard(int(index), int(total))
     except ValueError as exc:
-        raise argparse.ArgumentTypeError(
-            "shard must be INDEX/TOTAL with 1 <= INDEX <= TOTAL"
-        ) from exc
+        raise argparse.ArgumentTypeError("shard must be INDEX/TOTAL with 1 <= INDEX <= TOTAL") from exc
 
 
 def parse_shard_option(value: str) -> Shard | str:
@@ -163,9 +161,7 @@ def parse_shard_option(value: str) -> Shard | str:
     return value if value in ("auto", "none") else parse_shard(value)
 
 
-def resolve_shard(
-    selector: Shard | str, environment: Mapping[str, str]
-) -> tuple[Shard | None, str]:
+def resolve_shard(selector: Shard | str, environment: Mapping[str, str]) -> tuple[Shard | None, str]:
     """
     Resolve explicit coordinates or a unique CI environment into a shard.
 
@@ -193,18 +189,12 @@ def resolve_shard(
             candidates.append((None, provider.name))
             continue
         if not index_text or not total_text:
-            raise ValueError(
-                f"{provider.name} shard detection requires both "
-                f"{provider.index_key} and {provider.total_key}"
-            )
+            raise ValueError(f"{provider.name} shard detection requires both {provider.index_key} and {provider.total_key}")
         try:
             index, total = int(index_text), int(total_text)
             shard = Shard(index + (1 - provider.index_base), total)
         except ValueError as exc:
-            raise ValueError(
-                f"invalid {provider.name} shard coordinates in "
-                f"{provider.index_key}/{provider.total_key}"
-            ) from exc
+            raise ValueError(f"invalid {provider.name} shard coordinates in {provider.index_key}/{provider.total_key}") from exc
         candidates.append((None if total == 1 else shard, provider.name))
     if len(candidates) > 1:
         raise ValueError("ambiguous CI shard environment; use --shard INDEX/TOTAL or --shard none")

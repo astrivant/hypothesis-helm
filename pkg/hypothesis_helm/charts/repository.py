@@ -39,9 +39,7 @@ def remote_name(location: str) -> str | None:
             or parsed.query
             or parsed.fragment
         ):
-            raise ValueError(
-                "Use a repository clone URL without embedded credentials, query, or fragment"
-            )
+            raise ValueError("Use a repository clone URL without embedded credentials, query, or fragment")
         path = parsed.path
     elif re.fullmatch(r"[\w.-]+@[\w.-]+:.+", location):
         path = location.split(":", 1)[1]
@@ -113,9 +111,7 @@ class RepositorySource:
     diagnostic: str = ""
 
     @classmethod
-    def prepare(
-        cls, location: str, scope: ExitStack, timeout: float, deadline: float | None
-    ) -> RepositorySource:
+    def prepare(cls, location: str, scope: ExitStack, timeout: float, deadline: float | None) -> RepositorySource:
         """
         Clone a remote default branch, retaining its resolved commit and diagnostics.
 
@@ -140,9 +136,7 @@ class RepositorySource:
             remaining = stop - time.monotonic()
             if remaining <= 0:
                 raise subprocess.TimeoutExpired("git clone", timeout)
-            cloned = run_git(
-                ["git", "clone", "--depth", "1", "--", location, str(source.root)], remaining
-            )
+            cloned = run_git(["git", "clone", "--depth", "1", "--", location, str(source.root)], remaining)
             source.diagnostic = cloned.stdout + cloned.stderr
             if cloned.returncode:
                 source.status = "clone-failed"
@@ -157,11 +151,7 @@ class RepositorySource:
             else:
                 source.revision = revision.stdout.strip()
         except subprocess.TimeoutExpired:
-            source.status = (
-                "scan-timeout"
-                if deadline is not None and time.monotonic() >= deadline
-                else "clone-timeout"
-            )
+            source.status = "scan-timeout" if deadline is not None and time.monotonic() >= deadline else "clone-timeout"
             source.diagnostic += "\nRepository checkout deadline reached"
         except KeyboardInterrupt:
             source.status = "interrupted"

@@ -99,8 +99,7 @@ class PermutationStatistics:
             LOGGER.info("Permutation comparison: no previous run for this chart")
         else:
             LOGGER.info(
-                "Permutation comparison: %s -> %s iterations (%+d versus previous); "
-                "all %s iterations will run",
+                "Permutation comparison: %s -> %s iterations (%+d versus previous); all %s iterations will run",
                 previous_total,
                 stats["planned_iterations"],
                 stats["iteration_delta"],
@@ -136,26 +135,15 @@ class PermutationStatistics:
         if self.completed:
             average = self.successful_seconds / self.completed
             source = "current_run"
-        elif self.previous.get("context") == self.context and not self.context.get(
-            "custom_properties"
-        ):
+        elif self.previous.get("context") == self.context and not self.context.get("custom_properties"):
             historical = self.previous.get("seconds_per_iteration")
-            if (
-                type(historical) in (int, float)
-                and isinstance(historical, int | float)
-                and math.isfinite(historical)
-                and historical >= 0
-            ):
+            if type(historical) in (int, float) and isinstance(historical, int | float) and math.isfinite(historical) and historical >= 0:
                 average = float(historical)
                 source = "previous_run"
         return {
             "cost_profile": {
-                "seconds_per_render": self.render_seconds / self.rendered_successes
-                if self.rendered_successes
-                else None,
-                "seconds_per_check": self.check_seconds / self.completed
-                if self.completed
-                else None,
+                "seconds_per_render": self.render_seconds / self.rendered_successes if self.rendered_successes else None,
+                "seconds_per_check": self.check_seconds / self.completed if self.completed else None,
             },
             "planned_iterations": total,
             "unique_configurations": total,
@@ -173,15 +161,11 @@ class PermutationStatistics:
             "elapsed_seconds": max(0.0, time.perf_counter() - self.started),
             "seconds_per_iteration": average,
             "estimated_total_seconds": average * total if average is not None else None,
-            "estimated_remaining_seconds": (
-                0.0 if remaining == 0 else average * remaining if average is not None else None
-            ),
+            "estimated_remaining_seconds": (0.0 if remaining == 0 else average * remaining if average is not None else None),
             "estimate_source": source,
         }
 
-    def advance(
-        self, passed: bool, seconds: float, *, rendered: bool = False, render_seconds: float = 0.0
-    ) -> None:
+    def advance(self, passed: bool, seconds: float, *, rendered: bool = False, render_seconds: float = 0.0) -> None:
         """
         Count an attempted iteration and periodically emit measured progress.
 
@@ -219,8 +203,7 @@ class PermutationStatistics:
         eta = stats["estimated_remaining_seconds"]
         estimate = stats["estimated_total_seconds"]
         LOGGER.info(
-            "Permutation progress: %s/%s completed, %s remaining (%s attempted); "
-            "elapsed %.2fs; estimated total %s; ETA %s (%s)",
+            "Permutation progress: %s/%s completed, %s remaining (%s attempted); elapsed %.2fs; estimated total %s; ETA %s (%s)",
             stats["completed_iterations"],
             stats["planned_iterations"],
             stats["remaining_iterations"],
@@ -243,15 +226,7 @@ class PermutationStatistics:
             dict[str, object]: Final statistics for the run report.
         """
         stats = self.snapshot()
-        stats["exit_code"] = (
-            0
-            if status == "passed"
-            else 130
-            if status == "interrupted"
-            else 124
-            if status == "time-limit"
-            else 1
-        )
+        stats["exit_code"] = 0 if status == "passed" else 130 if status == "interrupted" else 124 if status == "time-limit" else 1
         LOGGER.info("Permutation run %s", status)
         self.log_progress(stats)
         destination = self.history_path()
@@ -298,9 +273,7 @@ class PermutationStatistics:
                 "context": self.context,
                 "status": status,
                 # Never turn an inherited estimate into a newly measured sample.
-                "seconds_per_iteration": (
-                    self.successful_seconds / self.completed if self.completed else None
-                ),
+                "seconds_per_iteration": (self.successful_seconds / self.completed if self.completed else None),
             }
             temporary = destination.with_suffix(f".{uuid4().hex}.tmp")
             temporary.write_text(json.dumps(history, indent=2) + "\n")

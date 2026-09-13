@@ -84,20 +84,12 @@ def infer_schema(value: object) -> dict[str, object]:
         return {"type": "object", "properties": {k: infer_schema(v) for k, v in value.items()}}
     if isinstance(value, list):
         kinds = list({json.dumps(infer_schema(v), sort_keys=True) for v in value})
-        items = (
-            {}
-            if not kinds
-            else json.loads(kinds[0])
-            if len(kinds) == 1
-            else {"anyOf": [json.loads(k) for k in sorted(kinds)]}
-        )
+        items = {} if not kinds else json.loads(kinds[0]) if len(kinds) == 1 else {"anyOf": [json.loads(k) for k in sorted(kinds)]}
         return {"type": "array", "items": items}
     raise ValueError(f"non-JSON YAML value: {type(value).__name__}")
 
 
-def dereference(
-    schema: dict[str, object], root: dict[str, object], seen: tuple[str, ...] = ()
-) -> dict[str, object]:
+def dereference(schema: dict[str, object], root: dict[str, object], seen: tuple[str, ...] = ()) -> dict[str, object]:
     """
     Expand local references without discarding sibling constraints.
 
@@ -229,9 +221,7 @@ def enumerate_paths(schema: dict[str, object]) -> list[ValuePath]:
                 if ref in refs:
                     raise ValueError(f"recursive schema path cannot be generated: {ref}")
                 return expand(dereference(value, root), (*refs, ref))
-            return {
-                k: expand(v, refs) for k, v in value.items() if k not in ("$defs", "definitions")
-            }
+            return {k: expand(v, refs) for k, v in value.items() if k not in ("$defs", "definitions")}
 
         result.append(ValuePath(path, mapping(expand(node))))
     return result
@@ -293,13 +283,7 @@ def _fallbacks(chart: Chart, references: list[Reference]) -> dict[tuple[str, ...
                 None: None. The operation completes through its documented side effects.
             """
             for node in nodes:
-                paths = {
-                    r.path
-                    for r in references
-                    if r.file == str(file_path.relative_to(chart.path))
-                    and r.line == node.line
-                    and r.path
-                }
+                paths = {r.path for r in references if r.file == str(file_path.relative_to(chart.path)) and r.line == node.line and r.path}
                 # Parent references introduced by index/aliases are not separate levers.
                 paths = {p for p in paths if not any(q[: len(p)] == p and q != p for q in paths)}
                 if len(paths) == 1:
@@ -310,11 +294,7 @@ def _fallbacks(chart: Chart, references: list[Reference]) -> dict[tuple[str, ...
                             if known:
                                 evidence.setdefault(path, []).append(value)
                     if node.tokens[0] == "dig":
-                        ts = (
-                            node.tokens[: node.tokens.index("|")]
-                            if "|" in node.tokens
-                            else node.tokens
-                        )
+                        ts = node.tokens[: node.tokens.index("|")] if "|" in node.tokens else node.tokens
                         if len(ts) >= 4:
                             known, value = _literal(ts[-2])
                             if known:
@@ -371,9 +351,7 @@ def _insert(values: dict[str, object], path: tuple[str, ...], value: object) -> 
     return True
 
 
-def _add_schema(
-    root: dict[str, object], path: tuple[str, ...], inferred: dict[str, object]
-) -> None:
+def _add_schema(root: dict[str, object], path: tuple[str, ...], inferred: dict[str, object]) -> None:
     """
     Check  add schema.
 
@@ -428,9 +406,7 @@ def coalesce(chart: Chart) -> Model:
         if not found:
             candidates = [n["default"] for n in nodes if "default" in n]
             candidates += fallbacks.get(path, [])
-            if candidates and all(
-                v == candidates[0] and type(v) is type(candidates[0]) for v in candidates
-            ):
+            if candidates and all(v == candidates[0] and type(v) is type(candidates[0]) for v in candidates):
                 value = copy.deepcopy(candidates[0])
             elif any(r.path[: len(path)] == path and len(r.path) > len(path) for r in references):
                 value = CommentedMap()
@@ -439,16 +415,11 @@ def coalesce(chart: Chart) -> Model:
                 diagnostics.append(
                     {
                         "path": list(path),
-                        "message": (
-                            "no unambiguous default; null placeholder, "
-                            "type from schema if available"
-                        ),
+                        "message": ("no unambiguous default; null placeholder, type from schema if available"),
                     }
                 )
             if not _insert(values, path, value):
-                diagnostics.append(
-                    {"path": list(path), "message": "cannot insert through a non-object value"}
-                )
+                diagnostics.append({"path": list(path), "message": "cannot insert through a non-object value"})
                 continue
         if not nodes:
             _add_schema(schema, path, infer_schema(value))
@@ -470,16 +441,7 @@ def coalesce(chart: Chart) -> Model:
         if path and not nodes:
             _add_schema(schema, path, infer_schema(value))
             inferred_paths.add(path)
-        elif (
-            path
-            and nodes
-            and all(
-                not any(
-                    k in n for k in ("type", "enum", "const", "anyOf", "oneOf", "allOf", "$ref")
-                )
-                for n in nodes
-            )
-        ):
+        elif path and nodes and all(not any(k in n for k in ("type", "enum", "const", "anyOf", "oneOf", "allOf", "$ref")) for n in nodes):
             inferred = infer_schema(value)
             for node in nodes:
                 for key, item in inferred.items():
@@ -518,12 +480,7 @@ def strategy_source(schema: dict[str, object]) -> str:
     Returns:
         str: Serialized output or resolved strategy expression.
     """
-    node = {
-        k: v
-        for k, v in schema.items()
-        if k
-        not in ("description", "title", "default", "examples", "$schema", "$defs", "definitions")
-    }
+    node = {k: v for k, v in schema.items() if k not in ("description", "title", "default", "examples", "$schema", "$defs", "definitions")}
     fallback = f"from_schema({schema!r})"
     if set(node) == {"const"}:
         return f"st.just({node['const']!r})"
@@ -560,20 +517,12 @@ def strategy_source(schema: dict[str, object]) -> str:
             )
         return f"st.integers(min_value={low!r}, max_value={high!r})"
     if kind == "number" and set(node) <= {"type", "minimum", "maximum"}:
-        return (
-            f"st.floats(min_value={node.get('minimum')!r}, "
-            f"max_value={node.get('maximum')!r}, allow_nan=False, allow_infinity=False)"
-        )
+        return f"st.floats(min_value={node.get('minimum')!r}, max_value={node.get('maximum')!r}, allow_nan=False, allow_infinity=False)"
     if kind == "string" and set(node) <= {"type", "minLength", "maxLength"}:
         return f"st.text(min_size={node.get('minLength', 0)!r}, max_size={node.get('maxLength')!r})"
-    if (
-        kind == "array"
-        and isinstance(node.get("items"), dict)
-        and set(node) <= {"type", "items", "minItems", "maxItems"}
-    ):
+    if kind == "array" and isinstance(node.get("items"), dict) and set(node) <= {"type", "items", "minItems", "maxItems"}:
         return (
-            f"st.lists({strategy_source(mapping(node['items']))}, "
-            f"min_size={node.get('minItems', 0)!r}, max_size={node.get('maxItems')!r})"
+            f"st.lists({strategy_source(mapping(node['items']))}, min_size={node.get('minItems', 0)!r}, max_size={node.get('maxItems')!r})"
         )
     # Regex, multipleOf, uniqueItems, object required/optional keys, unions and
     # references are delegated to the existing JSON Schema strategy library.
@@ -661,8 +610,7 @@ def generate_tests(
         lines += [
             f"# Path: {entry.path!r}; contract: {entry.origin}",
             f"@pytest.mark.hypothesis_helm_path({entry.path!r})",
-            f"@settings(max_examples={max_examples}, deadline=None, "
-            "suppress_health_check=[HealthCheck.too_slow])",
+            f"@settings(max_examples={max_examples}, deadline=None, suppress_health_check=[HealthCheck.too_slow])",
             f"@given(value={strategy_source(entry.schema)}, data=st.data())",
             f"def test_{name}_{digest}(chart: Chart, value: object, data: DataObject) -> None:",
             '    """',

@@ -29,9 +29,7 @@ def git(directory: Path, *arguments: str) -> str:
     Returns:
         str: Git standard output.
     """
-    result = subprocess.run(
-        ["git", "-C", str(directory), *arguments], capture_output=True, text=True, timeout=180
-    )
+    result = subprocess.run(["git", "-C", str(directory), *arguments], capture_output=True, text=True, timeout=180)
     if result.returncode:
         raise ValueError(f"schema cache git command failed: {result.stderr.strip()}")
     return result.stdout.strip()
@@ -68,11 +66,7 @@ def memory_snapshot(snapshot: Path) -> Path:
         target = root / snapshot.parent.name / snapshot.name
         if not target.exists():
             block = os.statvfs(root).f_frsize
-            required = sum(
-                ((path.stat().st_size + block - 1) // block) * block
-                for path in snapshot.rglob("*")
-                if path.is_file()
-            )
+            required = sum(((path.stat().st_size + block - 1) // block) * block for path in snapshot.rglob("*") if path.is_file())
             if required > shutil.disk_usage(root).free:
                 raise ValueError(f"schema tmpfs needs at least {required} free bytes: {root}")
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -109,9 +103,7 @@ def prepare(
         raise ValueError("--schema-version requires latest or an exact version such as 1.35.0")
     binary = shutil.which(executable)
     if binary is None:
-        raise ValueError(
-            f"kubeconform executable not found: {executable}; install kubeconform first"
-        )
+        raise ValueError(f"kubeconform executable not found: {executable}; install kubeconform first")
     cache = cache.expanduser().resolve()
     if read_only:
         offline = True
@@ -134,9 +126,7 @@ def prepare(
         revision = git(repository, "rev-parse", "FETCH_HEAD")
         names = git(repository, "ls-tree", "--name-only", revision).splitlines()
         versions = [
-            tuple(map(int, match.groups()))
-            for name in names
-            if (match := re.fullmatch(r"v(\d+)\.(\d+)\.(\d+)-standalone-strict", name))
+            tuple(map(int, match.groups())) for name in names if (match := re.fullmatch(r"v(\d+)\.(\d+)\.(\d+)-standalone-strict", name))
         ]
         if version == "latest":
             if not versions:
@@ -218,6 +208,5 @@ def validate(manifests: str, timeout: float) -> None:
         raise AssertionError(f"kubeconform exceeded {timeout}s") from exc
     if result.returncode:
         raise AssertionError(
-            f"Kubernetes {settings['version']} API schema validation failed: "
-            f"{result.stdout.strip()} {result.stderr.strip()}"
+            f"Kubernetes {settings['version']} API schema validation failed: {result.stdout.strip()} {result.stderr.strip()}"
         )

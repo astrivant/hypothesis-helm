@@ -70,9 +70,7 @@ def test_comments_strings_and_delimiters(tmp_path: Path) -> None:
     Returns:
         None: None. The operation completes through its documented side effects.
     """
-    refs, warnings = scan(
-        tmp_path, '{{/* .Values.fake }} */}}{{ "}} .Values.fake" }}{{ .Values.real }}'
-    )
+    refs, warnings = scan(tmp_path, '{{/* .Values.fake }} */}}{{ "}} .Values.fake" }}{{ .Values.real }}')
     assert {r.path for r in refs} == {("real",)}
     assert not warnings
 

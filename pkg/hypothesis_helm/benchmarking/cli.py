@@ -41,9 +41,7 @@ def main(argv: list[str] | None = None) -> int:
         return int(entry())
     except ModuleNotFoundError as exc:
         if exc.name is not None and exc.name.split(".")[0] in {"numpy", "matplotlib"}:
-            parser.error(
-                'install benchmark dependencies with pip install "hypothesis-helm[benchmarking]"'
-            )
+            parser.error('install benchmark dependencies with pip install "hypothesis-helm[benchmarking]"')
         raise
     finally:
         sys.argv = previous

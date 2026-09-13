@@ -40,17 +40,11 @@ def test_pca_fixed_basis_and_variance() -> None:
     bundles = [[configmap("sample", {"x": x, "y": y})] for x, y in ((0, 0), (1, 2), (3, 1), (0, 0))]
     scores, basis = project(bundles)
     features = sequence(basis["features"])
-    matrix = np.array(
-        [[manifest_features(bundle).get(str(name), 0) for name in features] for bundle in bundles]
-    )
-    expected = ((matrix - np.asarray(basis["center"])) / np.asarray(basis["scale"])) @ np.asarray(
-        basis["components"]
-    ).T
+    matrix = np.array([[manifest_features(bundle).get(str(name), 0) for name in features] for bundle in bundles])
+    expected = ((matrix - np.asarray(basis["center"])) / np.asarray(basis["scale"])) @ np.asarray(basis["components"]).T
     np.testing.assert_allclose(scores, expected)
     np.testing.assert_allclose(scores[0], scores[3])
-    assert sum(
-        number(value) for value in sequence(basis["explained_variance_ratio"])
-    ) == pytest.approx(1)
+    assert sum(number(value) for value in sequence(basis["explained_variance_ratio"])) == pytest.approx(1)
     assert np.linalg.norm(scores[0] - scores[1]) > 0
 
 
@@ -86,11 +80,7 @@ def test_seeded_errors_in_real_template(tmp_path: Path) -> None:
         pytest.skip("Helm required")
     generate(tmp_path, input_complexity=6, output_bins=4, structure="boundaries")
     chart = Chart.load(tmp_path)
-    values = [
-        {**chart.defaults, "input002": value, "input000": bit}
-        for value in (0, 1, 2)
-        for bit in (False, True)
-    ]
+    values = [{**chart.defaults, "input002": value, "input000": bit} for value in (0, 1, 2) for bit in (False, True)]
     faults = inject_errors(tmp_path, values, 50, 1729)
     previous = (tmp_path / "templates/benchmark-error.yaml").read_bytes()
     assert len(faults) == 3
@@ -98,9 +88,7 @@ def test_seeded_errors_in_real_template(tmp_path: Path) -> None:
     assert (tmp_path / "templates/benchmark-error.yaml").read_bytes() == previous
     for index, value in enumerate(values):
         resources = render(Chart.load(tmp_path), value, release="matrix")
-        error = next(
-            item for item in resources if mapping(item["metadata"])["name"] == "benchmark-error"
-        )
+        error = next(item for item in resources if mapping(item["metadata"])["name"] == "benchmark-error")
         assert mapping(error["data"])["status"] == ("incorrect" if index in faults else "expected")
 
 

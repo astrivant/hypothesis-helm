@@ -91,8 +91,7 @@ def check_prioritized(
     remaining = budget - (time.monotonic() - started)
     if fail_fast and any(
         phase["status"] == "failed"
-        and phase.get("failure_type")
-        not in {"Unsatisfiable", "FailedHealthCheck", "SchemaError", "InvalidArgument"}
+        and phase.get("failure_type") not in {"Unsatisfiable", "FailedHealthCheck", "SchemaError", "InvalidArgument"}
         for phase in phases
     ):
         phases.append(
@@ -125,9 +124,7 @@ def check_prioritized(
                     time_limit=remaining,
                     artifact_dir=artifacts / "robustness",
                     fail_fast=fail_fast,
-                    input_strategy=priority.deferred_strategy(chart)
-                    if priority is not None
-                    else None,
+                    input_strategy=priority.deferred_strategy(chart) if priority is not None else None,
                     input_inventory=inventory,
                 )
                 phases.append({**secondary, "phase": "robustness"})
@@ -203,9 +200,7 @@ def check_prioritized(
         },
     }
     if failures:
-        result["error"] = "\n\n".join(
-            f"{phase['phase']}: {phase.get('error', '')}" for phase in failures
-        )
+        result["error"] = "\n\n".join(f"{phase['phase']}: {phase.get('error', '')}" for phase in failures)
     if inventory is not None:
         combined = FieldCoverage(inventory, chart.defaults)
         for phase in phases:

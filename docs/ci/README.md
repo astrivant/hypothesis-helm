@@ -143,7 +143,7 @@ space for the schemas; parsing still costs time, and tmpfs can swap under pressu
 
 ## Minimal values in CI
 
-Add the second pre-commit hook to export concrete, render-verified values beside
+Add the second pre-commit hook to export example values with validation status beside
 all charts under the configured directory:
 
 ```yaml
@@ -175,12 +175,12 @@ steps:
 ```
 
 Commit-back implies export and defaults to `values-minimal.yaml` in **each chart’s
-directory**. Only the basename is configurable. Only verified YAML files are
+directory**. Only the basename is configurable. Only exported YAML files are
 staged; diagnostic JSON files remain local. Shard 1 handles export and commit-back
 for a sharded action. For multiple chart matrices, use one final export job to
 avoid competing pushes. Pushes require a branch checkout and use normal
 fast-forward updates. Pull-request merge refs do not commit back.
 
-The search can remove optional resources while preserving valid, nonempty output.
-It reports whether deletion-minimality was established within its budget; it does
-not claim a global minimum. See [verification and limits](../inputs/README.md).
+Verified examples can be reduced while preserving valid, nonempty output.
+Invalid examples are also exported, with the validation failure recorded for review.
+The exporter does not claim a global minimum. See [verification and limits](../inputs/README.md).

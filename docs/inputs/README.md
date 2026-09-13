@@ -53,36 +53,37 @@ Each export contains two YAML documents separated by `---`: the first holds the
 baseline values; the second lists `missing_values` with template references and
 `schema_fields_without_values`. No placeholder values are invented. Use the first
 document when supplying values to Helm; the second is diagnostic metadata. The
-filename checksum covers both documents.
+filename checksum covers both documents. Missing-field metadata describes the
+original source values, before any typed gaps are filled in the example.
 
 An adjacent `.inventory.json` retains the full lower-bound field list, source
 locations, and reasons for retained values. `audit` also works without a values schema.
 During scans, the selected
 `--values` file supplies the original baseline being inspected.
 
-The export searches an isolated chart copy, replacing its `values.yaml` so Helm
-cannot fill removed fields back in from the original defaults. Each accepted
-candidate passes the declared values schema, `helm lint`, `helm template`, and
-manifest envelope checks. Configured Kubeconform validation also applies when
-exporting through `test --kubeconform`. These are local checks, not an API-server
-admission or deployment guarantee.
+The exporter uses supplied values first, then explicit schema `default` or `const`
+values, then the type's constant for missing required or referenced fields. It
+does not infer downstream API bounds or search for replacement values. Fields
+whose types are unknown stay unresolved in the inventory; no placeholder is invented.
 
-Values are concrete: `false` and `0` remain meaningful values, and missing fields
-never become bare-key placeholders. Legitimate null values are written explicitly
-as `null`. If the original defaults fail, a bounded schema-based search may find
-an accepted starting configuration; no export is written without verification.
-Optional `enabled` components can be disabled when that reduces resource count.
-The search then removes entries while preserving valid, nonempty output without
-increasing that count. It is allowed to change the original manifests.
+Validation runs in an isolated chart copy with `values.yaml` replaced, so Helm
+cannot silently fill removed keys back in from the original defaults. Checks cover
+the values schema, Helm lint, rendering, and manifest envelopes. Configured
+Kubeconform validation also applies. If the example passes, the existing bounded
+reduction removes unnecessary entries while keeping valid, nonempty output.
 
-`--minimal-values-timeout 30s` bounds each search. A completed search establishes
-**deletion-minimality**: no single remaining entry can be removed under those
-checks without increasing resource count. This is not a global minimum over all
-value assignments or a proof of the fewest possible resources. An interrupted
-search exports only its last verified candidate and records incomplete minimality.
-Verification details appear in document 2 and the JSON sidecar. Volatile timing
-statistics live only in JSON so repeated completed YAML exports stay stable.
-The export does not change the original test domain or source values file.
+If validation fails, **the illustrative YAML is still exported**, with
+`verified: false` and the error in document 2 and the JSON sidecar. For example,
+an integer without a supplied value or declared default gets `0`, even when a
+schema requires at least `1`; validation flags that mismatch for the engineer.
+This file demonstrates configuration and is not a deployment certificate.
+
+`--minimal-values-timeout 30s` bounds verification and reduction. A completed,
+verified reduction establishes deletion-minimality under the observed checks,
+not a global minimum over every value assignment or resource configuration.
+A timeout preserves the last verified candidate, or the deterministic example
+if verification never completed. Volatile timing statistics stay in JSON so
+repeated completed YAML exports remain stable. Original chart inputs are untouched.
 
 ## Export beside every chart
 
@@ -93,8 +94,8 @@ helm hypothesis export-minimal-values ./charts --filename values-review.yaml
 
 This export-only command defaults to **`values-minimal.yaml` in every discovered
 chart directory**. `--filename` accepts a basename, never a directory override.
-Library charts are N/A; other unverified charts report failures while discovery
-continues. See [pre-commit and optional CI commit-back](../ci/README.md#minimal-values-in-ci).
+Library charts are N/A; export errors are reported while discovery continues.
+Example validation failures are recorded in the exported files. See [pre-commit and optional CI commit-back](../ci/README.md#minimal-values-in-ci).
 
 ## Export the input-to-output graph
 
@@ -115,3 +116,36 @@ output-space coverage. It records paths and types rather than manifest values.
 If the baseline cannot render, static evidence is still exported with output
 observation marked unavailable. Default names are
 `topological-graph-<checksum>-<epoch>.json`; scans keep each chart’s graph separate.
+
+## Deterministic type constants
+
+The compiler's `constants.py` supplies these defaults for missing typed values:
+
+| Declared input type | Constant |
+| --- | --- |
+| Boolean | `false` |
+| Integer | `0` |
+| Number | `0.0` |
+| String | `""` |
+| Array | `[]` |
+| Object | `{}`, with required or referenced typed children filled recursively |
+| Explicit null type | `null` |
+| Unknown type | No invented value; recorded as unresolved |
+
+Supplied values—including `false`, `0`, `""` and explicit null—are preserved.
+Explicit schema defaults and constants take precedence over these type constants.
+This policy is deterministic; it does not invent strings, choose enum alternatives,
+or solve downstream constraints. Further validation catches invalid examples.
+
+Export-only workflows can use the existing local Kubernetes schema validation:
+
+```sh
+helm hypothesis export-minimal-values ./charts --kubeconform --schema-version 1.35.0
+# Reuse a prepared snapshot without fetching:
+helm hypothesis export-minimal-values ./charts --kubeconform --schema-version 1.35.0 --schema-offline
+```
+
+Exports record whether API validation passed, was not confirmed, or did not run.
+The GitHub action reuses API validation when `kubeconform` or `kubesec` is enabled.
+API schema checks still omit some server-side checks; see
+[Kubeconform's documented limits](https://github.com/yannh/kubeconform#limits-of-kubeconform-validation).

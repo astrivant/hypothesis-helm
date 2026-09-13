@@ -51,9 +51,7 @@ def test_previous_counts_timing_and_remaining_work(
 
     monkeypatch.setattr("hypothesis_helm.charts.runner.render", render)
     caplog.set_level(logging.INFO, logger="hypothesis_helm")
-    first = check_chart(
-        "examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0
-    )
+    first = check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0)
     assert first["planned_iterations"] == 19
     assert first["completed_iterations"] == first["attempted_iterations"] == 19
     assert first["remaining_iterations"] == first["unattempted_iterations"] == 0
@@ -91,9 +89,7 @@ def test_previous_counts_timing_and_remaining_work(
     assert ET.parse(tmp_path / "junit.xml").getroot().get("failures") == "0"
 
     caplog.clear()
-    second = check_chart(
-        "examples/workload", permutations=3, artifact_dir=tmp_path, exhaustive_threshold=0
-    )
+    second = check_chart("examples/workload", permutations=3, artifact_dir=tmp_path, exhaustive_threshold=0)
     assert second["planned_iterations"] == 24
     assert second["previous_planned_iterations"] == 19
     assert second["iteration_delta"] == second["additional_iterations"] == 5
@@ -103,17 +99,13 @@ def test_previous_counts_timing_and_remaining_work(
     assert "ETA 48.00s (previous_run)" in caplog.text
     assert "24/24 completed, 0 remaining" in caplog.text
 
-    reduced = check_chart(
-        "examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0
-    )
+    reduced = check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0)
     assert reduced["iteration_delta"] == -5
     assert reduced["additional_iterations"] == 0
 
 
 @pytest.mark.parametrize("interrupted", [False, True])
-def test_failure_retains_incomplete_iterations(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, interrupted: bool
-) -> None:
+def test_failure_retains_incomplete_iterations(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, interrupted: bool) -> None:
     """
     Keep the failed iteration in remaining work and preserve interruption statistics.
 
@@ -148,13 +140,9 @@ def test_failure_retains_incomplete_iterations(
     monkeypatch.setattr("hypothesis_helm.charts.runner.render", render)
     if interrupted:
         with pytest.raises(KeyboardInterrupt):
-            check_chart(
-                "examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0
-            )
+            check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0)
     else:
-        check_chart(
-            "examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0
-        )
+        check_chart("examples/workload", permutations=2, artifact_dir=tmp_path, exhaustive_threshold=0)
     report = json.loads((tmp_path / "report.json").read_text())
     assert report["status"] == ("interrupted" if interrupted else "failed")
     assert report["attempts"] == report["attempted_iterations"] == 2

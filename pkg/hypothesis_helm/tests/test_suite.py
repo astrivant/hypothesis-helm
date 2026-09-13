@@ -18,9 +18,7 @@ from hypothesis_helm.execution.suite import run_suite
 
 @pytest.mark.integration
 @pytest.mark.skipif(not shutil.which("helm"), reason="Helm is required")
-def test_helm_workflow_generates_and_runs(
-    tmp_path: Path, capfd: pytest.CaptureFixture[str]
-) -> None:
+def test_helm_workflow_generates_and_runs(tmp_path: Path, capfd: pytest.CaptureFixture[str]) -> None:
     """
     Run per-path properties through the same entry point used by Helm.
 
@@ -71,17 +69,12 @@ def test_helm_workflow_returns_chart_failure(tmp_path: Path) -> None:
     Returns:
         None: The broken replica lever fails and its counterexample reaches JUnit.
     """
-    assert (
-        main(["test", "examples/broken", "--max-examples", "5", "--artifact-dir", str(tmp_path)])
-        == 1
-    )
+    assert main(["test", "examples/broken", "--max-examples", "5", "--artifact-dir", str(tmp_path)]) == 1
     assert "replicas=0" in (tmp_path / "junit.xml").read_text()
     assert json.loads((tmp_path / "report.json").read_text())["exit_code"] == 1
 
 
-def test_saved_suite_isolated_from_parent_pytest(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_saved_suite_isolated_from_parent_pytest(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Collect a saved suite without adopting unrelated pytest flags or plugins.
 
@@ -159,9 +152,7 @@ def test_runner_uses_own_interpreter(tmp_path: Path, monkeypatch: pytest.MonkeyP
     (tmp_path / "test_chart_values.py").write_text("# saved suite\n")
     calls: list[list[str]] = []
 
-    def execute(
-        self: Processes, command: list[str], **kwargs: object
-    ) -> subprocess.CompletedProcess[str]:
+    def execute(self: Processes, command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
         """
         Record the subprocess command and emulate a collection failure.
 
@@ -255,9 +246,7 @@ def test_json_manifest_stream(tmp_path: Path, capfd: pytest.CaptureFixture[str],
         assert json.loads((tmp_path / "report.json").read_text())["concurrency"] is None
 
 
-def test_parallel_workers_and_large_manifest_stream(
-    tmp_path: Path, capfd: pytest.CaptureFixture[str]
-) -> None:
+def test_parallel_workers_and_large_manifest_stream(tmp_path: Path, capfd: pytest.CaptureFixture[str]) -> None:
     """
     Require concurrent workers and verify large manifest lines remain intact.
 
@@ -319,9 +308,7 @@ def test_invalid_worker_count(jobs: str) -> None:
 
 
 @pytest.mark.parametrize("explicit_auto", [False, True])
-def test_adaptive_dispatches_each_completion(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, explicit_auto: bool
-) -> None:
+def test_adaptive_dispatches_each_completion(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, explicit_auto: bool) -> None:
     """
     Resize active concurrency without losing tests, failures, or merged reports.
 
@@ -344,9 +331,7 @@ def test_adaptive_dispatches_each_completion(
     completed: list[str] = []
     nodes = [f"test_chart_values.py::test_{index}" for index in range(30)]
 
-    def execute(
-        self: Processes, command: list[str], *, env: dict[str, str], **kwargs: object
-    ) -> subprocess.CompletedProcess[str]:
+    def execute(self: Processes, command: list[str], *, env: dict[str, str], **kwargs: object) -> subprocess.CompletedProcess[str]:
         """
         Emulate isolated pytest runs with overlapping work and one failing test.
 

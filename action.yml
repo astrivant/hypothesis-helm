@@ -9,10 +9,10 @@ inputs:
     description: Chart directory relative to the workspace.
     default: .
   export-minimal-values:
-    description: Export verified concrete values beside each chart after testing (shard 1 only).
+    description: Export deterministic concrete values beside each chart after testing (shard 1 only).
     default: 'false'
   commit-minimal-values:
-    description: Export and commit only verified YAML files back to the checked-out branch.
+    description: Export example values and commit those YAML files to the checked-out branch.
     default: 'false'
   minimal-values-filename:
     description: YAML basename in every discovered chart directory; directory overrides are rejected.
@@ -254,7 +254,7 @@ runs:
         HH_RERUN: ${{ inputs.rerun }}
         HH_ARTIFACT_DIR: ${{ inputs.artifact-dir }}
       run: '"$ACTION_PATH/.plugin-venv/bin/hypothesis-helm-github-action"'
-    - name: Export verified minimal values
+    - name: Export minimal example values
       if: ${{ always() && steps.test.outputs.shard != '' && (inputs.export-minimal-values == 'true' || inputs.commit-minimal-values == 'true') }}
       shell: bash
       env:
@@ -264,6 +264,12 @@ runs:
         HH_RESOLVED_SHARD: ${{ steps.test.outputs.shard }}
         HH_MINIMAL_VALUES_FILENAME: ${{ inputs.minimal-values-filename }}
         HH_MINIMAL_VALUES_TIMEOUT: ${{ inputs.minimal-values-timeout }}
+        HH_KUBECONFORM: ${{ inputs.kubeconform }}
+        HH_KUBESEC: ${{ inputs.kubesec }}
+        HH_SCHEMA_VERSION: ${{ inputs.schema-version }}
+        HH_SCHEMA_CACHE_DIR: ${{ inputs.schema-cache-dir }}
+        HH_KUBECONFORM_BINARY: ${{ inputs.kubeconform-binary }}
+        HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR: ${{ inputs.schema-memory-dir }}
         HH_COMMIT_MINIMAL_VALUES: ${{ inputs.commit-minimal-values }}
         HH_COMMIT_BRANCH: ${{ github.ref_type == 'branch' && github.ref_name || '' }}
       run: bash "$ACTION_PATH/pkg/hypothesis_helm/integrations/minimal_values.sh"

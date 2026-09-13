@@ -58,11 +58,11 @@ See [Benchmarking](docs/benchmarks/README.md) for chart generation and plot comm
 checks; adding `--filter` enables inferred-input testing and deferred robustness
 sampling. Skipped charts and incomplete coverage remain explicit in scan results.
 
-Use `--export-minimal-values` to save a concrete, render-verified baseline, or
+Use `--export-minimal-values` to save example values with validation status, or
 `--export-topological-graph` to inspect the input-to-output map. See
 [verification and field inventory](docs/inputs/README.md).
 
-## Quick start
+### Quick start
 
 ```sh
 helm hypothesis test ./chart

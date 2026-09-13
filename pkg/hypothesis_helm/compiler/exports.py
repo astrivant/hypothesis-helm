@@ -1,5 +1,5 @@
 """
-Export verified concrete baselines beside every discovered application chart.
+Export deterministic concrete baselines beside every discovered application chart.
 """
 
 from __future__ import annotations
@@ -9,7 +9,7 @@ from pathlib import Path
 
 from hypothesis_helm.charts.scan import discover_charts
 from hypothesis_helm.compiler.inputs import load_input_chart
-from hypothesis_helm.compiler.minimum import export_verified
+from hypothesis_helm.compiler.minimum import export_minimal
 
 
 def export_repository(
@@ -22,7 +22,7 @@ def export_repository(
     files_list: Path | None = None,
 ) -> int:
     """
-    Export each chart independently and optionally record only successful YAML paths for staging.
+    Export each chart independently and optionally record its YAML path for staging.
 
     Args:
         source (Path): Local repository or chart directory.
@@ -62,9 +62,7 @@ def export_repository(
         try:
             if target.is_symlink():
                 raise ValueError("Minimal-values destination must not be a symbolic link")
-            result = export_verified(
-                load_input_chart(chart_path), target, helm=helm, timeout=timeout, budget=budget
-            )
+            result = export_minimal(load_input_chart(chart_path), target, helm=helm, timeout=timeout, budget=budget)
             record.update(status="exported", export=result)
             exported.append(target.resolve())
         except Exception as exc:

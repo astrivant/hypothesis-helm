@@ -164,8 +164,8 @@ cat "$artifacts"/shards/*/report.json |
 `report.json`, and `junit.xml`. `--output-dir` selects another new directory.
 The merge returns a failure status when any shard fails. Missing, stale, or incompatible shards prevent publication. Suite fingerprints, collection
 identities, shard ownership, and JUnit checksums must agree. Repeating the merge
-with identical inputs reuses the same final bundle; concurrent mergers cannot
-publish competing reports. Partial shard artifacts remain available separately.
+with identical inputs reuses the same final bundle; concurrent mergers targeting
+the same output directory cannot publish competing reports. Partial shard artifacts remain available separately.
 
 On separate CI runners, upload each shard’s `report.json` and pipe the downloaded
 files into a single downstream aggregation job, including after test failures.

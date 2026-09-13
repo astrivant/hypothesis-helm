@@ -89,17 +89,11 @@ def execute_worker(job: Job) -> dict[str, object]:
         with execution_timer(job.deadline - started):
             chart = Chart.load(job.chart)
             inputs = load_inputs(chart, Path(job.values) if job.values else None)
-            spec = (
-                mapping(json.loads((chart.path / "benchmark.json").read_text()))
-                if inputs is None
-                else None
-            )
+            spec = mapping(json.loads((chart.path / "benchmark.json").read_text())) if inputs is None else None
             validator = validators.validator_for(chart.schema)(chart.schema)
             model = ValuesModel.from_schema(chart.schema)
             compiler = Pruner(chart.path, chart.defaults, model) if job.pruning else None
-            context = configuration_key(
-                {"helm": job.helm, "release": "benchmark", "namespace": "default"}
-            )
+            context = configuration_key({"helm": job.helm, "release": "benchmark", "namespace": "default"})
             for index in job.indices:
                 if time.perf_counter() >= job.deadline:
                     raise TimeLimitReached()
@@ -142,20 +136,14 @@ def execute_worker(job: Job) -> dict[str, object]:
                     expected = expected_output(effective, spec)
                     data = mapping(resources[0]["data"])
                     if data["value"] != expected:
-                        raise AssertionError(
-                            "rendered quantile differs from the declared distribution"
-                        )
+                        raise AssertionError("rendered quantile differs from the declared distribution")
                     edges = [float(str(value)) for value in sequence(spec["histogram_edges"])]
                     bucket = min(31, max(0, bisect.bisect_right(edges, float(expected)) - 1))
                 if compiler:
                     compiler.remember(witness, attempted, pristine)
                 received = float(str(mapping(resources[0]["data"])["value"])) if spec else None
                 # Commit once so an alarm cannot expose partially updated success counters.
-                projection = (
-                    configuration_key(expected_topology(effective, spec))
-                    if spec is not None and "topology" in spec
-                    else None
-                )
+                projection = configuration_key(expected_topology(effective, spec)) if spec is not None and "topology" in spec else None
                 ledger.append((reused, bucket, received, time.perf_counter(), projection))
     except TimeLimitReached:
         status = "time-limit"
@@ -189,9 +177,7 @@ def execute_worker(job: Job) -> dict[str, object]:
         "last_completed_index": job.indices[completed - 1] if completed else None,
         "oracle_checks": oracle_checks,
         "received_mean": received_mean if oracle_checks else None,
-        "received_stddev": math.sqrt(max(0.0, received_m2 / oracle_checks))
-        if oracle_checks
-        else None,
+        "received_stddev": math.sqrt(max(0.0, received_m2 / oracle_checks)) if oracle_checks else None,
         "status": status,
         "error": error,
         "assigned": len(job.indices),

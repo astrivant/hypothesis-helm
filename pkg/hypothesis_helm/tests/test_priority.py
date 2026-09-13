@@ -80,9 +80,7 @@ def test_known_inputs_preserve_dynamic_maps(tmp_path: Path) -> None:
     assert validators.validator_for(schema)(schema).is_valid(json_value(deferred))
     from hypothesis_helm.charts.runner import merge_values
 
-    assert not validators.validator_for(priority.schema)(priority.schema).is_valid(
-        json_value(merge_values(chart.defaults, deferred))
-    )
+    assert not validators.validator_for(priority.schema)(priority.schema).is_valid(json_value(merge_values(chart.defaults, deferred)))
 
 
 def test_pattern_maps_and_compositions_remain_open(tmp_path: Path) -> None:
@@ -110,9 +108,7 @@ def test_pattern_maps_and_compositions_remain_open(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize("fail_fast", [False, True])
-def test_phase_order_and_failure_preservation(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, fail_fast: bool
-) -> None:
+def test_phase_order_and_failure_preservation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, fail_fast: bool) -> None:
     """
     Run robustness after failures unless fail-fast explicitly stops the phase.
 
@@ -124,9 +120,7 @@ def test_phase_order_and_failure_preservation(
     Returns:
         None: Both phases use the original chart and retain distinct reports.
     """
-    chart = Chart(
-        tmp_path, {"type": "object", "properties": {"flag": {"type": "boolean"}}}, {"flag": False}
-    )
+    chart = Chart(tmp_path, {"type": "object", "properties": {"flag": {"type": "boolean"}}}, {"flag": False})
     calls: list[dict[str, object]] = []
 
     def check(source: Chart, **kwargs: object) -> dict[str, object]:
@@ -181,9 +175,7 @@ def test_phase_order_and_failure_preservation(
 
 @pytest.mark.integration
 @pytest.mark.parametrize("key", ["\U00010000", "é" * 180])
-@pytest.mark.parametrize(
-    "value", ["\U00010000", "\x7f", "\x85", "\x9f", "\u2028", "\u2029", "é", "\u0000"]
-)
+@pytest.mark.parametrize("value", ["\U00010000", "\x7f", "\x85", "\x9f", "\u2028", "\u2029", "é", "\u0000"])
 def test_unicode_values_reach_helm(tmp_path: Path, key: str, value: str) -> None:
     """
     Send supplementary Unicode as UTF-8 instead of YAML-incompatible surrogate escapes.

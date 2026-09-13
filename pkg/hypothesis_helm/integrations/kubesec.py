@@ -134,9 +134,7 @@ def scan(
     status = 0
     if selected:
         with (output / "parallel.stdout").open("w") as stdout:
-            result = Processes().run(
-                command, cwd=Path.cwd(), env={**os.environ, "GOMAXPROCS": "1"}, stdout=stdout
-            )
+            result = Processes().run(command, cwd=Path.cwd(), env={**os.environ, "GOMAXPROCS": "1"}, stdout=stdout)
         status = int(result.returncode != 0)
     conformity_status = 0
     if validate_rest and skipped:
@@ -190,13 +188,9 @@ def main() -> int:
     parser.add_argument("--jobs", default="auto")
     parser.add_argument("--shard", type=parse_shard_option, default="auto")
     parser.add_argument("--pre-sharded", action="store_true")
-    parser.add_argument(
-        "--validate-rest", action="store_true", help="Validate other kinds with Kubeconform"
-    )
+    parser.add_argument("--validate-rest", action="store_true", help="Validate other kinds with Kubeconform")
     parser.add_argument("--schema-version", default="latest")
-    parser.add_argument(
-        "--schema-cache-dir", type=Path, default=Path(".cache/hypothesis-helm/schemas")
-    )
+    parser.add_argument("--schema-cache-dir", type=Path, default=Path(".cache/hypothesis-helm/schemas"))
     parser.add_argument("--schema-offline", action="store_true")
     parser.add_argument("--kubeconform-binary", default="kubeconform")
     parser.add_argument("--kubesec-binary", default="kubesec")
@@ -204,9 +198,7 @@ def main() -> int:
     try:
         worker_count(args.jobs)
         shard, _ = resolve_shard(args.shard, os.environ)
-        configuration = prepare(
-            args.schema_cache_dir, args.schema_version, args.kubeconform_binary, args.schema_offline
-        )
+        configuration = prepare(args.schema_cache_dir, args.schema_version, args.kubeconform_binary, args.schema_offline)
         return scan(
             args.manifests,
             args.output,

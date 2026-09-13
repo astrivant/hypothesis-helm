@@ -52,9 +52,7 @@ def test_generated_distribution_and_oracle(tmp_path: Path) -> None:
     assert spec["unused_inputs"] == 8
     assert math.isclose(float(str(spec["discrete_mean"])), 42)
     for index, emitted in enumerate(sequence(spec["output_strings"])):
-        values: dict[str, object] = {
-            f"input{bit:03d}": bool((index >> bit) & 1) for bit in range(12)
-        }
+        values: dict[str, object] = {f"input{bit:03d}": bool((index >> bit) & 1) for bit in range(12)}
         assert expected_output(values, spec) == emitted
         assert 28 <= float(str(emitted)) <= 56
     # The oracle recomputes the distribution; it does not trust the generated table.
@@ -73,15 +71,7 @@ def test_input_stream_is_bijective_and_output_repetitions_are_controlled() -> No
     assert len({configuration_key(value) for value in inputs}) == 64
     assert all(inputs[0][f"input{bit:03d}"] == inputs[7][f"input{bit:03d}"] for bit in range(3))
     assert inputs[0] != inputs[7]
-    assert (
-        len(
-            {
-                configuration_key(standard_values(index, 5, complexity=3, bins=8))
-                for index in range(8)
-            }
-        )
-        == 8
-    )
+    assert len({configuration_key(standard_values(index, 5, complexity=3, bins=8)) for index in range(8)}) == 8
 
 
 def test_shards_and_replicas_partition_identical_global_inputs() -> None:
@@ -116,12 +106,8 @@ def test_real_outputs_and_pruning_match_independent_oracle(tmp_path: Path) -> No
         None: Both execution modes check every input and only exact equivalents skip renders.
     """
     generate(tmp_path, input_complexity=12, mean_value=10, stddev=2, output_bins=16)
-    baseline = execute_worker(
-        Job(str(tmp_path), list(range(32)), 5, 8, False, "helm", time.perf_counter() + 30)
-    )
-    filtered = execute_worker(
-        Job(str(tmp_path), list(range(32)), 5, 8, True, "helm", time.perf_counter() + 30)
-    )
+    baseline = execute_worker(Job(str(tmp_path), list(range(32)), 5, 8, False, "helm", time.perf_counter() + 30))
+    filtered = execute_worker(Job(str(tmp_path), list(range(32)), 5, 8, True, "helm", time.perf_counter() + 30))
     assert baseline["status"] == filtered["status"] == "passed"
     assert baseline["completed"] == filtered["completed"] == 32
     assert baseline["oracle_checks"] == filtered["oracle_checks"] == 32
@@ -151,9 +137,7 @@ def test_wrong_output_fails_instead_of_becoming_a_representative(
         "hypothesis_helm.benchmarking.runner.render",
         Mock(return_value=[{"data": {"value": "999"}}]),
     )
-    result = execute_worker(
-        Job(str(tmp_path), [0, 1], 5, 8, True, "helm", time.perf_counter() + 30)
-    )
+    result = execute_worker(Job(str(tmp_path), [0, 1], 5, 8, True, "helm", time.perf_counter() + 30))
     assert result["status"] == "failed"
     assert result["completed"] == result["oracle_checks"] == result["pruned"] == 0
     assert "quantile" in str(result["error"])
@@ -227,9 +211,7 @@ def test_linear_prefix_checkpoints_commit_only_completed_inputs(
             raise TimeLimitReached()
         return expected_output(values, config)
 
-    def render(
-        chart: object, values: dict[str, object], **kwargs: object
-    ) -> list[dict[str, object]]:
+    def render(chart: object, values: dict[str, object], **kwargs: object) -> list[dict[str, object]]:
         """
         Supply a correct scalar without invoking Helm in the checkpoint bookkeeping test.
 

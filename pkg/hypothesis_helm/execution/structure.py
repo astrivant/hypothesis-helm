@@ -117,9 +117,7 @@ class StructureMarker:
         }
 
 
-def inspect_structure(
-    directory: Path, cache_root: Path, seed: int, *, suite_location: Path | None = None
-) -> StructureMarker | None:
+def inspect_structure(directory: Path, cache_root: Path, seed: int, *, suite_location: Path | None = None) -> StructureMarker | None:
     """
     Compare original values with the previous seed-scoped tree without writing files.
 
@@ -134,11 +132,7 @@ def inspect_structure(
     """
     metadata = directory / "chart-source.json"
     if metadata.is_file():
-        source = (
-            (suite_location or directory)
-            / json.loads(metadata.read_text())["chart"]
-            / "values.yaml"
-        ).resolve()
+        source = ((suite_location or directory) / json.loads(metadata.read_text())["chart"] / "values.yaml").resolve()
     else:
         source = ((suite_location or directory) / "values.coalesced.yaml").resolve()
     if not source.is_file():

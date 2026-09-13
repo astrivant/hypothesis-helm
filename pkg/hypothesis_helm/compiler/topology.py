@@ -69,9 +69,7 @@ def trim_topology(
                     }
                 )
             else:
-                identity = hashlib.sha256(
-                    configuration_key({"projection": projections}).encode()
-                ).hexdigest()
+                identity = hashlib.sha256(configuration_key({"projection": projections}).encode()).hexdigest()
                 groups.setdefault(identity, []).append(overrides)
                 if memberships is not None:
                     memberships[configuration_key(overrides)] = identity
@@ -83,9 +81,7 @@ def trim_topology(
     for identity, members in groups.items():
         retained = trim_values(members, steps + random_steps, seed)
         selected.extend(retained)
-        regions.append(
-            {**evidence[identity], "candidates": len(members), "retained": len(retained)}
-        )
+        regions.append({**evidence[identity], "candidates": len(members), "retained": len(retained)})
     if not compiler.unchanged():
         fallback = "chart changed during topology analysis"
         selected = values

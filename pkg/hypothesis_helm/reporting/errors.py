@@ -15,9 +15,7 @@ from ruamel.yaml.error import YAMLError
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
-TEMPLATE_FRAME = re.compile(
-    r"(?:template: |execution error at \()(?P<path>[^\s\"():]+/templates/[^\s\"():]+):\d+(?::\d+)?"
-)
+TEMPLATE_FRAME = re.compile(r"(?:template: |execution error at \()(?P<path>[^\s\"():]+/templates/[^\s\"():]+):\d+(?::\d+)?")
 
 
 def template_source(chart: Path, location: str) -> dict[str, object] | None:
@@ -89,16 +87,8 @@ def chart_errors(record: dict[str, object], chart: Path | None = None) -> list[d
     Returns:
         list[dict[str, object]]: Diagnostic signatures and optional verified template identities.
     """
-    phases = [
-        mapping(phase)
-        for phase in sequence(record.get("phases", []))
-        if isinstance(phase, dict) and phase.get("error")
-    ]
-    aggregate = "\n\n".join(
-        f"{phase.get('phase')}: {phase['error']}"
-        for phase in phases
-        if phase.get("status") == "failed"
-    )
+    phases = [mapping(phase) for phase in sequence(record.get("phases", [])) if isinstance(phase, dict) and phase.get("error")]
+    aggregate = "\n\n".join(f"{phase.get('phase')}: {phase['error']}" for phase in phases if phase.get("status") == "failed")
     sources = list(phases)
     if record.get("error") and record["error"] != aggregate:
         sources.append(record)
@@ -114,9 +104,7 @@ def chart_errors(record: dict[str, object], chart: Path | None = None) -> list[d
             location = leaf.group("path")
             identity = template_source(chart, location)
             if identity is not None:
-                diagnostic = diagnostic[leaf.start() :].replace(
-                    location, f"{identity['name']}/{identity['template']}", 1
-                )
+                diagnostic = diagnostic[leaf.start() :].replace(location, f"{identity['name']}/{identity['template']}", 1)
         errors.append(
             {
                 "phase": source.get("phase", "chart"),

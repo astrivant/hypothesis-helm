@@ -52,18 +52,10 @@ class PriorityInputs:
         coalesced = coalesce(chart)
         model = ValuesModel.from_schema(coalesced.schema)
         references, _ = discover(chart.path)
-        dynamic = {
-            reference.path[: reference.path.index("*")]
-            for reference in references
-            if "*" in reference.path
-        }
+        dynamic = {reference.path[: reference.path.index("*")] for reference in references if "*" in reference.path}
         # Whole-map references may feed toYaml, include, tpl, or other opaque helpers.
         containers = {node.path for node in model.root.walk() if node.children}
-        dynamic.update(
-            reference.path
-            for reference in references
-            if reference.path and reference.path in containers
-        )
+        dynamic.update(reference.path for reference in references if reference.path and reference.path in containers)
         deferred: list[list[str]] = []
         retained: list[list[str]] = []
 
@@ -78,10 +70,7 @@ class PriorityInputs:
                 dict[str, object]: Copy used only to generate first-phase candidates.
             """
             schema = copy.deepcopy(node.schema)
-            if any(
-                key in schema
-                for key in ("$ref", "allOf", "anyOf", "oneOf", "if", "dependentSchemas")
-            ):
+            if any(key in schema for key in ("$ref", "allOf", "anyOf", "oneOf", "if", "dependentSchemas")):
                 return schema
             if node.children:
                 schema["properties"] = {name: visit(child) for name, child in node.children.items()}
@@ -116,9 +105,7 @@ class PriorityInputs:
         return (
             schema_strategy(self.schema)
             .map(mapping)
-            .filter(
-                lambda values: validator.is_valid(json_value(merge_values(chart.defaults, values)))
-            )
+            .filter(lambda values: validator.is_valid(json_value(merge_values(chart.defaults, values))))
         )
 
     def deferred_strategy(self, chart: Chart) -> SearchStrategy[dict[str, object]]:

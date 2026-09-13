@@ -1,28 +1,30 @@
 """
-Search for a verified, nonempty chart baseline by reducing concrete values in isolated copies.
+Export deterministic value examples and reduce successfully verified baselines.
 """
 
 from __future__ import annotations
 
 import copy
+import json
 import math
+import os
 import shutil
 import subprocess
 import tempfile
 import time
 from pathlib import Path
 
-from hypothesis import Phase, find, settings
-from hypothesis.errors import NoSuchExample
 from jsonschema import validators
 
 from hypothesis_helm.charts import yamlio
-from hypothesis_helm.charts.runner import Chart, merge_values, render
+from hypothesis_helm.charts.runner import Chart, render
+from hypothesis_helm.compiler.constants import fill_missing
 from hypothesis_helm.compiler.inputs import InputInventory
 from hypothesis_helm.execution.render_hashes import RenderHashes
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+from hypothesis_helm.schemas.conformity import ENVIRONMENT
 from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping, sequence
-from hypothesis_helm.schemas.priority import PriorityInputs
+from hypothesis_helm.schemas.model import ValuesModel
 
 
 def value_paths(value: object, prefix: tuple[str | int, ...] = ()) -> list[tuple[str | int, ...]]:
@@ -36,13 +38,7 @@ def value_paths(value: object, prefix: tuple[str | int, ...] = ()) -> list[tuple
     Returns:
         list[tuple[str | int, ...]]: Parent entries followed by their descendants.
     """
-    entries = (
-        value.items()
-        if isinstance(value, dict)
-        else enumerate(value)
-        if isinstance(value, list)
-        else []
-    )
+    entries = value.items() if isinstance(value, dict) else enumerate(value) if isinstance(value, list) else []
     result = []
     for key, child in entries:
         path = (*prefix, key)
@@ -51,9 +47,7 @@ def value_paths(value: object, prefix: tuple[str | int, ...] = ()) -> list[tuple
     return result
 
 
-def remove_paths(
-    values: dict[str, object], paths: list[tuple[str | int, ...]]
-) -> dict[str, object]:
+def remove_paths(values: dict[str, object], paths: list[tuple[str | int, ...]]) -> dict[str, object]:
     """
     Remove selected entries from a copy, deleting array indices from highest to lowest.
 
@@ -70,11 +64,7 @@ def remove_paths(
         try:
             for key in path[:-1]:
                 parent = (
-                    parent[key]
-                    if isinstance(parent, dict)
-                    else parent[key]
-                    if isinstance(parent, list) and isinstance(key, int)
-                    else None
+                    parent[key] if isinstance(parent, dict) else parent[key] if isinstance(parent, list) and isinstance(key, int) else None
                 )
             if isinstance(parent, dict):
                 parent.pop(path[-1], None)
@@ -96,14 +86,12 @@ def resource_count(resources: list[dict[str, object]]) -> int:
         int: Number of actual resources in the output.
     """
     return sum(
-        resource_count([mapping(item) for item in sequence(resource["items"])])
-        if resource.get("kind") == "List"
-        else 1
+        resource_count([mapping(item) for item in sequence(resource["items"])]) if resource.get("kind") == "List" else 1
         for resource in resources
     )
 
 
-def export_verified(
+def export_minimal(
     chart: Chart,
     target: Path | None = None,
     *,
@@ -114,7 +102,7 @@ def export_verified(
     build_dependencies: bool = True,
 ) -> dict[str, object]:
     """
-    Verify concrete candidate values with Helm and reduce them within a bounded search.
+    Export deterministic example values and reduce them only when validation succeeds.
 
     Args:
         chart (Chart): Original defaults and input contract.
@@ -126,7 +114,7 @@ def export_verified(
         build_dependencies (bool): Build dependencies in the isolated copy before verification.
 
     Returns:
-        dict[str, object]: Export paths and verified validity with explicitly scoped minimality.
+        dict[str, object]: Export paths and explicit validation status; failed examples remain reviewable.
     """
     if not math.isfinite(budget) or budget <= 0:
         raise ValueError("minimal-values timeout must be positive and finite")
@@ -140,6 +128,10 @@ def export_verified(
     validator = validators.validator_for(chart.schema)(chart.schema)
     checked: dict[str, int] = {}
     hashes = RenderHashes(scope="minimal-values-search")
+    model = ValuesModel.from_schema(chart.schema)
+    inventory = InputInventory.build(chart)
+    example = fill_missing(model, chart.defaults, inventory.known)
+    conformity = json.loads(os.environ[ENVIRONMENT]) if os.environ.get(ENVIRONMENT) else None
     try:
         with tempfile.TemporaryDirectory(prefix="helm-minimum-") as temporary:
             with execution_timer(budget):
@@ -156,9 +148,7 @@ def export_verified(
                         timeout=min(timeout, max(0.001, deadline - time.monotonic())),
                     )
                     if built.returncode:
-                        raise ValueError(
-                            f"Cannot verify minimal values: {built.stdout}{built.stderr}"
-                        )
+                        raise ValueError(f"Cannot verify minimal values: {built.stdout}{built.stderr}")
 
                 def verify(values: dict[str, object]) -> int:
                     """
@@ -213,68 +203,60 @@ def export_verified(
                 if best_count:
                     best = copy.deepcopy(chart.defaults)
                 else:
-                    strategy = PriorityInputs.build(chart).strategy(chart)
-                    try:
-                        found = find(
-                            strategy,
-                            lambda values: bool(verify(merge_values(chart.defaults, values))),
-                            settings=settings(
-                                max_examples=100,
-                                deadline=None,
-                                database=None,
-                                derandomize=True,
-                                phases=(Phase.generate,),
-                            ),
-                        )
-                        best = merge_values(chart.defaults, found)
-                        best_count = verify(best)
-                    except NoSuchExample:
-                        pass
-                if best is None:
-                    raise ValueError(f"Cannot export a verified baseline: {last_error}")
-                # Disabling an optional component is accepted only if it removes resources.
-                for path in value_paths(best):
-                    if path[-1] != "enabled":
-                        continue
-                    candidate = copy.deepcopy(best)
-                    parent: object = candidate
-                    for key in path[:-1]:
-                        parent = (
-                            parent[key]
-                            if isinstance(parent, dict)
-                            else parent[key]
-                            if isinstance(parent, list) and isinstance(key, int)
-                            else None
-                        )
-                    if isinstance(parent, dict) and parent.get("enabled") is True:
-                        parent["enabled"] = False
-                        count = verify(candidate)
-                        if 0 < count < best_count:
-                            best, best_count = candidate, count
-                granularity = 2
-                while paths := value_paths(best):
-                    width = max(1, math.ceil(len(paths) / granularity))
-                    for offset in range(0, len(paths), width):
-                        candidate = remove_paths(best, paths[offset : offset + width])
-                        count = verify(candidate)
-                        if 0 < count <= best_count:
-                            best, best_count = candidate, count
-                            granularity = 2
-                            break
-                    else:
-                        if width == 1:
-                            break
-                        granularity = min(len(paths), granularity * 2)
-                        continue
-                complete = True
+                    best_count = verify(example)
+                    if best_count:
+                        best = copy.deepcopy(example)
+                if best is not None:
+                    # Disabling an optional component is accepted only if it removes resources.
+                    for path in value_paths(best):
+                        if path[-1] != "enabled":
+                            continue
+                        candidate = copy.deepcopy(best)
+                        parent: object = candidate
+                        for key in path[:-1]:
+                            parent = (
+                                parent[key]
+                                if isinstance(parent, dict)
+                                else parent[key]
+                                if isinstance(parent, list) and isinstance(key, int)
+                                else None
+                            )
+                        if isinstance(parent, dict) and parent.get("enabled") is True:
+                            parent["enabled"] = False
+                            count = verify(candidate)
+                            if 0 < count < best_count:
+                                best, best_count = candidate, count
+                    granularity = 2
+                    while paths := value_paths(best):
+                        width = max(1, math.ceil(len(paths) / granularity))
+                        for offset in range(0, len(paths), width):
+                            candidate = remove_paths(best, paths[offset : offset + width])
+                            count = verify(candidate)
+                            if 0 < count <= best_count:
+                                best, best_count = candidate, count
+                                granularity = 2
+                                break
+                        else:
+                            if width == 1:
+                                break
+                            granularity = min(len(paths), granularity * 2)
+                            continue
+                    complete = True
     except TimeLimitReached:
         if time.monotonic() < deadline:
             raise  # Respect a shorter enclosing scan deadline.
+    verified = best is not None
     if best is None:
-        raise ValueError(f"No verified baseline within {budget:g}s: {last_error}")
+        best = example
     verification = {
-        "verified": True,
-        "checks": ["values schema", "Helm lint", "Helm template", "manifest envelopes"],
+        "generated_value_preference": "supplied values, declared defaults/const, then typed zeros; no generated-value search",
+        "kubernetes_api_validation": ("passed" if verified else "not-confirmed") if conformity else "not-run",
+        "kubernetes_schema_version": conformity["version"] if conformity else None,
+        "verified": verified,
+        "validation_error": last_error.replace(str(isolated), "chart") if not verified else None,
+        "checks": (["values schema", "Helm lint", "Helm template", "manifest envelopes"] + (["Kubeconform"] if conformity else []))
+        if verified
+        else [],
         "nonempty_resources": best_count,
         "candidates_checked": tested,
         "elapsed_seconds": time.monotonic() - started,
@@ -283,10 +265,10 @@ def export_verified(
         "deletion_minimal": complete,
         "globally_minimal_proven": False,
         "scope": "No single remaining entry can be removed while preserving validity "
-        "without increasing the resource count; no global minimum over all values is claimed",
+        "without increasing the resource count; no global minimum over all values is claimed"
+        if complete
+        else "Minimality not established; see verification status",
         "render_equivalence_proven": False,
     }
     optimized = Chart(chart.path, chart.schema, best)
-    return InputInventory.build(chart).dump(
-        optimized, target, directory=directory, verification=verification
-    )
+    return inventory.dump(optimized, target, directory=directory, verification=verification)

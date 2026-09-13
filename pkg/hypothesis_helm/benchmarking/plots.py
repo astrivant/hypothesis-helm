@@ -10,9 +10,7 @@ from collections import defaultdict
 from pathlib import Path
 from statistics import NormalDist, median
 
-os.environ.setdefault(
-    "MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib")
-)
+os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
 
 import matplotlib
 
@@ -105,11 +103,7 @@ def measured_line(
         label=label,
         color=color,
     )
-    capped = [
-        index
-        for index, batch in enumerate(observations)
-        if any(point["status"] == "time-limit" for point in batch)
-    ]
+    capped = [index for index, batch in enumerate(observations) if any(point["status"] == "time-limit" for point in batch)]
     if capped:
         axis.scatter(
             [xs[index] for index in capped],
@@ -197,10 +191,7 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
         )
     for index, count in enumerate(counts):
         baseline = strong.get((count, 1, True), [])
-        ratios = [
-            (workers, paired_ratio(baseline, strong.get((count, workers, True), [])))
-            for workers in replicas
-        ]
+        ratios = [(workers, paired_ratio(baseline, strong.get((count, workers, True), []))) for workers in replicas]
         good = [(workers, ratio) for workers, ratio in ratios if ratio is not None]
         right.plot(
             [workers for workers, _ in good],
@@ -218,8 +209,7 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
         figure,
         output,
         "strong-scaling",
-        "Fresh worker-local caches. Same input prefix at every replica count. "
-        "X = budget stop; censored runs excluded from speedup.",
+        "Fresh worker-local caches. Same input prefix at every replica count. X = budget stop; censored runs excluded from speedup.",
     )
 
     bases = sorted({count // (workers * shard_total) for count, workers, _ in weak})
@@ -255,9 +245,7 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
         xlabel="Global permutation count (grows with workers)",
         ylabel="Measured wall time (s)",
     )
-    right.set(
-        xlabel="Parallel worker shards (local)", ylabel="T(1, n) / T(p, p·n)", xticks=replicas
-    )
+    right.set(xlabel="Parallel worker shards (local)", ylabel="T(1, n) / T(p, p·n)", xticks=replicas)
     left.legend(fontsize=9)
     right.legend(fontsize=8, ncol=2)
     finish(
@@ -269,16 +257,10 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
     )
 
     count = max(counts)
-    replica_chosen = [
-        (workers, strong[(count, workers, True)])
-        for workers in replicas
-        if (count, workers, True) in strong
-    ]
+    replica_chosen = [(workers, strong[(count, workers, True)]) for workers in replicas if (count, workers, True) in strong]
     figure = plt.figure(figsize=(12, 5.4))
     left, right = figure.add_subplot(121), figure.add_subplot(122)
-    figure.suptitle(
-        f"Replica benchmark · {count:,} fixed global permutations", fontsize=17, fontweight="bold"
-    )
+    figure.suptitle(f"Replica benchmark · {count:,} fixed global permutations", fontsize=17, fontweight="bold")
     measured_line(
         left,
         [float(workers) for workers, _ in replica_chosen],
@@ -287,24 +269,18 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
         "completed checks / second",
         COLORS[0],
     )
-    rendered = [
-        median(numeric(point, "rendered") for point in batch) for _, batch in replica_chosen
-    ]
+    rendered = [median(numeric(point, "rendered") for point in batch) for _, batch in replica_chosen]
     pruned = [median(numeric(point, "pruned") for point in batch) for _, batch in replica_chosen]
     positions = list(range(len(replica_chosen)))
     right.bar(positions, rendered, label="completed Helm renders", color=COLORS[2])
-    right.bar(
-        positions, pruned, bottom=rendered, label="proved-equivalent render skips", color=COLORS[1]
-    )
+    right.bar(positions, pruned, bottom=rendered, label="proved-equivalent render skips", color=COLORS[1])
     right.set(
         xticks=positions,
         xticklabels=[str(workers) for workers, _ in replica_chosen],
         xlabel="Parallel worker shards (local)",
         ylabel="Completed input checks",
     )
-    left.set(
-        xlabel="Parallel worker shards (local)", ylabel="Completed checks / second", xticks=replicas
-    )
+    left.set(xlabel="Parallel worker shards (local)", ylabel="Completed checks / second", xticks=replicas)
     left.legend(fontsize=9)
     right.legend(fontsize=8, ncol=2)
     finish(
@@ -363,18 +339,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
             batches = [progressive[(count, 1, pruning)] for count in counts]
             if not batches:
                 continue
-            measured_line(
-                left, [float(count) for count in counts], batches, "elapsed_seconds", label, color
-            )
-            measured_line(
-                right, [float(count) for count in counts], batches, "completed", label, color
-            )
-            censored = [
-                point
-                for batch in batches
-                for point in batch
-                if point.get("observation") == "shared-prefix-censored"
-            ]
+            measured_line(left, [float(count) for count in counts], batches, "elapsed_seconds", label, color)
+            measured_line(right, [float(count) for count in counts], batches, "completed", label, color)
+            censored = [point for batch in batches for point in batch if point.get("observation") == "shared-prefix-censored"]
             if censored:
                 first = min(censored, key=lambda point: numeric(point, "requested_permutations"))
                 end = max(numeric(point, "censoring_upper_target") for point in censored)
@@ -386,9 +353,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     color=color,
                     alpha=0.65,
                 )
-                right.plot(
-                    [begin, end], [numeric(first, "completed")] * 2, "--", color=color, alpha=0.65
-                )
+                right.plot([begin, end], [numeric(first, "completed")] * 2, "--", color=color, alpha=0.65)
             if pruning:
                 right.plot(
                     counts,
@@ -425,26 +390,16 @@ def plot(output: Path, document: dict[str, object]) -> None:
         point
         for point in points
         if point["pruning"]
-        and sum(
-            sum(int(str(v)) for v in sequence(mapping(worker)["input_histogram"]))
-            for worker in sequence(point["workers"])
-        )
-        > 0
+        and sum(sum(int(str(v)) for v in sequence(mapping(worker)["input_histogram"])) for worker in sequence(point["workers"])) > 0
     ]
     if suitable:
         point = max(suitable, key=lambda item: numeric(item, "completed"))
         observed = [
-            sum(
-                int(str(sequence(mapping(worker)["input_histogram"])[index]))
-                for worker in sequence(point["workers"])
-            )
+            sum(int(str(sequence(mapping(worker)["input_histogram"])[index])) for worker in sequence(point["workers"]))
             for index in range(32)
         ]
         rendered = [
-            sum(
-                int(str(sequence(mapping(worker)["render_histogram"])[index]))
-                for worker in sequence(point["workers"])
-            )
+            sum(int(str(sequence(mapping(worker)["render_histogram"])[index])) for worker in sequence(point["workers"]))
             for index in range(32)
         ]
         spec = mapping(metadata["distribution"])
@@ -462,9 +417,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         width = (edges[-1] - edges[0]) / 32
         figure = plt.figure(figsize=(10, 5.4))
         axis = figure.add_subplot(111)
-        figure.suptitle(
-            "Received Helm output · predictable normal quantiles", fontsize=17, fontweight="bold"
-        )
+        figure.suptitle("Received Helm output · predictable normal quantiles", fontsize=17, fontweight="bold")
         axis.bar(
             [x - width * 0.2 for x in xs],
             observed,
@@ -486,9 +439,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
             color=COLORS[2],
             label=f"Normal reference: mean={spec['mean']}, stddev={spec['stddev']}",
         )
-        axis.set(
-            xlabel="Emitted ConfigMap value (rounded normal quantile)", ylabel="Measured frequency"
-        )
+        axis.set(xlabel="Emitted ConfigMap value (rounded normal quantile)", ylabel="Measured frequency")
         axis.legend(fontsize=9)
         finish(
             figure,

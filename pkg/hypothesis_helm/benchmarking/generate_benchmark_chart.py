@@ -74,9 +74,7 @@ def generate(
         raise ValueError("input complexity must be between 1 and 1024")
     defects, bug_spec = select_faults(
         input_complexity,
-        bug_orders
-        if bug_orders is not None
-        else tuple(range(min(2, input_complexity), min(6, input_complexity) + 1)),
+        bug_orders if bug_orders is not None else tuple(range(min(2, input_complexity), min(6, input_complexity) + 1)),
         bug_percent,
         bug_seed,
         max_bugs,
@@ -96,36 +94,23 @@ def generate(
         if not topology_components or not topology_depth_weights:
             raise ValueError("depth weights require components and a nonempty distribution")
         if any(
-            not isinstance(depth, int)
-            or not 1 <= depth <= input_complexity - active - 1
-            or not math.isfinite(weight)
-            or weight < 0
+            not isinstance(depth, int) or not 1 <= depth <= input_complexity - active - 1 or not math.isfinite(weight) or weight < 0
             for depth, weight in topology_depth_weights.items()
         ):
-            raise ValueError(
-                "gate depths must fit spare Boolean inputs; weights must be finite and nonnegative"
-            )
+            raise ValueError("gate depths must fit spare Boolean inputs; weights must be finite and nonnegative")
         total = sum(topology_depth_weights.values())
         if not math.isfinite(total) or total <= 0:
             raise ValueError("depth weights must have a finite positive sum")
     if topology_components:
         normalized_weights(topology_weights)
         if active + 5 > input_complexity or structure or topology or topology_opaque or bug_percent:
-            raise ValueError(
-                "topology mixtures require five spare inputs and no other structural or bug mode"
-            )
+            raise ValueError("topology mixtures require five spare inputs and no other structural or bug mode")
     if active > input_complexity or not 0 <= precision <= 12:
         raise ValueError("quantile bits must fit input complexity; precision must be 0..12")
     if structure is not None and (
-        structure not in STRUCTURES
-        or active + 4 > input_complexity
-        or topology
-        or topology_opaque
-        or bug_percent
+        structure not in STRUCTURES or active + 4 > input_complexity or topology or topology_opaque or bug_percent
     ):
-        raise ValueError(
-            "structure requires four spare inputs and cannot combine with topology or bugs"
-        )
+        raise ValueError("structure requires four spare inputs and cannot combine with topology or bugs")
     if (topology or topology_opaque) and active + 6 > input_complexity:
         raise ValueError("topology requires six inputs beyond the quantile selector bits")
     if any(value is not None and not math.isfinite(value) for value in (lower, upper)):
@@ -137,10 +122,7 @@ def generate(
     stop = distribution.cdf(upper) if upper is not None else 1.0
     if not 0 <= start < stop <= 1:
         raise ValueError("truncation interval has no numerically representable probability mass")
-    quantiles = [
-        distribution.inv_cdf(start + (stop - start) * (index + 0.5) / output_bins)
-        for index in range(output_bins)
-    ]
+    quantiles = [distribution.inv_cdf(start + (stop - start) * (index + 0.5) / output_bins) for index in range(output_bins)]
     if not all(math.isfinite(value) for value in quantiles):
         raise ValueError("distribution quantiles exceed finite floating-point range")
     strings = [f"{value:.{precision}f}" for value in quantiles]
@@ -240,9 +222,7 @@ def generate(
     )
     if structure is not None:
         spec["structure"] = write_structure(output, structure, active)
-        spec["possible_inputs"] = str(
-            (3 if structure == "boundaries" else 2) * 2 ** (input_complexity - 1)
-        )
+        spec["possible_inputs"] = str((3 if structure == "boundaries" else 2) * 2 ** (input_complexity - 1))
         spec["unused_inputs"] = (
             input_complexity
             - active
@@ -268,9 +248,7 @@ def generate(
             topology_depth_weights,
         )
         spec["structure"] = mixture
-        spec["possible_inputs"] = str(
-            (3 if mixture["numeric_input"] is not None else 2) * 2 ** (input_complexity - 1)
-        )
+        spec["possible_inputs"] = str((3 if mixture["numeric_input"] is not None else 2) * 2 ** (input_complexity - 1))
         spec["domain_note"] = "Cartesian input count before cross-input constraints"
         spec["unused_inputs"] = None
     if topology or topology_opaque:
@@ -332,9 +310,7 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="also add an unsupported loop for fallback measurements",
     )
-    parser.add_argument(
-        "--structure", choices=STRUCTURES, help="generate an isolated structural matrix case"
-    )
+    parser.add_argument("--structure", choices=STRUCTURES, help="generate an isolated structural matrix case")
     parser.add_argument(
         "--topology-components",
         type=int,
@@ -369,26 +345,18 @@ def main(argv: list[str] | None = None) -> int:
         lower=args.lower,
         upper=args.upper,
         bug_percent=args.bug_percent,
-        bug_orders=tuple(int(value) for value in args.bug_orders.split(","))
-        if args.bug_orders
-        else None,
+        bug_orders=tuple(int(value) for value in args.bug_orders.split(",")) if args.bug_orders else None,
         bug_seed=args.bug_seed,
         max_bugs=args.max_bugs,
         structure=args.structure,
         topology_components=args.topology_components,
-        topology_weights={
-            name: float(weight)
-            for name, weight in (item.split("=", 1) for item in args.topology_weight)
-        }
+        topology_weights={name: float(weight) for name, weight in (item.split("=", 1) for item in args.topology_weight)}
         if args.topology_weight
         else None,
         topology_seed=args.topology_seed,
         topology_depth_weights={args.topology_depth: 1.0}
         if args.topology_depth is not None
-        else {
-            int(depth): float(weight)
-            for depth, weight in (item.split("=", 1) for item in args.topology_depth_weight)
-        }
+        else {int(depth): float(weight) for depth, weight in (item.split("=", 1) for item in args.topology_depth_weight)}
         if args.topology_depth_weight
         else None,
         topology=args.topology,
@@ -397,11 +365,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     print(
         json.dumps(
-            {
-                key: value
-                for key, value in spec.items()
-                if key not in ("output_strings", "histogram_edges")
-            },
+            {key: value for key, value in spec.items() if key not in ("output_strings", "histogram_edges")},
             indent=2,
         )
     )

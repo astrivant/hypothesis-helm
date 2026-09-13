@@ -178,9 +178,7 @@ def run_suite(
                 snapshot = cache_results / "prior.json"
                 snapshot.write_text(json.dumps(cached))
                 environment["HYPOTHESIS_HELM_CACHE_READ"] = str(snapshot)
-                logging.getLogger(__name__).info(
-                    "Retrying failed or incomplete paths from %s", cache_file
-                )
+                logging.getLogger(__name__).info("Retrying failed or incomplete paths from %s", cache_file)
             command[-1:-1] = ["-p", "hypothesis_helm.execution.cache"]
         environment["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
         environment.pop("PYTEST_ADDOPTS", None)
@@ -230,9 +228,7 @@ def run_suite(
             status = 130
         if status == 5 and (cache_results / "deselected").exists():
             status, workers = 0, 0
-            logging.getLogger(__name__).info(
-                "All selected paths previously passed; nothing to rerun"
-            )
+            logging.getLogger(__name__).info("All selected paths previously passed; nothing to rerun")
         if cache_file is not None:
             updates: dict[str, str] = {}
             for result_file in cache_results.glob("[0-9]*.json"):
@@ -253,8 +249,7 @@ def run_suite(
             Console(stderr=True).show_cursor()
         if status == 130 and not (results / "junit.xml").exists():
             (results / "junit.xml").write_text(
-                '<testsuites><testsuite name="hypothesis-helm" tests="0" '
-                'failures="0" errors="0" skipped="0"/></testsuites>'
+                '<testsuites><testsuite name="hypothesis-helm" tests="0" failures="0" errors="0" skipped="0"/></testsuites>'
             )
         selected = set(assignment["tests"]) if assignment is not None else set()
         reused = sorted(node for node in selected if retry and cached.get(node) == "passed")
@@ -275,9 +270,7 @@ def run_suite(
             "suite": str(directory),
             "render_hashes": render_statistics,
             "values_structure": marker.report() if marker is not None else None,
-            "conformity": json.loads(environment["HYPOTHESIS_HELM_CONFORMITY"])
-            if "HYPOTHESIS_HELM_CONFORMITY" in environment
-            else None,
+            "conformity": json.loads(environment["HYPOTHESIS_HELM_CONFORMITY"]) if "HYPOTHESIS_HELM_CONFORMITY" in environment else None,
             "shard": assignment,
             "cache": str(cache_file) if cache_file else None,
             "rerun": "failed" if retry else "all",
@@ -287,15 +280,9 @@ def run_suite(
             "match": match,
             "collect_only": collect_only,
             "junit": str(results / "junit.xml"),
-            "junit_xml": (results / "junit.xml").read_text()
-            if (results / "junit.xml").is_file()
-            else None,
-            "junit_sha256": hashlib.sha256((results / "junit.xml").read_bytes()).hexdigest()
-            if (results / "junit.xml").is_file()
-            else None,
-            "concurrency": str(results / "concurrency.json")
-            if (results / "concurrency.json").is_file()
-            else None,
+            "junit_xml": (results / "junit.xml").read_text() if (results / "junit.xml").is_file() else None,
+            "junit_sha256": hashlib.sha256((results / "junit.xml").read_bytes()).hexdigest() if (results / "junit.xml").is_file() else None,
+            "concurrency": str(results / "concurrency.json") if (results / "concurrency.json").is_file() else None,
         }
         temporary = results / f"report.{uuid4().hex}.tmp"
         temporary.write_text(json.dumps(report, indent=2) + "\n")

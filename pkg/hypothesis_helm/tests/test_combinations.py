@@ -51,9 +51,7 @@ def test_covers_every_feasible_interaction(strength: int) -> None:
     schema["then"] = {"properties": {"flag_1": {"const": True}}}
     validator = validators.validator_for(schema)(schema)
     names = [f"flag_{index}" for index in range(4)]
-    universe = [
-        dict(zip(names, row, strict=True)) for row in itertools.product([False, True], repeat=4)
-    ]
+    universe = [dict(zip(names, row, strict=True)) for row in itertools.product([False, True], repeat=4)]
     valid = [row for row in universe if validator.is_valid(json_value(row))]
     plan = plan_interactions(schema, strength, exhaustive_threshold=0)
     assert all(validator.is_valid(json_value(row)) for row in plan.values)
@@ -120,9 +118,7 @@ def test_limits_refuse_partial_coverage(strength: int, max_cases: int, max_candi
         None: The planner raises for every insufficient budget.
     """
     with pytest.raises(ValueError):
-        plan_interactions(
-            boolean_schema(4), strength, max_cases=max_cases, max_candidates=max_candidates
-        )
+        plan_interactions(boolean_schema(4), strength, max_cases=max_cases, max_candidates=max_candidates)
 
 
 def test_unbounded_domain_requires_explicit_bounds() -> None:
@@ -172,9 +168,7 @@ def test_cli_rejects_per_path_options(option: str, capsys: pytest.CaptureFixture
     assert json.loads(capsys.readouterr().out)["status"] == "error"
 
 
-def test_cli_interactions_and_failure_report(
-    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], tmp_path: Path
-) -> None:
+def test_cli_interactions_and_failure_report(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
     """
     Render the interaction suite through the CLI and preserve failed coverage scope.
 

@@ -53,11 +53,7 @@ def test_audit_hidden_defaults_and_types() -> None:
         None: None. The operation completes through its documented side effects.
     """
     report = audit(Chart.load(ROOT / "examples/hidden-levers"))
-    assert {
-        tuple(sequence(mapping(f)["path"]))
-        for f in sequence(report["findings"])
-        if mapping(f)["issue"] == "undocumented"
-    } == {
+    assert {tuple(sequence(mapping(f)["path"])) for f in sequence(report["findings"]) if mapping(f)["issue"] == "undocumented"} == {
         ("secretSwitch",),
         ("other-switch",),
     }
@@ -190,10 +186,7 @@ def test_neighbor_astrivant_audit() -> None:
     if not path.exists():
         pytest.skip("neighboring Astrivant checkout unavailable")
     report = audit(Chart.load(path))
-    assert any(
-        mapping(r)["path"] == ("networkPolicy", "dns", "namespace")
-        for r in sequence(report["references"])
-    )
+    assert any(mapping(r)["path"] == ("networkPolicy", "dns", "namespace") for r in sequence(report["references"]))
     assert report["findings"]  # This real-world schema currently has documentation gaps.
 
 

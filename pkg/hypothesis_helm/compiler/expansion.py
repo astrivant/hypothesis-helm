@@ -67,9 +67,7 @@ class FailureExpansion:
             memberships=identities,
         )
         membership = {
-            index: identities[configuration_key(value)]
-            for index, value in enumerate(values)
-            if configuration_key(value) in identities
+            index: identities[configuration_key(value)] for index, value in enumerate(values) if configuration_key(value) in identities
         }
         groups: dict[str, list[int]] = defaultdict(list)
         for index, identity in membership.items():
@@ -87,11 +85,7 @@ class FailureExpansion:
             list[int]: Newly scheduled indices; no outcomes are inferred from membership.
         """
         identity = self.membership.get(index)
-        added = (
-            [member for member in self.groups.get(identity, []) if member not in self.scheduled]
-            if identity is not None
-            else []
-        )
+        added = [member for member in self.groups.get(identity, []) if member not in self.scheduled] if identity is not None else []
         self.scheduled.update(added)
         self.added.extend(added)
         return added

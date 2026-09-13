@@ -29,10 +29,7 @@ def test_default_enumeration_threshold(sizes: tuple[int, ...]) -> None:
         None: The strict threshold is respected without constructing the larger full suite.
     """
     schema = boolean_schema(len(sizes))
-    schema["properties"] = {
-        f"flag_{index}": {"type": "integer", "minimum": 0, "maximum": size - 1}
-        for index, size in enumerate(sizes)
-    }
+    schema["properties"] = {f"flag_{index}": {"type": "integer", "minimum": 0, "maximum": size - 1} for index, size in enumerate(sizes)}
     plan = plan_interactions(schema, 2)
     if len(sizes) == 3:
         assert plan.strategy == "exhaustive"
@@ -59,13 +56,9 @@ def test_targeted_group_covers_a_missing_triple() -> None:
         exhaustive_threshold=0,
         exhaustive_groups=(parse_group(",".join(names)),),
     )
-    assert {tuple(row[name] for name in names) for row in grouped.values} == set(
-        itertools.product([False, True], repeat=3)
-    )
+    assert {tuple(row[name] for name in names) for row in grouped.values} == set(itertools.product([False, True], repeat=3))
     for left, right in itertools.combinations(range(8), 2):
-        assert {(row[f"flag_{left}"], row[f"flag_{right}"]) for row in grouped.values} == set(
-            itertools.product([False, True], repeat=2)
-        )
+        assert {(row[f"flag_{left}"], row[f"flag_{right}"]) for row in grouped.values} == set(itertools.product([False, True], repeat=2))
     assert grouped.group_reports[0]["status"] == "exhaustive"
 
 
@@ -86,15 +79,8 @@ def test_group_constraints_have_valid_completions() -> None:
         exhaustive_groups=(parse_group("flag_0,flag_1,flag_2"),),
     )
     validator = validators.validator_for(schema)(schema)
-    universe = [
-        {f"flag_{index}": value for index, value in enumerate(row)}
-        for row in itertools.product([False, True], repeat=5)
-    ]
-    expected = {
-        tuple(row[f"flag_{index}"] for index in range(3))
-        for row in universe
-        if validator.is_valid(json_value(row))
-    }
+    universe = [{f"flag_{index}": value for index, value in enumerate(row)} for row in itertools.product([False, True], repeat=5)]
+    expected = {tuple(row[f"flag_{index}"] for index in range(3)) for row in universe if validator.is_valid(json_value(row))}
     assert {tuple(row[f"flag_{index}"] for index in range(3)) for row in plan.values} == expected
     assert all(validator.is_valid(json_value(row)) for row in plan.values)
 
@@ -122,10 +108,7 @@ def test_inference_uses_guards_dependencies_and_reports_unknowns(tmp_path: Path)
     schema["dependentRequired"] = {"flag_0": ["flag_1"], "flag_1": ["flag_2"]}
     groups, diagnostics = infer_groups(tmp_path, schema)
     template = [group for group in groups if group.source.startswith("template:")]
-    assert any(
-        set(group.paths) == {("ingress", "enabled"), ("tls", "enabled"), ("service", "type")}
-        for group in template
-    )
+    assert any(set(group.paths) == {("ingress", "enabled"), ("tls", "enabled"), ("service", "type")} for group in template)
     dependencies = [group for group in groups if "dependentRequired" in group.source]
     assert {group.paths for group in dependencies} == {
         (("flag_0",), ("flag_1",)),
@@ -170,9 +153,7 @@ def test_group_limits_are_explicit_and_required_groups_cannot_be_skipped() -> No
         )
 
 
-def test_automatic_dry_run_is_read_only(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_automatic_dry_run_is_read_only(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Select exhaustive coverage by default and expose counts without rendering or persistence.
 
@@ -253,9 +234,7 @@ def test_unbounded_default_keeps_per_path_testing(
     Returns:
         None: The default command remains usable for unbounded chart schemas.
     """
-    monkeypatch.setattr(
-        "hypothesis_helm.cli.generate_tests", lambda *a, **kw: {"tests": 1, "diagnostics": []}
-    )
+    monkeypatch.setattr("hypothesis_helm.cli.generate_tests", lambda *a, **kw: {"tests": 1, "diagnostics": []})
     monkeypatch.setattr("hypothesis_helm.cli.run_suite", lambda *a, **kw: 0)
     assert main(["test", "examples/configmap", "--artifact-dir", str(tmp_path)]) == 0
     assert "finite automatic coverage unavailable" in capsys.readouterr().err

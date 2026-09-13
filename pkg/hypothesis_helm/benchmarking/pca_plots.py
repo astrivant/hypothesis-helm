@@ -13,9 +13,7 @@ from matplotlib.lines import Line2D
 
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
-os.environ.setdefault(
-    "MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib")
-)
+os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
 
 import matplotlib
 
@@ -59,9 +57,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         pad = np.maximum((high - low) * 0.12, 0.5)
         individual, panels = plt.subplots(1, 4, figsize=(18, 4.8))
         for column, (strategy, label) in enumerate(LABELS.items()):
-            indices = [
-                int(number(value)) for value in sequence(mapping(row["selected_indices"])[strategy])
-            ]
+            indices = [int(number(value)) for value in sequence(mapping(row["selected_indices"])[strategy])]
             counts = Counter(outcome_ids[index] for index in indices)
             stats = mapping(mapping(row["strategies"])[strategy])
             csv_rows.append(
@@ -77,20 +73,13 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 background = np.array(list(locations.values()))
                 axis.scatter(background[:, 0], background[:, 1], s=18, c="#cbd5e1", alpha=0.6)
                 for erroneous, color, marker in ((False, "#2563eb", "o"), (True, "#dc2626", "X")):
-                    kept = [
-                        identity
-                        for identity in counts
-                        if (identity in faulty_outcomes) == erroneous
-                    ]
+                    kept = [identity for identity in counts if (identity in faulty_outcomes) == erroneous]
                     if kept:
                         points = np.array([locations[identity] for identity in kept])
                         axis.scatter(
                             points[:, 0],
                             points[:, 1],
-                            s=[
-                                24 + 400 * counts[identity] / max(full_counts.values())
-                                for identity in kept
-                            ],
+                            s=[24 + 400 * counts[identity] / max(full_counts.values()) for identity in kept],
                             color=color,
                             marker=marker,
                             edgecolors="white",
@@ -132,8 +121,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     weight="bold",
                 )
         individual.suptitle(
-            f"{row['structure']} · {row['actual_error_percent']:.2f}% "
-            f"erroneous inputs · trim level {metadata['trim_level']}"
+            f"{row['structure']} · {row['actual_error_percent']:.2f}% erroneous inputs · trim level {metadata['trim_level']}"
         )
         individual.tight_layout(rect=(0, 0.08, 1, 0.94))
         individual.text(
@@ -151,20 +139,13 @@ def plot(output: Path, document: dict[str, object]) -> None:
         individual.savefig(output / f"{row['structure']}.png", dpi=160, facecolor="white")
         plt.close(individual)
     figure.suptitle(
-        (
-            f"Output space before and after trimming · {metadata['error_percent']:g}% "
-            f"seeded errors · trim level {metadata['trim_level']}"
-        ),
+        (f"Output space before and after trimming · {metadata['error_percent']:g}% seeded errors · trim level {metadata['trim_level']}"),
         fontsize=17,
     )
     figure.legend(
         handles=[
-            Line2D(
-                [], [], color="#2563eb", marker="o", linestyle="", label="Retained correct output"
-            ),
-            Line2D(
-                [], [], color="#dc2626", marker="X", linestyle="", label="Retained erroneous output"
-            ),
+            Line2D([], [], color="#2563eb", marker="o", linestyle="", label="Retained correct output"),
+            Line2D([], [], color="#dc2626", marker="X", linestyle="", label="Retained erroneous output"),
             Line2D(
                 [],
                 [],
@@ -222,13 +203,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
         cells = []
         for strategy in LABELS:
             result = mapping(stats[strategy])
-            missed = (
-                f"{100 * number(result['errors_missed']) / errors:.1f}% missed" if errors else "N/A"
-            )
+            missed = f"{100 * number(result['errors_missed']) / errors:.1f}% missed" if errors else "N/A"
             cells.append(f"{result['errors_detected']}/{errors} ({missed})")
-        lines.append(
-            f"| [{row['structure']}]({row['structure']}.png) | " + " | ".join(cells) + " |"
-        )
+        lines.append(f"| [{row['structure']}]({row['structure']}.png) | " + " | ".join(cells) + " |")
     lines += [
         "",
         "PCA is fitted once per category to every valid input's "

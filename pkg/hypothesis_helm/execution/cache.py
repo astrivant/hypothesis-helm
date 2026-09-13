@@ -82,17 +82,12 @@ def fingerprint(
             excluded = (*excluded, Path(settings["cache_root"]))
         digest.update(
             json.dumps(
-                {
-                    k: v
-                    for k, v in settings.items()
-                    if k not in {"schemas", "cache_root", "executable"}
-                },
+                {k: v for k, v in settings.items() if k not in {"schemas", "cache_root", "executable"}},
                 sort_keys=True,
             ).encode()
         )
     files = sorted(directory.glob("*.py")) + [
-        directory / name
-        for name in ("values.coalesced.yaml", "values.inferred.schema.json", "chart-source.json")
+        directory / name for name in ("values.coalesced.yaml", "values.inferred.schema.json", "chart-source.json")
     ]
     for package in ("hypothesis", "hypothesis-jsonschema", "jsonschema", "ruamel.yaml", "pytest"):
         digest.update(f"{package}={version(package)}".encode())
@@ -105,11 +100,7 @@ def fingerprint(
                 digest.update(file.relative_to(chart).as_posix().encode())
                 digest.update(hashlib.sha256(file.read_bytes()).digest())
     package_root = Path(__file__).resolve().parents[1]
-    files += sorted(
-        file
-        for file in package_root.rglob("*.py")
-        if "tests" not in file.relative_to(package_root).parts
-    )
+    files += sorted(file for file in package_root.rglob("*.py") if "tests" not in file.relative_to(package_root).parts)
     for file in files:
         if file.is_file():
             digest.update(file.name.encode())
@@ -130,8 +121,7 @@ def read_outcomes(path: Path) -> dict[str, str]:
     try:
         data = json.loads(path.read_text())
         if not isinstance(data, dict) or any(
-            not isinstance(key, str) or value not in ("passed", "failed", "skipped")
-            for key, value in data.items()
+            not isinstance(key, str) or value not in ("passed", "failed", "skipped") for key, value in data.items()
         ):
             raise ValueError("invalid outcomes")
         return dict(data)
@@ -166,9 +156,7 @@ def merge_outcomes(path: Path, baseline: dict[str, str], updates: dict[str, str]
 
 
 @pytest.hookimpl(wrapper=True, tryfirst=True)
-def pytest_collection_modifyitems(
-    config: pytest.Config, items: list[pytest.Item]
-) -> Iterator[None]:
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> Iterator[None]:
     """
     Exclude cached successes while retaining failures and unseen properties.
 

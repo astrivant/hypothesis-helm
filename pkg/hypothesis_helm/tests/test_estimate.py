@@ -26,9 +26,7 @@ def test_saved_suite_cache_policy(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     """
     monkeypatch.setenv("CI", "false")
     (tmp_path / "test_chart_values.py").write_text(
-        "from pathlib import Path\n"
-        "def test_pass(): Path('executed').touch()\n"
-        "def test_fail(): assert False\n"
+        "from pathlib import Path\ndef test_pass(): Path('executed').touch()\ndef test_fail(): assert False\n"
     )
     assert run_suite(tmp_path, jobs=1) == 1
     before = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
@@ -38,10 +36,7 @@ def test_saved_suite_cache_policy(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     assert estimate["reused_properties"] == 1
     assert estimate["successful_example_budget"] is None
     assert estimate_suite(tmp_path, cache=False)["scheduled_properties"] == 2
-    assert (
-        estimate_suite(tmp_path, schema_state={"status": "unavailable"})["scheduled_properties"]
-        == 2
-    )
+    assert estimate_suite(tmp_path, schema_state={"status": "unavailable"})["scheduled_properties"] == 2
     assert estimate_suite(tmp_path, rerun="all")["scheduled_properties"] == 2
     monkeypatch.setenv("CI", "true")
     assert estimate_suite(tmp_path)["scheduled_properties"] == 2
@@ -50,9 +45,7 @@ def test_saved_suite_cache_policy(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     assert before == after
 
 
-def test_chart_dry_run_cache_identity(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_chart_dry_run_cache_identity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Stage generated sources without altering reports or breaking compatible cache keys.
 
@@ -96,9 +89,7 @@ def test_chart_dry_run_cache_identity(
     assert before == {p: p.read_bytes() for p in target.rglob("*") if p.is_file()}
 
 
-def test_plan_shards_and_missing_schemas(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_plan_shards_and_missing_schemas(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Respect shard partitioning and report uncached schemas without downloading them.
 
@@ -109,21 +100,10 @@ def test_plan_shards_and_missing_schemas(
     Returns:
         None: Every property is assigned once and schema preparation stays deferred.
     """
-    (tmp_path / "test_chart_values.py").write_text(
-        "def test_one(): assert False\ndef test_two(): assert False\n"
-    )
-    assert (
-        sum(
-            int(str(estimate_suite(tmp_path, shard=Shard(i, 2))["selected_properties"]))
-            for i in (1, 2)
-        )
-        == 2
-    )
+    (tmp_path / "test_chart_values.py").write_text("def test_one(): assert False\ndef test_two(): assert False\n")
+    assert sum(int(str(estimate_suite(tmp_path, shard=Shard(i, 2))["selected_properties"])) for i in (1, 2)) == 2
     cache = tmp_path / "missing"
-    assert (
-        main(["run", str(tmp_path), "--dry-run", "--kubeconform", "--schema-cache-dir", str(cache)])
-        == 0
-    )
+    assert main(["run", str(tmp_path), "--dry-run", "--kubeconform", "--schema-cache-dir", str(cache)]) == 0
     report = json.loads(capsys.readouterr().out)
     assert report["schema_cache"]["status"] == "unavailable"
     assert report["scheduled_properties"] == 2

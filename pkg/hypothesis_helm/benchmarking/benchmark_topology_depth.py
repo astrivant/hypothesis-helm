@@ -47,9 +47,7 @@ def sweep(
     spent = 0.0
     for depth in depths:
         started = time.perf_counter()
-        selected, evidence = trim_topology(
-            chart.path, chart.defaults, values[1:], values[1:], depth, seed, random_steps=0
-        )
+        selected, evidence = trim_topology(chart.path, chart.defaults, values[1:], values[1:], depth, seed, random_steps=0)
         selection_seconds = time.perf_counter() - started
         indices = [0, *(positions[configuration_key(value)] for value in selected)]
         paired = compare(
@@ -108,10 +106,7 @@ def main() -> int:
         and all(depth >= 0 for depth in args.depths)
         and len(set(args.depths)) == len(args.depths)
     ):
-        parser.error(
-            "require 7..12 inputs, 0<errors<=100, ceiling<=9m, 1..1024 components and "
-            "unique nonnegative depths"
-        )
+        parser.error("require 7..12 inputs, 0<errors<=100, ceiling<=9m, 1..1024 components and unique nonnegative depths")
     helm = shutil.which(args.helm)
     if not helm:
         parser.error("Helm is required")
@@ -135,10 +130,8 @@ def main() -> int:
             "expand_failures": True,
             "output_bins": 4,
             "time_limit_seconds": args.time_limit,
-            "method": "fresh complete references; matched initial observation replay; "
-            "additions physically rerendered per depth",
-            "budget": "per fixture: reference plus all depth expansion renders; excludes "
-            "planning and analysis",
+            "method": "fresh complete references; matched initial observation replay; additions physically rerendered per depth",
+            "budget": "per fixture: reference plus all depth expansion renders; excludes planning and analysis",
         },
         "rows": rows,
         "references": references,
@@ -156,9 +149,7 @@ def main() -> int:
             helm,
             args.time_limit,
             topology_components=args.topology_components if structure.startswith("mixed-") else 0,
-            topology_weights={"dependencies": 1, "interactions": 1, "equivalence": 1}
-            if structure == "mixed-supported"
-            else None,
+            topology_weights={"dependencies": 1, "interactions": 1, "equivalence": 1} if structure == "mixed-supported" else None,
             topology_seed=args.topology_seed,
         )
         references.append(reference)

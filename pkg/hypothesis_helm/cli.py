@@ -20,7 +20,7 @@ from hypothesis_helm.charts.scan import scan
 from hypothesis_helm.compiler.exports import export_repository
 from hypothesis_helm.compiler.graph import export_graph
 from hypothesis_helm.compiler.inputs import load_input_chart
-from hypothesis_helm.compiler.minimum import export_verified
+from hypothesis_helm.compiler.minimum import export_minimal
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
@@ -99,36 +99,22 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     Returns:
         argparse.ArgumentParser: Complete command tree without executing a command.
     """
-    parser = argparse.ArgumentParser(
-        prog=prog, description="Audit and property-test Helm chart values."
-    )
+    parser = argparse.ArgumentParser(prog=prog, description="Audit and property-test Helm chart values.")
     commands = parser.add_subparsers(dest="command", required=True)
-    merge = commands.add_parser(
-        "aggregate", help="verify piped shard reports and write one final report"
-    )
-    merge.add_argument(
-        "reports", nargs="*", type=Path, help="JSON files or artifact roots; default: stdin"
-    )
+    merge = commands.add_parser("aggregate", help="verify piped shard reports and write one final report")
+    merge.add_argument("reports", nargs="*", type=Path, help="JSON files or artifact roots; default: stdin")
     merge.add_argument("--shards", type=int, required=True)
     merge.add_argument("--run-id", required=True, help="identifier shared by this run's shards")
-    merge.add_argument(
-        "--output-dir", type=Path, help="new report directory; stdin default: reports/aggregate"
-    )
-    exports = commands.add_parser(
-        "export-minimal-values", help="write verified values beside each discovered chart"
-    )
+    merge.add_argument("--output-dir", type=Path, help="new report directory; stdin default: reports/aggregate")
+    exports = commands.add_parser("export-minimal-values", help="write example values beside each discovered chart")
     exports.add_argument("source", type=Path)
     exports.add_argument("--filename", default="values-minimal.yaml", help="YAML basename only")
     exports.add_argument("--helm", default="helm")
     exports.add_argument("--timeout", type=parse_time_limit, default=30)
     exports.add_argument("--minimal-values-timeout", type=parse_time_limit, default=30)
     exports.add_argument("--files-list", type=Path, help="write NUL-delimited exported YAML paths")
-    repository = commands.add_parser(
-        "scan", help="recursively test charts in a directory or Git repository"
-    )
-    repository.add_argument(
-        "directory", metavar="SOURCE", help="local directory, HTTPS repository URL, or Git SSH URL"
-    )
+    repository = commands.add_parser("scan", help="recursively test charts in a directory or Git repository")
+    repository.add_argument("directory", metavar="SOURCE", help="local directory, HTTPS repository URL, or Git SSH URL")
     repository.add_argument(
         "--clone-timeout",
         type=parse_time_limit,
@@ -178,8 +164,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     repository.add_argument(
         "--filter",
         action="store_true",
-        help="filter finite charts; otherwise prioritize known inputs "
-        "and run robustness cases last",
+        help="filter finite charts; otherwise prioritize known inputs and run robustness cases last",
     )
     repository.add_argument(
         "--fail",
@@ -193,17 +178,13 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         default=True,
         help="build locked dependencies in temporary chart copies",
     )
-    generate = commands.add_parser(
-        "generate", help="generate one typed Python property test per values path"
-    )
+    generate = commands.add_parser("generate", help="generate one typed Python property test per values path")
     generate.add_argument("chart", type=Path)
     generate.add_argument("--output", type=Path, default=Path("generated-tests"))
     generate.add_argument("--max-examples", type=int, default=100)
     inspect = commands.add_parser("audit", help="discover value references and schema gaps")
     inspect.add_argument("chart", type=Path)
-    inspect.add_argument(
-        "--strict", action="store_true", help="fail on any finding or unresolved access"
-    )
+    inspect.add_argument("--strict", action="store_true", help="fail on any finding or unresolved access")
     run = commands.add_parser("run", help="run a saved generated Python suite")
     run.add_argument("suite", type=Path)
     run.add_argument("--seed", type=int, default=0)
@@ -227,13 +208,9 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     )
     modes = test.add_mutually_exclusive_group()
     modes.add_argument("--paths", action="store_true", help="force generated per-path testing")
-    modes.add_argument(
-        "--exhaustive", action="store_true", help="enumerate finite whole-chart inputs"
-    )
+    modes.add_argument("--exhaustive", action="store_true", help="enumerate finite whole-chart inputs")
     modes.add_argument("--whole-chart", action="store_true", help="sample whole-chart inputs")
-    modes.add_argument(
-        "--permutations", type=int, metavar="N", help="cover every valid N-way finite interaction"
-    )
+    modes.add_argument("--permutations", type=int, metavar="N", help="cover every valid N-way finite interaction")
     filters = test.add_argument_group(
         "filtering",
         "Use --filter or the individual methods below; random trimming is independent.",
@@ -260,8 +237,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         type=int,
         default=0,
         metavar="N",
-        help="thin symbolic output/branch regions; retain representatives and unknowns; "
-        "combines with --trim-random",
+        help="thin symbolic output/branch regions; retain representatives and unknowns; combines with --trim-random",
     )
     filters.add_argument(
         "--expand-failures",
@@ -283,9 +259,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         default=10000,
         help="bound exhaustive domains or permutation suites and factor domains",
     )
-    test.add_argument(
-        "--max-candidates", type=int, default=100000, help="bound permutation planning work"
-    )
+    test.add_argument("--max-candidates", type=int, default=100000, help="bound permutation planning work")
     test.add_argument(
         "--exhaustive-threshold",
         type=int,
@@ -300,9 +274,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         metavar="PATH,PATH",
         help="require exhaustive coverage of a group of value paths or containers; repeatable",
     )
-    test.add_argument(
-        "--no-infer-groups", action="store_true", help="disable inferred exhaustive groups"
-    )
+    test.add_argument("--no-infer-groups", action="store_true", help="disable inferred exhaustive groups")
     test.add_argument(
         "--max-group-cases",
         type=int,
@@ -319,35 +291,26 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     test.add_argument("--artifact-dir", type=Path, default=Path("reports/hypothesis-helm"))
     schemas = commands.add_parser("schemas", help="prepare the sparse Kubernetes schema cache")
     schemas.add_argument("--schema-version", default="latest")
-    schemas.add_argument(
-        "--schema-cache-dir", type=Path, default=Path(".cache/hypothesis-helm/schemas")
-    )
+    schemas.add_argument("--schema-cache-dir", type=Path, default=Path(".cache/hypothesis-helm/schemas"))
     schemas.add_argument("--schema-offline", action="store_true")
     schemas.add_argument("--kubeconform-binary", default="kubeconform")
-    for command in (test, run):
-        command.add_argument(
-            "--dry-run",
-            action="store_true",
-            help="plot coverage and forecast filtering or cached property work without execution",
-        )
-        command.add_argument(
-            "--kubeconform", action="store_true", help="validate Kubernetes API schemas"
-        )
-        command.add_argument(
-            "--schema-version", default="latest", help="Kubernetes schema version: latest or X.Y.Z"
-        )
-        command.add_argument(
-            "--schema-cache-dir", type=Path, default=Path(".cache/hypothesis-helm/schemas")
-        )
+    for command in (test, run, exports):
+        command.add_argument("--kubeconform", action="store_true", help="validate Kubernetes API schemas")
+        command.add_argument("--schema-version", default="latest", help="Kubernetes schema version: latest or X.Y.Z")
+        command.add_argument("--schema-cache-dir", type=Path, default=Path(".cache/hypothesis-helm/schemas"))
         command.add_argument(
             "--schema-offline",
             action="store_true",
             help="reuse cached schemas without network access",
         )
         command.add_argument("--kubeconform-binary", default="kubeconform")
+    for command in (test, run):
         command.add_argument(
-            "--cache-dir", type=Path, help="persistent path-result cache directory"
+            "--dry-run",
+            action="store_true",
+            help="plot coverage and forecast filtering or cached property work without execution",
         )
+        command.add_argument("--cache-dir", type=Path, help="persistent path-result cache directory")
         command.add_argument(
             "--disable-schema-caching",
             action="store_true",
@@ -410,7 +373,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             nargs="?",
             const="",
             metavar="FILENAME",
-            help="export render-verified values and missing fields; default: "
+            help="export example values with validation status and missing fields; default: "
             "values-minimal-<checksum>-<epoch>.yaml (scan: separate files per chart)",
         )
     return parser
@@ -445,6 +408,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "aggregate":
             return aggregate(args.reports, args.shards, args.run_id, args.output_dir)
         if args.command == "export-minimal-values":
+            if args.kubeconform:
+                os.environ[ENVIRONMENT] = prepare(args.schema_cache_dir, args.schema_version, args.kubeconform_binary, args.schema_offline)
             return export_repository(
                 args.source,
                 args.filename,
@@ -471,17 +436,11 @@ def main(argv: list[str] | None = None) -> int:
             if source is None:
                 metadata = args.suite / "chart-source.json"
                 if not metadata.is_file():
-                    raise ValueError(
-                        "--strict run requires chart-source.json; regenerate the suite"
-                    )
+                    raise ValueError("--strict run requires chart-source.json; regenerate the suite")
                 source = args.suite / json.loads(metadata.read_text())["chart"]
             strict_report = audit(Chart.load(source))
             if strict_report["findings"] or strict_report["unresolved"]:
-                print(
-                    json.dumps(
-                        dict(strict_report, status="failed", reason="strict audit failed"), indent=2
-                    )
-                )
+                print(json.dumps(dict(strict_report, status="failed", reason="strict audit failed"), indent=2))
                 return 1
         if args.command in ("test", "run"):
             if args.kubeconform and not args.collect_only and not args.dry_run:
@@ -501,7 +460,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
         if args.command in ("audit", "generate", "test") and args.export_minimal_values is not None:
             original = load_input_chart(args.chart)
-            minimal_values = export_verified(
+            minimal_values = export_minimal(
                 original,
                 Path(args.export_minimal_values) if args.export_minimal_values else None,
                 helm=getattr(args, "helm", "helm"),
@@ -510,10 +469,7 @@ def main(argv: list[str] | None = None) -> int:
             )
             logger.info("Minimal input baseline: %s", minimal_values["yaml"])
         topological_graph = None
-        if (
-            args.command in ("audit", "generate", "test")
-            and args.export_topological_graph is not None
-        ):
+        if args.command in ("audit", "generate", "test") and args.export_topological_graph is not None:
             topological_graph = export_graph(
                 load_input_chart(args.chart),
                 Path(args.export_topological_graph) if args.export_topological_graph else None,
@@ -526,13 +482,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.expand_failures = True
             if args.trim < 0 or args.trim_topology < 0:
                 raise ValueError("--trim must be nonnegative")
-            if args.expand_failures and (
-                args.paths
-                or args.whole_chart
-                or args.exhaustive
-                or args.match is not None
-                or args.collect_only
-            ):
+            if args.expand_failures and (args.paths or args.whole_chart or args.exhaustive or args.match is not None or args.collect_only):
                 raise ValueError("--expand-failures requires finite permutation testing")
             if args.trim or args.trim_topology or args.expand_failures:
                 if args.paths or args.whole_chart or args.exhaustive:
@@ -546,40 +496,25 @@ def main(argv: list[str] | None = None) -> int:
                     if args.permutations is None:
                         args.permutations = 2
             if args.exhaustive_threshold < 0 or args.max_group_cases < 1:
-                raise ValueError(
-                    "exhaustive threshold must be nonnegative and group limit positive"
-                )
+                raise ValueError("exhaustive threshold must be nonnegative and group limit positive")
             if args.exhaustive_group and (args.paths or args.whole_chart or args.exhaustive):
                 raise ValueError("--exhaustive-group requires automatic or permutation coverage")
-            if not (
-                args.paths or args.whole_chart or args.exhaustive or args.permutations is not None
-            ):
+            if not (args.paths or args.whole_chart or args.exhaustive or args.permutations is not None):
                 if args.exhaustive_group:
                     args.permutations = 2
-                elif (
-                    args.match is None
-                    and not args.collect_only
-                    and args.shard is None
-                    and args.jobs in ("auto", 1)
-                ):
+                elif args.match is None and not args.collect_only and args.shard is None and args.jobs in ("auto", 1):
                     try:
                         factor_space(Chart.load(args.chart).schema, args.max_cases)
                     except NonFiniteSchema as exc:
-                        logger.info(
-                            "Using per-path testing: finite automatic coverage unavailable: %s", exc
-                        )
+                        logger.info("Using per-path testing: finite automatic coverage unavailable: %s", exc)
                     else:
                         args.permutations = 2
                         logger.info(
-                            "Automatic finite coverage: full enumeration below %d, "
-                            "otherwise pairs and groups",
+                            "Automatic finite coverage: full enumeration below %d, otherwise pairs and groups",
                             args.exhaustive_threshold,
                         )
                 else:
-                    logger.info(
-                        "Using per-path testing for the requested filter, "
-                        "collection or parallel controls"
-                    )
+                    logger.info("Using per-path testing for the requested filter, collection or parallel controls")
         if (
             args.command == "test"
             and args.time_limit is not None
@@ -588,20 +523,14 @@ def main(argv: list[str] | None = None) -> int:
             and not args.exhaustive
         ):
             raise ValueError("--time-limit applies to whole-chart testing, not per-path suites")
-        if (
-            args.command in ("test", "run")
-            and args.dry_run
-            and getattr(args, "permutations", None) is None
-        ):
+        if args.command in ("test", "run") and args.dry_run and getattr(args, "permutations", None) is None:
             if (
                 args.collect_only
                 or getattr(args, "whole_chart", False)
                 or getattr(args, "exhaustive", False)
                 or getattr(args, "permutations", None) is not None
             ):
-                raise ValueError(
-                    "--dry-run applies to per-path suites and cannot combine with --collect-only"
-                )
+                raise ValueError("--dry-run applies to per-path suites and cannot combine with --collect-only")
             if args.command == "test" and args.timeout <= 0:
                 raise ValueError("timeout must be positive")
             schema_state = None
@@ -623,16 +552,11 @@ def main(argv: list[str] | None = None) -> int:
                         read_only=True,
                     )
                     os.environ[ENVIRONMENT] = configuration
-                    schema_state.update(
-                        status="cached", resolved_version=json.loads(configuration)["version"]
-                    )
+                    schema_state.update(status="cached", resolved_version=json.loads(configuration)["version"])
                 except (ValueError, OSError) as exc:
                     schema_state["reason"] = str(exc)
                 if not args.schema_offline:
-                    schema_state["note"] = (
-                        "Estimate uses cached schemas; an online refresh "
-                        "may invalidate prior successes."
-                    )
+                    schema_state["note"] = "Estimate uses cached schemas; an online refresh may invalidate prior successes."
             logical = args.suite if args.command == "run" else args.artifact_dir
             if args.command == "test" and args.shard:
                 logical = logical / "shards" / args.shard.name
@@ -646,9 +570,7 @@ def main(argv: list[str] | None = None) -> int:
                             logical,
                             source,
                             dirs_exist_ok=True,
-                            ignore=shutil.ignore_patterns(
-                                "cache", "__pycache__", ".pytest_cache", ".hypothesis"
-                            ),
+                            ignore=shutil.ignore_patterns("cache", "__pycache__", ".pytest_cache", ".hypothesis"),
                         )
                     generate_tests(
                         args.chart,
@@ -774,13 +696,7 @@ def main(argv: list[str] | None = None) -> int:
                 time_limit=args.time_limit if args.time_limit is not None else 180.0,
                 prune_equivalent=args.prune_equivalent,
             )
-            status = (
-                0
-                if report["status"] in ("passed", "dry-run")
-                else 124
-                if report["status"] == "time-limit"
-                else 1
-            )
+            status = 0 if report["status"] in ("passed", "dry-run") else 124 if report["status"] == "time-limit" else 1
         if getattr(args, "dry_run", False):
             plot_progression(report)
         if minimal_values is not None:

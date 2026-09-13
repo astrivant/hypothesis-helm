@@ -58,9 +58,7 @@ def pytest_configure(config: pytest.Config) -> None:
         None: Pytest recognizes generated path metadata without marker warnings.
     """
     reset_process_hashes()
-    config.addinivalue_line(
-        "markers", "hypothesis_helm_path(path): schema path exercised by a test"
-    )
+    config.addinivalue_line("markers", "hypothesis_helm_path(path): schema path exercised by a test")
 
 
 @pytest.hookimpl(tryfirst=True)
@@ -161,9 +159,7 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
         return
     shard = parse_shard(selector)
     before = len(items)
-    matched_digest = hashlib.sha256(
-        json.dumps(sorted(item.nodeid for item in items)).encode()
-    ).hexdigest()
+    matched_digest = hashlib.sha256(json.dumps(sorted(item.nodeid for item in items)).encode()).hexdigest()
     selected = [item for item in items if shard.includes(item.nodeid)]
     deselected = [item for item in items if not shard.includes(item.nodeid)]
     items[:] = selected

@@ -9,9 +9,7 @@ from pathlib import Path
 
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
-os.environ.setdefault(
-    "MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib")
-)
+os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
 import matplotlib
 
 matplotlib.use("Agg")
@@ -51,10 +49,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
             )
             axis.plot(
                 [number(row["trim_topology"]) for row in selected],
-                [
-                    number(row[key]) * multiplier if row[key] is not None else float("nan")
-                    for row in selected
-                ],
+                [number(row[key]) * multiplier if row[key] is not None else float("nan") for row in selected],
                 marker="o",
                 label=str(reference["structure"]),
                 alpha=0.8,
@@ -74,13 +69,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
     plt.close(figure)
     svg = output / "topology-depth.svg"
     svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
-    fields = [
-        key for key in rows[0] if key not in {"topology", "checked_indices", "additional_indices"}
-    ]
+    fields = [key for key in rows[0] if key not in {"topology", "checked_indices", "additional_indices"}]
     with (output / "results.csv").open("w") as stream:
-        writer = csv.DictWriter(
-            stream, fieldnames=fields, extrasaction="ignore", lineterminator="\n"
-        )
+        writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     lines = [
@@ -88,8 +79,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
         "[Benchmarking](../README.md)",
         "",
-        "Only topology trim depth varies. Random trimming stays at zero and failure "
-        "expansion stays enabled.",
+        "Only topology trim depth varies. Random trimming stays at zero and failure expansion stays enabled.",
         "",
         f"Fixed settings: {metadata['input_complexity']} inputs, four normal-quantile outputs, "
         f"{metadata['error_percent']:g}% erroneous valid inputs (rounded down), fault "
@@ -100,31 +90,19 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
         "![Topology depth sensitivity](topology-depth.png)",
         "",
-        "Each cell below is **checks; erroneous inputs found / total (missed "
-        "percentage)** after expansion.",
+        "Each cell below is **checks; erroneous inputs found / total (missed percentage)** after expansion.",
         "",
-        "| Structure | "
-        + " | ".join(f"Depth {depth}" for depth in sequence(metadata["depths"]))
-        + " |",
+        "| Structure | " + " | ".join(f"Depth {depth}" for depth in sequence(metadata["depths"])) + " |",
         "|---|" + "---|" * len(sequence(metadata["depths"])),
     ]
     for reference in references:
         cells = []
         for depth in sequence(metadata["depths"]):
-            row = next(
-                row
-                for row in rows
-                if row["structure"] == reference["structure"] and row["trim_topology"] == depth
-            )
+            row = next(row for row in rows if row["structure"] == reference["structure"] and row["trim_topology"] == depth)
             missed = (
-                f"{100 * (1 - number(row['erroneous_input_recall'])):.1f}% missed"
-                if row["erroneous_input_recall"] is not None
-                else "N/A"
+                f"{100 * (1 - number(row['erroneous_input_recall'])):.1f}% missed" if row["erroneous_input_recall"] is not None else "N/A"
             )
-            cells.append(
-                f"{row['checked_inputs']}; "
-                f"{row['erroneous_inputs_found']}/{row['erroneous_inputs_total']} ({missed})"
-            )
+            cells.append(f"{row['checked_inputs']}; {row['erroneous_inputs_found']}/{row['erroneous_inputs_total']} ({missed})")
         lines.append("| " + str(reference["structure"]) + " | " + " | ".join(cells) + " |")
     lines += [
         "",
@@ -146,13 +124,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
 
             spec = mapping(json.loads((output / "charts" / name / "benchmark.json").read_text()))
             counts = mapping(mapping(spec["structure"])["realized_counts"])
-            lines.append(
-                "| "
-                + name
-                + " | "
-                + ", ".join(f"{key}: {value}" for key, value in counts.items())
-                + " |"
-            )
+            lines.append("| " + name + " | " + ", ".join(f"{key}: {value}" for key, value in counts.items()) + " |")
     lines += [
         "",
         "Uniform mixes sample all six types. Supported mixes weight dependencies, "

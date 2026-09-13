@@ -46,9 +46,7 @@ def bundle_key(resources: list[dict[str, object]]) -> str:
     return configuration_key({"resources": sorted(configuration_key(item) for item in resources)})
 
 
-def reference_space(
-    chart: Chart, spec: dict[str, object], limit: int
-) -> tuple[set[str], Counter[str]]:
+def reference_space(chart: Chart, spec: dict[str, object], limit: int) -> tuple[set[str], Counter[str]]:
     """
     Enumerate the fixture's independent valid input and output truth before sampling.
 
@@ -114,9 +112,7 @@ def measure(
     """
     started = time.perf_counter()
     model = ValuesModel.from_schema(chart.schema)
-    plan = plan_interactions(
-        model, len(mapping(chart.schema["properties"])), max_cases=limit, max_candidates=limit
-    )
+    plan = plan_interactions(model, len(mapping(chart.schema["properties"])), max_cases=limit, max_candidates=limit)
     baseline_key = configuration_key(chart.defaults)
     planned = {configuration_key(value): value for value in plan.values}
     planned[baseline_key] = chart.defaults
@@ -139,9 +135,7 @@ def measure(
     elif strategy == "random":
         candidates = trim_values(candidates, level, seed)
     candidates = [chart.defaults, *candidates]
-    compiler = (
-        Pruner(chart.path, chart.defaults, model) if strategy == "exact-equivalence" else None
-    )
+    compiler = Pruner(chart.path, chart.defaults, model) if strategy == "exact-equivalence" else None
     analysis_seconds = time.perf_counter() - analysis_started
     hashes = RenderHashes(scope="matrix-run-local")
     ledger: list[tuple[str, bool]] = []
@@ -217,9 +211,7 @@ def measure(
         "total_seconds": planning_seconds + analysis_seconds + execution_seconds,
         "topology": topology,
         "compiler_fallback": compiler.disabled if compiler else None,
-        "selected_sha256": hashlib.sha256(
-            configuration_key({"values": candidates}).encode()
-        ).hexdigest(),
+        "selected_sha256": hashlib.sha256(configuration_key({"values": candidates}).encode()).hexdigest(),
         "oracle_counts": dict(reference[1]),
         "observed_counts": dict(received),
         "chart_sha256": source_digest(chart.path),
@@ -249,11 +241,7 @@ def main() -> int:
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
-    if (
-        not 0 < args.time_limit <= 540
-        or args.trim_level < 1
-        or not 6 <= args.input_complexity <= 12
-    ):
+    if not 0 < args.time_limit <= 540 or args.trim_level < 1 or not 6 <= args.input_complexity <= 12:
         parser.error("require time limit <=9m, positive trim level, and 6..12 inputs")
     helm = shutil.which(args.helm)
     if helm is None:
@@ -274,8 +262,7 @@ def main() -> int:
             "trim_level": args.trim_level,
             "seed": args.seed,
             "repeats": 1,
-            "method": "complete finite-domain oracle; fresh sequential runs; "
-            "production selectors and pruner",
+            "method": "complete finite-domain oracle; fresh sequential runs; production selectors and pruner",
             "timing": "execution ceiling excludes planning/analysis; all three costs reported",
             "strategies": list(STRATEGIES),
             "structures": list(STRUCTURES),
@@ -284,15 +271,12 @@ def main() -> int:
     }
     for structure in STRUCTURES:
         path = args.output / "charts" / structure
-        spec = generate(
-            path, input_complexity=args.input_complexity, output_bins=4, structure=structure
-        )
+        spec = generate(path, input_complexity=args.input_complexity, output_bins=4, structure=structure)
         chart = Chart.load(path)
         truth = reference_space(chart, spec, args.max_cases)
         for strategy in STRATEGIES:
             print(
-                f"{structure} / {strategy}: {len(truth[0])} valid inputs, "
-                f"{args.time_limit:g}s ceiling",
+                f"{structure} / {strategy}: {len(truth[0])} valid inputs, {args.time_limit:g}s ceiling",
                 flush=True,
             )
             row = measure(

@@ -111,7 +111,7 @@ per-chart `error_refs`, while retaining original errors and artifacts. Grouping
 does not skip tests or change chart statuses, and a matching diagnostic does not
 prove a shared root cause.
 
-Add `--export-minimal-values` to retain a render-verified YAML baseline and compiler
+Add `--export-minimal-values` to retain a example YAML baseline with validation status and compiler
 inventory for each chart. An optional filename overrides the generated name; chart-relative subdirectories
 keep exports separate. The default is `values-minimal-<checksum>-<epoch>.yaml`.
 Reports include identified input-field counts and observed variation where

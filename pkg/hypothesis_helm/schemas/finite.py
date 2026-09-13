@@ -67,9 +67,7 @@ def enumerate_values(schema: dict[str, object], limit: int = 1000) -> list[dict[
             bounded(len(node["enum"]))
             return sequence(node["enum"])
         if any(k in node for k in ("$ref", "allOf", "anyOf", "oneOf", "if", "not")):
-            raise NonFiniteSchema(
-                "compositions and references are not supported in exhaustive mode"
-            )
+            raise NonFiniteSchema("compositions and references are not supported in exhaustive mode")
         kind = node.get("type")
         if kind == "boolean":
             return [False, True]
@@ -94,10 +92,7 @@ def enumerate_values(schema: dict[str, object], limit: int = 1000) -> list[dict[
                 choices.append(values)
                 size *= len(values)
                 bounded(size)
-            return [
-                dict((k, v) for k, v in zip(props, row, strict=True) if v is not missing)
-                for row in itertools.product(*choices)
-            ]
+            return [dict((k, v) for k, v in zip(props, row, strict=True) if v is not missing) for row in itertools.product(*choices)]
         if kind == "array":
             if "maxItems" not in node or not isinstance(node.get("items"), dict):
                 raise NonFiniteSchema("arrays need maxItems and a single finite items schema")

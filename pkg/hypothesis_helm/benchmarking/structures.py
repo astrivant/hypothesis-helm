@@ -19,9 +19,7 @@ STRUCTURES = (
 )
 
 
-def write_structure(
-    chart: Path, name: str, offset: int, *, paths: list[str] | None = None, prefix: str = "case-"
-) -> dict[str, object]:
+def write_structure(chart: Path, name: str, offset: int, *, paths: list[str] | None = None, prefix: str = "case-") -> dict[str, object]:
     """
     Add one isolated structure while retaining the common normal-quantile observable.
 
@@ -170,9 +168,7 @@ def write_structure(
             {{{{ end }}}}
             """
         ).removeprefix("\n")
-        defaults = (
-            (chart / "values.yaml").read_text().replace(paths[0] + ": false", paths[0] + ": 0")
-        )
+        defaults = (chart / "values.yaml").read_text().replace(paths[0] + ": false", paths[0] + ": 0")
         (chart / "values.yaml").write_text(defaults)
     schema["properties"] = properties
     schema_path.write_text(json.dumps(schema, indent=2) + "\n")
@@ -221,9 +217,7 @@ def configmap(name: str, data: dict[str, object]) -> dict[str, object]:
     return {"apiVersion": "v1", "kind": "ConfigMap", "metadata": {"name": name}, "data": data}
 
 
-def expected_manifests(
-    values: dict[str, object], spec: dict[str, object]
-) -> list[dict[str, object]]:
+def expected_manifests(values: dict[str, object], spec: dict[str, object]) -> list[dict[str, object]]:
     """
     Calculate exact expected outputs for each structural fixture.
 
@@ -242,11 +236,7 @@ def expected_manifests(
         assert isinstance(components, list)
         return [
             configmap("matrix", {"value": expected_output(values, spec)}),
-            *(
-                resource
-                for item in components
-                for resource in expected_manifests(values, {**spec, "structure": item})[1:]
-            ),
+            *(resource for item in components for resource in expected_manifests(values, {**spec, "structure": item})[1:]),
         ]
     paths = structure["paths"]
     assert isinstance(paths, list)
@@ -258,10 +248,7 @@ def expected_manifests(
         case "control-flow":
             if a:
                 result.append(configmap("case-state", {"gate": "open"}))
-            result.extend(
-                configmap(f"case-loop-{index}", {"member": "present"})
-                for index in range(3 if b else 1)
-            )
+            result.extend(configmap(f"case-loop-{index}", {"member": "present"}) for index in range(3 if b else 1))
         case "dependencies":
             port = 8080 if a else 80
             result.extend(
@@ -276,11 +263,7 @@ def expected_manifests(
                         "apiVersion": "networking.k8s.io/v1",
                         "kind": "Ingress",
                         "metadata": {"name": "case-ingress"},
-                        "spec": {
-                            "defaultBackend": {
-                                "service": {"name": "case-service", "port": {"number": port}}
-                            }
-                        },
+                        "spec": {"defaultBackend": {"service": {"name": "case-service", "port": {"number": port}}}},
                     },
                 ]
             )
@@ -296,9 +279,4 @@ def expected_manifests(
                 result.append(configmap("case-boundary", {"region": "high"}))
         case _:
             raise ValueError("unknown structural oracle")
-    return [
-        mapping(item)
-        for item in sequence(
-            json.loads(json.dumps(result).replace("case-", str(structure.get("prefix", "case-"))))
-        )
-    ]
+    return [mapping(item) for item in sequence(json.loads(json.dumps(result).replace("case-", str(structure.get("prefix", "case-")))))]

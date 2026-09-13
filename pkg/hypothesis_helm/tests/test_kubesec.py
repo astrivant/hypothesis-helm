@@ -15,9 +15,7 @@ from hypothesis_helm.integrations.sharding import Shard
 
 @pytest.mark.parametrize("validate_rest", [False, True])
 @pytest.mark.parametrize("pre_sharded", [False, True])
-def test_parallel_scan(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, pre_sharded: bool, validate_rest: bool
-) -> None:
+def test_parallel_scan(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, pre_sharded: bool, validate_rest: bool) -> None:
     """
     Run the real GNU scheduler with local schema arguments and one failing security scan.
 
@@ -142,9 +140,7 @@ def test_fallback_failure(tmp_path: Path) -> None:
         }
     )
     output = tmp_path / "reports"
-    assert (
-        kubesec.scan(source, output, configuration, executable=str(binary), validate_rest=True) == 1
-    )
+    assert kubesec.scan(source, output, configuration, executable=str(binary), validate_rest=True) == 1
     summary = json.loads((output / "summary.json").read_text())
     assert summary["scanned"] == 0
     assert summary["kubeconform_scanned"] == 1

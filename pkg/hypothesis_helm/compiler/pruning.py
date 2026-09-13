@@ -51,11 +51,7 @@ class DistanceBounds:
         Returns:
             str: Discard, render-novel, or render-ambiguous.
         """
-        if (
-            not (0 <= self.lower <= self.upper <= 1)
-            or not math.isfinite(epsilon)
-            or not 0 < epsilon <= 1
-        ):
+        if not (0 <= self.lower <= self.upper <= 1) or not math.isfinite(epsilon) or not 0 < epsilon <= 1:
             raise ValueError("invalid discrete distance bounds or epsilon")
         if self.upper < epsilon:
             return "discard"
@@ -99,13 +95,10 @@ def compatible_defaults(source: str, defaults: dict[str, object]) -> bool:
         seen.add(id(node))
         if isinstance(node, MappingNode):
             return node.tag == "tag:yaml.org,2002:map" and all(
-                key.tag == "tag:yaml.org,2002:str" and admitted(key) and admitted(value)
-                for key, value in node.value
+                key.tag == "tag:yaml.org,2002:str" and admitted(key) and admitted(value) for key, value in node.value
             )
         if isinstance(node, SequenceNode):
-            return node.tag == "tag:yaml.org,2002:seq" and all(
-                admitted(item) for item in node.value
-            )
+            return node.tag == "tag:yaml.org,2002:seq" and all(admitted(item) for item in node.value)
         if isinstance(node, ScalarNode):
             if node.tag == "tag:yaml.org,2002:str":
                 return True
@@ -158,9 +151,7 @@ def safe_schema(schema: object) -> bool:
         return False
     dialect = schema.get("$schema")
     if dialect is not None and dialect not in {
-        f"{scheme}://json-schema.org/draft-{version}/schema#"
-        for scheme in ("http", "https")
-        for version in ("04", "06", "07")
+        f"{scheme}://json-schema.org/draft-{version}/schema#" for scheme in ("http", "https") for version in ("04", "06", "07")
     }:
         return False
     allowed = {
@@ -210,16 +201,13 @@ def safe_values(defaults: object, overrides: object) -> bool:
         if not isinstance(defaults, dict):
             return False
         return all(
-            isinstance(key, str)
-            and safe_values(defaults.get(key, {} if isinstance(value, dict) else value), value)
+            isinstance(key, str) and safe_values(defaults.get(key, {} if isinstance(value, dict) else value), value)
             for key, value in overrides.items()
         )
     if isinstance(defaults, dict):
         return False
     if isinstance(overrides, list):
-        return all(
-            safe_values({} if isinstance(value, dict) else value, value) for value in overrides
-        )
+        return all(safe_values({} if isinstance(value, dict) else value, value) for value in overrides)
     if type(overrides) is bool:
         return True
     if type(overrides) is int:
@@ -332,41 +320,28 @@ class Pruner:
         try:
             self.files = snapshot(self.chart)
             self.stamp = hashlib.sha256(repr(sorted(self.files.items())).encode()).hexdigest()
-            if any(
-                name.casefold() == ".helmignore" or name.casefold().startswith("charts/")
-                for name in self.files
-            ):
+            if any(name.casefold() == ".helmignore" or name.casefold().startswith("charts/") for name in self.files):
                 raise ValueError("subcharts and .helmignore are outside the proof contract")
             metadata = mapping(yamlio.load(self.files["Chart.yaml"].decode()))
             if metadata.get("dependencies") or metadata.get("type", "application") != "application":
                 raise ValueError("dependencies and library charts are outside the proof contract")
             actual = mapping(yamlio.load(self.files["values.yaml"].decode()) or {})
-            if configuration_key(actual) != configuration_key(
-                self.defaults
-            ) or not compatible_defaults(self.files["values.yaml"].decode(), self.defaults):
+            if configuration_key(actual) != configuration_key(self.defaults) or not compatible_defaults(
+                self.files["values.yaml"].decode(), self.defaults
+            ):
                 raise ValueError("in-memory defaults differ from Helm's values file")
             disk_schema = json.loads(self.files["values.schema.json"])
             if disk_schema != self.model.root.schema or not safe_schema(disk_schema):
                 raise ValueError("schema validation is outside the shared proof contract")
             if not safe_values(self.defaults, self.defaults):
-                raise ValueError(
-                    "default coalescing or scalar types are outside the proof contract"
-                )
+                raise ValueError("default coalescing or scalar types are outside the proof contract")
             for name, source in self.files.items():
                 if name.casefold().startswith("templates/"):
                     if not name.startswith("templates/"):
-                        raise ValueError(
-                            "noncanonical template directory casing is outside the proof contract"
-                        )
+                        raise ValueError("noncanonical template directory casing is outside the proof contract")
                     lowered = lower(source.decode())
-                    if any(
-                        node.kind == "opaque"
-                        and node.text.split(maxsplit=1)[0] in ("define", "block")
-                        for node in walk(lowered)
-                    ):
-                        raise ValueError(
-                            "parse-global template definitions are outside the proof contract"
-                        )
+                    if any(node.kind == "opaque" and node.text.split(maxsplit=1)[0] in ("define", "block") for node in walk(lowered)):
+                        raise ValueError("parse-global template definitions are outside the proof contract")
                     nodes = fold(lowered)
                     self.programs[name] = nodes
                     for node in walk(nodes):
@@ -377,9 +352,7 @@ class Pruner:
                                     "input": list(path),
                                     "declared": self.model.reference(path).target is not None,
                                     "output": {"file": name, "line": node.line},
-                                    "transformation": "control"
-                                    if node.kind == "if"
-                                    else "scalar-copy",
+                                    "transformation": "control" if node.kind == "if" else "scalar-copy",
                                 }
                             )
         except (
@@ -409,9 +382,7 @@ class Pruner:
         except (OSError, ValueError):
             return False
 
-    def candidate(
-        self, overrides: dict[str, object], effective: dict[str, object], context: str
-    ) -> Witness | None:
+    def candidate(self, overrides: dict[str, object], effective: dict[str, object], context: str) -> Witness | None:
         """
         Compile an equality witness after ordinary schema preflight has succeeded.
 
@@ -452,9 +423,7 @@ class Pruner:
             merge(expected, overrides)
             if configuration_key(expected) != configuration_key(effective):
                 reason = "coalesced values differ from the compiled defaults"
-            elif not validators.validator_for(self.model.root.schema)(
-                self.model.root.schema
-            ).is_valid(json_value(effective)):
+            elif not validators.validator_for(self.model.root.schema)(self.model.root.schema).is_valid(json_value(effective)):
                 reason = "candidate violates the compiled schema"
         outputs: list[object] = []
         partitions: list[object] = []
@@ -506,10 +475,7 @@ class Pruner:
                 "eliminated_inputs": [
                     list(node.path)
                     for node in self.model.root.walk()
-                    if node.path
-                    and not node.children
-                    and node.item is None
-                    and list(node.path) not in witness.influences
+                    if node.path and not node.children and node.item is None and list(node.path) not in witness.influences
                 ],
                 "certainty": "EXACT",
                 "rule": "same-partition-same-symbolic-output",
@@ -517,9 +483,7 @@ class Pruner:
         )
         return copy.deepcopy(representative.resources)
 
-    def remember(
-        self, witness: Witness | None, iteration: int, resources: list[dict[str, object]]
-    ) -> None:
+    def remember(self, witness: Witness | None, iteration: int, resources: list[dict[str, object]]) -> None:
         """
         Commit a representative only after rendering and every configured check passed.
 
@@ -532,9 +496,7 @@ class Pruner:
             None: Future equivalent inputs may reuse this completed successful representative.
         """
         if witness is not None and self.unchanged():
-            self.representatives.setdefault(
-                witness.key, Representative(iteration, copy.deepcopy(resources))
-            )
+            self.representatives.setdefault(witness.key, Representative(iteration, copy.deepcopy(resources)))
 
     def report(self) -> dict[str, object]:
         """
@@ -558,9 +520,6 @@ class Pruner:
             "influence_matrix": self.influence_matrix,
             "certificates": self.certificates,
             "coverage_evidence": "rendered-or-proved-equivalent; assertions checked per candidate",
-            "proof_scope": (
-                "supported pure expressions, admitted schema/coalescing, "
-                "fixed trusted Helm and chart environment"
-            ),
+            "proof_scope": ("supported pure expressions, admitted schema/coalescing, fixed trusted Helm and chart environment"),
             "formally_verified": False,
         }

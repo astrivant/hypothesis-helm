@@ -28,7 +28,5 @@ def has_path(value: object, path: tuple[str | int, ...]) -> bool:
             return False
         return (bool(entries) or not tail) and all(has_path(entry, tail) for entry in entries)
     if isinstance(segment, int):
-        return (
-            isinstance(value, list) and 0 <= segment < len(value) and has_path(value[segment], tail)
-        )
+        return isinstance(value, list) and 0 <= segment < len(value) and has_path(value[segment], tail)
     return isinstance(value, dict) and segment in value and has_path(value[segment], tail)

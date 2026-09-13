@@ -25,9 +25,7 @@ from hypothesis_helm.schemas.contracts import configuration_key, mapping
 from hypothesis_helm.schemas.model import ValuesModel
 
 
-def selections(
-    chart: Chart, values: list[dict[str, object]], level: int, seed: int
-) -> tuple[dict[str, list[int]], dict[str, object]]:
+def selections(chart: Chart, values: list[dict[str, object]], level: int, seed: int) -> tuple[dict[str, list[int]], dict[str, object]]:
     """
     Apply production trimming to the faulty chart, retaining the default once.
 
@@ -112,9 +110,7 @@ def run_case(
     )
     chart = Chart.load(path)
     truth, _ = reference_space(chart, spec, 8192)
-    plan = plan_interactions(
-        ValuesModel.from_schema(chart.schema), complexity, max_cases=8192, max_candidates=8192
-    )
+    plan = plan_interactions(ValuesModel.from_schema(chart.schema), complexity, max_cases=8192, max_candidates=8192)
     baseline = configuration_key(chart.defaults)
     values = [
         chart.defaults,
@@ -134,9 +130,7 @@ def run_case(
                 remaining = seconds - (time.perf_counter() - started)
                 if remaining <= 0:
                     raise TimeLimitReached()
-                actual = render(
-                    chart, value, helm=helm, release="matrix", timeout=min(30, remaining)
-                )
+                actual = render(chart, value, helm=helm, release="matrix", timeout=min(30, remaining))
                 expected = [
                     *expected_manifests(value, spec),
                     configmap(
@@ -145,14 +139,10 @@ def run_case(
                     ),
                 ]
                 if bundle_key(actual) != bundle_key(expected):
-                    raise AssertionError(
-                        f"independent fault/manifest oracle mismatch: {structure} input {index}"
-                    )
+                    raise AssertionError(f"independent fault/manifest oracle mismatch: {structure} input {index}")
                 bundles.append(actual)
                 if len(bundles) % 100 == 0:
-                    print(
-                        f"  {structure}: {len(bundles)}/{len(values)} reference renders", flush=True
-                    )
+                    print(f"  {structure}: {len(bundles)}/{len(values)} reference renders", flush=True)
     except TimeLimitReached:
         status = "time-limit"
     elapsed = time.perf_counter() - started
@@ -221,15 +211,8 @@ def main() -> int:
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
-    if not (
-        6 <= args.input_complexity <= 12
-        and 0 <= args.error_percent <= 100
-        and args.trim_level >= 0
-        and 0 < args.time_limit <= 540
-    ):
-        parser.error(
-            "require 6..12 inputs, 0..100% errors, nonnegative trim level, and time limit <=9m"
-        )
+    if not (6 <= args.input_complexity <= 12 and 0 <= args.error_percent <= 100 and args.trim_level >= 0 and 0 < args.time_limit <= 540):
+        parser.error("require 6..12 inputs, 0..100% errors, nonnegative trim level, and time limit <=9m")
     helm = shutil.which(args.helm)
     if helm is None:
         parser.error("Helm is required")
@@ -288,10 +271,7 @@ def main() -> int:
         temporary.write_text(json.dumps(document, indent=2) + "\n")
         temporary.replace(args.output / "results.json")
         if row["status"] != "complete":
-            print(
-                f"Reference incomplete: {row['completed']}/{row['valid_inputs']}; "
-                f"saved stats without fitting partial PCA."
-            )
+            print(f"Reference incomplete: {row['completed']}/{row['valid_inputs']}; saved stats without fitting partial PCA.")
             return 1
         print(f"  complete in {row['execution_seconds']:.1f}s: {row['strategies']}", flush=True)
     plot(args.output, document)

@@ -28,11 +28,7 @@ def read_reports(inputs: list[Path]) -> list[dict[str, object]]:
     Returns:
         list[dict[str, object]]: Self-contained shard records, with no remote filesystem reads.
     """
-    sources = [
-        child
-        for source in inputs
-        for child in (sorted(source.glob("shards/*/report.json")) if source.is_dir() else [source])
-    ]
+    sources = [child for source in inputs for child in (sorted(source.glob("shards/*/report.json")) if source.is_dir() else [source])]
     contents = [source.read_text() for source in sources] if inputs else [sys.stdin.read()]
     result: list[dict[str, object]] = []
     decoder = json.JSONDecoder()
@@ -63,9 +59,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
         raise ValueError("shards must be positive and run-id must be nonempty")
     directory = inputs[0].resolve() if len(inputs) == 1 and inputs[0].is_dir() else None
     output = (output or (directory / "final" if directory else Path("reports/aggregate"))).resolve()
-    if directory is not None and (
-        output == directory or output.is_relative_to(directory / "shards")
-    ):
+    if directory is not None and (output == directory or output.is_relative_to(directory / "shards")):
         raise ValueError("final reports must be separate from shard artifacts")
     reports = read_reports(inputs)
     if len(reports) != total:
@@ -99,9 +93,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
                 raise ValueError(f"Shard {index}/{total} belongs to a different or missing run-id")
             assignment = mapping(record.get("shard"))
             if (assignment.get("index"), assignment.get("total")) != (index, total):
-                raise ValueError(
-                    f"Invalid or duplicate shard coordinates: expected {index}/{total}"
-                )
+                raise ValueError(f"Invalid or duplicate shard coordinates: expected {index}/{total}")
             signature = record.get("suite_fingerprint")
             inventory = assignment.get("matched_digest")
             if not isinstance(signature, str) or not isinstance(inventory, str):
@@ -112,12 +104,8 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             nodes = [str(node) for node in sequence(assignment["tests"])]
             if len(nodes) != len(set(nodes)) or len(nodes) != assignment["selected"]:
                 raise ValueError(f"Invalid selection count for shard {index}/{total}")
-            if selected.intersection(nodes) or any(
-                not Shard(index, total).includes(node) for node in nodes
-            ):
-                raise ValueError(
-                    "Shard selections overlap or contain incorrectly assigned properties"
-                )
+            if selected.intersection(nodes) or any(not Shard(index, total).includes(node) for node in nodes):
+                raise ValueError("Shard selections overlap or contain incorrectly assigned properties")
             selected.update(nodes)
             if record.get("collect_only"):
                 raise ValueError("Collection-only results cannot form a final test report")
@@ -129,9 +117,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             reused += len(cached)
             cases = list(xml.iter("testcase"))
             if record.get("exit_code") == 0 and len(cases) + len(cached) != len(nodes):
-                raise ValueError(
-                    f"Shard {index}/{total} claims success without covering its selection"
-                )
+                raise ValueError(f"Shard {index}/{total} claims success without covering its selection")
             counts["tests"] += len(cases)
             for case in cases:
                 for tag, key in (
@@ -143,8 +129,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
                     counts[key] += bool(entries)
                     if tag != "skipped":
                         failures.extend(
-                            f"{case.get('classname', '')}.{case.get('name', '')}: "
-                            f"{entry.text or entry.get('message', '')}"
+                            f"{case.get('classname', '')}.{case.get('name', '')}: {entry.text or entry.get('message', '')}"
                             for entry in entries
                         )
             merged.extend([xml] if xml.tag == "testsuite" else list(xml))
@@ -160,10 +145,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
         if output.exists():
             existing = mapping(json.loads((output / "report.json").read_text()))
             if existing.get("run_id") != run_id or existing.get("input_digest") != identity:
-                raise ValueError(
-                    "Final report already exists for different inputs; "
-                    "choose a new output directory"
-                )
+                raise ValueError("Final report already exists for different inputs; choose a new output directory")
             for name, checksum in mapping(existing["artifact_checksums"]).items():
                 if hashlib.sha256((output / name).read_bytes()).hexdigest() != checksum:
                     raise ValueError(f"Existing final report artifact checksum mismatch: {name}")
@@ -184,8 +166,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             f"Executed: {counts['tests']}; reused cached successes: {reused}; "
             f"failures: {counts['failures']}; errors: {counts['errors']}; "
             f"skipped: {counts['skipped']}.",
-            "Render hashes are process-local; "
-            "their counts cannot establish global output uniqueness.",
+            "Render hashes are process-local; their counts cannot establish global output uniqueness.",
         ]
         record = {
             "chart": Path(str(records[0]["suite"])).name,
@@ -193,10 +174,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             "result": "PASS" if status == 0 else "FAIL" if status == 1 else "N/A",
             "coverage": f"{len(selected)} selected properties across {total} shards",
             "artifacts": str(directory / "shards") if directory is not None else "none",
-            "phases": [
-                {"phase": f"shard {index}/{total}", "status": item["status"]}
-                for index, item in enumerate(records, 1)
-            ],
+            "phases": [{"phase": f"shard {index}/{total}", "status": item["status"]} for index, item in enumerate(records, 1)],
         }
         if failures:
             record["error"] = "\n\n".join(failures)
@@ -206,10 +184,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             "run_id": run_id,
             "input_digest": identity,
             "started_epoch": min(float(str(item["started_epoch"])) for item in records),
-            "elapsed_seconds": max(
-                float(str(item["started_epoch"])) + float(str(item["elapsed_seconds"]))
-                for item in records
-            )
+            "elapsed_seconds": max(float(str(item["started_epoch"])) + float(str(item["elapsed_seconds"])) for item in records)
             - min(float(str(item["started_epoch"])) for item in records),
             "scan_status": "completed" if status in (0, 1) else "incomplete",
             "discovery_complete": True,
@@ -227,13 +202,10 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
         with TemporaryDirectory(prefix=f".{output.name}-", dir=output.parent) as temporary:
             staged = Path(temporary) / "report"
             staged.mkdir()
-            ET.ElementTree(merged).write(
-                staged / "junit.xml", encoding="utf-8", xml_declaration=True
-            )
+            ET.ElementTree(merged).write(staged / "junit.xml", encoding="utf-8", xml_declaration=True)
             write_reports(report, staged / "report")
             report["artifact_checksums"] = {
-                name: hashlib.sha256((staged / name).read_bytes()).hexdigest()
-                for name in ("junit.xml", "report.md", "report.pdf")
+                name: hashlib.sha256((staged / name).read_bytes()).hexdigest() for name in ("junit.xml", "report.md", "report.pdf")
             }
             (staged / "report.json").write_text(json.dumps(report, indent=2) + "\n")
             staged.rename(output)

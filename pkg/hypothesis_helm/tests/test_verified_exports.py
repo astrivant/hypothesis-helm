@@ -13,7 +13,7 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.runner import Chart, render
 from hypothesis_helm.cli import main
 from hypothesis_helm.compiler.graph import export_graph
-from hypothesis_helm.compiler.minimum import export_verified
+from hypothesis_helm.compiler.minimum import export_minimal
 from hypothesis_helm.schemas.contracts import mapping
 
 pytestmark = [
@@ -88,7 +88,7 @@ def test_verified_concrete_replacement(chart: Chart, tmp_path: Path) -> None:
     """
     original = (chart.path / "values.yaml").read_bytes()
     target = tmp_path / "values-minimal.yaml"
-    result = export_verified(chart, target)
+    result = export_minimal(chart, target)
     documents = yamlio.load_all(target.read_text())
     assert documents[0] == {"flag": False, "count": 0}
     verification = mapping(result["verification"])
@@ -97,28 +97,32 @@ def test_verified_concrete_replacement(chart: Chart, tmp_path: Path) -> None:
     assert not verification["globally_minimal_proven"]
     assert (chart.path / "values.yaml").read_bytes() == original
     first = target.read_bytes()
-    export_verified(chart, target)
+    export_minimal(chart, target)
     assert target.read_bytes() == first
     (chart.path / "values.yaml").write_text(yamlio.dump(documents[0]))
     assert len(render(Chart.load(chart.path), {}, stream=False)) == 1
 
 
-def test_no_unverified_export(chart: Chart, tmp_path: Path) -> None:
+def test_unverified_example_is_exported(chart: Chart, tmp_path: Path) -> None:
     """
-    Refuse exports when no concrete values can produce a valid manifest.
+    Export the example with an explicit failure instead of searching for replacement values.
 
     Args:
         chart (Chart): Fixture changed to render no resources.
         tmp_path (Path): Export destination.
 
     Returns:
-        None: Failed verification leaves no misleading YAML export.
+        None: The example is inspectable and never labeled verified or deletion-minimal.
     """
     (chart.path / "templates/config.yaml").write_text("{{/* no resources */}}")
     target = tmp_path / "values-minimal.yaml"
-    with pytest.raises(ValueError, match="verified"):
-        export_verified(chart, target, budget=2)
-    assert not target.exists()
+    result = export_minimal(chart, target, budget=2)
+    assert target.exists()
+    verification = mapping(result["verification"])
+    assert not verification["verified"]
+    assert not verification["deletion_minimal"]
+    assert verification["validation_error"] == "Candidate renders no resources"
+    assert yamlio.load_all(target.read_text())[0] == chart.defaults
 
 
 def test_graph_evidence_and_no_secret_values(chart: Chart, tmp_path: Path) -> None:
@@ -148,9 +152,7 @@ def test_graph_evidence_and_no_secret_values(chart: Chart, tmp_path: Path) -> No
     assert "DO-NOT-EXPORT-SECRET" not in target.read_text()
 
 
-def test_repository_exports_basename_only(
-    chart: Chart, tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_repository_exports_basename_only(chart: Chart, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Export beside each discovered chart and reject path overrides before writing files.
 
@@ -168,16 +170,12 @@ def test_repository_exports_basename_only(
     assert main(["export-minimal-values", str(chart.path), "--files-list", str(listing)]) == 0
     summary = json.loads(capsys.readouterr().out)
     assert summary["exported"] == 2
-    assert set(listing.read_bytes().split(b"\0")[:-1]) == {
-        str(path / "values-minimal.yaml").encode() for path in (chart.path, nested)
-    }
+    assert set(listing.read_bytes().split(b"\0")[:-1]) == {str(path / "values-minimal.yaml").encode() for path in (chart.path, nested)}
     assert main(["export-minimal-values", str(chart.path), "--filename", "../outside.yaml"]) == 2
     assert "basename" in capsys.readouterr().out
 
 
-def test_budget_retains_only_verified_candidate(
-    chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_budget_retains_only_verified_candidate(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Preserve the last verified baseline when the minimization deadline interrupts another render.
 
@@ -196,9 +194,7 @@ def test_budget_retains_only_verified_candidate(
     original_render = render
     calls = 0
 
-    def delayed(
-        source: Chart, values: dict[str, object], **options: object
-    ) -> list[dict[str, object]]:
+    def delayed(source: Chart, values: dict[str, object], **options: object) -> list[dict[str, object]]:
         """
         Complete the initial baseline and let the deadline interrupt a subsequent render.
 
@@ -218,7 +214,7 @@ def test_budget_retains_only_verified_candidate(
 
     monkeypatch.setattr(minimum, "render", delayed)
     target = tmp_path / "values-minimal.yaml"
-    report = export_verified(chart, target, budget=1)
+    report = export_minimal(chart, target, budget=1)
     verified = mapping(report["verification"])
     assert verified["verified"] and not verified["deletion_minimal"]
     assert not verified["search_complete"]
@@ -239,9 +235,7 @@ def test_explicit_null_is_a_value_without_changing_other_writers() -> None:
     assert yamlio.dump({"nullable": None}) == before
 
 
-def test_ci_commit_only_exported_files(
-    chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_ci_commit_only_exported_files(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Commit back verified YAML through a local bare remote without staging diagnostics or other work.
 
@@ -273,9 +267,7 @@ def test_ci_commit_only_exported_files(
         Returns:
             str: Successful command output.
         """
-        return subprocess.run(
-            ["git", *arguments], cwd=tmp_path, check=True, capture_output=True, text=True
-        ).stdout.strip()
+        return subprocess.run(["git", *arguments], cwd=tmp_path, check=True, capture_output=True, text=True).stdout.strip()
 
     git("init", "--bare", str(remote))
     git("init", "-b", "main")
@@ -342,20 +334,20 @@ def test_ci_commit_only_exported_files(
     )
 
 
-def test_invalid_defaults_need_verified_concrete_replacement(chart: Chart, tmp_path: Path) -> None:
+def test_invalid_supplied_values_are_not_replaced(chart: Chart, tmp_path: Path) -> None:
     """
-    Find a schema-accepted concrete seed when the original defaults are invalid.
+    Preserve supplied values and report validation failures without generated repair.
 
     Args:
         chart (Chart): Fixture requiring a false flag but supplied with true.
         tmp_path (Path): Export destination.
 
     Returns:
-        None: The exported replacement satisfies the actual schema and Helm checks.
+        None: The illustrative export retains the supplied value and records its schema failure.
     """
     defaults = {**chart.defaults, "flag": True}
     (chart.path / "values.yaml").write_text(yamlio.dump(defaults))
     target = tmp_path / "values-minimal.yaml"
-    result = export_verified(Chart(chart.path, chart.schema, defaults), target, budget=10)
-    assert mapping(result["verification"])["verified"]
-    assert yamlio.load_all(target.read_text())[0] == {"flag": False, "count": 0}
+    result = export_minimal(Chart(chart.path, chart.schema, defaults), target, budget=10)
+    assert not mapping(result["verification"])["verified"]
+    assert yamlio.load_all(target.read_text())[0] == defaults

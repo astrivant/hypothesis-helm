@@ -41,9 +41,7 @@ def main() -> int:
     status = 2
     outputs: dict[str, str] = {}
     try:
-        shard, source = resolve_shard(
-            parse_shard_option(os.environ.get("HH_SHARD", "auto")), os.environ
-        )
+        shard, source = resolve_shard(parse_shard_option(os.environ.get("HH_SHARD", "auto")), os.environ)
         root = Path(os.environ.get("HH_ARTIFACT_DIR", "reports/hypothesis-helm")).resolve()
         results = root / "shards" / shard.name if shard is not None else root
         results.mkdir(parents=True, exist_ok=True)

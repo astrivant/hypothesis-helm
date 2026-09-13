@@ -124,11 +124,7 @@ def _replace(
                 current[segment] = context(path[: i + 1], next_segment)
         else:
             raise ValueError("path requires an object")
-        current = (
-            current[segment]
-            if isinstance(current, list) and isinstance(segment, int)
-            else mapping(current)[str(segment)]
-        )
+        current = current[segment] if isinstance(current, list) and isinstance(segment, int) else mapping(current)[str(segment)]
     final = path[-1]
     if isinstance(final, int):
         if not isinstance(current, list):
@@ -172,24 +168,16 @@ def _concrete_path(
             nodes = _schema_nodes(schema, tuple(str(p) for p in concrete), schema)
             if isinstance(current, list) or any(n.get("type") == "array" for n in nodes):
                 segment = (
-                    data.draw(st.integers(min_value=0, max_value=max(0, len(current) - 1)))
-                    if isinstance(current, list) and current
-                    else 0
+                    data.draw(st.integers(min_value=0, max_value=max(0, len(current) - 1))) if isinstance(current, list) and current else 0
                 )
             elif isinstance(current, dict) and current:
                 segment = data.draw(st.sampled_from(sorted(current)))
             else:
                 patterns = [p for n in nodes for p in mapping(n.get("patternProperties", {}))]
-                segment = (
-                    data.draw(st.from_regex(patterns[0])) if patterns else "__hypothesis_key__"
-                )
+                segment = data.draw(st.from_regex(patterns[0])) if patterns else "__hypothesis_key__"
         concrete.append(segment)
         try:
-            current = (
-                current[segment]
-                if isinstance(current, list) and isinstance(segment, int)
-                else mapping(current)[str(segment)]
-            )
+            current = current[segment] if isinstance(current, list) and isinstance(segment, int) else mapping(current)[str(segment)]
         except (TypeError, KeyError, IndexError, ValueError):
             current = None
     return tuple(concrete)

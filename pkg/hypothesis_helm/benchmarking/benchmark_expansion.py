@@ -36,9 +36,7 @@ def erroneous(outcome: dict[str, object]) -> bool:
     raise ValueError("reference outcome has no benchmark error projection")
 
 
-def compare(
-    chart: Chart, reference: dict[str, object], helm: str, seconds: float
-) -> list[dict[str, object]]:
+def compare(chart: Chart, reference: dict[str, object], helm: str, seconds: float) -> list[dict[str, object]]:
     """
     Replay initial observations and execute added cases for each enabled policy.
 
@@ -56,10 +54,7 @@ def compare(
     identities = [int(number(value)) for value in sequence(reference["outcome_indices"])]
     failed_outputs = {index for index, outcome in enumerate(outcomes) if erroneous(outcome)}
     failures = {index for index, identity in enumerate(identities) if identity in failed_outputs}
-    candidates = [
-        int(number(index))
-        for index in sequence(reference.get("candidate_indices", list(range(len(values)))))
-    ]
+    candidates = [int(number(index)) for index in sequence(reference.get("candidate_indices", list(range(len(values)))))]
     candidate_positions = {index: position for position, index in enumerate(candidates)}
     candidate_values = [values[index] for index in candidates]
     rows: list[dict[str, object]] = []
@@ -99,9 +94,7 @@ def compare(
                             )
                             actual = mapping(json.loads(bundle_key(received)))
                             if actual != outcomes[identities[index]]:
-                                raise AssertionError(
-                                    "expanded render differs from verified reference"
-                                )
+                                raise AssertionError("expanded render differs from verified reference")
                             failed = erroneous(actual)
                     except TimeLimitReached:
                         status = "time-limit"
@@ -115,10 +108,7 @@ def compare(
                 if failed:
                     found.add(index)
                     if enabled:
-                        queue.extend(
-                            candidates[added]
-                            for added in scheduler.failed(candidate_positions[index])
-                        )
+                        queue.extend(candidates[added] for added in scheduler.failed(candidate_positions[index]))
             rows.append(
                 {
                     "structure": reference["structure"],
@@ -136,12 +126,10 @@ def compare(
                     "erroneous_input_recall": len(found) / len(failures) if failures else None,
                     "erroneous_outputs_found": len({identities[index] for index in found}),
                     "erroneous_outputs_total": len(failed_outputs),
-                    "erroneous_output_coverage": len({identities[index] for index in found})
-                    / len(failed_outputs)
+                    "erroneous_output_coverage": len({identities[index] for index in found}) / len(failed_outputs)
                     if failed_outputs
                     else None,
-                    "all_output_coverage": len({identities[index] for index in checked})
-                    / len(outcomes),
+                    "all_output_coverage": len({identities[index] for index in checked}) / len(outcomes),
                     "checked_indices": checked,
                     "additional_indices": [candidates[index] for index in scheduler.added],
                     "unclassified_inputs": len(candidates) - len(scheduler.membership),
@@ -174,12 +162,7 @@ def main() -> int:
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
-    if not (
-        6 <= args.input_complexity <= 12
-        and 0 <= args.error_percent <= 100
-        and args.trim_level >= 0
-        and 0 < args.time_limit <= 540
-    ):
+    if not (6 <= args.input_complexity <= 12 and 0 <= args.error_percent <= 100 and args.trim_level >= 0 and 0 < args.time_limit <= 540):
         parser.error("require 6..12 inputs, 0..100% errors, nonnegative trim and a ceiling <=9m")
     helm = shutil.which(args.helm)
     if not helm:
@@ -204,13 +187,9 @@ def main() -> int:
                 "initial observations; added checks rerendered per enabled policy"
             ),
             "budget": (
-                "reference rendering plus all added renders share the category ceiling; "
-                "planning, partitioning and plotting excluded"
+                "reference rendering plus all added renders share the category ceiling; planning, partitioning and plotting excluded"
             ),
-            "interpretation": (
-                "policy check counts are not independent full-run timing "
-                "measurements; no inferred failures"
-            ),
+            "interpretation": ("policy check counts are not independent full-run timing measurements; no inferred failures"),
         },
         "rows": rows,
         "references": references,
@@ -244,9 +223,7 @@ def main() -> int:
         if reference["status"] != "complete" or any(row["status"] != "complete" for row in rows):
             print("Execution ceiling reached; saved partial counts and remaining work.", flush=True)
             return 1
-        added = sum(
-            int(number(row["additional_executed"])) for row in rows if row["structure"] == structure
-        )
+        added = sum(int(number(row["additional_executed"])) for row in rows if row["structure"] == structure)
         print(
             f"  complete; {added} added renders",
             flush=True,

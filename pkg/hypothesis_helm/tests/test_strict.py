@@ -44,16 +44,13 @@ def chart_files(directory: Path, values: dict[str, object]) -> Path:
         )
     )
     (directory / "templates/resource.yaml").write_text(
-        "apiVersion: v1\nkind: ConfigMap\nmetadata:\n"
-        '  name: {{ .Values.fallback | default "fallback" }}\n'
+        'apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: {{ .Values.fallback | default "fallback" }}\n'
     )
     return directory
 
 
 @pytest.mark.parametrize("command", ["audit", "test", "generate", "run"])
-def test_strict_requires_source_fields(
-    tmp_path: Path, command: str, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_strict_requires_source_fields(tmp_path: Path, command: str, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Reject schema defaults and template fallbacks as substitutes for source values.
 
@@ -77,9 +74,7 @@ def test_strict_requires_source_fields(
         arguments += ["--output", str(tmp_path / "strict-suite")]
     assert main(arguments) == 1
     report = json.loads(capsys.readouterr().out)
-    missing = {
-        tuple(entry["path"]) for entry in report["findings"] if entry["issue"] == "no-default"
-    }
+    missing = {tuple(entry["path"]) for entry in report["findings"] if entry["issue"] == "no-default"}
     assert missing == {("schemaOnly",), ("fallback",)}
     assert (chart / "values.yaml").read_bytes() == original
     assert not (tmp_path / "strict-suite").exists()
@@ -100,9 +95,7 @@ def test_strict_requires_source_fields(
         ({"items": ["a"]}, ("items", 1), False),
     ],
 )
-def test_collection_presence(
-    values: dict[str, object], path: tuple[str | int, ...], present: bool
-) -> None:
+def test_collection_presence(values: dict[str, object], path: tuple[str | int, ...], present: bool) -> None:
     """
     Require named fields in all entries and distinguish explicit null from missing keys.
 
@@ -144,7 +137,6 @@ def test_audit_checks_unreferenced_collection_fields(tmp_path: Path) -> None:
     }
     chart.defaults["items"] = [{"name": "a"}, {}]
     assert any(
-        mapping(finding)["path"] == ["items", "*", "name"]
-        and mapping(finding)["issue"] == "no-default"
+        mapping(finding)["path"] == ["items", "*", "name"] and mapping(finding)["issue"] == "no-default"
         for finding in sequence(audit(chart)["findings"])
     )

@@ -58,14 +58,8 @@ def test_nested_roundtrip_preserves_absence_null_and_original_keys() -> None:
     assert model.unstructure(typed) == values
     service = model.reference(("service",)).target
     assert service is not None
-    assert (
-        attrs.fields(cast(type[AttrsInstance], type(typed))).service.metadata["value_node"]
-        is service
-    )
-    assert (
-        model.reference(("items", "0", "enabled")).target
-        is model.reference(("items", "*", "enabled")).target
-    )
+    assert attrs.fields(cast(type[AttrsInstance], type(typed))).service.metadata["value_node"] is service
+    assert model.reference(("items", "0", "enabled")).target is model.reference(("items", "*", "enabled")).target
 
 
 def test_validation_remains_strict_and_schema_snapshot_is_owned() -> None:
@@ -124,9 +118,7 @@ def test_analysis_passes_share_declared_field_identity(tmp_path: Path) -> None:
     }
     templates = tmp_path / "templates"
     templates.mkdir()
-    (templates / "service.yaml").write_text(
-        "{{ if .Values.enabled }}\n{{ .Values.service.port }}\n{{ end }}"
-    )
+    (templates / "service.yaml").write_text("{{ if .Values.enabled }}\n{{ .Values.service.port }}\n{{ end }}")
     model = ValuesModel.from_schema(schema)
     space = factor_space(model)
     groups, _ = infer_groups(tmp_path, model)

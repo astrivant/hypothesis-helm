@@ -251,9 +251,7 @@ def audit(chart: Chart) -> dict[str, object]:
         elif not any("type" in n or "enum" in n or "const" in n for n in nodes):
             findings.append({"path": list(path), "issue": "untyped", "references": locations})
         elif not any(n.get("description") for n in nodes):
-            findings.append(
-                {"path": list(path), "issue": "missing-description", "references": locations}
-            )
+            findings.append({"path": list(path), "issue": "missing-description", "references": locations})
         if not has_path(chart.defaults, path):
             findings.append(
                 {
@@ -301,11 +299,7 @@ def validate_resources(resources: Sequence[object]) -> None:
             validate_resources(sequence(resource["items"]))
             continue
         metadata = resource.get("metadata")
-        if (
-            not isinstance(metadata, dict)
-            or not isinstance(metadata.get("name"), str)
-            or not metadata["name"]
-        ):
+        if not isinstance(metadata, dict) or not isinstance(metadata.get("name"), str) or not metadata["name"]:
             raise RenderFailure("resource has no metadata.name")
         identity = (
             resource["apiVersion"],
@@ -395,9 +389,7 @@ def render(
         sort_keys=True,
     )
     try:
-        (hashes if hashes is not None else process_hashes()).check(
-            resources, context, validate_bundle
-        )
+        (hashes if hashes is not None else process_hashes()).check(resources, context, validate_bundle)
     except (TypeError, ValueError) as exc:
         raise RenderFailure(f"invalid rendered manifest: {exc}") from exc
     return [mapping(resource) for resource in resources]
@@ -503,16 +495,8 @@ def check_chart(
     field_coverage = FieldCoverage(inputs, chart.defaults)
     LOGGER.info("Compiler input baseline: %d statically named fields", len(inputs.known))
     hashes = RenderHashes(scope="run-local")
-    model = (
-        ValuesModel.from_schema(chart.schema)
-        if permutations is not None or prune_equivalent
-        else None
-    )
-    pruner = (
-        Pruner(chart.path, chart.defaults, model)
-        if prune_equivalent and model is not None
-        else None
-    )
+    model = ValuesModel.from_schema(chart.schema) if permutations is not None or prune_equivalent else None
+    pruner = Pruner(chart.path, chart.defaults, model) if prune_equivalent and model is not None else None
     if pruner is not None and (not release or not namespace):
         pruner.disabled = "empty release or namespace is outside the fixed-context proof contract"
     interaction_plan = None
@@ -534,9 +518,7 @@ def check_chart(
             permutations,
             max_cases=max_cases,
             max_candidates=max_candidates,
-            accept=lambda values: validator.is_valid(
-                json_value(merge_values(chart.defaults, values))
-            ),
+            accept=lambda values: validator.is_valid(json_value(merge_values(chart.defaults, values))),
             exhaustive_threshold=exhaustive_threshold,
             exhaustive_groups=(*exhaustive_groups, *inferred),
             max_group_cases=max_group_cases,
@@ -593,9 +575,7 @@ def check_chart(
         interaction_plan.values = select_cases(interaction_plan.values)
     trimmed_cases = untrimmed_cases - len(interaction_plan.values) if interaction_plan else 0
     expansion = None
-    expansion_positions = {
-        configuration_key(value): index for index, value in enumerate(expansion_values)
-    }
+    expansion_positions = {configuration_key(value): index for index, value in enumerate(expansion_values)}
     if expand_failures and interaction_plan is not None:
         expansion = FailureExpansion.build(
             chart.path,
@@ -604,10 +584,7 @@ def check_chart(
             [merge_values(chart.defaults, value) for value in expansion_values],
             [
                 0,
-                *(
-                    expansion_positions[configuration_key(value)]
-                    for value in interaction_plan.values
-                ),
+                *(expansion_positions[configuration_key(value)] for value in interaction_plan.values),
             ],
             fixed_names=bool(release and namespace),
         )
@@ -632,9 +609,7 @@ def check_chart(
             "trim_seed": random_seed,
             "untrimmed_iterations": untrimmed_cases + 1,
             "trimmed_iterations": trimmed_cases,
-            "retained_fraction": (len(interaction_plan.values) / untrimmed_cases)
-            if untrimmed_cases
-            else 1.0,
+            "retained_fraction": (len(interaction_plan.values) / untrimmed_cases) if untrimmed_cases else 1.0,
             "coverage_guaranteed_by_plan": not bool(trimmed_cases),
             "coverage_strategy": "trimmed" if trimmed_cases else interaction_plan.strategy,
             "untrimmed_coverage_strategy": interaction_plan.strategy,
@@ -706,9 +681,7 @@ def check_chart(
                     strength,
                     max_cases=max_cases,
                     max_candidates=max_candidates,
-                    accept=lambda values: validator.is_valid(
-                        json_value(merge_values(chart.defaults, values))
-                    ),
+                    accept=lambda values: validator.is_valid(json_value(merge_values(chart.defaults, values))),
                     exhaustive_threshold=0,
                     exhaustive_groups=(*exhaustive_groups, *inferred),
                     max_group_cases=max_group_cases,
@@ -717,9 +690,7 @@ def check_chart(
                 pruning=prune_equivalent,
                 max_cases=max_cases,
                 max_candidates=max_candidates,
-                history=statistics.previous
-                if statistics.previous.get("context") == statistics.context and not properties
-                else {},
+                history=statistics.previous if statistics.previous.get("context") == statistics.context and not properties else {},
                 selector=select_cases,
                 trim_topology=trim_topology,
                 trim=trim,
@@ -952,9 +923,7 @@ def check_chart(
         expansion_report(result)
         if artifact_dir is not None:
             artifact_dir.mkdir(parents=True, exist_ok=True)
-            (artifact_dir / "values.json").write_text(
-                yamlio.json_for_helm(values, indent=2) + "\n", encoding="utf-8"
-            )
+            (artifact_dir / "values.json").write_text(yamlio.json_for_helm(values, indent=2) + "\n", encoding="utf-8")
             (artifact_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
@@ -1043,11 +1012,7 @@ def check_chart(
             "scope": "all schema-valid overrides in this finite domain, current Helm environment",
             "proof_of_totality": False,
             **coverage,
-            **(
-                {"coverage_complete": not bool(trimmed_cases)}
-                if interaction_plan is not None
-                else {}
-            ),
+            **({"coverage_complete": not bool(trimmed_cases)} if interaction_plan is not None else {}),
         }
         if statistics is not None:
             result.update(statistics.finish("passed"))

@@ -14,9 +14,7 @@ from hypothesis_helm.schemas.combinations import plan_interactions
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
 
 
-def test_cli_plot_preserves_configured_enumeration(
-    capsys: pytest.CaptureFixture[str], tmp_path: Path
-) -> None:
+def test_cli_plot_preserves_configured_enumeration(capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
     """
     Preview increasing strengths while preserving the configured exhaustive policy.
 
@@ -79,9 +77,7 @@ def test_large_full_run_remains_bounded() -> None:
     cumulative: set[str] = set()
     for strength, stage in enumerate(stages[:2], 1):
         plan = plan_interactions(chart.schema, strength, exhaustive_threshold=0)
-        inputs = {
-            configuration_key(merge_values(chart.defaults, values)) for values in [{}, *plan.values]
-        }
+        inputs = {configuration_key(merge_values(chart.defaults, values)) for values in [{}, *plan.values]}
         assert stage["new_inputs"] == len(inputs - cumulative)
         cumulative.update(inputs)
         assert stage["cumulative_inputs"] == len(cumulative)
@@ -148,9 +144,7 @@ def test_progression_advances_beyond_triples(tmp_path: Path) -> None:
             }
         )
     )
-    (tmp_path / "templates" / "config.yaml").write_text(
-        "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: four\n"
-    )
+    (tmp_path / "templates" / "config.yaml").write_text("apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: four\n")
     report = check_chart(tmp_path, permutations=2, dry_run=True, exhaustive_threshold=0)
     forecast = mapping(report["progressive_estimate"])
     stages = [mapping(stage) for stage in sequence(forecast["stages"])]

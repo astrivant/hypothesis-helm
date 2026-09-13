@@ -215,8 +215,8 @@ and appear in scan artifacts rather than the Helm JUnit report.
 | Input | Default | Purpose |
 | --- | --- | --- |
 | `run-id` | empty | Common pipeline and attempt identity for shard aggregation. |
-| `export-minimal-values` | `false` | Export verified concrete values after tests. |
-| `commit-minimal-values` | `false` | Export and commit only the verified YAML files. |
+| `export-minimal-values` | `false` | Export deterministic concrete values after tests. |
+| `commit-minimal-values` | `false` | Export and commit only the exported YAML files. |
 | `minimal-values-filename` | `values-minimal.yaml` | Basename written inside each discovered chart. |
 | `minimal-values-timeout` | `30s` | Search budget per chart. |
 

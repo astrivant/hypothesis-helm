@@ -121,10 +121,7 @@ def test_property(index):
             assert report["workers"] == min(2, assignment["selected"])
             assert report["run_id"] == "cold"
             assert Path(report["cache"]).parent.parent == cache
-            total += sum(
-                int(suite.get("tests", "0"))
-                for suite in ET.parse(root / "junit.xml").getroot().iter("testsuite")
-            )
+            total += sum(int(suite.get("tests", "0")) for suite in ET.parse(root / "junit.xml").getroot().iter("testsuite"))
         assert sum(statuses) == 1
         assert len(names) == len(set(names)) == len(nodeids) == total == 12
         assert not (tmp_path / "report.json").exists()
@@ -136,9 +133,7 @@ def test_property(index):
 
     caches = list(cache.glob("*/*.json"))
     assert len(caches) == 3
-    outcomes = {
-        node: status for path in caches for node, status in json.loads(path.read_text()).items()
-    }
+    outcomes = {node: status for path in caches for node, status in json.loads(path.read_text()).items()}
     assert set(outcomes) == nodeids
     assert list(outcomes.values()).count("failed") == 1
     assert not list(cache.rglob("*.tmp"))

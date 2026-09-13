@@ -30,9 +30,7 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         pytest.skip("Poetry is required to build the distribution")
     root = Path(__file__).resolve().parents[3]
     environment = {
-        key: value
-        for key, value in os.environ.items()
-        if key not in {"VIRTUAL_ENV", "PYENV_VERSION", "PYENV_VIRTUAL_ENV", "PYTHONPATH"}
+        key: value for key, value in os.environ.items() if key not in {"VIRTUAL_ENV", "PYENV_VERSION", "PYENV_VIRTUAL_ENV", "PYTHONPATH"}
     }
     subprocess.run(
         [poetry, "build", "--format", "wheel", "--output", str(tmp_path / "dist")],
@@ -44,9 +42,7 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
     )
     wheel = next((tmp_path / "dist").glob("*.whl"))
     with ZipFile(wheel) as archive:
-        metadata_name = next(
-            name for name in archive.namelist() if name.endswith(".dist-info/METADATA")
-        )
+        metadata_name = next(name for name in archive.namelist() if name.endswith(".dist-info/METADATA"))
         entry_points = archive.read(metadata_name.replace("METADATA", "entry_points.txt")).decode()
         for declaration in (
             "hypothesis-helm-benchmark=hypothesis_helm.benchmarking.cli:main",
@@ -58,16 +54,10 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         assert "benchmarking" in metadata.get_all("Provides-Extra", [])
         requirements = metadata.get_all("Requires-Dist", [])
         for dependency in ("matplotlib", "numpy"):
-            assert any(
-                line.startswith(dependency + " ") and 'extra == "benchmarking"' in line
-                for line in requirements
-            )
+            assert any(line.startswith(dependency + " ") and 'extra == "benchmarking"' in line for line in requirements)
         assert not any(name.startswith("scripts/") for name in archive.namelist())
         archive.extractall(tmp_path / "installed")
-    bootstrap = (
-        "import sys; sys.path.insert(0,sys.argv.pop(1)); "
-        "from hypothesis_helm.benchmarking.cli import main; sys.exit(main())"
-    )
+    bootstrap = "import sys; sys.path.insert(0,sys.argv.pop(1)); from hypothesis_helm.benchmarking.cli import main; sys.exit(main())"
     command = [sys.executable, "-I", "-c", bootstrap, str(tmp_path / "installed")]
     for name in (
         "generate",

@@ -131,13 +131,7 @@ def export_graph(
         Returns:
             None: Field nodes and containment edges are appended.
         """
-        entries = (
-            value.items()
-            if isinstance(value, dict)
-            else enumerate(value)
-            if isinstance(value, list)
-            else []
-        )
+        entries = value.items() if isinstance(value, dict) else enumerate(value) if isinstance(value, list) else []
         for key, child in entries:
             path = (*prefix, str(key))
             field = node(
@@ -201,15 +195,8 @@ def export_graph(
     target = target or directory / f"topological-graph-{checksum}-{int(time.time())}.json"
     if target.suffix != ".json":
         raise ValueError("Topological graph filename must end in .json")
-    protected = {
-        (chart.path / name).resolve()
-        for name in ("Chart.yaml", "values.yaml", "values.schema.json")
-    }
-    if (
-        target.resolve() in protected
-        or target.is_symlink()
-        or target.with_suffix(".dot").is_symlink()
-    ):
+    protected = {(chart.path / name).resolve() for name in ("Chart.yaml", "values.yaml", "values.schema.json")}
+    if target.resolve() in protected or target.is_symlink() or target.with_suffix(".dot").is_symlink():
         raise ValueError("Graph export must not overwrite source chart inputs or symbolic links")
     target.parent.mkdir(parents=True, exist_ok=True)
     dot = ["digraph helm {"]
@@ -217,10 +204,7 @@ def export_graph(
         label = str(attributes.get("path", attributes.get("resource_kind", attributes["kind"])))
         dot.append(f"  {json.dumps(identity)} [label={json.dumps(label)}];")
     for edge in edges:
-        dot.append(
-            f"  {json.dumps(edge['from'])} -> {json.dumps(edge['to'])} "
-            f"[label={json.dumps(edge['kind'])}];"
-        )
+        dot.append(f"  {json.dumps(edge['from'])} -> {json.dumps(edge['to'])} [label={json.dumps(edge['kind'])}];")
     dot.append("}")
     target.write_text(content)
     target.with_suffix(".dot").write_text("\n".join(dot) + "\n")

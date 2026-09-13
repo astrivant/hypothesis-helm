@@ -56,9 +56,7 @@ def lex(source: str) -> list[Token]:
             tokens.append(Token(False, literal, line))
             return tokens
         cursor = start + 2
-        left = source[cursor : cursor + 1] == "-" and source[cursor + 1 : cursor + 2] in tuple(
-            SPACE
-        )
+        left = source[cursor : cursor + 1] == "-" and source[cursor + 1 : cursor + 2] in tuple(SPACE)
         if left:
             literal = literal.rstrip(SPACE)
         tokens.append(Token(False, literal, line))
@@ -194,9 +192,7 @@ def fold(nodes: tuple[Node, ...]) -> tuple[Node, ...]:
         if node.kind == "if" and node.text in ("true", "false"):
             result.extend(fold(node.children if node.text == "true" else node.otherwise))
         else:
-            result.append(
-                Node(node.kind, node.text, node.line, fold(node.children), fold(node.otherwise))
-            )
+            result.append(Node(node.kind, node.text, node.line, fold(node.children), fold(node.otherwise)))
     return tuple(result)
 
 
@@ -248,9 +244,7 @@ class SymbolicOutput:
     reason: str | None = None
 
 
-def specialize(
-    nodes: tuple[Node, ...], values: dict[str, object], model: ValuesModel
-) -> SymbolicOutput:
+def specialize(nodes: tuple[Node, ...], values: dict[str, object], model: ValuesModel) -> SymbolicOutput:
     """
     Bind candidate constants, partition Boolean control flow and project live influences.
 

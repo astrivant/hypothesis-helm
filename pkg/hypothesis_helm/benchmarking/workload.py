@@ -53,15 +53,9 @@ def standard_values(
     live_rng = random.Random(f"{VERSION}:{seed}:live")
     live = (quantile * (live_rng.getrandbits(active) | 1) + live_rng.getrandbits(active)) % bins
     noise_rng = random.Random(f"{VERSION}:{seed}:unused")
-    unused = (
-        (cycle * repeats + noise) * (noise_rng.getrandbits(unused_bits) | 1)
-        + noise_rng.getrandbits(unused_bits)
-    ) % 2**unused_bits
+    unused = ((cycle * repeats + noise) * (noise_rng.getrandbits(unused_bits) | 1) + noise_rng.getrandbits(unused_bits)) % 2**unused_bits
     return {
-        f"input{bit:03d}": bool((live >> bit) & 1)
-        if bit < active
-        else bool((unused >> (bit - active)) & 1)
-        for bit in range(complexity)
+        f"input{bit:03d}": bool((live >> bit) & 1) if bit < active else bool((unused >> (bit - active)) & 1) for bit in range(complexity)
     }
 
 
@@ -83,10 +77,7 @@ def partition_indices(total: int, shard: Shard | None, replicas: int) -> list[li
     if total < 1 or replicas < 1:
         raise ValueError("permutation and replica counts must be positive")
     selected = list(range(shard.index - 1, total, shard.total)) if shard else list(range(total))
-    return [
-        selected[len(selected) * worker // replicas : len(selected) * (worker + 1) // replicas]
-        for worker in range(replicas)
-    ]
+    return [selected[len(selected) * worker // replicas : len(selected) * (worker + 1) // replicas] for worker in range(replicas)]
 
 
 def load_inputs(chart: Chart, source: Path | None) -> list[dict[str, object]] | None:

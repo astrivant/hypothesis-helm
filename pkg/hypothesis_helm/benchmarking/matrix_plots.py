@@ -47,23 +47,15 @@ def plot(output: Path, document: dict[str, object]) -> None:
             for strategy in strategies:
                 row = indexed[(structure, strategy)]
                 if metric in {"coverage", "total_variation"}:
-                    value = (
-                        float(str(mapping(row["distribution"])[metric])) * 100
-                        if row["distribution"] is not None
-                        else float("nan")
-                    )
+                    value = float(str(mapping(row["distribution"])[metric])) * 100 if row["distribution"] is not None else float("nan")
                 elif metric == "render_fraction":
-                    value = (
-                        100 * int(str(row["render_invocations"])) / int(str(row["valid_domain"]))
-                    )
+                    value = 100 * int(str(row["render_invocations"])) / int(str(row["valid_domain"]))
                 else:
                     value = float(str(row[metric]))
                 line.append(value)
             values.append(line)
         axis.imshow(values, cmap=color, vmin=0, vmax=maximum, aspect="auto")
-        axis.set_xticks(
-            range(len(strategies)), [labels[item] for item in strategies], rotation=20, ha="right"
-        )
+        axis.set_xticks(range(len(strategies)), [labels[item] for item in strategies], rotation=20, ha="right")
         axis.set_yticks(range(len(structures)), structures)
         axis.set_title(title)
         axis.grid(False)
@@ -86,8 +78,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     figure.text(
         0.04,
         0.02,
-        "One seeded run per cell; finite jobs stop when complete. * = execution deadline. "
-        "Coverage uses exact fixture outputs.",
+        "One seeded run per cell; finite jobs stop when complete. * = execution deadline. Coverage uses exact fixture outputs.",
         fontsize=9,
     )
     figure.tight_layout(rect=(0, 0.05, 1, 0.94))
@@ -116,9 +107,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "total_seconds",
     ]
     with (output / "results.csv").open("w") as stream:
-        writer = csv.DictWriter(
-            stream, fieldnames=fields, extrasaction="ignore", lineterminator="\n"
-        )
+        writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     lines = [
@@ -146,15 +135,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
         cells = []
         for strategy in strategies:
             row = indexed[(structure, strategy)]
-            coverage = (
-                100 * float(str(mapping(row["distribution"])["coverage"]))
-                if row["distribution"] is not None
-                else float("nan")
-            )
-            cells.append(
-                f"{coverage:.0f}% / {float(str(row['total_seconds'])):.1f}s / "
-                f"{row['render_invocations']}"
-            )
+            coverage = 100 * float(str(mapping(row["distribution"])["coverage"])) if row["distribution"] is not None else float("nan")
+            cells.append(f"{coverage:.0f}% / {float(str(row['total_seconds'])):.1f}s / {row['render_invocations']}")
         lines.append("| " + structure + " | " + " | ".join(cells) + " |")
     lines += [
         "",

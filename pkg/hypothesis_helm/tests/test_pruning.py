@@ -96,9 +96,7 @@ def test_pruning_matches_full_helm_output_and_replays_assertions(proof_chart: Ch
     for item in sequence(pruning["certificates"]):
         certificate = mapping(item)
         assert certificate["upper_bound"] == 0
-        assert number(certificate["representative_iteration"]) < number(
-            certificate["candidate_iteration"]
-        )
+        assert number(certificate["representative_iteration"]) < number(certificate["candidate_iteration"])
 
 
 @pytest.mark.skipif(shutil.which("helm") is None, reason="requires Helm")
@@ -113,9 +111,7 @@ def test_reachable_opaque_failure_is_never_pruned(proof_chart: Chart) -> None:
         None: Prior inactive successes cannot suppress the later Helm failure.
     """
     source = proof_chart.path / "templates" / "config.yaml"
-    source.write_text(
-        source.read_text() + '{{ if .Values.enabled }}{{ fail "must fail" }}{{ end }}'
-    )
+    source.write_text(source.read_text() + '{{ if .Values.enabled }}{{ fail "must fail" }}{{ end }}')
     report = check_chart(proof_chart, permutations=2, prune_equivalent=True)
     assert report["status"] == "failed"
     assert "must fail" in str(report["error"])
@@ -185,9 +181,7 @@ def test_schema_and_coalescing_boundaries(proof_chart: Chart) -> None:
     Returns:
         None: No risky merge or format constraint can authorize skipping Helm.
     """
-    pruner = Pruner(
-        proof_chart.path, proof_chart.defaults, ValuesModel.from_schema(proof_chart.schema)
-    )
+    pruner = Pruner(proof_chart.path, proof_chart.defaults, ValuesModel.from_schema(proof_chart.schema))
     assert pruner.candidate({"unused": None}, proof_chart.defaults, "context") is None
     assert pruner.candidate({"unused": {}}, proof_chart.defaults, "context") is None
     schema = copy.deepcopy(proof_chart.schema)
@@ -277,9 +271,7 @@ def test_yaml_and_numeric_schema_ambiguity_falls_back(proof_chart: Chart) -> Non
     pruner = Pruner(chart.path, chart.defaults, ValuesModel.from_schema(chart.schema))
     assert pruner.disabled is not None
     values.write_text("%YAML 1.2\n---\n" + original)
-    pruner = Pruner(
-        proof_chart.path, proof_chart.defaults, ValuesModel.from_schema(proof_chart.schema)
-    )
+    pruner = Pruner(proof_chart.path, proof_chart.defaults, ValuesModel.from_schema(proof_chart.schema))
     assert pruner.disabled is not None
     values.write_text(original)
     schema = copy.deepcopy(proof_chart.schema)
@@ -360,10 +352,7 @@ def test_pruning_dry_run_does_not_render_or_create_artifacts(
     [
         'data:\n  state: "{{ if .Values.enabled }}on{{ else }}off{{ end }}"\n',
         'data:\n  state: "A \n{{- if .Values.enabled -}} on {{- else -}} off {{- end -}} B"\n',
-        (
-            'data:\n  state: "{{ if .Values.enabled }}{{ if .Values.unused }}'
-            'a{{ else }}b{{ end }}{{ else }}c{{ end }}"\n'
-        ),
+        ('data:\n  state: "{{ if .Values.enabled }}{{ if .Values.unused }}a{{ else }}b{{ end }}{{ else }}c{{ end }}"\n'),
         'data:\n  state: "{{/* }} {{ */}}constant"\n',
     ],
 )
@@ -378,9 +367,7 @@ def test_supported_control_ir_matches_helm(proof_chart: Chart, body: str) -> Non
     Returns:
         None: Every candidate emits the same manifests with and without pruning.
     """
-    (proof_chart.path / "templates" / "config.yaml").write_text(
-        "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: proof\n" + body
-    )
+    (proof_chart.path / "templates" / "config.yaml").write_text("apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: proof\n" + body)
     baseline = Mock()
     reduced = Mock()
     assert check_chart(proof_chart, permutations=2, properties=(baseline,))["status"] == "passed"
@@ -431,17 +418,13 @@ def test_case_insensitive_ignore_files_cannot_hide_values(proof_chart: Chart) ->
         None: A differently cased ignore file disables all proof reuse.
     """
     (proof_chart.path / ".HELMIGNORE").write_text("values.yaml\nvalues.schema.json\n")
-    pruner = Pruner(
-        proof_chart.path, proof_chart.defaults, ValuesModel.from_schema(proof_chart.schema)
-    )
+    pruner = Pruner(proof_chart.path, proof_chart.defaults, ValuesModel.from_schema(proof_chart.schema))
     assert pruner.disabled is not None
     assert ".helmignore" in pruner.disabled
 
 
 @pytest.mark.parametrize("enabled", [False, True])
-def test_progressive_forecast_is_read_only(
-    proof_chart: Chart, monkeypatch: pytest.MonkeyPatch, enabled: bool
-) -> None:
+def test_progressive_forecast_is_read_only(proof_chart: Chart, monkeypatch: pytest.MonkeyPatch, enabled: bool) -> None:
     """
     Forecast known output classes without executing assertions or issuing certificates.
 
@@ -478,6 +461,4 @@ def test_progressive_forecast_is_read_only(
         assert mapping(report["pruning"])["certificates"] == []
     renderer.assert_not_called()
     prop.assert_not_called()
-    assert before == {
-        path: path.read_bytes() for path in proof_chart.path.rglob("*") if path.is_file()
-    }
+    assert before == {path: path.read_bytes() for path in proof_chart.path.rglob("*") if path.is_file()}

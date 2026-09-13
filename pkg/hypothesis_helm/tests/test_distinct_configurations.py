@@ -12,9 +12,7 @@ from hypothesis_helm.schemas.factors import factor_space
 
 
 @pytest.mark.parametrize("exhaustive", [False, True])
-def test_defaults_and_omitted_values_are_not_rendered_twice(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, exhaustive: bool
-) -> None:
+def test_defaults_and_omitted_values_are_not_rendered_twice(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, exhaustive: bool) -> None:
     """
     Collapse omitted and explicit defaults while preserving genuinely distinct values.
 
@@ -34,9 +32,7 @@ def test_defaults_and_omitted_values_are_not_rendered_twice(
     chart = Chart(tmp_path, schema, {"enabled": False})
     rendered: list[str] = []
 
-    def render(
-        chart: Chart, values: dict[str, object], **kwargs: object
-    ) -> list[dict[str, object]]:
+    def render(chart: Chart, values: dict[str, object], **kwargs: object) -> list[dict[str, object]]:
         """
         Record normalized values without invoking Helm.
 

@@ -142,13 +142,7 @@ class ValuesModel:
         """
         declared = node.schema.get("type")
         kinds = sequence(declared) if isinstance(declared, list) else [declared]
-        examples = (
-            sequence(node.schema["enum"])
-            if "enum" in node.schema
-            else [node.schema["const"]]
-            if "const" in node.schema
-            else []
-        )
+        examples = sequence(node.schema["enum"]) if "enum" in node.schema else [node.schema["const"]] if "const" in node.schema else []
         if declared is None and examples:
             names = {
                 type(None): "null",
@@ -169,12 +163,7 @@ class ValuesModel:
         used = {"values_extra"}
         for index, (name, schema) in enumerate(properties.items()):
             attribute = name
-            if (
-                not name.isascii()
-                or not name.isidentifier()
-                or keyword.iskeyword(name)
-                or name.startswith("_")
-            ):
+            if not name.isascii() or not name.isidentifier() or keyword.iskeyword(name) or name.startswith("_"):
                 attribute = f"value_{index}"
             while attribute in used or (attribute != name and attribute in properties):
                 attribute += "_"
@@ -189,9 +178,7 @@ class ValuesModel:
             self.compile_node(child)
         arrays = [sequence(value) for value in examples if isinstance(value, list)]
         bound = node.schema.get("maxItems")
-        node.max_items = (
-            bound if isinstance(bound, int) else max(map(len, arrays)) if arrays else None
-        )
+        node.max_items = bound if isinstance(bound, int) else max(map(len, arrays)) if arrays else None
         items = node.schema.get("items")
         if items is None and any(arrays):
             items = {"enum": [item for values in arrays for item in values]}
@@ -228,15 +215,9 @@ class ValuesModel:
                 """
                 document = mapping(value)
                 fields = {
-                    child.attribute: self.structure_node(child, document[name])
-                    for name, child in node.children.items()
-                    if name in document
+                    child.attribute: self.structure_node(child, document[name]) for name, child in node.children.items() if name in document
                 }
-                fields["values_extra"] = {
-                    name: copy.deepcopy(value)
-                    for name, value in document.items()
-                    if name not in node.children
-                }
+                fields["values_extra"] = {name: copy.deepcopy(value) for name, value in document.items() if name not in node.children}
                 return target(**fields)
 
             def unstructure(value: object) -> dict[str, object]:
@@ -265,9 +246,7 @@ class ValuesModel:
             "number": int | float,
             "null": type(None),
             "object": node.record_type or dict[str, object],
-            "array": GenericAlias(list, node.item.python_type)
-            if node.item is not None
-            else list[object],
+            "array": GenericAlias(list, node.item.python_type) if node.item is not None else list[object],
         }
         annotations = [primitives.get(kind, object) for kind in kinds]
         node.python_type = reduce(or_, annotations) if len(annotations) > 1 else annotations[0]
@@ -318,9 +297,7 @@ class ValuesModel:
             object: Root attrs instance with nested typed values.
         """
         if validate:
-            validators.validator_for(self.root.schema)(self.root.schema).validate(
-                json_value(values)
-            )
+            validators.validator_for(self.root.schema)(self.root.schema).validate(json_value(values))
         return self.structure_node(self.root, values)
 
     def unstructure(self, values: object) -> dict[str, object]:
@@ -370,18 +347,14 @@ class ValuesModel:
                 node = node.children[segment]
             elif node.item is not None and (segment == "*" or segment.isdigit()):
                 maximum = node.max_items
-                if isinstance(maximum, int) and (
-                    maximum == 0 or (segment != "*" and int(segment) >= maximum)
-                ):
+                if isinstance(maximum, int) and (maximum == 0 or (segment != "*" and int(segment) >= maximum)):
                     return ValueReference(path)
                 node = node.item
             else:
                 return ValueReference(path)
         return ValueReference(path, node)
 
-    def collect_relationships(
-        self, schema: dict[str, object], prefix: tuple[str, ...], location: str
-    ) -> None:
+    def collect_relationships(self, schema: dict[str, object], prefix: tuple[str, ...], location: str) -> None:
         """
         Compile constraint evidence once, keeping overlapping relationships independent.
 
@@ -429,9 +402,7 @@ class ValuesModel:
             Returns:
                 None: The relationship is retained for subsequent analysis.
             """
-            self.relationships.append(
-                Relationship(tuple(self.reference(path) for path in sorted(paths)), source)
-            )
+            self.relationships.append(Relationship(tuple(self.reference(path) for path in sorted(paths)), source))
 
         if "if" in schema:
             add(

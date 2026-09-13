@@ -24,7 +24,7 @@ from hypothesis_helm.charts.repository import RepositorySource
 from hypothesis_helm.charts.runner import Chart, check_chart, render
 from hypothesis_helm.compiler.graph import export_graph
 from hypothesis_helm.compiler.inputs import FieldCoverage, InputInventory, load_input_chart
-from hypothesis_helm.compiler.minimum import export_verified
+from hypothesis_helm.compiler.minimum import export_minimal
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.errors import chart_errors, deduplicate_errors
 from hypothesis_helm.reporting.repository import write_reports
@@ -33,9 +33,7 @@ from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
 
 LOGGER = logging.getLogger(__name__)
-VERSION = re.compile(
-    r"^v?(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?(?:\.(0|[1-9]\d*))?(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$"
-)
+VERSION = re.compile(r"^v?(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?(?:\.(0|[1-9]\d*))?(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 
 
 def discover_charts(root: Path, *, deadline: float | None = None) -> list[dict[str, object]]:
@@ -59,11 +57,7 @@ def discover_charts(root: Path, *, deadline: float | None = None) -> list[dict[s
             for directory, children, files in os.walk(root, followlinks=False):
                 if deadline is not None and time.monotonic() >= deadline:
                     break
-                children[:] = sorted(
-                    name
-                    for name in children
-                    if name not in {".git", ".venv", ".cache", "__pycache__"}
-                )
+                children[:] = sorted(name for name in children if name not in {".git", ".venv", ".cache", "__pycache__"})
                 if "Chart.yaml" not in files:
                     continue
                 path = Path(directory)
@@ -78,19 +72,11 @@ def discover_charts(root: Path, *, deadline: float | None = None) -> list[dict[s
                     if metadata.get("apiVersion") not in ("v1", "v2"):
                         raise ValueError("apiVersion must be v1 or v2")
                     name = metadata.get("name")
-                    if (
-                        not isinstance(name, str)
-                        or not name.strip()
-                        or name in (".", "..")
-                        or "/" in name
-                        or "\\" in name
-                    ):
+                    if not isinstance(name, str) or not name.strip() or name in (".", "..") or "/" in name or "\\" in name:
                         raise ValueError("name must be a nonempty chart basename")
                     version = metadata.get("version")
                     if not isinstance(version, str) or VERSION.fullmatch(version) is None:
-                        raise ValueError(
-                            "version must be a Helm-compatible semantic version string"
-                        )
+                        raise ValueError("version must be a Helm-compatible semantic version string")
                     kind = metadata.get("type", "application")
                     if kind not in ("application", "library"):
                         raise ValueError("type must be application or library")
@@ -115,17 +101,14 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
     Returns:
         dict[str, object]: Results distinguishing blocked execution and limited coverage.
     """
-    baseline = subprocess.run(
-        [args.helm, "lint", str(path)], capture_output=True, text=True, timeout=args.timeout
-    )
+    baseline = subprocess.run([args.helm, "lint", str(path)], capture_output=True, text=True, timeout=args.timeout)
     artifacts.mkdir(parents=True, exist_ok=True)
     diagnostic = baseline.stdout + baseline.stderr
     (artifacts / "lint.txt").write_text(diagnostic)
     if baseline.returncode:
         status = (
             "missing-dependencies"
-            if "dependencies" in diagnostic.lower()
-            and ("missing" in diagnostic.lower() or "not found" in diagnostic.lower())
+            if "dependencies" in diagnostic.lower() and ("missing" in diagnostic.lower() or "not found" in diagnostic.lower())
             else "baseline-failed"
         )
         return {"status": status, "error": diagnostic, "coverage": "defaults only"}
@@ -161,9 +144,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
     except NonFiniteSchema as exc:
         filtering["reason"] = f"Finite filtering unavailable: {exc}"
         if args.filter:
-            LOGGER.info(
-                "%s; prioritizing known inputs before robustness sampling", filtering["reason"]
-            )
+            LOGGER.info("%s; prioritizing known inputs before robustness sampling", filtering["reason"])
         if strength is not None:
             return {"status": "unsupported-schema", "error": str(exc), "coverage": "lint only"}
     else:
@@ -231,15 +212,11 @@ def scan(args: argparse.Namespace) -> int:
     scan_started = time.monotonic()
     args.scan_deadline = scan_started + args.scan_timeout if args.scan_timeout is not None else None
     with ExitStack() as scope:
-        source = RepositorySource.prepare(
-            str(args.directory), scope, args.clone_timeout, args.scan_deadline
-        )
+        source = RepositorySource.prepare(str(args.directory), scope, args.clone_timeout, args.scan_deadline)
         return scan_checkout(args, source, started, scan_started)
 
 
-def scan_checkout(
-    args: argparse.Namespace, source: RepositorySource, started: float, scan_started: float
-) -> int:
+def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: float, scan_started: float) -> int:
     """
     Exercise a prepared source and write reports before its checkout is released.
 
@@ -254,12 +231,8 @@ def scan_checkout(
     """
     root = source.root
     records = discover_charts(root, deadline=args.scan_deadline) if source.status == "ready" else []
-    discovery_complete = source.status == "ready" and (
-        args.scan_deadline is None or time.monotonic() < args.scan_deadline
-    )
-    timed_out = source.status in {"clone-timeout", "scan-timeout"} or (
-        source.status == "ready" and not discovery_complete
-    )
+    discovery_complete = source.status == "ready" and (args.scan_deadline is None or time.monotonic() < args.scan_deadline)
+    timed_out = source.status in {"clone-timeout", "scan-timeout"} or (source.status == "ready" and not discovery_complete)
     output = args.artifact_dir.resolve() / f"{source.name}_{int(started)}"
     output.mkdir(parents=True, exist_ok=True)
     if source.remote:
@@ -308,9 +281,7 @@ def scan_checkout(
                     (copy / "values.yaml").unlink(missing_ok=True)
                     (copy / "values.yaml").write_text(baseline)
                     record["values_file"] = (
-                        str(selected.relative_to(root))
-                        if source.remote and selected.is_relative_to(root)
-                        else str(selected)
+                        str(selected.relative_to(root)) if source.remote and selected.is_relative_to(root) else str(selected)
                     )
                     if args.build_dependencies:
                         built = subprocess.run(
@@ -322,9 +293,7 @@ def scan_checkout(
                         artifacts.mkdir(parents=True, exist_ok=True)
                         (artifacts / "dependencies.txt").write_text(built.stdout + built.stderr)
                         if built.returncode:
-                            record.update(
-                                status="dependency-build-failed", error=built.stdout + built.stderr
-                            )
+                            record.update(status="dependency-build-failed", error=built.stdout + built.stderr)
                             continue
                     if record["kind"] == "library":
                         record.update(
@@ -339,15 +308,12 @@ def scan_checkout(
                         if args.export_minimal_values:
                             filename = Path(args.export_minimal_values)
                             target = filename.parent / str(record["chart"]) / filename.name
-                            protected = {
-                                (path / name).resolve()
-                                for name in ("values.yaml", "values.schema.json", "Chart.yaml")
-                            } | {selected.resolve()}
+                            protected = {(path / name).resolve() for name in ("values.yaml", "values.schema.json", "Chart.yaml")} | {
+                                selected.resolve()
+                            }
                             if target.resolve() in protected:
-                                raise ValueError(
-                                    "Minimal-values output must not overwrite source chart inputs"
-                                )
-                        record["minimal_values"] = export_verified(
+                                raise ValueError("Minimal-values output must not overwrite source chart inputs")
+                        record["minimal_values"] = export_minimal(
                             input_chart,
                             target,
                             directory=artifacts,
@@ -356,9 +322,7 @@ def scan_checkout(
                             budget=args.minimal_values_timeout,
                             build_dependencies=False,
                         )
-                        record["input_inventory"] = mapping(record["minimal_values"])[
-                            "input_inventory"
-                        ]
+                        record["input_inventory"] = mapping(record["minimal_values"])["input_inventory"]
                     if args.export_topological_graph is not None:
                         target = None
                         if args.export_topological_graph:
@@ -368,9 +332,7 @@ def scan_checkout(
                                 (path / "values.schema.json").resolve(),
                                 selected.resolve(),
                             }:
-                                raise ValueError(
-                                    "Graph export must not overwrite source chart inputs"
-                                )
+                                raise ValueError("Graph export must not overwrite source chart inputs")
                         record["topological_graph"] = export_graph(
                             load_input_chart(copy),
                             target,
@@ -425,11 +387,7 @@ def scan_checkout(
         )
         record.setdefault(
             "result",
-            "PASS"
-            if record["status"] == "passed"
-            else "FAIL"
-            if record["status"] in {"baseline-failed", "failed"}
-            else "N/A",
+            "PASS" if record["status"] == "passed" else "FAIL" if record["status"] in {"baseline-failed", "failed"} else "N/A",
         )
     counts = dict(Counter(str(record["status"]) for record in records))
     report: dict[str, object] = {
@@ -491,8 +449,6 @@ def scan_checkout(
         return 1
     if len(records) == 1 and records[0]["status"] == "missing-values":
         return 1
-    if any(
-        status in counts for status in ("invalid-metadata", "baseline-failed", "failed", "error")
-    ):
+    if any(status in counts for status in ("invalid-metadata", "baseline-failed", "failed", "error")):
         return 1
     return 0 if records and set(counts) <= {"passed"} else 2

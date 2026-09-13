@@ -30,9 +30,7 @@ def test_marker_canonical_structure(tmp_path: Path) -> None:
     assert marker is not None and marker.status == "new"
     decoded = base64.b64decode(marker.encoded).decode()
     assert "private-scalar" not in decoded and "first" not in decoded and "42" not in decoded
-    assert json.loads(decoded) == {
-        "object": {"password": None, "items": {"array": [{"object": {"name": None}}]}, "old": None}
-    }
+    assert json.loads(decoded) == {"object": {"password": None, "items": {"array": [{"object": {"name": None}}]}, "old": None}}
     marker.save()
     original = marker.destination.read_bytes()
     values.write_text("old: null\nitems:\n  - name: second\npassword: changed\n")
@@ -138,6 +136,4 @@ def test_recursive_alias_rejected() -> None:
     with pytest.raises(ValueError, match="recursive YAML"):
         structure(value)
     child = {"key": "secret"}
-    assert structure({"a": child, "b": child}) == {
-        "object": {"a": {"object": {"key": None}}, "b": {"object": {"key": None}}}
-    }
+    assert structure({"a": child, "b": child}) == {"object": {"a": {"object": {"key": None}}, "b": {"object": {"key": None}}}}

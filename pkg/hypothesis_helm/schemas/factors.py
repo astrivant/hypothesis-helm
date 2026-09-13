@@ -60,18 +60,11 @@ def factor_space(schema: dict[str, object] | ValuesModel, limit: int = 10000) ->
         """
         node, path = declaration.schema, declaration.path
         if node.get("additionalProperties") is not False or node.get("patternProperties"):
-            raise NonFiniteSchema(
-                f"permutations need closed objects at {path!r}; set additionalProperties: false"
-            )
+            raise NonFiniteSchema(f"permutations need closed objects at {path!r}; set additionalProperties: false")
         for name, child in declaration.children.items():
             child_schema = child.schema
             child_path = child.path
-            if (
-                child.required
-                and child_schema.get("type") == "object"
-                and "enum" not in child_schema
-                and "const" not in child_schema
-            ):
+            if child.required and child_schema.get("type") == "object" and "enum" not in child_schema and "const" not in child_schema:
                 nested: dict[str, object] = {}
                 base[name] = nested
                 discover(child, nested)
@@ -85,14 +78,10 @@ def factor_space(schema: dict[str, object] | ValuesModel, limit: int = 10000) ->
                 try:
                     choices = enumerate_values(wrapper, limit)
                 except NonFiniteSchema as exc:
-                    raise NonFiniteSchema(
-                        f"cannot cover permutations at {child_path!r}: {exc}"
-                    ) from exc
+                    raise NonFiniteSchema(f"cannot cover permutations at {child_path!r}: {exc}") from exc
                 factors.append(child_path)
                 nodes.append(child)
-                domains.append(
-                    list({configuration_key(choice): choice for choice in choices}.values())
-                )
+                domains.append(list({configuration_key(choice): choice for choice in choices}.values()))
 
     if schema.get("type") != "object":
         raise NonFiniteSchema("permutations require an object schema")

@@ -9,9 +9,7 @@ from pathlib import Path
 
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
-os.environ.setdefault(
-    "MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib")
-)
+os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
 
 import matplotlib
 
@@ -70,10 +68,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         axis.set_title(title)
         axis.set_xticks(
             range(len(columns)),
-            [
-                LABELS[strategy] + ("\n+ expansion" if enabled else "\nunchanged")
-                for strategy, enabled in columns
-            ],
+            [LABELS[strategy] + ("\n+ expansion" if enabled else "\nunchanged") for strategy, enabled in columns],
             rotation=25,
             ha="right",
         )
@@ -84,15 +79,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 row = indexed[(structure, strategy, enabled)]
                 label = f"{values[i][j]:.0f}"
                 if metric == "erroneous_output_coverage":
-                    label = (
-                        f"{row['erroneous_outputs_found']}/{row['erroneous_outputs_total']}\n"
-                        f"{values[i][j]:.1f}%"
-                    )
+                    label = f"{row['erroneous_outputs_found']}/{row['erroneous_outputs_total']}\n{values[i][j]:.1f}%"
                 elif metric == "erroneous_input_recall":
-                    label = (
-                        f"{row['erroneous_inputs_found']}/{row['erroneous_inputs_total']}\n"
-                        f"{100 - values[i][j]:.1f}% missed"
-                    )
+                    label = f"{row['erroneous_inputs_found']}/{row['erroneous_inputs_total']}\n{100 - values[i][j]:.1f}% missed"
                 axis.text(
                     j,
                     i,
@@ -104,8 +93,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 )
     metadata = mapping(document["metadata"])
     figure.suptitle(
-        f"Failure expansion · {metadata['error_percent']:g}% seeded errors · "
-        "matched initial selections",
+        f"Failure expansion · {metadata['error_percent']:g}% seeded errors · matched initial selections",
         fontsize=18,
     )
     figure.text(
@@ -125,9 +113,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     with (output / "results.csv").open("w") as stream:
         writer = csv.DictWriter(
             stream,
-            fieldnames=[
-                key for key in rows[0] if key not in {"checked_indices", "additional_indices"}
-            ],
+            fieldnames=[key for key in rows[0] if key not in {"checked_indices", "additional_indices"}],
             extrasaction="ignore",
             lineterminator="\n",
         )
@@ -177,10 +163,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     if result["erroneous_input_recall"] is not None
                     else "N/A"
                 )
-                counts.append(
-                    f"{result['erroneous_inputs_found']}/"
-                    f"{result['erroneous_inputs_total']} ({missed})"
-                )
+                counts.append(f"{result['erroneous_inputs_found']}/{result['erroneous_inputs_total']} ({missed})")
             cells.append(" → ".join(counts) + f" (+{after['additional_executed']})")
         lines.append("| " + structure + " | " + " | ".join(cells) + " |")
     lines += [

@@ -22,9 +22,7 @@ def test_ci_boolean(value: str) -> None:
     Returns:
         None: Cache behavior matches the requested policy.
     """
-    assert in_ci({"CI": value, "GITHUB_ACTIONS": "true"}) == (
-        value.strip().lower() in {"true", "yes", "1"}
-    )
+    assert in_ci({"CI": value, "GITHUB_ACTIONS": "true"}) == (value.strip().lower() in {"true", "yes", "1"})
 
 
 @pytest.mark.parametrize("jobs", [1, 2])
@@ -127,9 +125,7 @@ def test_collect_only_and_teardown_failure(tmp_path: Path, monkeypatch: pytest.M
     assert set(read_outcomes(cached).values()) == {"failed", "skipped"}
 
 
-def test_nested_implementation_invalidation(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_nested_implementation_invalidation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Invalidate cached successes when implementation in another subpackage changes.
 

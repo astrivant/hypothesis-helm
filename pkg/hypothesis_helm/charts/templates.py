@@ -116,9 +116,7 @@ def parse(source: str) -> list[Action]:
                 break
             i += 1
         if i >= len(source):
-            raise ValueError(
-                f"unterminated template action at line {source.count(chr(10), 0, start) + 1}"
-            )
+            raise ValueError(f"unterminated template action at line {source.count(chr(10), 0, start) + 1}")
         text = source[start + 2 : i].strip()
         if text.startswith("-"):
             text = text[1:].lstrip()
@@ -152,9 +150,7 @@ def parse(source: str) -> list[Action]:
     return root
 
 
-def discover(
-    path: Path, *, prune_literals: bool = False
-) -> tuple[list[Reference], list[Diagnostic]]:
+def discover(path: Path, *, prune_literals: bool = False) -> tuple[list[Reference], list[Diagnostic]]:
     """
     Resolve direct fields, aliases, with/range scopes, and literal key access.
 
@@ -290,9 +286,7 @@ def discover(
                         return "*"
                     return None
 
-                def expression(
-                    ts: list[str], action_text: str = node.text
-                ) -> tuple[str, ...] | None:
+                def expression(ts: list[str], action_text: str = node.text) -> tuple[str, ...] | None:
                     """
                     Resolve literal lookups and simple template expressions.
 
@@ -311,11 +305,7 @@ def discover(
                             depth += (t == "(") - (t == ")")
                             if depth == 0:
                                 base = expression(ts[1:j])
-                                if (
-                                    base is not None
-                                    and j + 1 < len(ts)
-                                    and ts[j + 1].startswith(".")
-                                ):
+                                if base is not None and j + 1 < len(ts) and ts[j + 1].startswith("."):
                                     return base + tuple(ts[j + 1][1:].split("."))
                                 return base
                         return None
@@ -410,9 +400,7 @@ def discover(
                     if head == "range" and len(names) == 2 and position == 0:
                         child_env[variable] = None
                         continue
-                    child_env[variable] = (
-                        value + ("*",) if value is not None and head == "range" else value
-                    )
+                    child_env[variable] = value + ("*",) if value is not None and head == "range" else value
                 if head not in ("if", "range", "with"):
                     env.update(child_env)
                 child_dot = dot

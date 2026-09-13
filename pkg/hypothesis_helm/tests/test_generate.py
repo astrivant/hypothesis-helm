@@ -57,20 +57,14 @@ def test_roundtrip_comments_and_merge_keys(tmp_path: Path) -> None:
     chart_dir = tmp_path / "chart"
     shutil.copytree("examples/hidden-levers", chart_dir)
     (chart_dir / "values.yaml").write_text(
-        '# keep this comment\nvisible: "hello" # inline\nbase: &base\n  '
-        "enabled: true\ncopy:\n  <<: *base\n"
+        '# keep this comment\nvisible: "hello" # inline\nbase: &base\n  enabled: true\ncopy:\n  <<: *base\n'
     )
     result = coalesce(Chart.load(chart_dir))
     output = yamlio.dump(result.values)
     assert "# keep this comment" in output and "# inline" in output
     assert "&base" in output and "<<: *base" in output
     assert mapping(result.values["copy"])["enabled"] is True
-    assert (
-        mapping(
-            mapping(mapping(mapping(result.schema["properties"])["copy"])["properties"])["enabled"]
-        )["type"]
-        == "boolean"
-    )
+    assert mapping(mapping(mapping(mapping(result.schema["properties"])["copy"])["properties"])["enabled"])["type"] == "boolean"
 
 
 def test_schema_paths_refs_arrays_and_branches() -> None:
@@ -178,11 +172,7 @@ def test_generated_source_one_function_per_path(tmp_path: Path) -> None:
     """
     report = generate_tests("examples/workload", tmp_path, max_examples=3)
     source = (tmp_path / "test_chart_values.py").read_text()
-    functions = [
-        n.name
-        for n in ast.parse(source).body
-        if isinstance(n, ast.FunctionDef) and n.name.startswith("test_")
-    ]
+    functions = [n.name for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name.startswith("test_")]
     assert len(functions) == report["tests"] == 4
     assert "st.integers(min_value=0, max_value=5)" in source
     assert len(json.loads((tmp_path / "paths.json").read_text())["paths"]) == 4
@@ -300,8 +290,7 @@ def test_array_paths_and_dependent_context(tmp_path: Path) -> None:
     }
     (chart_dir / "values.schema.json").write_text(json.dumps(schema))
     (chart_dir / "templates/resource.yaml").write_text(
-        "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: example\n"
-        "data:\n  items: {{ .Values.items | toJson | quote }}\n"
+        "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: example\ndata:\n  items: {{ .Values.items | toJson | quote }}\n"
     )
     generated = tmp_path / "generated"
     generate_tests(chart_dir, generated, max_examples=4)

@@ -94,9 +94,7 @@ def test_report_paths_and_pagination(tmp_path: Path) -> None:
     assert pdf.read_bytes().count(b"/Type /Page\n") >= 2
 
 
-def test_scan_execution(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_scan_execution(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Preserve property results and classify missing schemas without false passes.
 
@@ -120,9 +118,7 @@ def test_scan_execution(
         module,
         "exercise_chart",
         lambda path, args, artifacts: {
-            "status": "passed"
-            if "name: a" in (path / "Chart.yaml").read_text()
-            else "baseline-only",
+            "status": "passed" if "name: a" in (path / "Chart.yaml").read_text() else "baseline-only",
             "attempts": 5,
         },
     )
@@ -235,9 +231,7 @@ def test_scan_fail_flag(
     assert (tmp_path / "result.pdf").read_bytes().startswith(b"%PDF-")
 
 
-def test_missing_values_single_and_recursive(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_missing_values_single_and_recursive(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Fail the sole missing baseline and keep scanning a mixed repository.
 
@@ -251,12 +245,7 @@ def test_missing_values_single_and_recursive(
     first = tmp_path / "first"
     first.mkdir()
     (first / "Chart.yaml").write_text("apiVersion: v2\nname: first\nversion: '1.0.0'\n")
-    assert (
-        main(
-            ["scan", str(first), "--helm", "/usr/bin/true", "--artifact-dir", str(tmp_path / "out")]
-        )
-        == 1
-    )
+    assert main(["scan", str(first), "--helm", "/usr/bin/true", "--artifact-dir", str(tmp_path / "out")]) == 1
     report = json.loads(capsys.readouterr().out)
     assert report["counts"] == {"missing-values": 1}
     assert report["charts"][0]["result"] == "N/A"
@@ -281,9 +270,7 @@ def test_missing_values_single_and_recursive(
     assert report["counts"] == {"missing-values": 1, "baseline-only": 1}
 
 
-def test_values_override_and_dependency_build(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_values_override_and_dependency_build(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Build before testing and apply the chosen baseline only in the isolated copy.
 
@@ -353,9 +340,7 @@ def test_values_override_and_dependency_build(
     assert json.loads(capsys.readouterr().out)["counts"] == {"passed": 1}
 
 
-def test_interrupt_preserves_remaining_charts(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_interrupt_preserves_remaining_charts(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Save reports on interruption without claiming unattempted charts passed.
 
@@ -410,9 +395,7 @@ def test_interrupt_preserves_remaining_charts(
     assert (tmp_path / "partial.pdf").exists()
 
 
-def test_scan_timeout_stops_dependency_process(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_scan_timeout_stops_dependency_process(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Interrupt a dependency subprocess and preserve the unstarted chart and reports.
 
@@ -468,9 +451,7 @@ def test_scan_timeout_stops_dependency_process(
         os.kill(int(pid.read_text()), 0)
 
 
-def test_timeout_during_discovery(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_timeout_during_discovery(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Make incomplete discovery explicit instead of claiming an empty successful scan.
 

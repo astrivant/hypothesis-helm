@@ -144,11 +144,7 @@ def plan_interactions(
             reason = "no finite factors"
         elif strategy != "exhaustive" and not requested.explicit and size > max_group_cases:
             reason = f"group exceeds inferred group limit {max_group_cases}"
-        elif (
-            strategy != "exhaustive"
-            and group not in groups
-            and inventory_size + size > max_candidates
-        ):
+        elif strategy != "exhaustive" and group not in groups and inventory_size + size > max_candidates:
             reason = "group exceeds interaction inventory limit --max-candidates"
         if reason is not None and requested.explicit:
             raise NonFiniteSchema(f"required exhaustive group {requested.source}: {reason}")
@@ -177,10 +173,7 @@ def plan_interactions(
     while uncovered:
         target = next(target for target in targets if target in uncovered)
         fixed = dict(target)
-        choices = [
-            [fixed[index]] if index in fixed else range(len(domain))
-            for index, domain in enumerate(domains)
-        ]
+        choices = [[fixed[index]] if index in fixed else range(len(domain)) for index, domain in enumerate(domains)]
         for row in itertools.product(*choices):
             candidates += 1
             if candidates > max_candidates:
@@ -191,9 +184,7 @@ def plan_interactions(
                 if name in domain[choice]:
                     model.assign(typed_candidate, node, domain[choice][name])
             candidate = model.unstructure(typed_candidate)
-            if not validator.is_valid(json_value(candidate)) or (
-                accept is not None and not accept(candidate)
-            ):
+            if not validator.is_valid(json_value(candidate)) or (accept is not None and not accept(candidate)):
                 continue
             if len(values) >= max_cases:
                 raise NonFiniteSchema("interaction suite exceeds --max-cases")

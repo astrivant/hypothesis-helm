@@ -130,9 +130,7 @@ def estimate_progression(
             distinct.setdefault(configuration_key(merge(values)), values)
         candidates = list(distinct.values())[1:]
         if plan is not selected:
-            candidates = (
-                selector(candidates) if selector else trim_values(candidates, trim, random_seed)
-            )
+            candidates = selector(candidates) if selector else trim_values(candidates, trim, random_seed)
         for overrides in [{}, *candidates]:
             effective = merge(overrides)
             key = configuration_key(effective)
@@ -234,9 +232,7 @@ def estimate_progression(
     else:
         upper = raw_space + 1  # Baseline may lie outside enumerated override assignments.
         extrapolated = (
-            (upper * len(cumulative_outputs) + len(cumulative_inputs) - 1) // len(cumulative_inputs)
-            if cumulative_inputs
-            else None
+            (upper * len(cumulative_outputs) + len(cumulative_inputs) - 1) // len(cumulative_inputs) if cumulative_inputs else None
         )
         full = {
             "label": "full",
@@ -255,12 +251,8 @@ def estimate_progression(
             "heuristic_estimated_seconds": duration_estimate(
                 upper, extrapolated if pruning and extrapolated is not None else upper, history
             ),
-            "reason": full_reason
-            or "full enumeration exceeds the configured or 10,000-case forecast limit",
-            "heuristic_basis": (
-                "progressive union filtering ratio applied to the raw input upper bound; "
-                "not a confidence interval"
-            ),
+            "reason": full_reason or "full enumeration exceeds the configured or 10,000-case forecast limit",
+            "heuristic_basis": ("progressive union filtering ratio applied to the raw input upper bound; not a confidence interval"),
         }
     configured = row(selected, "configured")
     stable = compiler.disabled is not None or compiler.unchanged()
@@ -281,9 +273,7 @@ def estimate_progression(
         and isinstance(item.get("estimated_seconds"), int | float)
         and float(str(item["estimated_seconds"])) <= time_limit
     ]
-    recommendation = (
-        max(eligible, key=lambda item: int(str(item["strength"]))) if eligible else None
-    )
+    recommendation = max(eligible, key=lambda item: int(str(item["strength"]))) if eligible else None
     timed = any(isinstance(item.get("estimated_seconds"), int | float) for item in rows)
     return {
         "execution_budget": {
@@ -291,11 +281,7 @@ def estimate_progression(
             "recommended_strength": recommendation["strength"] if recommendation else None,
             "recommended_inputs": recommendation["candidate_inputs"] if recommendation else None,
             "estimated_seconds": recommendation["estimated_seconds"] if recommendation else None,
-            "status": "estimated-fit"
-            if recommendation
-            else "no-estimated-fit"
-            if timed
-            else "unknown",
+            "status": "estimated-fit" if recommendation else "no-estimated-fit" if timed else "unknown",
             "advisory": True,
         },
         "mode": "static-progressive-forecast",
@@ -306,15 +292,11 @@ def estimate_progression(
         "configured_run": configured,
         "full_run": full,
         "pruning_enabled": pruning,
-        "filtering_condition": (
-            "all representatives and candidate assertions succeed; fixed chart and renderer"
-        ),
+        "filtering_condition": ("all representatives and candidate assertions succeed; fixed chart and renderer"),
         "compiler_fallback": compiler.disabled,
         "source_stable": stable,
         "forecast_seconds": time.perf_counter() - started,
-        "timing_source": "compatible_history"
-        if duration_estimate(1, 1, history) is not None
-        else "unknown",
+        "timing_source": "compatible_history" if duration_estimate(1, 1, history) is not None else "unknown",
         "actual_renders": 0,
         "pruning_certificates": [],
         "notes": [
@@ -344,9 +326,7 @@ def plot_progression(report: dict[str, object]) -> None:
     if not isinstance(progression, dict):
         selected = int(str(report.get("selected_properties", 0)))
         scheduled = int(str(report.get("scheduled_properties", 0)))
-        console.print(
-            "Dry-run property workload (permutation progression is unavailable for this mode)"
-        )
+        console.print("Dry-run property workload (permutation progression is unavailable for this mode)")
         for label, count in (
             ("selected", selected),
             ("scheduled", scheduled),
@@ -359,9 +339,7 @@ def plot_progression(report: dict[str, object]) -> None:
     full = mapping(progression["full_run"])
     if full["status"] == "planned":
         rows.append(full)
-    maximum = max(
-        [int(str(item["candidate_inputs"])) for item in rows if item["status"] == "planned"] or [1]
-    )
+    maximum = max([int(str(item["candidate_inputs"])) for item in rows if item["status"] == "planned"] or [1])
     console.print("Progressive dry-run forecast (no Helm invocations)")
     console.print("  . candidate inputs    # render forecast after equivalence filtering")
     for item in rows:
@@ -371,29 +349,17 @@ def plot_progression(report: dict[str, object]) -> None:
             continue
         count = int(str(item["candidate_inputs"]))
         filtered = item["filter_forecast_renders"]
-        console.print(
-            f"  {label:>4} {'.' * max(1, round(24 * count / max(maximum, 1))):24} {count} inputs"
-        )
+        console.print(f"  {label:>4} {'.' * max(1, round(24 * count / max(maximum, 1))):24} {count} inputs")
         if isinstance(filtered, int):
-            console.print(
-                f"       {'#' * max(1, round(24 * filtered / max(maximum, 1))):24} "
-                f"{filtered} renders (forecast)"
-            )
+            console.print(f"       {'#' * max(1, round(24 * filtered / max(maximum, 1))):24} {filtered} renders (forecast)")
         if "new_inputs" in item:
-            console.print(
-                f"       {item['new_inputs']} additional inputs; "
-                f"{item['cumulative_inputs']} cumulative"
-            )
+            console.print(f"       {item['new_inputs']} additional inputs; {item['cumulative_inputs']} cumulative")
     configured = mapping(progression["configured_run"])
     seconds = configured["estimated_seconds"]
     console.print(
         f"Configured run: {configured['candidate_inputs']} inputs, "
         f"{configured['configured_renders']} renders (forecast); time: "
-        + (
-            f"{seconds:.2f}s"
-            if isinstance(seconds, int | float)
-            else "unknown (no compatible measurements)"
-        )
+        + (f"{seconds:.2f}s" if isinstance(seconds, int | float) else "unknown (no compatible measurements)")
     )
     if not progression["pruning_enabled"]:
         console.print("Filtering is potential savings; enable --prune-equivalent to apply it.")

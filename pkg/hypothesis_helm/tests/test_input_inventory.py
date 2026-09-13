@@ -81,10 +81,7 @@ def test_input_discrepancies_and_projection(chart: Chart, tmp_path: Path) -> Non
     assert report["unreferenced_values"] == [["orphan"]]
     assert [row["path"] for row in report["template_only_fields"]] == [["hidden"]]
     assert ["documented"] in report["schema_fields_without_values"]
-    assert (
-        next(f for f in inventory.fields if f.reference.path == ("used",)).reference.target
-        is not None
-    )
+    assert next(f for f in inventory.fields if f.reference.path == ("used",)).reference.target is not None
     original = (chart.path / "values.yaml").read_bytes()
     target = tmp_path / "minimal.yaml"
     result = inventory.dump(chart, target)
@@ -102,12 +99,7 @@ def test_input_discrepancies_and_projection(chart: Chart, tmp_path: Path) -> Non
     assert result["render_equivalence_proven"] is False
     assert result["globally_minimal_proven"] is False
     assert (chart.path / "values.yaml").read_bytes() == original
-    assert (
-        json.loads(target.with_suffix(".inventory.json").read_text())["input_inventory"][
-            "lower_bound_fields"
-        ]
-        == 2
-    )
+    assert json.loads(target.with_suffix(".inventory.json").read_text())["input_inventory"]["lower_bound_fields"] == 2
     with pytest.raises(ValueError, match="overwrite"):
         inventory.dump(chart, chart.path / "values.yaml")
 
@@ -159,9 +151,7 @@ def test_dynamic_map_and_array_inventory(chart: Chart) -> None:
     assert inventory.report()["inventory_complete"] is False
 
 
-def test_render_input_variation_is_not_presence(
-    chart: Chart, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_render_input_variation_is_not_presence(chart: Chart, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Credit only changed named fields and preserve missing-field gaps after successful renders.
 
@@ -172,9 +162,7 @@ def test_render_input_variation_is_not_presence(
     Returns:
         None: Successful rendering does not imply every named field was varied.
     """
-    monkeypatch.setattr(
-        "hypothesis_helm.charts.runner.render", lambda *args, **kwargs: [{"kind": "ConfigMap"}]
-    )
+    monkeypatch.setattr("hypothesis_helm.charts.runner.render", lambda *args, **kwargs: [{"kind": "ConfigMap"}])
     report = check_chart(chart, max_examples=1, input_strategy=st.just({"used": True}))
     assert report["status"] == "passed"
     measured = report["field_coverage"]
@@ -190,9 +178,7 @@ def test_render_input_variation_is_not_presence(
     assert baseline.statistics["varied_fields"] == [["used"]]
 
 
-def test_audit_dump_without_schema(
-    chart: Chart, capsys: pytest.CaptureFixture[str], tmp_path: Path
-) -> None:
+def test_audit_dump_without_schema(chart: Chart, capsys: pytest.CaptureFixture[str], tmp_path: Path) -> None:
     """
     Expose the compiler baseline through audit even without a values schema.
 
@@ -280,9 +266,7 @@ def test_scan_exports_each_chart(
           name: child
     """)
     )
-    monkeypatch.setattr(
-        "hypothesis_helm.charts.scan.exercise_chart", lambda *args: {"status": "passed"}
-    )
+    monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", lambda *args: {"status": "passed"})
     output = tmp_path / "dumps"
     assert (
         main(
@@ -316,9 +300,7 @@ def test_scan_exports_each_chart(
     assert "Identified input fields" in (tmp_path / "scan.md").read_text()
 
 
-def test_scan_export_cannot_overwrite_original_values(
-    chart: Chart, tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_scan_export_cannot_overwrite_original_values(chart: Chart, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Protect original inputs even though scan exports are computed from isolated copies.
 
@@ -353,9 +335,7 @@ def test_scan_export_cannot_overwrite_original_values(
     assert source.read_bytes() == original
 
 
-def test_phase_coverage_unions_field_identities(
-    chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_phase_coverage_unions_field_identities(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Count a field once across phases even when both phases vary it.
 
@@ -409,9 +389,7 @@ def test_phase_coverage_unions_field_identities(
     assert result["proof_of_totality"] is False
 
 
-def test_failure_retains_field_coverage(
-    chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_failure_retains_field_coverage(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Persist partial variation evidence alongside a failing render's counterexample.
 
@@ -424,9 +402,7 @@ def test_failure_retains_field_coverage(
         None: Failure JSON retains the same field denominator and observed variation.
     """
 
-    def render(
-        source: Chart, values: dict[str, object], **kwargs: object
-    ) -> list[dict[str, object]]:
+    def render(source: Chart, values: dict[str, object], **kwargs: object) -> list[dict[str, object]]:
         """
         Simulate a render failure for the varied input.
 
@@ -444,9 +420,7 @@ def test_failure_retains_field_coverage(
 
     monkeypatch.setattr("hypothesis_helm.charts.runner.render", render)
     output = tmp_path / "failure"
-    result = check_chart(
-        chart, max_examples=1, input_strategy=st.just({"used": True}), artifact_dir=output
-    )
+    result = check_chart(chart, max_examples=1, input_strategy=st.just({"used": True}), artifact_dir=output)
     assert result["status"] == "failed"
     saved = json.loads((output / "report.json").read_text())
     assert saved["field_coverage"]["varied_fields"] == [["used"]]

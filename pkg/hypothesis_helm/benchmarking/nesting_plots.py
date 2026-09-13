@@ -14,9 +14,7 @@ import numpy as np
 
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
-os.environ.setdefault(
-    "MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib")
-)
+os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
 import matplotlib
 
 matplotlib.use("Agg")
@@ -56,13 +54,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         ("Erroneous inputs exercised", "Inputs checked by policy"),
         strict=True,
     ):
-        values = [
-            [
-                number(indexed[(ref["structure"], strategy, expanded)][metric])
-                for strategy, expanded in columns
-            ]
-            for ref in references
-        ]
+        values = [[number(indexed[(ref["structure"], strategy, expanded)][metric]) for strategy, expanded in columns] for ref in references]
         axis.imshow(
             values,
             cmap="YlGn" if metric == "erroneous_input_recall" else "YlOrRd",
@@ -72,17 +64,14 @@ def plot(output: Path, document: dict[str, object]) -> None:
         )
         axis.set_title(title)
         axis.set_yticks(range(len(references)), [str(ref["structure"]) for ref in references])
-        axis.set_xticks(
-            range(len(columns)), [labels[s] + (" + expansion" if e else "") for s, e in columns]
-        )
+        axis.set_xticks(range(len(columns)), [labels[s] + (" + expansion" if e else "") for s, e in columns])
         for i, ref in enumerate(references):
             for j, (strategy, expanded) in enumerate(columns):
                 row = indexed[(ref["structure"], strategy, expanded)]
                 label = str(row["checked_inputs"])
                 if metric == "erroneous_input_recall":
                     label = (
-                        f"{row['erroneous_inputs_found']}/{row['erroneous_inputs_total']}\n"
-                        f"{100 * (1 - number(row[metric])):.1f}% missed"
+                        f"{row['erroneous_inputs_found']}/{row['erroneous_inputs_total']}\n{100 * (1 - number(row[metric])):.1f}% missed"
                     )
                 axis.text(
                     j,
@@ -93,9 +82,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     fontsize=9,
                     bbox={"facecolor": "white", "alpha": 0.75, "edgecolor": "none"},
                 )
-    figure.suptitle(
-        f"Chart nesting × permutation strength {metadata['permutations']} · fixed trim level 2"
-    )
+    figure.suptitle(f"Chart nesting × permutation strength {metadata['permutations']} · fixed trim level 2")
     figure.tight_layout(rect=(0, 0, 1, 0.96))
     for extension in ("png", "svg"):
         figure.savefig(output / f"matrix.{extension}", dpi=160, facecolor="white")
@@ -104,9 +91,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         frame = mapping(raw_frame)
         refs = [ref for ref in references if ref["family"] == frame["family"]]
         coordinates = mapping(frame["coordinates"])
-        pooled = np.concatenate(
-            [np.asarray(coordinates[str(ref["structure"])], dtype=float) for ref in refs]
-        )
+        pooled = np.concatenate([np.asarray(coordinates[str(ref["structure"])], dtype=float) for ref in refs])
         low, high = pooled.min(axis=0), pooled.max(axis=0)
         pad = np.maximum((high - low) * 0.12, 0.5)
         variance = sequence(mapping(frame["basis"])["explained_variance_ratio"])
@@ -123,12 +108,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     indices = (
                         list(range(len(points)))
                         if strategy == "full"
-                        else [
-                            int(number(value))
-                            for value in sequence(
-                                indexed[(ref["structure"], strategy, expanded)]["checked_indices"]
-                            )
-                        ]
+                        else [int(number(value)) for value in sequence(indexed[(ref["structure"], strategy, expanded)]["checked_indices"])]
                     )
                     counts = Counter(identities[index] for index in indices)
                     axis = axes[i, j]
@@ -138,11 +118,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                         (False, "#2563eb", "o"),
                         (True, "#dc2626", "X"),
                     ):
-                        kept = [
-                            identity
-                            for identity in counts
-                            if (identity in faulty_outputs) == erroneous
-                        ]
+                        kept = [identity for identity in counts if (identity in faulty_outputs) == erroneous]
                         if kept:
                             kept_points = np.array([locations[identity] for identity in kept])
                             axis.scatter(
@@ -203,18 +179,14 @@ def plot(output: Path, document: dict[str, object]) -> None:
             )
             figure.tight_layout(rect=(0.02, 0.065, 1, 0.96))
             for extension in ("png", "svg"):
-                figure.savefig(
-                    output / f"pca-{frame['family']}-{mode}.{extension}", dpi=160, facecolor="white"
-                )
+                figure.savefig(output / f"pca-{frame['family']}-{mode}.{extension}", dpi=160, facecolor="white")
             plt.close(figure)
     for svg in output.glob("*.svg"):
         svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
     with (output / "results.csv").open("w") as stream:
         writer = csv.DictWriter(
             stream,
-            fieldnames=[
-                key for key in rows[0] if key not in {"checked_indices", "additional_indices"}
-            ],
+            fieldnames=[key for key in rows[0] if key not in {"checked_indices", "additional_indices"}],
             extrasaction="ignore",
             lineterminator="\n",
         )
@@ -270,15 +242,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
         |---|---|---|
         """).lstrip("\n")
     for ref in references:
-        spec = mapping(
-            json.loads((output / "charts" / str(ref["structure"]) / "benchmark.json").read_text())
-        )
+        spec = mapping(json.loads((output / "charts" / str(ref["structure"]) / "benchmark.json").read_text()))
         components = sequence(mapping(spec["structure"])["components"])
         depths = ", ".join(str(mapping(component)["gate_depth"]) for component in components)
-        text += (
-            f"| {ref['structure']} | {depths} | "
-            f"{mapping(ref['planning'])['planned_inputs']}/{ref['valid_inputs']} |\n"
-        )
+        text += f"| {ref['structure']} | {depths} | {mapping(ref['planning'])['planned_inputs']}/{ref['valid_inputs']} |\n"
     text += dedent(f"""
 
         Helm `{metadata["helm"]}`. Every reference render is checked against an independent

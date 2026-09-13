@@ -37,7 +37,7 @@ positional arguments:
   {aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
     aggregate           verify piped shard reports and write one final report
     export-minimal-values
-                        write verified values beside each discovered chart
+                        write example values beside each discovered chart
     scan                recursively test charts in a directory or Git repository
     generate            generate one typed Python property test per values path
     audit               discover value references and schema gaps
@@ -79,7 +79,11 @@ options:
 usage: helm hypothesis export-minimal-values [-h] [--filename FILENAME] [--helm HELM]
                                              [--timeout TIMEOUT]
                                              [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
-                                             [--files-list FILES_LIST]
+                                             [--files-list FILES_LIST] [--kubeconform]
+                                             [--schema-version SCHEMA_VERSION]
+                                             [--schema-cache-dir SCHEMA_CACHE_DIR]
+                                             [--schema-offline]
+                                             [--kubeconform-binary KUBECONFORM_BINARY]
                                              source
 
 positional arguments:
@@ -93,6 +97,12 @@ options:
   --minimal-values-timeout MINIMAL_VALUES_TIMEOUT
   --files-list FILES_LIST
                         write NUL-delimited exported YAML paths
+  --kubeconform         validate Kubernetes API schemas
+  --schema-version SCHEMA_VERSION
+                        Kubernetes schema version: latest or X.Y.Z
+  --schema-cache-dir SCHEMA_CACHE_DIR
+  --schema-offline      reuse cached schemas without network access
+  --kubeconform-binary KUBECONFORM_BINARY
 ~~~
 
 </details>
@@ -151,9 +161,9 @@ options:
                         verification and minimization budget for values export
                         (default: 30s)
   --export-minimal-values [FILENAME]
-                        export render-verified values and missing fields; default:
-                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
-                        per chart)
+                        export example values with validation status and missing
+                        fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
+                        separate files per chart)
 ~~~
 
 </details>
@@ -184,9 +194,9 @@ options:
                         verification and minimization budget for values export
                         (default: 30s)
   --export-minimal-values [FILENAME]
-                        export render-verified values and missing fields; default:
-                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
-                        per chart)
+                        export example values with validation status and missing
+                        fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
+                        separate files per chart)
 ~~~
 
 </details>
@@ -213,9 +223,9 @@ options:
                         verification and minimization budget for values export
                         (default: 30s)
   --export-minimal-values [FILENAME]
-                        export render-verified values and missing fields; default:
-                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
-                        per chart)
+                        export example values with validation status and missing
+                        fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
+                        separate files per chart)
 ~~~
 
 </details>
@@ -225,10 +235,10 @@ options:
 
 ~~~text
 usage: helm hypothesis run [-h] [--seed SEED] [--match MATCH] [--collect-only]
-                           [--artifact-dir ARTIFACT_DIR] [--dry-run] [--kubeconform]
+                           [--artifact-dir ARTIFACT_DIR] [--kubeconform]
                            [--schema-version SCHEMA_VERSION]
                            [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
-                           [--kubeconform-binary KUBECONFORM_BINARY]
+                           [--kubeconform-binary KUBECONFORM_BINARY] [--dry-run]
                            [--cache-dir CACHE_DIR] [--disable-schema-caching]
                            [--progress] [--run-id RUN_ID] [--no-cache]
                            [--rerun {auto,all,failed}] [--shard SHARD] [--jobs JOBS]
@@ -245,14 +255,14 @@ options:
   --collect-only
   --artifact-dir ARTIFACT_DIR
                         report directory for a saved suite
-  --dry-run             plot coverage and forecast filtering or cached property work
-                        without execution
   --kubeconform         validate Kubernetes API schemas
   --schema-version SCHEMA_VERSION
                         Kubernetes schema version: latest or X.Y.Z
   --schema-cache-dir SCHEMA_CACHE_DIR
   --schema-offline      reuse cached schemas without network access
   --kubeconform-binary KUBECONFORM_BINARY
+  --dry-run             plot coverage and forecast filtering or cached property work
+                        without execution
   --cache-dir CACHE_DIR
                         persistent path-result cache directory
   --disable-schema-caching
@@ -291,10 +301,10 @@ usage: helm hypothesis test [-h] [--max-examples MAX_EXAMPLES] [--time-limit DUR
                             [--max-group-cases MAX_GROUP_CASES] [--seed SEED]
                             [--timeout TIMEOUT] [--helm HELM] [--release RELEASE]
                             [--namespace NAMESPACE] [--kube-version KUBE_VERSION]
-                            [--allow-empty] [--artifact-dir ARTIFACT_DIR] [--dry-run]
+                            [--allow-empty] [--artifact-dir ARTIFACT_DIR]
                             [--kubeconform] [--schema-version SCHEMA_VERSION]
                             [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
-                            [--kubeconform-binary KUBECONFORM_BINARY]
+                            [--kubeconform-binary KUBECONFORM_BINARY] [--dry-run]
                             [--cache-dir CACHE_DIR] [--disable-schema-caching]
                             [--progress] [--run-id RUN_ID] [--no-cache]
                             [--rerun {auto,all,failed}] [--shard SHARD] [--jobs JOBS]
@@ -346,14 +356,14 @@ options:
   --kube-version KUBE_VERSION
   --allow-empty
   --artifact-dir ARTIFACT_DIR
-  --dry-run             plot coverage and forecast filtering or cached property work
-                        without execution
   --kubeconform         validate Kubernetes API schemas
   --schema-version SCHEMA_VERSION
                         Kubernetes schema version: latest or X.Y.Z
   --schema-cache-dir SCHEMA_CACHE_DIR
   --schema-offline      reuse cached schemas without network access
   --kubeconform-binary KUBECONFORM_BINARY
+  --dry-run             plot coverage and forecast filtering or cached property work
+                        without execution
   --cache-dir CACHE_DIR
                         persistent path-result cache directory
   --disable-schema-caching
@@ -380,9 +390,9 @@ options:
                         verification and minimization budget for values export
                         (default: 30s)
   --export-minimal-values [FILENAME]
-                        export render-verified values and missing fields; default:
-                        values-minimal-<checksum>-<epoch>.yaml (scan: separate files
-                        per chart)
+                        export example values with validation status and missing
+                        fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
+                        separate files per chart)
 
 filtering:
   Use --filter or the individual methods below; random trimming is independent.

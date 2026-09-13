@@ -97,9 +97,7 @@ class ThroughputController:
                 -1.0,
                 min(
                     1.0,
-                    (rate - self._previous_rate)
-                    / max(rate, self._previous_rate, 1e-9)
-                    / (measured_limit - self._previous_limit),
+                    (rate - self._previous_rate) / max(rate, self._previous_rate, 1e-9) / (measured_limit - self._previous_limit),
                 ),
             )
             # On a throughput plateau, prefer fewer active workers.
@@ -117,9 +115,7 @@ class ThroughputController:
         # Probe periodically when quantization or a boundary prevents movement.
         # A PID alone cannot discover an unknown throughput maximum.
         if self._unchanged >= 3 and self.maximum > 1:
-            self.limit += (
-                -1 if self.limit > 1 and (self._gradient < 0 or self.limit == self.maximum) else 1
-            )
+            self.limit += -1 if self.limit > 1 and (self._gradient < 0 or self.limit == self.maximum) else 1
             self._position = float(self.limit)
             self.pid = PID()
             self._unchanged = 0

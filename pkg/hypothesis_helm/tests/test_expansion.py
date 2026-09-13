@@ -83,9 +83,7 @@ def error_output(values: dict[str, object]) -> list[dict[str, object]]:
     Returns:
         list[dict[str, object]]: Exact error-status manifest bundle.
     """
-    return [
-        configmap("benchmark-error", {"status": "incorrect" if values.get("a") else "expected"})
-    ]
+    return [configmap("benchmark-error", {"status": "incorrect" if values.get("a") else "expected"})]
 
 
 def reject_error(resources: list[dict[str, object]]) -> None:
@@ -102,9 +100,7 @@ def reject_error(resources: list[dict[str, object]]) -> None:
 
 
 @pytest.mark.parametrize("sampled", [False, True])
-def test_fail_fast_preserves_first_failure(
-    expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch, tmp_path: Path, sampled: bool
-) -> None:
+def test_fail_fast_preserves_first_failure(expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch, tmp_path: Path, sampled: bool) -> None:
     """
     Stop after one faulty render in both sampled and failure-expansion execution.
 
@@ -121,9 +117,7 @@ def test_fail_fast_preserves_first_failure(
 
     calls: list[dict[str, object]] = []
 
-    def render(
-        chart: Chart, values: dict[str, object], **kwargs: object
-    ) -> list[dict[str, object]]:
+    def render(chart: Chart, values: dict[str, object], **kwargs: object) -> list[dict[str, object]]:
         """
         Record renders and produce the fixture's independent expected output.
 
@@ -184,9 +178,7 @@ def test_expansion_execution(
     """
     calls: list[dict[str, object]] = []
 
-    def render(
-        chart: Chart, values: dict[str, object], **kwargs: object
-    ) -> list[dict[str, object]]:
+    def render(chart: Chart, values: dict[str, object], **kwargs: object) -> list[dict[str, object]]:
         """
         Simulate Helm output or a deadline during an added render.
 
@@ -232,14 +224,10 @@ def test_expansion_execution(
         assert details["additional_executed"] == 3
         assert report["remaining_iterations"] == 0
         assert report["completed_iterations"] == report["attempts"]
-    assert json.loads((tmp_path / "reports/report.json").read_text()) == json.loads(
-        json.dumps(report)
-    )
+    assert json.loads((tmp_path / "reports/report.json").read_text()) == json.loads(json.dumps(report))
 
 
-def test_expansion_scheduler_and_benchmark(
-    expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_expansion_scheduler_and_benchmark(expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Expand only observed failures and preserve exact output coverage while increasing input recall.
 
@@ -250,13 +238,8 @@ def test_expansion_scheduler_and_benchmark(
     Returns:
         None: Duplicate triggers do not reschedule inputs and no oracle labels guide selection.
     """
-    values: list[dict[str, object]] = [
-        dict(zip(("a", "b", "c"), bits, strict=True))
-        for bits in itertools.product((False, True), repeat=3)
-    ]
-    scheduler = FailureExpansion.build(
-        expansion_chart.path, expansion_chart.defaults, values, values, [0, 4]
-    )
+    values: list[dict[str, object]] = [dict(zip(("a", "b", "c"), bits, strict=True)) for bits in itertools.product((False, True), repeat=3)]
+    scheduler = FailureExpansion.build(expansion_chart.path, expansion_chart.defaults, values, values, [0, 4])
     assert scheduler.failed(4) == [5, 6, 7]
     assert scheduler.failed(5) == []
     assert FailureExpansion({}, {}, {0}).failed(0) == []
@@ -281,9 +264,7 @@ def test_expansion_scheduler_and_benchmark(
     reference: dict[str, object] = {
         "structure": "fixture",
         "values": values,
-        "outcomes": [
-            json.loads(bundle_key(error_output(value))) for value in (values[0], values[4])
-        ],
+        "outcomes": [json.loads(bundle_key(error_output(value))) for value in (values[0], values[4])],
         "outcome_indices": [0] * 4 + [1] * 4,
         "selected_indices": {"topology": [0, 4]},
         "faulty_indices": [],  # Intentionally wrong: scheduling must read observed outputs.
@@ -311,9 +292,7 @@ def test_expansion_scheduler_and_benchmark(
         ["--trim-random", "1", "--filter"],
     ],
 )
-def test_expansion_cli_dry_run(
-    expansion_chart: Chart, capsys: pytest.CaptureFixture[str], options: list[str]
-) -> None:
+def test_expansion_cli_dry_run(expansion_chart: Chart, capsys: pytest.CaptureFixture[str], options: list[str]) -> None:
     """
     Expose the opt-in flag and bound failure-dependent work without executing chart tests.
 
@@ -373,9 +352,7 @@ def test_filter_exclusivity(individual: list[str], preset_first: bool) -> None:
     with pytest.raises(SystemExit) as error:
         parser.parse_args(["test", *options])
     assert error.value.code == 2
-    parsed = parser.parse_args(
-        ["test", "--trim-random", "1", "--trim-topology", "2", "--expand-failures"]
-    )
+    parsed = parser.parse_args(["test", "--trim-random", "1", "--trim-topology", "2", "--expand-failures"])
     assert (parsed.trim, parsed.trim_topology, parsed.expand_failures) == (1, 2, True)
 
 
@@ -394,22 +371,16 @@ def test_topology_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.Monkey
 
     from hypothesis_helm.benchmarking.benchmark_topology_depth import sweep
 
-    values: list[dict[str, object]] = [
-        dict(zip(("a", "b", "c"), items, strict=True)) for items in product((False, True), repeat=3)
-    ]
+    values: list[dict[str, object]] = [dict(zip(("a", "b", "c"), items, strict=True)) for items in product((False, True), repeat=3)]
     reference: dict[str, object] = {
         "structure": "fixture",
         "values": values,
-        "outcomes": [
-            json.loads(bundle_key(error_output(value))) for value in (values[0], values[4])
-        ],
+        "outcomes": [json.loads(bundle_key(error_output(value))) for value in (values[0], values[4])],
         "outcome_indices": [0] * 4 + [1] * 4,
     }
     calls: list[dict[str, object]] = []
 
-    def observed(
-        chart: Chart, value: dict[str, object], **kwargs: object
-    ) -> list[dict[str, object]]:
+    def observed(chart: Chart, value: dict[str, object], **kwargs: object) -> list[dict[str, object]]:
         """
         Record every physical expansion execution and return independent oracle resources.
 
@@ -430,10 +401,7 @@ def test_topology_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.Monkey
     assert all(row["erroneous_inputs_found"] == 4 for row in rows)
     assert all(row["trim_random"] == 0 and row["expand_failures"] for row in rows)
     assert sum(int(str(row["additional_executed"])) for row in rows) == len(calls)
-    assert all(
-        len(sequence(row["checked_indices"])) == len(set(sequence(row["checked_indices"])))
-        for row in rows
-    )
+    assert all(len(sequence(row["checked_indices"])) == len(set(sequence(row["checked_indices"]))) for row in rows)
     stopped = sweep(expansion_chart, reference, [1, 2], 2026, "helm", 0)
     assert len(stopped) == 1
     assert stopped[0]["status"] == "time-limit"

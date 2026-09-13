@@ -147,9 +147,7 @@ def expected_topology(values: dict[str, object], spec: dict[str, object]) -> dic
     return result
 
 
-def validate_topology(
-    resources: list[dict[str, object]], values: dict[str, object], spec: dict[str, object]
-) -> None:
+def validate_topology(resources: list[dict[str, object]], values: dict[str, object], spec: dict[str, object]) -> None:
     """
     Assert resource presence and cross-resource projections against the independent oracle.
 

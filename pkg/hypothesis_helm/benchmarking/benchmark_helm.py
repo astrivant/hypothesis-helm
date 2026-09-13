@@ -64,13 +64,9 @@ def parser() -> argparse.ArgumentParser:
         default=540.0,
         help="shared per-point worker deadline; default and ceiling: 9m",
     )
-    result.add_argument(
-        "--step", type=int, default=50, help="linear progressive checkpoint interval"
-    )
+    result.add_argument("--step", type=int, default=50, help="linear progressive checkpoint interval")
     result.add_argument("--max-permutations", type=int, default=200000)
-    result.add_argument(
-        "--counts", type=positive_counts, help="optional explicit prefix checkpoints"
-    )
+    result.add_argument("--counts", type=positive_counts, help="optional explicit prefix checkpoints")
     result.add_argument("--scaling-counts", type=positive_counts, default=list(range(50, 501, 50)))
     result.add_argument(
         "--replicas",
@@ -90,9 +86,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--multiplicity", type=int, default=MULTIPLICITY)
     result.add_argument("--shard", type=parse_shard_option, default="auto")
     result.add_argument("--suite", choices=["all", "progressive", "scaling"], default="all")
-    result.add_argument(
-        "--resume", action="store_true", help="reuse matching completed measurements"
-    )
+    result.add_argument("--resume", action="store_true", help="reuse matching completed measurements")
     result.add_argument("--plot-only", action="store_true", help="plot saved measurements only")
     return result
 
@@ -171,9 +165,7 @@ def run(argv: list[str] | None = None) -> int:
         or args.multiplicity < 1
         or args.multiplicity & (args.multiplicity - 1)
     ):
-        raise ValueError(
-            "limit must be <= 9m; repeats positive; multiplicity a positive power of two"
-        )
+        raise ValueError("limit must be <= 9m; repeats positive; multiplicity a positive power of two")
     shard, shard_source = resolve_shard(args.shard, os.environ)
     output = args.output / f"shard-{shard.name}" if shard else args.output
     if args.plot_only:
@@ -186,9 +178,7 @@ def run(argv: list[str] | None = None) -> int:
         raise ValueError(f"Helm executable not found: {args.helm}")
     chart = Chart.load(args.chart)
     inputs = load_inputs(chart, args.values)
-    spec = (
-        mapping(json.loads((chart.path / "benchmark.json").read_text())) if inputs is None else None
-    )
+    spec = mapping(json.loads((chart.path / "benchmark.json").read_text())) if inputs is None else None
     available = 2 ** int(str(spec["input_complexity"])) if spec else len(inputs or [])
     shard_total = shard.total if shard else 1
     metadata: dict[str, object] = {
@@ -196,9 +186,7 @@ def run(argv: list[str] | None = None) -> int:
         "workload": VERSION if inputs is None else "custom-jsonl",
         "distribution": spec,
         "chart_sha256": source_digest(chart.path),
-        "values_sha256": hashlib.sha256(args.values.read_bytes()).hexdigest()
-        if args.values
-        else None,
+        "values_sha256": hashlib.sha256(args.values.read_bytes()).hexdigest() if args.values else None,
         "code_sha256": code_digest(),
         "seed": args.seed,
         "multiplicity": args.multiplicity,
@@ -218,17 +206,9 @@ def run(argv: list[str] | None = None) -> int:
         "logical_cpus": os.cpu_count(),
         "helm": subprocess.check_output([helm, "version", "--short"], text=True).strip(),
         "matplotlib": importlib.metadata.version("matplotlib"),
-        "cache_scope": (
-            "fresh caches per scaling point and progressive trajectory; "
-            "progressive checkpoints share their trajectory cache"
-        ),
-        "timing": (
-            "wall time includes spawn, chart loading, input generation and validation; "
-            "cleanup measured"
-        ),
-        "coverage": (
-            "distinct seeded input prefixes; counts are not --permutations interaction strengths"
-        ),
+        "cache_scope": ("fresh caches per scaling point and progressive trajectory; progressive checkpoints share their trajectory cache"),
+        "timing": ("wall time includes spawn, chart loading, input generation and validation; cleanup measured"),
+        "coverage": ("distinct seeded input prefixes; counts are not --permutations interaction strengths"),
         "replicas_meaning": "parallel benchmark worker processes, not Kubernetes replicas",
     }
     points: list[object] = []
@@ -237,9 +217,7 @@ def run(argv: list[str] | None = None) -> int:
             raise ValueError(f"{output}/results.json exists; use --resume or another --output")
         previous = mapping(json.loads((output / "results.json").read_text()))
         if previous["metadata"] != metadata:
-            raise ValueError(
-                "cannot resume: chart, code, workload, machine or shard settings changed"
-            )
+            raise ValueError("cannot resume: chart, code, workload, machine or shard settings changed")
         points = sequence(previous["points"])
     document: dict[str, object] = {
         "metadata": metadata,
@@ -247,9 +225,7 @@ def run(argv: list[str] | None = None) -> int:
         "points": points,
     }
 
-    def point(
-        count: int, replicas: int, pruning: bool, repeat: int, family: str
-    ) -> dict[str, object]:
+    def point(count: int, replicas: int, pruning: bool, repeat: int, family: str) -> dict[str, object]:
         """
         Measure or reuse an identical point and attach its explicit study memberships.
 
@@ -264,9 +240,7 @@ def run(argv: list[str] | None = None) -> int:
             dict[str, object]: A matching measured point with immutable input identity.
         """
         if count > available:
-            raise ValueError(
-                f"requested {count} permutations but the workload contains {available}"
-            )
+            raise ValueError(f"requested {count} permutations but the workload contains {available}")
         for item in points:
             saved = mapping(item)
             if saved.get("observation", "independent-run") != "independent-run":
@@ -377,20 +351,12 @@ def run(argv: list[str] | None = None) -> int:
                                 "workers": [],
                             }
                         )
-                    completed_targets = {
-                        int(str(row["requested_permutations"])) for row in checkpoints
-                    }
+                    completed_targets = {int(str(row["requested_permutations"])) for row in checkpoints}
                     if measured["status"] == "time-limit":
                         # These are two censored targets from the SAME observed execution window,
                         # not independent runs or extrapolated completion times.
-                        for target in [
-                            value for value in targets if value not in completed_targets
-                        ][:2]:
-                            assigned = (
-                                len(range(shard.index - 1, target, shard.total))
-                                if shard
-                                else target
-                            )
+                        for target in [value for value in targets if value not in completed_targets][:2]:
+                            assigned = len(range(shard.index - 1, target, shard.total)) if shard else target
                             points.append(
                                 {
                                     **measured,

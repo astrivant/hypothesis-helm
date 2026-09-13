@@ -100,10 +100,7 @@ def test_shared_error_groups(tmp_path: Path, packaged: bool) -> None:
     records = []
     for root in (first, second):
         error = diagnostic(root.name)
-        phases = [
-            {"phase": name, "status": "failed", "error": error}
-            for name in ("known-inputs", "robustness")
-        ]
+        phases = [{"phase": name, "status": "failed", "error": error} for name in ("known-inputs", "robustness")]
         record: dict[str, object] = {
             "chart": root.name,
             "status": "failed",
@@ -117,9 +114,7 @@ def test_shared_error_groups(tmp_path: Path, packaged: bool) -> None:
     standalone: dict[str, object] = {
         "chart": "first/charts/alias",
         "status": "failed",
-        "error": diagnostic("first")
-        .split("error calling include: ")[1]
-        .replace("first/charts/alias/", "shared/"),
+        "error": diagnostic("first").split("error calling include: ")[1].replace("first/charts/alias/", "shared/"),
     }
     standalone["error_diagnostics"] = chart_errors(standalone, child)
     records.append(standalone)
@@ -172,23 +167,17 @@ def test_distinct_dependency_errors(tmp_path: Path, difference: str) -> None:
         )
         error = diagnostic(
             name,
-            "port must exceed 200"
-            if difference == "message" and name == "second"
-            else "port must exceed 100",
+            "port must exceed 200" if difference == "message" and name == "second" else "port must exceed 100",
         )
         record: dict[str, object] = {"chart": name, "status": "failed", "error": error}
-        record["error_diagnostics"] = chart_errors(
-            record, None if difference == "unresolved" else root
-        )
+        record["error_diagnostics"] = chart_errors(record, None if difference == "unresolved" else root)
         records.append(record)
     report: dict[str, object] = {"charts": records}
     deduplicate_errors(report)
     assert report["error_summary"] == {"unique_errors": 2, "occurrences": 2, "duplicates": 0}
 
 
-def test_scan_dependency_deduplication(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
+def test_scan_dependency_deduplication(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Deduplicate before temporary copies disappear and keep scanning every parent.
 

@@ -25,11 +25,7 @@ def records() -> list[dict[str, object]]:
     result = []
     for index in (1, 2):
         selected = [node for node in nodes if Shard(index, 2).includes(node)]
-        junit = (
-            "<testsuites><testsuite>"
-            + "".join(f'<testcase name="{node}"/>' for node in selected)
-            + "</testsuite></testsuites>"
-        )
+        junit = "<testsuites><testsuite>" + "".join(f'<testcase name="{node}"/>' for node in selected) + "</testsuite></testsuites>"
         result.append(
             {
                 "run_id": "pipeline-42-attempt-1",
@@ -73,10 +69,7 @@ def test_piped_reports(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, encoding
     payload = (
         json.dumps(reports)
         if encoding == "array"
-        else "\n".join(
-            json.dumps(record, indent=2 if encoding == "concatenated" else None)
-            for record in reports
-        )
+        else "\n".join(json.dumps(record, indent=2 if encoding == "concatenated" else None) for record in reports)
     )
     monkeypatch.setattr("sys.stdin", io.StringIO(payload))
     output = tmp_path / "final"
@@ -104,12 +97,8 @@ def test_piped_reports(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, encoding
     assert report["properties"]["selected"] == report["properties"]["tests"] == 6
 
 
-@pytest.mark.parametrize(
-    "damage", ["missing", "duplicate", "run-id", "suite", "checksum", "inventory"]
-)
-def test_incompatible_reports_never_publish(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, damage: str
-) -> None:
+@pytest.mark.parametrize("damage", ["missing", "duplicate", "run-id", "suite", "checksum", "inventory"])
+def test_incompatible_reports_never_publish(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, damage: str) -> None:
     """
     Reject missing or mixed pipeline artifacts before publishing any final report.
 

@@ -22,9 +22,7 @@ from hypothesis_helm.schemas.model import ValuesModel
 PROFILES = {"shallow": {1: 1.0}, "deep": {5: 1.0}, "random": dict.fromkeys(range(1, 6), 1.0)}
 
 
-def select_plan(
-    chart: Chart, reference: dict[str, object], strength: int, level: int, seed: int
-) -> dict[str, object]:
+def select_plan(chart: Chart, reference: dict[str, object], strength: int, level: int, seed: int) -> dict[str, object]:
     """
     Restrict each policy and its expansion candidates to the actual interaction plan.
 
@@ -59,9 +57,7 @@ def select_plan(
     return {
         **reference,
         "candidate_indices": candidates,
-        "selected_indices": {
-            name: [candidates[index] for index in indices] for name, indices in selected.items()
-        },
+        "selected_indices": {name: [candidates[index] for index in indices] for name, indices in selected.items()},
         "planning": {
             "requested_strength": strength,
             "effective_strength": plan.strength,
@@ -91,12 +87,7 @@ def pooled_projection(references: list[dict[str, object]]) -> list[dict[str, obj
         for ref in selected:
             outcomes = [mapping(value) for value in sequence(ref["outcomes"])]
             for identity in sequence(ref["outcome_indices"]):
-                bundles.append(
-                    [
-                        mapping(json.loads(str(encoded)))
-                        for encoded in sequence(outcomes[int(number(identity))]["resources"])
-                    ]
-                )
+                bundles.append([mapping(json.loads(str(encoded))) for encoded in sequence(outcomes[int(number(identity))]["resources"])])
         scores, basis = project(bundles)
         basis["fit"] = "pooled complete populations across depth profiles within this family"
         coordinates = {}
@@ -173,9 +164,7 @@ def main() -> int:
                 args.time_limit,
                 topology_components=12,
                 topology_seed=2026,
-                topology_weights={"dependencies": 1, "interactions": 1, "equivalence": 1}
-                if family == "supported"
-                else None,
+                topology_weights={"dependencies": 1, "interactions": 1, "equivalence": 1} if family == "supported" else None,
                 topology_depth_weights=weights,
             )
             reference.update({"family": family, "profile": profile})
@@ -195,9 +184,7 @@ def main() -> int:
                 reference.pop(key, None)
             references.append(reference)
             (args.output / "results.json").write_text(json.dumps(document) + "\n")
-            if reference["status"] != "complete" or any(
-                row["status"] != "complete" for row in rows
-            ):
+            if reference["status"] != "complete" or any(row["status"] != "complete" for row in rows):
                 return 1
             print("  complete", flush=True)
     document["frames"] = pooled_projection(references)

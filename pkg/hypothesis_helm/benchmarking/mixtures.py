@@ -67,9 +67,7 @@ def write_mixture(
         paths = rng.sample(boolean, 4)
         if name == "boundaries":
             paths[0] = f"input{numeric:03d}"
-        component = write_structure(
-            chart, name, active, paths=paths, prefix=f"component-{index:03d}-"
-        )
+        component = write_structure(chart, name, active, paths=paths, prefix=f"component-{index:03d}-")
         if depth_weights is not None:
             depth = depth_rng.choices(list(depth_weights), weights=list(depth_weights.values()))[0]
             gates = gate_rng.sample(boolean, len(boolean))[:depth]
@@ -88,9 +86,7 @@ def write_mixture(
         "realized_counts": {name: names.count(name) for name in STRUCTURES},
         "component_count": count,
         "components": components,
-        "depth_weights": {str(key): value for key, value in depth_weights.items()}
-        if depth_weights is not None
-        else None,
+        "depth_weights": {str(key): value for key, value in depth_weights.items()} if depth_weights is not None else None,
         "numeric_input": numeric,
         "wiring": "four distinct sampled paths per component; paths shared across components",
         "realized_probabilities": {name: value / count for name, value in Counter(names).items()},

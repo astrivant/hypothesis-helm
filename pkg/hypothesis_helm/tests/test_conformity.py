@@ -214,15 +214,11 @@ def test_memory_snapshot(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Non
     assert conformity.memory_snapshot(snapshot) == snapshot
     root = tmp_path / "memory"
     monkeypatch.setenv("HYPOTHESIS_HELM_SCHEMA_MEMORY_DIR", str(root))
-    monkeypatch.setattr(
-        subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "ext4\n")
-    )
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "ext4\n"))
     with pytest.raises(ValueError, match="Linux tmpfs"):
         conformity.memory_snapshot(snapshot)
     assert not root.exists()
-    monkeypatch.setattr(
-        subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "tmpfs\n")
-    )
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess([], 0, "tmpfs\n"))
     staged = conformity.memory_snapshot(snapshot)
     assert staged == root / snapshot.parent.name / snapshot.name
     assert (staged / "pod.json").read_bytes() == (snapshot / "pod.json").read_bytes()

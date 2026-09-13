@@ -28,9 +28,7 @@ def render_digest(resources: Sequence[object]) -> bytes:
     Returns:
         bytes: SHA-256 digest independent of YAML formatting and mapping key order.
     """
-    payload = json.dumps(
-        list(resources), sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False
-    ).encode()
+    payload = json.dumps(list(resources), sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode()
     return hashlib.sha256(payload).digest()
 
 
@@ -55,9 +53,7 @@ class RenderHashes:
     validated: set[bytes] = field(factory=set, repr=False)
     lock: RLock = field(factory=RLock, repr=False)
 
-    def check(
-        self, resources: Sequence[object], context: str, validate: Callable[[], None]
-    ) -> None:
+    def check(self, resources: Sequence[object], context: str, validate: Callable[[], None]) -> None:
         """
         Validate unseen output in this context, committing its digest only after success.
 
@@ -70,9 +66,7 @@ class RenderHashes:
             None: Validation passes or the original failure propagates uncached.
         """
         digest = render_digest(resources)
-        validation_key = hashlib.sha256(
-            ALGORITHM.encode() + b"\0" + digest + b"\0" + context.encode()
-        ).digest()
+        validation_key = hashlib.sha256(ALGORITHM.encode() + b"\0" + digest + b"\0" + context.encode()).digest()
         with self.lock:
             self.observed += 1
             self.seen.add(digest)
@@ -109,8 +103,7 @@ class RenderHashes:
         """
         stats = self.snapshot()
         LOGGER.info(
-            "Render hashes (%s): %s observed, %s unique, %s duplicate bundles; "
-            "%s successful validations reused",
+            "Render hashes (%s): %s observed, %s unique, %s duplicate bundles; %s successful validations reused",
             stats["scope"],
             stats["observed_bundles"],
             stats["unique_bundles"],
@@ -174,9 +167,7 @@ def summarize_process_statistics(directory: Path) -> dict[str, object]:
     Returns:
         dict[str, object]: Worker-local totals; global output uniqueness remains unknown.
     """
-    totals = dict.fromkeys(
-        ("observed_bundles", "unique_bundles", "duplicate_bundles", "validation_cache_hits"), 0
-    )
+    totals = dict.fromkeys(("observed_bundles", "unique_bundles", "duplicate_bundles", "validation_cache_hits"), 0)
     workers = 0
     for path in directory.glob("*.json"):
         try:
