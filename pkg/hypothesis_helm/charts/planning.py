@@ -14,14 +14,16 @@ from jsonschema import validators
 
 from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.compiler.passes.expansion import FailureExpansion
+from hypothesis_helm.compiler.passes.sampling import profile as sampling_profile
 from hypothesis_helm.compiler.passes.topology import trim_topology as topology_trim
+from hypothesis_helm.execution.aggressive import select as select_aggressive
 from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.traversal import ALGORITHM, order_configurations
 from hypothesis_helm.reporting.permutations import PermutationStatistics
 from hypothesis_helm.reporting.progressive import estimate_progression
 from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.conformity import ENVIRONMENT
-from hypothesis_helm.schemas.contracts import configuration_key, json_value
+from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping
 from hypothesis_helm.schemas.finite import enumerate_values
 from hypothesis_helm.schemas.groups import ExhaustiveGroup, infer_groups
 from hypothesis_helm.schemas.model import ValuesModel
@@ -145,6 +147,7 @@ def build_plan(
         PlannedRun: Planned inputs, coverage accounting and optional dry-run report.
     """
     planning_started = clock()
+    sampling_analysis = sampling_profile(chart) if options.sampling.aggressive else None
     dry_report = None
     interaction_plan = None
     group_diagnostics: list[dict[str, object]] = []
@@ -228,7 +231,19 @@ def build_plan(
                     protected.add(identity)
                     if region is not None:
                         regions.add(region)
-        selected, sampling_report = options.sampling.select(selected, configuration_key, options.random_seed, protected=protected)
+        if sampling_analysis is not None:
+            selected, sampling_report = select_aggressive(
+                chart,
+                options.sampling,
+                selected,
+                options.random_seed,
+                protected=protected,
+                analysis=sampling_analysis,
+                topology=topology,
+                context={"strength": options.permutations, "trim": options.trim, "trim_topology": options.trim_topology},
+            )
+        else:
+            selected, sampling_report = options.sampling.select(selected, configuration_key, options.random_seed, protected=protected)
         sampling_report["unit"] = "non-default configuration"
         return order_configurations(
             selected,
@@ -315,7 +330,13 @@ def build_plan(
             options.artifact_dir,
             clock() - planning_started,
             {
-                "sampling": {"percent": options.sampling.percent, "minimum": options.sampling.minimum},
+                "sampling": {
+                    "percent": options.sampling.percent,
+                    "minimum": options.sampling.minimum,
+                    "aggressive": options.sampling.aggressive,
+                    "calibration": options.sampling.calibration,
+                    "calibration_id": mapping(sampling_report.get("aggressive", {})).get("calibration_id"),
+                },
                 "trim": options.trim,
                 "trim_topology": options.trim_topology,
                 "expand_failures": options.expand_failures,

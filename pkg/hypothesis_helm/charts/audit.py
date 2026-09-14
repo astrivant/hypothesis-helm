@@ -11,6 +11,7 @@ from hypothesis_helm.charts.presence import has_path
 from hypothesis_helm.charts.templates import discover
 from hypothesis_helm.compiler.passes.complexity import measure
 from hypothesis_helm.compiler.passes.inputs import InputInventory
+from hypothesis_helm.compiler.passes.sampling import profile as sampling_profile
 from hypothesis_helm.reporting.progress import format_path
 
 LOGGER = logging.getLogger(__name__)
@@ -56,9 +57,11 @@ def audit(chart: Chart) -> dict[str, object]:
                     "message": "Configurable field is absent from the original values.yaml",
                 }
             )
+    complexity = measure(chart)
     return {
         "chart": str(chart.path),
-        "complexity": measure(chart),
+        "complexity": complexity,
+        "sampling_profile": sampling_profile(chart, complexity),
         "references": [asdict(r) for r in references],
         "findings": findings,
         "unresolved": [asdict(d) for d in diagnostics],

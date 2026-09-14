@@ -21,6 +21,7 @@ from hypothesis_helm.compiler.asts.contracts import Contracts
 from hypothesis_helm.compiler.passes.dependencies import Dependencies
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.passes.rejections import RejectionPolicy
+from hypothesis_helm.compiler.passes.sampling import profile as sampling_profile
 from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.traversal import ALGORITHM, order_paths, validate_strategy
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
@@ -125,6 +126,7 @@ def check_paths(
     if not math.isfinite(budget) or budget <= 0 or max_examples < 1 or timeout <= 0:
         raise ValueError("budget, max_examples, and timeout must be positive")
     planning_started = time.monotonic()
+    sampling_analysis = sampling_profile(chart) if sampling.aggressive else None
     inventory = InputInventory.build(chart)
     rejections = (
         RejectionPolicy(Contracts.build(chart.path), chart.defaults, (chart.path / "values.schema.json").is_file()) if filtering else None
@@ -138,8 +140,16 @@ def check_paths(
     linear = list(dict.fromkeys([*map(tuple, _default_paths(chart.defaults)), *unique]))
     selected = [unique[path] for path in linear if path in unique]
     eligible_paths = [list(entry.path) for entry in selected]
-    selected, sampling_report = sampling.select(selected, lambda entry: json.dumps(list(entry.path)), seed)
+    selected, sampling_report = (Sampling() if sampling.aggressive else sampling).select(
+        selected, lambda entry: json.dumps(list(entry.path)), seed
+    )
     sampling_report["unit"] = "path property"
+    if sampling_analysis is not None:
+        sampling_report["aggressive"] = {
+            "requested_percent": 70,
+            "analysis": sampling_analysis,
+            "fallback": "path-property sampling has no measured calibration; additional sampling disabled",
+        }
     ordered = order_paths(selected, lambda entry: entry.path, strategy=traversal_strategy, seed=seed)
     planned_paths = [list(entry.path) for entry in ordered]
     planning_seconds = time.monotonic() - planning_started

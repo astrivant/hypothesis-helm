@@ -26,6 +26,8 @@ COMMANDS = {
     "nesting": "benchmark_nesting",
     "stress": "benchmark_stress",
     "sampling": "benchmark_sampling",
+    "calibration": "benchmark_calibration",
+    "filtering": "benchmark_filtering",
     "topology": "benchmark_topology",
     "flamegraph": "flamegraph",
 }

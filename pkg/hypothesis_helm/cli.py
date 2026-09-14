@@ -63,12 +63,15 @@ class FilterAction(argparse.Action):
         Returns:
             None: Store the option after checking preset exclusivity.
         """
-        if self.dest == "filter":
+        if self.dest in {"filter", "filter_aggressive"}:
             if getattr(namespace, "individual_filter", None):
-                parser.error("--filter cannot be combined with individual filtering options")
+                parser.error(f"{option_string} cannot be combined with individual filtering options")
+            other = "filter_aggressive" if self.dest == "filter" else "filter"
+            if getattr(namespace, other, False):
+                parser.error("--filter and --filter-aggressive cannot be combined")
         else:
-            if getattr(namespace, "filter", False):
-                parser.error(f"{option_string} cannot be combined with --filter")
+            if getattr(namespace, "filter", False) or getattr(namespace, "filter_aggressive", False):
+                parser.error(f"{option_string} cannot be combined with a filter preset")
             namespace.individual_filter = option_string
         setattr(namespace, self.dest, True if self.nargs == 0 else values)
 
@@ -178,7 +181,9 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     )
     repository.add_argument(
         "--filter",
-        action="store_true",
+        action=FilterAction,
+        nargs=0,
+        default=False,
         help="filter finite charts with failure expansion; otherwise filter generated inputs before path traversal",
     )
     repository.add_argument(
@@ -307,6 +312,15 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="bound automatically inferred group domains",
     )
     test.add_argument("--seed", type=int, default=0)
+    for target in (test, repository):
+        target.add_argument(
+            "--filter-aggressive",
+            action=FilterAction,
+            nargs=0,
+            default=False,
+            help="enable --filter and retain 70%% subject to measured topology sample floors; unmatched charts keep all filtered cases",
+        )
+        target.add_argument("--sampling-calibration", type=Path, help="override the packaged aggressive-sampling calibration JSON")
     for testing in (run, test, repository):
         testing.add_argument(
             "--sample-random",
@@ -496,9 +510,21 @@ def main(argv: list[str] | None = None) -> int:
     Returns:
         int: Process exit status, zero on success.
     """
-    args = argument_parser().parse_args(argv)
+    parser = argument_parser()
+    args = parser.parse_args(argv)
+    if getattr(args, "sampling_calibration", None) is not None and not args.filter_aggressive:
+        parser.error("--sampling-calibration requires --filter-aggressive")
+    if getattr(args, "filter_aggressive", False):
+        if args.sample_random != 100 or args.sample_min_cases != 128:
+            parser.error("--filter-aggressive determines the percentage and sample floor; omit manual sampling options")
+        args.filter = True
     if hasattr(args, "sample_random"):
-        Sampling(args.sample_random, args.sample_min_cases)
+        Sampling(
+            args.sample_random,
+            args.sample_min_cases,
+            getattr(args, "filter_aggressive", False),
+            str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
+        )
     logger = logging.getLogger("hypothesis_helm")
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
@@ -713,7 +739,12 @@ def main(argv: list[str] | None = None) -> int:
                     suite_location=logical,
                     seed=args.seed,
                     traversal_strategy=args.traversal_strategy,
-                    sampling=Sampling(args.sample_random, args.sample_min_cases),
+                    sampling=Sampling(
+                        args.sample_random,
+                        args.sample_min_cases,
+                        getattr(args, "filter_aggressive", False),
+                        str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
+                    ),
                     match=args.match,
                     jobs=args.jobs,
                     shard=args.shard,
@@ -731,7 +762,12 @@ def main(argv: list[str] | None = None) -> int:
                 args.suite,
                 seed=args.seed,
                 traversal_strategy=args.traversal_strategy,
-                sampling=Sampling(args.sample_random, args.sample_min_cases),
+                sampling=Sampling(
+                    args.sample_random,
+                    args.sample_min_cases,
+                    getattr(args, "filter_aggressive", False),
+                    str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
+                ),
                 match=args.match,
                 collect_only=args.collect_only,
                 jobs=args.jobs,
@@ -778,7 +814,12 @@ def main(argv: list[str] | None = None) -> int:
                 generated,
                 seed=args.seed,
                 traversal_strategy=args.traversal_strategy,
-                sampling=Sampling(args.sample_random, args.sample_min_cases),
+                sampling=Sampling(
+                    args.sample_random,
+                    args.sample_min_cases,
+                    getattr(args, "filter_aggressive", False),
+                    str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
+                ),
                 match=args.match,
                 collect_only=args.collect_only,
                 jobs=args.jobs,
@@ -803,7 +844,12 @@ def main(argv: list[str] | None = None) -> int:
                 max_examples=args.max_examples,
                 random_seed=args.seed,
                 traversal_strategy=args.traversal_strategy,
-                sampling=Sampling(args.sample_random, args.sample_min_cases),
+                sampling=Sampling(
+                    args.sample_random,
+                    args.sample_min_cases,
+                    getattr(args, "filter_aggressive", False),
+                    str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
+                ),
                 timeout=args.timeout,
                 helm=args.helm,
                 release=args.release,

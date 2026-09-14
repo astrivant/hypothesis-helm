@@ -150,7 +150,8 @@ def finish(figure: Figure, output: Path, name: str, subtitle: str) -> None:
         None: PNG and SVG exports are written without requiring a display.
     """
     for axis in figure.axes:
-        axis.set_ylim(bottom=0)
+        if not axis.images and not axis.yaxis_inverted():
+            axis.set_ylim(bottom=0)
     figure.text(0.06, 0.025, subtitle, fontsize=9, color="#475569")
     figure.tight_layout(rect=(0, 0.07, 1, 0.92))
     figure.savefig(output / f"{name}.png", dpi=170, facecolor="white")

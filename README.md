@@ -14,7 +14,7 @@ time budget.
 - Generate a minimal values schema.
 - Choose permutation coverage, with exhaustive testing for small finite spaces.
 - Traverse unique value paths randomly with a reproducible seed, or choose linear, root-first, or leaf-first order.
-- Skip provably equivalent renders or opt into sampling to reduce test volume.
+- Skip provably equivalent renders or opt into [calibrated sampling](docs/aggressive-filtering/README.md) to reduce test volume.
 - Recognize explicit configuration requirements with `--filter`, test dependent settings together, and report rejections separately.
 - Discover dependency activation controls and exercise child settings with their subchart enabled, including aliases and nested dependencies.
 - Show changed values and manifest fields in failure reports, with verified JSON replay of saved changes.

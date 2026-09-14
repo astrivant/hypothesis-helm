@@ -34,7 +34,8 @@ empty_repositories = dedent(
 (root / "helm/repositories.yaml").write_text(empty_repositories)
 (root / "plotting-order.patch").write_text("")
 hashes = {}
-for path in sorted(Path("pkg/hypothesis_helm").rglob("*.py")):
+sources = [*Path("pkg/hypothesis_helm").rglob("*.py"), Path("pkg/hypothesis_helm/execution/calibration.json")]
+for path in sorted(sources):
     if "tests" in path.parts:
         continue
     hashes[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()

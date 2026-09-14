@@ -1,0 +1,122 @@
+format: 1
+parameters:
+  input_complexity: 6
+  mean_value: 0.0
+  stddev: 1.0
+  output_bins: 2
+  precision: 6
+  lower:
+  upper:
+  bug_percent: 0.0
+  bug_orders:
+  bug_seed: 2026
+  max_bugs: 1000
+  structure:
+  topology_components: 0
+  topology_weights:
+  topology_seed: 2026
+  topology_depth_weights:
+  topology: false
+  topology_opaque: false
+  stress:
+  readable_inputs: true
+oracle:
+  format_version: 2
+  workload: normal-quantile-v2
+  input_complexity: 6
+  active_inputs: 1
+  unused_inputs: 5
+  possible_inputs: '64'
+  mean: 0.0
+  stddev: 1.0
+  lower:
+  upper:
+  output_bins: 2
+  precision: 6
+  output_strings:
+  - '-0.674490'
+  - '0.674490'
+  unique_emitted_values: 2
+  discrete_mean: 0.0
+  discrete_stddev: 0.67449
+  histogram_edges:
+  - -0.67449
+  - -0.632334375
+  - -0.59017875
+  - -0.548023125
+  - -0.5058675
+  - -0.463711875
+  - -0.42155625
+  - -0.37940062500000005
+  - -0.337245
+  - -0.295089375
+  - -0.25293375
+  - -0.21077812500000004
+  - -0.1686225
+  - -0.12646687499999998
+  - -0.08431125000000006
+  - -0.04215562500000003
+  - 0.0
+  - 0.04215562500000003
+  - 0.08431125000000006
+  - 0.12646687499999998
+  - 0.1686225
+  - 0.21077812500000004
+  - 0.25293374999999996
+  - 0.295089375
+  - 0.337245
+  - 0.37940062499999994
+  - 0.4215562500000001
+  - 0.463711875
+  - 0.5058674999999999
+  - 0.548023125
+  - 0.59017875
+  - 0.6323343750000001
+  - 0.67449
+  interpretation: midpoint normal quantiles, not a continuous or exactly
+    Gaussian output
+  input_names:
+  - distributionBit01
+  - equivalentChoice001
+  - equivalentChoice002
+  - equivalentChoice003
+  - equivalentChoice004
+  - equivalentChoice005
+  bugs:
+    definition: explicit fixed defect triggers
+    total_faults: 3
+    faults:
+    - name: bug0
+      terms:
+        distributionBit01: true
+        equivalentChoice002: true
+        equivalentChoice005: true
+    - name: bug1
+      terms:
+        equivalentChoice001: true
+        equivalentChoice004: true
+        equivalentChoice003: true
+    - name: bug2
+      terms:
+        equivalentChoice004: true
+        equivalentChoice005: true
+        equivalentChoice003: true
+operations:
+  faults:
+    faults:
+    - name: bug0
+      terms:
+        distributionBit01: true
+        equivalentChoice002: true
+        equivalentChoice005: true
+    - name: bug1
+      terms:
+        equivalentChoice001: true
+        equivalentChoice004: true
+        equivalentChoice003: true
+    - name: bug2
+      terms:
+        equivalentChoice004: true
+        equivalentChoice005: true
+        equivalentChoice003: true
+    symbolic: true

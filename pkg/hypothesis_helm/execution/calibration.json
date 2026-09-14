@@ -1,0 +1,4876 @@
+{
+  "version": "aggressive-calibration-v1",
+  "status": "complete",
+  "independent_validation": false,
+  "helm": "v4.3.0+gbec5b06",
+  "metadata": {
+    "code_sha256": "64b785fead5e43ce61c102178b9033f099e0ece49d6ecf7a8bf2d5b941488a4d",
+    "helm": "v4.3.0+gbec5b06",
+    "time_limit_seconds": 540
+  },
+  "elapsed_seconds": 286.47256762487814,
+  "id": "65b65fc46bcb4af6ae69145bdd32606e6e48270ff4564783c6c95ac61043d36b",
+  "approximation": {
+    "enabled": false,
+    "radius": 0,
+    "metric": "maximum-relative-coordinate-change-v1",
+    "range": "each coordinate must remain within the measured range of compatible domain types and filter settings",
+    "floor": "maximum case and field floors among neighbors within the selected radius",
+    "evidence": [
+      {
+        "radius": 0.1,
+        "matched_cases": 0,
+        "useful_cases": 0,
+        "passed": false
+      },
+      {
+        "radius": 0.2,
+        "matched_cases": 20,
+        "useful_cases": 0,
+        "passed": false
+      },
+      {
+        "radius": 0.35,
+        "matched_cases": 25,
+        "useful_cases": 0,
+        "passed": false
+      },
+      {
+        "radius": 0.5,
+        "matched_cases": 27,
+        "useful_cases": 1,
+        "passed": false
+      }
+    ],
+    "independent_validation": false,
+    "scope": "Cross-checks reuse calibration fixtures with each target descriptor excluded from lookup; not an arbitrary-chart guarantee."
+  },
+  "profiles": [
+    {
+      "case": "fields-6-depth-1-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 1,
+          "interaction_order": 3
+        },
+        "region_sizes": [
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 8,
+      "minimum_fields": 4,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-1-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 1,
+          "interaction_order": 2
+        },
+        "region_sizes": [
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 4,
+      "minimum_fields": 3,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-2-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 2,
+          "interaction_order": 4
+        },
+        "region_sizes": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 12,
+      "minimum_fields": 4,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-2-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 2,
+          "interaction_order": 4
+        },
+        "region_sizes": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 9,
+      "minimum_fields": 4,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-3-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 3,
+          "interaction_order": 6
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 29,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-3-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 3,
+          "interaction_order": 5
+        },
+        "region_sizes": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 16,
+      "minimum_fields": 5,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-4-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 4,
+          "interaction_order": 5
+        },
+        "region_sizes": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 18,
+      "minimum_fields": 5,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-4-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 4,
+          "interaction_order": 6
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 29,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-5-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 5,
+          "interaction_order": 6
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 32,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-6-depth-5-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 6,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 5,
+          "interaction_order": 6
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 28,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 64,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-1-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 1,
+          "interaction_order": 3
+        },
+        "region_sizes": [
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 8,
+      "minimum_fields": 4,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-1-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 1,
+          "interaction_order": 2
+        },
+        "region_sizes": [
+          [
+            31,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 4,
+      "minimum_fields": 3,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-2-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 2,
+          "interaction_order": 5
+        },
+        "region_sizes": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 18,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-2-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 2,
+          "interaction_order": 5
+        },
+        "region_sizes": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            31,
+            2
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 15,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-3-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 3,
+          "interaction_order": 5
+        },
+        "region_sizes": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 18,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-3-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 3,
+          "interaction_order": 6
+        },
+        "region_sizes": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            31,
+            2
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 19,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-4-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 4,
+          "interaction_order": 7
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 40,
+      "minimum_fields": 7,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-4-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 4,
+          "interaction_order": 7
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 34,
+      "minimum_fields": 7,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-5-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 5,
+          "interaction_order": 6
+        },
+        "region_sizes": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            31,
+            2
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 23,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-7-depth-5-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 7,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 5,
+          "interaction_order": 7
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            31,
+            2
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 35,
+      "minimum_fields": 7,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 3,
+        "reference_renders": 128,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-1-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 1,
+          "interaction_order": 3
+        },
+        "region_sizes": [
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 16,
+      "minimum_fields": 5,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-1-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 1,
+          "interaction_order": 3
+        },
+        "region_sizes": [
+          [
+            31,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ],
+          [
+            32,
+            2
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 8,
+      "minimum_fields": 4,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-2-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 2,
+          "interaction_order": 4
+        },
+        "region_sizes": [
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 24,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-2-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 2,
+          "interaction_order": 5
+        },
+        "region_sizes": [
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 24,
+      "minimum_fields": 6,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-3-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 3,
+          "interaction_order": 5
+        },
+        "region_sizes": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 38,
+      "minimum_fields": 7,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-3-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 3,
+          "interaction_order": 6
+        },
+        "region_sizes": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            31,
+            2
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 33,
+      "minimum_fields": 7,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-4-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 4,
+          "interaction_order": 7
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 64,
+      "minimum_fields": 8,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-4-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 4,
+          "interaction_order": 8
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 100,
+      "minimum_fields": 8,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-5-placement-0",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 5,
+          "interaction_order": 8
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 106,
+      "minimum_fields": 8,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    },
+    {
+      "case": "fields-8-depth-5-placement-1",
+      "descriptor": {
+        "profile_version": "sampling-topology-v1",
+        "features": {
+          "maximum_score": 24,
+          "input_fields": 8,
+          "domain_sizes": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "domain_kinds": [
+            "bool"
+          ],
+          "gate_depth": 5,
+          "interaction_order": 8
+        },
+        "region_sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            1
+          ]
+        ],
+        "context": {
+          "strength": 2,
+          "trim": 0,
+          "trim_topology": 2
+        },
+        "unit": "non-default configuration"
+      },
+      "minimum_cases": 57,
+      "minimum_fields": 8,
+      "evidence": {
+        "trials": 100,
+        "seed_start": 2026,
+        "target_recall": 0.96,
+        "target_success_fraction": 0.95,
+        "target_successes": 100,
+        "mean_bug_recall": 1.0,
+        "known_bugs": 4,
+        "reference_renders": 256,
+        "independent_validation": false
+      }
+    }
+  ]
+}

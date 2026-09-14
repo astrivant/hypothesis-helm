@@ -422,10 +422,9 @@ See the [measured sample-size study](../../benchmarks/sampling/README.md). Repea
 bugs can be found from a small sample. An error that occurs for only one input
 requires sampling most of the population to obtain a high discovery probability.
 
-### Planned aggressive preset
+### Aggressive preset
 
-[`--filter-aggressive`](../aggressive-filtering/README.md) is a proposed preset combining `--filter` with about 70%
-retention. After discovery and chart preparation, it would recompute complexity for each chart immediately before
-selecting its tests. Its minimum sample and distinct-field coverage would be calibrated against that fresh result
-and chart topology. Unknown complexity or missing calibration would keep all cases left by `--filter`. The flag is not yet
-implemented; the explicit sampling options above are available today.
+[`--filter-aggressive`](../aggressive-filtering/README.md) combines `--filter` with about 70% retention when measured
+calibration supports it. Each chart receives a fresh complexity and topology analysis before test selection. Case and
+changed-field floors can enlarge the sample. Unknown complexity or unmatched calibration keeps ordinary filtering.
+See the [evidence and test matrix](../aggressive-filtering/TESTS.md).

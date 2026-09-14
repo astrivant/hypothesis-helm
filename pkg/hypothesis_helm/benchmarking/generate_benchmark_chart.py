@@ -362,7 +362,7 @@ def reproduce(source: Path, output: Path, *, force: bool = False, workspace: Fix
     operations = mapping(document.get("operations", {}))
     if "faults" in operations:
         faults = converter.structure(sequence(mapping(operations["faults"])["faults"]), list[Fault])
-        write_faults(output, faults, workspace=workspace)
+        write_faults(output, faults, workspace=workspace, symbolic=bool(mapping(operations["faults"]).get("symbolic", False)))
     if "uniform_errors" in operations:
         operation = mapping(operations["uniform_errors"])
         chart = Chart.load(chart_path(output, workspace=workspace))

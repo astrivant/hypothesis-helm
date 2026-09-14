@@ -24,6 +24,8 @@ assert set(statuses) == {
     "nesting",
     "stress",
     "sampling",
+    "calibration-variation",
+    "filtering",
 }
 assert all(status == "0" for status in statuses.values()), statuses
 assert (root / "topology-finished-epoch.txt").exists()

@@ -39,7 +39,7 @@ class Fault:
         return all(values[key] == expected for key, expected in self.terms.items())
 
 
-def write_faults(path: Path, defects: list[Fault], *, workspace: FixtureWorkspace | None = None) -> None:
+def write_faults(path: Path, defects: list[Fault], *, workspace: FixtureWorkspace | None = None, symbolic: bool = False) -> None:
     """
     Write conditional wrong-output fields into an existing generated chart.
 
@@ -47,6 +47,7 @@ def write_faults(path: Path, defects: list[Fault], *, workspace: FixtureWorkspac
         path (Path): Chart root with an existing templates directory.
         defects (list[Fault]): Independent wrong-output trigger specifications.
         workspace (FixtureWorkspace | None): Explicit owner of the invocation's reusable chart.
+        symbolic (bool): Express triggers with direct Boolean branches supported by topology analysis.
 
     Returns:
         None: The generated fault template records correct or incorrect per-defect fields.
@@ -67,10 +68,17 @@ def write_faults(path: Path, defects: list[Fault], *, workspace: FixtureWorkspac
         metadata_path.write_text(json.dumps(metadata, indent=2) + "\n")
     lines = ["apiVersion: v1", "kind: ConfigMap", "metadata:", "  name: injected-faults", "data:"]
     for defect in defects:
-        terms = " ".join(f"(eq .Values.{key} {str(value).lower()})" for key, value in defect.terms.items())
-        lines.append(f'  {defect.name}: "{{{{ if and {terms} }}}}incorrect{{{{ else }}}}expected{{{{ end }}}}"')
+        if symbolic:
+            output = "incorrect"
+            for key, value in reversed(defect.terms.items()):
+                yes, no = (output, "expected") if value else ("expected", output)
+                output = f"{{{{ if .Values.{key} }}}}{yes}{{{{ else }}}}{no}{{{{ end }}}}"
+            lines.append(f'  {defect.name}: "{output}"')
+        else:
+            terms = " ".join(f"(eq .Values.{key} {str(value).lower()})" for key, value in defect.terms.items())
+            lines.append(f'  {defect.name}: "{{{{ if and {terms} }}}}incorrect{{{{ else }}}}expected{{{{ end }}}}"')
     (path / "templates/faults.yaml").write_text("\n".join(lines) + "\n")
-    record_change(logical, "faults", {"faults": [asdict(defect) for defect in defects]}, workspace=workspace)
+    record_change(logical, "faults", {"faults": [asdict(defect) for defect in defects], "symbolic": symbolic}, workspace=workspace)
 
 
 def select_faults(complexity: int, orders: tuple[int, ...], percent: float, seed: int, limit: int) -> tuple[list[Fault], dict[str, object]]:

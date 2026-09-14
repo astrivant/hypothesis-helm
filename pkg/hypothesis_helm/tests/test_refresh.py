@@ -16,6 +16,7 @@ from attrs import asdict
 from hypothesis_helm.benchmarking.benchmark_matrix import STRATEGIES
 from hypothesis_helm.benchmarking.stress import Stress, progression
 from hypothesis_helm.charts import yamlio
+from hypothesis_helm.schemas.contracts import mapping
 
 
 @pytest.mark.integration
@@ -107,18 +108,36 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize(
-    "damage", [None, "censored", "missing-step", "duplicate", "parameters", "recipe", "plot", "sampling-reference", "sampling-inventory"]
+    "damage",
+    [
+        None,
+        "censored",
+        "missing-step",
+        "duplicate",
+        "parameters",
+        "recipe",
+        "plot",
+        "sampling-reference",
+        "sampling-inventory",
+        "calibration-count",
+        "calibration-trials",
+        "calibration-reference",
+        "calibration-duplicate",
+        "filtering-count",
+        "filtering-duplicate",
+        "filtering-timing",
+    ],
 )
 def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | None) -> None:
     """
-    Reject incomplete or inconsistent stress results before the refresh publishes them.
+    Reject incomplete or inconsistent stress, calibration and runtime results before publication.
 
     Args:
         tmp_path (Path): Synthetic measurement ledgers for the publication gate.
         damage (str | None): One deliberate corruption, or an intact matrix.
 
     Returns:
-        None: Only the complete 22-step, five-strategy matrix passes verification.
+        None: Only complete study matrices with consistent references, phases and counts pass verification.
     """
     project = Path(__file__).resolve().parents[3]
     (tmp_path / "provenance.json").write_text(json.dumps({"code_sha256": "test-source"}))
@@ -135,6 +154,8 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
         "nesting",
         "stress",
         "sampling",
+        "calibration-variation",
+        "filtering",
     )
     for study in studies:
         directory = tmp_path / "outputs" / study
@@ -196,6 +217,69 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                 document["reference"] = {"completed": 2, "remaining": 0, "fault_masks": {"a": 0}}
             for filename in ("chart-parameters.yaml", "sampling-recall.png", "sampling-recall.svg"):
                 (directory / filename).write_bytes(b"x" * 1001)
+        if study == "calibration-variation":
+            calibration_rows = [
+                {"case": f"case-{index}", "strategy": strategy, "status": "complete", "trials": 100}
+                for index in range(30)
+                for strategy in ("filter", "exact", "nearby-0.1", "nearby-0.2", "nearby-0.35", "nearby-0.5")
+            ]
+            if damage == "calibration-count":
+                calibration_rows.pop()
+            elif damage == "calibration-trials":
+                calibration_rows[0]["trials"] = 99
+            elif damage == "calibration-duplicate":
+                calibration_rows[-1] = calibration_rows[0]
+            document["rows"] = calibration_rows
+            (directory / "calibration.json").write_text(
+                json.dumps(
+                    {
+                        "status": "complete",
+                        "profiles": [
+                            {
+                                "case": f"case-{index}",
+                                "reference": {"cases": [1]},
+                                "evidence": {"reference_renders": 3 if damage == "calibration-reference" else 2},
+                            }
+                            for index in range(30)
+                        ],
+                    }
+                )
+            )
+            for filename in ("matrix.csv", "matrix.json", "MATRIX.md", "matching-matrix.png", "profile-variation.png"):
+                (directory / filename).write_bytes(b"x" * 1001)
+        if study == "filtering":
+            mapping(document["metadata"]).update(status="complete", repeats=2)
+            load_rows = [
+                {
+                    "input_fields": fields,
+                    "gate_depth": depth,
+                    "repeat": repeat,
+                    "strategy": method,
+                    "status": "passed",
+                    "valid_inputs": 2**fields,
+                    "planned": 4,
+                    "completed": 4,
+                    "remaining": 0,
+                    "wall_seconds": 3,
+                    "planning_seconds": 1,
+                    "execution_seconds": 2,
+                    "complexity_seconds": 0.5,
+                }
+                for fields in (6, 7, 8, 9)
+                for depth in (1, 3, 5)
+                for repeat in range(2)
+                for method in ("baseline", "sample-random", "filter", "filter-aggressive")
+            ]
+            if damage == "filtering-count":
+                load_rows.pop()
+            elif damage == "filtering-duplicate":
+                load_rows[-1] = load_rows[0]
+            elif damage == "filtering-timing":
+                load_rows[0]["wall_seconds"] = 1
+            document["rows"] = load_rows
+            for name in ("filtering-runtime", "filtering-planning", "filtering-completed", "filtering-phases"):
+                for extension in ("png", "svg"):
+                    (directory / f"{name}.{extension}").write_bytes(b"x" * 1001)
         (directory / "results.json").write_text(json.dumps(document))
     result = subprocess.run(
         [sys.executable, str(project / "benchmarks/refresh/verify-measurements.py"), str(tmp_path)],

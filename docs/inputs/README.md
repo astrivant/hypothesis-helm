@@ -248,6 +248,6 @@ beat an already checked result. Canonical domain ordering makes tie-breaking rep
 The candidate count includes inputs that may fail after defaults merging. Search bounds can remain loose, and a template
 that depends on every factor can still require exponential work. Unsupported behavior never becomes a pruning certificate.
 
-The proposed [`--filter-aggressive` preset](../aggressive-filtering/README.md) would use this audit result to select
-measured sampling and field-coverage floors. That calibration remains to be measured; the complexity score alone
-does not determine a suitable sample size.
+The [`--filter-aggressive` preset](../aggressive-filtering/README.md) uses this audit result alongside domain, gate and
+region measurements to select calibrated case and field-coverage floors. The complexity score alone does not determine
+a suitable sample size. Unsupported or unmatched profiles keep ordinary filtering.

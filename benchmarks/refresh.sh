@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 if [[ "${1:-}" == --help ]]; then
   echo 'Usage: poetry run bash benchmarks/refresh.sh'
   echo 'Requires Helm 4, GNU Parallel, Git, and the project development/benchmark dependencies.'
-  echo 'Runs all checks, twelve benchmark studies (9m ceilings), topology exports, and both repository tests (5m/chart).'
+  echo 'Runs all checks, fourteen benchmark studies (9m ceilings), topology exports, and both repository tests (5m/chart).'
   exit 0
 fi
 if (($#)); then

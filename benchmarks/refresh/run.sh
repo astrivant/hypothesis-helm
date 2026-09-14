@@ -67,5 +67,15 @@ hypothesis-helm-benchmark sampling --time-limit 9m --output "$root/outputs/sampl
 status=$?
 printf 'sampling\t%s\n' "$status" >>"$root/status.tsv"
 [[ "$status" -eq 0 ]] || exit "$status"
+printf '%s\n' 'calibration-variation' >"$root/current.txt"
+hypothesis-helm-benchmark calibration --time-limit 9m --output "$root/outputs/calibration-variation" >"$root/logs/calibration-variation.log" 2>&1
+status=$?
+printf 'calibration-variation\t%s\n' "$status" >>"$root/status.tsv"
+[[ "$status" -eq 0 ]] || exit "$status"
+printf '%s\n' 'filtering' >"$root/current.txt"
+hypothesis-helm-benchmark filtering --time-limit 9m --output "$root/outputs/filtering" >"$root/logs/filtering.log" 2>&1
+status=$?
+printf 'filtering\t%s\n' "$status" >>"$root/status.tsv"
+[[ "$status" -eq 0 ]] || exit "$status"
 printf '%s\n' 'complete' >"$root/current.txt"
 date +%s >"$root/finished-epoch.txt"

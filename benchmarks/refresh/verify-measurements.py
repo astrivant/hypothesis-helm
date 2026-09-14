@@ -28,6 +28,8 @@ for study in [
     "nesting",
     "stress",
     "sampling",
+    "calibration-variation",
+    "filtering",
 ]:
     directory = root / "outputs" / study
     result = json.loads((directory / "results.json").read_text())
@@ -38,7 +40,42 @@ for study in [
     rows = result.get("points", result.get("rows", result.get("runs", [])))
     assert rows, study
     statuses = Counter(row.get("status", "unreported") for row in rows)
-    assert set(statuses) <= ({"passed", "time-limit"} if study in {"performance", "stress"} else {"passed", "complete"}), (study, statuses)
+    assert set(statuses) <= ({"passed", "time-limit"} if study in {"performance", "stress", "filtering"} else {"passed", "complete"}), (
+        study,
+        statuses,
+    )
+    if study == "filtering":
+        assert metadata["status"] == "complete" and metadata["repeats"] == 2
+        expected_rows = {
+            (fields, depth, repeat, method)
+            for fields in (6, 7, 8, 9)
+            for depth in (1, 3, 5)
+            for repeat in range(2)
+            for method in ("baseline", "sample-random", "filter", "filter-aggressive")
+        }
+        assert len(rows) == len(expected_rows)
+        assert {(row["input_fields"], row["gate_depth"], row["repeat"], row["strategy"]) for row in rows} == expected_rows
+        for row in rows:
+            assert row["valid_inputs"] == 2 ** row["input_fields"]
+            assert 0 <= row["completed"] <= row["planned"] <= row["valid_inputs"]
+            assert row["remaining"] == row["planned"] - row["completed"]
+            assert row["status"] != "passed" or row["remaining"] == 0
+            assert row["wall_seconds"] >= row["planning_seconds"] + row["execution_seconds"]
+            assert row["planning_seconds"] >= row["complexity_seconds"] >= 0
+        for name in ("filtering-runtime", "filtering-planning", "filtering-completed", "filtering-phases"):
+            assert (directory / f"{name}.png").is_file() and (directory / f"{name}.svg").is_file()
+    if study == "calibration-variation":
+        calibration = json.loads((directory / "calibration.json").read_text())
+        assert calibration["status"] == "complete" and len(calibration["profiles"]) == 30
+        assert len(rows) == 180 and all(row["trials"] == 100 for row in rows)
+        cases = {cell["case"] for cell in calibration["profiles"]}
+        strategies = {"filter", "exact", "nearby-0.1", "nearby-0.2", "nearby-0.35", "nearby-0.5"}
+        assert len(cases) == 30
+        assert {(row["case"], row["strategy"]) for row in rows} == {(case, strategy) for case in cases for strategy in strategies}
+        for cell in calibration["profiles"]:
+            assert len(cell["reference"]["cases"]) + 1 == cell["evidence"]["reference_renders"]
+        for filename in ("matrix.csv", "matrix.json", "MATRIX.md", "matching-matrix.png", "profile-variation.png"):
+            assert (directory / filename).is_file(), filename
     if study == "sampling":
         reference = result["reference"]
         assert result["status"] == "complete" and reference["remaining"] == 0, "Sampling requires a complete reference"

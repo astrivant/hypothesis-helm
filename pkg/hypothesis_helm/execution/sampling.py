@@ -22,10 +22,14 @@ class Sampling:
     Attributes:
         percent (float): Percentage of eligible cases to retain; 100 disables sampling.
         minimum (int): Minimum retained sample, or all cases when fewer exist.
+        aggressive (bool): Request per-chart calibrated selection after ordinary filtering.
+        calibration (str | None): Optional replacement for the packaged calibration evidence.
     """
 
     percent: float = 100.0
     minimum: int = 128
+    aggressive: bool = False
+    calibration: str | None = None
 
     def __attrs_post_init__(self) -> None:
         """
@@ -40,7 +44,14 @@ class Sampling:
             raise ValueError("--sample-min-cases must be a positive integer")
 
     def select(  # noqa: UP047 - pinned pydocstyle cannot parse PEP 695 type parameters.
-        self, values: Sequence[T], key: Callable[[T], str], seed: int, *, protected: set[str] | None = None
+        self,
+        values: Sequence[T],
+        key: Callable[[T], str],
+        seed: int,
+        *,
+        protected: set[str] | None = None,
+        fields: Callable[[T], set[str]] | None = None,
+        minimum_fields: int = 0,
     ) -> tuple[list[T], dict[str, object]]:
         """
         Sample without replacement, preserving input order and mandatory representatives.
@@ -50,10 +61,14 @@ class Sampling:
             key (Callable[[T], str]): Unique stable identity independent of traversal and shard.
             seed (int): Reproducible selection seed.
             protected (set[str] | None): Identities that must survive sampling.
+            fields (Callable[[T], set[str]] | None): Distinct changed paths exercised by a case.
+            minimum_fields (int): Minimum distinct paths across the retained cases.
 
         Returns:
             tuple[list[T], dict[str, object]]: Selected cases and explicit omission statistics.
         """
+        if minimum_fields < 0 or (minimum_fields and fields is None):
+            raise ValueError("a field floor requires nonnegative coverage and a path mapping")
         identities = [key(value) for value in values]
         if len(set(identities)) != len(identities):
             raise ValueError("sampling requires unique case identities")
@@ -66,8 +81,17 @@ class Sampling:
                 key=lambda identity: (hashlib.sha256(f"sample-v1:{seed}:{identity}".encode()).digest(), identity),
             )
             retained = required | set(ranked[: count - len(required)])
+            if fields is not None and minimum_fields:
+                by_key = dict(zip(identities, values, strict=True))
+                covered = set().union(*(fields(by_key[identity]) for identity in retained))
+                for identity in ranked[count - len(required) :]:
+                    if len(covered) >= minimum_fields:
+                        break
+                    retained.add(identity)
+                    covered.update(fields(by_key[identity]))
+                count = len(retained)
             selected = [value for value, identity in zip(values, identities, strict=True) if identity in retained]
-        return selected, {
+        report: dict[str, object] = {
             "algorithm": "sha256-identity-sample-v1",
             "percent": self.percent,
             "minimum": self.minimum,
@@ -79,6 +103,10 @@ class Sampling:
             "applied": count < len(values),
             "bug_recall_guaranteed": False,
         }
+        if fields is not None:
+            selected_fields = len(set().union(*(fields(value) for value in selected)))
+            report.update(minimum_fields=minimum_fields, selected_fields=selected_fields, field_floor_met=selected_fields >= minimum_fields)
+        return selected, report
 
 
 DEFAULT_SAMPLING = Sampling()

@@ -11,7 +11,7 @@ Run repository command examples from the checkout root unless stated otherwise.
 - [Input inventory](inputs/README.md): missing fields, coverage measurements, and minimal-values dumps.
 - [Architecture](architecture/README.md): input discovery, test generation, rendering, and validation.
 - [Execution](execution/README.md): parallelism, sharding, dry runs, and execution budgets.
-- [Aggressive filtering proposal](aggressive-filtering/README.md): audit-informed sampling and measured field-coverage floors.
+- [Aggressive filtering](aggressive-filtering/README.md): audit-informed sampling and measured field-coverage floors.
 - [CI examples](ci/README.md): GitHub Action, CircleCI, and GitLab configuration.
 - [Benchmarking](../benchmarks/README.md): local shards, generated charts, and plots.
 - [CLI reference](cli/README.md): generated command help.

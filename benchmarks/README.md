@@ -59,6 +59,27 @@ hypothesis-helm-benchmark generate \
   --parameters benchmarks/runs/stress/cases/00-worst-case.yaml --output benchmarks/runs/chart
 ```
 
+### Complexity-informed sampling
+
+The [calibration study](calibration-variation/README.md) compares 30 generated chart variants across 100 seeds each.
+Its [matrix and graphs](calibration-variation/MATRIX.md) show retained cases, known-bug discovery and nearby-profile fallback.
+The [test matrix](../docs/aggressive-filtering/TESTS.md) separates deterministic selector properties from empirical results.
+
+```sh
+hypothesis-helm-benchmark calibration --output benchmarks/runs/calibration --time-limit 9m
+```
+
+### Filtering runtime
+
+The [filtering load test](filtering/README.md) compares an unfiltered baseline, 70% random sampling, ordinary filtering and aggressive filtering.
+It varies the finite input-space size and gate depth, using paired seeds and real Helm execution. Graphs separate planning from test execution;
+time-limited observations retain their unfinished counts. The [theoretical comparison](../docs/aggressive-filtering/README.md#conditions-behind-the-comparison)
+states the conditions under which each bound and expected saving applies.
+
+```sh
+hypothesis-helm-benchmark filtering --output benchmarks/runs/filtering --time-limit 9m
+```
+
 ### Random sampling and defect discovery
 
 The [sample-size study](sampling/README.md) renders the shared chart's complete
