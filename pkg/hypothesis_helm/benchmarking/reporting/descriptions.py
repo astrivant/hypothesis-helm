@@ -53,6 +53,11 @@ INTRODUCTIONS = {
         "How many sampled inputs are needed to find the known defects? Compare distinct bugs found with the fraction of "
         "erroneous inputs tested.",
     ),
+    "complexity-sweep": (
+        "Measured sampling floors across chart breadth and depth",
+        "Does a wider or deeper manifest need more test cases when the inputs and defect triggers stay the same? "
+        "Compare paired chart shapes.",
+    ),
     "calibration": (
         "Chart complexity and measured sampling floors",
         "How much sampling was needed for these generated charts? Compare chart complexity, retained checks and observed bug discovery.",

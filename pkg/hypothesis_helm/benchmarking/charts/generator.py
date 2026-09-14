@@ -368,6 +368,11 @@ def reproduce(source: Path, output: Path, *, force: bool = False, workspace: Fix
     if "faults" in operations:
         faults = converter.structure(sequence(mapping(operations["faults"])["faults"]), list[Fault])
         write_faults(output, faults, workspace=workspace, symbolic=bool(mapping(operations["faults"]).get("symbolic", False)))
+    if "output_shape" in operations:
+        from hypothesis_helm.benchmarking.charts.shape import reshape_faults
+
+        shape = mapping(operations["output_shape"])
+        reshape_faults(output, int(str(shape["copies"])), int(str(shape["wrappers"])), workspace=workspace)
     if "uniform_errors" in operations:
         operation = mapping(operations["uniform_errors"])
         chart = Chart.load(chart_path(output, workspace=workspace))

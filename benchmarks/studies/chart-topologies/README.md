@@ -2,7 +2,7 @@
 
 [Benchmarking](../../README.md)
 
-197 charts: 191 graphs with rendered baselines, 5 static-only graphs, and 1 chart without a values file. The [verification record](verification.json) accounts for every exported vertex and edge.
+197 charts: 191 graphs with rendered baselines, 5 static-only graphs, and 1 chart without a values file. Verification checks account for every exported vertex and edge.
 
 These are directed multigraphs G = (V, E) from the compiler, rendered with Matplotlib. Every exported vertex and edge is retained, including parallel references; overlapping marks are not removed.
 

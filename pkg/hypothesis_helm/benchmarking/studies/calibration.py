@@ -5,6 +5,7 @@ Calibrate topology-aware sample floors against independently checked synthetic d
 import argparse
 import csv
 import hashlib
+import itertools
 import json
 import math
 import random
@@ -17,6 +18,7 @@ from attrs import asdict
 from hypothesis_helm.benchmarking.charts.faults import Fault, write_faults
 from hypothesis_helm.benchmarking.charts.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.charts.generator import generate
+from hypothesis_helm.benchmarking.charts.shape import fault_outputs, reshape_faults
 from hypothesis_helm.benchmarking.execution.provenance import code_digest
 from hypothesis_helm.benchmarking.reporting.plots import finish
 from hypothesis_helm.benchmarking.reporting.progress import BenchmarkProgress
@@ -60,9 +62,12 @@ def study(chart: Chart, faults: list[Fault], trials: int, seed: int, helm: str, 
         if time.monotonic() >= deadline:
             raise TimeLimitReached()
         resources = render(chart, value, helm=helm, timeout=min(30, max(0.001, deadline - time.monotonic())), stream=False)
-        actual = next(mapping(resource["data"]) for resource in resources if mapping(resource["metadata"])["name"] == "injected-faults")
+        outputs = list(fault_outputs(resources))
+        if not outputs:
+            raise AssertionError("Helm output contains no injected-fault ConfigMap")
+        actual = outputs[0]
         expected = {fault.name: "incorrect" if fault.active(value) else "expected" for fault in faults}
-        if actual != expected:
+        if any(actual != expected for actual in outputs):
             raise AssertionError("Helm fault output disagrees with the independent trigger oracle")
         observed[configuration_key(value)] = {name for name, status in actual.items() if status == "incorrect"}
     memberships: dict[str, str] = {}
@@ -224,6 +229,24 @@ def plot(output: Path, document: dict[str, object]) -> None:
         writer = csv.DictWriter(stream, fieldnames=list(table[0]))
         writer.writeheader()
         writer.writerows(table)
+    from hypothesis_helm.benchmarking.reporting.complexity_sweep import plot as plot_sweep
+
+    if plot_sweep(output, document):
+        lines += [
+            "",
+            "## Breadth and depth sweep",
+            "",
+            "![Sample floors across output breadth and depth](complexity-sweep.png)",
+            "",
+            "Sibling ConfigMap copies vary breadth; nested List envelopes vary output depth. Axis labels are measured tree dimensions.",
+            "Each panel holds input count and defect-trigger depth fixed. "
+            "Every shape uses the same paired defect placements and sampling seeds.",
+            "Copies preserve the same defect triggers: a flat surface means "
+            "increasing output size alone did not increase the measured floor.",
+            "Cells show mean ±1 sample standard deviation across placements, not a confidence interval or a recall guarantee.",
+            "[Sweep measurements](complexity-sweep.csv)",
+            "",
+        ]
     lines += [
         "",
         "Complete recall here can follow from preserving every symbolic output region. It does not validate random sampling alone.",
@@ -249,6 +272,8 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/calibration"))
     parser.add_argument("--inputs", type=int, nargs="+", default=[6, 7, 8])
     parser.add_argument("--depths", type=int, nargs="+", default=[1, 2, 3, 4, 5])
+    parser.add_argument("--breadths", type=int, nargs="+", default=[1], help="sibling copies of the fault resource (1..16)")
+    parser.add_argument("--output-depths", type=int, nargs="+", default=[0], help="nested List envelopes around fault resources (0..5)")
     parser.add_argument("--placements", type=int, default=2)
     parser.add_argument("--trials", type=int, default=100)
     parser.add_argument("--seed", type=int, default=2026)
@@ -265,6 +290,11 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         return 0
     if not all(2 <= count <= 10 for count in args.inputs) or not all(1 <= depth <= min(args.inputs) for depth in args.depths):
         parser.error("inputs must be 2..10 and depths must fit every input count")
+    if not all(1 <= value <= 16 for value in args.breadths) or not all(0 <= value <= 5 for value in args.output_depths):
+        parser.error("breadths must be 1..16 and output-depths must be 0..5")
+    for values in (args.inputs, args.depths, args.breadths, args.output_depths):
+        if len(set(values)) != len(values):
+            parser.error("sweep axes must not contain duplicate values")
     if args.trials < 1 or args.placements < 1 or not 0 < args.time_limit <= 540:
         parser.error("trials and placements must be positive; time limit must be at most 9m")
     if (args.output / "calibration.json").exists():
@@ -282,28 +312,38 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         "helm": Processes().run([args.helm, "version", "--short"], capture_output=True, check=True, timeout=30).stdout.strip(),
     }
     profiles: list[dict[str, object]] = []
-    document["metadata"] = {"code_sha256": code_digest(), "helm": document["helm"], "time_limit_seconds": args.time_limit}
+    document["metadata"] = {
+        "code_sha256": code_digest(),
+        "helm": document["helm"],
+        "time_limit_seconds": args.time_limit,
+        "sweep": {
+            "inputs": args.inputs,
+            "gate_depths": args.depths,
+            "resource_copies": args.breadths,
+            "list_wrappers": args.output_depths,
+            "placements": args.placements,
+            "trials": args.trials,
+            "seed": args.seed,
+        },
+    }
     try:
         with execution_timer(args.time_limit):
-            with BenchmarkProgress("Calibration: chart sizes") as display:
-                for inputs in display.track(args.inputs):
-                    for depth in args.depths:
-                        for placement in range(args.placements):
-                            name = f"fields-{inputs}-depth-{depth}-placement-{placement}"
-                            logical = args.output / "charts" / name
-                            generate(logical, input_complexity=inputs, output_bins=2, workspace=workspace)
-                            chart = Chart.load(chart_path(logical, workspace=workspace))
-                            fields = list(chart.defaults)
-                            rng = random.Random(args.seed + placement)
-                            faults = [
-                                Fault(f"bug{index}", dict.fromkeys(rng.sample(fields, depth), True)) for index in range(max(2, inputs // 2))
-                            ]
-                            write_faults(logical, faults, workspace=workspace, symbolic=True)
-                            result = study(chart, faults, args.trials, args.seed, args.helm, started + args.time_limit)
-                            profiles.append({"case": name, **result})
-                            print(
-                                f"Calibrated {name}: cases >= {result['minimum_cases']}, fields >= {result['minimum_fields']}", flush=True
-                            )
+            cases = itertools.product(args.inputs, args.depths, range(args.placements), args.breadths, args.output_depths)
+            total = len(args.inputs) * len(args.depths) * args.placements * len(args.breadths) * len(args.output_depths)
+            with BenchmarkProgress("Calibration: chart shapes") as display:
+                for inputs, depth, placement, breadth, output_depth in display.track(cases, total=total):
+                    name = f"fields-{inputs}-depth-{depth}-placement-{placement}-breadth-{breadth}-output-depth-{output_depth}"
+                    logical = args.output / "charts" / name
+                    generate(logical, input_complexity=inputs, output_bins=2, workspace=workspace)
+                    chart = Chart.load(chart_path(logical, workspace=workspace))
+                    fields = list(chart.defaults)
+                    rng = random.Random(args.seed + placement)
+                    faults = [Fault(f"bug{index}", dict.fromkeys(rng.sample(fields, depth), True)) for index in range(max(2, inputs // 2))]
+                    write_faults(logical, faults, workspace=workspace, symbolic=True)
+                    reshape_faults(logical, breadth, output_depth, workspace=workspace)
+                    result = study(chart, faults, args.trials, args.seed, args.helm, started + args.time_limit)
+                    profiles.append({"case": name, "output_shape": {"copies": breadth, "wrappers": output_depth}, **result})
+                    print(f"Calibrated {name}: cases >= {result['minimum_cases']}, fields >= {result['minimum_fields']}", flush=True)
     except TimeLimitReached:
         document["status"] = "time-limit"
     document["profiles"] = profiles

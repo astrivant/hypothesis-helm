@@ -468,6 +468,8 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
     (run / "started-epoch.txt").write_text("0")
     (run / "finished-epoch.txt").write_text("60")
     (run / "retained-fixture-sha256.json").write_text("{}")
+    (run / "topology-finished-epoch.txt").write_text("60")
+    (run / "topology-retry-finished-epoch.txt").write_text("60")
     (run / "logs").mkdir()
     (run / "logs/performance.log").write_text("complete\n")
     (run / "parameters").mkdir()
@@ -483,7 +485,10 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
     assert not (published / "matrix").exists()
     assert not (published / "parameters").exists()
     assert (published / "fixture/parameters/standard.yaml").read_text() == "parameters: {}\n"
-    checksums = json.loads((published / "refresh/sha256.json").read_text())
+    checksums = json.loads((run / "sha256.json").read_text())
+    assert not (published / "refresh/sha256.json").exists()
+    assert not (published / "refresh/logs").exists()
+    assert not (published / "studies/chart-topologies/verification.json").exists()
     for name in (*studies, "chart-topologies"):
         path = published / "studies" / name / "results.json"
         assert json.loads(path.read_text()) == {"study": name}

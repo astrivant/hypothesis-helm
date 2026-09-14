@@ -68,7 +68,6 @@ case "$stage" in
     ruff format --check .
     ;;
   publication-finished)
-    cp "$root/publication-verification.json" benchmarks/refresh/
     date +%s >"$root/publication-finished-epoch.txt"
     ;;
   *)

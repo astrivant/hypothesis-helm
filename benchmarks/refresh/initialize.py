@@ -13,6 +13,7 @@ from pathlib import Path
 from textwrap import dedent
 
 from hypothesis_helm.benchmarking.execution.provenance import code_digest
+from hypothesis_helm.benchmarking.refresh.plan import STUDIES
 from hypothesis_helm.charts.scan import discover_charts
 from hypothesis_helm.execution.processes import Processes
 
@@ -125,17 +126,20 @@ provenance = {
 (root / "topology-inventory.json").write_text(json.dumps(topologies, indent=2) + "\n")
 (root / "graph-source-ready.txt").write_text("Source checkouts verified.\n")
 (root / "repositories.tsv").write_text("".join(f"{name}\t{run}\n" for name, run in repositories.items()))
-ledger = json.loads((recipes / "sha256.json").read_text())
+published = Path("benchmarks")
+ledger = {
+    str(path.relative_to(published)): hashlib.sha256(path.read_bytes()).hexdigest()
+    for study in (*STUDIES, "chart-topologies", "flamegraphs")
+    for path in sorted((published / "studies" / study).rglob("*"))
+    if path.is_file() and path.name != "verification.json"
+}
 (root / "previous-artifact-inventory.json").write_text(json.dumps([f"benchmarks/{name}" for name in ledger], indent=2) + "\n")
-retained_path = recipes / "retained-fixture-sha256.json"
-retained = json.loads(retained_path.read_text()) if retained_path.exists() else {}
+retained = {}
 for name, checksum in ledger.items():
-    path = recipes.parent / name
-    if any(
-        (parent / "Chart.yaml").exists() for parent in path.parents if parent != recipes.parent and parent.is_relative_to(recipes.parent)
-    ):
+    path = published / name
+    if any((parent / "Chart.yaml").exists() for parent in path.parents if parent != published and parent.is_relative_to(published)):
         retained[name] = checksum
 (root / "retained-fixture-sha256.json").write_text(json.dumps(retained, indent=2) + "\n")
-Path("benchmarks/runs/latest-refresh.txt").write_text(str(root) + "\n")
-Path("benchmarks/runs/refresh-state.json").write_text(json.dumps({"root": str(root), "stamp": stamp}, indent=2) + "\n")
+(root.parent / "latest-refresh.txt").write_text(str(root) + "\n")
+(root.parent / "refresh-state.json").write_text(json.dumps({"root": str(root), "stamp": stamp}, indent=2) + "\n")
 print(f"Prepared {len(topologies)} real chart jobs and {len(hashes)} snapshotted application files.")

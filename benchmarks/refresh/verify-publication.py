@@ -11,7 +11,7 @@ from urllib.parse import unquote, urlsplit
 
 root = Path(sys.argv[1])
 benchmarks = Path("benchmarks")
-checksums = json.loads((benchmarks / "refresh/sha256.json").read_text())
+checksums = json.loads((root / "sha256.json").read_text())
 for name, expected in checksums.items():
     path = benchmarks / name
     assert path.is_file(), path
@@ -33,6 +33,8 @@ assert all((flamegraphs / figure[extension]).is_file() for figure in profile["fi
 superseded = []
 for name in previous:
     path = Path(name)
+    if path.name == "verification.json":
+        continue
     if path.parent == flamegraphs and str(path.relative_to(benchmarks)) not in checksums:
         # Fresh process captures replace prior PID-named artifacts as a verified family.
         superseded.append(name)

@@ -100,7 +100,7 @@ def main(argv: list[str] | None = None) -> int:
         project = Path.cwd()
         if not (project / "benchmarks/refresh/operations.sh").is_file():
             raise ValueError("Run hypothesis-helm-refresh from the project checkout root")
-        root = Path(f"benchmarks/runs/refresh-{int(time.time())}")
+        root = Path(f".cache/refresh/refresh-{int(time.time())}")
         operations = Refresh(root).operations()
         if args.dry_run:
             print(json.dumps({"workers": workers, "operations": [asdict(item) for item in operations]}, indent=2))
@@ -108,6 +108,14 @@ def main(argv: list[str] | None = None) -> int:
         for binary in ("python", "helm", "parallel", "git", "hypothesis-helm", "hypothesis-helm-benchmark"):
             if shutil.which(binary) is None:
                 raise ValueError(f"Required executable not found: {binary}")
+        legacy = Path("benchmarks/runs")
+        if (legacy / "full-refresh.lock").exists():
+            raise ValueError("An earlier refresh owns benchmarks/runs/full-refresh.lock; let it finish before starting another")
+        marker = legacy / "latest-refresh.txt"
+        if marker.is_file():
+            previous = Path(marker.read_text().strip())
+            if previous.is_dir() and not (previous / "publication-finished-epoch.txt").is_file():
+                raise ValueError(f"Unfinished earlier refresh at {previous}; inspect it before removing {marker}")
         root.parent.mkdir(parents=True, exist_ok=True)
         with RefreshLock(root.parent / "full-refresh.lock"):
             latest = root.parent / "latest-refresh.txt"
@@ -134,7 +142,6 @@ def main(argv: list[str] | None = None) -> int:
             )
             print(f"Refresh: {root}; state: {root}/operations.json; logs: {root}/logs/", file=sys.stderr)
             queue.run()
-            shutil.copy2(root / "operations.json", "benchmarks/refresh/operations.json")
             print(f"Full refresh complete: {root}")
         return 0
     except KeyboardInterrupt:

@@ -208,18 +208,45 @@ def test_calibration_command_writes_reproducible_matrix_and_plots(tmp_path: Path
     from hypothesis_helm.benchmarking.studies.calibration import main
 
     output = tmp_path / "study"
-    assert main(["--output", str(output), "--inputs", "3", "--depths", "1", "--placements", "1", "--trials", "2"]) == 0
+    assert (
+        main(
+            [
+                "--output",
+                str(output),
+                "--inputs",
+                "3",
+                "--depths",
+                "1",
+                "--placements",
+                "1",
+                "--trials",
+                "2",
+                "--breadths",
+                "1",
+                "2",
+                "--output-depths",
+                "0",
+                "1",
+            ]
+        )
+        == 0
+    )
     document = json.loads((output / "calibration.json").read_text())
     assert document["status"] == "complete"
-    assert document["profiles"][0]["evidence"]["reference_renders"] == 8
+    assert len(document["profiles"]) == 4
+    assert all(cell["evidence"]["reference_renders"] == 8 for cell in document["profiles"])
+    assert all(cell["faults"] == document["profiles"][0]["faults"] for cell in document["profiles"])
+    dimensions = [cell["analysis"]["complexity"]["maximum_output"] for cell in document["profiles"]]
+    assert len({cell["breadth"] for cell in dimensions}) == len({cell["depth"] for cell in dimensions}) == 2
+    assert len({cell["score"] for cell in dimensions}) == 4
     assert document["approximation"]["enabled"] is False
     recorded = (output / "calibration.json").read_bytes()
     assert main(["--output", str(output), "--plot-only"]) == 0
     assert (output / "calibration.json").read_bytes() == recorded
-    for name in ("calibration", "matching-matrix", "profile-variation"):
+    for name in ("calibration", "matching-matrix", "profile-variation", "complexity-sweep"):
         for extension in ("png", "svg"):
             assert (output / f"{name}.{extension}").stat().st_size > 1000
-    assert len(json.loads((output / "matrix.json").read_text())["rows"]) == 6
+    assert len(json.loads((output / "matrix.json").read_text())["rows"]) == 24
     assert (output / "MATRIX.md").is_file() and (output / "matrix.csv").is_file()
     assert not list(output.rglob("Chart.yaml"))
 
@@ -243,3 +270,32 @@ def test_plot_export_preserves_all_heatmap_rows(tmp_path: Path) -> None:
     limits = axis.get_ylim()
     finish(figure, tmp_path, "heatmap", "Three rows must remain visible.", question="How do the three recorded cases compare?")
     assert axis.get_ylim() == limits
+
+
+def test_shaped_fixture_replays_the_same_fault_outputs(tmp_path: Path) -> None:
+    """
+    Reproduce sibling copies and nested envelopes from the retained shared-chart recipe.
+
+    Args:
+        tmp_path (Path): Independent generated and replayed chart locations.
+
+    Returns:
+        None: Replay preserves exact manifests, all defect copies and the measured tree shape.
+    """
+    from hypothesis_helm.benchmarking.charts.faults import Fault, write_faults
+    from hypothesis_helm.benchmarking.charts.generator import generate, reproduce
+    from hypothesis_helm.benchmarking.charts.shape import fault_outputs, reshape_faults
+    from hypothesis_helm.charts.model import Chart
+    from hypothesis_helm.charts.rendering import render
+
+    source, target = tmp_path / "source", tmp_path / "replayed"
+    generate(source, input_complexity=3, output_bins=2)
+    values = Chart.load(source).defaults
+    fault = Fault("bug", {next(iter(values)): True})
+    write_faults(source, [fault], symbolic=True)
+    reshape_faults(source, 3, 2)
+    values = {key: True for key in values}
+    actual = render(Chart.load(source), values, stream=False)
+    assert list(fault_outputs(actual)) == [{"bug": "incorrect"}] * 3
+    reproduce(source / "benchmark-parameters.yaml", target)
+    assert render(Chart.load(target), values, stream=False) == actual

@@ -156,7 +156,7 @@ lines = [
     f"{len(rows)} charts: "
     f"{counts['rendered']} graphs with rendered baselines, "
     f"{counts['static-only']} static-only graphs, and "
-    f"{counts['missing-values']} chart without a values file. The [verification record](verification.json) accounts for "
+    f"{counts['missing-values']} chart without a values file. Verification checks account for "
     f"every exported vertex and edge.",
     "",
     "These are directed multigraphs G = (V, E) from the compiler, rendered with Matplotlib. Every exported vertex and "

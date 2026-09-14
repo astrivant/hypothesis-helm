@@ -226,7 +226,9 @@ reusable scheduler in a sibling Python package; the Helm-specific inventory and
 Bash commands stay in this project. Both import packages use the root Poetry
 configuration and ship in the same wheel.
 
-Each run writes an atomic `operations.json` journal and one log per operation.
+Refresh workspaces live under `.cache/refresh/refresh-<epoch>/`. Each run keeps its
+`operations.json` journal, verification records, source snapshots and operation logs there.
+Only benchmark results, plots and chart recipes are published; refresh bookkeeping is not committed.
 Failures stop scheduling, join owned children, and mark pending operations blocked.
 Repository command failures are retained for their finalizer to inspect; missing
 or invalid reports still prevent the next repository and final publication.
@@ -467,3 +469,31 @@ with random trimming disabled and failure expansion enabled.
 and seeded random nesting depths (1–5). `--permutations 8` stays fixed; each
 chart retains 12 topology components. Shared PCA axes make depth profiles
 comparable within each topology family.
+
+## Sweep chart breadth and depth
+
+To compare sampling floors across output shapes, run this from the repository root:
+
+```bash
+bash scripts/project-run.sh hypothesis-helm-benchmark calibration \
+  --inputs 6 --depths 1 3 5 \
+  --breadths 1 4 8 --output-depths 0 1 2 \
+  --placements 2 --trials 100 --seed 2026 --time-limit 9m \
+  --output "benchmarks/runs/calibration-sweep-$(date +%s)"
+```
+
+This measures 54 cases: nine output shapes at three defect-trigger depths, with two paired defect placements.
+`--breadths` selects sibling fault-resource copies. `--output-depths` selects nested Kubernetes `List` envelopes;
+`--depths` selects how many input conditions activate a defect. Plots label the actual measured breadth and depth.
+Copies have distinct resource names but preserve the same defects, so output growth alone need not increase the sample floor.
+
+The output contains `complexity-sweep.png`/`.svg`, numerical sweep data, the calibration plot, and the matching matrix.
+Heatmap cells show mean floors and one sample standard deviation across placements. The 100 sampling seeds calibrate each placement's floor.
+All permitted inputs are rendered for each measured chart; incomplete runs do not publish a completed calibration.
+Future full repository refreshes include this sweep. A refresh already running uses its captured source and command inventory.
+
+To redraw a completed run's plots without repeating Helm measurements:
+
+```bash
+bash scripts/project-run.sh hypothesis-helm-benchmark calibration --plot-only --output benchmarks/runs/calibration-sweep-<epoch>
+```

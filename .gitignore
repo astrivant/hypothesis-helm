@@ -17,3 +17,10 @@ generated-tests/
 # Retain published scan reports and their underlying measurements.
 !docs/reports/
 !docs/reports/**
+
+# Refresh helpers are source files; generated bookkeeping belongs under .cache/refresh/.
+benchmarks/refresh/*
+!benchmarks/refresh/README.md
+!benchmarks/refresh/*.py
+!benchmarks/refresh/*.sh
+benchmarks/studies/chart-topologies/verification.json
