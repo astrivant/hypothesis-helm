@@ -75,6 +75,7 @@ hypothesis-helm-benchmark --help
 ```
 
 See [Benchmarking](benchmarks/README.md) for chart generation and plot commands.
+Browse the [flame graphs](benchmarks/studies/flamegraphs/README.md) to see time spent in Python calls during a scaling smoke test.
 The [configurable stress chart](benchmarks/chart) combines known defects and topology
 controls in one fixture; its [guide](benchmarks/fixture/README.md) explains how to reduce them one step at a time.
 See [random sampling results](benchmarks/studies/sampling/README.md) for the measured

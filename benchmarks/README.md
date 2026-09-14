@@ -134,6 +134,9 @@ a defect exposed by one input has only a 70% detection chance when 70% are teste
 
 ### Flame graphs across worker cores
 
+[View published flame graphs](studies/flamegraphs/README.md), including combined workers,
+the coordinator and individual processes. These are scaling smoke-test captures.
+
 Place `--profile DIRECTORY` before the study name to capture Python call stacks
 and generate Matplotlib flame graphs:
 

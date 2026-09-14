@@ -13,6 +13,7 @@ Each directory contains one study's recorded inputs, results and available plots
 | error-surface | [Browse](error-surface/README.md) |
 | expansion | [Browse](expansion/README.md) |
 | filtering | [Browse](filtering/README.md) |
+| flamegraphs (scaling smoke test) | [Browse](flamegraphs/README.md) |
 | matrix | [Browse](matrix/README.md) |
 | nesting | [Browse](nesting/README.md) |
 | pca | [Browse](pca/README.md) |
