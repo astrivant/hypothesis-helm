@@ -126,7 +126,7 @@ class RepositorySource:
             remaining = stop - time.monotonic()
             if remaining <= 0:
                 raise subprocess.TimeoutExpired("git clone", timeout)
-            cloned = run_git(["git", "clone", "--depth", "1", "--", location, str(source.root)], remaining)
+            cloned = run_git(["git", "clone", "--depth", "3", "--", location, str(source.root)], remaining)
             source.diagnostic = cloned.stdout + cloned.stderr
             if cloned.returncode:
                 source.status = "clone-failed"

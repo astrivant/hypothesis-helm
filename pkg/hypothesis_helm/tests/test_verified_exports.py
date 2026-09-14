@@ -328,6 +328,7 @@ def test_ci_commit_only_exported_files(chart: Chart, tmp_path: Path, monkeypatch
             text=True,
         )
     assert git("rev-list", "--count", "HEAD") == "2"
+    assert "Hypothesis-Helm-Minimal-Values: true" in git("log", "-1", "--format=%B").splitlines()
     assert set(git("diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").splitlines()) == {
         "values-[review].yaml",
         "values-[review].proof",

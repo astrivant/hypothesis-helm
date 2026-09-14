@@ -100,6 +100,9 @@ whole-chart and exhaustive modes remain serial.
 
 ### Runtime estimates
 
+This section describes generated property suites. Recursive repository tests can also
+reuse entire completed charts after [Git and content verification](../scanning/README.md#incremental-repository-tests).
+
 **Expect the first execution to take substantially longer than a cached local
 rerun.** The tool traverses the complete schema and discovered values-path tree to
 generate properties, then executes every selected property because no successful

@@ -4,6 +4,7 @@ Resolve CI comparison revisions and retain conservative, repository-relative Git
 
 import json
 import os
+import subprocess
 from collections.abc import Mapping
 from pathlib import Path
 
@@ -42,7 +43,7 @@ def optional_git(root: Path, *arguments: str) -> str:
     """
     try:
         return git(root, *arguments).strip()
-    except (ValueError, OSError):
+    except (ValueError, OSError, subprocess.TimeoutExpired):
         return ""
 
 
@@ -115,7 +116,7 @@ def comparison(root: Path, base_ref: str | None = None, *, environment: Mapping[
         tracked = git(repository, "diff", "--name-only", "--no-renames", "-z", base, "--")
         untracked = git(repository, "ls-files", "--others", "--exclude-standard", "-z")
         report.update(status="resolved", base_commit=base, changed_files=sorted(set(filter(None, (tracked + untracked).split("\0")))))
-    except (OSError, ValueError) as exc:
+    except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
         report["reason"] = str(exc)
     return report
 
@@ -133,7 +134,14 @@ def chart_changed(path: Path, report: dict[str, object]) -> bool:
     """
     if report["status"] != "resolved":
         return True
-    relative = path.resolve().relative_to(Path(str(report["repository"]))).as_posix()
+    repository = Path(str(report["repository"]))
+    if not path.resolve().is_relative_to(repository):
+        return True
+    relative = path.resolve().relative_to(repository).as_posix()
     paths = report["changed_files"]
     assert isinstance(paths, list)
-    return relative == "." and bool(paths) or any(str(item) == relative or str(item).startswith(relative + "/") for item in paths)
+    return (
+        relative == "."
+        and bool(paths)
+        or any(str(item) == relative or str(item).startswith(relative + "/") or relative.startswith(str(item) + "/") for item in paths)
+    )

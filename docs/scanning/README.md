@@ -12,7 +12,7 @@ helm hypothesis test ./charts --values ci/test-values.yaml --report reports/char
 `test PATH` discovers charts in a local directory. `scan SOURCE` fetches remote charts
 from a Helm repository/chart (see below), an HTTPS Git repository URL, or an SSH URL
 (`git@host:owner/repo.git` or `ssh://git@host/owner/repo.git`). Git sources
-require Git and use a shallow checkout of the default branch. Reports retain
+require Git and use a three-commit shallow checkout of the default branch. Reports retain
 the original URL and resolved commit; the temporary checkout is removed after
 the scan, while reports, diagnostics, and failing values remain in the artifact
 directory. Repository submodules are not initialized automatically.
@@ -26,6 +26,54 @@ URLs without embedded HTTPS credentials, query strings, or fragments.
 `--scan-timeout` also includes this time and takes precedence when shorter.
 Failed clones produce a report with incomplete discovery and exit **1**;
 checkout timeouts exit **124**, and interruption exits **130**.
+
+## Incremental repository tests
+
+Repository tests reuse a previous chart success only when Git reports the chart unchanged
+and the prepared chart, dependencies, selected values, test settings, seed, Helm binary and
+tool implementation still match. A cold cache, failure or incomplete run causes fresh testing.
+Changing the seed therefore runs a new sample even when chart files have not changed.
+
+```sh
+helm hypothesis test ./charts --filter --base-ref origin/main \
+  --cache-dir .cache/hypothesis-helm/charts --report
+```
+
+Without `--base-ref`, the comparison is selected automatically:
+
+| Execution | Git comparison |
+| --- | --- |
+| Main, master, trunk or the repository's default branch | Previous commit, `HEAD^`. |
+| Same branches, immediately after this tool commits minimal values | `HEAD~2`, retaining the source change before the generated commit. |
+| GitHub pull request | Merge base with `GITHUB_BASE_REF`. |
+| GitLab merge request | `CI_MERGE_REQUEST_DIFF_BASE_SHA`, or merge base with `CI_MERGE_REQUEST_TARGET_BRANCH_NAME`. |
+| Other feature branches | Merge base with the remote default branch, falling back to `main`. |
+
+`--base-ref` overrides `HYPOTHESIS_HELM_BASE_REF`, which overrides automatic selection.
+CircleCI supplies the current branch through `CIRCLE_BRANCH`; set `HYPOTHESIS_HELM_BASE_REF`
+explicitly when the PR targets another branch. Provider metadata is ignored when the scanned
+repository differs from the surrounding CI checkout.<sup>[1](https://docs.github.com/en/actions/reference/workflows-and-actions/variables),
+[2](https://docs.gitlab.com/ci/variables/predefined_variables/), [3](https://circleci.com/docs/reference/variables/)</sup>
+
+The two-commit rule recognizes the `Hypothesis-Helm-Minimal-Values: true` trailer written by
+the [commit-back step](../ci/README.md#minimal-values-in-ci). Enabling export alone does not
+change the comparison. Missing history or an unavailable reference disables reuse; charts
+are tested. Local CI checkouts should fetch the comparison history, for example with
+`fetch-depth: 0` in GitHub Actions. Arbitrary overrides in remote scans may require a local
+checkout with more history followed by `test`.
+
+Completed chart results expire after **21 days**, provided the CI provider retains the
+cache that long. Restore and save `.cache/hypothesis-helm/charts`, or the directory supplied
+with `--cache-dir`. Writes use a filesystem lock and atomic replacement; concurrent failures
+take precedence over conflicting successes. Separate CI cache uploads still require the
+provider's normal save/restore policy. `--no-cache` forces fresh execution and disables writes.
+
+Dependency preparation still runs before cache verification and remains outside testing
+budgets. Requested exports and external Kubernetes validation require fresh execution.
+Helm registry downloads have no Git comparison, so they also run afresh. Reports label reused
+results **CACHED PASS**, with zero new attempts, and record the resolved comparison commit.
+These rules apply to recursive repository execution; generated property suites retain their
+[separate path-result cache](../execution/README.md#runtime-estimates).
 
 ## Helm repositories and registries
 

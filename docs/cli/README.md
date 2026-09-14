@@ -138,14 +138,15 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--values VALUES] [--timeout TIMEOUT]
                             [--chart-timeout CHART_TIMEOUT]
                             [--scan-timeout SCAN_TIMEOUT]
-                            [--max-examples MAX_EXAMPLES] [--jobs JOBS]
-                            [--permutations PERMUTATIONS] [--filter] [--fail]
-                            [--seed SEED]
+                            [--max-examples MAX_EXAMPLES] [--cache-dir CACHE_DIR]
+                            [--no-cache] [--jobs JOBS] [--permutations PERMUTATIONS]
+                            [--filter] [--fail] [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
                             [--filter-aggressive]
                             [--sampling-calibration SAMPLING_CALIBRATION]
                             [--sample-random PERCENT] [--sample-min-cases N]
                             [--traversal-strategy {random,linear,root-first,leaf-first}]
+                            [--base-ref BASE_REF]
                             [--export-topological-graph [FILENAME]]
                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
                             [--export-minimal-values [FILENAME]]
@@ -175,6 +176,10 @@ options:
                         scan budget excluding dependency preparation; default:
                         unlimited
   --max-examples MAX_EXAMPLES
+  --cache-dir CACHE_DIR
+                        completed chart-result cache; default: .cache/hypothesis-
+                        helm/charts
+  --no-cache            disable completed chart-result caching
   --jobs, -j JOBS       path workers per chart; auto: available CPUs
   --permutations PERMUTATIONS
                         finite interaction strength; default: automatic finite
@@ -198,6 +203,8 @@ options:
   --traversal-strategy {random,linear,root-first,leaf-first}
                         value-path order: seeded random (default), original linear,
                         root-first, or leaf-first
+  --base-ref BASE_REF   Git comparison ref for repository tests; overrides CI target
+                        or previous trunk commit
   --export-topological-graph [FILENAME]
                         export input references, control flow and observed manifests
                         as JSON and DOT
@@ -366,11 +373,11 @@ usage: helm hypothesis test [-h] [--report [PATH]] [--values VALUES]
                             [--allow-empty] [--artifact-dir ARTIFACT_DIR]
                             [--kubeconform] [--schema-version SCHEMA_VERSION]
                             [--schema-cache-dir SCHEMA_CACHE_DIR] [--schema-offline]
-                            [--kubeconform-binary KUBECONFORM_BINARY] [--dry-run]
-                            [--cache-dir CACHE_DIR] [--disable-schema-caching]
-                            [--progress] [--run-id RUN_ID] [--no-cache]
-                            [--rerun {auto,all,failed}] [--shard SHARD] [--jobs JOBS]
-                            [--output {json}] [--strict]
+                            [--kubeconform-binary KUBECONFORM_BINARY]
+                            [--base-ref BASE_REF] [--dry-run] [--cache-dir CACHE_DIR]
+                            [--disable-schema-caching] [--progress] [--run-id RUN_ID]
+                            [--no-cache] [--rerun {auto,all,failed}] [--shard SHARD]
+                            [--jobs JOBS] [--output {json}] [--strict]
                             [--export-topological-graph [FILENAME]]
                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
                             [--export-minimal-values [FILENAME]]
@@ -447,6 +454,8 @@ options:
   --schema-cache-dir SCHEMA_CACHE_DIR
   --schema-offline      reuse cached schemas without network access
   --kubeconform-binary KUBECONFORM_BINARY
+  --base-ref BASE_REF   Git comparison ref for repository tests; overrides CI target
+                        or previous trunk commit
   --dry-run             plot coverage and forecast filtering or cached property work
                         without execution
   --cache-dir CACHE_DIR

@@ -409,6 +409,7 @@ def test_values_override_and_dependency_build(tmp_path: Path, monkeypatch: pytes
         return {"status": "passed", "attempts": 1}
 
     monkeypatch.setattr("hypothesis_helm.charts.scan.Processes.run", lambda self, *args, **kwargs: command(*args, **kwargs))
+    monkeypatch.setattr("hypothesis_helm.charts.scan.comparison", lambda *args: {"status": "unavailable"})
     monkeypatch.setattr("hypothesis_helm.charts.scan.exercise_chart", exercise)
     assert (
         main(
@@ -670,6 +671,7 @@ def test_dependency_timing_accounting(
         return {"status": "passed", "attempts": 1, "execution_seconds": 0.2}
 
     monkeypatch.setattr("hypothesis_helm.charts.scan.Processes.run", lambda self, *args, **kwargs: prepare(*args, **kwargs))
+    monkeypatch.setattr(module, "comparison", lambda *args: {"status": "unavailable"})
     monkeypatch.setattr(module, "exercise_chart", exercise)
     code = main(
         [

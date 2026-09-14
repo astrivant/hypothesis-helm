@@ -42,5 +42,6 @@ fi
 git --literal-pathspecs -c user.name='github-actions[bot]' \
   -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
   commit --only --pathspec-from-file="$files_list" --pathspec-file-nul \
-  -m 'Update minimal Helm values and verification proof'
+  -m 'Update minimal Helm values and verification proof' \
+  -m 'Hypothesis-Helm-Minimal-Values: true'
 git push origin "HEAD:$HH_COMMIT_BRANCH"

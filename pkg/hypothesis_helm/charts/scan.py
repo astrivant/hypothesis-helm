@@ -20,6 +20,8 @@ from pathlib import Path
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.audit import audit
+from hypothesis_helm.charts.cache import ChartCache
+from hypothesis_helm.charts.changes import comparison
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.paths import check_paths
 from hypothesis_helm.charts.registry import prepare_helm_source
@@ -281,6 +283,9 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         int: Scan exit status, including checkout failure or timeout.
     """
     root = source.root
+    changes: dict[str, object] = (
+        comparison(root, getattr(args, "base_ref", None)) if source.status == "ready" else {"status": "unavailable"}
+    )
     records = discover_charts(root, deadline=args.scan_deadline) if source.status == "ready" else []
     if source.kind == "helm":
         for package in source.packages:
@@ -311,6 +316,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         artifacts = output / f"{index:04d}"
         record["artifacts"] = str(artifacts)
         tick = time.monotonic()
+        cache = ChartCache()
         LOGGER.info("Chart %d/%d: %s", index + 1, len(records), record["chart"])
         try:
             with ExitStack() as scope:
@@ -379,6 +385,16 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
                             coverage="not a standalone application",
                         )
                         continue
+                    cache = ChartCache.prepare(copy, path, args, changes)
+                    record["cache"] = {"key": cache.key, "reused": cache.reusable, "reason": cache.reason}
+                    if cache.reusable:
+                        record.update(
+                            status="cached-pass",
+                            result="CACHED PASS",
+                            attempts=0,
+                            coverage="reused completed tests with identical inputs and settings; no new tests executed",
+                        )
+                        continue
                     if args.export_minimal_values is not None:
                         input_chart = load_input_chart(copy)
                         target = None
@@ -443,6 +459,8 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
                 timed_out = True
                 if record["status"] in {"time-limit", "timeout"}:
                     record.update(status="scan-timeout", error="Total scan deadline reached")
+            if not cache.reusable:
+                cache.publish(record)
             LOGGER.info(
                 "%s: %s; testing %.2fs; dependency preparation %.2fs; %d charts remain",
                 record["chart"],
@@ -498,6 +516,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         "charts_discovered": len(records),
         "counts": counts,
         "charts": records,
+        "git_comparison": changes,
         "settings": {
             "max_examples": args.max_examples,
             "jobs": getattr(args, "jobs", 1),
@@ -549,6 +568,13 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
             ]
             if source.status != "ready":
                 report["summary"] = ["Helm source preparation did not complete; available results are retained.", source.diagnostic]
+    summary = report.setdefault("summary", [])
+    assert isinstance(summary, list)
+    summary.append(
+        f"Git comparison: {changes['base_ref']} ({changes['base_commit']}); {counts.get('cached-pass', 0)} cached chart successes reused."
+        if changes["status"] == "resolved"
+        else "Git comparison unavailable; no charts skipped using previous test results."
+    )
     deduplicate_errors(report)
     (output / "scan.json").write_text(json.dumps(report, indent=2) + "\n")
     if args.report is not None:
@@ -565,4 +591,4 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         return 1
     if any(status in counts for status in ("invalid-metadata", "baseline-failed", "failed", "error")):
         return 1
-    return 0 if records and set(counts) <= {"passed"} else 2
+    return 0 if records and set(counts) <= {"passed", "cached-pass"} else 2

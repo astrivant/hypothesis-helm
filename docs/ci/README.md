@@ -371,6 +371,13 @@ for a sharded action. For multiple chart matrices, use one final export job to
 avoid competing pushes. Pushes require a branch checkout and use normal
 fast-forward updates. Pull-request merge refs do not commit back.
 
+For incremental repository tests on main/trunk, a generated commit-back at `HEAD`
+automatically changes the comparison from `HEAD^` to `HEAD~2`. This keeps the preceding
+source change in the diff. The commit-back script identifies its commits with
+`Hypothesis-Helm-Minimal-Values: true`; simply enabling export does not widen the window.
+Use `fetch-depth: 0` with `actions/checkout` to make comparison history available.
+An explicit `--base-ref` takes precedence. See [incremental repository tests](../scanning/README.md#incremental-repository-tests).
+
 Verified examples can be reduced while preserving valid, nonempty output.
 Invalid examples are also exported, with the validation failure recorded for review.
 The exporter does not claim a global minimum. See [verification and limits](../inputs/README.md).

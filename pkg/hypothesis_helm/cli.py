@@ -175,6 +175,8 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="scan budget excluding dependency preparation; default: unlimited",
     )
     repository.add_argument("--max-examples", type=int, default=10)
+    repository.add_argument("--cache-dir", type=Path, help="completed chart-result cache; default: .cache/hypothesis-helm/charts")
+    repository.add_argument("--no-cache", action="store_true", help="disable completed chart-result caching")
     repository.add_argument("--jobs", "-j", type=parse_jobs, default="auto", help="path workers per chart; auto: available CPUs")
     repository.add_argument(
         "--permutations",
@@ -367,6 +369,8 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             help="reuse cached schemas without network access",
         )
         command.add_argument("--kubeconform-binary", default="kubeconform")
+    for command in (test, repository):
+        command.add_argument("--base-ref", help="Git comparison ref for repository tests; overrides CI target or previous trunk commit")
     for command in (test, run):
         command.add_argument(
             "--dry-run",
@@ -463,8 +467,6 @@ def local_discovery(args: argparse.Namespace) -> bool:
         "--collect-only": args.collect_only,
         "--dry-run": args.dry_run,
         "--shard": args.shard is not None,
-        "--cache-dir": args.cache_dir is not None,
-        "--no-cache": args.no_cache,
         "--disable-schema-caching": args.disable_schema_caching,
         "--rerun": args.rerun != "auto",
         "--run-id": args.run_id is not None,
@@ -478,6 +480,8 @@ def local_discovery(args: argparse.Namespace) -> bool:
         or args.scan_timeout is not None
         or args.build_dependencies is not None
         or args.fail
+        or args.base_ref is not None
+        or bool(os.environ.get("HYPOTHESIS_HELM_BASE_REF"))
         or (not any(unsupported.values()) and len(discover_charts(args.chart)) > 1)
     )
     if args.filter and not recursive:
