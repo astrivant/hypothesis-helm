@@ -13,7 +13,7 @@ A gate is a template `if` condition. Depth counts nested conditions required to 
 ![Phase costs](filtering-phases.png)
 
 2 paired repeats per chart and method; execution ceiling 540 seconds per run.
-Bands show observed ranges, not confidence intervals. Method order is seeded and shuffled for each repeat.
+Dark bands show mean ±1 sample SD; light bands show ±2 SD across paired repeats, not confidence intervals. Method order is seeded and shuffled for each repeat.
 Input count is the full Boolean domain (2^fields), not the interaction-strength flag; strength stays at two.
 The small finite domains are fully enumerated before filtering.
 Gate depth changes branch rarity, fan-in and equivalent-output regions.
@@ -126,4 +126,4 @@ Failure expansion is enabled for both filter presets; workloads with actual fail
 | 9 | 5 | 1 | sample-random | 359 | 359 | 16.927 | 0.146 | 0.000 | 16.774 | passed |
 | 9 | 5 | 1 | filter | 127 | 127 | 6.870 | 0.279 | 0.000 | 6.583 | passed |
 
-[Raw timings and fallback decisions](results.csv) · [Full measurements](results.json) · [Chart recipes](cases)
+[Raw timings and fallback decisions](results.csv) · [Full measurements](results.json) · [Chart recipes](cases/)

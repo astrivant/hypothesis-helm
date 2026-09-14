@@ -8,6 +8,7 @@ import logging
 import platform
 import shutil
 import time
+from collections.abc import Sequence
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.analysis.pca import inject_errors, project
@@ -53,6 +54,7 @@ def selections(
     candidates = values[1:]
     groups = {"before": list(range(len(values)))}
     evidence: dict[str, object] = {}
+    selected: Sequence[dict[str, object]]
     for strategy in ("random", "topology", "combined", *PRESETS):
         if strategy in PRESETS:
             selected, evidence[strategy] = select_preset(chart, candidates, strategy, seed, strength=strength)

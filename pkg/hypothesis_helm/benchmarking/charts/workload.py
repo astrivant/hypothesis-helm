@@ -5,12 +5,14 @@ Define unique indexed inputs, balanced shard ownership and a bell-shaped observa
 import hashlib
 import json
 import random
+from collections.abc import Sequence
 from pathlib import Path
 from statistics import NormalDist
 
 from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.schemas.contracts import configuration_key, mapping
+from hypothesis_helm.schemas.replay import Replay
 
 INPUTS = 100
 LIVE = 8
@@ -59,7 +61,7 @@ def standard_values(
     }
 
 
-def partition_indices(total: int, shard: Shard | None, replicas: int) -> list[list[int]]:
+def partition_indices(total: int, shard: Shard | None, replicas: int) -> list[range]:
     """
     Partition a fixed global input prefix into disjoint CI shards and replica workers.
 
@@ -72,15 +74,15 @@ def partition_indices(total: int, shard: Shard | None, replicas: int) -> list[li
         replicas (int): Requested local process count.
 
     Returns:
-        list[list[int]]: Disjoint replica assignments whose union is the selected shard.
+        list[range]: Disjoint replica assignments whose union is the selected shard.
     """
     if total < 1 or replicas < 1:
         raise ValueError("permutation and replica counts must be positive")
-    selected = list(range(shard.index - 1, total, shard.total)) if shard else list(range(total))
+    selected = range(shard.index - 1, total, shard.total) if shard else range(total)
     return [selected[len(selected) * worker // replicas : len(selected) * (worker + 1) // replicas] for worker in range(replicas)]
 
 
-def load_inputs(chart: Chart, source: Path | None) -> list[dict[str, object]] | None:
+def load_inputs(chart: Chart, source: Path | None) -> Sequence[dict[str, object]] | None:
     """
     Validate custom JSONL input uniqueness or require the standardized chart schema.
 
@@ -89,7 +91,7 @@ def load_inputs(chart: Chart, source: Path | None) -> list[dict[str, object]] | 
         source (Path | None): Optional user-supplied finite workload.
 
     Returns:
-        list[dict[str, object]] | None: Custom overrides or the indexed standard generator.
+        Sequence[dict[str, object]] | None: Verified JSONL offsets yielding overrides or the indexed standard generator.
     """
     if source is None:
         spec_path = chart.path / "benchmark.json"
@@ -103,11 +105,45 @@ def load_inputs(chart: Chart, source: Path | None) -> list[dict[str, object]] | 
         if set(properties) != set(names) or any(mapping(value).get("type") != "boolean" for value in properties.values()):
             raise ValueError("custom charts require --values with distinct JSONL overrides")
         return None
-    values = [mapping(json.loads(line)) for line in source.read_text().splitlines() if line.strip()]
-    identities = {configuration_key(merge_values(chart.defaults, value)) for value in values}
-    if not values or len(values) != len(identities):
+    source = source.resolve()
+    positions: list[tuple[int, bytes]] = []
+    identities: set[bytes] = set()
+    with source.open("rb") as stream:
+        while True:
+            offset = stream.tell()
+            line = stream.readline()
+            if not line:
+                break
+            if not line.strip():
+                continue
+            value = mapping(json.loads(line))
+            identity = hashlib.sha256(configuration_key(merge_values(chart.defaults, value)).encode()).digest()
+            if identity in identities:
+                raise ValueError("--values must contain nonempty, distinct effective inputs")
+            identities.add(identity)
+            positions.append((offset, hashlib.sha256(line).digest()))
+    if not positions:
         raise ValueError("--values must contain nonempty, distinct effective inputs")
-    return values
+
+    def at(index: int) -> dict[str, object]:
+        """
+        Read one verified record without retaining parsed values or an open descriptor.
+
+        Args:
+            index (int): Valid record position in the original JSONL workload.
+
+        Returns:
+            dict[str, object]: Fresh values, rejecting changed input bytes before execution.
+        """
+        offset, expected = positions[index]
+        with source.open("rb") as stream:
+            stream.seek(offset)
+            line = stream.readline()
+        if hashlib.sha256(line).digest() != expected:
+            raise ValueError("--values workload changed after validation")
+        return mapping(json.loads(line))
+
+    return Replay(len(positions), at)
 
 
 def source_digest(directory: Path) -> str:

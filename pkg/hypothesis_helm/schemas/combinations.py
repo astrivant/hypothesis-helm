@@ -8,7 +8,7 @@ import copy
 import itertools
 import math
 import random
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 
 from attrs import define, field
 from jsonschema import validators
@@ -18,6 +18,7 @@ from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
 from hypothesis_helm.schemas.groups import ExhaustiveGroup
 from hypothesis_helm.schemas.model import ValuesModel
+from hypothesis_helm.schemas.replay import Replay, select
 
 
 @define
@@ -26,9 +27,9 @@ class InteractionPlan:
     Store configurations and the finite factors whose interactions they cover.
 
     Attributes:
-        values (list[dict[str, object]]): Complete schema-valid configurations.
+        values (Sequence[dict[str, object]]): Complete schema-valid configurations.
         factors (list[tuple[str, ...]]): Paths treated as independent factors.
-        domains (list[list[dict[str, object]]]): Per-factor assignments, including omission.
+        domains (list[Sequence[dict[str, object]]]): Per-factor assignments, including omission.
         strength (int): Effective interaction strength, capped at the factor count.
         interactions (int): Number of valid interactions covered by the suite.
         candidates (int): Complete configurations examined during planning.
@@ -38,9 +39,9 @@ class InteractionPlan:
         duplicate_cases_removed (int): Assignments already covered by another configuration.
     """
 
-    values: list[dict[str, object]]
+    values: Sequence[dict[str, object]]
     factors: list[tuple[str, ...]]
-    domains: list[list[dict[str, object]]]
+    domains: list[Sequence[dict[str, object]]]
     strength: int
     interactions: int
     candidates: int
@@ -166,7 +167,30 @@ def plan_interactions(
         for group in groups
         for choices in itertools.product(*(range(len(domains[index])) for index in group))
     }
-    values: list[dict[str, object]] = []
+    assignments: list[int] = []
+
+    def candidate_at(number: int) -> dict[str, object]:
+        """
+        Reconstruct an accepted assignment from its compact mixed-radix ID.
+
+        Args:
+            number (int): Position in the full finite Cartesian domain.
+
+        Returns:
+            dict[str, object]: Fresh configuration with the original typed object structure.
+        """
+        row = []
+        for domain in reversed(domains):
+            number, choice = divmod(number, len(domain))
+            row.append(choice)
+        typed_candidate = copy.deepcopy(skeleton)
+        for node, domain, choice in zip(space.nodes, domains, reversed(row), strict=True):
+            name = node.path[-1]
+            assignment = domain[choice]
+            if name in assignment:
+                model.assign(typed_candidate, node, assignment[name])
+        return model.unstructure(typed_candidate)
+
     covered = 0
     candidates = 0
     targets = iter(sorted(uncovered))
@@ -178,17 +202,15 @@ def plan_interactions(
             candidates += 1
             if candidates > max_candidates:
                 raise NonFiniteSchema("interaction completion search exceeds --max-candidates")
-            typed_candidate = copy.deepcopy(skeleton)
-            for node, domain, choice in zip(space.nodes, domains, row, strict=True):
-                name = node.path[-1]
-                if name in domain[choice]:
-                    model.assign(typed_candidate, node, domain[choice][name])
-            candidate = model.unstructure(typed_candidate)
+            number = 0
+            for domain, choice in zip(domains, row, strict=True):
+                number = number * len(domain) + choice
+            candidate = candidate_at(number)
             if not validator.is_valid(json_value(candidate)) or (accept is not None and not accept(candidate)):
                 continue
-            if len(values) >= max_cases:
+            if len(assignments) >= max_cases:
                 raise NonFiniteSchema("interaction suite exceeds --max-cases")
-            values.append(candidate)
+            assignments.append(number)
             for group in groups:
                 interaction = tuple((index, row[index]) for index in group)
                 if interaction in uncovered:
@@ -197,8 +219,9 @@ def plan_interactions(
             break
         else:
             uncovered.remove(target)
-    if not values:
+    if not assignments:
         raise NonFiniteSchema("schema has no feasible configurations for permutations")
+    values = Replay(len(assignments), lambda index: candidate_at(assignments[index]))
     return InteractionPlan(
         values,
         factors,
@@ -212,27 +235,43 @@ def plan_interactions(
     )
 
 
-def trim_values(values: list[dict[str, object]], steps: int, seed: int) -> list[dict[str, object]]:
+def trim_values(values: Sequence[dict[str, object]], steps: int, seed: int) -> Sequence[dict[str, object]]:
     """
     Retain nested seeded subsets, keeping one quarter per step rounded upward.
 
     Args:
-        values (list[dict[str, object]]): Distinct non-default planned configurations.
+        values (Sequence[dict[str, object]]): Distinct non-default planned configurations.
         steps (int): Nonnegative thinning depth; zero preserves the original order.
         seed (int): Seed shared across trim levels for reproducible nested subsets.
 
     Returns:
-        list[dict[str, object]]: Retained configurations in their original execution order.
+        Sequence[dict[str, object]]: Retained configurations in their original execution order.
+    """
+    positions = trim_indices(len(values), steps, seed)
+    return values if not steps or not values else select(values, positions)
+
+
+def trim_indices(size: int, steps: int, seed: int) -> Sequence[int]:
+    """
+    Select the historical seeded subset without constructing its configurations.
+
+    Args:
+        size (int): Available population size.
+        steps (int): Quarter-retention steps.
+        seed (int): Shared deterministic shuffle seed.
+
+    Returns:
+        Sequence[int]: Selected positions in original population order.
     """
     if type(steps) is not int or steps < 0:
         raise ValueError("trim must be a nonnegative integer")
-    if not steps or not values:
-        return values
-    count = len(values)
+    if not steps or not size:
+        return range(size)
+    count = size
     for _ in range(steps):
         count = (count + 3) // 4
         if count == 1:
             break
-    indices = list(range(len(values)))
+    indices = list(range(size))
     random.Random(seed).shuffle(indices)
-    return [values[index] for index in sorted(indices[:count])]
+    return sorted(indices[:count])

@@ -20,6 +20,7 @@ from hypothesis_helm.benchmarking.charts.generator import generate
 from hypothesis_helm.benchmarking.execution.provenance import code_digest
 from hypothesis_helm.benchmarking.reporting.plots import finish
 from hypothesis_helm.benchmarking.reporting.progress import BenchmarkProgress
+from hypothesis_helm.benchmarking.reporting.variation import bands
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
 from hypothesis_helm.compiler.passes.sampling import profile
@@ -113,6 +114,7 @@ def study(chart: Chart, faults: list[Fault], trials: int, seed: int, helm: str, 
                 "eligible": len(filtered),
                 "protected": len(groups),
                 "mean_bug_recall": statistics.mean(recall),
+                "stddev_bug_recall": statistics.stdev(recall) if len(recall) > 1 else None,
                 "p05_bug_recall": recall[int(0.05 * (trials - 1))],
                 "p95_bug_recall": recall[int(0.95 * (trials - 1))],
                 "target_successes": sum(value >= 0.96 for value in recall),
@@ -186,14 +188,26 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "| Case | Max complexity | Gate depth | Fields | Eligible | Protected | Case floor | Field floor | Seeds reaching 96% bug recall |",
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
-    for entry in sequence(document["profiles"]):
+    for index, entry in enumerate(sequence(document["profiles"])):
         cell = mapping(entry)
         features = mapping(mapping(cell["descriptor"])["features"])
         evidence = mapping(cell["evidence"])
         rows = [mapping(row) for row in sequence(cell["rows"])]
         label = str(cell["case"])
         axes[0].scatter(features["maximum_score"], cell["minimum_cases"], label=label)
-        axes[1].plot([row["sample_size"] for row in rows], [100 * float(str(row["mean_bug_recall"])) for row in rows], ".-", alpha=0.6)
+        xs = [float(str(row["sample_size"])) for row in rows]
+        centers = [100 * float(str(row["mean_bug_recall"])) for row in rows]
+        color = f"C{index % 10}"
+        axes[1].plot(xs, centers, ".-", color=color, alpha=0.6)
+        bands(
+            axes[1],
+            xs,
+            centers,
+            [100 * float(str(row["stddev_bug_recall"])) if row.get("stddev_bug_recall") is not None else float("nan") for row in rows],
+            [int(str(row["trials"])) for row in rows],
+            color,
+            upper=100,
+        )
         for row in rows:
             table.append({"case": label, **features, **row})
         lines.append(

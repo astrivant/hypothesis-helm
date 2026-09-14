@@ -5,6 +5,7 @@ Apply measured sampling floors only within an explicitly calibrated structural p
 import json
 import logging
 import math
+from collections.abc import Sequence
 from pathlib import Path
 
 from hypothesis_helm.charts.model import Chart, merge_values
@@ -146,21 +147,21 @@ def descriptor(analysis: dict[str, object], topology: dict[str, object], context
 def select(
     chart: Chart,
     sampling: Sampling,
-    values: list[dict[str, object]],
+    values: Sequence[dict[str, object]],
     seed: int,
     *,
     protected: set[str],
     analysis: dict[str, object],
     topology: dict[str, object],
     context: dict[str, object],
-) -> tuple[list[dict[str, object]], dict[str, object]]:
+) -> tuple[Sequence[dict[str, object]], dict[str, object]]:
     """
     Preserve representatives, apply calibrated floors and report any conservative fallback.
 
     Args:
         chart (Chart): Current chart and effective values.
         sampling (Sampling): Requested aggressive preset and optional calibration path.
-        values (list[dict[str, object]]): Eligible cases after ordinary filtering.
+        values (Sequence[dict[str, object]]): Eligible cases after ordinary filtering.
         seed (int): Shared reproducible selection seed.
         protected (set[str]): Topology representatives and unresolved cases.
         analysis (dict[str, object]): Fresh measurements taken before planning.
@@ -168,7 +169,7 @@ def select(
         context (dict[str, object]): Settings that affect the eligible population.
 
     Returns:
-        tuple[list[dict[str, object]], dict[str, object]]: Selected configurations and decision evidence.
+        tuple[Sequence[dict[str, object]], dict[str, object]]: Selected configurations and decision evidence.
     """
     reason = None
     cell = None

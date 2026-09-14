@@ -9,6 +9,8 @@ from typing import TypeVar
 
 from attrs import frozen
 
+from hypothesis_helm.schemas.replay import select as select_indices
+
 T = TypeVar("T")
 ENVIRONMENT = "HYPOTHESIS_HELM_SAMPLING"
 REPORT = "HYPOTHESIS_HELM_SAMPLING_REPORT"
@@ -52,7 +54,7 @@ class Sampling:
         protected: set[str] | None = None,
         fields: Callable[[T], set[str]] | None = None,
         minimum_fields: int = 0,
-    ) -> tuple[list[T], dict[str, object]]:
+    ) -> tuple[Sequence[T], dict[str, object]]:
         """
         Sample without replacement, preserving input order and mandatory representatives.
 
@@ -65,7 +67,7 @@ class Sampling:
             minimum_fields (int): Minimum distinct paths across the retained cases.
 
         Returns:
-            tuple[list[T], dict[str, object]]: Selected cases and explicit omission statistics.
+            tuple[Sequence[T], dict[str, object]]: Selected cases and explicit omission statistics.
         """
         if minimum_fields < 0 or (minimum_fields and fields is None):
             raise ValueError("a field floor requires nonnegative coverage and a path mapping")
@@ -74,7 +76,7 @@ class Sampling:
             raise ValueError("sampling requires unique case identities")
         required = set(identities) & (protected or set())
         count = min(len(values), max(self.minimum, math.ceil(len(values) * self.percent / 100), len(required)))
-        selected = list(values)
+        selected = values
         if count < len(values):
             ranked = sorted(
                 (identity for identity in identities if identity not in required),
@@ -82,15 +84,17 @@ class Sampling:
             )
             retained = required | set(ranked[: count - len(required)])
             if fields is not None and minimum_fields:
-                by_key = dict(zip(identities, values, strict=True))
-                covered = set().union(*(fields(by_key[identity]) for identity in retained))
+                by_key = {identity: index for index, identity in enumerate(identities)}
+                covered: set[str] = set()
+                for identity in retained:
+                    covered.update(fields(values[by_key[identity]]))
                 for identity in ranked[count - len(required) :]:
                     if len(covered) >= minimum_fields:
                         break
                     retained.add(identity)
-                    covered.update(fields(by_key[identity]))
+                    covered.update(fields(values[by_key[identity]]))
                 count = len(retained)
-            selected = [value for value, identity in zip(values, identities, strict=True) if identity in retained]
+            selected = select_indices(values, [index for index, identity in enumerate(identities) if identity in retained])
         report: dict[str, object] = {
             "algorithm": "sha256-identity-sample-v1",
             "percent": self.percent,
@@ -104,7 +108,10 @@ class Sampling:
             "bug_recall_guaranteed": False,
         }
         if fields is not None:
-            selected_fields = len(set().union(*(fields(value) for value in selected)))
+            covered_fields: set[str] = set()
+            for value in selected:
+                covered_fields.update(fields(value))
+            selected_fields = len(covered_fields)
             report.update(minimum_fields=minimum_fields, selected_fields=selected_fields, field_floor_met=selected_fields >= minimum_fields)
         return selected, report
 

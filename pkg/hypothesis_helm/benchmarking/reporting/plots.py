@@ -8,7 +8,8 @@ import os
 import tempfile
 from collections import defaultdict
 from pathlib import Path
-from statistics import NormalDist, median
+from statistics import NormalDist, mean
+from textwrap import fill
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
 
@@ -19,6 +20,7 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
+from hypothesis_helm.benchmarking.reporting.variation import repeated_line
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 COLORS = ["#2563eb", "#059669", "#d97706", "#9333ea", "#dc2626"]
@@ -74,7 +76,7 @@ def measured_line(
     color: str,
 ) -> None:
     """
-    Plot medians with observed min-max ranges and explicit deadline-censored markers.
+    Plot means and sample deviations with explicit deadline-censored markers.
 
     Args:
         axis (Axes): Destination axes.
@@ -88,21 +90,11 @@ def measured_line(
         None: Only observed measurements are plotted.
     """
     values = [[numeric(point, key) for point in batch] for batch in observations]
-    centers = [median(batch) for batch in values]
-    axis.errorbar(
-        xs,
-        centers,
-        yerr=[
-            [center - min(batch) for center, batch in zip(centers, values, strict=True)],
-            [max(batch) - center for center, batch in zip(centers, values, strict=True)],
-        ],
-        marker="o",
-        markersize=5,
-        linewidth=2,
-        capsize=3,
-        label=label,
-        color=color,
-    )
+    centers = [mean(batch) for batch in values]
+    completed = [
+        batch if all(point["status"] == "passed" for point in records) else [] for batch, records in zip(values, observations, strict=True)
+    ]
+    repeated_line(axis, xs, completed, label, color)
     capped = [index for index, batch in enumerate(observations) if any(point["status"] == "time-limit" for point in batch)]
     if capped:
         axis.scatter(
@@ -116,7 +108,7 @@ def measured_line(
         )
 
 
-def paired_ratio(baseline: list[Point], parallel: list[Point]) -> float | None:
+def paired_ratios(baseline: list[Point], parallel: list[Point]) -> list[float]:
     """
     Calculate paired timing ratios only when both workloads completed.
 
@@ -125,7 +117,7 @@ def paired_ratio(baseline: list[Point], parallel: list[Point]) -> float | None:
         parallel (list[Point]): Target-replica measurements of the appropriate workload.
 
     Returns:
-        float | None: Median paired ratio, or unknown for exclusively censored observations.
+        list[float]: One ratio per completed pair, excluding censored observations.
     """
     reference = {int(numeric(point, "repeat")): point for point in baseline}
     ratios = []
@@ -133,7 +125,7 @@ def paired_ratio(baseline: list[Point], parallel: list[Point]) -> float | None:
         other = reference.get(int(numeric(point, "repeat")))
         if other is not None and other["status"] == point["status"] == "passed":
             ratios.append(numeric(other, "elapsed_seconds") / numeric(point, "elapsed_seconds"))
-    return median(ratios) if ratios else None
+    return ratios
 
 
 def finish(figure: Figure, output: Path, name: str, subtitle: str) -> None:
@@ -152,8 +144,23 @@ def finish(figure: Figure, output: Path, name: str, subtitle: str) -> None:
     for axis in figure.axes:
         if not axis.images and not axis.yaxis_inverted():
             axis.set_ylim(bottom=0)
-    figure.text(0.06, 0.025, subtitle, fontsize=9, color="#475569")
-    figure.tight_layout(rect=(0, 0.07, 1, 0.92))
+    counts = [
+        int(count)
+        for axis in figure.axes
+        for collection in axis.collections
+        if str(collection.get_label()).startswith("_variation_n=")
+        for count in str(collection.get_label()).split("=")[1].split(":")
+    ]
+    if counts:
+        sample_label = str(min(counts)) if min(counts) == max(counts) else f"{min(counts)}-{max(counts)}"
+        subtitle += (
+            f"\nMean ±1 SD (dark), ±2 SD (light); n={sample_label} per shaded point. "
+            "Sample spread, not confidence intervals; clipped to physical bounds."
+        )
+    subtitle = "\n".join(fill(line, width=int(figure.get_figwidth() * 17)) for line in subtitle.splitlines())
+    footer = max(0.07, 0.045 + 0.023 * len(subtitle.splitlines()))
+    figure.text(0.06, 0.025, subtitle, fontsize=8, color="#475569")
+    figure.tight_layout(rect=(0, footer, 1, 0.92))
     figure.savefig(output / f"{name}.png", dpi=170, facecolor="white")
     figure.savefig(output / f"{name}.svg", facecolor="white")
     plt.close(figure)
@@ -192,12 +199,12 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
         )
     for index, count in enumerate(counts):
         baseline = strong.get((count, 1, True), [])
-        ratios = [(workers, paired_ratio(baseline, strong.get((count, workers, True), []))) for workers in replicas]
-        good = [(workers, ratio) for workers, ratio in ratios if ratio is not None]
-        right.plot(
+        ratios = [(workers, paired_ratios(baseline, strong.get((count, workers, True), []))) for workers in replicas]
+        good = [(workers, ratio) for workers, ratio in ratios if ratio]
+        repeated_line(
+            right,
             [workers for workers, _ in good],
             [ratio for _, ratio in good],
-            "o-",
             label=f"{count:,} global inputs",
             color=COLORS[index % len(COLORS)],
         )
@@ -232,12 +239,12 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
             COLORS[index % len(COLORS)],
         )
         baseline = weak.get((base * shard_total, 1, True), [])
-        ratios = [(workers, paired_ratio(baseline, batch)) for workers, batch in weak_chosen]
-        good = [(workers, ratio) for workers, ratio in ratios if ratio is not None]
-        right.plot(
+        ratios = [(workers, paired_ratios(baseline, batch)) for workers, batch in weak_chosen]
+        good = [(workers, ratio) for workers, ratio in ratios if ratio]
+        repeated_line(
+            right,
             [workers for workers, _ in good],
             [ratio for _, ratio in good],
-            "o-",
             color=COLORS[index % len(COLORS)],
             label=f"{base:,} inputs / worker",
         )
@@ -270,17 +277,14 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
         "completed checks / second",
         COLORS[0],
     )
-    rendered = [median(numeric(point, "rendered") for point in batch) for _, batch in replica_chosen]
-    pruned = [median(numeric(point, "pruned") for point in batch) for _, batch in replica_chosen]
-    positions = list(range(len(replica_chosen)))
-    right.bar(positions, rendered, label="completed Helm renders", color=COLORS[2])
-    right.bar(positions, pruned, bottom=rendered, label="proved-equivalent render skips", color=COLORS[1])
-    right.set(
-        xticks=positions,
-        xticklabels=[str(workers) for workers, _ in replica_chosen],
-        xlabel="Parallel worker shards (local)",
-        ylabel="Completed input checks",
-    )
+    for metric, label, color in (
+        ("rendered", "completed Helm renders", COLORS[2]),
+        ("pruned", "proved-equivalent render skips", COLORS[1]),
+    ):
+        measured_line(
+            right, [float(workers) for workers, _ in replica_chosen], [batch for _, batch in replica_chosen], metric, label, color
+        )
+    right.set(xticks=replicas, xlabel="Parallel worker shards (local)", ylabel="Completed input checks")
     left.set(xlabel="Parallel worker shards (local)", ylabel="Completed checks / second", xticks=replicas)
     left.legend(fontsize=9)
     right.legend(fontsize=8, ncol=2)
@@ -356,13 +360,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 )
                 right.plot([begin, end], [numeric(first, "completed")] * 2, "--", color=color, alpha=0.65)
             if pruning:
-                right.plot(
-                    counts,
-                    [median(numeric(point, "pruned") for point in batch) for batch in batches],
-                    "--",
-                    color=COLORS[0],
-                    label="render invocations dropped",
-                )
+                measured_line(right, [float(count) for count in counts], batches, "pruned", "render invocations dropped", COLORS[0])
         limit = float(str(metadata["time_limit_seconds"]))
         left.axhline(limit, linestyle="--", color="#475569", label=f"{limit:g}s execution ceiling")
         left.set(
@@ -383,7 +381,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
             figure,
             output,
             "progressive",
-            "Checkpoints share one growing run. X and dashed tails mark unfinished targets "
+            "Checkpoints within each repeat share one growing run. X and dashed tails mark unfinished targets "
             "in that same capped window, not separate trials.",
         )
     scaling_plots(output, points, shard_total)

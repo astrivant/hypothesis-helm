@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import copy
 import subprocess
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 
 from attrs import define
 from jsonschema import validators
@@ -47,7 +47,7 @@ class CandidateChecks:
         render_candidate (Callable[[dict[str, object], bool], list[dict[str, object]]]): Coordinator-owned bounded renderer; the Boolean
             selects hash accounting.
         pruning_context (Callable[[], str]): Current environment and fixed renderer context identity.
-        finite_values (list[dict[str, object]] | None): Retained finite overrides, or None for Hypothesis generation.
+        finite_values (Sequence[dict[str, object]] | None): Retained finite overrides, or None for Hypothesis generation.
         allow_empty (bool): Whether a render with no resource documents is accepted.
         baseline_documents (list[object] | None): Successful baseline resources retained for failure comparisons.
         count (int): Number of attempted candidates, including failures.
@@ -70,7 +70,7 @@ class CandidateChecks:
     remaining_time: Callable[[], float]
     render_candidate: Callable[[dict[str, object], bool], list[dict[str, object]]]
     pruning_context: Callable[[], str]
-    finite_values: list[dict[str, object]] | None
+    finite_values: Sequence[dict[str, object]] | None
     allow_empty: bool
     baseline_documents: list[object] | None
     count: int = 0

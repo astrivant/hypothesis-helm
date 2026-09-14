@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import logging
 import os
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from pathlib import Path
 
 from attrs import frozen
@@ -27,6 +27,7 @@ from hypothesis_helm.schemas.contracts import configuration_key, json_value, map
 from hypothesis_helm.schemas.finite import enumerate_values
 from hypothesis_helm.schemas.groups import ExhaustiveGroup, infer_groups
 from hypothesis_helm.schemas.model import ValuesModel
+from hypothesis_helm.schemas.replay import concatenate, select, transform
 
 LOGGER = logging.getLogger(__name__)
 
@@ -97,24 +98,24 @@ class PlannedRun:
     Transfer a complete plan and its mutable execution-accounting objects to the coordinator.
 
     Attributes:
-        finite_values (list[dict[str, object]] | None): Retained finite overrides, or None for Hypothesis generation.
+        finite_values (Sequence[dict[str, object]] | None): Retained finite overrides, or None for Hypothesis generation.
         finite_domain_size (int | None): Complete exhaustive domain size before default merging and deduplication.
         duplicate_cases_removed (int): Configurations already represented by defaults or another input.
         trimmed_cases (int): Non-default configurations omitted by the selected filters.
         expansion (FailureExpansion | None): Failure-region scheduling state, when expansion is enabled.
-        expansion_values (list[dict[str, object]]): Untrimmed inputs available for failure-region expansion.
+        expansion_values (Sequence[dict[str, object]]): Untrimmed inputs available for failure-region expansion.
         expansion_positions (dict[str, int]): Stable configuration identities mapped to expansion indices.
         coverage (dict[str, object]): Plan and input-coverage evidence included in execution reports.
         statistics (PermutationStatistics | None): Per-iteration timing and completion accounting, when planning is finite.
         dry_report (dict[str, object] | None): Completed progressive estimate, or None when tests should execute.
     """
 
-    finite_values: list[dict[str, object]] | None
+    finite_values: Sequence[dict[str, object]] | None
     finite_domain_size: int | None
     duplicate_cases_removed: int
     trimmed_cases: int
     expansion: FailureExpansion | None
-    expansion_values: list[dict[str, object]]
+    expansion_values: Sequence[dict[str, object]]
     expansion_positions: dict[str, int]
     coverage: dict[str, object]
     statistics: PermutationStatistics | None
@@ -123,21 +124,21 @@ class PlannedRun:
 
 def select_cases(
     chart: Chart,
-    values: list[dict[str, object]],
+    values: Sequence[dict[str, object]],
     options: PlanningOptions,
     sampling_analysis: dict[str, object] | None,
-) -> tuple[list[dict[str, object]], dict[str, object], dict[str, object]]:
+) -> tuple[Sequence[dict[str, object]], dict[str, object], dict[str, object]]:
     """
     Apply the shared production selectors before ordering retained configurations.
 
     Args:
         chart (Chart): Current chart and defaults.
-        values (list[dict[str, object]]): Unique non-default configurations from the finite plan.
+        values (Sequence[dict[str, object]]): Unique non-default configurations from the finite plan.
         options (PlanningOptions): Filtering, sampling and traversal settings.
         sampling_analysis (dict[str, object] | None): Fresh complexity profile for aggressive sampling.
 
     Returns:
-        tuple[list[dict[str, object]], dict[str, object], dict[str, object]]:
+        tuple[Sequence[dict[str, object]], dict[str, object], dict[str, object]]:
             Ordered configurations, topology evidence and sampling decisions.
     """
     topology: dict[str, object] = {}
@@ -147,7 +148,7 @@ def select_cases(
             chart.path,
             chart.defaults,
             values,
-            [merge_values(chart.defaults, item) for item in values],
+            transform(values, lambda item: merge_values(chart.defaults, item)),
             options.trim_topology,
             options.random_seed,
             random_steps=options.trim,
@@ -249,22 +250,22 @@ def build_plan(
         finite_values = interaction_plan.values
     if finite_values is not None:
         seen = {configuration_key(chart.defaults)}
-        distinct: list[dict[str, object]] = []
-        for values in finite_values:
+        distinct: list[int] = []
+        for index, values in enumerate(finite_values):
             identity = configuration_key(merge_values(chart.defaults, values))
             if identity in seen:
                 duplicate_cases_removed += 1
             else:
                 seen.add(identity)
-                distinct.append(values)
-        finite_values = distinct
+                distinct.append(index)
+        finite_values = select(finite_values, distinct)
         if interaction_plan is not None:
-            interaction_plan.values = distinct
+            interaction_plan.values = finite_values
             interaction_plan.duplicate_cases_removed = duplicate_cases_removed
     topology: dict[str, object] = {}
     sampling_report: dict[str, object] = {}
 
-    expansion_values = [{}, *(finite_values or [])] if options.expand_failures else []
+    expansion_values = concatenate([{}], finite_values or []) if options.expand_failures else []
     untrimmed_cases = len(finite_values) if finite_values is not None else 0
     if interaction_plan is not None:
         interaction_plan.values, topology, sampling_report = select_cases(chart, interaction_plan.values, options, sampling_analysis)
@@ -288,7 +289,7 @@ def build_plan(
             chart.path,
             chart.defaults,
             expansion_values,
-            [merge_values(chart.defaults, value) for value in expansion_values],
+            transform(expansion_values, lambda value: merge_values(chart.defaults, value)),
             [
                 0,
                 *(expansion_positions[configuration_key(value)] for value in interaction_plan.values),
@@ -325,7 +326,7 @@ def build_plan(
             "requested_strength": options.permutations,
             "effective_strength": interaction_plan.strength,
             "factors": [list(path) for path in interaction_plan.factors],
-            "factor_domains": interaction_plan.domains,
+            "factor_domains": [list(domain) for domain in interaction_plan.domains],
             "planned_cases": len(interaction_plan.values),
             "valid_interactions": interaction_plan.interactions,
             "planning_candidates": interaction_plan.candidates,

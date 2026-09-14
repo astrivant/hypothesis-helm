@@ -26,6 +26,7 @@ from hypothesis_helm.schemas.contracts import configuration_key, json_value, map
 from hypothesis_helm.schemas.factors import FactorSpace, factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema, enumerate_values
 from hypothesis_helm.schemas.model import ValuesModel
+from hypothesis_helm.schemas.replay import select
 
 
 @frozen
@@ -239,8 +240,8 @@ def measure(chart: Chart, *, max_cases: int = 4096, time_limit: float = 5.0) -> 
         else:
             space = factor_space(model, max_cases)
         # Stable domain ordering also defines the canonical values for unused factors.
-        for domain in space.domains:
-            domain.sort(key=configuration_key)
+        for index, domain in enumerate(space.domains):
+            space.domains[index] = select(domain, sorted(range(len(domain)), key=lambda position: configuration_key(domain[position])))
         sizes = [len(domain) for domain in space.domains]
         result["candidate_configurations"] = math.prod(sizes)
         base = [0] * len(sizes)

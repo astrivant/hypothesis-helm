@@ -49,6 +49,22 @@ Interactive local runs show progress bars with completion counts, elapsed time a
 CI disables all progress bars, including forced chart-test progress. CI and redirected benchmark output use plain-text
 status updates instead. Failure expansion can increase the remaining count as it schedules more checks.
 
+### Reading variation bands
+
+Where a setting has repeated runs, the line shows their mean. Dark shading and inner whiskers extend one
+sample standard deviation (SD) above and below it; lighter shading and outer whiskers extend two SDs.
+The caption gives the number of observations per shaded point. Larger bands mean results varied more between repeats.
+These are **not confidence intervals**, and two SDs do not imply 95% coverage for these measurements.
+Bands stop at zero for counts/times and at 100% for percentages. A singleton has no estimated spread;
+a zero-width band means the recorded repeats agreed, not that future runs must agree.
+
+Runtime and scaling bands compare repeats at the same settings; speedups use paired completed runs.
+Timeouts stay marked separately and do not contribute to completed-runtime bands. Checkpoints along one growing
+run are not treated as independent repetitions. Calibration placement plots describe variation between chart placements.
+Error-rate heatmaps show mean ±1 SD per cell, with ±2 SD endpoints and observed ranges in their CSV.
+Historical recall records that saved only percentiles retain those percentile bands; new runs also record sample SD.
+Exact topology/PCA diagrams and single-seed studies do not acquire estimated error bars without repeated observations.
+
 ### One configurable chart
 
 All synthetic studies use the same chart generator. Each command reuses one temporary

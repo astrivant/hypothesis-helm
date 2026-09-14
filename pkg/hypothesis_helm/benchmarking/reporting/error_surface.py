@@ -9,13 +9,14 @@ import statistics
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.reporting.plots import finish
+from hypothesis_helm.benchmarking.reporting.variation import repeated_line
 from hypothesis_helm.benchmarking.studies.error_surface import METRICS
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
 def plot(output: Path, document: dict[str, object]) -> None:
     """
-    Draw comparable method panels and retain means and observed ranges in a summary table.
+    Draw paired means and standard deviations, retaining exact observed ranges in the table.
 
     Args:
         output (Path): Study artifact destination.
@@ -77,11 +78,13 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "`sample-random` uses 70% with its 128-case floor. Aggressive sampling falls back when calibration "
         "cannot support it; the CSV records why.",
         "",
-        "Colours share a scale across methods within each figure. Cells show means across completed paired runs.",
+        "Colours share a scale across methods within each figure. "
+        "Cells show mean ±1 sample SD across completed paired runs; CSV includes ±2 SD endpoints.",
         "Cells are discrete parameter settings; the heatmaps do not interpolate between sampled rates.",
         "T = an incomplete execution; N/A = no erroneous inputs; blank = no measurement. No partial timing is "
         "shown as a completed runtime.",
-        "The CSV includes observed ranges, not confidence intervals. These synthetic assertions do not "
+        "The CSV includes sample SD and observed ranges. These describe seed variation, not confidence intervals. "
+        "These synthetic assertions do not "
         "establish recall for arbitrary charts.",
         "",
         "[Individual measurements](results.csv) · [Means and ranges](summary.csv) · [Oracle populations and provenance](results.json)",
@@ -126,11 +129,16 @@ def plot(output: Path, document: dict[str, object]) -> None:
                             continue
                         complete = len(batch) == int(str(metadata["repeats"])) and all(row["status"] == "passed" for row in batch)
                         observations = [float(str(row[metric])) for row in batch if row[metric] is not None]
+                        deviation = statistics.stdev(observations) if complete and len(observations) > 1 else None
+                        center = statistics.mean(observations) if complete and observations else None
                         if not complete:
                             annotations[y, x] = "T" if any(row["status"] != "passed" for row in batch) else "partial"
                         elif observations:
                             matrix[y, x] = statistics.mean(observations)
                             annotations[y, x] = f"{100 * matrix[y, x]:.0f}%" if metric == "error_recall" else f"{matrix[y, x]:.2g}"
+                            if deviation is not None:
+                                spread = f"{100 * deviation:.1f} pp" if metric == "error_recall" else f"{deviation:.2g}"
+                                annotations[y, x] += f"\n±{spread}"
                         else:
                             annotations[y, x] = "N/A"
                         summary.append(
@@ -142,7 +150,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
                                 "metric": metric,
                                 "paired_runs": len(batch),
                                 "complete": complete,
-                                "mean": statistics.mean(observations) if complete and observations else None,
+                                "mean": center,
+                                "sample_stddev": deviation,
+                                "mean_minus_2sd": center - 2 * deviation if center is not None and deviation is not None else None,
+                                "mean_plus_2sd": center + 2 * deviation if center is not None and deviation is not None else None,
                                 "minimum": min(observations) if complete and observations else None,
                                 "maximum": max(observations) if complete and observations else None,
                             }
@@ -163,7 +174,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 figure,
                 output,
                 name,
-                "Paired means; shared colour scale. T = incomplete; N/A = zero errors. See CSV for actual rates and ranges.",
+                f"Cells: mean ±1 sample SD where n≥2; {metadata['repeats']} paired seeds. pp = percentage points. "
+                "T = incomplete; N/A = zero errors. CSV: ±2 SD, not confidence intervals.",
             )
             lines.extend([f"![{metric_labels[metric]} by {axis}]({name}.png)", ""])
     clustering_rows = [row for row in rows if row["axis"] == "clustering"]
@@ -202,19 +214,16 @@ def plot(output: Path, document: dict[str, object]) -> None:
         (output / "clustering-counts.md").write_text("\n".join(findings) + "\n")
         lines.extend(["[Compare clustering at a fixed error count](clustering-counts.md)", ""])
         figure, panel = plt.subplots(figsize=(9, 5))
-        for value in sorted({float(str(row["axis_value"])) for row in clustering_rows}):
-            means, lows, highs = [], [], []
+        for index, value in enumerate(sorted({float(str(row["axis_value"])) for row in clustering_rows})):
+            observations_by_rate = []
             for rate in rates:
                 seed_observations = {
                     int(str(row["repeat"])): float(str(row["neighbor_error_fraction"]))
                     for row in clustering_rows
                     if row["axis_value"] == value and row["error_percent"] == rate and row["neighbor_error_fraction"] is not None
                 }
-                means.append(statistics.mean(seed_observations.values()) if seed_observations else float("nan"))
-                lows.append(min(seed_observations.values()) if seed_observations else float("nan"))
-                highs.append(max(seed_observations.values()) if seed_observations else float("nan"))
-            panel.plot(rates, means, "o-", label=f"Clustering {value:g}")
-            panel.fill_between(rates, lows, highs, alpha=0.1)
+                observations_by_rate.append(list(seed_observations.values()))
+            repeated_line(panel, rates, observations_by_rate, f"Clustering {value:g}", f"C{index % 10}", upper=1)
         panel.set(xlabel="Requested erroneous inputs (%)", ylabel="Failing neighbours / all neighbours of failing inputs", ylim=(0, 1))
         panel.legend()
         panel.grid(alpha=0.2)
@@ -223,7 +232,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
             figure,
             output,
             "clustering-observed",
-            "Neighbours differ in one Boolean switch. Bands show seed ranges; zero errors have no ratio.",
+            "Neighbours differ in one Boolean switch. Variation is across seeds; zero errors have no ratio.",
         )
         lines.extend(["![Measured clustering, independent of filter selection](clustering-observed.png)", ""])
     with (output / "summary.csv").open("w", newline="") as stream:

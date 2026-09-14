@@ -8,6 +8,7 @@ import json
 import math
 import platform
 import shutil
+import statistics
 import subprocess
 import time
 from pathlib import Path
@@ -21,6 +22,7 @@ from hypothesis_helm.benchmarking.execution.profiling import profile_settings
 from hypothesis_helm.benchmarking.execution.provenance import code_digest
 from hypothesis_helm.benchmarking.reporting.plots import finish
 from hypothesis_helm.benchmarking.reporting.progress import BenchmarkProgress
+from hypothesis_helm.benchmarking.reporting.variation import bands
 from hypothesis_helm.benchmarking.studies.matrix import bundle_key, reference_space
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import RenderFailure, render
@@ -50,15 +52,31 @@ def plot(output: Path, document: dict[str, object]) -> None:
         (axes[0], [row["sample_size"] for row in rows], "Random inputs tested (plus defaults)"),
         (axes[1], [row["retained_percent"] for row in rows], "Eligible inputs retained (%)"),
     ):
-        axis.plot(x, [100 * number(row["mean_bug_recall"]) for row in rows], "o-", label="Distinct defects found: mean")
-        axis.fill_between(
-            x,
-            [100 * number(row["p05_bug_recall"]) for row in rows],
-            [100 * number(row["p95_bug_recall"]) for row in rows],
-            alpha=0.2,
-            label="5th-95th percentile across seeds",
-        )
-        axis.plot(x, [100 * number(row["mean_error_input_recall"]) for row in rows], "--", label="Erroneous inputs tested: mean")
+        for metric, label, color in (
+            ("bug_recall", "Distinct defects found: mean", "#2563eb"),
+            ("error_input_recall", "Erroneous inputs tested: mean", "#d97706"),
+        ):
+            centers = [100 * number(row[f"mean_{metric}"]) for row in rows]
+            axis.plot(x, centers, "o-", label=label, color=color)
+            if any(row.get(f"stddev_{metric}") is not None for row in rows):
+                bands(
+                    axis,
+                    [number(value) for value in x],
+                    centers,
+                    [100 * number(row[f"stddev_{metric}"]) if row.get(f"stddev_{metric}") is not None else math.nan for row in rows],
+                    [int(str(row.get("trials", metadata["trials"]))) for row in rows],
+                    color,
+                    upper=100,
+                )
+            elif metric == "bug_recall":
+                axis.fill_between(
+                    x,
+                    [100 * number(row["p05_bug_recall"]) for row in rows],
+                    [100 * number(row["p95_bug_recall"]) for row in rows],
+                    alpha=0.2,
+                    color=color,
+                    label="5th-95th percentile across seeds (legacy data)",
+                )
         axis.plot(x, [row["retained_percent"] for row in rows], ":", label="One-input defect: uniform-sample probability")
         axis.axhline(96, color="grey", linewidth=1, label="96% recall target")
         axis.set(xlabel=label, ylabel="Recall / detection chance (%)", ylim=(-2, 105))
@@ -231,6 +249,9 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                     "sample_size": count,
                     "retained_percent": 100 * count / len(population),
                     "mean_bug_recall": float(np.mean(recall)),
+                    "stddev_bug_recall": statistics.stdev(recall) if len(recall) > 1 else None,
+                    "stddev_error_input_recall": statistics.stdev(error_recall) if len(error_recall) > 1 else None,
+                    "trials": args.trials,
                     "p05_bug_recall": float(np.quantile(recall, 0.05)),
                     "p95_bug_recall": float(np.quantile(recall, 0.95)),
                     "target_success_rate": sum(value >= 0.96 for value in recall) / len(recall),

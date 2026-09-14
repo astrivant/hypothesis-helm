@@ -5,6 +5,7 @@ Schedule omitted members of failed symbolic regions without inferring their test
 from __future__ import annotations
 
 from collections import defaultdict
+from collections.abc import Sequence
 from pathlib import Path
 
 from attrs import define, field
@@ -35,8 +36,8 @@ class FailureExpansion:
         cls,
         chart: Path,
         defaults: dict[str, object],
-        values: list[dict[str, object]],
-        effective: list[dict[str, object]],
+        values: Sequence[dict[str, object]],
+        effective: Sequence[dict[str, object]],
         selected: list[int],
         *,
         fixed_names: bool = True,
@@ -47,8 +48,8 @@ class FailureExpansion:
         Args:
             chart (Path): Chart templates supplying the static regions.
             defaults (dict[str, object]): Fixed chart defaults.
-            values (list[dict[str, object]]): Distinct finite overrides including the baseline.
-            effective (list[dict[str, object]]): Corresponding merged values.
+            values (Sequence[dict[str, object]]): Distinct finite overrides including the baseline.
+            effective (Sequence[dict[str, object]]): Corresponding merged values.
             selected (list[int]): Indices retained before expansion.
             fixed_names (bool): Whether renderer names meet the static partition contract.
 

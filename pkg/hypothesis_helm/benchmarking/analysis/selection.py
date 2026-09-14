@@ -2,6 +2,8 @@
 Share production filter presets and their recorded decisions across benchmark studies.
 """
 
+from collections.abc import Sequence
+
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.planning import PlanningOptions, select_cases
 from hypothesis_helm.compiler.passes.sampling import profile
@@ -14,24 +16,24 @@ LABELS = {"filter": "--filter", "filter-aggressive": "--filter-aggressive"}
 
 def select(
     chart: Chart,
-    values: list[dict[str, object]],
+    values: Sequence[dict[str, object]],
     strategy: str,
     seed: int,
     *,
     strength: int = 2,
-) -> tuple[list[dict[str, object]], dict[str, object]]:
+) -> tuple[Sequence[dict[str, object]], dict[str, object]]:
     """
     Select an existing finite plan using the same preset logic as chart testing.
 
     Args:
         chart (Chart): Fresh fixture, including injected faults.
-        values (list[dict[str, object]]): Unique non-default configurations in the study's plan.
+        values (Sequence[dict[str, object]]): Unique non-default configurations in the study's plan.
         strategy (str): Public filter preset name.
         seed (int): Reproducible selection and traversal seed.
         strength (int): Interaction strength represented by the plan.
 
     Returns:
-        tuple[list[dict[str, object]], dict[str, object]]: Initial selection and full topology/calibration evidence.
+        tuple[Sequence[dict[str, object]], dict[str, object]]: Initial selection and full topology/calibration evidence.
     """
     if strategy not in PRESETS:
         raise ValueError(f"unknown filter preset: {strategy}")

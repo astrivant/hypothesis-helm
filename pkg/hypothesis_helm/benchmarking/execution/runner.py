@@ -12,6 +12,7 @@ import resource
 import subprocess
 import sys
 import time
+from collections.abc import Sequence
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from multiprocessing import get_context
 from pathlib import Path
@@ -47,7 +48,7 @@ class Job:
 
     Attributes:
         chart (str): Source chart path.
-        indices (list[int]): Unique global input IDs owned by this replica.
+        indices (Sequence[int]): Unique global input IDs owned by this replica.
         seed (int): Deterministic workload seed.
         multiplicity (int): Controlled output-equivalence multiplicity.
         pruning (bool): Whether exact compiler pruning is enabled.
@@ -60,7 +61,7 @@ class Job:
     """
 
     chart: str
-    indices: list[int]
+    indices: Sequence[int]
     seed: int
     multiplicity: int
     pruning: bool
@@ -70,6 +71,25 @@ class Job:
     checkpoints: list[int] = field(factory=list)
     started: float = 0.0
     profile_directory: str | None = None
+
+
+def assignment_digest(indices: Sequence[int]) -> str:
+    """
+    Hash the historical JSON ID array incrementally without allocating its text.
+
+    Args:
+        indices (Sequence[int]): Ordered global input IDs, usually a compact range.
+
+    Returns:
+        str: Same SHA-256 as json.dumps of the expanded integer list.
+    """
+    digest = hashlib.sha256(b"[")
+    for position, index in enumerate(indices):
+        if position:
+            digest.update(b", ")
+        digest.update(str(index).encode())
+    digest.update(b"]")
+    return digest.hexdigest()
 
 
 def execute_worker(job: Job) -> dict[str, object]:
@@ -205,7 +225,7 @@ def execute_worker(job: Job) -> dict[str, object]:
         "remaining": len(job.indices) - completed,
         "rendered": rendered,
         "pruned": pruned,
-        "assignment_sha256": hashlib.sha256(json.dumps(job.indices).encode()).hexdigest(),
+        "assignment_sha256": assignment_digest(job.indices),
         "first_index": job.indices[0] if job.indices else None,
         "last_index": job.indices[-1] if job.indices else None,
         "elapsed_seconds": time.perf_counter() - started,

@@ -2,11 +2,14 @@
 Extract finite independent factors without enumerating their Cartesian product.
 """
 
+from collections.abc import Sequence
+
 from attrs import define, field
 
 from hypothesis_helm.schemas.contracts import configuration_key
 from hypothesis_helm.schemas.finite import NonFiniteSchema, enumerate_values
 from hypothesis_helm.schemas.model import ValueNode, ValuesModel
+from hypothesis_helm.schemas.replay import select
 
 
 @define
@@ -16,13 +19,13 @@ class FactorSpace:
 
     Attributes:
         paths (list[tuple[str, ...]]): Independent configurable factor paths.
-        domains (list[list[dict[str, object]]]): Assignments, including optional omission.
+        domains (list[Sequence[dict[str, object]]]): Assignments, including optional omission.
         skeleton (dict[str, object]): Required nested and empty object containers.
         nodes (list[ValueNode]): Shared declarations for each finite factor.
     """
 
     paths: list[tuple[str, ...]]
-    domains: list[list[dict[str, object]]]
+    domains: list[Sequence[dict[str, object]]]
     skeleton: dict[str, object]
     nodes: list[ValueNode] = field(factory=list)
 
@@ -44,7 +47,7 @@ def factor_space(schema: dict[str, object] | ValuesModel, limit: int = 10000) ->
     schema = model.root.schema
     nodes: list[ValueNode] = []
     factors: list[tuple[str, ...]] = []
-    domains: list[list[dict[str, object]]] = []
+    domains: list[Sequence[dict[str, object]]] = []
     skeleton: dict[str, object] = {}
 
     def discover(declaration: ValueNode, base: dict[str, object]) -> None:
@@ -81,7 +84,8 @@ def factor_space(schema: dict[str, object] | ValuesModel, limit: int = 10000) ->
                     raise NonFiniteSchema(f"cannot cover permutations at {child_path!r}: {exc}") from exc
                 factors.append(child_path)
                 nodes.append(child)
-                domains.append(list({configuration_key(choice): choice for choice in choices}.values()))
+                positions = {configuration_key(choice): index for index, choice in enumerate(choices)}
+                domains.append(select(choices, tuple(positions.values())))
 
     if schema.get("type") != "object":
         raise NonFiniteSchema("permutations require an object schema")

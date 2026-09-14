@@ -16,6 +16,7 @@ from hypothesis_helm.benchmarking.charts.generator import generate
 from hypothesis_helm.benchmarking.execution.provenance import code_digest
 from hypothesis_helm.benchmarking.reporting.plots import finish
 from hypothesis_helm.benchmarking.reporting.progress import BenchmarkProgress
+from hypothesis_helm.benchmarking.reporting.variation import bands, repeated_line
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.execution.processes import Processes
@@ -133,17 +134,14 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 sizes = sorted({int(str(row["valid_inputs"])) for row in selected})
                 batches = [[row for row in selected if row["valid_inputs"] == size] for size in sizes]
                 means = [statistics.mean(float(str(row[metric])) for row in batch) for batch in batches]
-                lower = [min(float(str(row[metric])) for row in batch) for batch in batches]
-                upper = [max(float(str(row[metric])) for row in batch) for batch in batches]
                 complete = [all(row["status"] == "passed" for row in batch) for batch in batches]
-                axis.plot(
+                repeated_line(
+                    axis,
                     sizes,
-                    [mean if done else float("nan") for mean, done in zip(means, complete, strict=True)],
-                    "o-",
-                    label=method,
-                    color=colors[method],
+                    [[float(str(row[metric])) for row in batch] if done else [] for batch, done in zip(batches, complete, strict=True)],
+                    method,
+                    colors[method],
                 )
-                axis.fill_between(sizes, lower, upper, where=complete, alpha=0.12, color=colors[method])
                 axis.scatter(
                     [size for size, done in zip(sizes, complete, strict=True) if not done],
                     [mean for mean, done in zip(means, complete, strict=True) if not done],
@@ -168,9 +166,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
             axis.set_xticks(ticks, [str(size) for size in ticks])
             axis.grid(alpha=0.2)
             axis.legend(fontsize=8)
-        finish(figure, output, name, "Means and observed ranges; X = incomplete run; hollow square = extra sampling disabled by fallback.")
+        finish(figure, output, name, "X = incomplete run; hollow square = extra sampling disabled by fallback.")
     largest = max(int(str(row["valid_inputs"])) for row in rows)
     figure, axis = plt.subplots(figsize=(12, 5))
+    totals: list[list[float]] = []
     labels: list[str] = []
     analysis: list[float] = []
     planning: list[float] = []
@@ -179,6 +178,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     for depth in depths:
         for method in METHODS:
             batch = [row for row in rows if row["strategy"] == method and row["gate_depth"] == depth and row["valid_inputs"] == largest]
+            totals.append([float(str(row["wall_seconds"])) for row in batch] if all(row["status"] == "passed" for row in batch) else [])
             labels.append(f"depth {depth}\n{method}")
             for target, key in (
                 (analysis, "complexity_seconds"),
@@ -196,6 +196,14 @@ def plot(output: Path, document: dict[str, object]) -> None:
     ):
         axis.bar(range(len(labels)), amounts, bottom=bottom, label=label)
         bottom = [old + added for old, added in zip(bottom, amounts, strict=True)]
+    bands(
+        axis,
+        list(range(len(labels))),
+        bottom,
+        [statistics.stdev(batch) if len(batch) > 1 else float("nan") for batch in totals],
+        [len(batch) for batch in totals],
+        "#334155",
+    )
     axis.set_xticks(range(len(labels)), labels, rotation=35, ha="right", fontsize=8)
     axis.set(ylabel="Measured seconds", title=f"Phase costs at {largest} possible inputs")
     axis.legend(fontsize=8)
@@ -222,7 +230,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "![Phase costs](filtering-phases.png)",
         "",
         f"{metadata['repeats']} paired repeats per chart and method; execution ceiling {metadata['time_limit_seconds']} seconds per run.",
-        "Bands show observed ranges, not confidence intervals. Method order is seeded and shuffled for each repeat.",
+        "Dark bands show mean ±1 sample SD; light bands show ±2 SD across paired repeats, not confidence intervals. "
+        "Method order is seeded and shuffled for each repeat.",
         "Input count is the full Boolean domain (2^fields), not the interaction-strength flag; strength stays at two.",
         "The small finite domains are fully enumerated before filtering.",
         "Gate depth changes branch rarity, fan-in and equivalent-output regions.",

@@ -44,6 +44,7 @@ from hypothesis_helm.schemas.contracts import (
 )
 from hypothesis_helm.schemas.groups import ExhaustiveGroup
 from hypothesis_helm.schemas.model import ValuesModel
+from hypothesis_helm.schemas.replay import concatenate, select
 
 LOGGER = logging.getLogger(__name__)
 
@@ -494,11 +495,12 @@ def check_chart(
 
     if expansion is not None:
         assert finite_values is not None
-        work = [{}, *finite_values]
+        work = [0, *(expansion_positions[configuration_key(value)] for value in finite_values)]
         first_error: Exception | None = None
         first_failure = None
         initial_count = len(work)
-        for position, values in enumerate(work):
+        for position, index in enumerate(work):
+            values = expansion_values[index]
             try:
                 check(values, force_render=position >= initial_count, baseline=position == 0)
             except TimeLimitReached:
@@ -524,14 +526,14 @@ def check_chart(
                     first_error, first_failure = exc, checks.last_failure
                 added = expansion.failed(expansion_positions[configuration_key(values)])
                 additional = order_configurations(
-                    [expansion_values[index] for index in added],
+                    select(expansion_values, added),
                     lambda value: merge_values(chart.defaults, value),
                     chart.defaults,
                     strategy=traversal_strategy,
                     seed=random_seed,
                 )
-                work.extend(additional)
-                finite_values.extend(additional)
+                work.extend(expansion_positions[configuration_key(value)] for value in additional)
+                finite_values = concatenate(finite_values, additional)
                 LOGGER.info(
                     "Failure expansion: %d additional cases scheduled; %d remain",
                     len(added),

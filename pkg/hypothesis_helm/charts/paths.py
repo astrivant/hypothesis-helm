@@ -8,6 +8,7 @@ import logging
 import math
 import tempfile
 import time
+from collections.abc import Sequence
 from pathlib import Path
 
 from hypothesis import strategies as st
@@ -141,7 +142,7 @@ def check_paths(
         model = coalesce(chart)
     unique = {entry.path: entry for entry in model.paths}
     linear = list(dict.fromkeys([*map(tuple, _default_paths(chart.defaults)), *unique]))
-    selected = [unique[path] for path in linear if path in unique]
+    selected: Sequence[ValuePath] = [unique[path] for path in linear if path in unique]
     eligible_paths = [list(entry.path) for entry in selected]
     selected, sampling_report = (Sampling() if sampling.aggressive else sampling).select(
         selected, lambda entry: json.dumps(list(entry.path)), seed

@@ -20,7 +20,7 @@ from hypothesis_helm.benchmarking.charts.workload import (
     standard_values,
 )
 from hypothesis_helm.benchmarking.execution.runner import Job, execute_worker
-from hypothesis_helm.benchmarking.reporting.plots import paired_ratio
+from hypothesis_helm.benchmarking.reporting.plots import paired_ratios
 from hypothesis_helm.benchmarking.studies.performance import parser
 from hypothesis_helm.charts.runner import Chart, RenderFailure
 from hypothesis_helm.integrations.sharding import Shard
@@ -88,7 +88,7 @@ def test_shards_and_replicas_partition_identical_global_inputs() -> None:
         serial = partition_indices(101, Shard(index, 3), 1)[0]
         parallel = partition_indices(101, Shard(index, 3), 4)
         flattened = [item for worker in parallel for item in worker]
-        assert serial == flattened
+        assert list(serial) == flattened
         assert not owners.intersection(flattened)
         owners.update(flattened)
     assert owners == set(range(101))
@@ -203,9 +203,9 @@ def test_censored_timing_is_never_a_scaling_speedup() -> None:
     capped: list[dict[str, object]] = [
         {"repeat": 0, "status": "time-limit", "elapsed_seconds": 1},
     ]
-    assert paired_ratio(baseline, capped) is None
+    assert paired_ratios(baseline, capped) == []
     capped[0]["status"] = "passed"
-    assert paired_ratio(baseline, capped) == 10
+    assert paired_ratios(baseline, capped) == [10]
 
 
 @pytest.mark.parametrize("complexity", [1, 3, 100])

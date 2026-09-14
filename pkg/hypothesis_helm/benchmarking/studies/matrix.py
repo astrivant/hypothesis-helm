@@ -13,7 +13,7 @@ import shutil
 import subprocess
 import time
 from collections import Counter
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from pathlib import Path
 
 from jsonschema import validators
@@ -146,11 +146,12 @@ def measure(
     analysis_started = time.perf_counter()
     topology: dict[str, object] = {}
     evidence: dict[str, object] = {}
+    selected: Sequence[dict[str, object]] = candidates
     if strategy in PRESETS:
-        candidates, evidence = select_preset(chart, candidates, strategy, seed, strength=selection_strength)
+        selected, evidence = select_preset(chart, candidates, strategy, seed, strength=selection_strength)
         topology = mapping(evidence["topology"])
     elif strategy in {"topology", "combined"}:
-        candidates, topology = trim_topology(
+        selected, topology = trim_topology(
             chart.path,
             chart.defaults,
             candidates,
@@ -160,10 +161,10 @@ def measure(
             random_steps=level if strategy == "combined" else 0,
         )
     elif strategy == "random":
-        candidates = trim_values(candidates, level, seed)
+        selected = trim_values(candidates, level, seed)
     elif strategy == "sample-random":
-        candidates, evidence = Sampling(70).select(candidates, configuration_key, seed)
-    candidates = [chart.defaults, *candidates]
+        selected, evidence = Sampling(70).select(candidates, configuration_key, seed)
+    candidates = [chart.defaults, *selected]
     initial_selected = len(candidates)
     expansion = (
         FailureExpansion.build(

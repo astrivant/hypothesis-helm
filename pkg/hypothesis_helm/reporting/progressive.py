@@ -7,7 +7,7 @@ from __future__ import annotations
 import logging
 import math
 import time
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from pathlib import Path
 
 from rich.console import Console
@@ -18,6 +18,7 @@ from hypothesis_helm.schemas.combinations import InteractionPlan, trim_values
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
 from hypothesis_helm.schemas.finite import NonFiniteSchema
 from hypothesis_helm.schemas.model import ValuesModel
+from hypothesis_helm.schemas.replay import concatenate, select
 
 LOGGER = logging.getLogger(__name__)
 
@@ -68,7 +69,7 @@ def estimate_progression(
     max_cases: int,
     max_candidates: int,
     history: dict[str, object],
-    selector: Callable[[list[dict[str, object]]], list[dict[str, object]]] | None = None,
+    selector: Callable[[Sequence[dict[str, object]]], Sequence[dict[str, object]]] | None = None,
     trim_topology: int = 0,
     trim: int = 0,
     random_seed: int = 0,
@@ -92,7 +93,7 @@ def estimate_progression(
         max_cases (int): Configured per-plan case limit.
         max_candidates (int): Configured planning work limit.
         history (dict[str, object]): Compatible measured costs; no successes are restored.
-        selector (Callable[[list[dict[str, object]]], list[dict[str, object]]] | None):
+        selector (Callable[[Sequence[dict[str, object]]], Sequence[dict[str, object]]] | None):
             Configured sampling policy for preview plans.
         trim_topology (int): Topology sampling depth for report provenance.
         trim (int): Quarter-retention steps for preview plans; selected is already trimmed.
@@ -125,13 +126,13 @@ def estimate_progression(
             dict[str, tuple[str, str]]: Distinct inputs mapped to conditional render classes.
         """
         inputs: dict[str, tuple[str, str]] = {}
-        distinct: dict[str, dict[str, object]] = {configuration_key(merge({})): {}}
-        for values in plan.values:
-            distinct.setdefault(configuration_key(merge(values)), values)
-        candidates = list(distinct.values())[1:]
+        distinct: dict[str, int] = {configuration_key(merge({})): -1}
+        for index, values in enumerate(plan.values):
+            distinct.setdefault(configuration_key(merge(values)), index)
+        candidates: Sequence[dict[str, object]] = select(plan.values, tuple(distinct.values())[1:])
         if plan is not selected:
             candidates = selector(candidates) if selector else trim_values(candidates, trim, random_seed)
-        for overrides in [{}, *candidates]:
+        for overrides in concatenate([{}], candidates):
             effective = merge(overrides)
             key = configuration_key(effective)
             if key in inputs:

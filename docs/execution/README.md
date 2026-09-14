@@ -98,6 +98,22 @@ throughput within its bounds; it does not guarantee a global optimum. Use
 `--jobs N` for fixed concurrency or `--jobs 1` for serial execution. The explicit
 whole-chart and exhaustive modes remain serial.
 
+### Input memory
+
+Finite plans store assignment IDs and reconstruct values when needed. Filtering and
+traversal retain selected positions rather than copies of every configuration. Planning
+still validates candidate inputs before claiming coverage; replay trades some repeated
+construction work for lower memory use. The seed, case order and coverage rules are unchanged.
+
+Benchmark workers receive compact ranges of input IDs. Custom JSONL workloads retain byte
+offsets and hashes, read one record at a time, and reject records changed after validation.
+Neither approach requires loading all input documents into each worker's memory.
+
+Memory still grows with the discovered paths, selected IDs, deduplication hashes and
+interaction-coverage bookkeeping. Reports retain bounded factor domains and observed results;
+PCA retains the numerical data needed for its calculation. This reduces input storage without
+claiming constant memory for the entire run.
+
 ### Runtime estimates
 
 This section describes generated property suites. Recursive repository tests can also

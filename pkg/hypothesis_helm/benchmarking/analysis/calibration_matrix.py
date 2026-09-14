@@ -10,6 +10,7 @@ from functools import partial
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.reporting.plots import finish
+from hypothesis_helm.benchmarking.reporting.variation import repeated_line
 from hypothesis_helm.execution.aggressive import changed_fields, matching_profiles
 from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.schemas.combinations import trim_values
@@ -186,12 +187,11 @@ def plot(output: Path, rows: list[dict[str, object]], policy: dict[str, object])
     )
     figure, axis = plt.subplots(figsize=(9, 5))
     exact = [row for row in rows if row["strategy"] == "exact"]
-    for fields in sorted({int(str(row["input_fields"])) for row in exact}):
+    for index, fields in enumerate(sorted({int(str(row["input_fields"])) for row in exact})):
         subset = [row for row in exact if int(str(row["input_fields"])) == fields]
         depths = sorted({int(str(row["gate_depth"])) for row in subset})
         counts = [[float(str(row["mean_selected"])) for row in subset if int(str(row["gate_depth"])) == depth] for depth in depths]
-        axis.plot(depths, [statistics.mean(items) for items in counts], "o-", label=f"{fields} input fields")
-        axis.fill_between(depths, [min(items) for items in counts], [max(items) for items in counts], alpha=0.2)
+        repeated_line(axis, depths, counts, f"{fields} input fields", f"C{index % 10}")
     axis.set(xlabel="Maximum gate depth", ylabel="Selected cases after filtering and sampling")
     axis.legend()
     axis.grid(alpha=0.2)
@@ -199,7 +199,7 @@ def plot(output: Path, rows: list[dict[str, object]], policy: dict[str, object])
         figure,
         output,
         "profile-variation",
-        "Bands span measured defect placements; maximum output score alone does not determine these counts.",
+        "Variation is across defect-placement means, not individual seeds; maximum output score alone does not determine these counts.",
     )
     lines = [
         "# Sampling evidence matrix",

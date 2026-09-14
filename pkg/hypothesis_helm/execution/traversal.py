@@ -8,6 +8,7 @@ from collections.abc import Callable, Sequence
 from typing import TypeVar
 
 from hypothesis_helm.schemas.contracts import configuration_key
+from hypothesis_helm.schemas.replay import select
 
 STRATEGIES = ("random", "linear", "root-first", "leaf-first")
 ALGORITHM = "seeded-path-priority-v1"
@@ -84,7 +85,7 @@ def order_configurations(
     *,
     strategy: str = "random",
     seed: int = 0,
-) -> list[dict[str, object]]:
+) -> Sequence[dict[str, object]]:
     """
     Reorder retained finite cases using their identity or changed-field depth.
 
@@ -100,11 +101,18 @@ def order_configurations(
         seed (int): Reproducible configuration-order seed.
 
     Returns:
-        list[dict[str, object]]: The same retained configurations in execution order.
+        Sequence[dict[str, object]]: The same retained configurations in execution order.
     """
     strategy = validate_strategy(strategy)
-    if strategy in {"random", "linear"}:
-        return order_paths(values, lambda value: (), strategy=strategy, seed=seed, identity=configuration_key)
+    if strategy == "linear":
+        return values
+    if strategy == "random":
+        return select(
+            values,
+            order_paths(
+                range(len(values)), lambda index: (), strategy=strategy, seed=seed, identity=lambda index: configuration_key(values[index])
+            ),
+        )
 
     def depths(value: object, baseline: object, depth: int = 0) -> list[int]:
         """
@@ -145,4 +153,4 @@ def order_configurations(
         changed = depths(effective(value), defaults) or [0]
         return min(changed) if strategy == "root-first" else -max(changed)
 
-    return sorted(values, key=priority)
+    return select(values, sorted(range(len(values)), key=lambda index: priority(values[index])))
