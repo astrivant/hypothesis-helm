@@ -2,10 +2,13 @@
 
 [Recommended workflow](README.md#recommended-workflow)
 
-Start with **two path workers on MR/PR jobs**, **four on main**, and **eight concurrent Helm processes for exhaustive release checks**.
-The release allocation is **8 vCPU / 8 GiB**, doubling main-branch CPU while keeping its memory allocation. Reserve at least as many vCPUs as workers. The workflow
-table budgets roughly 2 GiB per vCPU for path testing for the Python workers, Helm children, coordinator
-and CI overhead. This is an initial allocation to tune, not a measured requirement.
+Start with **2 vCPU / 4 GiB and two workers per CI job** at every stage.
+MR/PR and main-branch checks use one job. Release checks use two jobs, totaling
+**4 vCPU / 8 GiB and four workers**. Assign different charts to those release jobs;
+exhaustive testing cannot split one chart across CI shards.
+Reserve at least as many vCPUs as workers. The memory allocation covers Python workers,
+Helm children, the coordinator and CI overhead. These are starting estimates to tune,
+not measured requirements.
 
 ## What the Bitnami data tells us
 
@@ -29,14 +32,14 @@ The suggested RAM allocations deliberately leave room beyond that observation.
 ## Workers and shards do different jobs
 
 - **Local workers** share the current chart's path queue and one chart deadline.
-  `--jobs 4` runs up to four path properties concurrently, then moves to the next chart.
+  `--jobs 2` runs up to two path properties concurrently, then moves to the next chart.
 - **CI shards** are separate CI jobs, each with its own CPU and RAM allocation.
   The new repository path queue does not support distributed sharding. Use one CI job
   for the filtered recursive test/scan commands in the workflow table.
 - **Generated pytest suites** support `--shard` and report aggregation. If a measured
   suite misses its target duration, try two shards before increasing further. Two
-  shards with four local workers each need two runners: eight vCPUs and 16 GiB in
-  total at the main-branch allocation. They do not share a global chart deadline.
+  shards with two local workers each need two runners: four vCPUs and 8 GiB in
+  total at the recommended per-job allocation. They do not share a global chart deadline.
 - **Explicit exhaustive testing** runs up to `--jobs N` Helm processes concurrently and cannot be sharded.
   One coordinator validates outputs, updates the shared render-hash cache and writes the report in seeded order.
   Only a worker-sized window of inputs and raw outputs is retained. Finite interaction plans remain serial.
@@ -54,9 +57,8 @@ on the same chart, seed and example limit. Increase workers when throughput impr
 otherwise keep the smaller runner. Check peak memory on the actual CI runner before
 tightening its allocation. No CPU or memory optimum has been measured for these presets.
 
-Start large charts near or above 1,000 supplied paths at six workers on 8 vCPU / 16 GiB,
-then adjust using their discovered queue and measured throughput. This threshold is
-a practical starting rule based on the inventory's upper tenth, not a complexity law.
+Start large dependency-heavy charts with the same two workers on 2 vCPU / 4 GiB,
+then adjust using their discovered queue and measured throughput.
 Path count alone cannot predict render cost, shrinking work or the size of a finite
 permutation space. `--filter-aggressive` also falls back to ordinary filtering when
 its calibration does not cover the chart, including the current path-property mode.

@@ -17,8 +17,9 @@ Use progressively broader coverage as changes approach a release:
 | Before tagging a release | `--exhaustive` | 2 vCPU / 4 GiB | `--jobs 2` | 2 |
 
 These are starting allocations, not measured resource minimums or completion guarantees.
-Large dependency-heavy charts can start at 8 vCPU / 16 GiB with six path workers.
-The pre-tag allocation doubles main-branch CPU and worker count while keeping RAM at 8 GiB.
+Start large dependency-heavy charts with the same 2 vCPU / 4 GiB and two workers per job, then adjust using measured throughput.
+Two release jobs total 4 vCPU / 8 GiB and four workers. Assign different charts to each job;
+exhaustive testing cannot split one chart across CI shards.
 Exhaustive runs launch concurrent Helm processes; the coordinator validates outputs and writes reports in seeded order.
 [Sizing evidence and shard limitations](resources.md) explain how to adjust these estimates.
 
@@ -29,10 +30,10 @@ After installing the plugin, use these commands in the corresponding CI jobs:
 helm hypothesis test ./chart --filter-aggressive --jobs 2 --chart-timeout 3m --shard none
 
 # Main branch
-helm hypothesis test ./chart --filter --jobs 4 --chart-timeout 5m --shard none
+helm hypothesis test ./chart --filter --jobs 2 --chart-timeout 5m --shard none
 
 # Manual pre-tag check, once per chart with a finite values.schema.json
-helm hypothesis test ./chart --exhaustive --jobs 8 --shard none
+helm hypothesis test ./chart --exhaustive --jobs 2 --shard none
 ```
 
 Aggressive sampling falls back to ordinary filtering when the chart has no matching

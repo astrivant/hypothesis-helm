@@ -31,7 +31,8 @@ Choose coverage for each stage of development:
 | Before tagging a release | `--exhaustive` | 2 vCPU / 4 GiB | `--jobs 2` | 2 |
 
 These are starting estimates for one chart at a time, not measured minimum requirements.
-For large dependency-heavy charts, start with 8 vCPU / 16 GiB and six path workers.
+Start with 2 vCPU / 4 GiB and two workers per job, including for large dependency-heavy charts; increase resources after measuring throughput.
+The two-job release allocation totals 4 vCPU / 8 GiB and four workers, with different charts assigned to each job.
 Exhaustive runs use parallel Helm processes; finite interaction execution remains serial. Repository path queues are local to one CI job;
 distributed shards apply to the separate generated-suite workflow.<sup>[\[2\]](docs/ci/resources.md)</sup>
 
