@@ -188,6 +188,15 @@ env -u VIRTUAL_ENV -u PYENV_VERSION -u PYENV_VIRTUAL_ENV poetry install
 bash scripts/check.sh
 ```
 
+The check command runs pytest in parallel, automatically choosing the worker count from
+the runner's CPU count. CI and the full benchmark refresh use the same command.
+Set `PYTEST_WORKERS=2` to choose a fixed count, or use
+`bash scripts/check.sh -n 0` for serial execution. To run only tests in parallel:
+
+```sh
+bash scripts/project-run.sh pytest -n auto --dist worksteal
+```
+
 Development dependencies include shfmt. Pre-commit formats maintained shell scripts;
 `scripts/check.sh` checks their formatting in CI. Shell indentation is configured in
 `.editorconfig`. To format them manually:

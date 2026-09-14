@@ -144,12 +144,16 @@ From a checkout with Helm 4 and GNU Parallel on `PATH`:
 poetry install --extras benchmarking && poetry run bash benchmarks/refresh.sh
 ```
 
-This runs lint, type checks, documentation checks, and the full pytest suite, then
-all twelve synthetic studies, their plots and tables, and the synthetic/Bitnami/Prometheus
+This runs lint, type checks, documentation checks, and the full pytest suite with the
+worker count selected from the runner's CPUs (`PYTEST_WORKERS` overrides it), then all fourteen synthetic studies,
+their plots and tables, and the synthetic/Bitnami/Prometheus
 topology catalog. It tests both pinned chart submodules with four workers,
 `--filter`, seeded random traversal, and five minutes per chart, then verifies and
 publishes the combined Markdown/PDF reports. Dependency preparation is outside
 each chart's testing budget. External kubeconform/kubesec checks are not enabled.
+
+Timed synthetic studies run sequentially to avoid CPU contention between measurements.
+The scaling study varies workers within each measurement to compare parallel execution.
 
 Each benchmark run has a nine-minute ceiling; the complete refresh takes hours.
 The command initializes missing submodules (Prometheus uses GitHub SSH), records

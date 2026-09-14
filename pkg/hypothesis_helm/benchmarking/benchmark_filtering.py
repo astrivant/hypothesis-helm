@@ -122,8 +122,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
     colors = dict(zip(METHODS, ("#64748b", "#d97706", "#2563eb", "#059669"), strict=True))
     for metric, name, ylabel in (
         ("wall_seconds", "filtering-runtime", "Total engine time (seconds)"),
-        ("planning_seconds", "filtering-planning", "Planning time, including complexity analysis (seconds)"),
-        ("completed", "filtering-completed", "Completed configurations, including baseline"),
+        ("planning_seconds", "filtering-planning", "Planning time (seconds)"),
+        ("completed", "filtering-completed", "Completed configurations"),
     ):
         figure, axes = plt.subplots(1, len(depths), figsize=(5 * len(depths), 5), squeeze=False, sharey=True)
         for axis, depth in zip(axes[0], depths, strict=True):
@@ -163,6 +163,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
                         )
             axis.set(title=f"Gate depth {depth}", xlabel="Schema-valid input configurations", ylabel=ylabel)
             axis.set_xscale("log", base=2)
+            ticks = sorted({int(str(row["valid_inputs"])) for row in rows})
+            axis.set_xticks(ticks, [str(size) for size in ticks])
             axis.grid(alpha=0.2)
             axis.legend(fontsize=8)
         finish(figure, output, name, "Means and observed ranges; X = incomplete run; hollow square = extra sampling disabled by fallback.")
