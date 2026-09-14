@@ -96,7 +96,7 @@ resources can introduce interference. Process and fixture startup add overhead,
 so small suites may benefit less from parallelism. Automatic tuning seeks higher
 throughput within its bounds; it does not guarantee a global optimum. Use
 `--jobs N` for fixed concurrency or `--jobs 1` for serial execution. The explicit
-whole-chart and exhaustive modes remain serial.
+whole-chart sampling and finite interaction modes remain serial. Explicit `--exhaustive --jobs N` runs up to N Helm processes concurrently.
 
 ### Input memory
 
@@ -472,3 +472,15 @@ requires sampling most of the population to obtain a high discovery probability.
 calibration supports it. Each chart receives a fresh complexity and topology analysis before test selection. Case and
 changed-field floors can enlarge the sample. Unknown complexity or unmatched calibration keeps ordinary filtering.
 See the [evidence and test matrix](../aggressive-filtering/TESTS.md).
+
+### Parallel exhaustive execution
+
+`helm hypothesis test ./chart --exhaustive --jobs 8 --shard none` uses eight concurrent Helm processes.
+`--jobs auto` uses the available CPU count; `--jobs 1` preserves serial execution. Dependencies and planning finish before the execution budget starts.
+The baseline is checked first. Workers prefetch a bounded window of finite inputs; the coordinator parses and validates results in seeded order,
+updates one render-hash cache, streams complete JSON records, and writes the report. Schema validators and custom Python assertions run on the coordinator.
+
+A failure, timeout or interrupt stops all owned Helm process groups and joins the worker threads before returning.
+Prefetched inputs that have not reached coordinator validation do not count as completed coverage; their number appears in `parallel_execution`.
+The chart has one shared execution deadline, including coordinator validation. Cleanup can extend wall time slightly beyond that deadline.
+Parallel exhaustive execution requires equivalence pruning and rejection filtering to be disabled. Distributed sharding remains unavailable for this mode.

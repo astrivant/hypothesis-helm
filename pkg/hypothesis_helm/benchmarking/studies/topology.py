@@ -14,6 +14,7 @@ from textwrap import dedent
 from typing import NotRequired, TypedDict
 
 from hypothesis_helm.benchmarking.charts.fixture import FixtureWorkspace
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 
 
 class GraphNode(TypedDict):
@@ -211,8 +212,9 @@ def plot(graph: Graph, output: Path, title: str) -> dict[str, object]:
         xlabel="Longest directed dependency path from a source (edges)",
         yticks=[],
     )
+    figure.suptitle(title)
     axis.set_title(
-        f"{title}\nDirected dependency multigraph · {metrics['vertices']:,} vertices · "
+        f"Directed dependency multigraph · {metrics['vertices']:,} vertices · "
         f"{metrics['edges']:,} edges · {metrics['weak_components']:,} weak components"
     )
     axis.legend(
@@ -236,7 +238,7 @@ def plot(graph: Graph, output: Path, title: str) -> dict[str, object]:
         ha="center",
         fontsize=9,
     )
-    figure.tight_layout(rect=(0, 0.09, 1, 1))
+    figure.tight_layout(rect=(0, 0.09, 1, describe(figure, "topology")))
     figure.savefig(output / "topology.png", dpi=170, facecolor="white")
     figure.savefig(output / "topology.svg", facecolor="white")
     plt.close(figure)

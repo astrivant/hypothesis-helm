@@ -11,6 +11,7 @@ from pathlib import Path
 from textwrap import dedent
 
 import matplotlib
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
@@ -142,7 +143,7 @@ for axis in axes:
     axis.legend()
     axis.grid(alpha=0.2)
 figure.suptitle("Compiler graph invariants - every exported vertex and edge retained")
-figure.tight_layout()
+figure.tight_layout(rect=(0, 0, 1, describe(figure, "graph-invariants")))
 figure.savefig(output / "graph-invariants.png", dpi=170)
 figure.savefig(output / "graph-invariants.svg")
 plt.close(figure)

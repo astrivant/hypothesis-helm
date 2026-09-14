@@ -14,6 +14,7 @@ import numpy as np
 from hypothesis_helm.benchmarking.analysis.selection import LABELS as PRESET_LABELS
 from hypothesis_helm.benchmarking.analysis.selection import explanation
 from hypothesis_helm.benchmarking.charts.fixture import read_spec
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -87,7 +88,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     bbox={"facecolor": "white", "alpha": 0.75, "edgecolor": "none"},
                 )
     figure.suptitle(f"Chart nesting × permutation strength {metadata['permutations']} · fixed trim level 2")
-    figure.tight_layout(rect=(0, 0, 1, 0.96))
+    figure.tight_layout(rect=(0, 0, 1, describe(figure, "nesting-matrix")))
     for extension in ("png", "svg"):
         figure.savefig(output / f"matrix.{extension}", dpi=160, facecolor="white")
     plt.close(figure)
@@ -181,7 +182,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 "axes fixed across profiles and policies.",
                 ha="center",
             )
-            figure.tight_layout(rect=(0.02, 0.065, 1, 0.96))
+            figure.tight_layout(rect=(0.02, 0.065, 1, describe(figure, "nesting-pca")))
             for extension in ("png", "svg"):
                 figure.savefig(output / f"pca-{frame['family']}-{mode}.{extension}", dpi=160, facecolor="white")
             plt.close(figure)

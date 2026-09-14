@@ -2,8 +2,8 @@
 
 [Recommended workflow](README.md#recommended-workflow)
 
-Start with **two path workers on MR/PR jobs**, **four on main**, and **six for large
-dependency-heavy charts**. Reserve at least as many vCPUs as workers. The workflow
+Start with **two path workers on MR/PR jobs**, **four on main**, and **eight concurrent Helm processes for exhaustive release checks**.
+The release allocation is **8 vCPU / 8 GiB**, doubling main-branch CPU while keeping its memory allocation. Reserve at least as many vCPUs as workers. The workflow
 table budgets roughly 2 GiB per vCPU for path testing for the Python workers, Helm children, coordinator
 and CI overhead. This is an initial allocation to tune, not a measured requirement.
 
@@ -37,9 +37,10 @@ The suggested RAM allocations deliberately leave room beyond that observation.
   suite misses its target duration, try two shards before increasing further. Two
   shards with four local workers each need two runners: eight vCPUs and 16 GiB in
   total at the main-branch allocation. They do not share a global chart deadline.
-- **Explicit exhaustive testing** currently runs serially and cannot be sharded.
-  Finite interaction plans also remain serial. More CPU cores do not remove
-  finite-domain or execution-budget limits.
+- **Explicit exhaustive testing** runs up to `--jobs N` Helm processes concurrently and cannot be sharded.
+  One coordinator validates outputs, updates the shared render-hash cache and writes the report in seeded order.
+  Only a worker-sized window of inputs and raw outputs is retained. Finite interaction plans remain serial.
+  More CPU cores do not remove finite-domain or execution-budget limits.
 
 The [sharded CI examples](README.md#gitlab) use the generated-suite workflow.
 Do not add their shard settings to a filtered repository queue and assume the work

@@ -11,6 +11,7 @@ import math
 import os
 import time
 from collections.abc import Callable, Sequence
+from concurrent.futures import Future
 from pathlib import Path
 
 from hypothesis import HealthCheck, Phase, assume, given, seed, settings
@@ -20,6 +21,7 @@ from hypothesis.strategies import SearchStrategy
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.audit import audit as audit
 from hypothesis_helm.charts.candidates import CandidateChecks
+from hypothesis_helm.charts.exhaustive import ExhaustiveRenders
 from hypothesis_helm.charts.model import Chart as Chart
 from hypothesis_helm.charts.model import _default_paths as _default_paths
 from hypothesis_helm.charts.model import _schema_nodes as _schema_nodes
@@ -64,6 +66,7 @@ def check_chart(
     allow_empty: bool = False,
     artifact_dir: Path | None = None,
     exhaustive: bool = False,
+    jobs: int = 1,
     max_cases: int = 10000,
     permutations: int | None = None,
     trim: int = 0,
@@ -107,6 +110,7 @@ def check_chart(
         allow_empty (bool): Whether a render with no resource documents is accepted.
         artifact_dir (Path | None): Optional destination for failing values and report artifacts.
         exhaustive (bool): Whether to enumerate the entire supported finite input domain.
+        jobs (int): Concurrent Helm processes for exhaustive execution; all verification stays on the coordinator.
         max_cases (int): Maximum exhaustive domain or interaction suite and factor size.
         permutations (int | None): Required finite interaction strength when supplied.
         trim (int): Seeded quarter-retention steps applied after finite permutation planning.
@@ -147,6 +151,10 @@ def check_chart(
         raise ValueError("max_examples and timeout must be positive")
     if sampling.percent < 100 and permutations is None and not exhaustive:
         raise ValueError("--sample-random requires a finite plan or path-based testing")
+    if type(jobs) is not int or jobs < 1:
+        raise ValueError("jobs must be a positive integer")
+    if jobs > 1 and (not exhaustive or prune_equivalent or filter_rejections or rejection_policy is not None):
+        raise ValueError("parallel exhaustive execution requires exhaustive mode without equivalence pruning or rejection filtering")
     if permutations is not None and exhaustive:
         raise ValueError("permutations and exhaustive are mutually exclusive")
     if expand_failures and permutations is None:
@@ -248,6 +256,10 @@ def check_chart(
             raise TimeLimitReached()
         return remaining
 
+    parallel: ExhaustiveRenders | None = None
+    prefetched: Future[str] | None = None
+    consumed = 0
+
     def render_candidate(values: dict[str, object], record_hashes: bool) -> list[dict[str, object]]:
         """
         Render within the coordinator's remaining budget and fixed Helm context.
@@ -259,6 +271,14 @@ def check_chart(
         Returns:
             list[dict[str, object]]: Validated rendered resources.
         """
+        nonlocal consumed
+        output: str | None = None
+        if prefetched is not None and record_hashes:
+            consumed += 1
+            try:
+                output = prefetched.result(timeout=remaining_time())
+            except TimeoutError as exc:
+                raise TimeLimitReached() from exc
         if record_hashes:
             return render(
                 chart,
@@ -269,6 +289,7 @@ def check_chart(
                 namespace=namespace,
                 kube_version=kube_version,
                 hashes=hashes,
+                rendered_output=output,
             )
         return render(
             chart,
@@ -330,6 +351,15 @@ def check_chart(
         Returns:
             None: In-place additions preserve successful and failed execution counts separately.
         """
+        if parallel is not None:
+            result["parallel_execution"] = {
+                "workers": parallel.workers,
+                "scheduled_renders": parallel.submitted,
+                "finished_render_tasks": parallel.finished,
+                "results_consumed": consumed,
+                "unverified_scheduled_renders": parallel.submitted - consumed,
+                "scope": "Concurrent Helm processes; ordered coordinator validation and one shared execution deadline",
+            }
         if inputs.dependencies.nodes:
             result["dependency_activation"] = {
                 **inputs.dependencies.report(chart.defaults),
@@ -561,8 +591,26 @@ def check_chart(
     if finite_values is not None:
         try:
             if expansion is None:
-                for values in finite_values:
-                    check(values)
+                if jobs == 1:
+                    for values in finite_values:
+                        check(values)
+                else:
+                    parallel = ExhaustiveRenders(
+                        chart,
+                        finite_values,
+                        jobs,
+                        time.perf_counter() + remaining_time(),
+                        helm=helm,
+                        timeout=timeout,
+                        release=release,
+                        namespace=namespace,
+                        kube_version=kube_version,
+                    )
+                    with parallel:
+                        for values, future in parallel:
+                            prefetched = future
+                            check(values)
+                    prefetched = None
         except TimeLimitReached:
             return stopped_report()
         except KeyboardInterrupt as exc:

@@ -13,6 +13,7 @@ from matplotlib.lines import Line2D
 
 from hypothesis_helm.benchmarking.analysis.selection import LABELS as PRESET_LABELS
 from hypothesis_helm.benchmarking.analysis.selection import decision, explanation
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -129,7 +130,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         individual.suptitle(
             f"{row['structure']} · {row['actual_error_percent']:.2f}% erroneous inputs · trim level {metadata['trim_level']}"
         )
-        individual.tight_layout(rect=(0, 0.08, 1, 0.94))
+        individual.tight_layout(rect=(0, 0.08, 1, describe(individual, "output-pca")))
         individual.text(
             0.5,
             0.02,
@@ -167,7 +168,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         ncol=4,
         frameon=False,
     )
-    figure.tight_layout(rect=(0.03, 0.025, 1, 0.97))
+    figure.tight_layout(rect=(0.03, 0.025, 1, describe(figure, "output-pca")))
     figure.savefig(output / "output-pca.png", dpi=160, facecolor="white")
     figure.savefig(output / "output-pca.svg", facecolor="white")
     plt.close(figure)

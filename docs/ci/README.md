@@ -14,12 +14,12 @@ Use progressively broader coverage as changes approach a release:
 | --- | --- | --- | ---: | ---: |
 | MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
 | `main` | `--filter` | 4 vCPU / 8 GiB | `--jobs 4` | 1 |
-| Before tagging | `--exhaustive` | 2 vCPU / 8 GiB | `--jobs 1` | 1 |
+| Before tagging | `--exhaustive` | 8 vCPU / 8 GiB | `--jobs 8` | 1 |
 
 These are starting allocations, not measured resource minimums or completion guarantees.
 Large dependency-heavy charts can start at 8 vCPU / 16 GiB with six path workers.
-The extra pre-tag memory allows room for finite enumeration; additional workers do not
-accelerate the current serial exhaustive executor.
+The pre-tag allocation doubles main-branch CPU and worker count while keeping RAM at 8 GiB.
+Exhaustive runs launch concurrent Helm processes; the coordinator validates outputs and writes reports in seeded order.
 [Sizing evidence and shard limitations](resources.md) explain how to adjust these estimates.
 
 After installing the plugin, use these commands in the corresponding CI jobs:
@@ -32,7 +32,7 @@ helm hypothesis test ./chart --filter-aggressive --jobs 2 --chart-timeout 3m --s
 helm hypothesis test ./chart --filter --jobs 4 --chart-timeout 5m --shard none
 
 # Manual pre-tag check, once per chart with a finite values.schema.json
-helm hypothesis test ./chart --exhaustive --jobs 1 --shard none
+helm hypothesis test ./chart --exhaustive --jobs 8 --shard none
 ```
 
 Aggressive sampling falls back to ordinary filtering when the chart has no matching
@@ -44,7 +44,7 @@ calibration. Neither filtered mode establishes exhaustive coverage. See the
 Run the exhaustive check manually on `main` just before tagging a service release.
 It checks the accumulated changes on the exact commit you intend to tag. Leave
 filtering, trimming and percentage sampling disabled. Explicit exhaustive mode runs
-one local chart at a time and does not support sharding; use a separate job from the
+one local chart at a time, with up to eight concurrent Helm processes in this example, and does not support sharding; use a separate job from the
 sharded examples below.
 
 The schema must have a supported finite input domain. `--max-cases` bounds enumeration;

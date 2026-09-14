@@ -75,7 +75,7 @@ def validate_resources(resources: Sequence[object]) -> None:
         identities.add(identity)
 
 
-def render(
+def render_output(
     chart: Chart,
     values: dict[str, object],
     *,
@@ -84,26 +84,23 @@ def render(
     release: str = "hypothesis",
     namespace: str = "default",
     kube_version: str | None = None,
-    hashes: RenderHashes | None = None,
-    stream: bool = True,
-) -> list[dict[str, object]]:
+    processes: Processes | None = None,
+) -> str:
     """
-    Render locally with Helm schema checks enabled and a subprocess deadline.
+    Execute Helm and retain raw output for validation by the owning coordinator.
 
     Args:
-        chart (Chart): Loaded chart and its schema and defaults.
-        values (dict[str, object]): Values document used as the rendering baseline.
-        helm (str): Helm executable used to render the chart.
-        timeout (float): Maximum seconds allowed for each Helm invocation.
-        release (str): Release name supplied to Helm.
-        namespace (str): Release namespace supplied to Helm.
-        kube_version (str | None): Optional Kubernetes capability version supplied to Helm.
-
-        hashes (RenderHashes | None): Run index, or the current process index by default.
-        stream (bool): Emit manifests to the configured output stream.
+        chart (Chart): Prepared chart with dependencies available.
+        values (dict[str, object]): Overrides for this input.
+        helm (str): Helm executable.
+        timeout (float): Maximum subprocess duration.
+        release (str): Fixed release name.
+        namespace (str): Fixed namespace.
+        kube_version (str | None): Optional Kubernetes capability version.
+        processes (Processes | None): Explicit subprocess owner for parallel cancellation.
 
     Returns:
-        list[dict[str, object]]: Result of the documented operation.
+        str: Unvalidated rendered YAML; nonzero Helm exits remain reproducible failures.
     """
     with tempfile.TemporaryDirectory(prefix="hypothesis-helm-") as directory:
         value_file = Path(directory) / "values.json"
@@ -121,15 +118,63 @@ def render(
         if kube_version:
             command += ["--kube-version", kube_version]
         try:
-            process = Processes().run(command, capture_output=True, text=True, timeout=timeout)
+            process = (processes if processes is not None else Processes()).run(command, capture_output=True, text=True, timeout=timeout)
         except subprocess.TimeoutExpired as exc:
             raise RenderFailure(f"helm exceeded {timeout}s") from exc
         if process.returncode:
             raise RenderFailure(process.stderr.strip() or f"helm exited {process.returncode}")
-        try:
-            resources = [item for item in yamlio.load_all(process.stdout) if item is not None]
-        except YAMLError as exc:
-            raise RenderFailure(f"invalid rendered YAML: {exc}") from exc
+        return process.stdout
+
+
+def render(
+    chart: Chart,
+    values: dict[str, object],
+    *,
+    helm: str = "helm",
+    timeout: float = 30.0,
+    release: str = "hypothesis",
+    namespace: str = "default",
+    kube_version: str | None = None,
+    hashes: RenderHashes | None = None,
+    stream: bool = True,
+    rendered_output: str | None = None,
+) -> list[dict[str, object]]:
+    """
+    Render locally with Helm schema checks enabled and a subprocess deadline.
+
+    Args:
+        chart (Chart): Loaded chart and its schema and defaults.
+        values (dict[str, object]): Values document used as the rendering baseline.
+        helm (str): Helm executable used to render the chart.
+        timeout (float): Maximum seconds allowed for each Helm invocation.
+        release (str): Release name supplied to Helm.
+        namespace (str): Release namespace supplied to Helm.
+        kube_version (str | None): Optional Kubernetes capability version supplied to Helm.
+
+        hashes (RenderHashes | None): Run index, or the current process index by default.
+        stream (bool): Emit manifests to the configured output stream.
+        rendered_output (str | None): Exact output prefetched for these values, or execute Helm when absent.
+
+    Returns:
+        list[dict[str, object]]: Result of the documented operation.
+    """
+    output = (
+        rendered_output
+        if rendered_output is not None
+        else render_output(
+            chart,
+            values,
+            helm=helm,
+            timeout=timeout,
+            release=release,
+            namespace=namespace,
+            kube_version=kube_version,
+        )
+    )
+    try:
+        resources = [item for item in yamlio.load_all(output) if item is not None]
+    except YAMLError as exc:
+        raise RenderFailure(f"invalid rendered YAML: {exc}") from exc
     if stream:
         for resource in resources:
             emit_manifest(resource)
@@ -143,7 +188,7 @@ def render(
         """
         validate_resources(resources)
         try:
-            validate(process.stdout, timeout)
+            validate(output, timeout)
         except AssertionError as exc:
             raise RenderFailure(str(exc)) from exc
 

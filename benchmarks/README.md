@@ -49,6 +49,9 @@ Interactive local runs show progress bars with completion counts, elapsed time a
 CI disables all progress bars, including forced chart-test progress. CI and redirected benchmark output use plain-text
 status updates instead. Failure expansion can increase the remaining count as it schedules more checks.
 
+Each plot starts with the question it answers and a short guide to reading it.
+Method notes and uncertainty definitions remain below the axes.
+
 ### Reading variation bands
 
 Where a setting has repeated runs, the line shows their mean. Dark shading and inner whiskers extend one

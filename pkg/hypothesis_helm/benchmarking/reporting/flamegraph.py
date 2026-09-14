@@ -10,6 +10,7 @@ from pathlib import Path
 
 from hypothesis_helm.benchmarking.charts.fixture import FixtureWorkspace
 from hypothesis_helm.benchmarking.execution.profiling import Frame
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -126,7 +127,6 @@ def plot(frames: list[Frame], output: Path, title: str, max_depth: int = 30, min
             ylim=(-0.15, depth + 1.15),
             xlabel="Captured wall seconds (summed for workers); grouped call stacks, not a timeline",
             ylabel="Python call depth",
-            title=title,
         )
         axis.yaxis.set_major_locator(MaxNLocator(integer=True))
         figure.text(
@@ -137,7 +137,8 @@ def plot(frames: list[Frame], output: Path, title: str, max_depth: int = 30, min
             ha="center",
             fontsize=8,
         )
-        figure.tight_layout(rect=(0, 0.05, 1, 1))
+        figure.suptitle(title)
+        figure.tight_layout(rect=(0, 0.05, 1, describe(figure, "flamegraph")))
         figure.savefig(output.with_suffix(".png"), dpi=160)
         figure.savefig(output.with_suffix(".svg"))
     finally:

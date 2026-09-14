@@ -16,6 +16,8 @@ for name, expected in checksums.items():
     path = benchmarks / name
     assert path.is_file(), path
     assert hashlib.sha256(path.read_bytes()).hexdigest() == expected, path
+    if path.suffix == ".svg":
+        assert 'id="plot-question"' in path.read_text(), f"Plot has no reader question: {path}"
 
 previous = json.loads((root / "previous-artifact-inventory.json").read_text())
 retained = json.loads((root / "retained-fixture-sha256.json").read_text())

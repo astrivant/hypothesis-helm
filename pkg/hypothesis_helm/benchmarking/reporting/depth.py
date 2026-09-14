@@ -8,6 +8,7 @@ import tempfile
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.charts.fixture import read_spec
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -64,7 +65,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     handles, labels = axes[0, 0].get_legend_handles_labels()
     figure.legend(handles, labels, loc="lower center", ncol=4)
     figure.suptitle("Topology depth sweep · random trim 0 · failure expansion enabled", fontsize=17)
-    figure.tight_layout(rect=(0, 0.08, 1, 0.95))
+    figure.tight_layout(rect=(0, 0.08, 1, describe(figure, "topology-depth")))
     for extension in ("png", "svg"):
         figure.savefig(output / f"topology-depth.{extension}", dpi=160, facecolor="white")
     plt.close(figure)

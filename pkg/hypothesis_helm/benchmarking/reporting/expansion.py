@@ -9,6 +9,7 @@ from pathlib import Path
 
 from hypothesis_helm.benchmarking.analysis.selection import LABELS as PRESET_LABELS
 from hypothesis_helm.benchmarking.analysis.selection import explanation
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -108,7 +109,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         ha="center",
         fontsize=10,
     )
-    figure.tight_layout(rect=(0, 0.04, 1, 0.95))
+    figure.tight_layout(rect=(0, 0.04, 1, describe(figure, "failure-expansion")))
     figure.savefig(output / "failure-expansion.png", dpi=160, facecolor="white")
     figure.savefig(output / "failure-expansion.svg", facecolor="white")
     plt.close(figure)

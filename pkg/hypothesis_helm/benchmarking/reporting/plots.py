@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 from hypothesis_helm.benchmarking.reporting.variation import repeated_line
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -128,7 +129,7 @@ def paired_ratios(baseline: list[Point], parallel: list[Point]) -> list[float]:
     return ratios
 
 
-def finish(figure: Figure, output: Path, name: str, subtitle: str) -> None:
+def finish(figure: Figure, output: Path, name: str, subtitle: str, *, question: str | None = None) -> None:
     """
     Export a standalone vector figure and the README raster image.
 
@@ -137,6 +138,7 @@ def finish(figure: Figure, output: Path, name: str, subtitle: str) -> None:
         output (Path): Artifact directory.
         name (str): Stable artifact stem.
         subtitle (str): Method and censoring information printed in the figure.
+        question (str | None): Explicit reader question for a custom plot outside the registered studies.
 
     Returns:
         None: PNG and SVG exports are written without requiring a display.
@@ -160,7 +162,8 @@ def finish(figure: Figure, output: Path, name: str, subtitle: str) -> None:
     subtitle = "\n".join(fill(line, width=int(figure.get_figwidth() * 17)) for line in subtitle.splitlines())
     footer = max(0.07, 0.045 + 0.023 * len(subtitle.splitlines()))
     figure.text(0.06, 0.025, subtitle, fontsize=8, color="#475569")
-    figure.tight_layout(rect=(0, footer, 1, 0.92))
+    top = describe(figure, name, question=question)
+    figure.tight_layout(rect=(0, footer, 1, top))
     figure.savefig(output / f"{name}.png", dpi=170, facecolor="white")
     figure.savefig(output / f"{name}.svg", facecolor="white")
     plt.close(figure)

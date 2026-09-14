@@ -241,5 +241,5 @@ def test_plot_export_preserves_all_heatmap_rows(tmp_path: Path) -> None:
     figure, axis = plt.subplots()
     axis.imshow([[1, 2], [3, 4], [5, 6]])
     limits = axis.get_ylim()
-    finish(figure, tmp_path, "heatmap", "Three rows must remain visible.")
+    finish(figure, tmp_path, "heatmap", "Three rows must remain visible.", question="How do the three recorded cases compare?")
     assert axis.get_ylim() == limits

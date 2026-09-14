@@ -6,6 +6,7 @@ import csv
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.analysis.selection import LABELS, explanation
+from hypothesis_helm.benchmarking.reporting.descriptions import describe
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -85,7 +86,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "One seeded run per cell. * = execution deadline; F = aggressive sampling fallback. Coverage uses exact fixture outputs.",
         fontsize=9,
     )
-    figure.tight_layout(rect=(0, 0.05, 1, 0.94))
+    figure.tight_layout(rect=(0, 0.05, 1, describe(figure, "strategy-matrix")))
     figure.savefig(output / "strategy-matrix.png", dpi=170, facecolor="white")
     figure.savefig(output / "strategy-matrix.svg", facecolor="white")
     plt.close(figure)

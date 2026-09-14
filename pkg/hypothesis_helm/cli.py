@@ -407,7 +407,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             "-j",
             type=parse_jobs,
             default="auto",
-            help="workers per chart; auto: CPU count for repository tests, PID tuning for suites; 1: serial",
+            help="workers per chart; auto: CPU count for repository/exhaustive tests, PID tuning for suites; 1: serial",
         )
         command.add_argument(
             "--output",
@@ -841,8 +841,8 @@ def main(argv: list[str] | None = None) -> int:
         else:
             if args.shard is not None:
                 raise ValueError("--shard applies to per-path suites only")
-            if args.jobs not in ("auto", 1):
-                raise ValueError("--jobs applies to per-path suites; whole-chart modes are serial")
+            if not args.exhaustive and args.jobs not in ("auto", 1):
+                raise ValueError("--jobs applies to per-path suites and exhaustive testing; other whole-chart modes are serial")
             if args.match is not None or args.collect_only:
                 raise ValueError("--match and --collect-only apply to per-path tests only")
             report = check_chart(
@@ -864,6 +864,7 @@ def main(argv: list[str] | None = None) -> int:
                 allow_empty=args.allow_empty,
                 artifact_dir=args.artifact_dir,
                 exhaustive=args.exhaustive,
+                jobs=((os.process_cpu_count() or 1) if args.jobs == "auto" else args.jobs) if args.exhaustive else 1,
                 max_cases=args.max_cases,
                 permutations=args.permutations,
                 trim=args.trim,

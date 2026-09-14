@@ -337,8 +337,8 @@ options:
                         auto: rerun failures locally; run all paths in CI
   --shard SHARD         auto (default): detect CI node; INDEX/TOTAL: explicit shard;
                         none: disable
-  --jobs, -j JOBS       workers per chart; auto: CPU count for repository tests, PID
-                        tuning for suites; 1: serial
+  --jobs, -j JOBS       workers per chart; auto: CPU count for repository/exhaustive
+                        tests, PID tuning for suites; 1: serial
   --output, -o {json}   stream one rendered manifest per JSON line on stdout; reports
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a
@@ -471,8 +471,8 @@ options:
                         auto: rerun failures locally; run all paths in CI
   --shard SHARD         auto (default): detect CI node; INDEX/TOTAL: explicit shard;
                         none: disable
-  --jobs, -j JOBS       workers per chart; auto: CPU count for repository tests, PID
-                        tuning for suites; 1: serial
+  --jobs, -j JOBS       workers per chart; auto: CPU count for repository/exhaustive
+                        tests, PID tuning for suites; 1: serial
   --output, -o {json}   stream one rendered manifest per JSON line on stdout; reports
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a

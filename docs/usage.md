@@ -403,7 +403,8 @@ and dynamic references; its generated tests may expose real chart failures.
 
 Use `helm hypothesis test ./chart --output json` (or `-o json`) to emit
 newline-delimited JSON: one compact Kubernetes resource per line, flushed as
-each Helm render completes. The same flag works with `helm hypothesis run
+each render reaches coordinator verification. Parallel exhaustive runs preserve seeded order and emit complete records from one coordinator.
+The same flag works with `helm hypothesis run
 reports/hypothesis-helm`, `--whole-chart`, and `--exhaustive`. Progress,
 pytest output, reports, and errors go to stderr; stdout contains only manifests.
 Collection-only runs emit no manifests.
@@ -420,7 +421,7 @@ makes the pipeline fail:
 
 ```bash
 set -o pipefail
-helm hypothesis test ./chart -o json |
+helm hypothesis test ./chart --filter -o json |
   (
     status=0
     while IFS= read -r manifest; do
@@ -486,9 +487,9 @@ records each completed test, elapsed time, exit code, active count, target count
 and latest measured throughput. Target changes also appear in progress logs.
 Any failed worker fails the command.
 
-Collection-only runs stay serial. The explicit `--whole-chart` and
-`--exhaustive` modes remain serial; `auto` does not change their execution and
-they reject numeric `--jobs` values above one.
+Collection-only runs stay serial. Explicit `--exhaustive` supports concurrent
+Helm processes with `--jobs N`; `auto` uses the available CPU count.
+Other whole-chart modes remain serial and reject numeric `--jobs` values above one.
 The pre-commit hook inherits `--jobs auto` without configuration changes.
 
 ## Progress and interruption

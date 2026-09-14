@@ -35,7 +35,7 @@ def test_sample_deviation_and_physical_bounds(tmp_path: Path) -> None:
     assert set(inner[inner[:, 0] == 1, 1]) == {0, 4}
     assert set(outer[outer[:, 0] == 2, 1]) == {94, 100}
     assert set(inner[inner[:, 0] == 2, 1]) == {96, 100}
-    finish(figure, tmp_path, "variation", "Repeated seed trials.")
+    finish(figure, tmp_path, "variation", "Repeated seed trials.", question="How much do results vary across seeds?")
     svg = (tmp_path / "variation.svg").read_text()
     assert "n=3" in svg and "not confidence intervals" in svg
 
