@@ -18,6 +18,7 @@ Each directory contains one study's recorded inputs, results and available plots
 | nesting | [Browse](nesting/README.md) |
 | pca | [Browse](pca/README.md) |
 | performance | [Browse](performance/README.md) |
+| resource-sizing (preliminary observations) | [Browse](resource-sizing/README.md) |
 | sampling | [Browse](sampling/README.md) |
 | sparsity | [Browse](sparsity/README.md) |
 | topology-depth | [Browse](topology-depth/README.md) |

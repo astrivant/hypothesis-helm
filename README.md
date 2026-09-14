@@ -24,11 +24,16 @@ time budget.
 
 Choose coverage for each stage of development:
 
-| When | Recommended mode | Purpose |
-| --- | --- | --- |
-| Merge requests / pull requests | `--filter-aggressive` | Faster feedback with calibrated sampling. |
-| Changes on `main` | `--filter` | Broader checks without the additional sampling. |
-| Before tagging a release | `--exhaustive` | Test every supported finite input configuration, without trimming or sampling. |
+| When | Recommended mode | Starting CPU / RAM per CI job | Local workers | CI shards |
+| --- | --- | --- | ---: | ---: |
+| MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
+| Changes on `main` | `--filter` | 4 vCPU / 8 GiB | `--jobs 4` | 1 |
+| Before tagging a release | `--exhaustive` | 2 vCPU / 8 GiB | `--jobs 1` | 1 |
+
+These are starting estimates for one chart at a time, not measured minimum requirements.
+For large dependency-heavy charts, start with 8 vCPU / 16 GiB and six path workers.
+Finite interaction and exhaustive execution are serial. Repository path queues are local to one CI job;
+distributed shards apply to the separate generated-suite workflow.<sup>[\[2\]](docs/ci/resources.md)</sup>
 
 Run the pre-tag check manually on the release commit and review its coverage report before tagging.
 Exhaustive coverage requires a finite domain and a completed run; time-limited runs remain incomplete.

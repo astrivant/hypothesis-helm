@@ -10,23 +10,29 @@ The new GitLab and CircleCI URLs become available when these files are published
 
 Use progressively broader coverage as changes approach a release:
 
-| Stage | Mode | Coverage tradeoff |
-| --- | --- | --- |
-| MR / PR | `--filter-aggressive` | Apply ordinary filtering and calibrated sampling for faster feedback. |
-| `main` | `--filter` | Apply ordinary filtering with failure expansion, without the aggressive sampling. |
-| Before tagging | `--exhaustive` | Enumerate every supported finite configuration, with no trimming or sampling. |
+| Stage | Mode | Starting CPU / RAM per CI job | Local workers | CI shards |
+| --- | --- | --- | ---: | ---: |
+| MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
+| `main` | `--filter` | 4 vCPU / 8 GiB | `--jobs 4` | 1 |
+| Before tagging | `--exhaustive` | 2 vCPU / 8 GiB | `--jobs 1` | 1 |
+
+These are starting allocations, not measured resource minimums or completion guarantees.
+Large dependency-heavy charts can start at 8 vCPU / 16 GiB with six path workers.
+The extra pre-tag memory allows room for finite enumeration; additional workers do not
+accelerate the current serial exhaustive executor.
+[Sizing evidence and shard limitations](resources.md) explain how to adjust these estimates.
 
 After installing the plugin, use these commands in the corresponding CI jobs:
 
 ```sh
 # Merge request / pull request
-helm hypothesis test ./chart --filter-aggressive
+helm hypothesis test ./chart --filter-aggressive --jobs 2 --chart-timeout 3m --shard none
 
 # Main branch
-helm hypothesis test ./chart --filter
+helm hypothesis test ./chart --filter --jobs 4 --chart-timeout 5m --shard none
 
 # Manual pre-tag check, once per chart with a finite values.schema.json
-helm hypothesis test ./chart --exhaustive --shard none
+helm hypothesis test ./chart --exhaustive --jobs 1 --shard none
 ```
 
 Aggressive sampling falls back to ordinary filtering when the chart has no matching
