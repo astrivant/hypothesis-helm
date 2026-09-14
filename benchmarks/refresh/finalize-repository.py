@@ -68,6 +68,7 @@ for sequence, expected in enumerate(inventory, 1):
     roots = [record for record in report["charts"] if record["chart"] == "."]
     assert len(roots) == 1, f"Worker {sequence} has no unique root chart"
     root = roots[0]
+    assert root["status"] != "cached-pass", f"Worker {sequence} reused old results instead of running fresh tests"
     for key in ("name", "version", "kind"):
         assert root.get(key) == expected.get(key), f"Wrong {key} in worker {sequence}"
     for record in report["charts"]:

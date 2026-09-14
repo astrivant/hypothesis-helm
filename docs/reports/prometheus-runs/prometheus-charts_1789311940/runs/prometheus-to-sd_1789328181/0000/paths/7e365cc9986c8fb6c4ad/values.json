@@ -1,16 +1,3 @@
-{
-  "replicaCount": 1,
-  "image": {
-    "repository": "gcr.io/google-containers/prometheus-to-sd",
-    "tag": "\"",
-    "pullPolicy": "IfNotPresent"
-  },
-  "resources": {},
-  "port": 6060,
-  "metricsSources": {
-    "kube-state-metrics": "http://kube-state-metrics:8080"
-  },
-  "monitoredResourceTypes": "gke_container",
-  "nodeSelector": {},
-  "tolerations": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d9bf74c5b6fe52695e54b35f83a9b6371d77694614a3edefa0f0b2febe6cf484
+size 364

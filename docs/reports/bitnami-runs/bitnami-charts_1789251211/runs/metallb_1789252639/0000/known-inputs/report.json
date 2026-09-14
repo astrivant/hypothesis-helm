@@ -1,21 +1,3 @@
-{
-  "status": "failed",
-  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-75f1ai39/chart",
-  "seed": 0,
-  "attempts": 124,
-  "error": "Error: template: metallb/templates/speaker/rbac.yaml:44:14: executing \"metallb/templates/speaker/rbac.yaml\" at <include \"common.capabilities.psp.supported\" .>: error calling include: template: metallb/charts/common/templates/_capabilities.tpl:131:32: executing \"common.capabilities.psp.supported\" at <semverCompare \"<1.25-0\" $kubeVersion>: error calling semverCompare: invalid semantic version\n\nUse --debug flag to render out invalid YAML",
-  "values": {
-    "kubeVersion": ":"
-  },
-  "failure_type": "RenderFailure",
-  "render_hashes": {
-    "algorithm": "sha256-canonical-json-v1",
-    "scope": "run-local",
-    "observed_bundles": 90,
-    "unique_bundles": 90,
-    "duplicate_bundles": 0,
-    "validation_cache_hits": 0,
-    "validated_entries": 90
-  },
-  "phase": "known-inputs"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:19dc1f45027fc3d9da1c9d980e53fd01538e75153d78893729466a078f537cc1
+size 962

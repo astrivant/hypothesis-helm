@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+        with:
+          lfs: true
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
@@ -70,6 +72,8 @@ jobs:
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v7
+        with:
+          lfs: true
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'

@@ -190,10 +190,14 @@ poetry install --extras benchmarking && poetry run bash benchmarks/refresh.sh
 This runs lint, type checks, documentation checks, and the full pytest suite with the
 worker count selected from the runner's CPUs (`PYTEST_WORKERS` overrides it), then all fifteen synthetic studies,
 their plots and tables, and the synthetic/Bitnami/Prometheus
-topology catalog. It tests both pinned chart submodules sequentially, with six path workers per chart,
+topology catalog. After these plots, tables and benchmark summaries are published, it tests
+Bitnami, then Prometheus, with six path workers per chart,
 `--filter`, seeded random traversal, and five minutes per chart, then verifies and
 publishes the combined Markdown/PDF reports. Dependency preparation is outside
 each chart's testing budget. External kubeconform/kubesec checks are not enabled.
+Repository refreshes use `--no-cache` to collect fresh results. Generated summary blocks
+in this README and the root README update counts, settings and report links from the new
+result files. Edit the surrounding prose freely; retain the `refresh:...` comment markers.
 
 Timed synthetic studies run sequentially to avoid CPU contention between measurements.
 The scaling study varies workers within each measurement to compare parallel execution.
@@ -269,8 +273,10 @@ Renders are skipped when the compiler proves they match an already validated out
 Use each script's `--help` for options.
 
 The figures below use local Python workers and the [standard chart](studies/performance/standard-chart).
+<!-- refresh:performance:start -->
 In this Helm 4 run, pruning completed **163,122 checks with 256 renders**, compared
 with **11,583 checks** without pruning, within each nine-minute budget.
+<!-- refresh:performance:end -->
 [Raw measurements](studies/performance/results.json), [CSV](studies/performance/results.csv), and
 [refresh provenance](refresh/README.md) include the host and run details.
 These are single-run measurements; they do not establish timing variability.

@@ -18,6 +18,9 @@ bash "$root/retry-topologies.sh" "$root" >>"$root/logs/topology-retries.log" 2>&
 python "$root/catalog-topologies.py" "$root" >"$root/logs/catalog-topologies.log" 2>&1
 python "$root/verify-topologies.py" "$root" >"$root/logs/verify-topologies.log" 2>&1
 python "$root/publish.py" "$root" >"$root/logs/publish.log" 2>&1
+python "$root/update-documentation.py" "$root" --benchmarks-only >"$root/logs/update-benchmarks.log" 2>&1
+date +%s >"$root/diagrams-finished-epoch.txt"
+printf '%s\n' 'Load tests, diagrams, tables and benchmark summaries complete; starting Bitnami, then Prometheus.'
 while IFS=$'\t' read -r name run_dir; do
   printf '%s\n' "$name" >"$root/postprocess-current.txt"
   printf 'Testing %s charts; logs: %s/jobs/\n' "$name" "$run_dir"

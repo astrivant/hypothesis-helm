@@ -174,6 +174,7 @@ See [Repository scanning](docs/scanning/README.md) for authentication, public in
 
 ## Test case: Bitnami charts
 
+<!-- refresh:bitnami:start -->
 We scanned **115 Bitnami charts**, recording **101,799 test attempts** with filtering
 and a five-minute budget per chart. The results include render failures, chart
 validation rejections, and tooling limitations; confirmed chart bugs require triage.
@@ -181,11 +182,13 @@ validation rejections, and tooling limitations; confirmed chart bugs require tri
 Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
 reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
 the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789311940/README.md).
+<!-- refresh:bitnami:end -->
 The [chart topology catalog](benchmarks/studies/chart-topologies/README.md) includes
 directed dependency graphs and their mathematical measurements.
 
 ## Test case: Prometheus Community charts
 
+<!-- refresh:prometheus:start -->
 We scanned **46 Prometheus Community charts**, recording **94,833 test attempts**
 with the same filtering and five-minute budget per chart. The report distinguishes
 observed input failures, blocked checks, and incomplete coverage.
@@ -193,6 +196,7 @@ observed input failures, blocked checks, and incomplete coverage.
 Read the [scan results](docs/reports/prometheus.md), download the
 [combined PDF](docs/reports/prometheus.pdf), or inspect the
 [retained logs and data](docs/reports/prometheus-runs/prometheus-charts_1789311940/README.md).
+<!-- refresh:prometheus:end -->
 Its dependency graphs are also in the [topology catalog](benchmarks/studies/chart-topologies/README.md).
 
 ## Development

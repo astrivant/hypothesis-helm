@@ -487,3 +487,157 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
         path = published / "studies" / name / "results.json"
         assert json.loads(path.read_text()) == {"study": name}
         assert checksums[str(path.relative_to(published))] == hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+@pytest.mark.parametrize("failure", [None, "verify-topologies.py", "bitnami/finalize.py"])
+def test_refresh_scans_follow_published_diagrams(tmp_path: Path, failure: str | None) -> None:
+    """
+    Run the refresh coordinator with recorded stages and controlled failures.
+
+    Args:
+        tmp_path (Path): Fake completed measurements and stage executables.
+        failure (str | None): Verification stage that must prevent later repository work.
+
+    Returns:
+        None: Diagram publication precedes Bitnami, which precedes Prometheus; failed gates stop the sequence.
+    """
+    from textwrap import dedent
+
+    project = Path(__file__).resolve().parents[3]
+    root = tmp_path / "refresh"
+    (root / "logs").mkdir(parents=True)
+    (root / "finished-epoch.txt").touch()
+    binary = tmp_path / "bin"
+    binary.mkdir()
+    interpreter = binary / "python"
+    interpreter.write_text(
+        f"#!{sys.executable}\n"
+        + dedent(
+            """
+            import os
+            import sys
+            from pathlib import Path
+            source = Path(sys.argv[1])
+            stage = f"{source.parent.name}/{source.name}" if source.name == "finalize.py" else source.name
+            with Path(os.environ["STAGES"]).open("a") as output:
+                output.write(stage + "\\n")
+            sys.exit(3 if stage == os.environ.get("FAIL_STAGE") else 0)
+            """
+        )
+    )
+    interpreter.chmod(0o755)
+    for name in ("run-topologies.sh", "retry-topologies.sh"):
+        (root / name).write_text(f"printf '%s\\n' {name} >>\"$STAGES\"\n")
+    for name in ("bitnami", "prometheus"):
+        directory = tmp_path / name
+        directory.mkdir()
+        (directory / "run.sh").write_text(f"printf '%s\\n' {name} >>\"$STAGES\"\nexit 1\n")
+    (root / "repositories.tsv").write_text("".join(f"{name}\t{tmp_path / name}\n" for name in ("bitnami", "prometheus")))
+    stages = tmp_path / "stages.txt"
+    result = subprocess.run(
+        ["bash", str(project / "benchmarks/refresh/finish-refresh.sh"), str(root)],
+        cwd=tmp_path,
+        env=dict(os.environ, PATH=f"{binary}:{os.environ['PATH']}", STAGES=str(stages), FAIL_STAGE=failure or ""),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    visited = stages.read_text().splitlines()
+    assert (result.returncode == 0) == (failure is None), result.stdout + result.stderr
+    if failure == "verify-topologies.py":
+        assert "publish.py" not in visited and "bitnami" not in visited
+        assert not (root / "diagrams-finished-epoch.txt").exists()
+    else:
+        assert visited.index("verify-topologies.py") < visited.index("publish.py") < visited.index("update-documentation.py")
+        assert visited.index("update-documentation.py") < visited.index("bitnami") < visited.index("bitnami/finalize.py")
+        assert (root / "diagrams-finished-epoch.txt").exists()
+        if failure:
+            assert "prometheus" not in visited
+        else:
+            assert visited.index("bitnami/finalize.py") < visited.index("prometheus") < visited.index("prometheus/finalize.py")
+    assert (root / "all-finished-epoch.txt").exists() == (failure is None)
+
+
+def test_refresh_summaries_replace_numbers_and_preserve_prose(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Refresh marked text twice from changing evidence without depending on old wording.
+
+    Args:
+        tmp_path (Path): Publication workspace with synthetic verified ledgers.
+        monkeypatch (pytest.MonkeyPatch): Isolate CLI arguments, working directory and PDF presentation.
+
+    Returns:
+        None: Counts, budgets, worker settings and links change; unrelated prose and repeatability are preserved.
+    """
+    import gzip
+    import runpy
+
+    project = Path(__file__).resolve().parents[3]
+    script = project / "benchmarks/refresh/update-documentation.py"
+    monkeypatch.chdir(tmp_path)
+    root = tmp_path / "refresh"
+    output = root / "outputs/performance"
+    output.mkdir(parents=True)
+    benchmark = tmp_path / "benchmarks/README.md"
+    benchmark.parent.mkdir()
+    benchmark.write_text("My introduction\n<!-- refresh:performance:start -->old wording<!-- refresh:performance:end -->\nKeep this.")
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        "Keep the examples.\n"
+        + "\n".join(f"<!-- refresh:{name}:start -->arbitrary old prose<!-- refresh:{name}:end -->" for name in ("bitnami", "prometheus"))
+    )
+    performance = {
+        "metadata": {"helm": "v4.3.0"},
+        "points": [
+            {
+                "observation": "progressive-run",
+                "repeat": 0,
+                "pruning": enabled,
+                "completed": 1000 if enabled else 40,
+                "rendered": 20,
+                "time_limit_seconds": 540,
+            }
+            for enabled in (False, True)
+        ],
+    }
+    (output / "results.json").write_text(json.dumps(performance))
+    monkeypatch.setattr(sys, "argv", [str(script), str(root), "--benchmarks-only"])
+    runpy.run_path(str(script), run_name="__main__")
+    assert "1,000 checks" in benchmark.read_text()
+    assert "arbitrary old prose" in readme.read_text()
+    scans = {name: f"docs/reports/{name}-runs/{name}-charts_1234" for name in ("bitnami", "prometheus")}
+    (root / "provenance.json").write_text(json.dumps({"repository_scans": scans}))
+    presented: list[str] = []
+    monkeypatch.setattr("hypothesis_helm.reporting.repository.write_reports", lambda report, stem, **kwargs: presented.append(str(stem)))
+    for directory in scans.values():
+        run = Path(directory)
+        run.mkdir(parents=True)
+        (run / "verification.json").write_text(json.dumps({"all_workers_finished": True, "systemic_execution_failure": False}))
+        report: dict[str, object] = {
+            "charts": [{"attempts": 12}, {"attempts": 15}],
+            "settings": {"filter": True, "workers": 6, "chart_timeout_seconds": 300},
+        }
+        (run / "scan.json.gz").write_bytes(gzip.compress(json.dumps(report).encode()))
+    monkeypatch.setattr(sys, "argv", [str(script), str(root)])
+    runpy.run_path(str(script), run_name="__main__")
+    assert "**2 Bitnami charts**" in readme.read_text() and "**27 test attempts**" in readme.read_text()
+    assert "**6 path workers" in readme.read_text() and "**5-minute budget" in readme.read_text()
+    assert all(f"{directory}/README.md" in readme.read_text() for directory in scans.values())
+    assert len(presented) == 2
+    for directory in scans.values():
+        run = Path(directory)
+        report["charts"] = [{"attempts": 99}]
+        report["settings"] = {"filter": False, "workers": 2, "chart_timeout_seconds": 600}
+        (run / "scan.json.gz").write_bytes(gzip.compress(json.dumps(report).encode()))
+    runpy.run_path(str(script), run_name="__main__")
+    assert "**1 Bitnami chart**" in readme.read_text() and "**99 test attempts**" in readme.read_text()
+    assert "no filtering" in readme.read_text() and "**10-minute budget" in readme.read_text()
+    assert "Keep the examples." in readme.read_text() and "Keep this." in benchmark.read_text()
+    previous = readme.read_text()
+    runpy.run_path(str(script), run_name="__main__")
+    assert readme.read_text() == previous
+    readme.write_text(previous.replace("<!-- refresh:prometheus:end -->", ""))
+    benchmark_before = benchmark.read_text()
+    with pytest.raises(ValueError, match="summary markers"):
+        runpy.run_path(str(script), run_name="__main__")
+    assert benchmark.read_text() == benchmark_before

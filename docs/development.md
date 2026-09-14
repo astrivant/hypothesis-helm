@@ -28,6 +28,20 @@ the checkout environment; avoid Python module-launcher wrappers.
 
 ## Checks
 
+Raw benchmark datasets, compressed artifacts and scan logs are stored with Git LFS.
+After installing Git LFS, download them before running checks or a full refresh:
+
+```sh
+git lfs install --local
+git lfs pull
+```
+
+The patterns are maintained in [`.gitattributes`](../.gitattributes). Add regenerated
+data normally with `git add`; Git stores LFS pointers and the pre-push hook uploads
+the content. Markdown, plots, PDFs and chart schemas remain ordinary Git files.
+LFS tracking does not remove large blobs from earlier commits; that requires a
+separate history migration.
+
 ```sh
 bash scripts/check.sh
 poetry build

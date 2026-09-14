@@ -1,33 +1,3 @@
-{
-  "name": "druid-exporter",
-  "image": {
-    "name": "\"",
-    "tag": "v0.11",
-    "pullPolicy": "IfNotPresent"
-  },
-  "imagePullSecrets": [],
-  "annotations": {},
-  "podAnnotations": {},
-  "extraEnv": [],
-  "druidURL": "http://druid.opstreelabs.in",
-  "logLevel": "info",
-  "logFormat": "json",
-  "exporterPort": 8080,
-  "serviceAccount": {
-    "create": true
-  },
-  "serviceType": "ClusterIP",
-  "serviceMonitor": {
-    "enabled": false,
-    "namespace": "monitoring",
-    "interval": "30s",
-    "scrapeTimeout": "10s",
-    "additionalLabels": {},
-    "targetLabels": []
-  },
-  "securityContext": {},
-  "containerSecurityContext": {},
-  "nodeSelector": {},
-  "tolerations": [],
-  "affinity": {}
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:971a7fa7c3fd144cb38277a64e44c9ba82c8fa28132623a8e2f1eff93d39c243
+size 701

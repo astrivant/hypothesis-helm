@@ -1,35 +1,3 @@
-{
-  "rbac": {
-    "create": true,
-    "pspEnabled": true
-  },
-  "serviceAccount": {
-    "create": true,
-    "name": null
-  },
-  "replicaCount": 1,
-  "image": {
-    "repository": "gesellix/couchdb-prometheus-exporter",
-    "tag": 16,
-    "pullPolicy": ">0"
-  },
-  "service": {
-    "type": "ClusterIP",
-    "port": 9984
-  },
-  "ingress": {
-    "enabled": false,
-    "annotations": {},
-    "path": "/",
-    "hosts": null,
-    "tls": []
-  },
-  "resources": {},
-  "nodeSelector": {},
-  "tolerations": [],
-  "affinity": {},
-  "couchdb": {
-    "uri": "http://couchdb.default.svc:5984",
-    "databases": "_all_dbs"
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4a816f412d5abd0b4fb291a49a876d2c0ef4a488d014753c91f515e7579ae5ca
+size 613
