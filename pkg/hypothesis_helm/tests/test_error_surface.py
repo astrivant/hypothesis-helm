@@ -172,6 +172,8 @@ def test_surface_command_and_plots(tmp_path: Path) -> None:
     if not shutil.which("helm"):
         pytest.skip("Helm is required")
     args = [
+        "--output-size",
+        "2x2",
         "--input-complexity",
         "3",
         "--axes",
@@ -211,3 +213,45 @@ def test_surface_command_and_plots(tmp_path: Path) -> None:
     result["rows"][-1] = result["rows"][0]
     with pytest.raises(AssertionError):
         verify(result)
+
+
+@pytest.mark.parametrize("size", ["11x13", "21x21", "2x2", "5X7"])
+def test_output_grid(size: str) -> None:
+    """
+    Produce unique measured settings with endpoints at the requested dimensions.
+
+    Args:
+        size (str): Supported dimension spelling.
+
+    Returns:
+        None: Assertions verify counts, endpoints and preserved default rates.
+    """
+    from hypothesis_helm.benchmarking.studies.error_surface import RATES, grid_values, output_size
+
+    dimensions = output_size(size)
+    clustering, rates = grid_values(dimensions)
+    assert (len(clustering), len(rates)) == dimensions
+    assert len(set(clustering)) == len(clustering)
+    assert len(set(rates)) == len(rates)
+    assert (clustering[0], clustering[-1], rates[0], rates[-1]) == (0, 1, 0, 100)
+    if dimensions == (11, 13):
+        assert rates == list(RATES)
+
+
+@pytest.mark.parametrize("size", ["11", "11x", "1x13", "0x0", "11x13x2", "axt", "2.5x3"])
+def test_invalid_output_grid(size: str) -> None:
+    """
+    Reject malformed or degenerate grid dimensions before starting measurements.
+
+    Args:
+        size (str): Invalid dimensions.
+
+    Returns:
+        None: Parsing fails with a CLI-compatible error.
+    """
+    import argparse
+
+    from hypothesis_helm.benchmarking.studies.error_surface import output_size
+
+    with pytest.raises(argparse.ArgumentTypeError):
+        output_size(size)

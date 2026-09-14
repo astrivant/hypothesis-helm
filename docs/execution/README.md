@@ -390,7 +390,7 @@ Exact-equivalence pruning remains a separate control. Trimming applies to finite
 permutation plans, including automatic enumeration. It does not apply to per-path
 suites, random whole-chart sampling, or explicit exhaustive mode.
 
-See [computational cost](../aggressive-filtering/README.md#computational-cost) for the shared comparison
+See [computational cost](../adaptive-filtering/README.md#computational-cost) for the shared comparison
 of unfiltered execution, trimming, percentage sampling and both filter presets.
 
 ### Expanding observed failures
@@ -430,7 +430,7 @@ Dry runs report a bound on additional work; the actual count depends on failures
 filters, rounded up to a whole case. It keeps at least 128, or all cases if fewer
 than 128 remain. For example, it keeps 700 of 1,000 cases and all 100 of 100 cases.
 The default is `--sample-random 100`, which disables this reduction. The minimum
-test count does not guarantee how many bugs will be found.<sup>[\[3\]](../aggressive-filtering/README.md#what-determines-the-minimum)</sup>
+test count does not guarantee how many bugs will be found.<sup>[\[3\]](../adaptive-filtering/README.md#what-determines-the-minimum)</sup>
 
 ```sh
 helm hypothesis test ./chart --filter --sample-random 70 --sample-min-cases 128 --seed 2026
@@ -466,12 +466,12 @@ See the [measured sample-size study](../../benchmarks/studies/sampling/README.md
 bugs can be found from a small sample. An error that occurs for only one input
 requires sampling most of the population to obtain a high discovery probability.
 
-### Aggressive preset
+### Adaptive preset
 
-[`--filter-aggressive`](../aggressive-filtering/README.md) combines `--filter` with about 70% retention when measured
+[`--filter-adaptive`](../adaptive-filtering/README.md) combines `--filter` with about 70% retention when measured
 calibration supports it. Each chart receives a fresh complexity and topology analysis before test selection. Case and
 changed-field floors can enlarge the sample. Unknown complexity or unmatched calibration keeps ordinary filtering.
-See the [evidence and test matrix](../aggressive-filtering/TESTS.md).
+See the [evidence and test matrix](../adaptive-filtering/TESTS.md).
 
 ### Parallel exhaustive execution
 

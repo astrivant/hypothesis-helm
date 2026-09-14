@@ -43,6 +43,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
     Returns:
         None: Matrix, PCA figures, CSV and reproducible documentation are written.
     """
+    from hypothesis_helm.benchmarking.reporting.labels import current_labels
+
+    document = mapping(current_labels(document))
+
     references = [mapping(value) for value in sequence(document["references"])]
     rows = [mapping(value) for value in sequence(document["rows"])]
     metadata = mapping(document["metadata"])

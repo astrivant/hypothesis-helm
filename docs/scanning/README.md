@@ -154,7 +154,7 @@ charts. For non-finite charts it restricts generation to known schema, default, 
 template paths where analysis permits. Filtering precedes traversal. Each discovered
 path is scheduled at most once; failed properties retain their reproducing values.
 
-The [`--filter-aggressive` preset](../aggressive-filtering/README.md#recompute-before-visiting-each-chart)
+The [`--filter-adaptive` preset](../adaptive-filtering/README.md#recompute-before-visiting-each-chart)
 recomputes complexity after preparing each usable chart, before selecting its property tests. Earlier audits and
 cached outcomes do not replace this per-visit calculation. Unsupported calibration keeps ordinary filtering.
 

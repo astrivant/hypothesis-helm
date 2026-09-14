@@ -1,21 +1,21 @@
-# Aggressive filtering
+# Adaptive filtering
 
 [Execution](../execution/README.md#percentage-sampling) · [Audit complexity](../inputs/README.md#potential-output-complexity)
 
-`--filter-aggressive` starts with `--filter`, then aims to test about **70% of the
+`--filter-adaptive` starts with `--filter`, then aims to test about **70% of the
 remaining input configurations**. It uses benchmark measurements to decide whether
 that extra reduction is supported for the current chart. When necessary, it keeps
 more tests to meet a measured minimum or preserve examples of different predicted
 outputs. If suitable measurements are unavailable, it keeps the ordinary filtered
 selection.<sup>[\[1\]](#what-determines-the-minimum)</sup>
 
-Recommended workflow: use `--filter-aggressive` on **MRs/PRs**, `--filter` on **main**, and
+Recommended workflow: use `--filter-adaptive` on **MRs/PRs**, `--filter` on **main**, and
 an unfiltered `--exhaustive` search **before tagging**. The pre-tag run must complete its supported
 finite domain; see the [CI workflow](../ci/README.md#recommended-workflow) for commands and coverage requirements.
 
 ```sh
-helm hypothesis test ./charts --filter-aggressive --seed 2026
-helm hypothesis scan https://github.com/example/charts.git --filter-aggressive
+helm hypothesis test ./charts --filter-adaptive --seed 2026
+helm hypothesis scan https://github.com/example/charts.git --filter-adaptive
 ```
 
 Use this preset instead of `--filter` or its individual topology/expansion flags. It also excludes explicit
@@ -114,7 +114,7 @@ and compares those outputs to the injected-defect oracle. It evaluates 100 seeds
 CSV/JSON measurements and a readable matrix. The full refresh includes this study. Use `--plot-only` with its output directory
 to redraw figures without rerendering charts.
 
-`--sampling-calibration path/to/calibration.json` replaces the packaged calibration for an aggressive run.
+`--sampling-calibration path/to/calibration.json` replaces the packaged calibration for an adaptive run.
 A completed study records its source digest and Helm version. Regenerating benchmark evidence does not silently replace the
 packaged runtime policy; changes to that policy should be reviewed alongside the matrix.
 
@@ -144,7 +144,7 @@ The complexity search has its own budget and can return an unknown maximum.<sup>
 | Both trims | Same form as topology trimming; add levels within each region and retain unclassified cases |
 | `--sample-random` | `O(N log N + NV)` for seeded ranking and case identities |
 | `--filter` | `O(NT + N log N + NV)` for symbolic regions, identities and selection |
-| `--filter-aggressive` | `O(A + PD + NT + N log N + NV)` including calibration lookup and changed-field floors |
+| `--filter-adaptive` | `O(A + PD + NT + N log N + NV)` including calibration lookup and changed-field floors |
 
 Exact and nearby lookup both scan the calibration: `O(PD)`. The packaged calibration has 30 profiles. Nearby lookup does not
 enumerate chart values again. The field-floor check can inspect every remaining case, including cases it ultimately omits.
@@ -178,17 +178,17 @@ For unique non-default inputs, the number retained before execution is more prec
 | --- | --- | --- |
 | Random 70% | `min(N, max(128, ceil(0.7N)))` | Default case floor; no additional protected cases or preceding filters |
 | `--filter` | `sum(ceil(n_j / 16))` | Topology depth two, supported groups of sizes `n_j`, no extra trim or failure expansion yet |
-| Aggressive | At least `min(M, max(ceil(0.7M), case_floor, protected_count))` | A matching calibration; `M` is the ordinary filtered count |
+| Adaptive | At least `min(M, max(ceil(0.7M), case_floor, protected_count))` | A matching calibration; `M` is the ordinary filtered count |
 
-Aggressive selection can add further cases to meet its field floor. An unmatched chart retains `M`. Unknown topology cases are
+Adaptive selection can add further cases to meet its field floor. An unmatched chart retains `M`. Unknown topology cases are
 retained in addition to the supported-group sum. Each method also checks the baseline. Timeouts can leave planned cases unexecuted,
 and failing properties can trigger expansion beyond these initial counts.
 
 If there are `R` supported groups, ordinary filtering retains at least `R` cases. It is useful when many inputs share a group;
-when nearly every input has its own group, filtering has little work to remove. Aggressive sampling is useful only if its
+when nearly every input has its own group, filtering has little work to remove. Adaptive sampling is useful only if its
 additional saved execution exceeds the cost of fresh analysis and selection:
 
-`(ordinary_completed - aggressive_completed) × average_test_cost > additional_planning_cost`
+`(ordinary_completed - adaptive_completed) × average_test_cost > additional_planning_cost`
 
 This break-even approximation assumes comparable per-case costs and completed runs. It does not apply directly to censored timings
 or when the selected inputs have materially different render costs.
@@ -200,7 +200,7 @@ establish equivalence or guarantee recall.
 
 Under an ideal uniform sample without replacement, with `B` erroneous inputs among `N` fixed inputs, the probability of missing all
 of them in `k` tests is `C(N-B, k) / C(N, k)`. This is a model for percentage sampling, not a guarantee supplied by a deterministic seed.
-Protected representatives and adaptive field floors make aggressive sampling nonuniform, so that formula cannot be applied to it unchanged.
+Protected representatives and adaptive field floors make adaptive sampling nonuniform, so that formula cannot be applied to it unchanged.
 
 For independent, uniformly chosen Boolean fields, a specified chain of `g` gates is reached with probability `2^-g`.
 Constraints or correlated fields invalidate that calculation. The load fixture has unconstrained Boolean fields; its gate depths

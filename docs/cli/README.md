@@ -157,7 +157,7 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--no-cache] [--jobs JOBS] [--permutations PERMUTATIONS]
                             [--filter] [--fail] [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
-                            [--filter-aggressive]
+                            [--filter-adaptive]
                             [--sampling-calibration SAMPLING_CALIBRATION]
                             [--sample-random PERCENT] [--sample-min-cases N]
                             [--traversal-strategy {random,linear,root-first,leaf-first}]
@@ -207,10 +207,10 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
-  --filter-aggressive   enable --filter and retain 70% subject to measured topology
+  --filter-adaptive     enable --filter and retain 70% subject to measured topology
                         sample floors; unmatched charts keep all filtered cases
   --sampling-calibration SAMPLING_CALIBRATION
-                        override the packaged aggressive-sampling calibration JSON
+                        override the packaged adaptive-sampling calibration JSON
   --sample-random PERCENT
                         retain this percentage after filtering; default: 100
                         (disabled); no bug-recall guarantee
@@ -395,7 +395,7 @@ usage: helm hypothesis test [-h] [--report [PATH]] [--values VALUES]
                             [--exhaustive-threshold EXHAUSTIVE_THRESHOLD]
                             [--exhaustive-group PATH,PATH] [--no-infer-groups]
                             [--max-group-cases MAX_GROUP_CASES] [--seed SEED]
-                            [--filter-aggressive]
+                            [--filter-adaptive]
                             [--sampling-calibration SAMPLING_CALIBRATION]
                             [--sample-random PERCENT] [--sample-min-cases N]
                             [--traversal-strategy {random,linear,root-first,leaf-first}]
@@ -461,10 +461,10 @@ options:
   --max-group-cases MAX_GROUP_CASES
                         bound automatically inferred group domains
   --seed SEED
-  --filter-aggressive   enable --filter and retain 70% subject to measured topology
+  --filter-adaptive     enable --filter and retain 70% subject to measured topology
                         sample floors; unmatched charts keep all filtered cases
   --sampling-calibration SAMPLING_CALIBRATION
-                        override the packaged aggressive-sampling calibration JSON
+                        override the packaged adaptive-sampling calibration JSON
   --sample-random PERCENT
                         retain this percentage after filtering; default: 100
                         (disabled); no bug-recall guarantee

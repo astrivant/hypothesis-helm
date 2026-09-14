@@ -12,7 +12,7 @@ Run repository command examples from the checkout root unless stated otherwise.
 - [Architecture](architecture/README.md): input discovery, test generation, rendering, and validation.
 - [Compiler](compiler/README.md): syntax trees, analysis passes, and diagrams explaining selection decisions.
 - [Execution](execution/README.md): parallelism, sharding, dry runs, and execution budgets.
-- [Aggressive filtering](aggressive-filtering/README.md): how benchmark evidence determines which tests can be sampled and how many to keep.
+- [Adaptive filtering](adaptive-filtering/README.md): how benchmark evidence determines which tests can be sampled and how many to keep.
 - [CI examples](ci/README.md): GitHub Action, CircleCI, and GitLab configuration.
 - [Benchmarking](../benchmarks/README.md): local shards, generated charts, and plots.
 - [Check codes](rules/README.md): built-in checks and per-project opt-outs.

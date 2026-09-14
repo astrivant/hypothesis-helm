@@ -21,6 +21,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
     Returns:
         None: PNG, SVG, CSV and README artifacts reference only observed results.
     """
+    from hypothesis_helm.benchmarking.reporting.labels import current_labels
+
+    document = mapping(current_labels(document))
+
     import matplotlib.pyplot as plt
 
     metadata = mapping(document["metadata"])
@@ -83,7 +87,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     figure.text(
         0.04,
         0.02,
-        "One seeded run per cell. * = execution deadline; F = aggressive sampling fallback. Coverage uses exact fixture outputs.",
+        "One seeded run per cell. * = execution deadline; F = adaptive sampling fallback. Coverage uses exact fixture outputs.",
         fontsize=9,
     )
     figure.tight_layout(rect=(0, 0.05, 1, describe(figure, "strategy-matrix")))

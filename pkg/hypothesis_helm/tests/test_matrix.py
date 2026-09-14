@@ -50,13 +50,13 @@ def test_matrix_strategy_contracts(tmp_path: Path, monkeypatch: pytest.MonkeyPat
         for strategy in STRATEGIES
     }
     assert all(report["status"] == "passed" for report in reports.values())
-    for strategy in ("default", "exact-equivalence", "topology", "combined", "filter", "filter-aggressive"):
+    for strategy in ("default", "exact-equivalence", "topology", "combined", "filter", "filter-adaptive"):
         assert reports[strategy]["observed_outcomes"] == reports[strategy]["possible_outcomes"]
     assert reports["default"]["completed"] == len(truth[0])
     assert int(str(reports["random"]["selected"])) < len(truth[0])
-    assert reports["filter-aggressive"]["sampling_fallback"]
-    assert reports["filter-aggressive"]["selected_sha256"] == reports["filter"]["selected_sha256"]
-    assert reports["filter-aggressive"]["expand_failures"] is True
+    assert reports["filter-adaptive"]["sampling_fallback"]
+    assert reports["filter-adaptive"]["selected_sha256"] == reports["filter"]["selected_sha256"]
+    assert reports["filter-adaptive"]["expand_failures"] is True
     if structure in {"constraints", "control-flow", "boundaries"}:
         assert reports["topology"]["omitted"] == reports["combined"]["omitted"] == 0
     stopped = measure(
@@ -185,7 +185,7 @@ def test_benchmark_preset_matches_native_calibrated_selection(tmp_path: Path) ->
     chart = Chart.load(tmp_path)
     plan = plan_interactions(ValuesModel.from_schema(chart.schema), 2)
     values = [value for value in plan.values if value != chart.defaults]
-    selected, evidence = select(chart, values, "filter-aggressive", 2026)
+    selected, evidence = select(chart, values, "filter-adaptive", 2026)
     native = check_chart(chart, permutations=2, trim_topology=2, expand_failures=True, sampling=Sampling(aggressive=True), random_seed=2026)
     sampling = mapping(evidence["sampling"])
     assert native["status"] == "passed"

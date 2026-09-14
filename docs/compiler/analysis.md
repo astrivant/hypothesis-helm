@@ -109,7 +109,7 @@ many such decisions can enclose a template statement. A source fingerprint binds
 the profile to the analyzed chart. Unknown complexity or changing source bytes
 prevents a supported profile.
 
-The aggressive sampling policy uses this profile to seek applicable benchmark
+The adaptive sampling policy uses this profile to seek applicable benchmark
 calibration. `sampling.py` describes the chart; it does not choose a sample size
 by itself. Unsupported or unmatched profiles retain ordinary filtering instead
-of assuming a bug-discovery rate.<sup>[\[4\]](../aggressive-filtering/README.md)
+of assuming a bug-discovery rate.<sup>[\[4\]](../adaptive-filtering/README.md)

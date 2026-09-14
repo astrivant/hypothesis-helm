@@ -24,7 +24,7 @@ from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
-METHODS = ("baseline", "sample-random", "filter", "filter-aggressive")
+METHODS = ("baseline", "sample-random", "filter", "filter-adaptive")
 
 
 def measure(chart: Chart, method: str, seed: int, limit: float, helm: str) -> tuple[dict[str, object], dict[str, object]]:
@@ -43,13 +43,13 @@ def measure(chart: Chart, method: str, seed: int, limit: float, helm: str) -> tu
     """
     if method not in METHODS:
         raise ValueError(f"unknown filtering method: {method}")
-    filtered = method in {"filter", "filter-aggressive"}
+    filtered = method in {"filter", "filter-adaptive"}
     started = time.perf_counter()
     report = check_chart(
         chart,
         permutations=2,
         random_seed=seed,
-        sampling=Sampling(70 if method == "sample-random" else 100, aggressive=method == "filter-aggressive"),
+        sampling=Sampling(70 if method == "sample-random" else 100, aggressive=method == "filter-adaptive"),
         trim_topology=2 if filtered else 0,
         expand_failures=filtered,
         filter_rejections=filtered,
@@ -117,6 +117,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
     Returns:
         None: Runtime, planning and phase plots accompany a readable numerical table.
     """
+    from hypothesis_helm.benchmarking.reporting.labels import current_labels
+
+    document = mapping(current_labels(document))
+
     from matplotlib import pyplot as plt
 
     rows = [mapping(row) for row in sequence(document["rows"])]
@@ -148,7 +152,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     marker="x",
                     color=colors[method],
                 )
-                if method == "filter-aggressive":
+                if method == "filter-adaptive":
                     fallback = [any(row.get("fallback") for row in batch) for batch in batches]
                     if any(fallback):
                         axis.scatter(
@@ -158,7 +162,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                             facecolors="none",
                             edgecolors=colors[method],
                             s=70,
-                            label="aggressive: fallback",
+                            label="adaptive: fallback",
                         )
             axis.set(title=f"Gate depth {depth}", xlabel="Schema-valid input configurations", ylabel=ylabel)
             axis.set_xscale("log", base=2)
@@ -217,7 +221,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Filtering load test",
         "",
-        "[Theory and conditions](../../../docs/aggressive-filtering/README.md#computational-cost)",
+        "[Theory and conditions](../../../docs/adaptive-filtering/README.md#computational-cost)",
         "",
         "A gate is a template `if` condition. Depth counts nested conditions required to reach the innermost branch.",
         "",
@@ -241,7 +245,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "Planning and analysis are included in total engine time. The execution ceiling does not cap planning.",
         "",
         "`sample-random` retains 70% subject to its normal 128-case floor. `filter` uses topology depth two and failure expansion.",
-        "`filter-aggressive` adds its measured floors; unmatched charts keep ordinary filtering. All methods use the same traversal seed.",
+        "`filter-adaptive` adds its measured floors; unmatched charts keep ordinary filtering. All methods use the same traversal seed.",
         "The chart's injected markers change topology but are not asserted as lint failures in this successful-render load test.",
         "Failure expansion is enabled for both filter presets; workloads with actual failing properties may expand toward the full plan.",
         "",

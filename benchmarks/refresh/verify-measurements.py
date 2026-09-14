@@ -38,7 +38,7 @@ for study in STUDIES:
         expected_rows = {(structure, strategy) for structure in STRUCTURES for strategy in STRATEGIES}
         assert len(rows) == len(expected_rows) and {(row["structure"], row["strategy"]) for row in rows} == expected_rows
     if study == "pca":
-        expected_strategies = {"before", "random", "topology", "combined", "filter", "filter-aggressive"}
+        expected_strategies = {"before", "random", "topology", "combined", "filter", "filter-adaptive"}
         assert {row["structure"] for row in rows} == set(STRUCTURES) and len(rows) == len(STRUCTURES)
         assert all(set(row["strategies"]) == expected_strategies for row in rows)
         assert all(set(row["selected_indices"]) == expected_strategies for row in rows)
@@ -51,7 +51,7 @@ for study in STUDIES:
         expected_rows = {
             (structure, strategy, expanded)
             for structure in structures
-            for strategy in ("before", "random", "topology", "combined", "filter", "filter-aggressive")
+            for strategy in ("before", "random", "topology", "combined", "filter", "filter-adaptive")
             for expanded in (False, True)
         }
         assert len(rows) == len(expected_rows)
@@ -63,7 +63,7 @@ for study in STUDIES:
             for fields in (6, 7, 8, 9)
             for depth in (1, 3, 5)
             for repeat in range(2)
-            for method in ("baseline", "sample-random", "filter", "filter-aggressive")
+            for method in ("baseline", "sample-random", "filter", "filter-adaptive")
         }
         assert len(rows) == len(expected_rows)
         assert {(row["input_fields"], row["gate_depth"], row["repeat"], row["strategy"]) for row in rows} == expected_rows

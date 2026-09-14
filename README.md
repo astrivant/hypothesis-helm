@@ -4,7 +4,8 @@
 
 Test Helm charts with automatically generated `values.yaml` inputs. Built on Python's
 Hypothesis<sup>[\[1\]](https://github.com/HypothesisWorks/hypothesis/)</sup> testing framework, this tool
-generates inputs from declared or inferred types, renders your charts with Helm, and
+generates inputs from declared or inferred types<sup>[\[2\]](docs/inputs/README.md#declared-and-inferred-types)</sup>,
+renders your charts with Helm, and
 checks for failures. When a property-based test fails, Hypothesis simplifies the input
 to a small example you can reproduce. Filtering skips redundant renders, while optional
 sampling techniques reduce the number of inputs tested so you can cover more charts within your
@@ -14,7 +15,7 @@ time budget.
 - Generate a minimal values schema.
 - Choose permutation coverage, with exhaustive testing for small finite spaces.
 - Traverse unique value paths randomly with a reproducible seed, or choose linear, root-first, or leaf-first order.
-- Skip provably equivalent renders or opt into [calibrated sampling](docs/aggressive-filtering/README.md) to reduce test volume.
+- Skip provably equivalent renders or opt into [calibrated sampling](docs/adaptive-filtering/README.md) to reduce test volume.
 - Recognize explicit configuration requirements with `--filter`, test dependent settings together, and report rejections separately.
 - Discover dependency activation controls and exercise child settings with their subchart enabled, including aliases and nested dependencies.
 - Show changed values and manifest fields in failure reports, with verified JSON replay of saved changes.
@@ -26,7 +27,7 @@ Choose coverage for each stage of development:
 
 | When | Recommended mode | Starting CPU / RAM per CI job | Local workers | CI shards |
 | --- | --- | --- | ---: | ---: |
-| MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
+| MR / PR | `--filter-adaptive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
 | Changes on `main` | `--filter` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
 | Before tagging a release | `--exhaustive` | 2 vCPU / 4 GiB | `--jobs 2` | 2 |
 
@@ -34,7 +35,7 @@ These are starting estimates for one chart at a time, not measured minimum requi
 Start with 2 vCPU / 4 GiB and two workers per job, including for large dependency-heavy charts; increase resources after measuring throughput.
 The two-job release allocation totals 4 vCPU / 8 GiB and four workers, with different charts assigned to each job.
 Exhaustive runs use parallel Helm processes; finite interaction execution remains serial. Repository path queues are local to one CI job;
-distributed shards apply to the separate generated-suite workflow.<sup>[\[2\]](docs/ci/resources.md)</sup>
+distributed shards apply to the separate generated-suite workflow.<sup>[\[3\]](docs/ci/resources.md)</sup>
 
 Run the pre-tag check manually on the release commit and review its coverage report before tagging.
 Exhaustive coverage requires a finite domain and a completed run; time-limited runs remain incomplete.
@@ -53,7 +54,7 @@ See the [CI workflow and release-check requirements](docs/ci/README.md#recommend
   - [Test case: Prometheus Community charts](#test-case-prometheus-community-charts)
   - [Development](#development)
   - [License](#license)
-  - [Acknowledgements and citation](#acknowledgements-and-citation)
+  - [Citation](#citation)
 
 ## Install
 
@@ -232,7 +233,7 @@ bash scripts/project-run.sh shfmt -w scripts pkg/hypothesis_helm/integrations
 
 [GNU General Public License v3.0 only](LICENSE).
 
-## Acknowledgements and citation
+## Citation
 
 This project builds on [Hypothesis](https://github.com/HypothesisWorks/hypothesis/),
 the property-based testing framework for Python. Its authors recommend the following

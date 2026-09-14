@@ -2,6 +2,32 @@
 
 [Documentation](../README.md) · [Project](../../README.md)
 
+## Declared and inferred types
+
+**Declared types** are rules the chart author writes in `values.schema.json`, using
+JSON Schema. For example, `"type": "integer"` declares a whole-number setting;
+`"minimum": 1` restricts its allowed values. The schema must describe an object at
+its root. Schema references (`$ref`) must point within the same document.
+
+**Inferred types** are derived from existing values when a declaration is missing.
+For example, `replicaCount: 2` in `values.yaml` provides evidence of an integer,
+but does not establish a minimum, maximum, or list of allowed values. The tool also
+examines template references and supported literal fallbacks. Inference supplies
+test inputs; it does not establish the chart author's intended contract.
+
+| Input | Accepted format | Purpose |
+| --- | --- | --- |
+| `values.schema.json` | JSON Schema written as JSON | Declares types and constraints for chart settings. |
+| `values.yaml` | YAML mapping of setting names to values | Supplies defaults and evidence for type inference. `--values FILE` selects an alternative values file. |
+| `templates/` | Helm's Go templates | Identifies referenced settings and supported literal fallbacks. |
+
+Values can contain strings, booleans, numbers, lists, nested mappings, and nulls.
+A null default alone does not establish a type, and an empty list alone does not
+establish its item type. See [generated suites](../usage.md#inspect-and-rerun-generated-suites)
+for the generated artifacts and their review workflow.
+
+## Inventory values
+
 ```sh
 helm hypothesis audit ./chart --export-minimal-values
 helm hypothesis audit ./chart --export-minimal-values ./review/minimal.yaml
@@ -308,8 +334,8 @@ An upper bound may be too generous to skip much work. If one template reads ever
 varying field, the search may still need to try exponentially many choices. Code
 the compiler cannot interpret is never used as evidence to skip a candidate.
 
-`--filter-aggressive` uses this score together with allowed input choices, nested
+`--filter-adaptive` uses this score together with allowed input choices, nested
 conditions and groups of predicted outputs to choose a minimum number of tests
 and changed fields, based on benchmark measurements. The score alone does not
 determine a suitable sample size. If no suitable measurements are available,
-ordinary filtering still applies, but the extra sampling is disabled.<sup>[\[4\]](../aggressive-filtering/README.md#what-determines-the-minimum)</sup>
+ordinary filtering still applies, but the extra sampling is disabled.<sup>[\[4\]](../adaptive-filtering/README.md#what-determines-the-minimum)</sup>

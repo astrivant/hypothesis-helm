@@ -171,7 +171,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
             sampling=Sampling(
                 getattr(args, "sample_random", 100),
                 getattr(args, "sample_min_cases", 128),
-                getattr(args, "filter_aggressive", False),
+                getattr(args, "filter_adaptive", False),
                 str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
             ),
             release=getattr(args, "release", "hypothesis"),
@@ -194,7 +194,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
         sampling=Sampling(
             getattr(args, "sample_random", 100),
             getattr(args, "sample_min_cases", 128),
-            getattr(args, "filter_aggressive", False),
+            getattr(args, "filter_adaptive", False),
             str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
         ),
         helm=args.helm,
@@ -538,7 +538,7 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
             "sampling": {
                 "percent": getattr(args, "sample_random", 100),
                 "minimum": getattr(args, "sample_min_cases", 128),
-                "aggressive": getattr(args, "filter_aggressive", False),
+                "aggressive": getattr(args, "filter_adaptive", False),
             },
             "build_dependencies": args.build_dependencies,
             "values": str(args.values),

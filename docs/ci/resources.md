@@ -60,7 +60,7 @@ tightening its allocation. No CPU or memory optimum has been measured for these 
 Start large dependency-heavy charts with the same two workers on 2 vCPU / 4 GiB,
 then adjust using their discovered queue and measured throughput.
 Path count alone cannot predict render cost, shrinking work or the size of a finite
-permutation space. `--filter-aggressive` also falls back to ordinary filtering when
+permutation space. `--filter-adaptive` also falls back to ordinary filtering when
 its calibration does not cover the chart, including the current path-property mode.
 
 Runner labels may provide more resources than these allocations. Check the provider's

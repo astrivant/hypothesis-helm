@@ -65,7 +65,7 @@ if not args.benchmarks_only:
         report = json.loads(gzip.decompress((run / "scan.json.gz").read_bytes()))
         settings = report["settings"]
         attempts = sum(chart.get("attempts", 0) for chart in report["charts"])
-        policy = "`--filter-aggressive`" if settings.get("filter_aggressive") else "`--filter`" if settings["filter"] else "no filtering"
+        policy = "`--filter-adaptive`" if settings.get("filter_adaptive") else "`--filter`" if settings["filter"] else "no filtering"
         summary = (
             f"We scanned **{len(report['charts']):,} {title} {'chart' if len(report['charts']) == 1 else 'charts'}**, "
             f"recording **{attempts:,} test attempts**\n"

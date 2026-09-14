@@ -12,7 +12,7 @@ Use progressively broader coverage as changes approach a release:
 
 | When | Recommended mode | Starting CPU / RAM per CI job | Local workers | CI shards |
 | --- | --- | --- | ---: | ---: |
-| MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
+| MR / PR | `--filter-adaptive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
 | Changes on `main` | `--filter` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
 | Before tagging a release | `--exhaustive` | 2 vCPU / 4 GiB | `--jobs 2` | 2 |
 
@@ -27,7 +27,7 @@ After installing the plugin, use these commands in the corresponding CI jobs:
 
 ```sh
 # Merge request / pull request
-helm hypothesis test ./chart --filter-aggressive --jobs 2 --chart-timeout 3m --shard none
+helm hypothesis test ./chart --filter-adaptive --jobs 2 --chart-timeout 3m --shard none
 
 # Main branch
 helm hypothesis test ./chart --filter --jobs 2 --chart-timeout 5m --shard none
@@ -36,9 +36,9 @@ helm hypothesis test ./chart --filter --jobs 2 --chart-timeout 5m --shard none
 helm hypothesis test ./chart --exhaustive --jobs 2 --shard none
 ```
 
-Aggressive sampling falls back to ordinary filtering when the chart has no matching
+Adaptive sampling falls back to ordinary filtering when the chart has no matching
 calibration. Neither filtered mode establishes exhaustive coverage. See the
-[aggressive filtering guide](../aggressive-filtering/README.md) for the selection policy.
+[adaptive filtering guide](../adaptive-filtering/README.md) for the selection policy.
 
 ## Recommended release check
 

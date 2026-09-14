@@ -99,7 +99,7 @@ hypothesis-helm-benchmark generate \
 
 The [calibration study](studies/calibration-variation/README.md) compares 30 generated chart variants across 100 seeds each.
 Its [matrix and graphs](studies/calibration-variation/MATRIX.md) show retained cases, known-bug discovery and nearby-profile fallback.
-The [test matrix](../docs/aggressive-filtering/TESTS.md) separates deterministic selector properties from empirical results.
+The [test matrix](../docs/adaptive-filtering/TESTS.md) separates deterministic selector properties from empirical results.
 
 ```sh
 hypothesis-helm-benchmark calibration --output benchmarks/runs/calibration --time-limit 9m
@@ -107,9 +107,9 @@ hypothesis-helm-benchmark calibration --output benchmarks/runs/calibration --tim
 
 ### Filtering runtime
 
-The [filtering load test](studies/filtering/README.md) compares an unfiltered baseline, 70% random sampling, ordinary filtering and aggressive filtering.
+The [filtering load test](studies/filtering/README.md) compares an unfiltered baseline, 70% random sampling, ordinary filtering and adaptive filtering.
 It varies the finite input-space size and gate depth, using paired seeds and real Helm execution. Graphs separate planning from test execution;
-time-limited observations retain their unfinished counts. The [theoretical comparison](../docs/aggressive-filtering/README.md#conditions-behind-the-comparison)
+time-limited observations retain their unfinished counts. The [theoretical comparison](../docs/adaptive-filtering/README.md#conditions-behind-the-comparison)
 states the conditions under which each bound and expected saving applies.
 
 ```sh
@@ -129,9 +129,29 @@ The full refresh includes these sweeps, paired seeds, heatmaps, and numerical ta
 Templates stay fixed within each error-rate sweep; seeded input-aware assertions determine which rendered results fail.
 This lets us measure expansion without also changing the template's branches.
 The nine-minute ceiling applies to each method's execution, not the entire study.
-The default sweep schedules 3,264 measurements. Use `--axes clustering` for just the failure-placement comparison.
+The failure-placement surface measures **11 clustering settings × 13 error rates** (143 cells per method and seed).
+Clustering runs from 0 to 1 in steps of 0.1; error rates run from 0% to 100% in steps of 10%, plus 1% and 5%
+to retain detail where failures are rare. Figure dimensions grow with the measured grid so cell labels remain readable.
+The full default sweep schedules 7,800 measurements. Use `--axes clustering` for just the failure-placement comparison
+(3,432 measurements). Existing results keep their measured settings; `--plot-only` cannot add observations.
+
+Use `--output-size COLUMNSxROWS` to choose the measured failure-placement grid (default `11x13`):
+
+```bash
+hypothesis-helm-benchmark error-surface --axes clustering --output-size 11x13 --time-limit 9m --output "benchmarks/runs/error-surface-$(date +%s)"
+```
+
+Columns span clustering 0 to 1 evenly. Rows span error rates 0% to 100% evenly, except that 13 rows retain
+the established 0%, 1%, 5%, 10%, 20%, …, 100% settings. Both dimensions must be at least 2.
+Explicit `--clustering` or `--error-rates` lists override the corresponding dimension.
+This controls measured settings, not image pixels; other structural axes keep their own depth/redundancy settings.
+With eight methods and three seeds, the clustering sweep runs `columns × rows × 24` measurements.
 
 [Results and interpretation](studies/error-surface/README.md)
+
+[Fitted response surfaces](studies/error-surface/quadratic-fits.md) place quadratic predictions beside
+the collected measurements and their residuals. The [model guide](../docs/benchmarking/response-surface.md)
+defines the six coefficients and explains where the approximation can fail.
 
 ![Error rate and failure clustering](studies/error-surface/clustering-error-recall.png)
 
@@ -417,7 +437,7 @@ error is assigned to unordered topology outcomes.
 The matrix uses fully enumerable fixtures to measure exact outcome coverage,
 with a nine-minute execution ceiling for each independent run.
 The structural, stress, PCA, expansion and nesting comparisons include `--filter`
-and `--filter-aggressive`. They use the production selectors, refresh complexity for
+and `--filter-adaptive`. They use the production selectors, refresh complexity for
 each aggressive selection, and report calibration matches or conservative fallback.
 Both presets enable failure expansion; paired expansion-off columns isolate its effect.
 

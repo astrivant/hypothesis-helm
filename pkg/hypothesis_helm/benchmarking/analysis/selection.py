@@ -10,8 +10,8 @@ from hypothesis_helm.compiler.passes.sampling import profile
 from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.schemas.contracts import mapping
 
-PRESETS = ("filter", "filter-aggressive")
-LABELS = {"filter": "--filter", "filter-aggressive": "--filter-aggressive"}
+PRESETS = ("filter", "filter-adaptive")
+LABELS = {"filter": "--filter", "filter-adaptive": "--filter-adaptive"}
 
 
 def select(
@@ -37,7 +37,7 @@ def select(
     """
     if strategy not in PRESETS:
         raise ValueError(f"unknown filter preset: {strategy}")
-    aggressive = strategy == "filter-aggressive"
+    aggressive = strategy == "filter-adaptive"
     options = PlanningOptions(
         random_seed=seed,
         permutations=strength,
@@ -82,12 +82,12 @@ def explanation(rows: list[dict[str, object]]) -> list[str]:
     Returns:
         list[str]: Markdown lines describing actual non-default sampling counts and fallback reasons.
     """
-    measured = [row for row in rows if row.get("strategy") == "filter-aggressive"]
+    measured = [row for row in rows if row.get("strategy") == "filter-adaptive"]
     if not measured:
         return []
     lines = [
         "",
-        "`--filter` and `--filter-aggressive` use topology level 2 and enable failure expansion. "
+        "`--filter` and `--filter-adaptive` use topology level 2 and enable failure expansion. "
         "Aggressive sampling recomputes chart complexity, protects structural regions and applies "
         "the packaged calibration. An unmatched or unsupported chart keeps the ordinary filtered selection; "
         "70% retention is not forced. Expansion-off columns are controlled ablations of these presets.",

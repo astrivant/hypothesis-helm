@@ -39,6 +39,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
     Returns:
         None: Figures and documentation distinguish failure classes from repeated failing inputs.
     """
+    from hypothesis_helm.benchmarking.reporting.labels import current_labels
+
+    document = mapping(current_labels(document))
+
     rows = [mapping(row) for row in sequence(document["rows"])]
     references = [mapping(row) for row in sequence(document["references"])]
     if any(row["status"] != "complete" for row in [*rows, *references]):

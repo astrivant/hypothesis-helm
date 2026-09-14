@@ -67,14 +67,14 @@ class FilterAction(argparse.Action):
         Returns:
             None: Store the option after checking preset exclusivity.
         """
-        if self.dest in {"filter", "filter_aggressive"}:
+        if self.dest in {"filter", "filter_adaptive"}:
             if getattr(namespace, "individual_filter", None):
                 parser.error(f"{option_string} cannot be combined with individual filtering options")
-            other = "filter_aggressive" if self.dest == "filter" else "filter"
+            other = "filter_adaptive" if self.dest == "filter" else "filter"
             if getattr(namespace, other, False):
-                parser.error("--filter and --filter-aggressive cannot be combined")
+                parser.error("--filter and --filter-adaptive cannot be combined")
         else:
-            if getattr(namespace, "filter", False) or getattr(namespace, "filter_aggressive", False):
+            if getattr(namespace, "filter", False) or getattr(namespace, "filter_adaptive", False):
                 parser.error(f"{option_string} cannot be combined with a filter preset")
             namespace.individual_filter = option_string
         setattr(namespace, self.dest, True if self.nargs == 0 else values)
@@ -323,13 +323,13 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     test.add_argument("--seed", type=int, default=0)
     for target in (test, repository):
         target.add_argument(
-            "--filter-aggressive",
+            "--filter-adaptive",
             action=FilterAction,
             nargs=0,
             default=False,
             help="enable --filter and retain 70%% subject to measured topology sample floors; unmatched charts keep all filtered cases",
         )
-        target.add_argument("--sampling-calibration", type=Path, help="override the packaged aggressive-sampling calibration JSON")
+        target.add_argument("--sampling-calibration", type=Path, help="override the packaged adaptive-sampling calibration JSON")
     for testing in (run, test, repository):
         testing.add_argument(
             "--sample-random",
@@ -527,17 +527,17 @@ def main(argv: list[str] | None = None) -> int:
     """
     parser = argument_parser()
     args = parser.parse_args(argv)
-    if getattr(args, "sampling_calibration", None) is not None and not args.filter_aggressive:
-        parser.error("--sampling-calibration requires --filter-aggressive")
-    if getattr(args, "filter_aggressive", False):
+    if getattr(args, "sampling_calibration", None) is not None and not args.filter_adaptive:
+        parser.error("--sampling-calibration requires --filter-adaptive")
+    if getattr(args, "filter_adaptive", False):
         if args.sample_random != 100 or args.sample_min_cases != 128:
-            parser.error("--filter-aggressive determines the percentage and sample floor; omit manual sampling options")
+            parser.error("--filter-adaptive determines the percentage and sample floor; omit manual sampling options")
         args.filter = True
     if hasattr(args, "sample_random"):
         Sampling(
             args.sample_random,
             args.sample_min_cases,
-            getattr(args, "filter_aggressive", False),
+            getattr(args, "filter_adaptive", False),
             str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
         )
     logger = logging.getLogger("hypothesis_helm")
@@ -769,7 +769,7 @@ def main(argv: list[str] | None = None) -> int:
                     sampling=Sampling(
                         args.sample_random,
                         args.sample_min_cases,
-                        getattr(args, "filter_aggressive", False),
+                        getattr(args, "filter_adaptive", False),
                         str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
                     ),
                     match=args.match,
@@ -792,7 +792,7 @@ def main(argv: list[str] | None = None) -> int:
                 sampling=Sampling(
                     args.sample_random,
                     args.sample_min_cases,
-                    getattr(args, "filter_aggressive", False),
+                    getattr(args, "filter_adaptive", False),
                     str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
                 ),
                 match=args.match,
@@ -844,7 +844,7 @@ def main(argv: list[str] | None = None) -> int:
                 sampling=Sampling(
                     args.sample_random,
                     args.sample_min_cases,
-                    getattr(args, "filter_aggressive", False),
+                    getattr(args, "filter_adaptive", False),
                     str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
                 ),
                 match=args.match,
@@ -874,7 +874,7 @@ def main(argv: list[str] | None = None) -> int:
                 sampling=Sampling(
                     args.sample_random,
                     args.sample_min_cases,
-                    getattr(args, "filter_aggressive", False),
+                    getattr(args, "filter_adaptive", False),
                     str(args.sampling_calibration) if getattr(args, "sampling_calibration", None) else None,
                 ),
                 timeout=args.timeout,

@@ -70,7 +70,7 @@ def test_calibrated_selection_runs_real_helm(tmp_path: Path) -> None:
             [
                 "test",
                 str(chart.path),
-                "--filter-aggressive",
+                "--filter-adaptive",
                 "--sampling-calibration",
                 str(calibration),
                 "--artifact-dir",
@@ -214,7 +214,7 @@ def test_field_floor_adds_cases_in_seeded_order() -> None:
 
 
 @pytest.mark.parametrize("command", ["test", "scan"])
-@pytest.mark.parametrize("options", [["--filter", "--filter-aggressive"], ["--filter-aggressive", "--filter"]])
+@pytest.mark.parametrize("options", [["--filter", "--filter-adaptive"], ["--filter-adaptive", "--filter"]])
 def test_presets_are_exclusive(command: str, options: list[str]) -> None:
     """
     Reject conflicting presets regardless of argument order or discovery source.
@@ -228,6 +228,25 @@ def test_presets_are_exclusive(command: str, options: list[str]) -> None:
     """
     with pytest.raises(SystemExit):
         argument_parser().parse_args([command, ".", *options])
+
+
+@pytest.mark.parametrize("command", ["test", "scan"])
+def test_adaptive_flag_replaces_old_name(command: str) -> None:
+    """
+    Accept the renamed preset and reject the removed flag without an alias.
+
+    Args:
+        command (str): Local testing or remote scanning.
+
+    Returns:
+        None: Parser assertions verify the breaking rename.
+    """
+    parser = argument_parser()
+    args = parser.parse_args([command, ".", "--filter-adaptive"])
+    assert args.filter_adaptive is True
+    with pytest.raises(SystemExit) as error:
+        parser.parse_args([command, ".", "--filter-aggressive"])
+    assert error.value.code == 2
 
 
 def test_nearby_selection_uses_maximum_neighbor_floors(tmp_path: Path) -> None:
@@ -278,7 +297,7 @@ def test_empty_population_remains_empty() -> None:
     assert report["field_floor_met"] is False
 
 
-@pytest.mark.parametrize("options", [["--sampling-calibration", "custom.json"], ["--filter-aggressive", "--sample-random", "50"]])
+@pytest.mark.parametrize("options", [["--sampling-calibration", "custom.json"], ["--filter-adaptive", "--sample-random", "50"]])
 def test_invalid_calibration_options_are_cli_errors(options: list[str]) -> None:
     """
     Explain conflicting calibration options without an implementation traceback.
@@ -292,3 +311,17 @@ def test_invalid_calibration_options_are_cli_errors(options: list[str]) -> None:
     with pytest.raises(SystemExit) as error:
         main(["test", ".", *options])
     assert error.value.code == 2
+
+
+def test_archived_benchmark_labels_preserve_measurements() -> None:
+    """
+    Relabel historical display data without modifying its recorded source.
+
+    Returns:
+        None: Assertions verify nested labels, unchanged measurements and immutable source data.
+    """
+    from hypothesis_helm.benchmarking.reporting.labels import current_labels
+
+    original = {"methods": ["filter-aggressive"], "strategies": {"filter-aggressive": {"seconds": 2.5}}}
+    assert current_labels(original) == {"methods": ["filter-adaptive"], "strategies": {"filter-adaptive": {"seconds": 2.5}}}
+    assert original == {"methods": ["filter-aggressive"], "strategies": {"filter-aggressive": {"seconds": 2.5}}}

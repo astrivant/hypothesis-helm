@@ -26,9 +26,45 @@ from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
 
 METHODS = (*STRATEGIES, "sample-random")
-RATES = (0, 1, 5, 10, 25, 50, 75, 100)
+RATES = (0, 1, 5, *range(10, 101, 10))
 AXES = ("depth", "redundancy", "clustering")
 METRICS = ("total_seconds", "render_invocations", "error_recall", "additional_executed")
+
+
+def output_size(value: str) -> tuple[int, int]:
+    """
+    Parse measured clustering columns and error-rate rows.
+
+    Args:
+        value (str): Grid dimensions written as columns x rows.
+
+    Returns:
+        tuple[int, int]: Two dimensions, each at least two to include both endpoints.
+    """
+    try:
+        columns, rows = (int(part) for part in value.lower().split("x"))
+        if columns < 2 or rows < 2:
+            raise ValueError
+    except ValueError as error:
+        raise argparse.ArgumentTypeError("use COLUMNSxROWS, with both dimensions at least 2 (for example 11x13)") from error
+    return columns, rows
+
+
+def grid_values(size: tuple[int, int]) -> tuple[list[float], list[float]]:
+    """
+    Generate endpoint-inclusive factor settings for the requested measurement grid.
+
+    Args:
+        size (tuple[int, int]): Validated clustering columns and error-rate rows.
+
+    Returns:
+        tuple[list[float], list[float]]: Clustering settings and error percentages;
+            thirteen rows retain the established rare-error settings.
+    """
+    columns, rows = size
+    return [index / (columns - 1) for index in range(columns)], (
+        [float(rate) for rate in RATES] if rows == len(RATES) else [100 * index / (rows - 1) for index in range(rows)]
+    )
 
 
 def save(output: Path, document: dict[str, object]) -> None:
@@ -143,11 +179,18 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/error-surface"))
     parser.add_argument("--input-complexity", type=int, default=8)
-    parser.add_argument("--error-rates", type=float, nargs="+", default=list(RATES))
+    parser.add_argument(
+        "--output-size",
+        type=output_size,
+        default=(11, 13),
+        metavar="COLUMNSxROWS",
+        help="measured clustering columns x error-rate rows; default: 11x13; explicit axis lists override their dimension",
+    )
+    parser.add_argument("--error-rates", type=float, nargs="+", help="explicit error percentages; overrides the output-size row count")
     parser.add_argument("--axes", choices=AXES, nargs="+", default=list(AXES))
     parser.add_argument("--depths", type=int, nargs="+", default=list(range(6)))
     parser.add_argument("--redundant-inputs", type=int, nargs="+", help="unused Boolean fields; defaults to 0 through fields minus one")
-    parser.add_argument("--clustering", type=float, nargs="+", default=[0, 0.5, 1])
+    parser.add_argument("--clustering", type=float, nargs="+", help="explicit clustering settings; overrides the output-size column count")
     parser.add_argument("--methods", choices=METHODS, nargs="+", default=list(METHODS))
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--seed", type=int, default=2026)
@@ -161,6 +204,11 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
+    grid_clustering, grid_rates = grid_values(args.output_size)
+    if args.clustering is None:
+        args.clustering = grid_clustering
+    if args.error_rates is None:
+        args.error_rates = grid_rates
     if not 2 <= args.input_complexity <= 10 or not 1 <= args.permutations <= args.input_complexity:
         parser.error("require 2..10 fields and a positive interaction strength no larger than the field count")
     redundant = args.redundant_inputs if args.redundant_inputs is not None else list(range(args.input_complexity))

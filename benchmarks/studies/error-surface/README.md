@@ -58,3 +58,5 @@ The CSV includes sample SD and observed ranges. These describe seed variation, n
 [Compare clustering at a fixed error count](clustering-counts.md)
 
 ![Measured clustering, independent of filter selection](clustering-observed.png)
+
+[Fitted response surfaces: measurements, quadratic predictions and residuals](quadratic-fits.md)

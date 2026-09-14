@@ -1,6 +1,6 @@
 # CI integration
 
-Use `--filter-aggressive` on MRs/PRs, `--filter` on `main`, and an unfiltered exhaustive search before tagging.
+Use `--filter-adaptive` on MRs/PRs, `--filter` on `main`, and an unfiltered exhaustive search before tagging.
 See the [recommended workflow](ci/README.md#recommended-workflow) for commands and release coverage requirements.
 
 For cached property tests, use `--rerun all` to refresh results for every selected test.

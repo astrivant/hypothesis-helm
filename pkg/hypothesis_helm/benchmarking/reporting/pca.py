@@ -43,6 +43,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
     Returns:
         None: Every panel uses the original coordinates and fixed per-category axes.
     """
+    from hypothesis_helm.benchmarking.reporting.labels import current_labels
+
+    document = mapping(current_labels(document))
+
     rows = [mapping(row) for row in sequence(document["rows"])]
     if not rows or any(row["status"] != "complete" for row in rows):
         raise ValueError("PCA comparison requires complete reference populations")
@@ -255,6 +259,6 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
     ]
     lines.extend(explanation(csv_rows))
-    if "filter-aggressive" in labels:
+    if "filter-adaptive" in labels:
         lines += ["Preset PCA columns include failure expansion, replaying each visited input's actual Helm result.", ""]
     (output / "README.md").write_text("\n".join(lines))

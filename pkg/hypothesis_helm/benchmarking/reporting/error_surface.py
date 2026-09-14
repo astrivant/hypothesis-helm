@@ -25,6 +25,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
     Returns:
         None: PNG/SVG heatmaps and CSV summaries accompany a concise study guide.
     """
+    from hypothesis_helm.benchmarking.reporting.labels import current_labels
+
+    document = mapping(current_labels(document))
+
     import numpy as np
     from matplotlib import pyplot as plt
 
@@ -73,8 +77,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "render caches; OS caches can be warm.",
         "Method order is shuffled within every paired comparison. Total time includes planning and execution.",
         "Chart generation, oracle-population construction, and independent reference enumeration are excluded from method timings.",
-        "`filter` and `filter-aggressive` expand failed symbolic regions. The other methods retain their "
-        "usual expansion-disabled behavior.",
+        "`filter` and `filter-adaptive` expand failed symbolic regions. The other methods retain their usual expansion-disabled behavior.",
         "`sample-random` uses 70% with its 128-case floor. Aggressive sampling falls back when calibration "
         "cannot support it; the CSV records why.",
         "",
@@ -97,7 +100,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         f"| topology | `--trim-topology {metadata['trim_level']}` |",
         f"| combined | Both trim methods at {metadata['trim_level']} |",
         "| filter | `--filter` |",
-        "| filter-aggressive | `--filter-aggressive`, including its calibration fallback |",
+        "| filter-adaptive | `--filter-adaptive`, including its calibration fallback |",
         "| sample-random | `--sample-random 70`, with the default minimum |",
         "",
     ]
@@ -113,7 +116,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
             maximum = 1.0 if metric == "error_recall" else max(numeric, default=1.0) or 1.0
             columns = min(4, len(methods))
             figure, axes = plt.subplots(
-                math.ceil(len(methods) / columns), columns, figsize=(5 * columns, 3.8 * math.ceil(len(methods) / columns)), squeeze=False
+                math.ceil(len(methods) / columns),
+                columns,
+                figsize=(max(5, len(rates) * 0.65) * columns, max(3.8, len(values) * 0.5) * math.ceil(len(methods) / columns)),
+                squeeze=False,
             )
             for panel, method in zip(axes.flat, methods, strict=False):
                 matrix = np.full((len(values), len(rates)), np.nan)
@@ -239,4 +245,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
         writer = csv.DictWriter(stream, fieldnames=list(summary[0]) if summary else ["axis"], lineterminator="\n")
         writer.writeheader()
         writer.writerows(summary)
+    from hypothesis_helm.benchmarking.reporting.response_surface import plot as plot_quadratic
+
+    plot_quadratic(output, document)
+    lines.extend(["[Fitted response surfaces: measurements, quadratic predictions and residuals](quadratic-fits.md)", ""])
     (output / "README.md").write_text("\n".join(lines))

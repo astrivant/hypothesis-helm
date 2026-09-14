@@ -224,7 +224,7 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                 {"structure": structure, "strategy": strategy, "status": "passed"} for structure in STRUCTURES for strategy in STRATEGIES
             ]
         elif study == "pca":
-            policies = ("before", "random", "topology", "combined", "filter", "filter-aggressive")
+            policies = ("before", "random", "topology", "combined", "filter", "filter-adaptive")
             rows = [
                 {
                     "structure": structure,
@@ -243,14 +243,14 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
             rows = [
                 {"structure": structure, "strategy": strategy, "expand_failures": expanded, "status": "complete"}
                 for structure in structures
-                for strategy in ("before", "random", "topology", "combined", "filter", "filter-aggressive")
+                for strategy in ("before", "random", "topology", "combined", "filter", "filter-adaptive")
                 for expanded in (False, True)
             ]
         if damage == f"{study}-missing-aggressive":
             if study == "pca":
-                mapping(rows[0]["strategies"]).pop("filter-aggressive")
+                mapping(rows[0]["strategies"]).pop("filter-adaptive")
             else:
-                rows = [row for row in rows if row.get("strategy") != "filter-aggressive"]
+                rows = [row for row in rows if row.get("strategy") != "filter-adaptive"]
         document["rows"] = rows
         if study == "sampling":
             document.update(
@@ -313,7 +313,7 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                 for fields in (6, 7, 8, 9)
                 for depth in (1, 3, 5)
                 for repeat in range(2)
-                for method in ("baseline", "sample-random", "filter", "filter-aggressive")
+                for method in ("baseline", "sample-random", "filter", "filter-adaptive")
             ]
             if damage == "filtering-count":
                 load_rows.pop()

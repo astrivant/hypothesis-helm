@@ -29,7 +29,7 @@ bash scripts/project-run.sh hypothesis-helm-benchmark topology --graph "$output/
 bash scripts/project-run.sh hypothesis-helm test "$output/chart" --permutations 2 \
   --sample-random 70 --sample-min-cases 32 --dry-run --artifact-dir "$output/sampled-plan" >"$output/sampled-plan.json"
 bash scripts/project-run.sh hypothesis-helm test "$output/chart" --permutations 2 \
-  --filter-aggressive --dry-run --artifact-dir "$output/aggressive-plan" >"$output/aggressive-plan.json"
+  --filter-adaptive --dry-run --artifact-dir "$output/aggressive-plan" >"$output/aggressive-plan.json"
 test -s "$output/stress/results.json"
 test -s "$output/stress/results.csv"
 test -s "$output/stress/topology-stress.png"
