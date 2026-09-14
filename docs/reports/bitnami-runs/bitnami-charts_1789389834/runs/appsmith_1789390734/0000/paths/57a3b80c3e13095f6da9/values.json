@@ -1,0 +1,600 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "clusterDomain": "cluster.local",
+  "extraDeploy": [],
+  "usePasswordFiles": true,
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/appsmith",
+    "tag": "1.85.0-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": [],
+    "debug": false
+  },
+  "client": {
+    "replicaCount": 1,
+    "containerPorts": {
+      "http": 8080,
+      "https": 8443
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "nano",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "readOnlyRootFilesystem": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "command": [],
+    "args": [],
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "service": {
+      "type": "LoadBalancer",
+      "ports": {
+        "http": 80
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "hostname": "appsmith.local",
+      "ingressClassName": "",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    }
+  },
+  "backend": {
+    "replicaCount": 1,
+    "adminUser": "user",
+    "adminEmail": "user@example.com",
+    "adminPassword": "",
+    "encryptionSalt": "",
+    "encryptionPassword": "",
+    "existingSecret": "",
+    "existingSecretPasswordKey": "admin-password",
+    "existingSecretEncryptionSaltKey": "encryption-salt",
+    "existingSecretEncryptionPasswordKey": "encryption-password",
+    "containerPorts": {
+      "http": 8083
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "large",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "readOnlyRootFilesystem": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "command": [],
+    "args": [],
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "redirectAmbassador": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/haproxy",
+        "tag": "3.2.4-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "readOnlyRootFilesystem": true,
+        "privileged": false,
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "lifecycleHooks": {},
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "extraVolumeMounts": [],
+      "containerPorts": {
+        "http": 8080
+      },
+      "livenessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 6,
+        "successThreshold": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 6,
+        "successThreshold": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "initialDelaySeconds": 30,
+        "periodSeconds": 10,
+        "timeoutSeconds": 5,
+        "failureThreshold": 6,
+        "successThreshold": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "http": 80
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "persistence": {
+      "enabled": true,
+      "mountPath": "/bitnami/appsmith",
+      "subPath": "",
+      "gitDataPath": "",
+      "storageClass": "",
+      "annotations": {},
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "existingClaim": "",
+      "selector": {},
+      "dataSource": {}
+    },
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    }
+  },
+  "rts": {
+    "replicaCount": 1,
+    "containerPorts": {
+      "http": 8080
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 30,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 6,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "nano",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "readOnlyRootFilesystem": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "command": [],
+    "args": [],
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate"
+    },
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "sidecars": [],
+    "initContainers": [],
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "service": {
+      "type": "ClusterIP",
+      "ports": {
+        "http": 80
+      },
+      "nodePorts": {
+        "http": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {}
+    },
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    }
+  },
+  "volumePermissions": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "containerSecurityContext": {
+      "seLinuxOptions": {},
+      "runAsUser": 0
+    }
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "annotations": {},
+    "automountServiceAccountToken": false
+  },
+  "externalDatabase": {
+    "hosts": [],
+    "port": 27017,
+    "username": "root",
+    "database": "appsmith",
+    "password": "",
+    "existingSecret": "",
+    "existingSecretPasswordKey": ""
+  },
+  "externalRedis": {
+    "host": "",
+    "port": 6379,
+    "password": "",
+    "existingSecret": "",
+    "existingSecretPasswordKey": ""
+  },
+  "redis": {
+    "enabled": true,
+    "architecture": "standalone",
+    "existingSecret": "",
+    "master": {
+      "service": {
+        "ports": {
+          "redis": 6379
+        }
+      },
+      "resourcesPreset": "nano",
+      "resources": {}
+    },
+    "auth": {
+      "enabled": true,
+      "password": "",
+      "existingSecret": ""
+    }
+  },
+  "mongodb": {
+    "enabled": true,
+    "architecture": "replicaset",
+    "replicaCount": 2,
+    "auth": {
+      "usernames": [
+        "bn_appsmith"
+      ],
+      "databases": [
+        "bitnami_appsmith"
+      ]
+    },
+    "containerPorts": {
+      "mongodb": 27017
+    },
+    "arbiter": {
+      "enabled": false
+    },
+    "resourcesPreset": "small",
+    "resources": {},
+    "global": {
+      "namespaceOverride": "-",
+      "security": {
+        "allowInsecureImages": false
+      }
+    }
+  }
+}
