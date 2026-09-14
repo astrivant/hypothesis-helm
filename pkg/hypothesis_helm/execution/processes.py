@@ -8,9 +8,12 @@ import subprocess
 import threading
 import time
 from pathlib import Path
+from types import FrameType
 from typing import TextIO
 
 from attrs import define, field
+
+from hypothesis_helm.reporting.budget import TimeLimitReached
 
 
 def _signal_group(child: subprocess.Popen[str], sig: int, *, permission_grace: float = 1.0) -> bool:
@@ -115,6 +118,8 @@ class Processes:
             try:
                 self.stop()
             except BaseException as cleanup_error:
+                if isinstance(error, subprocess.TimeoutExpired) and isinstance(cleanup_error, TimeLimitReached) and not self._children:
+                    raise cleanup_error from error
                 raise BaseExceptionGroup("Process execution and cleanup failed", [error, cleanup_error]) from None
             raise
         result = subprocess.CompletedProcess(command, child.returncode, output, errors)
@@ -182,13 +187,46 @@ class Processes:
         """
         main_thread = threading.current_thread() is threading.main_thread()
         previous = signal.signal(signal.SIGINT, signal.SIG_IGN) if main_thread else None
+        previous_alarm = signal.getsignal(signal.SIGALRM) if main_thread and hasattr(signal, "SIGALRM") else None
+        alarm_pending = False
+        errors: list[BaseException] = []
+
+        def defer_alarm(signum: int, frame: FrameType | None) -> None:
+            """
+            Delay a deadline callback until owned process groups have been joined.
+
+            Args:
+                signum (int): Alarm signal number.
+                frame (FrameType | None): Interrupted cleanup frame.
+
+            Returns:
+                None: The alarm is recorded for delivery after cleanup.
+            """
+            nonlocal alarm_pending
+            alarm_pending = True
+
         try:
+            if callable(previous_alarm):
+                signal.signal(signal.SIGALRM, defer_alarm)
             with self._lock:
                 self._stopping.set()
             with self._shutdown_lock:
                 with self._lock:
                     children = list(self._children)
                 self._reap(children)
+        except BaseException as error:
+            errors.append(error)
         finally:
+            if callable(previous_alarm):
+                signal.signal(signal.SIGALRM, previous_alarm)
             if main_thread and previous is not None:
                 signal.signal(signal.SIGINT, previous)
+        if alarm_pending:
+            try:
+                signal.raise_signal(signal.SIGALRM)
+            except BaseException as error:
+                errors.append(error)
+        if len(errors) == 1:
+            raise errors[0]
+        if errors:
+            raise BaseExceptionGroup("Process cleanup and deferred alarm failed", errors)

@@ -394,6 +394,113 @@ def test_execution_and_cleanup_errors_are_preserved(tmp_path: Path, monkeypatch:
     assert owner._children == {child}
 
 
+@pytest.mark.skipif(not hasattr(signal, "SIGALRM"), reason="POSIX alarm required")
+def test_timeout_alarm_waits_for_real_child_cleanup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Deliver the overall deadline during timeout cleanup without losing the real child.
+
+    Args:
+        tmp_path (Path): Isolated subprocess working directory.
+        monkeypatch (pytest.MonkeyPatch): Force the two deadlines to overlap deterministically.
+
+    Returns:
+        None: The deadline propagates only after the child is joined and handlers are restored.
+    """
+    from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+
+    children: list[subprocess.Popen[str]] = []
+    create = subprocess.Popen
+    signal_group = _signal_group
+    alarm_delivered = False
+
+    def spawn(*args: object, **kwargs: object) -> subprocess.Popen[str]:
+        """
+        Start a real worker and simulate its communication timeout.
+
+        Args:
+            *args (object): Native Popen arguments.
+            **kwargs (object): Native Popen keyword arguments.
+
+        Returns:
+            subprocess.Popen[str]: Registered child whose communicate method times out.
+        """
+        child = cast("subprocess.Popen[str]", create(*args, **kwargs))  # type: ignore[call-overload]
+        children.append(child)
+        monkeypatch.setattr(child, "communicate", Mock(side_effect=subprocess.TimeoutExpired("worker", 0.01)))
+        return child
+
+    def interrupt_cleanup(child: subprocess.Popen[str], sig: int) -> bool:
+        """
+        Inject the deadline while the owner is still releasing a process group.
+
+        Args:
+            child (subprocess.Popen[str]): Real owned worker.
+            sig (int): Cleanup signal or existence probe.
+
+        Returns:
+            bool: Whether the original process group still exists.
+        """
+        nonlocal alarm_delivered
+        if not alarm_delivered:
+            alarm_delivered = True
+            signal.raise_signal(signal.SIGALRM)
+        return signal_group(child, sig)
+
+    monkeypatch.setattr(subprocess, "Popen", spawn)
+    monkeypatch.setattr("hypothesis_helm.execution.processes._signal_group", interrupt_cleanup)
+    previous_alarm, previous_interrupt = signal.getsignal(signal.SIGALRM), signal.getsignal(signal.SIGINT)
+    owner = Processes(interrupt_grace=0.1)
+    with pytest.raises(TimeLimitReached) as failure, execution_timer(30):
+        owner.run([sys.executable, "-c", "import time; time.sleep(30)"], cwd=tmp_path, capture_output=True, timeout=0.01)
+    assert isinstance(failure.value.__cause__, subprocess.TimeoutExpired)
+    assert len(children) == 1 and children[0].returncode is not None
+    assert not owner._children and not signal_group(children[0], 0)
+    assert children[0].stdout is not None and children[0].stdout.closed
+    assert signal.getsignal(signal.SIGALRM) == previous_alarm
+    assert signal.getsignal(signal.SIGINT) == previous_interrupt
+
+
+@pytest.mark.skipif(not hasattr(signal, "SIGALRM"), reason="POSIX alarm required")
+def test_deferred_deadline_preserves_cleanup_failure(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Keep a real cleanup failure visible when the deadline also expires.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Supply a child that cannot be joined and an overlapping alarm.
+
+    Returns:
+        None: Both causes remain visible and unsuccessful ownership is retained.
+    """
+    from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+
+    child = Mock(spec=subprocess.Popen, pid=12345, stdin=None, stdout=None, stderr=None)
+    child.wait.side_effect = OSError("join failed")
+    owner = Processes()
+    owner._children.add(child)
+
+    def gone(child: subprocess.Popen[str], sig: int) -> bool:
+        """
+        Report an exited process group after delivering a cleanup-time alarm.
+
+        Args:
+            child (subprocess.Popen[str]): Owned test worker.
+            sig (int): Group signal number.
+
+        Returns:
+            bool: False to proceed to the failing join.
+        """
+        signal.raise_signal(signal.SIGALRM)
+        return False
+
+    monkeypatch.setattr("hypothesis_helm.execution.processes._signal_group", gone)
+    with pytest.raises(BaseExceptionGroup) as failure, execution_timer(30):
+        owner.stop()
+    assert failure.value.subgroup(OSError) is not None
+    assert failure.value.subgroup(TimeLimitReached) is not None
+    assert owner._children == {child}
+    child.wait.assert_called_once()
+
+
 @pytest.mark.parametrize("cleanup_fails", [False, True])
 def test_scheduler_joins_threads_after_failure(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, cleanup_fails: bool) -> None:
     """

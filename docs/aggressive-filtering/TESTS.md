@@ -43,6 +43,8 @@ Maximum output complexity alone cannot bound the probability of a rare defect.
 | Unmatched structural cases retain ordinary filtering | `test_matrix_strategy_contracts` | All six topology families and seven strategies |
 | PCA expansion uses visited Helm observations and never duplicates a case | `test_pca_presets_expand_only_observed_failures` | Paired correct and failing observations |
 | Time-limited measurements retain unfinished counts | `test_execution_ceiling_is_not_a_completed_timing` | Native execution with a deliberately short deadline |
+| An overlapping execution deadline cannot interrupt child cleanup | `test_timeout_alarm_waits_for_real_child_cleanup` | Real child, injected subprocess timeout and POSIX alarm |
+| A deadline cannot hide a cleanup failure | `test_deferred_deadline_preserves_cleanup_failure` | Failed join retained alongside the deferred deadline |
 | Publication rejects missing presets, duplicated runs and inconsistent timing phases | `test_refresh_requires_complete_stress_matrix` | Damaged structural, PCA, expansion, nesting, stress, calibration and load-test ledgers |
 
 Tests live in [test_aggressive.py](../../pkg/hypothesis_helm/tests/test_aggressive.py) and
