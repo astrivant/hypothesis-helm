@@ -8,7 +8,7 @@ from textwrap import dedent
 
 import pytest
 
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
+from hypothesis_helm.benchmarking.charts.generator import generate
 from hypothesis_helm.charts.runner import Chart, check_chart
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.sampling import Sampling

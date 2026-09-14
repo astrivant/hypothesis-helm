@@ -6,19 +6,53 @@ Use the remote definitions below and change `./chart` to your chart directory.
 The examples track `main`; replace it with a published commit or tag to pin a version.
 The new GitLab and CircleCI URLs become available when these files are published.
 
+## Recommended workflow
+
+Use progressively broader coverage as changes approach a release:
+
+| Stage | Mode | Coverage tradeoff |
+| --- | --- | --- |
+| MR / PR | `--filter-aggressive` | Apply ordinary filtering and calibrated sampling for faster feedback. |
+| `main` | `--filter` | Apply ordinary filtering with failure expansion, without the aggressive sampling. |
+| Before tagging | `--exhaustive` | Enumerate every supported finite configuration, with no trimming or sampling. |
+
+After installing the plugin, use these commands in the corresponding CI jobs:
+
+```sh
+# Merge request / pull request
+helm hypothesis test ./chart --filter-aggressive
+
+# Main branch
+helm hypothesis test ./chart --filter
+
+# Manual pre-tag check, once per chart with a finite values.schema.json
+helm hypothesis test ./chart --exhaustive --shard none
+```
+
+Aggressive sampling falls back to ordinary filtering when the chart has no matching
+calibration. Neither filtered mode establishes exhaustive coverage. See the
+[aggressive filtering guide](../aggressive-filtering/README.md) for the selection policy.
+
 ## Recommended release check
 
-Run this manually on trunk just before tagging a service release. It checks the
-sprint's accumulated changes across the chart's input surface. Use `--rerun all`
-(`rerun: all` in the action) to execute the selected tests and refresh their cache,
-including failures. Review every shard and the final report, then tag that exact
-commit. Coverage and time budgets still apply; a passing run is not exhaustive
-unless the report establishes that coverage.
+Run the exhaustive check manually on `main` just before tagging a service release.
+It checks the accumulated changes on the exact commit you intend to tag. Leave
+filtering, trimming and percentage sampling disabled. Explicit exhaustive mode runs
+one local chart at a time and does not support sharding; use a separate job from the
+sharded examples below.
 
-The examples below use a manual trigger or approval on trunk. GitHub and GitLab
-use the repository's default branch; replace `main` in CircleCI if needed. Keep
-your existing pull-request checks. If tagging is automated, make its job depend
-on successful tests and aggregation; these examples do not create tags.
+The schema must have a supported finite input domain. `--max-cases` bounds enumeration;
+`--time-limit` bounds execution. Increase these budgets to fit the chart, and require
+completed coverage in the report before tagging. An unsupported domain, a failure or
+a timeout does not establish exhaustive coverage. For unbounded domains such as free-form
+strings, use a documented finite test domain and state that coverage is limited to it.
+
+The examples below demonstrate sharded property tests, report aggregation and cache
+retention. Their manual triggers do not make them exhaustive. For these cached property
+checks, `--rerun all` (`rerun: all` in the action) executes the selected tests again and
+refreshes their cache, including failures. The explicit exhaustive command above renders
+its configurations afresh. If tagging is automated, require the exhaustive check to finish
+successfully before tagging the tested commit; these examples do not create tags.
 
 ## GitLab
 

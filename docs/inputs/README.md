@@ -162,7 +162,7 @@ These are graphs of the compiler's available evidence. Potential references and
 baseline observations do not prove exact causal influence; opaque access remains
 explicitly unresolved.
 
-The [topology catalog](../../benchmarks/chart-topologies/README.md) contains rendered
+The [topology catalog](../../benchmarks/studies/chart-topologies/README.md) contains rendered
 graphs for the synthetic fixtures and the Bitnami and Prometheus chart collections.
 
 ## Deterministic type constants

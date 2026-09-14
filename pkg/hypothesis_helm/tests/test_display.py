@@ -9,6 +9,21 @@ import pytest
 from hypothesis_helm.reporting.display import start_progress
 
 
+@pytest.fixture(autouse=True)
+def local_progress_environment(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Exercise local progress behavior independently of the test runner's CI markers.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Clear CI flags inherited by subprocesses.
+
+    Returns:
+        None: Explicit CI suppression is tested separately.
+    """
+    for name in ("CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "TF_BUILD", "JENKINS_URL", "BUILD_BUILDID", "BUILDKITE"):
+        monkeypatch.delenv(name, raising=False)
+
+
 def test_progress_summary_uses_stderr(capsys: pytest.CaptureFixture[str]) -> None:
     """
     Preserve partial counts and avoid terminal escape sequences in redirected output.

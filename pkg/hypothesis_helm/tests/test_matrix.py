@@ -8,9 +8,9 @@ from pathlib import Path
 
 import pytest
 
-from hypothesis_helm.benchmarking.benchmark_matrix import STRATEGIES, measure, reference_space
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
-from hypothesis_helm.benchmarking.structures import STRUCTURES, expected_manifests
+from hypothesis_helm.benchmarking.charts.generator import generate
+from hypothesis_helm.benchmarking.charts.structures import STRUCTURES, expected_manifests
+from hypothesis_helm.benchmarking.studies.matrix import STRATEGIES, measure, reference_space
 from hypothesis_helm.charts.runner import Chart, RenderFailure
 
 
@@ -32,7 +32,7 @@ def test_matrix_strategy_contracts(tmp_path: Path, monkeypatch: pytest.MonkeyPat
     truth = reference_space(chart, spec, 128)
     assert len(truth[0]) == (32 if structure == "constraints" else 96 if structure == "boundaries" else 64)
     monkeypatch.setattr(
-        "hypothesis_helm.benchmarking.benchmark_matrix.render",
+        "hypothesis_helm.benchmarking.studies.matrix.render",
         lambda chart, values, **kwargs: expected_manifests(values, spec),
     )
     reports = {
@@ -73,7 +73,7 @@ def test_matrix_strategy_contracts(tmp_path: Path, monkeypatch: pytest.MonkeyPat
     assert stopped["status"] == "time-limit"
     assert stopped["remaining"] == stopped["selected"]
     assert stopped["distribution"] is None
-    monkeypatch.setattr("hypothesis_helm.benchmarking.benchmark_matrix.render", lambda *args, **kwargs: [])
+    monkeypatch.setattr("hypothesis_helm.benchmarking.studies.matrix.render", lambda *args, **kwargs: [])
     failed = measure(
         chart,
         spec,
@@ -101,7 +101,7 @@ def test_numeric_boundary_helm(tmp_path: Path) -> None:
     """
     import shutil
 
-    from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key
+    from hypothesis_helm.benchmarking.studies.matrix import bundle_key
     from hypothesis_helm.charts.runner import render
 
     if not shutil.which("helm"):
@@ -134,8 +134,8 @@ def test_matrix_distinguishes_deadline_from_render_timeout(
     chart = Chart.load(tmp_path)
     reference = reference_space(chart, spec, 128)
     clock = [0.0]
-    monkeypatch.setattr("hypothesis_helm.benchmarking.benchmark_matrix.time.perf_counter", lambda: clock[0])
-    monkeypatch.setattr("hypothesis_helm.benchmarking.benchmark_matrix.execution_timer", lambda seconds: nullcontext())
+    monkeypatch.setattr("hypothesis_helm.benchmarking.studies.matrix.time.perf_counter", lambda: clock[0])
+    monkeypatch.setattr("hypothesis_helm.benchmarking.studies.matrix.execution_timer", lambda seconds: nullcontext())
 
     def timeout(*args: object, **kwargs: object) -> list[dict[str, object]]:
         """
@@ -151,7 +151,7 @@ def test_matrix_distinguishes_deadline_from_render_timeout(
         clock[0] = min(30, seconds)
         raise RenderFailure("Helm timed out") from subprocess.TimeoutExpired("helm", clock[0])
 
-    monkeypatch.setattr("hypothesis_helm.benchmarking.benchmark_matrix.render", timeout)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.studies.matrix.render", timeout)
     result = measure(chart, spec, "default", level=2, seed=2026, limit=128, seconds=seconds, helm="helm", reference=reference)
     assert result["status"] == status
     assert result["completed"] == 0
@@ -169,8 +169,8 @@ def test_benchmark_preset_matches_native_calibrated_selection(tmp_path: Path) ->
     Returns:
         None: Both paths apply the same nontrivial sample floor and exact calibration descriptor.
     """
-    from hypothesis_helm.benchmarking.faults import Fault, write_faults
-    from hypothesis_helm.benchmarking.selection import select
+    from hypothesis_helm.benchmarking.analysis.selection import select
+    from hypothesis_helm.benchmarking.charts.faults import Fault, write_faults
     from hypothesis_helm.charts.runner import check_chart
     from hypothesis_helm.execution.sampling import Sampling
     from hypothesis_helm.schemas.combinations import plan_interactions

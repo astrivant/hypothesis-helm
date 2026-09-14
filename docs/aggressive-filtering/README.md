@@ -6,6 +6,10 @@
 It raises that count when needed to meet calibrated case and field floors, and always preserves protected topology representatives.
 Unmatched or unsupported charts keep ordinary filtering without additional percentage sampling.
 
+Recommended workflow: use `--filter-aggressive` on **MRs/PRs**, `--filter` on **main**, and
+an unfiltered `--exhaustive` search **before tagging**. The pre-tag run must complete its supported
+finite domain; see the [CI workflow](../ci/README.md#recommended-workflow) for commands and coverage requirements.
+
 ```sh
 helm hypothesis test ./charts --filter-aggressive --seed 2026
 helm hypothesis scan https://github.com/example/charts.git --filter-aggressive
@@ -22,12 +26,12 @@ gate depth, and template input fan-in. The planner adds the reachable symbolic r
 A gate is a template `if` condition; gate depth counts nested conditions required to reach a branch.
 Template fan-in is a conservative interaction descriptor: it counts referenced fields in a template, not a proven minimal interaction order.
 
-The [calibration study](../../benchmarks/calibration-variation/README.md) measures case floors and changed-field floors separately.
+The [calibration study](../../benchmarks/studies/calibration-variation/README.md) measures case floors and changed-field floors separately.
 A configuration can change several fields; a complexity score is neither a case count nor a field count.
 The selected field floor counts distinct paths whose effective values differ from the defaults. Lists count as one changed path.
 
 Matching prefers an exact descriptor. Nearby matching is available only when the calibration's
-[evidence matrix](../../benchmarks/calibration-variation/MATRIX.md) enables it. It requires compatible domain types, domain
+[evidence matrix](../../benchmarks/studies/calibration-variation/MATRIX.md) enables it. It requires compatible domain types, domain
 cardinalities and filter settings. Every numeric coordinate must lie within the measured range. Distance is the largest
 relative coordinate difference, `abs(a - b) / max(abs(a), abs(b))`, with two zero coordinates treated as equal.
 The policy uses the largest case floor and the largest field floor among all neighbors within its measured radius.
@@ -69,7 +73,7 @@ for execution; a timeout can prevent some selected cases from completing.
 Reports distinguish eligible, selected, omitted and protected cases, selected fields, calibration ID and matching distance.
 
 See the [proof obligations and regression matrix](TESTS.md) for the deterministic properties checked by tests.
-The [benchmark matrix](../../benchmarks/calibration-variation/MATRIX.md) shows empirical case reduction and known-bug discovery.
+The [benchmark matrix](../../benchmarks/studies/calibration-variation/MATRIX.md) shows empirical case reduction and known-bug discovery.
 Protected symbolic output regions can account for complete bug discovery in these fixtures; the graphs do not establish the
 same result for random sampling alone.
 
@@ -94,16 +98,24 @@ packaged runtime policy; changes to that policy should be reviewed alongside the
 These bounds describe filtering **after candidate generation**, excluding Helm execution. Let `N` be the candidate count,
 `V` the values-document size, `T` the template-analysis work per case, `P` the number of calibration profiles, and `D` their descriptor size.
 `A` is the cost of fresh maximum-complexity and profile analysis for the chart.
+For trimming, `I` is chart analysis and IR construction, `C` is per-case symbolic evaluation and projection work,
+and `K` is the retained count (`Kᵢ` within region i).
 
 | Option | Filtering time |
 | --- | --- |
+| No filtering | No additional filtering pass; execute all `N` planned cases |
+| `--trim-random` | `O(N + K log K)` to shuffle indices and restore retained cases to execution order |
+| `--trim-topology` | `O(I + NC + Σ(Kᵢ log Kᵢ))` to classify candidates and sample within regions |
+| Both trims | Same form as topology trimming; add levels within each region and retain unclassified cases |
 | `--sample-random` | `O(N log N + NV)` for seeded ranking and case identities |
 | `--filter` | `O(NT + N log N + NV)` for symbolic regions, identities and selection |
 | `--filter-aggressive` | `O(A + PD + NT + N log N + NV)` including calibration lookup and changed-field floors |
 
 Exact and nearby lookup both scan the calibration: `O(PD)`. The packaged calibration has 30 profiles. Nearby lookup does not
 enumerate chart values again. The field-floor check can inspect every remaining case, including cases it ultimately omits.
-Cases and their identities use `O(NV)` storage; calibration and compiler tables add their own storage.
+All modes retain the full plan. Cases and their identities use `O(NV)` storage; random trimming also uses `O(N)` indices.
+Topology membership, predicted outputs, calibration and compiler tables add their own storage. The trimming bounds assume
+bounded-size values; larger values add copying and serialization work, including the work represented by `C`.
 
 `A` can be exponential in the number of independently varying fields. With `F` Boolean fields, the input space has `2^F`
 assignments. Component tables restrict enumeration to the fields each template uses, and branch-and-bound can skip many assignments.
@@ -113,8 +125,10 @@ source loading, profiling and later topology selection add overhead. An incomple
 These are the costs of establishing a maximum. The budget limits effort by allowing an unknown result; it does not turn exact maximization
 into a polynomial-time algorithm.
 
-Execution adds roughly `K × H`, where `K` is the number of cases actually tested and `H` their average Helm/property-test cost.
-Failure expansion can increase `K` toward the original plan. Thus filtering reduces typical execution volume without improving
+Total runtime adds candidate generation and roughly `K × H` for execution, where `H` is the average Helm/property-test cost.
+A completed unfiltered plan has `K = N`. These expressions omit the single defaults check. Planning may dominate: full enumeration grows
+with the product of field-domain sizes, while strength-t planning must cover every valid assignment to each set of t fields.
+Trimming happens after planning and does not reduce that cost. Failure expansion can increase `K` toward the original plan. Thus filtering reduces typical execution volume without improving
 its worst-case asymptotic bound. The measured matrix records case counts; it is not a runtime speedup benchmark.
 
 ### Conditions behind the comparison
@@ -157,5 +171,5 @@ For independent, uniformly chosen Boolean fields, a specified chain of `g` gates
 Constraints or correlated fields invalidate that calculation. The load fixture has unconstrained Boolean fields; its gate depths
 therefore provide controlled changes in branch rarity and symbolic region structure.
 
-See the [real Helm load test](../../benchmarks/filtering/README.md) for runtime, planning, completed-work and phase graphs.
+See the [real Helm load test](../../benchmarks/studies/filtering/README.md) for runtime, planning, completed-work and phase graphs.
 Reproduce it with `hypothesis-helm-benchmark filtering --output benchmarks/runs/filtering --time-limit 9m`.

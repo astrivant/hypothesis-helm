@@ -6,7 +6,7 @@ import json
 import sys
 from pathlib import Path
 
-from hypothesis_helm.benchmarking.benchmark_sparsity import plot
+from hypothesis_helm.benchmarking.studies.sparsity import plot
 from matplotlib import pyplot as plt
 
 root = Path(sys.argv[1])

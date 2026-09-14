@@ -13,7 +13,7 @@ import time
 from pathlib import Path
 from textwrap import dedent
 
-from hypothesis_helm.benchmarking.benchmark_helm import code_digest
+from hypothesis_helm.benchmarking.execution.provenance import code_digest
 from hypothesis_helm.charts.scan import discover_charts
 
 root = Path(sys.argv[1])

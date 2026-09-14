@@ -13,9 +13,9 @@ from pathlib import Path
 import pytest
 from attrs import asdict
 
-from hypothesis_helm.benchmarking.benchmark_matrix import STRATEGIES
-from hypothesis_helm.benchmarking.stress import Stress, progression
-from hypothesis_helm.benchmarking.structures import STRUCTURES
+from hypothesis_helm.benchmarking.charts.stress import Stress, progression
+from hypothesis_helm.benchmarking.charts.structures import STRUCTURES
+from hypothesis_helm.benchmarking.studies.matrix import STRATEGIES
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.schemas.contracts import mapping
 
@@ -365,3 +365,62 @@ def test_refresh_includes_every_stress_topology(tmp_path: Path) -> None:
     assert {Path(record["source"]).stem for record in stress} == {name for name, _ in progression(Stress())}
     assert all(Path(record["source"]).is_file() for record in records)
     assert not list(tmp_path.rglob("Chart.yaml"))
+
+
+def test_publish_groups_studies(tmp_path: Path) -> None:
+    """
+    Publish performance alongside other studies and keep the benchmark root clear.
+
+    Args:
+        tmp_path (Path): Isolated completed refresh and publication destination.
+
+    Returns:
+        None: Published paths, retained recipes and checksums use the grouped layout.
+    """
+    project = Path(__file__).resolve().parents[3]
+    recipes = project / "benchmarks/refresh"
+    run = tmp_path / "refresh"
+    run.mkdir()
+    for source in recipes.iterdir():
+        if source.is_file():
+            (run / source.name).write_text("{}\n")
+    studies = (
+        "performance",
+        "discovery",
+        "bug-density",
+        "sparsity",
+        "topology-sparsity",
+        "matrix",
+        "pca",
+        "expansion",
+        "topology-depth",
+        "nesting",
+        "stress",
+        "sampling",
+        "calibration-variation",
+        "filtering",
+    )
+    (run / "status.tsv").write_text("".join(f"{name}\t0\n" for name in studies))
+    (run / "started-epoch.txt").write_text("0")
+    (run / "finished-epoch.txt").write_text("60")
+    (run / "retained-fixture-sha256.json").write_text("{}")
+    (run / "logs").mkdir()
+    (run / "logs/performance.log").write_text("complete\n")
+    (run / "parameters").mkdir()
+    (run / "parameters/standard.yaml").write_text("parameters: {}\n")
+    for name in (*studies, "chart-topologies"):
+        output = run / "outputs" / name
+        output.mkdir(parents=True)
+        (output / "results.json").write_text(json.dumps({"study": name}))
+    (run / "outputs/chart-topologies/verification.json").write_text("{}")
+    subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, check=True, capture_output=True)
+    published = tmp_path / "benchmarks"
+    assert not (published / "results.json").exists()
+    assert not (published / "matrix").exists()
+    assert not (published / "parameters").exists()
+    assert (published / "fixture/parameters/standard.yaml").read_text() == "parameters: {}\n"
+    checksums = json.loads((published / "refresh/sha256.json").read_text())
+    for name in (*studies, "chart-topologies"):
+        path = published / "studies" / name / "results.json"
+        assert json.loads(path.read_text()) == {"study": name}
+        assert checksums[str(path.relative_to(published))] == hashlib.sha256(path.read_bytes()).hexdigest()

@@ -118,6 +118,13 @@ class Processes:
             try:
                 self.stop()
             except BaseException as cleanup_error:
+                if isinstance(cleanup_error, TimeLimitReached) and self._children:
+                    # The one-shot alarm can arrive before stop installs its handler.
+                    # Retry cleanup after delivery, retaining ownership until it succeeds.
+                    try:
+                        self.stop()
+                    except BaseException as retry_error:
+                        raise BaseExceptionGroup("Process execution and cleanup failed", [error, cleanup_error, retry_error]) from None
                 if isinstance(error, subprocess.TimeoutExpired) and isinstance(cleanup_error, TimeLimitReached) and not self._children:
                     raise cleanup_error from error
                 raise BaseExceptionGroup("Process execution and cleanup failed", [error, cleanup_error]) from None

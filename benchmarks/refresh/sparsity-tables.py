@@ -38,7 +38,7 @@ for study in ["sparsity", "topology-sparsity"]:
     lines = [
         "# Sparsity and Stochasticity" if study == "sparsity" else "# Sparsity across topology outcomes",
         "",
-        "[Benchmarking](../README.md)",
+        "[Benchmarking](../../README.md)",
         "",
         "Each stage uses a smaller nested random subset of the same input prefix, fresh caches, and a nine-minute "
         "ceiling. Case count varies; interaction strength does not. Scalar and categorical outcome distributions are "
@@ -80,7 +80,7 @@ for study in ["sparsity", "topology-sparsity"]:
         ]
     )
     if study == "sparsity":
-        original = Path("benchmarks/sparsity/README.md").read_text()
+        original = Path("benchmarks/studies/sparsity/README.md").read_text()
         marker = "\n## Fresh measurements\n"
         original = original.split(marker)[0]
         table = lines[6 : lines.index("![Outcome coverage and distribution error](sparsity-quality.png)")]

@@ -6,8 +6,8 @@ import sys
 from pathlib import Path
 
 from attrs import asdict
-from hypothesis_helm.benchmarking.benchmark_discovery import faults
-from hypothesis_helm.benchmarking.parameters import Parameters
+from hypothesis_helm.benchmarking.charts.parameters import Parameters
+from hypothesis_helm.benchmarking.studies.discovery import faults
 from hypothesis_helm.charts import yamlio
 
 root = Path(sys.argv[1]) / "parameters"

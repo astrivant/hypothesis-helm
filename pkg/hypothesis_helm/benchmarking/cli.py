@@ -10,26 +10,26 @@ import tempfile
 from contextlib import nullcontext
 from pathlib import Path
 
-from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
-from hypothesis_helm.benchmarking.profiling import PROFILE_DIRECTORY, capture
+from hypothesis_helm.benchmarking.charts.fixture import FixtureWorkspace, chart_path
+from hypothesis_helm.benchmarking.execution.profiling import PROFILE_DIRECTORY, capture
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 
 COMMANDS = {
-    "generate": "generate_benchmark_chart",
-    "run": "benchmark_helm",
-    "discovery": "benchmark_discovery",
-    "sparsity": "benchmark_sparsity",
-    "matrix": "benchmark_matrix",
-    "pca": "benchmark_pca",
-    "expansion": "benchmark_expansion",
-    "topology-depth": "benchmark_topology_depth",
-    "nesting": "benchmark_nesting",
-    "stress": "benchmark_stress",
-    "sampling": "benchmark_sampling",
-    "calibration": "benchmark_calibration",
-    "filtering": "benchmark_filtering",
-    "topology": "benchmark_topology",
-    "flamegraph": "flamegraph",
+    "generate": "charts.generator",
+    "run": "studies.performance",
+    "discovery": "studies.discovery",
+    "sparsity": "studies.sparsity",
+    "matrix": "studies.matrix",
+    "pca": "studies.pca",
+    "expansion": "studies.expansion",
+    "topology-depth": "studies.topology_depth",
+    "nesting": "studies.nesting",
+    "stress": "studies.stress",
+    "sampling": "studies.sampling",
+    "calibration": "studies.calibration",
+    "filtering": "studies.filtering",
+    "topology": "studies.topology",
+    "flamegraph": "reporting.flamegraph",
 }
 
 
@@ -63,7 +63,7 @@ def main(argv: list[str] | None = None) -> int:
             Returns:
                 int: Selected benchmark command exit status.
             """
-            from hypothesis_helm.benchmarking.generate_benchmark_chart import reproduce
+            from hypothesis_helm.benchmarking.charts.generator import reproduce
 
             with nullcontext() if args.command == "generate" else FixtureWorkspace() as workspace:
                 if args.parameters is not None and "--plot-only" not in args.arguments:
@@ -90,7 +90,7 @@ def main(argv: list[str] | None = None) -> int:
                 return int(entry(arguments, workspace=workspace))
 
         if args.profile is not None:
-            from hypothesis_helm.benchmarking.flamegraph import render_profiles
+            from hypothesis_helm.benchmarking.reporting.flamegraph import render_profiles
 
             if args.command == "flamegraph":
                 parser.error("flamegraph redraws existing profiles; use --profile with a benchmark study")

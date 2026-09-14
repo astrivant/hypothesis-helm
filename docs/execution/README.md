@@ -329,28 +329,8 @@ Exact-equivalence pruning remains a separate control. Trimming applies to finite
 permutation plans, including automatic enumeration. It does not apply to per-path
 suites, random whole-chart sampling, or explicit exhaustive mode.
 
-### Computational cost
-
-| Mode | Approximate time | Annotation |
-|---|---|---|
-| Default | `P + N·R` | Execute the full finite plan. |
-| `--trim-random` | `P + N + K log K + K·R` | Shuffle once; restore retained cases to execution order. |
-| `--trim-topology` | `P + A + N·C + Σ(Kᵢ log Kᵢ) + K·R` | Classify every candidate; sample within regions. |
-| Both | Same form as topology | Add the levels within each group; keep at least one case and all unclassified cases. |
-
-`P`: planning cost; `N`: planned non-default cases; `K`: retained cases;
-`Kᵢ`: retained cases in region i; `R`: render and validation cost;
-`A`: chart analysis and IR construction; `C`: per-case symbolic evaluation, value
-normalization and projection construction.
-The single defaults check is omitted from these expressions. They describe execution
-without optional equivalence pruning, with bounded-size values; larger values add
-serialization and copying costs.
-
-All modes store the full plan (`O(N)` cases). Random trimming also stores `O(N)`
-indices. Topology trimming stores group membership and predicted output information.
-Planning can take longer than execution: exhaustive enumeration must account for
-the product of all fields' value counts. Strength-t planning must cover every valid
-assignment to each set of t fields. Planning limits still apply before trimming.
+See [computational cost](../aggressive-filtering/README.md#computational-cost) for the shared comparison
+of unfiltered execution, trimming, percentage sampling and both filter presets.
 
 ### Expanding observed failures
 
@@ -379,7 +359,7 @@ without discovering a different erroneous output. It does not infer failures for
 unexecuted inputs, and cannot recover an entirely missed failure region.
 Unsupported regions have no automatic expansion membership.
 
-See the [paired failure-expansion matrix](../../benchmarks/expansion/README.md).
+See the [paired failure-expansion matrix](../../benchmarks/studies/expansion/README.md).
 Dry runs report a bound on additional work; the actual count depends on failures.
 
 ## Percentage sampling
@@ -418,7 +398,7 @@ eligible, retained, omitted, and protected counts. Omissions are not successful 
 For N eligible cases, sampling uses O(N log N) time to rank stable case identities
 and O(N) memory. When every case is retained, it skips ranking and takes O(N) time.
 
-See the [measured sample-size study](../../benchmarks/sampling/README.md). Repeated
+See the [measured sample-size study](../../benchmarks/studies/sampling/README.md). Repeated
 bugs can be found from a small sample. An error that occurs for only one input
 requires sampling most of the population to obtain a high discovery probability.
 

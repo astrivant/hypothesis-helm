@@ -8,9 +8,9 @@ from collections import Counter
 from pathlib import Path
 
 from attrs import asdict
-from hypothesis_helm.benchmarking.benchmark_matrix import STRATEGIES
-from hypothesis_helm.benchmarking.stress import Stress, progression
-from hypothesis_helm.benchmarking.structures import STRUCTURES
+from hypothesis_helm.benchmarking.charts.stress import Stress, progression
+from hypothesis_helm.benchmarking.charts.structures import STRUCTURES
+from hypothesis_helm.benchmarking.studies.matrix import STRATEGIES
 from hypothesis_helm.charts import yamlio
 
 root = Path(sys.argv[1])

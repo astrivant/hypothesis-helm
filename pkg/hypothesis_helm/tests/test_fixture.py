@@ -9,14 +9,14 @@ from pathlib import Path
 import pytest
 from attrs import asdict
 
-from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key, reference_space
+from hypothesis_helm.benchmarking.analysis.pca import inject_errors
+from hypothesis_helm.benchmarking.charts.fixture import FixtureWorkspace, case_path, chart_path, read_spec
+from hypothesis_helm.benchmarking.charts.generator import generate, reproduce
+from hypothesis_helm.benchmarking.charts.stress import FAMILIES, SIGNALS, Stress, progression
+from hypothesis_helm.benchmarking.charts.structures import STRUCTURES, expected_manifests
+from hypothesis_helm.benchmarking.charts.workload import source_digest
 from hypothesis_helm.benchmarking.cli import main
-from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, case_path, chart_path, read_spec
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate, reproduce
-from hypothesis_helm.benchmarking.pca import inject_errors
-from hypothesis_helm.benchmarking.stress import FAMILIES, SIGNALS, Stress, progression
-from hypothesis_helm.benchmarking.structures import STRUCTURES, expected_manifests
-from hypothesis_helm.benchmarking.workload import source_digest
+from hypothesis_helm.benchmarking.studies.matrix import bundle_key, reference_space
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.runner import Chart, render
 from hypothesis_helm.compiler.passes.topology import trim_topology
@@ -196,7 +196,7 @@ def test_cli_keeps_shard_recipes_separate(tmp_path: Path, monkeypatch: pytest.Mo
     Returns:
         None: Separate shard records survive after their distinct chart workspaces are removed.
     """
-    from hypothesis_helm.benchmarking import benchmark_helm
+    from hypothesis_helm.benchmarking.studies import performance as benchmark_helm
 
     recipe = tmp_path / "parameters.yaml"
     recipe.write_text(yamlio.dump({"parameters": {"input_complexity": 6, "output_bins": 4}}))

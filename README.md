@@ -22,9 +22,17 @@ time budget.
 - Test local chart trees or scan remote Git and authenticated Helm repositories; build dependencies and export Markdown/PDF reports.
 - Integrate Kubernetes schema validation and optional security checks into CI with [kubesec](https://github.com/controlplaneio/kubesec) and [kubeconform](https://github.com/yannh/kubeconform).
 
-We recommend a **manual CI check on trunk before tagging a service release**, to
-exercise the sprint's accumulated changes. Run fresh tests, review the report,
-and tag the tested commit. See the [release-check workflow and cache retention](docs/ci/README.md).
+Choose coverage for each stage of development:
+
+| When | Recommended mode | Purpose |
+| --- | --- | --- |
+| Merge requests / pull requests | `--filter-aggressive` | Faster feedback with calibrated sampling. |
+| Changes on `main` | `--filter` | Broader checks without the additional sampling. |
+| Before tagging a release | `--exhaustive` | Test every supported finite input configuration, without trimming or sampling. |
+
+Run the pre-tag check manually on the release commit and review its coverage report before tagging.
+Exhaustive coverage requires a finite domain and a completed run; time-limited runs remain incomplete.
+See the [CI workflow and release-check requirements](docs/ci/README.md#recommended-workflow).
 
 ## Table of contents
 
@@ -69,7 +77,7 @@ hypothesis-helm-benchmark --help
 See [Benchmarking](benchmarks/README.md) for chart generation and plot commands.
 The [configurable stress chart](benchmarks/chart) combines known defects and topology
 controls in one fixture; its [guide](benchmarks/fixture/README.md) explains how to reduce them one step at a time.
-See [random sampling results](benchmarks/sampling/README.md) for the measured
+See [random sampling results](benchmarks/studies/sampling/README.md) for the measured
 tradeoff between sample size and known defect discovery.
 To rerun all project checks, benchmarks, plots, and repository reports, see the
 [full refresh command](benchmarks/README.md#reproduce-the-full-project-run).
@@ -167,7 +175,7 @@ validation rejections, and tooling limitations; confirmed chart bugs require tri
 Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
 reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
 the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789311940/README.md).
-The [chart topology catalog](benchmarks/chart-topologies/README.md) includes
+The [chart topology catalog](benchmarks/studies/chart-topologies/README.md) includes
 directed dependency graphs and their mathematical measurements.
 
 ## Test case: Prometheus Community charts
@@ -179,7 +187,7 @@ observed input failures, blocked checks, and incomplete coverage.
 Read the [scan results](docs/reports/prometheus.md), download the
 [combined PDF](docs/reports/prometheus.pdf), or inspect the
 [retained logs and data](docs/reports/prometheus-runs/prometheus-charts_1789311940/README.md).
-Its dependency graphs are also in the [topology catalog](benchmarks/chart-topologies/README.md).
+Its dependency graphs are also in the [topology catalog](benchmarks/studies/chart-topologies/README.md).
 
 ## Development
 

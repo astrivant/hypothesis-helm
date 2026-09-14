@@ -9,9 +9,9 @@ from textwrap import dedent
 
 import pytest
 
-from hypothesis_helm.benchmarking.benchmark_expansion import compare
-from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key
-from hypothesis_helm.benchmarking.structures import configmap
+from hypothesis_helm.benchmarking.charts.structures import configmap
+from hypothesis_helm.benchmarking.studies.expansion import compare
+from hypothesis_helm.benchmarking.studies.matrix import bundle_key
 from hypothesis_helm.charts.runner import Chart, check_chart
 from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.reporting.budget import TimeLimitReached
@@ -260,7 +260,7 @@ def test_expansion_scheduler_and_benchmark(expansion_chart: Chart, monkeypatch: 
         calls.append(value)
         return error_output(value)
 
-    monkeypatch.setattr("hypothesis_helm.benchmarking.benchmark_expansion.render", render)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.studies.expansion.render", render)
     reference: dict[str, object] = {
         "structure": "fixture",
         "values": values,
@@ -429,7 +429,7 @@ def test_topology_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.Monkey
     """
     from itertools import product
 
-    from hypothesis_helm.benchmarking.benchmark_topology_depth import sweep
+    from hypothesis_helm.benchmarking.studies.topology_depth import sweep
 
     values: list[dict[str, object]] = [dict(zip(("a", "b", "c"), items, strict=True)) for items in product((False, True), repeat=3)]
     reference: dict[str, object] = {
@@ -455,7 +455,7 @@ def test_topology_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.Monkey
         calls.append(value)
         return error_output(value)
 
-    monkeypatch.setattr("hypothesis_helm.benchmarking.benchmark_expansion.render", observed)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.studies.expansion.render", observed)
     rows = sweep(expansion_chart, reference, [0, 1, 2, 3], 2026, "helm", 30)
     assert rows[0]["initial_checks"] == 8
     assert all(row["erroneous_inputs_found"] == 4 for row in rows)
@@ -480,8 +480,8 @@ def test_pca_presets_expand_only_observed_failures(expansion_chart: Chart) -> No
     """
     from itertools import product
 
-    from hypothesis_helm.benchmarking.benchmark_pca import expand_selections
-    from hypothesis_helm.benchmarking.selection import PRESETS
+    from hypothesis_helm.benchmarking.analysis.selection import PRESETS
+    from hypothesis_helm.benchmarking.studies.pca import expand_selections
 
     values: list[dict[str, object]] = [dict(zip(("a", "b", "c"), items, strict=True)) for items in product((False, True), repeat=3)]
     selected = {strategy: [0, 4] for strategy in PRESETS}

@@ -72,7 +72,10 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         "nesting",
         "stress",
         "sampling",
+        "calibration",
+        "filtering",
         "topology",
+        "flamegraph",
     ):
         result = subprocess.run(
             [*command, name, "--help"],
@@ -93,3 +96,35 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
     )
     assert json.loads(result.stdout)["input_complexity"] == 8
     assert (tmp_path / "chart/Chart.yaml").exists()
+
+
+def test_source_fingerprint_covers_application_code(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Keep application code in the fingerprint after nesting the benchmark modules.
+
+    Args:
+        tmp_path (Path): Synthetic installed package with the new directory layout.
+        monkeypatch (pytest.MonkeyPatch): Locate fingerprinting in the synthetic package.
+
+    Returns:
+        None: Application and benchmark changes invalidate measurements; tests do not.
+    """
+    from hypothesis_helm.benchmarking.execution import provenance
+
+    package = tmp_path / "hypothesis_helm"
+    source = package / "benchmarking/execution/provenance.py"
+    source.parent.mkdir(parents=True)
+    source.write_text("# source fingerprint implementation\n")
+    application = package / "cli.py"
+    application.write_text("VERSION = 1\n")
+    monkeypatch.setattr(provenance, "__file__", str(source))
+    original = provenance.code_digest()
+    application.write_text("VERSION = 2\n")
+    changed = provenance.code_digest()
+    assert changed != original
+    tests = package / "tests"
+    tests.mkdir()
+    (tests / "test_cli.py").write_text("def test_cli(): pass\n")
+    assert provenance.code_digest() == changed
+    source.write_text("# changed benchmark implementation\n")
+    assert provenance.code_digest() != changed

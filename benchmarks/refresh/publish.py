@@ -34,9 +34,9 @@ assert (root / "outputs/chart-topologies/verification.json").exists()
 assert (root / "outputs/chart-topologies/results.json").exists()
 shutil.copy2(root / "logs/performance.log", root / "outputs/performance/run.log")
 for directory in sorted((root / "outputs").iterdir()):
-    destination = target if directory.name == "performance" else target / directory.name
+    destination = target / "studies" / directory.name
     shutil.copytree(directory, destination, dirs_exist_ok=True)
-shutil.copytree(root / "parameters", target / "parameters", dirs_exist_ok=True)
+shutil.copytree(root / "parameters", target / "fixture/parameters", dirs_exist_ok=True)
 records = target / "refresh"
 records.mkdir(exist_ok=True)
 # A new measurement run cannot inherit an earlier manual inspection or interruption record.
@@ -87,7 +87,7 @@ for name in record_names:
 shutil.copytree(root / "logs", records / "logs", dirs_exist_ok=True)
 checksums = {}
 for directory in (root / "outputs").iterdir():
-    destination = target if directory.name == "performance" else target / directory.name
+    destination = target / "studies" / directory.name
     for source in directory.rglob("*"):
         if source.is_file():
             copied = destination / source.relative_to(directory)
@@ -113,7 +113,7 @@ for directory in (root / "outputs").iterdir():
             "",
             "The retained shell commands, chart parameter files, seeds, raw results, and logs describe this run. Paths under "
             f"`{root}` identify its staging directory; the published fixtures and "
-            "measurements are now under `benchmarks/`.",
+            "measurements are now under `benchmarks/studies/`.",
             "",
             "All studies and graph exports use the same [recorded application sources](measured-source-hashes.json), "
             "retained in the [source snapshot](measured-source.tar.gz).",

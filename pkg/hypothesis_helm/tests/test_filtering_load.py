@@ -8,8 +8,8 @@ from pathlib import Path
 from hypothesis import given
 from hypothesis import strategies as st
 
-from hypothesis_helm.benchmarking.benchmark_filtering import METHODS, main, measure
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
+from hypothesis_helm.benchmarking.charts.generator import generate
+from hypothesis_helm.benchmarking.studies.filtering import METHODS, main, measure
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.schemas.combinations import trim_values
 

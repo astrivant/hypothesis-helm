@@ -8,10 +8,10 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from hypothesis_helm.benchmarking.benchmark_pca import run_case
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
-from hypothesis_helm.benchmarking.pca import inject_errors, manifest_features, project
-from hypothesis_helm.benchmarking.structures import configmap
+from hypothesis_helm.benchmarking.analysis.pca import inject_errors, manifest_features, project
+from hypothesis_helm.benchmarking.charts.generator import generate
+from hypothesis_helm.benchmarking.charts.structures import configmap
+from hypothesis_helm.benchmarking.studies.pca import run_case
 from hypothesis_helm.charts.runner import Chart, render
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
@@ -118,7 +118,7 @@ def test_deadline_saves_no_partial_pca(tmp_path: Path, monkeypatch: pytest.Monke
         """
         raise TimeLimitReached()
 
-    monkeypatch.setattr("hypothesis_helm.benchmarking.benchmark_pca.render", expired)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.studies.pca.render", expired)
     row = run_case(tmp_path, "equivalence", 6, 5, 1729, 2026, 2, "helm", 30)
     assert row["status"] == "time-limit"
     assert row["remaining"] == row["valid_inputs"]

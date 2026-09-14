@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
+from hypothesis_helm.benchmarking.charts.generator import generate
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.cli import argument_parser, main

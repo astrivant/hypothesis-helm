@@ -13,15 +13,15 @@ from unittest.mock import Mock
 
 import pytest
 
-from hypothesis_helm.benchmarking.benchmark_helm import parser
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
-from hypothesis_helm.benchmarking.plots import paired_ratio
-from hypothesis_helm.benchmarking.runner import Job, execute_worker
-from hypothesis_helm.benchmarking.workload import (
+from hypothesis_helm.benchmarking.charts.generator import generate
+from hypothesis_helm.benchmarking.charts.workload import (
     expected_output,
     partition_indices,
     standard_values,
 )
+from hypothesis_helm.benchmarking.execution.runner import Job, execute_worker
+from hypothesis_helm.benchmarking.reporting.plots import paired_ratio
+from hypothesis_helm.benchmarking.studies.performance import parser
 from hypothesis_helm.charts.runner import Chart, RenderFailure
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.budget import TimeLimitReached
@@ -136,7 +136,7 @@ def test_wrong_output_fails_instead_of_becoming_a_representative(
     """
     generate(tmp_path, input_complexity=8)
     monkeypatch.setattr(
-        "hypothesis_helm.benchmarking.runner.render",
+        "hypothesis_helm.benchmarking.execution.runner.render",
         Mock(return_value=[{"data": {"value": "999"}}]),
     )
     result = execute_worker(Job(str(tmp_path), [0, 1], 5, 8, True, "helm", time.perf_counter() + 30))
@@ -161,8 +161,8 @@ def test_budget_limited_render_timeout(tmp_path: Path, monkeypatch: pytest.Monke
         None: Only budget-bound subprocess timeouts become incomplete, nonfailed runs.
     """
     generate(tmp_path, input_complexity=8)
-    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.time.perf_counter", lambda: 100.0)
-    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.execution_timer", lambda seconds: nullcontext())
+    monkeypatch.setattr("hypothesis_helm.benchmarking.execution.runner.time.perf_counter", lambda: 100.0)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.execution.runner.execution_timer", lambda seconds: nullcontext())
 
     def render(*args: object, **kwargs: object) -> list[dict[str, object]]:
         """
@@ -180,7 +180,7 @@ def test_budget_limited_render_timeout(tmp_path: Path, monkeypatch: pytest.Monke
             raise RenderFailure("helm exceeded its timeout") from subprocess.TimeoutExpired("helm", float(str(kwargs["timeout"])))
         raise RenderFailure("invalid manifest")
 
-    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.render", render)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.execution.runner.render", render)
     result = execute_worker(Job(str(tmp_path), [0, 1], 5, 8, False, "helm", 100.0 + remaining))
     censored = timeout and remaining <= 30.0
     assert result["status"] == ("time-limit" if censored else "failed")
@@ -272,8 +272,8 @@ def test_linear_prefix_checkpoints_commit_only_completed_inputs(
         """
         return [{"data": {"value": expected_output(values, spec)}}]
 
-    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.render", render)
-    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.expected_output", oracle)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.execution.runner.render", render)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.execution.runner.expected_output", oracle)
     started = time.perf_counter()
     result = execute_worker(
         Job(

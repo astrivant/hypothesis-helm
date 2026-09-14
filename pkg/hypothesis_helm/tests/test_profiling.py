@@ -12,10 +12,10 @@ from unittest.mock import Mock
 
 import pytest
 
-from hypothesis_helm.benchmarking.flamegraph import layout, merge, render_profiles
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
-from hypothesis_helm.benchmarking.profiling import PROFILE_DIRECTORY, StackProfiler, capture
-from hypothesis_helm.benchmarking.runner import measure
+from hypothesis_helm.benchmarking.charts.generator import generate
+from hypothesis_helm.benchmarking.execution.profiling import PROFILE_DIRECTORY, StackProfiler, capture
+from hypothesis_helm.benchmarking.execution.runner import measure
+from hypothesis_helm.benchmarking.reporting.flamegraph import layout, merge, render_profiles
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -195,7 +195,7 @@ def test_ci_process_id_collisions_stay_separate(tmp_path: Path, monkeypatch: pyt
             "frames": [{"label": "profiled entry", "parent": -1, "self_seconds": 1.0, "calls": 1}],
         }
         (tmp_path / f"worker-42-{identity}.json").write_text(json.dumps(document))
-    monkeypatch.setattr("hypothesis_helm.benchmarking.flamegraph.plot", Mock(return_value=1.0))
+    monkeypatch.setattr("hypothesis_helm.benchmarking.reporting.flamegraph.plot", Mock(return_value=1.0))
     result = render_profiles(tmp_path, tmp_path / "plots")
     assert result["worker_processes"] == 2
     figures = [mapping(item) for item in sequence(result["figures"])]

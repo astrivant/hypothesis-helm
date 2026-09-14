@@ -44,7 +44,8 @@ for name, directory in json.loads((root / "provenance.json").read_text())["repos
     scans[name] = {"retained_files": len(ledger), **verification}
 
 documents = [Path("README.md"), Path("docs/reports/bitnami.md"), Path("docs/reports/prometheus.md")]
-documents.extend(benchmarks.rglob("README.md"))
+documents.append(benchmarks / "README.md")
+documents.extend((benchmarks / "studies").rglob("README.md"))
 documents.extend(
     Path(directory) / "README.md" for directory in json.loads((root / "provenance.json").read_text())["repository_scans"].values()
 )

@@ -16,7 +16,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from hypothesis_helm.benchmarking.runner import Job, measure
+from hypothesis_helm.benchmarking.execution.runner import Job, measure
 from hypothesis_helm.charts.registry import HelmTransport
 from hypothesis_helm.charts.repository import run_git
 from hypothesis_helm.execution.parallel import run_parallel
@@ -395,13 +395,15 @@ def test_execution_and_cleanup_errors_are_preserved(tmp_path: Path, monkeypatch:
 
 
 @pytest.mark.skipif(not hasattr(signal, "SIGALRM"), reason="POSIX alarm required")
-def test_timeout_alarm_waits_for_real_child_cleanup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize("before_handler", [False, True])
+def test_timeout_alarm_waits_for_real_child_cleanup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, before_handler: bool) -> None:
     """
     Deliver the overall deadline during timeout cleanup without losing the real child.
 
     Args:
         tmp_path (Path): Isolated subprocess working directory.
         monkeypatch (pytest.MonkeyPatch): Force the two deadlines to overlap deterministically.
+        before_handler (bool): Deliver the deadline just before cleanup installs its handler.
 
     Returns:
         None: The deadline propagates only after the child is joined and handlers are restored.
@@ -447,7 +449,28 @@ def test_timeout_alarm_waits_for_real_child_cleanup(tmp_path: Path, monkeypatch:
         return signal_group(child, sig)
 
     monkeypatch.setattr(subprocess, "Popen", spawn)
-    monkeypatch.setattr("hypothesis_helm.execution.processes._signal_group", interrupt_cleanup)
+    if before_handler:
+        stop = Processes.stop
+
+        def interrupt_before_stop(owner: Processes) -> None:
+            """
+            Deliver the one-shot deadline before entering the cleanup method.
+
+            Args:
+                owner (Processes): Owner retaining its unjoined child.
+
+            Returns:
+                None: Retried cleanup uses the original method after alarm delivery.
+            """
+            nonlocal alarm_delivered
+            if not alarm_delivered:
+                alarm_delivered = True
+                signal.raise_signal(signal.SIGALRM)
+            stop(owner)
+
+        monkeypatch.setattr(Processes, "stop", interrupt_before_stop)
+    else:
+        monkeypatch.setattr("hypothesis_helm.execution.processes._signal_group", interrupt_cleanup)
     previous_alarm, previous_interrupt = signal.getsignal(signal.SIGALRM), signal.getsignal(signal.SIGINT)
     owner = Processes(interrupt_grace=0.1)
     with pytest.raises(TimeLimitReached) as failure, execution_timer(30):
@@ -592,7 +615,7 @@ def test_benchmark_pool_joins_after_replica_failure(tmp_path: Path, monkeypatch:
     Returns:
         None: A sibling finishes before the failed benchmark returns control.
     """
-    monkeypatch.setattr("hypothesis_helm.benchmarking.runner.execute_profiled_worker", _failing_replica)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.execution.runner.execute_profiled_worker", _failing_replica)
     with pytest.raises(OSError, match="replica failed"):
         measure(tmp_path, 2, 2, False, seed=0, multiplicity=1, time_limit=5, helm="helm", shard=None)
     assert (tmp_path / "replica-finished").exists()

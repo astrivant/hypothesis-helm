@@ -1,8 +1,11 @@
 # CI integration
 
-For a final release check, run manually on trunk before tagging, using `--rerun all`
-to refresh results for the selected tests. See the [manual CI examples and retention
-policy](ci/README.md#recommended-release-check); keep the tested commit as the release candidate.
+Use `--filter-aggressive` on MRs/PRs, `--filter` on `main`, and an unfiltered exhaustive search before tagging.
+See the [recommended workflow](ci/README.md#recommended-workflow) for commands and release coverage requirements.
+
+For cached property tests, use `--rerun all` to refresh results for every selected test.
+This does not turn a filtered run into an exhaustive search. See the [release check and cache retention
+policy](ci/README.md#recommended-release-check); tag the commit whose exhaustive coverage you reviewed.
 
 `helm hypothesis test` and `helm hypothesis run` default to `--shard auto`.
 Parallel pipeline jobs automatically select a deterministic partition, while

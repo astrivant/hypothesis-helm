@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from hypothesis_helm.benchmarking.benchmark_topology import Graph, analyze, plot
+from hypothesis_helm.benchmarking.studies.topology import Graph, analyze, plot
 
 
 def test_multigraph_invariants_and_exports(tmp_path: Path) -> None:
@@ -96,7 +96,7 @@ def test_layout_is_stable_across_process_hash_seeds() -> None:
         graph["nodes"].append({"id": target, "kind": "template"})
         graph["edges"].extend({"from": parent, "to": target, "kind": "potential-reference"} for parent in parents)
     script = (
-        "import json,sys; from hypothesis_helm.benchmarking.benchmark_topology import analyze; "
+        "import json,sys; from hypothesis_helm.benchmarking.studies.topology import analyze; "
         "print(json.dumps(analyze(json.load(sys.stdin))[1], sort_keys=True))"
     )
     coordinates = []

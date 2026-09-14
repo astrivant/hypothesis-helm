@@ -1,12 +1,33 @@
 [tool.poetry]
 name = "hypothesis-helm"
 version = "0.1.0"
-description = "Property-based Helm chart testing and value-reference auditing"
+description = "Property-based testing, input auditing, and reproducible failure reports for Helm charts"
 authors = ["Emma Doyle"]
 readme = "README.md"
 license = "GPL-3.0-only"
+homepage = "https://github.com/astrivant/hypothesis-helm"
+repository = "https://github.com/astrivant/hypothesis-helm"
+documentation = "https://github.com/astrivant/hypothesis-helm/blob/main/docs/README.md"
+keywords = ["helm", "kubernetes", "hypothesis", "property-based-testing", "linting", "testing"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+    "Topic :: System :: Systems Administration",
+]
 packages = [{include = "hypothesis_helm", from = "pkg"}]
 include = [{path = "plugin.yaml", format = ["sdist"]}, {path = "scripts", format = ["sdist"]}]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/astrivant/hypothesis-helm/issues"
+"Source Code" = "https://github.com/astrivant/hypothesis-helm"
 
 [tool.poetry.dependencies]
 python = ">=3.13,<4.0"

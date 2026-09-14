@@ -10,7 +10,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from hypothesis_helm.benchmarking.calibration_matrix import METRIC, evaluate
+from hypothesis_helm.benchmarking.analysis.calibration_matrix import METRIC, evaluate
 from hypothesis_helm.execution.aggressive import matching_profiles
 from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.schemas.contracts import mapping, sequence
@@ -173,7 +173,7 @@ def test_matrix_excludes_target_and_requires_useful_measured_reduction(tmp_path:
     fourth["descriptor"] = description(105)
     profiles.append(fourth)
     document: dict[str, object] = {"profiles": profiles, "metadata": {"test_only": True}}
-    monkeypatch.setattr("hypothesis_helm.benchmarking.calibration_matrix.plot", lambda *_: None)
+    monkeypatch.setattr("hypothesis_helm.benchmarking.analysis.calibration_matrix.plot", lambda *_: None)
     evaluate(tmp_path, document)
     matrix = json.loads((tmp_path / "matrix.json").read_text())
     assert matrix["policy"]["enabled"] is True
@@ -205,7 +205,7 @@ def test_calibration_command_writes_reproducible_matrix_and_plots(tmp_path: Path
     Returns:
         None: The command writes full reference data, numerical matrices, PNG/SVG plots and redrawable reports.
     """
-    from hypothesis_helm.benchmarking.benchmark_calibration import main
+    from hypothesis_helm.benchmarking.studies.calibration import main
 
     output = tmp_path / "study"
     assert main(["--output", str(output), "--inputs", "3", "--depths", "1", "--placements", "1", "--trials", "2"]) == 0
@@ -236,7 +236,7 @@ def test_plot_export_preserves_all_heatmap_rows(tmp_path: Path) -> None:
     """
     from matplotlib import pyplot as plt
 
-    from hypothesis_helm.benchmarking.plots import finish
+    from hypothesis_helm.benchmarking.reporting.plots import finish
 
     figure, axis = plt.subplots()
     axis.imshow([[1, 2], [3, 4], [5, 6]])

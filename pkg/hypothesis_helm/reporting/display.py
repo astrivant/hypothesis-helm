@@ -2,6 +2,8 @@
 Render test progress on stderr without capturing the manifest stream.
 """
 
+import os
+
 from rich.console import Console
 from rich.progress import (
     BarColumn,
@@ -14,14 +16,27 @@ from rich.progress import (
 )
 
 
+def in_ci() -> bool:
+    """
+    Detect CI environments even when a runner allocates a terminal.
+
+    Returns:
+        bool: Whether a common CI marker has an enabled value.
+    """
+    return any(
+        os.environ.get(name, "").lower() not in {"", "0", "false", "no"}
+        for name in ("CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "TF_BUILD", "JENKINS_URL", "BUILD_BUILDID", "BUILDKITE")
+    )
+
+
 def start_progress(total: int, workers: int, *, force: bool = False) -> tuple[Progress, TaskID]:
     """
-    Start a terminal progress bar, or a final-only summary for redirected output.
+    Start progress outside CI, with a final-only summary for redirected output.
 
     Args:
         total (int): Number of selected properties.
         workers (int): Initial worker target.
-        force (bool): Render live terminal updates even on redirected stderr.
+        force (bool): Render live updates on redirected stderr outside CI.
 
     Returns:
         tuple[Progress, TaskID]: Live display and its test task identifier.
@@ -34,7 +49,8 @@ def start_progress(total: int, workers: int, *, force: bool = False) -> tuple[Pr
         TimeElapsedColumn(),
         TextColumn("ETA"),
         TimeRemainingColumn(),
-        console=Console(stderr=True, force_terminal=True if force else None),
+        console=Console(stderr=True, force_terminal=True if force and not in_ci() else None),
+        disable=in_ci(),
         auto_refresh=False,
         redirect_stdout=False,
         redirect_stderr=False,

@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pytest
 
-from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key, reference_space
-from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
-from hypothesis_helm.benchmarking.mixtures import normalized_weights
-from hypothesis_helm.benchmarking.structures import expected_manifests
+from hypothesis_helm.benchmarking.charts.generator import generate
+from hypothesis_helm.benchmarking.charts.mixtures import normalized_weights
+from hypothesis_helm.benchmarking.charts.structures import expected_manifests
+from hypothesis_helm.benchmarking.studies.matrix import bundle_key, reference_space
 from hypothesis_helm.charts.runner import Chart, render
 from hypothesis_helm.schemas.contracts import mapping
 
@@ -125,7 +125,7 @@ def test_nested_components(tmp_path: Path, weights: dict[str, float] | None) -> 
         for encoded in samples:
             values = json.loads(encoded)
             assert bundle_key(render(chart, values, helm=helm, release="matrix")) == bundle_key(expected_manifests(values, spec))
-        from hypothesis_helm.benchmarking.benchmark_nesting import select_plan
+        from hypothesis_helm.benchmarking.studies.nesting import select_plan
 
         reference: dict[str, object] = {
             "values": [
