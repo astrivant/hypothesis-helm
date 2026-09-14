@@ -138,7 +138,7 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--values VALUES] [--timeout TIMEOUT]
                             [--chart-timeout CHART_TIMEOUT]
                             [--scan-timeout SCAN_TIMEOUT]
-                            [--max-examples MAX_EXAMPLES]
+                            [--max-examples MAX_EXAMPLES] [--jobs JOBS]
                             [--permutations PERMUTATIONS] [--filter] [--fail]
                             [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
@@ -175,6 +175,7 @@ options:
                         scan budget excluding dependency preparation; default:
                         unlimited
   --max-examples MAX_EXAMPLES
+  --jobs, -j JOBS       path workers per chart; auto: available CPUs
   --permutations PERMUTATIONS
                         finite interaction strength; default: automatic finite
                         coverage or sampling
@@ -329,8 +330,8 @@ options:
                         auto: rerun failures locally; run all paths in CI
   --shard SHARD         auto (default): detect CI node; INDEX/TOTAL: explicit shard;
                         none: disable
-  --jobs, -j JOBS       auto (default): PID throughput tuning; N: fixed worker count;
-                        1: serial
+  --jobs, -j JOBS       workers per chart; auto: CPU count for repository tests, PID
+                        tuning for suites; 1: serial
   --output, -o {json}   stream one rendered manifest per JSON line on stdout; reports
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a
@@ -461,8 +462,8 @@ options:
                         auto: rerun failures locally; run all paths in CI
   --shard SHARD         auto (default): detect CI node; INDEX/TOTAL: explicit shard;
                         none: disable
-  --jobs, -j JOBS       auto (default): PID throughput tuning; N: fixed worker count;
-                        1: serial
+  --jobs, -j JOBS       workers per chart; auto: CPU count for repository tests, PID
+                        tuning for suites; 1: serial
   --output, -o {json}   stream one rendered manifest per JSON line on stdout; reports
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a

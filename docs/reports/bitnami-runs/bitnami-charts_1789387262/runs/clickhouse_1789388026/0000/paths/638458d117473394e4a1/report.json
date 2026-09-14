@@ -1,0 +1,7036 @@
+{
+  "sampling": {},
+  "field_coverage": {
+    "lower_bound_fields": 244,
+    "present_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "args"
+      ],
+      [
+        "auth",
+        "existingSecret"
+      ],
+      [
+        "auth",
+        "username"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "clusterName"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configdFiles"
+      ],
+      [
+        "configuration"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "https"
+      ],
+      [
+        "containerPorts",
+        "interserver"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerPorts",
+        "mysql"
+      ],
+      [
+        "containerPorts",
+        "postgresql"
+      ],
+      [
+        "containerPorts",
+        "tcp"
+      ],
+      [
+        "containerPorts",
+        "tcpSecure"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "defaultInitContainers",
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "volumePermissions",
+        "image"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "distributeReplicasByZone"
+      ],
+      [
+        "existingConfigdConfigmap"
+      ],
+      [
+        "existingConfigmap"
+      ],
+      [
+        "existingUsersdConfigmap"
+      ],
+      [
+        "existingUsersdSecret"
+      ],
+      [
+        "exposeMysql"
+      ],
+      [
+        "exposePostgresql"
+      ],
+      [
+        "externalZookeeper",
+        "port"
+      ],
+      [
+        "externalZookeeper",
+        "servers"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeClaimTemplates"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "initdbScripts"
+      ],
+      [
+        "initdbScriptsSecret"
+      ],
+      [
+        "keeper",
+        "affinity"
+      ],
+      [
+        "keeper",
+        "automountServiceAccountToken"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "keeper",
+        "configdFiles"
+      ],
+      [
+        "keeper",
+        "configuration"
+      ],
+      [
+        "keeper",
+        "containerPorts",
+        "raft"
+      ],
+      [
+        "keeper",
+        "containerPorts",
+        "tcp"
+      ],
+      [
+        "keeper",
+        "containerPorts",
+        "tcpSecure"
+      ],
+      [
+        "keeper",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "customLivenessProbe"
+      ],
+      [
+        "keeper",
+        "customReadinessProbe"
+      ],
+      [
+        "keeper",
+        "customStartupProbe"
+      ],
+      [
+        "keeper",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "existingConfigdConfigmap"
+      ],
+      [
+        "keeper",
+        "existingConfigmap"
+      ],
+      [
+        "keeper",
+        "existingUsersdConfigmap"
+      ],
+      [
+        "keeper",
+        "existingUsersdSecret"
+      ],
+      [
+        "keeper",
+        "extraContainerPorts"
+      ],
+      [
+        "keeper",
+        "extraEnvVars"
+      ],
+      [
+        "keeper",
+        "extraEnvVarsCM"
+      ],
+      [
+        "keeper",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "keeper",
+        "extraVolumeMounts"
+      ],
+      [
+        "keeper",
+        "extraVolumes"
+      ],
+      [
+        "keeper",
+        "hostAliases"
+      ],
+      [
+        "keeper",
+        "image",
+        "debug"
+      ],
+      [
+        "keeper",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "keeper",
+        "initContainers"
+      ],
+      [
+        "keeper",
+        "lifecycleHooks"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "keeper",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "keeper",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "keeper",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "keeper",
+        "nodeSelector"
+      ],
+      [
+        "keeper",
+        "pdb",
+        "create"
+      ],
+      [
+        "keeper",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "keeper",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "keeper",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "keeper",
+        "podAffinityPreset"
+      ],
+      [
+        "keeper",
+        "podAnnotations"
+      ],
+      [
+        "keeper",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "keeper",
+        "podLabels"
+      ],
+      [
+        "keeper",
+        "podManagementPolicy"
+      ],
+      [
+        "keeper",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "priorityClassName"
+      ],
+      [
+        "keeper",
+        "replicaCount"
+      ],
+      [
+        "keeper",
+        "resources"
+      ],
+      [
+        "keeper",
+        "schedulerName"
+      ],
+      [
+        "keeper",
+        "service",
+        "annotations"
+      ],
+      [
+        "keeper",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "keeper",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "keeper",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "keeper",
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "keeper",
+        "service",
+        "headless",
+        "extraPorts"
+      ],
+      [
+        "keeper",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "keeper",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "keeper",
+        "service",
+        "nodePorts",
+        "raft"
+      ],
+      [
+        "keeper",
+        "service",
+        "nodePorts",
+        "tcp"
+      ],
+      [
+        "keeper",
+        "service",
+        "nodePorts",
+        "tcpSecure"
+      ],
+      [
+        "keeper",
+        "service",
+        "ports",
+        "raft"
+      ],
+      [
+        "keeper",
+        "service",
+        "ports",
+        "tcp"
+      ],
+      [
+        "keeper",
+        "service",
+        "ports",
+        "tcpSecure"
+      ],
+      [
+        "keeper",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "keeper",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "keeper",
+        "service",
+        "type"
+      ],
+      [
+        "keeper",
+        "sidecars"
+      ],
+      [
+        "keeper",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "keeper",
+        "tolerations"
+      ],
+      [
+        "keeper",
+        "topologySpreadConstraints"
+      ],
+      [
+        "keeper",
+        "updateStrategy"
+      ],
+      [
+        "keeper",
+        "usersdFiles"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "logLevel"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "labels"
+      ],
+      [
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "persistence",
+        "volumeName"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "enabled"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenDeleted"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenScaled"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "resourcesPreset"
+      ],
+      [
+        "sampling",
+        "enabled"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "headless",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "perReplicaAccess"
+      ],
+      [
+        "service",
+        "ports",
+        "tcp"
+      ],
+      [
+        "service",
+        "ports",
+        "tcpSecure"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "shards"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "startdbScripts"
+      ],
+      [
+        "startdbScriptsSecret"
+      ],
+      [
+        "startupProbe",
+        "enabled"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "usersdFiles"
+      ]
+    ],
+    "varied_fields": [],
+    "unvaried_fields": [
+      [
+        "affinity"
+      ],
+      [
+        "args"
+      ],
+      [
+        "auth",
+        "existingSecret"
+      ],
+      [
+        "auth",
+        "username"
+      ],
+      [
+        "automountServiceAccountToken"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "clusterDomain"
+      ],
+      [
+        "clusterName"
+      ],
+      [
+        "command"
+      ],
+      [
+        "commonAnnotations"
+      ],
+      [
+        "commonLabels"
+      ],
+      [
+        "configdFiles"
+      ],
+      [
+        "configuration"
+      ],
+      [
+        "containerPorts",
+        "http"
+      ],
+      [
+        "containerPorts",
+        "https"
+      ],
+      [
+        "containerPorts",
+        "interserver"
+      ],
+      [
+        "containerPorts",
+        "metrics"
+      ],
+      [
+        "containerPorts",
+        "mysql"
+      ],
+      [
+        "containerPorts",
+        "postgresql"
+      ],
+      [
+        "containerPorts",
+        "tcp"
+      ],
+      [
+        "containerPorts",
+        "tcpSecure"
+      ],
+      [
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "customLivenessProbe"
+      ],
+      [
+        "customReadinessProbe"
+      ],
+      [
+        "customStartupProbe"
+      ],
+      [
+        "defaultInitContainers",
+        "volumePermissions",
+        "enabled"
+      ],
+      [
+        "defaultInitContainers",
+        "volumePermissions",
+        "image"
+      ],
+      [
+        "diagnosticMode",
+        "args"
+      ],
+      [
+        "diagnosticMode",
+        "command"
+      ],
+      [
+        "diagnosticMode",
+        "enabled"
+      ],
+      [
+        "distributeReplicasByZone"
+      ],
+      [
+        "existingConfigdConfigmap"
+      ],
+      [
+        "existingConfigmap"
+      ],
+      [
+        "existingUsersdConfigmap"
+      ],
+      [
+        "existingUsersdSecret"
+      ],
+      [
+        "exposeMysql"
+      ],
+      [
+        "exposePostgresql"
+      ],
+      [
+        "externalZookeeper",
+        "port"
+      ],
+      [
+        "externalZookeeper",
+        "servers"
+      ],
+      [
+        "extraDeploy"
+      ],
+      [
+        "extraEnvVars"
+      ],
+      [
+        "extraEnvVarsCM"
+      ],
+      [
+        "extraEnvVarsSecret"
+      ],
+      [
+        "extraVolumeClaimTemplates"
+      ],
+      [
+        "extraVolumeMounts"
+      ],
+      [
+        "extraVolumes"
+      ],
+      [
+        "global"
+      ],
+      [
+        "hostAliases"
+      ],
+      [
+        "image",
+        "debug"
+      ],
+      [
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "ingress",
+        "annotations"
+      ],
+      [
+        "ingress",
+        "enabled"
+      ],
+      [
+        "ingress",
+        "extraHosts"
+      ],
+      [
+        "ingress",
+        "extraPaths"
+      ],
+      [
+        "ingress",
+        "extraRules"
+      ],
+      [
+        "ingress",
+        "extraTls"
+      ],
+      [
+        "ingress",
+        "hostname"
+      ],
+      [
+        "ingress",
+        "ingressClassName"
+      ],
+      [
+        "ingress",
+        "path"
+      ],
+      [
+        "ingress",
+        "pathType"
+      ],
+      [
+        "ingress",
+        "secrets"
+      ],
+      [
+        "ingress",
+        "selfSigned"
+      ],
+      [
+        "ingress",
+        "tls"
+      ],
+      [
+        "initContainers"
+      ],
+      [
+        "initdbScripts"
+      ],
+      [
+        "initdbScriptsSecret"
+      ],
+      [
+        "keeper",
+        "affinity"
+      ],
+      [
+        "keeper",
+        "automountServiceAccountToken"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "annotations"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "controlledResources"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "maxAllowed"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "minAllowed"
+      ],
+      [
+        "keeper",
+        "autoscaling",
+        "vpa",
+        "updatePolicy",
+        "updateMode"
+      ],
+      [
+        "keeper",
+        "configdFiles"
+      ],
+      [
+        "keeper",
+        "configuration"
+      ],
+      [
+        "keeper",
+        "containerPorts",
+        "raft"
+      ],
+      [
+        "keeper",
+        "containerPorts",
+        "tcp"
+      ],
+      [
+        "keeper",
+        "containerPorts",
+        "tcpSecure"
+      ],
+      [
+        "keeper",
+        "containerSecurityContext",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "customLivenessProbe"
+      ],
+      [
+        "keeper",
+        "customReadinessProbe"
+      ],
+      [
+        "keeper",
+        "customStartupProbe"
+      ],
+      [
+        "keeper",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "existingConfigdConfigmap"
+      ],
+      [
+        "keeper",
+        "existingConfigmap"
+      ],
+      [
+        "keeper",
+        "existingUsersdConfigmap"
+      ],
+      [
+        "keeper",
+        "existingUsersdSecret"
+      ],
+      [
+        "keeper",
+        "extraContainerPorts"
+      ],
+      [
+        "keeper",
+        "extraEnvVars"
+      ],
+      [
+        "keeper",
+        "extraEnvVarsCM"
+      ],
+      [
+        "keeper",
+        "extraEnvVarsSecret"
+      ],
+      [
+        "keeper",
+        "extraVolumeMounts"
+      ],
+      [
+        "keeper",
+        "extraVolumes"
+      ],
+      [
+        "keeper",
+        "hostAliases"
+      ],
+      [
+        "keeper",
+        "image",
+        "debug"
+      ],
+      [
+        "keeper",
+        "image",
+        "pullPolicy"
+      ],
+      [
+        "keeper",
+        "initContainers"
+      ],
+      [
+        "keeper",
+        "lifecycleHooks"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "extraEgress"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "keeper",
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "keeper",
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "keeper",
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "keeper",
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "keeper",
+        "nodeSelector"
+      ],
+      [
+        "keeper",
+        "pdb",
+        "create"
+      ],
+      [
+        "keeper",
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "keeper",
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "keeper",
+        "persistence",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "keeper",
+        "podAffinityPreset"
+      ],
+      [
+        "keeper",
+        "podAnnotations"
+      ],
+      [
+        "keeper",
+        "podAntiAffinityPreset"
+      ],
+      [
+        "keeper",
+        "podLabels"
+      ],
+      [
+        "keeper",
+        "podManagementPolicy"
+      ],
+      [
+        "keeper",
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "keeper",
+        "priorityClassName"
+      ],
+      [
+        "keeper",
+        "replicaCount"
+      ],
+      [
+        "keeper",
+        "resources"
+      ],
+      [
+        "keeper",
+        "schedulerName"
+      ],
+      [
+        "keeper",
+        "service",
+        "annotations"
+      ],
+      [
+        "keeper",
+        "service",
+        "clusterIP"
+      ],
+      [
+        "keeper",
+        "service",
+        "externalTrafficPolicy"
+      ],
+      [
+        "keeper",
+        "service",
+        "extraPorts"
+      ],
+      [
+        "keeper",
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "keeper",
+        "service",
+        "headless",
+        "extraPorts"
+      ],
+      [
+        "keeper",
+        "service",
+        "loadBalancerIP"
+      ],
+      [
+        "keeper",
+        "service",
+        "loadBalancerSourceRanges"
+      ],
+      [
+        "keeper",
+        "service",
+        "nodePorts",
+        "raft"
+      ],
+      [
+        "keeper",
+        "service",
+        "nodePorts",
+        "tcp"
+      ],
+      [
+        "keeper",
+        "service",
+        "nodePorts",
+        "tcpSecure"
+      ],
+      [
+        "keeper",
+        "service",
+        "ports",
+        "raft"
+      ],
+      [
+        "keeper",
+        "service",
+        "ports",
+        "tcp"
+      ],
+      [
+        "keeper",
+        "service",
+        "ports",
+        "tcpSecure"
+      ],
+      [
+        "keeper",
+        "service",
+        "sessionAffinity"
+      ],
+      [
+        "keeper",
+        "service",
+        "sessionAffinityConfig"
+      ],
+      [
+        "keeper",
+        "service",
+        "type"
+      ],
+      [
+        "keeper",
+        "sidecars"
+      ],
+      [
+        "keeper",
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "keeper",
+        "tolerations"
+      ],
+      [
+        "keeper",
+        "topologySpreadConstraints"
+      ],
+      [
+        "keeper",
+        "updateStrategy"
+      ],
+      [
+        "keeper",
+        "usersdFiles"
+      ],
+      [
+        "lifecycleHooks"
+      ],
+      [
+        "livenessProbe",
+        "enabled"
+      ],
+      [
+        "logLevel"
+      ],
+      [
+        "metrics",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "podAnnotations"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "additionalLabels"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "prometheusRule",
+        "rules"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "annotations"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "enabled"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "honorLabels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "interval"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "jobLabel"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "labels"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "metricRelabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "namespace"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "relabelings"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "scrapeTimeout"
+      ],
+      [
+        "metrics",
+        "serviceMonitor",
+        "selector"
+      ],
+      [
+        "networkPolicy",
+        "addExternalClientAccess"
+      ],
+      [
+        "networkPolicy",
+        "allowExternal"
+      ],
+      [
+        "networkPolicy",
+        "allowExternalEgress"
+      ],
+      [
+        "networkPolicy",
+        "enabled"
+      ],
+      [
+        "networkPolicy",
+        "extraIngress"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSMatchLabels"
+      ],
+      [
+        "networkPolicy",
+        "ingressNSPodMatchLabels"
+      ],
+      [
+        "nodeAffinityPreset",
+        "key"
+      ],
+      [
+        "nodeAffinityPreset",
+        "type"
+      ],
+      [
+        "nodeAffinityPreset",
+        "values"
+      ],
+      [
+        "nodeSelector"
+      ],
+      [
+        "pdb",
+        "create"
+      ],
+      [
+        "pdb",
+        "maxUnavailable"
+      ],
+      [
+        "pdb",
+        "minAvailable"
+      ],
+      [
+        "persistence",
+        "accessModes"
+      ],
+      [
+        "persistence",
+        "annotations"
+      ],
+      [
+        "persistence",
+        "dataSource"
+      ],
+      [
+        "persistence",
+        "enabled"
+      ],
+      [
+        "persistence",
+        "existingClaim"
+      ],
+      [
+        "persistence",
+        "labels"
+      ],
+      [
+        "persistence",
+        "mountPath"
+      ],
+      [
+        "persistence",
+        "selector"
+      ],
+      [
+        "persistence",
+        "size"
+      ],
+      [
+        "persistence",
+        "volumeName"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "enabled"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenDeleted"
+      ],
+      [
+        "persistentVolumeClaimRetentionPolicy",
+        "whenScaled"
+      ],
+      [
+        "podAffinityPreset"
+      ],
+      [
+        "podAnnotations"
+      ],
+      [
+        "podAntiAffinityPreset"
+      ],
+      [
+        "podLabels"
+      ],
+      [
+        "podManagementPolicy"
+      ],
+      [
+        "podSecurityContext",
+        "enabled"
+      ],
+      [
+        "priorityClassName"
+      ],
+      [
+        "readinessProbe",
+        "enabled"
+      ],
+      [
+        "replicaCount"
+      ],
+      [
+        "resources"
+      ],
+      [
+        "resourcesPreset"
+      ],
+      [
+        "sampling",
+        "enabled"
+      ],
+      [
+        "schedulerName"
+      ],
+      [
+        "service",
+        "headless",
+        "annotations"
+      ],
+      [
+        "service",
+        "headless",
+        "extraPorts"
+      ],
+      [
+        "service",
+        "perReplicaAccess"
+      ],
+      [
+        "service",
+        "ports",
+        "tcp"
+      ],
+      [
+        "service",
+        "ports",
+        "tcpSecure"
+      ],
+      [
+        "service",
+        "type"
+      ],
+      [
+        "serviceAccount",
+        "annotations"
+      ],
+      [
+        "serviceAccount",
+        "automountServiceAccountToken"
+      ],
+      [
+        "serviceAccount",
+        "create"
+      ],
+      [
+        "shards"
+      ],
+      [
+        "sidecars"
+      ],
+      [
+        "startdbScripts"
+      ],
+      [
+        "startdbScriptsSecret"
+      ],
+      [
+        "startupProbe",
+        "enabled"
+      ],
+      [
+        "tags",
+        "bitnami-common"
+      ],
+      [
+        "terminationGracePeriodSeconds"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "duration"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuer"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "existingIssuerKind"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keyAlgorithm"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "keySize"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "certManager",
+        "renewBefore"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "enabled"
+      ],
+      [
+        "tls",
+        "autoGenerated",
+        "engine"
+      ],
+      [
+        "tls",
+        "enabled"
+      ],
+      [
+        "tolerations"
+      ],
+      [
+        "topologySpreadConstraints"
+      ],
+      [
+        "updateStrategy"
+      ],
+      [
+        "usePasswordFiles"
+      ],
+      [
+        "usersdFiles"
+      ]
+    ],
+    "present_count": 243,
+    "varied_count": 0,
+    "varied_fraction": 0.0,
+    "scope": "render inputs; includes failed renders, excludes equivalence-pruned candidates",
+    "branch_coverage_proven": false
+  },
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "traversal_unit": "Hypothesis samples",
+  "status": "failed",
+  "chart": "/var/folders/dd/pd400p1j4vgf5gv6qp6zfx000000gn/T/hypothesis-helm-scan-gq3532w3/chart",
+  "seed": 0,
+  "attempts": 4,
+  "error": "Error: YAML parse error on clickhouse/templates/usersd-configmap.yaml: error converting YAML to JSON: yaml: line 14: did not find expected key\n\nUse --debug flag to render out invalid YAML",
+  "values": {
+    "global": {
+      "imageRegistry": "",
+      "imagePullSecrets": [],
+      "defaultStorageClass": "",
+      "security": {
+        "allowInsecureImages": false
+      },
+      "compatibility": {
+        "openshift": {
+          "adaptSecurityContext": "auto"
+        }
+      }
+    },
+    "kubeVersion": "",
+    "apiVersions": [],
+    "nameOverride": "",
+    "fullnameOverride": "",
+    "namespaceOverride": "",
+    "commonLabels": {},
+    "commonAnnotations": {},
+    "clusterDomain": "cluster.local",
+    "extraDeploy": [],
+    "usePasswordFiles": true,
+    "diagnosticMode": {
+      "enabled": false,
+      "command": [
+        "sleep"
+      ],
+      "args": [
+        "infinity"
+      ]
+    },
+    "defaultInitContainers": {
+      "volumePermissions": {
+        "enabled": false,
+        "image": {
+          "registry": "docker.io",
+          "repository": "bitnami/os-shell",
+          "tag": "12-debian-12-r51",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": []
+        },
+        "containerSecurityContext": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 0,
+          "privileged": false,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "add": [
+              "CHOWN"
+            ],
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "resourcesPreset": "nano",
+        "resources": {}
+      }
+    },
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/clickhouse",
+      "tag": "25.7.5-debian-12-r0",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": [],
+      "debug": false
+    },
+    "clusterName": "default",
+    "auth": {
+      "username": "default",
+      "password": "",
+      "existingSecret": "",
+      "existingSecretKey": ""
+    },
+    "tls": {
+      "enabled": false,
+      "autoGenerated": {
+        "enabled": true,
+        "engine": "helm",
+        "certManager": {
+          "existingIssuer": "",
+          "existingIssuerKind": "",
+          "keySize": 2048,
+          "keyAlgorithm": "RSA",
+          "duration": "2160h",
+          "renewBefore": "360h"
+        }
+      },
+      "ca": "",
+      "existingCASecret": "",
+      "server": {
+        "cert": "",
+        "key": "",
+        "existingSecret": ""
+      },
+      "keeper": {
+        "cert": "",
+        "key": "",
+        "existingSecret": ""
+      }
+    },
+    "logLevel": "information",
+    "sampling": {
+      "enabled": false
+    },
+    "configuration": {},
+    "existingConfigmap": "",
+    "configdFiles": {},
+    "existingConfigdConfigmap": "",
+    "usersdFiles": {
+      "": null
+    },
+    "existingUsersdConfigmap": "",
+    "existingUsersdSecret": "",
+    "initdbScripts": {},
+    "initdbScriptsSecret": "",
+    "startdbScripts": {},
+    "startdbScriptsSecret": "",
+    "shards": 2,
+    "replicaCount": 3,
+    "distributeReplicasByZone": false,
+    "exposeMysql": true,
+    "exposePostgresql": true,
+    "containerPorts": {
+      "http": 8123,
+      "https": 8443,
+      "tcp": 9000,
+      "tcpSecure": 9440,
+      "mysql": 9004,
+      "postgresql": 9005,
+      "interserver": 9009,
+      "metrics": 8001
+    },
+    "livenessProbe": {
+      "enabled": true,
+      "failureThreshold": 3,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "failureThreshold": 3,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "failureThreshold": 3,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "successThreshold": 1,
+      "timeoutSeconds": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "small",
+    "resources": {},
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 1001
+    },
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "readOnlyRootFilesystem": true,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "command": [],
+    "args": [],
+    "automountServiceAccountToken": false,
+    "hostAliases": [],
+    "podLabels": {},
+    "podAnnotations": {},
+    "podAffinityPreset": "",
+    "podAntiAffinityPreset": "soft",
+    "nodeAffinityPreset": {
+      "type": "",
+      "key": "",
+      "values": []
+    },
+    "affinity": {},
+    "nodeSelector": {},
+    "tolerations": [],
+    "updateStrategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {}
+    },
+    "podManagementPolicy": "Parallel",
+    "priorityClassName": "",
+    "topologySpreadConstraints": [],
+    "schedulerName": "",
+    "terminationGracePeriodSeconds": "",
+    "lifecycleHooks": {},
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "extraVolumes": [],
+    "extraVolumeMounts": [],
+    "extraVolumeClaimTemplates": [],
+    "sidecars": [],
+    "initContainers": [],
+    "pdb": {
+      "create": true,
+      "minAvailable": "",
+      "maxUnavailable": ""
+    },
+    "autoscaling": {
+      "vpa": {
+        "enabled": false,
+        "annotations": {},
+        "controlledResources": [],
+        "maxAllowed": {},
+        "minAllowed": {},
+        "updatePolicy": {
+          "updateMode": "Auto"
+        }
+      }
+    },
+    "service": {
+      "type": "ClusterIP",
+      "perReplicaAccess": false,
+      "ports": {
+        "http": 8123,
+        "https": 443,
+        "tcp": 9000,
+        "tcpSecure": 9440,
+        "mysql": 9004,
+        "postgresql": 9005,
+        "interserver": 9009,
+        "metrics": 8001
+      },
+      "nodePorts": {
+        "http": "",
+        "https": "",
+        "tcp": "",
+        "tcpSecure": "",
+        "mysql": "",
+        "postgresql": "",
+        "interserver": "",
+        "metrics": ""
+      },
+      "clusterIP": "",
+      "loadBalancerIP": "",
+      "loadBalancerIPs": [],
+      "loadBalancerAnnotations": [],
+      "loadBalancerSourceRanges": [],
+      "externalTrafficPolicy": "Cluster",
+      "annotations": {},
+      "extraPorts": [],
+      "sessionAffinity": "None",
+      "sessionAffinityConfig": {},
+      "headless": {
+        "annotations": {},
+        "extraPorts": []
+      }
+    },
+    "ingress": {
+      "enabled": false,
+      "pathType": "ImplementationSpecific",
+      "apiVersion": "",
+      "hostname": "clickhouse.local",
+      "ingressClassName": "",
+      "path": "/",
+      "annotations": {},
+      "tls": false,
+      "selfSigned": false,
+      "extraHosts": [],
+      "extraPaths": [],
+      "extraTls": [],
+      "secrets": [],
+      "extraRules": []
+    },
+    "networkPolicy": {
+      "enabled": true,
+      "allowExternal": true,
+      "allowExternalEgress": true,
+      "addExternalClientAccess": true,
+      "extraIngress": [],
+      "extraEgress": [],
+      "ingressNSMatchLabels": {},
+      "ingressNSPodMatchLabels": {}
+    },
+    "persistentVolumeClaimRetentionPolicy": {
+      "enabled": false,
+      "whenScaled": "Retain",
+      "whenDeleted": "Retain"
+    },
+    "persistence": {
+      "enabled": true,
+      "volumeName": "data",
+      "existingClaim": "",
+      "storageClass": "",
+      "labels": {},
+      "annotations": {},
+      "accessModes": [
+        "ReadWriteOnce"
+      ],
+      "size": "8Gi",
+      "selector": {},
+      "dataSource": {},
+      "mountPath": "/bitnami/clickhouse"
+    },
+    "keeper": {
+      "enabled": true,
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/clickhouse-keeper",
+        "tag": "25.7.5-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [],
+        "debug": false
+      },
+      "replicaCount": 3,
+      "configuration": {},
+      "existingConfigmap": "",
+      "configdFiles": {},
+      "existingConfigdConfigmap": "",
+      "usersdFiles": {},
+      "existingUsersdConfigmap": "",
+      "existingUsersdSecret": "",
+      "containerPorts": {
+        "tcp": 9181,
+        "tcpSecure": 9281,
+        "raft": 9234
+      },
+      "extraContainerPorts": [],
+      "livenessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "readinessProbe": {
+        "enabled": true,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "startupProbe": {
+        "enabled": false,
+        "failureThreshold": 3,
+        "initialDelaySeconds": 10,
+        "periodSeconds": 10,
+        "successThreshold": 1,
+        "timeoutSeconds": 1
+      },
+      "customLivenessProbe": {},
+      "customReadinessProbe": {},
+      "customStartupProbe": {},
+      "resourcesPreset": "small",
+      "resources": {},
+      "podSecurityContext": {
+        "enabled": true,
+        "fsGroupChangePolicy": "Always",
+        "sysctls": [],
+        "supplementalGroups": [],
+        "fsGroup": 1001
+      },
+      "containerSecurityContext": {
+        "enabled": true,
+        "seLinuxOptions": {},
+        "runAsUser": 1001,
+        "runAsGroup": 1001,
+        "runAsNonRoot": true,
+        "privileged": false,
+        "allowPrivilegeEscalation": false,
+        "readOnlyRootFilesystem": true,
+        "capabilities": {
+          "drop": [
+            "ALL"
+          ]
+        },
+        "seccompProfile": {
+          "type": "RuntimeDefault"
+        }
+      },
+      "command": [],
+      "args": [],
+      "extraEnvVars": [],
+      "extraEnvVarsCM": "",
+      "extraEnvVarsSecret": "",
+      "automountServiceAccountToken": false,
+      "hostAliases": [],
+      "podLabels": {},
+      "podAnnotations": {},
+      "podAffinityPreset": "",
+      "podAntiAffinityPreset": "soft",
+      "nodeAffinityPreset": {
+        "key": "",
+        "type": "",
+        "values": []
+      },
+      "affinity": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "updateStrategy": {
+        "type": "RollingUpdate",
+        "rollingUpdate": {}
+      },
+      "podManagementPolicy": "Parallel",
+      "priorityClassName": "",
+      "topologySpreadConstraints": [],
+      "schedulerName": "",
+      "terminationGracePeriodSeconds": "",
+      "lifecycleHooks": {},
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "sidecars": [],
+      "initContainers": [],
+      "pdb": {
+        "create": true,
+        "minAvailable": "",
+        "maxUnavailable": ""
+      },
+      "autoscaling": {
+        "vpa": {
+          "enabled": false,
+          "annotations": {},
+          "controlledResources": [],
+          "maxAllowed": {},
+          "minAllowed": {},
+          "updatePolicy": {
+            "updateMode": "Auto"
+          }
+        }
+      },
+      "service": {
+        "type": "ClusterIP",
+        "ports": {
+          "tcp": 9181,
+          "tcpSecure": 9281,
+          "raft": 9234
+        },
+        "nodePorts": {
+          "tcp": "",
+          "tcpSecure": "",
+          "raft": ""
+        },
+        "clusterIP": "",
+        "loadBalancerIP": "",
+        "loadBalancerSourceRanges": [],
+        "externalTrafficPolicy": "Cluster",
+        "annotations": {},
+        "extraPorts": [],
+        "sessionAffinity": "None",
+        "sessionAffinityConfig": {},
+        "headless": {
+          "annotations": {},
+          "extraPorts": []
+        }
+      },
+      "networkPolicy": {
+        "enabled": true,
+        "allowExternal": true,
+        "allowExternalEgress": true,
+        "addExternalClientAccess": true,
+        "extraIngress": [],
+        "extraEgress": [],
+        "ingressNSMatchLabels": {},
+        "ingressNSPodMatchLabels": {}
+      },
+      "persistentVolumeClaimRetentionPolicy": {
+        "enabled": false,
+        "whenScaled": "Retain",
+        "whenDeleted": "Retain"
+      },
+      "persistence": {
+        "enabled": true,
+        "existingClaim": "",
+        "storageClass": "",
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "size": "8Gi",
+        "annotations": {},
+        "labels": {},
+        "selector": {},
+        "dataSource": {},
+        "mountPath": "/bitnami/clickhouse-keeper"
+      }
+    },
+    "serviceAccount": {
+      "create": true,
+      "name": "",
+      "annotations": {},
+      "automountServiceAccountToken": false
+    },
+    "metrics": {
+      "enabled": false,
+      "podAnnotations": {},
+      "serviceMonitor": {
+        "enabled": false,
+        "namespace": "",
+        "annotations": {},
+        "labels": {},
+        "jobLabel": "",
+        "honorLabels": false,
+        "interval": "",
+        "scrapeTimeout": "",
+        "metricRelabelings": [],
+        "relabelings": [],
+        "selector": {}
+      },
+      "prometheusRule": {
+        "enabled": false,
+        "namespace": "",
+        "additionalLabels": {},
+        "rules": []
+      }
+    },
+    "externalZookeeper": {
+      "servers": [],
+      "port": 2888
+    }
+  },
+  "input_changes": {
+    "$.usersdFiles[\"\"]": null
+  },
+  "comparisons": {
+    "overrides": {
+      "format": "deepdiff-json-v1",
+      "baseline_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "result_sha256": "d67318d283342553367844f16354ab67f7c1477a0390c0948a3e8972d94e93b9",
+      "changes": [
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.affinity",
+          "segments": [
+            "affinity"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.apiVersions",
+          "segments": [
+            "apiVersions"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.args",
+          "segments": [
+            "args"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.auth",
+          "segments": [
+            "auth"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "username": "default",
+            "password": "",
+            "existingSecret": "",
+            "existingSecretKey": ""
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.automountServiceAccountToken",
+          "segments": [
+            "automountServiceAccountToken"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": false
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.autoscaling",
+          "segments": [
+            "autoscaling"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "vpa": {
+              "enabled": false,
+              "annotations": {},
+              "controlledResources": [],
+              "maxAllowed": {},
+              "minAllowed": {},
+              "updatePolicy": {
+                "updateMode": "Auto"
+              }
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.clusterDomain",
+          "segments": [
+            "clusterDomain"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": "cluster.local"
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.clusterName",
+          "segments": [
+            "clusterName"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": "default"
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.command",
+          "segments": [
+            "command"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.commonAnnotations",
+          "segments": [
+            "commonAnnotations"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.commonLabels",
+          "segments": [
+            "commonLabels"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.configdFiles",
+          "segments": [
+            "configdFiles"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.configuration",
+          "segments": [
+            "configuration"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.containerPorts",
+          "segments": [
+            "containerPorts"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "http": 8123,
+            "https": 8443,
+            "tcp": 9000,
+            "tcpSecure": 9440,
+            "mysql": 9004,
+            "postgresql": 9005,
+            "interserver": 9009,
+            "metrics": 8001
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.containerSecurityContext",
+          "segments": [
+            "containerSecurityContext"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": true,
+            "seLinuxOptions": {},
+            "runAsUser": 1001,
+            "runAsGroup": 1001,
+            "runAsNonRoot": true,
+            "privileged": false,
+            "allowPrivilegeEscalation": false,
+            "readOnlyRootFilesystem": true,
+            "capabilities": {
+              "drop": [
+                "ALL"
+              ]
+            },
+            "seccompProfile": {
+              "type": "RuntimeDefault"
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.customLivenessProbe",
+          "segments": [
+            "customLivenessProbe"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.customReadinessProbe",
+          "segments": [
+            "customReadinessProbe"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.customStartupProbe",
+          "segments": [
+            "customStartupProbe"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.defaultInitContainers",
+          "segments": [
+            "defaultInitContainers"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "volumePermissions": {
+              "enabled": false,
+              "image": {
+                "registry": "docker.io",
+                "repository": "bitnami/os-shell",
+                "tag": "12-debian-12-r51",
+                "digest": "",
+                "pullPolicy": "IfNotPresent",
+                "pullSecrets": []
+              },
+              "containerSecurityContext": {
+                "enabled": true,
+                "seLinuxOptions": {},
+                "runAsUser": 0,
+                "privileged": false,
+                "allowPrivilegeEscalation": false,
+                "capabilities": {
+                  "add": [
+                    "CHOWN"
+                  ],
+                  "drop": [
+                    "ALL"
+                  ]
+                },
+                "seccompProfile": {
+                  "type": "RuntimeDefault"
+                }
+              },
+              "resourcesPreset": "nano",
+              "resources": {}
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.diagnosticMode",
+          "segments": [
+            "diagnosticMode"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": false,
+            "command": [
+              "sleep"
+            ],
+            "args": [
+              "infinity"
+            ]
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.distributeReplicasByZone",
+          "segments": [
+            "distributeReplicasByZone"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": false
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.existingConfigdConfigmap",
+          "segments": [
+            "existingConfigdConfigmap"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.existingConfigmap",
+          "segments": [
+            "existingConfigmap"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.existingUsersdConfigmap",
+          "segments": [
+            "existingUsersdConfigmap"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.existingUsersdSecret",
+          "segments": [
+            "existingUsersdSecret"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.exposeMysql",
+          "segments": [
+            "exposeMysql"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": true
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.exposePostgresql",
+          "segments": [
+            "exposePostgresql"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": true
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.externalZookeeper",
+          "segments": [
+            "externalZookeeper"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "servers": [],
+            "port": 2888
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.extraDeploy",
+          "segments": [
+            "extraDeploy"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.extraEnvVars",
+          "segments": [
+            "extraEnvVars"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.extraEnvVarsCM",
+          "segments": [
+            "extraEnvVarsCM"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.extraEnvVarsSecret",
+          "segments": [
+            "extraEnvVarsSecret"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.extraVolumeClaimTemplates",
+          "segments": [
+            "extraVolumeClaimTemplates"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.extraVolumeMounts",
+          "segments": [
+            "extraVolumeMounts"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.extraVolumes",
+          "segments": [
+            "extraVolumes"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.fullnameOverride",
+          "segments": [
+            "fullnameOverride"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.global",
+          "segments": [
+            "global"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "imageRegistry": "",
+            "imagePullSecrets": [],
+            "defaultStorageClass": "",
+            "security": {
+              "allowInsecureImages": false
+            },
+            "compatibility": {
+              "openshift": {
+                "adaptSecurityContext": "auto"
+              }
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.hostAliases",
+          "segments": [
+            "hostAliases"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.image",
+          "segments": [
+            "image"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "registry": "docker.io",
+            "repository": "bitnami/clickhouse",
+            "tag": "25.7.5-debian-12-r0",
+            "digest": "",
+            "pullPolicy": "IfNotPresent",
+            "pullSecrets": [],
+            "debug": false
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.ingress",
+          "segments": [
+            "ingress"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": false,
+            "pathType": "ImplementationSpecific",
+            "apiVersion": "",
+            "hostname": "clickhouse.local",
+            "ingressClassName": "",
+            "path": "/",
+            "annotations": {},
+            "tls": false,
+            "selfSigned": false,
+            "extraHosts": [],
+            "extraPaths": [],
+            "extraTls": [],
+            "secrets": [],
+            "extraRules": []
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.initContainers",
+          "segments": [
+            "initContainers"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.initdbScripts",
+          "segments": [
+            "initdbScripts"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.initdbScriptsSecret",
+          "segments": [
+            "initdbScriptsSecret"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.keeper",
+          "segments": [
+            "keeper"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": true,
+            "image": {
+              "registry": "docker.io",
+              "repository": "bitnami/clickhouse-keeper",
+              "tag": "25.7.5-debian-12-r0",
+              "digest": "",
+              "pullPolicy": "IfNotPresent",
+              "pullSecrets": [],
+              "debug": false
+            },
+            "replicaCount": 3,
+            "configuration": {},
+            "existingConfigmap": "",
+            "configdFiles": {},
+            "existingConfigdConfigmap": "",
+            "usersdFiles": {},
+            "existingUsersdConfigmap": "",
+            "existingUsersdSecret": "",
+            "containerPorts": {
+              "tcp": 9181,
+              "tcpSecure": 9281,
+              "raft": 9234
+            },
+            "extraContainerPorts": [],
+            "livenessProbe": {
+              "enabled": true,
+              "failureThreshold": 3,
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "readinessProbe": {
+              "enabled": true,
+              "failureThreshold": 3,
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "startupProbe": {
+              "enabled": false,
+              "failureThreshold": 3,
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "customLivenessProbe": {},
+            "customReadinessProbe": {},
+            "customStartupProbe": {},
+            "resourcesPreset": "small",
+            "resources": {},
+            "podSecurityContext": {
+              "enabled": true,
+              "fsGroupChangePolicy": "Always",
+              "sysctls": [],
+              "supplementalGroups": [],
+              "fsGroup": 1001
+            },
+            "containerSecurityContext": {
+              "enabled": true,
+              "seLinuxOptions": {},
+              "runAsUser": 1001,
+              "runAsGroup": 1001,
+              "runAsNonRoot": true,
+              "privileged": false,
+              "allowPrivilegeEscalation": false,
+              "readOnlyRootFilesystem": true,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "command": [],
+            "args": [],
+            "extraEnvVars": [],
+            "extraEnvVarsCM": "",
+            "extraEnvVarsSecret": "",
+            "automountServiceAccountToken": false,
+            "hostAliases": [],
+            "podLabels": {},
+            "podAnnotations": {},
+            "podAffinityPreset": "",
+            "podAntiAffinityPreset": "soft",
+            "nodeAffinityPreset": {
+              "key": "",
+              "type": "",
+              "values": []
+            },
+            "affinity": {},
+            "nodeSelector": {},
+            "tolerations": [],
+            "updateStrategy": {
+              "type": "RollingUpdate",
+              "rollingUpdate": {}
+            },
+            "podManagementPolicy": "Parallel",
+            "priorityClassName": "",
+            "topologySpreadConstraints": [],
+            "schedulerName": "",
+            "terminationGracePeriodSeconds": "",
+            "lifecycleHooks": {},
+            "extraVolumes": [],
+            "extraVolumeMounts": [],
+            "sidecars": [],
+            "initContainers": [],
+            "pdb": {
+              "create": true,
+              "minAvailable": "",
+              "maxUnavailable": ""
+            },
+            "autoscaling": {
+              "vpa": {
+                "enabled": false,
+                "annotations": {},
+                "controlledResources": [],
+                "maxAllowed": {},
+                "minAllowed": {},
+                "updatePolicy": {
+                  "updateMode": "Auto"
+                }
+              }
+            },
+            "service": {
+              "type": "ClusterIP",
+              "ports": {
+                "tcp": 9181,
+                "tcpSecure": 9281,
+                "raft": 9234
+              },
+              "nodePorts": {
+                "tcp": "",
+                "tcpSecure": "",
+                "raft": ""
+              },
+              "clusterIP": "",
+              "loadBalancerIP": "",
+              "loadBalancerSourceRanges": [],
+              "externalTrafficPolicy": "Cluster",
+              "annotations": {},
+              "extraPorts": [],
+              "sessionAffinity": "None",
+              "sessionAffinityConfig": {},
+              "headless": {
+                "annotations": {},
+                "extraPorts": []
+              }
+            },
+            "networkPolicy": {
+              "enabled": true,
+              "allowExternal": true,
+              "allowExternalEgress": true,
+              "addExternalClientAccess": true,
+              "extraIngress": [],
+              "extraEgress": [],
+              "ingressNSMatchLabels": {},
+              "ingressNSPodMatchLabels": {}
+            },
+            "persistentVolumeClaimRetentionPolicy": {
+              "enabled": false,
+              "whenScaled": "Retain",
+              "whenDeleted": "Retain"
+            },
+            "persistence": {
+              "enabled": true,
+              "existingClaim": "",
+              "storageClass": "",
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "size": "8Gi",
+              "annotations": {},
+              "labels": {},
+              "selector": {},
+              "dataSource": {},
+              "mountPath": "/bitnami/clickhouse-keeper"
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.kubeVersion",
+          "segments": [
+            "kubeVersion"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.lifecycleHooks",
+          "segments": [
+            "lifecycleHooks"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.livenessProbe",
+          "segments": [
+            "livenessProbe"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": true,
+            "failureThreshold": 3,
+            "initialDelaySeconds": 10,
+            "periodSeconds": 10,
+            "successThreshold": 1,
+            "timeoutSeconds": 1
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.logLevel",
+          "segments": [
+            "logLevel"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": "information"
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.metrics",
+          "segments": [
+            "metrics"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": false,
+            "podAnnotations": {},
+            "serviceMonitor": {
+              "enabled": false,
+              "namespace": "",
+              "annotations": {},
+              "labels": {},
+              "jobLabel": "",
+              "honorLabels": false,
+              "interval": "",
+              "scrapeTimeout": "",
+              "metricRelabelings": [],
+              "relabelings": [],
+              "selector": {}
+            },
+            "prometheusRule": {
+              "enabled": false,
+              "namespace": "",
+              "additionalLabels": {},
+              "rules": []
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.nameOverride",
+          "segments": [
+            "nameOverride"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.namespaceOverride",
+          "segments": [
+            "namespaceOverride"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.networkPolicy",
+          "segments": [
+            "networkPolicy"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": true,
+            "allowExternal": true,
+            "allowExternalEgress": true,
+            "addExternalClientAccess": true,
+            "extraIngress": [],
+            "extraEgress": [],
+            "ingressNSMatchLabels": {},
+            "ingressNSPodMatchLabels": {}
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.nodeAffinityPreset",
+          "segments": [
+            "nodeAffinityPreset"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "type": "",
+            "key": "",
+            "values": []
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.nodeSelector",
+          "segments": [
+            "nodeSelector"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.pdb",
+          "segments": [
+            "pdb"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "create": true,
+            "minAvailable": "",
+            "maxUnavailable": ""
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.persistence",
+          "segments": [
+            "persistence"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": true,
+            "volumeName": "data",
+            "existingClaim": "",
+            "storageClass": "",
+            "labels": {},
+            "annotations": {},
+            "accessModes": [
+              "ReadWriteOnce"
+            ],
+            "size": "8Gi",
+            "selector": {},
+            "dataSource": {},
+            "mountPath": "/bitnami/clickhouse"
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.persistentVolumeClaimRetentionPolicy",
+          "segments": [
+            "persistentVolumeClaimRetentionPolicy"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": false,
+            "whenScaled": "Retain",
+            "whenDeleted": "Retain"
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.podAffinityPreset",
+          "segments": [
+            "podAffinityPreset"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.podAnnotations",
+          "segments": [
+            "podAnnotations"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.podAntiAffinityPreset",
+          "segments": [
+            "podAntiAffinityPreset"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": "soft"
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.podLabels",
+          "segments": [
+            "podLabels"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.podManagementPolicy",
+          "segments": [
+            "podManagementPolicy"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": "Parallel"
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.podSecurityContext",
+          "segments": [
+            "podSecurityContext"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": true,
+            "fsGroupChangePolicy": "Always",
+            "sysctls": [],
+            "supplementalGroups": [],
+            "fsGroup": 1001
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.priorityClassName",
+          "segments": [
+            "priorityClassName"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.readinessProbe",
+          "segments": [
+            "readinessProbe"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": true,
+            "failureThreshold": 3,
+            "initialDelaySeconds": 10,
+            "periodSeconds": 10,
+            "successThreshold": 1,
+            "timeoutSeconds": 1
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.replicaCount",
+          "segments": [
+            "replicaCount"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": 3
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.resources",
+          "segments": [
+            "resources"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.resourcesPreset",
+          "segments": [
+            "resourcesPreset"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": "small"
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.sampling",
+          "segments": [
+            "sampling"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": false
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.schedulerName",
+          "segments": [
+            "schedulerName"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.service",
+          "segments": [
+            "service"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "type": "ClusterIP",
+            "perReplicaAccess": false,
+            "ports": {
+              "http": 8123,
+              "https": 443,
+              "tcp": 9000,
+              "tcpSecure": 9440,
+              "mysql": 9004,
+              "postgresql": 9005,
+              "interserver": 9009,
+              "metrics": 8001
+            },
+            "nodePorts": {
+              "http": "",
+              "https": "",
+              "tcp": "",
+              "tcpSecure": "",
+              "mysql": "",
+              "postgresql": "",
+              "interserver": "",
+              "metrics": ""
+            },
+            "clusterIP": "",
+            "loadBalancerIP": "",
+            "loadBalancerIPs": [],
+            "loadBalancerAnnotations": [],
+            "loadBalancerSourceRanges": [],
+            "externalTrafficPolicy": "Cluster",
+            "annotations": {},
+            "extraPorts": [],
+            "sessionAffinity": "None",
+            "sessionAffinityConfig": {},
+            "headless": {
+              "annotations": {},
+              "extraPorts": []
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.serviceAccount",
+          "segments": [
+            "serviceAccount"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "create": true,
+            "name": "",
+            "annotations": {},
+            "automountServiceAccountToken": false
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.shards",
+          "segments": [
+            "shards"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": 2
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.sidecars",
+          "segments": [
+            "sidecars"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.startdbScripts",
+          "segments": [
+            "startdbScripts"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {}
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.startdbScriptsSecret",
+          "segments": [
+            "startdbScriptsSecret"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.startupProbe",
+          "segments": [
+            "startupProbe"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": false,
+            "failureThreshold": 3,
+            "initialDelaySeconds": 10,
+            "periodSeconds": 10,
+            "successThreshold": 1,
+            "timeoutSeconds": 1
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.terminationGracePeriodSeconds",
+          "segments": [
+            "terminationGracePeriodSeconds"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": ""
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.tls",
+          "segments": [
+            "tls"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "enabled": false,
+            "autoGenerated": {
+              "enabled": true,
+              "engine": "helm",
+              "certManager": {
+                "existingIssuer": "",
+                "existingIssuerKind": "",
+                "keySize": 2048,
+                "keyAlgorithm": "RSA",
+                "duration": "2160h",
+                "renewBefore": "360h"
+              }
+            },
+            "ca": "",
+            "existingCASecret": "",
+            "server": {
+              "cert": "",
+              "key": "",
+              "existingSecret": ""
+            },
+            "keeper": {
+              "cert": "",
+              "key": "",
+              "existingSecret": ""
+            }
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.tolerations",
+          "segments": [
+            "tolerations"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.topologySpreadConstraints",
+          "segments": [
+            "topologySpreadConstraints"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": []
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.updateStrategy",
+          "segments": [
+            "updateStrategy"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "type": "RollingUpdate",
+            "rollingUpdate": {}
+          }
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.usePasswordFiles",
+          "segments": [
+            "usePasswordFiles"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": true
+        },
+        {
+          "kind": "dictionary_item_added",
+          "path": "$.usersdFiles",
+          "segments": [
+            "usersdFiles"
+          ],
+          "old_present": false,
+          "new_present": true,
+          "after": {
+            "": null
+          }
+        }
+      ],
+      "delta": {
+        "dictionary_item_added": {
+          "root['global']": {
+            "imageRegistry": "",
+            "imagePullSecrets": [],
+            "defaultStorageClass": "",
+            "security": {
+              "allowInsecureImages": false
+            },
+            "compatibility": {
+              "openshift": {
+                "adaptSecurityContext": "auto"
+              }
+            }
+          },
+          "root['kubeVersion']": "",
+          "root['apiVersions']": [],
+          "root['nameOverride']": "",
+          "root['fullnameOverride']": "",
+          "root['namespaceOverride']": "",
+          "root['commonLabels']": {},
+          "root['commonAnnotations']": {},
+          "root['clusterDomain']": "cluster.local",
+          "root['extraDeploy']": [],
+          "root['usePasswordFiles']": true,
+          "root['diagnosticMode']": {
+            "enabled": false,
+            "command": [
+              "sleep"
+            ],
+            "args": [
+              "infinity"
+            ]
+          },
+          "root['defaultInitContainers']": {
+            "volumePermissions": {
+              "enabled": false,
+              "image": {
+                "registry": "docker.io",
+                "repository": "bitnami/os-shell",
+                "tag": "12-debian-12-r51",
+                "digest": "",
+                "pullPolicy": "IfNotPresent",
+                "pullSecrets": []
+              },
+              "containerSecurityContext": {
+                "enabled": true,
+                "seLinuxOptions": {},
+                "runAsUser": 0,
+                "privileged": false,
+                "allowPrivilegeEscalation": false,
+                "capabilities": {
+                  "add": [
+                    "CHOWN"
+                  ],
+                  "drop": [
+                    "ALL"
+                  ]
+                },
+                "seccompProfile": {
+                  "type": "RuntimeDefault"
+                }
+              },
+              "resourcesPreset": "nano",
+              "resources": {}
+            }
+          },
+          "root['image']": {
+            "registry": "docker.io",
+            "repository": "bitnami/clickhouse",
+            "tag": "25.7.5-debian-12-r0",
+            "digest": "",
+            "pullPolicy": "IfNotPresent",
+            "pullSecrets": [],
+            "debug": false
+          },
+          "root['clusterName']": "default",
+          "root['auth']": {
+            "username": "default",
+            "password": "",
+            "existingSecret": "",
+            "existingSecretKey": ""
+          },
+          "root['tls']": {
+            "enabled": false,
+            "autoGenerated": {
+              "enabled": true,
+              "engine": "helm",
+              "certManager": {
+                "existingIssuer": "",
+                "existingIssuerKind": "",
+                "keySize": 2048,
+                "keyAlgorithm": "RSA",
+                "duration": "2160h",
+                "renewBefore": "360h"
+              }
+            },
+            "ca": "",
+            "existingCASecret": "",
+            "server": {
+              "cert": "",
+              "key": "",
+              "existingSecret": ""
+            },
+            "keeper": {
+              "cert": "",
+              "key": "",
+              "existingSecret": ""
+            }
+          },
+          "root['logLevel']": "information",
+          "root['sampling']": {
+            "enabled": false
+          },
+          "root['configuration']": {},
+          "root['existingConfigmap']": "",
+          "root['configdFiles']": {},
+          "root['existingConfigdConfigmap']": "",
+          "root['usersdFiles']": {
+            "": null
+          },
+          "root['existingUsersdConfigmap']": "",
+          "root['existingUsersdSecret']": "",
+          "root['initdbScripts']": {},
+          "root['initdbScriptsSecret']": "",
+          "root['startdbScripts']": {},
+          "root['startdbScriptsSecret']": "",
+          "root['shards']": 2,
+          "root['replicaCount']": 3,
+          "root['distributeReplicasByZone']": false,
+          "root['exposeMysql']": true,
+          "root['exposePostgresql']": true,
+          "root['containerPorts']": {
+            "http": 8123,
+            "https": 8443,
+            "tcp": 9000,
+            "tcpSecure": 9440,
+            "mysql": 9004,
+            "postgresql": 9005,
+            "interserver": 9009,
+            "metrics": 8001
+          },
+          "root['livenessProbe']": {
+            "enabled": true,
+            "failureThreshold": 3,
+            "initialDelaySeconds": 10,
+            "periodSeconds": 10,
+            "successThreshold": 1,
+            "timeoutSeconds": 1
+          },
+          "root['readinessProbe']": {
+            "enabled": true,
+            "failureThreshold": 3,
+            "initialDelaySeconds": 10,
+            "periodSeconds": 10,
+            "successThreshold": 1,
+            "timeoutSeconds": 1
+          },
+          "root['startupProbe']": {
+            "enabled": false,
+            "failureThreshold": 3,
+            "initialDelaySeconds": 10,
+            "periodSeconds": 10,
+            "successThreshold": 1,
+            "timeoutSeconds": 1
+          },
+          "root['customLivenessProbe']": {},
+          "root['customReadinessProbe']": {},
+          "root['customStartupProbe']": {},
+          "root['resourcesPreset']": "small",
+          "root['resources']": {},
+          "root['podSecurityContext']": {
+            "enabled": true,
+            "fsGroupChangePolicy": "Always",
+            "sysctls": [],
+            "supplementalGroups": [],
+            "fsGroup": 1001
+          },
+          "root['containerSecurityContext']": {
+            "enabled": true,
+            "seLinuxOptions": {},
+            "runAsUser": 1001,
+            "runAsGroup": 1001,
+            "runAsNonRoot": true,
+            "privileged": false,
+            "allowPrivilegeEscalation": false,
+            "readOnlyRootFilesystem": true,
+            "capabilities": {
+              "drop": [
+                "ALL"
+              ]
+            },
+            "seccompProfile": {
+              "type": "RuntimeDefault"
+            }
+          },
+          "root['command']": [],
+          "root['args']": [],
+          "root['automountServiceAccountToken']": false,
+          "root['hostAliases']": [],
+          "root['podLabels']": {},
+          "root['podAnnotations']": {},
+          "root['podAffinityPreset']": "",
+          "root['podAntiAffinityPreset']": "soft",
+          "root['nodeAffinityPreset']": {
+            "type": "",
+            "key": "",
+            "values": []
+          },
+          "root['affinity']": {},
+          "root['nodeSelector']": {},
+          "root['tolerations']": [],
+          "root['updateStrategy']": {
+            "type": "RollingUpdate",
+            "rollingUpdate": {}
+          },
+          "root['podManagementPolicy']": "Parallel",
+          "root['priorityClassName']": "",
+          "root['topologySpreadConstraints']": [],
+          "root['schedulerName']": "",
+          "root['terminationGracePeriodSeconds']": "",
+          "root['lifecycleHooks']": {},
+          "root['extraEnvVars']": [],
+          "root['extraEnvVarsCM']": "",
+          "root['extraEnvVarsSecret']": "",
+          "root['extraVolumes']": [],
+          "root['extraVolumeMounts']": [],
+          "root['extraVolumeClaimTemplates']": [],
+          "root['sidecars']": [],
+          "root['initContainers']": [],
+          "root['pdb']": {
+            "create": true,
+            "minAvailable": "",
+            "maxUnavailable": ""
+          },
+          "root['autoscaling']": {
+            "vpa": {
+              "enabled": false,
+              "annotations": {},
+              "controlledResources": [],
+              "maxAllowed": {},
+              "minAllowed": {},
+              "updatePolicy": {
+                "updateMode": "Auto"
+              }
+            }
+          },
+          "root['service']": {
+            "type": "ClusterIP",
+            "perReplicaAccess": false,
+            "ports": {
+              "http": 8123,
+              "https": 443,
+              "tcp": 9000,
+              "tcpSecure": 9440,
+              "mysql": 9004,
+              "postgresql": 9005,
+              "interserver": 9009,
+              "metrics": 8001
+            },
+            "nodePorts": {
+              "http": "",
+              "https": "",
+              "tcp": "",
+              "tcpSecure": "",
+              "mysql": "",
+              "postgresql": "",
+              "interserver": "",
+              "metrics": ""
+            },
+            "clusterIP": "",
+            "loadBalancerIP": "",
+            "loadBalancerIPs": [],
+            "loadBalancerAnnotations": [],
+            "loadBalancerSourceRanges": [],
+            "externalTrafficPolicy": "Cluster",
+            "annotations": {},
+            "extraPorts": [],
+            "sessionAffinity": "None",
+            "sessionAffinityConfig": {},
+            "headless": {
+              "annotations": {},
+              "extraPorts": []
+            }
+          },
+          "root['ingress']": {
+            "enabled": false,
+            "pathType": "ImplementationSpecific",
+            "apiVersion": "",
+            "hostname": "clickhouse.local",
+            "ingressClassName": "",
+            "path": "/",
+            "annotations": {},
+            "tls": false,
+            "selfSigned": false,
+            "extraHosts": [],
+            "extraPaths": [],
+            "extraTls": [],
+            "secrets": [],
+            "extraRules": []
+          },
+          "root['networkPolicy']": {
+            "enabled": true,
+            "allowExternal": true,
+            "allowExternalEgress": true,
+            "addExternalClientAccess": true,
+            "extraIngress": [],
+            "extraEgress": [],
+            "ingressNSMatchLabels": {},
+            "ingressNSPodMatchLabels": {}
+          },
+          "root['persistentVolumeClaimRetentionPolicy']": {
+            "enabled": false,
+            "whenScaled": "Retain",
+            "whenDeleted": "Retain"
+          },
+          "root['persistence']": {
+            "enabled": true,
+            "volumeName": "data",
+            "existingClaim": "",
+            "storageClass": "",
+            "labels": {},
+            "annotations": {},
+            "accessModes": [
+              "ReadWriteOnce"
+            ],
+            "size": "8Gi",
+            "selector": {},
+            "dataSource": {},
+            "mountPath": "/bitnami/clickhouse"
+          },
+          "root['keeper']": {
+            "enabled": true,
+            "image": {
+              "registry": "docker.io",
+              "repository": "bitnami/clickhouse-keeper",
+              "tag": "25.7.5-debian-12-r0",
+              "digest": "",
+              "pullPolicy": "IfNotPresent",
+              "pullSecrets": [],
+              "debug": false
+            },
+            "replicaCount": 3,
+            "configuration": {},
+            "existingConfigmap": "",
+            "configdFiles": {},
+            "existingConfigdConfigmap": "",
+            "usersdFiles": {},
+            "existingUsersdConfigmap": "",
+            "existingUsersdSecret": "",
+            "containerPorts": {
+              "tcp": 9181,
+              "tcpSecure": 9281,
+              "raft": 9234
+            },
+            "extraContainerPorts": [],
+            "livenessProbe": {
+              "enabled": true,
+              "failureThreshold": 3,
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "readinessProbe": {
+              "enabled": true,
+              "failureThreshold": 3,
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "startupProbe": {
+              "enabled": false,
+              "failureThreshold": 3,
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "customLivenessProbe": {},
+            "customReadinessProbe": {},
+            "customStartupProbe": {},
+            "resourcesPreset": "small",
+            "resources": {},
+            "podSecurityContext": {
+              "enabled": true,
+              "fsGroupChangePolicy": "Always",
+              "sysctls": [],
+              "supplementalGroups": [],
+              "fsGroup": 1001
+            },
+            "containerSecurityContext": {
+              "enabled": true,
+              "seLinuxOptions": {},
+              "runAsUser": 1001,
+              "runAsGroup": 1001,
+              "runAsNonRoot": true,
+              "privileged": false,
+              "allowPrivilegeEscalation": false,
+              "readOnlyRootFilesystem": true,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "command": [],
+            "args": [],
+            "extraEnvVars": [],
+            "extraEnvVarsCM": "",
+            "extraEnvVarsSecret": "",
+            "automountServiceAccountToken": false,
+            "hostAliases": [],
+            "podLabels": {},
+            "podAnnotations": {},
+            "podAffinityPreset": "",
+            "podAntiAffinityPreset": "soft",
+            "nodeAffinityPreset": {
+              "key": "",
+              "type": "",
+              "values": []
+            },
+            "affinity": {},
+            "nodeSelector": {},
+            "tolerations": [],
+            "updateStrategy": {
+              "type": "RollingUpdate",
+              "rollingUpdate": {}
+            },
+            "podManagementPolicy": "Parallel",
+            "priorityClassName": "",
+            "topologySpreadConstraints": [],
+            "schedulerName": "",
+            "terminationGracePeriodSeconds": "",
+            "lifecycleHooks": {},
+            "extraVolumes": [],
+            "extraVolumeMounts": [],
+            "sidecars": [],
+            "initContainers": [],
+            "pdb": {
+              "create": true,
+              "minAvailable": "",
+              "maxUnavailable": ""
+            },
+            "autoscaling": {
+              "vpa": {
+                "enabled": false,
+                "annotations": {},
+                "controlledResources": [],
+                "maxAllowed": {},
+                "minAllowed": {},
+                "updatePolicy": {
+                  "updateMode": "Auto"
+                }
+              }
+            },
+            "service": {
+              "type": "ClusterIP",
+              "ports": {
+                "tcp": 9181,
+                "tcpSecure": 9281,
+                "raft": 9234
+              },
+              "nodePorts": {
+                "tcp": "",
+                "tcpSecure": "",
+                "raft": ""
+              },
+              "clusterIP": "",
+              "loadBalancerIP": "",
+              "loadBalancerSourceRanges": [],
+              "externalTrafficPolicy": "Cluster",
+              "annotations": {},
+              "extraPorts": [],
+              "sessionAffinity": "None",
+              "sessionAffinityConfig": {},
+              "headless": {
+                "annotations": {},
+                "extraPorts": []
+              }
+            },
+            "networkPolicy": {
+              "enabled": true,
+              "allowExternal": true,
+              "allowExternalEgress": true,
+              "addExternalClientAccess": true,
+              "extraIngress": [],
+              "extraEgress": [],
+              "ingressNSMatchLabels": {},
+              "ingressNSPodMatchLabels": {}
+            },
+            "persistentVolumeClaimRetentionPolicy": {
+              "enabled": false,
+              "whenScaled": "Retain",
+              "whenDeleted": "Retain"
+            },
+            "persistence": {
+              "enabled": true,
+              "existingClaim": "",
+              "storageClass": "",
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "size": "8Gi",
+              "annotations": {},
+              "labels": {},
+              "selector": {},
+              "dataSource": {},
+              "mountPath": "/bitnami/clickhouse-keeper"
+            }
+          },
+          "root['serviceAccount']": {
+            "create": true,
+            "name": "",
+            "annotations": {},
+            "automountServiceAccountToken": false
+          },
+          "root['metrics']": {
+            "enabled": false,
+            "podAnnotations": {},
+            "serviceMonitor": {
+              "enabled": false,
+              "namespace": "",
+              "annotations": {},
+              "labels": {},
+              "jobLabel": "",
+              "honorLabels": false,
+              "interval": "",
+              "scrapeTimeout": "",
+              "metricRelabelings": [],
+              "relabelings": [],
+              "selector": {}
+            },
+            "prometheusRule": {
+              "enabled": false,
+              "namespace": "",
+              "additionalLabels": {},
+              "rules": []
+            }
+          },
+          "root['externalZookeeper']": {
+            "servers": [],
+            "port": 2888
+          }
+        }
+      }
+    },
+    "values": {
+      "format": "deepdiff-json-v1",
+      "baseline_sha256": "bde831ae95f5bde9537a6e38bdd2a1a6c22b36bcd45bb75e3deebde71faf59cc",
+      "result_sha256": "bde831ae95f5bde9537a6e38bdd2a1a6c22b36bcd45bb75e3deebde71faf59cc",
+      "changes": [],
+      "delta": {}
+    },
+    "manifests": {
+      "unavailable": "No parsed failing output or successful baseline is available."
+    }
+  },
+  "failure_type": "RenderFailure",
+  "render_hashes": {
+    "algorithm": "sha256-canonical-json-v1",
+    "scope": "run-local",
+    "observed_bundles": 1,
+    "unique_bundles": 1,
+    "duplicate_bundles": 0,
+    "validation_cache_hits": 0,
+    "validated_entries": 1
+  },
+  "dependency_activation": {
+    "dependencies": [
+      {
+        "path": [
+          "common"
+        ],
+        "name": "common",
+        "source": "charts/common/",
+        "conditions": [],
+        "tags": [
+          [
+            "tags",
+            "bitnami-common"
+          ]
+        ],
+        "baseline_enabled": true,
+        "reason": null
+      }
+    ],
+    "guided_contexts": 0,
+    "unavailable_contexts": 0,
+    "diagnostics": [
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .values"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .values"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .type"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .type"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .topologyKey"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .component"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .customLabels"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraMatchLabels"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraPodAffinityTerms"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraNamespaces"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .context.Release.Namespace"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .topologyKey"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraMatchLabels"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .namespaces"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved variable context: $.context.Release.Namespace"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .namespaces"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .topologyKey"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .weight"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .component"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .customLabels"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraMatchLabels"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraPodAffinityTerms"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraNamespaces"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .context.Release.Namespace"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .topologyKey"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .extraMatchLabels"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .namespaces"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved variable context: $.context.Release.Namespace"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .namespaces"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .topologyKey"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .type"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: .type"
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_affinities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .Capabilities.KubeVersion.Version"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .Values.kubeVersion"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .Values.global"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .kubeVersion"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .context.Values.apiVersions"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .context.Values.global"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .apiVersions"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .context.Capabilities.APIVersions.Has"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .version"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .version"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_capabilities.tpl",
+        "message": "unresolved dot context: .Capabilities"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .Capabilities.APIVersions.Has"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .secContext"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .context.Values.global"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .compatibility"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .openshift"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .context.Values.global.compatibility.openshift.adaptSecurityContext"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"fsGroup\" \"runAsUser\" \"runAsGroup\""
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .secContext.seLinuxOptions"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"seLinuxOptions\""
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .context.Values.global"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .compatibility"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .omitEmptySeLinuxOptions"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved dot context: .secContext.seLinuxOptions"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"seLinuxOptions\""
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "unresolved variable context: $adaptedContext.privileged"
+      },
+      {
+        "file": "charts/common/templates/_compatibility.tpl",
+        "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"capabilities\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .validationErrors"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .context.Release.IsUpgrade"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print $errorString \"\\n                 Note that even after reinstallation, old credentials may be needed as they may be kept in persistent volume claims.\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print $errorString \"\\n                 Further information can be obtained at https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues/#credential-errors-while-upgrading-chart-releases\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print $errorString \"\\n%s\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .context.Values.global"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .imageRegistry"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .context.Chart.Annotations.images"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .images"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .registry"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .repository"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .tag"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $relocatedImages = append $relocatedImages $fullImageName"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .repository"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $replacedImages = append $replacedImages $fullImageName"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $bitnamiLegacyImages = append $bitnamiLegacyImages $fullImageName"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .repository"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .tag"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $retaggedImages = append $retaggedImages $fullImageName"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .context.Values.global"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .security"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: .allowInsecureImages"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print $errorString \"\\n\\nUnrecognized images:\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print $errorString \"\\n  - \" ."
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print \"\\n\\n\u26a0 WARNING: \" $errorString"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print \"\\n\\n\u26a0 ERROR: \" $errorString"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print $errorString \"\\n\\nIf you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print $errorString \"\\nFurther information can be obtained at https://github.com/bitnami/charts/issues/30850\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $errorString = print \"\\n\\n\u26a0 WARNING: \" $errorString"
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $warnString = print $warnString \"\\n\\nRetagged images:\""
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_errors.tpl",
+        "message": "variable reassignment requires review: $warnString = print $warnString \"\\n  - \" ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRoot.registry"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .global"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRegistry"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRoot.repository"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRoot.tag"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRoot.tag"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .chart"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .chart.AppVersion"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $termination = .chart.AppVersion | toString"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRoot.digest"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $separator = \"@\""
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRoot.digest"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $termination = .imageRoot.digest | toString"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .global"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imagePullSecrets"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .name"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets .name"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .images"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .pullSecrets"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .name"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets .name"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved variable context: $context.Values.global"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imagePullSecrets"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .name"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" .name \"context\" $context))"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" . \"context\" $context))"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .images"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .pullSecrets"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .name"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" .name \"context\" $context))"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" . \"context\" $context))"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .imageRoot.tag"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved variable context: $version.Major"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved variable context: $version.Minor"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved variable context: $version.Patch"
+      },
+      {
+        "file": "charts/common/templates/_images.tpl",
+        "message": "unresolved dot context: .chart.AppVersion"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "unresolved dot context: .serviceName"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "unresolved dot context: .servicePort"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "unresolved dot context: .servicePort"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "unresolved dot context: .servicePort"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "unresolved dot context: .servicePort"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_ingress.tpl",
+        "message": "unresolved dot context: .annotations"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .context.Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .context.Release.Service"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .context.Chart.AppVersion"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: set"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .customLabels"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: template"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .Release.Service"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .Chart.AppVersion"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .customLabels"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .context.Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: merge"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_labels.tpl",
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Chart.Version"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Values.fullnameOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Chart.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Values.nameOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .chartValues.fullnameOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .chartValues.fullnameOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .chartName"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .chartValues.nameOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .context.Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .context.Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .context.Release.Name"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Release.Namespace"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: .Values.namespaceOverride"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_names.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_resources.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_resources.tpl",
+        "message": "unresolved dot context: .type"
+      },
+      {
+        "file": "charts/common/templates/_resources.tpl",
+        "message": "unresolved dot context: .type"
+      },
+      {
+        "file": "charts/common/templates/_resources.tpl",
+        "message": "unresolved lookup target: index $presets .type | toYaml"
+      },
+      {
+        "file": "charts/common/templates/_resources.tpl",
+        "message": "unresolved dot context: .type"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .defaultNameSuffix"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .defaultNameSuffix"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $name = printf \"%s-%s\" $name .defaultNameSuffix | trunc 63 | trimSuffix \"-\""
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .existingSecret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .name"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $name = ."
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $name = ."
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .existingSecret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .existingSecret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .existingSecret.keyMapping"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .existingSecret.keyMapping"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved variable context: $.key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved lookup target: $key = index .existingSecret.keyMapping $.key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $key = index .existingSecret.keyMapping $.key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .chartName"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .length"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .providedValues"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .data"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved lookup target: $password = index $secretData .key | b64dec"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = index $secretData .key | b64dec"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .failOnNew"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .honorProvidedValues"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "tpl source is dynamic or unsupported"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = tpl ($providedPasswordValue | toString) .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "tpl source is dynamic or unsupported"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = tpl ($providedPasswordValue | toString) .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .context.Values.enabled"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $subchart = $chartName"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .failOnNew"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .strong"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = randAscii $passwordLength"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = regexReplaceAllLiteral \"\\\\W\" $password \"@\" | substr 5 $passwordLength"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = printf \"%s%s\" $subStr $password | toString | shuffle"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = randAlphaNum $passwordLength"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .skipB64enc"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $password = $password | b64enc"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .skipQuote"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .data"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved lookup target: $value = index $secretData .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $value = index $secretData .key"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .defaultValue"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .defaultValue"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "variable reassignment requires review: $value = .defaultValue | toString | b64enc"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/_secrets.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_storage.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_storage.tpl",
+        "message": "unresolved dot context: .global"
+      },
+      {
+        "file": "charts/common/templates/_storage.tpl",
+        "message": "unresolved dot context: .storageClass"
+      },
+      {
+        "file": "charts/common/templates/_storage.tpl",
+        "message": "unresolved dot context: .persistence.storageClass"
+      },
+      {
+        "file": "charts/common/templates/_storage.tpl",
+        "message": "unresolved dot context: .defaultStorageClass"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .value"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .value"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .scope"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .scope"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "tpl source is dynamic or unsupported"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "dynamic template/context or mutation requires review: merge"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "tpl source is dynamic or unsupported"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .values"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved variable context: $.scope"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "dynamic template/context or mutation requires review: merge"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "variable reassignment requires review: $dst = include \"common.tplvalues.render\" (dict \"value\" . \"context\" $.context \"scope\" $.scope) | fromYaml | merge $dst"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: .values"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "unresolved variable context: $.scope"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "dynamic template/context or mutation requires review: mergeOverwrite"
+      },
+      {
+        "file": "charts/common/templates/_tplvalues.tpl",
+        "message": "variable reassignment requires review: $dst = include \"common.tplvalues.render\" (dict \"value\" . \"context\" $.context \"scope\" $.scope) | fromYaml | mergeOverwrite $dst"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .field"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .field"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "variable reassignment requires review: $upperCaseFieldNameSplit = append $upperCaseFieldNameSplit ( upper . )"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved variable context: $.context.Values"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved variable context: $.key"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved lookup target: $value = ( index $latestObj . )"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "variable reassignment requires review: $value = ( index $latestObj . )"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "variable reassignment requires review: $latestObj = $value"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .keys"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .keys"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "variable reassignment requires review: $key = ."
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .context.Template.BasePath"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .path"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/_utils.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .repository"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .tag"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .repository"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .tag"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .context.Chart.Annotations.images"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .images"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .registry"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .repository"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .tag"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .registry"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .repository"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .tag"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $affectedImages = append $affectedImages (printf \"%s/%s:%s\" .registry .repository .tag)"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $printMessage = true"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .context.Values"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: .sections"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved lookup target: if not (index $values \"resources\")"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $affectedSections = append $affectedSections \"resources\""
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $printMessage = true"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved lookup target: $section = index $section ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $section = index $section ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved lookup target: if not (index $section \"resources\")"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved lookup target: if index $section \"enabled\""
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $affectedSections = append $affectedSections (printf \"%s.resources\" .)"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $printMessage = true"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "chained else context requires review"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved lookup target: if (gt (index $section \"replicaCount\" | int) 0)"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $affectedSections = append $affectedSections (printf \"%s.resources\" .)"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $printMessage = true"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $affectedSections = append $affectedSections (printf \"%s.resources\" .)"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "variable reassignment requires review: $printMessage = true"
+      },
+      {
+        "file": "charts/common/templates/_warnings.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "unresolved dot context: .context.Values.cassandra.dbUser.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "unresolved dot context: .context.Values.dbUser.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "unresolved dot context: .context.Values.cassandra.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "unresolved dot context: .context.Values.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_cassandra.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "variable reassignment requires review: $requiredPasswords = append $requiredPasswords $requiredRootPassword"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "variable reassignment requires review: $requiredPasswords = append $requiredPasswords $requiredPassword"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "variable reassignment requires review: $requiredPasswords = append $requiredPasswords $requiredReplicationPassword"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context.Values.mariadb.auth.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context.Values.auth.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context.Values.mariadb.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context.Values.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context.Values.mariadb.architecture"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .context.Values.architecture"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mariadb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .context.Values.mongodb.auth.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .context.Values.auth.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .context.Values.mongodb.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .context.Values.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .context.Values.mongodb.architecture"
+      },
+      {
+        "file": "charts/common/templates/validations/_mongodb.tpl",
+        "message": "unresolved dot context: .context.Values.architecture"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .context.Values.mysql.auth.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .context.Values.auth.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .context.Values.mysql.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .context.Values.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .context.Values.mysql.architecture"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .context.Values.architecture"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_mysql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.global"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.global.postgresql"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.global.postgresql"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .key"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved lookup target: index .context.Values.global.postgresql .key | quote"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.postgresql.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.existingSecret"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.postgresql.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.postgresql.replication.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .context.Values.replication.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_postgresql.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "unresolved dot context: .context.Values.redis.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "unresolved dot context: .context.Values.enabled"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/validations/_redis.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .required"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .valueKey"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .field"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved variable context: $.context"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "named template context is resolved only at runtime"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .valueKey"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .context"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .subchart"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .secret"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .field"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "variable reassignment requires review: $varname = include \"common.utils.fieldToEnvVar\" ."
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: ."
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "dynamic template/context or mutation requires review: include"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "variable reassignment requires review: $getCurrentValue = printf \" To get the current value:\\n\\n        %s\\n\" (include \"common.utils.secret.getvalue\" .)"
+      },
+      {
+        "file": "charts/common/templates/validations/_validations.tpl",
+        "message": "unresolved dot context: .valueKey"
+      }
+    ],
+    "scope": "Activation predictions guide generation; Helm validates each rendered input. Inactive fields remain testable.",
+    "render_attempts_by_predicted_state": [
+      {
+        "path": [
+          "common"
+        ],
+        "enabled": 4,
+        "disabled": 0,
+        "unknown": 0
+      }
+    ],
+    "activation_coverage_proven": false
+  },
+  "configuration_rejections": {
+    "enabled": true,
+    "rejected_candidates": 0,
+    "filtered_candidates": 0,
+    "adjusted_candidates": 0,
+    "verification_renders": 0,
+    "verify_every_candidate": true,
+    "classifier_disagreements": 0,
+    "declared_schema": false,
+    "schema_conflicts": 0,
+    "requirements": [],
+    "unsupported_sources": [],
+    "scope": "Explicit chart rejection contracts; unknown branches are tested normally. Not a proof of valid chart semantics."
+  },
+  "phase": "$.usersdFiles",
+  "kind": "value-path",
+  "path": [
+    "usersdFiles"
+  ],
+  "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789387262/runs/clickhouse_1789388026/0000/paths/638458d117473394e4a1"
+}

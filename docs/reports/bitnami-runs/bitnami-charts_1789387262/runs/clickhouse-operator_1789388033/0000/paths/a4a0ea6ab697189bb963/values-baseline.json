@@ -1,0 +1,303 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      },
+      "omitEmptySeLinuxOptions": false
+    }
+  },
+  "kubeVersion": "",
+  "apiVersions": [],
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "clusterDomain": "cluster.local",
+  "extraDeploy": [],
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/clickhouse-operator",
+    "tag": "0.25.3-debian-12-r1",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "clickHouseImage": {
+    "registry": "docker.io",
+    "repository": "bitnami/clickhouse",
+    "tag": "25.7.5-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "keeperImage": {
+    "registry": "docker.io",
+    "repository": "bitnami/clickhouse-keeper",
+    "tag": "25.7.5-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": []
+  },
+  "auth": {
+    "username": "clickhouse_operator",
+    "password": "",
+    "existingSecret": ""
+  },
+  "ipFamily": {
+    "enableIpv4": true,
+    "enableIpv6": true
+  },
+  "replicaCount": 1,
+  "containerPorts": {
+    "metrics": 9999
+  },
+  "extraContainerPorts": [],
+  "livenessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 5,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 5,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "startupProbe": {
+    "enabled": false,
+    "initialDelaySeconds": 5,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "failureThreshold": 5,
+    "successThreshold": 1
+  },
+  "customLivenessProbe": {},
+  "customReadinessProbe": {},
+  "customStartupProbe": {},
+  "resourcesPreset": "nano",
+  "resources": {},
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "privileged": false,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "configuration": {},
+  "overrideConfiguration": {},
+  "existingConfigmap": "",
+  "chiTemplate": {},
+  "existingChiTemplatesConfigmap": "",
+  "chiConfigd": [],
+  "existingChiConfigdConfigmap": "",
+  "chiUsersd": [],
+  "existingChiUsersdConfigmap": "",
+  "chkTemplate": {},
+  "existingChkTemplatesConfigmap": "",
+  "chkConfigd": [],
+  "existingChkConfigdConfigmap": "",
+  "chkUsersd": [],
+  "existingChkUsersdConfigmap": "",
+  "watchAllNamespaces": false,
+  "watchNamespaces": [],
+  "command": [],
+  "args": [],
+  "automountServiceAccountToken": true,
+  "hostAliases": [],
+  "deploymentAnnotations": {},
+  "podLabels": {},
+  "podAnnotations": {},
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "priorityClassName": "",
+  "topologySpreadConstraints": [],
+  "schedulerName": "",
+  "terminationGracePeriodSeconds": "",
+  "lifecycleHooks": {},
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "sidecars": [],
+  "initContainers": [],
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "autoscaling": {
+    "vpa": {
+      "enabled": false,
+      "annotations": {},
+      "controlledResources": [],
+      "maxAllowed": {},
+      "minAllowed": {},
+      "updatePolicy": {
+        "updateMode": "Auto"
+      }
+    },
+    "hpa": {
+      "enabled": false,
+      "minReplicas": "",
+      "maxReplicas": "",
+      "targetCPU": "",
+      "targetMemory": ""
+    }
+  },
+  "service": {
+    "ports": {
+      "metrics": 9999,
+      "metricsExporter": 8888
+    },
+    "clusterIP": "",
+    "annotations": {},
+    "extraPorts": []
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "kubeAPIServerPorts": [
+      443,
+      6443,
+      8443
+    ],
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "addExternalClientAccess": true,
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressPodMatchLabels": {},
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "rbac": {
+    "create": true,
+    "rules": []
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "annotations": {},
+    "automountServiceAccountToken": true
+  },
+  "metrics": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/clickhouse-operator-metrics-exporter",
+      "tag": "0.25.3-debian-12-r1",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "containerPorts": {
+      "metrics": 8888
+    },
+    "extraContainerPorts": [],
+    "livenessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "readinessProbe": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "startupProbe": {
+      "enabled": false,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    },
+    "customLivenessProbe": {},
+    "customReadinessProbe": {},
+    "customStartupProbe": {},
+    "resourcesPreset": "nano",
+    "resources": {},
+    "containerSecurityContext": {
+      "enabled": true,
+      "seLinuxOptions": {},
+      "runAsUser": 1001,
+      "runAsGroup": 1001,
+      "runAsNonRoot": true,
+      "readOnlyRootFilesystem": true,
+      "privileged": false,
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "extraEnvVars": [],
+    "extraEnvVarsCM": "",
+    "extraEnvVarsSecret": "",
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "",
+      "annotations": {},
+      "labels": {},
+      "jobLabel": "",
+      "honorLabels": false,
+      "interval": "",
+      "scrapeTimeout": "",
+      "metricRelabelings": [],
+      "relabelings": [],
+      "selector": {}
+    }
+  }
+}

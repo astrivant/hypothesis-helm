@@ -1,0 +1,941 @@
+{
+  "overrides": {
+    "format": "deepdiff-json-v1",
+    "baseline_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result_sha256": "03910628832e1507291c1e97e78a0db29134e6fe8a548a6380eb8990e8108b72",
+    "changes": [
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.affinity",
+        "segments": [
+          "affinity"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.args",
+        "segments": [
+          "args"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.automountServiceAccountToken",
+        "segments": [
+          "automountServiceAccountToken"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": false
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.command",
+        "segments": [
+          "command"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.commonAnnotations",
+        "segments": [
+          "commonAnnotations"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.commonLabels",
+        "segments": [
+          "commonLabels"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.containerPorts",
+        "segments": [
+          "containerPorts"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "http": 8080
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.containerSecurityContext",
+        "segments": [
+          "containerSecurityContext"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 0,
+          "runAsGroup": 0,
+          "runAsNonRoot": false,
+          "privileged": false,
+          "allowPrivilegeEscalation": true,
+          "readOnlyRootFilesystem": true,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.customLivenessProbe",
+        "segments": [
+          "customLivenessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.customReadinessProbe",
+        "segments": [
+          "customReadinessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.customStartupProbe",
+        "segments": [
+          "customStartupProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.defaultMounts",
+        "segments": [
+          "defaultMounts"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "rootfs": true,
+          "varRun": true,
+          "sys": true,
+          "varLibDocker": true,
+          "devDisk": true
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.diagnosticMode",
+        "segments": [
+          "diagnosticMode"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "command": [
+            "sleep"
+          ],
+          "args": [
+            "infinity"
+          ]
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraArgs",
+        "segments": [
+          "extraArgs"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraContainerPorts",
+        "segments": [
+          "extraContainerPorts"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraDeploy",
+        "segments": [
+          "extraDeploy"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraEnvVars",
+        "segments": [
+          "extraEnvVars"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraEnvVarsCM",
+        "segments": [
+          "extraEnvVarsCM"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraEnvVarsSecret",
+        "segments": [
+          "extraEnvVarsSecret"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraVolumeMounts",
+        "segments": [
+          "extraVolumeMounts"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraVolumes",
+        "segments": [
+          "extraVolumes"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.fullnameOverride",
+        "segments": [
+          "fullnameOverride"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.global",
+        "segments": [
+          "global"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "imageRegistry": "",
+          "imagePullSecrets": [],
+          "defaultStorageClass": "",
+          "security": {
+            "allowInsecureImages": false
+          },
+          "compatibility": {
+            "openshift": {
+              "adaptSecurityContext": "auto"
+            }
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.hostAliases",
+        "segments": [
+          "hostAliases"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.image",
+        "segments": [
+          "image"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "registry": "docker.io",
+          "repository": "bitnami/cadvisor",
+          "tag": "0.53.0-debian-12-r9",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": [
+            [
+              null,
+              []
+            ]
+          ]
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ingress",
+        "segments": [
+          "ingress"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "selfSigned": false,
+          "pathType": "ImplementationSpecific",
+          "apiVersion": "",
+          "hostname": "cadvisor.local",
+          "path": "/",
+          "annotations": {},
+          "ingressClassName": "",
+          "tls": false,
+          "tlsWwwPrefix": false,
+          "extraHosts": [],
+          "extraPaths": [],
+          "extraTls": [],
+          "secrets": [],
+          "extraRules": []
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.initContainers",
+        "segments": [
+          "initContainers"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.kubeVersion",
+        "segments": [
+          "kubeVersion"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.lifecycleHooks",
+        "segments": [
+          "lifecycleHooks"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.livenessProbe",
+        "segments": [
+          "livenessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.metrics",
+        "segments": [
+          "metrics"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "annotations": {},
+          "serviceMonitor": {
+            "enabled": false,
+            "annotations": "",
+            "namespace": "",
+            "interval": "",
+            "scrapeTimeout": "",
+            "labels": {},
+            "selector": {},
+            "relabelings": [],
+            "metricRelabelings": [],
+            "honorLabels": false,
+            "jobLabel": ""
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.nameOverride",
+        "segments": [
+          "nameOverride"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.namespaceOverride",
+        "segments": [
+          "namespaceOverride"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.networkPolicy",
+        "segments": [
+          "networkPolicy"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "allowExternalEgress": true,
+          "extraIngress": [],
+          "extraEgress": [],
+          "addExternalClientAccess": true,
+          "ingressPodMatchLabels": {},
+          "ingressNSMatchLabels": {},
+          "ingressNSPodMatchLabels": {}
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.nodeAffinityPreset",
+        "segments": [
+          "nodeAffinityPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "type": "",
+          "key": "",
+          "values": []
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.nodeSelector",
+        "segments": [
+          "nodeSelector"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podAffinityPreset",
+        "segments": [
+          "podAffinityPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podAnnotations",
+        "segments": [
+          "podAnnotations"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podAntiAffinityPreset",
+        "segments": [
+          "podAntiAffinityPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "soft"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podLabels",
+        "segments": [
+          "podLabels"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podSecurityContext",
+        "segments": [
+          "podSecurityContext"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "fsGroupChangePolicy": "Always",
+          "sysctls": [],
+          "supplementalGroups": [],
+          "fsGroup": 0
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.priorityClassName",
+        "segments": [
+          "priorityClassName"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.readinessProbe",
+        "segments": [
+          "readinessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 5,
+          "timeoutSeconds": 1,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.resources",
+        "segments": [
+          "resources"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.resourcesPreset",
+        "segments": [
+          "resourcesPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "small"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.schedulerName",
+        "segments": [
+          "schedulerName"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.service",
+        "segments": [
+          "service"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "type": "ClusterIP",
+          "ports": {
+            "http": 8080
+          },
+          "nodePorts": {
+            "http": ""
+          },
+          "clusterIP": "",
+          "externalIPs": [],
+          "externalName": "",
+          "loadBalancerIP": "",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "extraPorts": [],
+          "annotations": {},
+          "labels": {},
+          "sessionAffinity": "None",
+          "sessionAffinityConfig": {}
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.serviceAccount",
+        "segments": [
+          "serviceAccount"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "create": true,
+          "name": "",
+          "automountServiceAccountToken": false,
+          "annotations": {}
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.sidecars",
+        "segments": [
+          "sidecars"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.startupProbe",
+        "segments": [
+          "startupProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.tolerations",
+        "segments": [
+          "tolerations"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.topologySpreadConstraints",
+        "segments": [
+          "topologySpreadConstraints"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.updateStrategy",
+        "segments": [
+          "updateStrategy"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "type": "RollingUpdate"
+        }
+      }
+    ],
+    "delta": {
+      "dictionary_item_added": {
+        "root['global']": {
+          "imageRegistry": "",
+          "imagePullSecrets": [],
+          "defaultStorageClass": "",
+          "security": {
+            "allowInsecureImages": false
+          },
+          "compatibility": {
+            "openshift": {
+              "adaptSecurityContext": "auto"
+            }
+          }
+        },
+        "root['kubeVersion']": "",
+        "root['nameOverride']": "",
+        "root['fullnameOverride']": "",
+        "root['namespaceOverride']": "",
+        "root['commonAnnotations']": {},
+        "root['commonLabels']": {},
+        "root['extraDeploy']": [],
+        "root['diagnosticMode']": {
+          "enabled": false,
+          "command": [
+            "sleep"
+          ],
+          "args": [
+            "infinity"
+          ]
+        },
+        "root['image']": {
+          "registry": "docker.io",
+          "repository": "bitnami/cadvisor",
+          "tag": "0.53.0-debian-12-r9",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": [
+            [
+              null,
+              []
+            ]
+          ]
+        },
+        "root['command']": [],
+        "root['args']": [],
+        "root['extraArgs']": [],
+        "root['updateStrategy']": {
+          "type": "RollingUpdate"
+        },
+        "root['priorityClassName']": "",
+        "root['schedulerName']": "",
+        "root['topologySpreadConstraints']": [],
+        "root['automountServiceAccountToken']": false,
+        "root['hostAliases']": [],
+        "root['extraEnvVars']": [],
+        "root['extraEnvVarsCM']": "",
+        "root['extraEnvVarsSecret']": "",
+        "root['defaultMounts']": {
+          "rootfs": true,
+          "varRun": true,
+          "sys": true,
+          "varLibDocker": true,
+          "devDisk": true
+        },
+        "root['extraVolumes']": [],
+        "root['extraVolumeMounts']": [],
+        "root['initContainers']": [],
+        "root['sidecars']": [],
+        "root['tolerations']": [],
+        "root['podAffinityPreset']": "",
+        "root['podAntiAffinityPreset']": "soft",
+        "root['nodeAffinityPreset']": {
+          "type": "",
+          "key": "",
+          "values": []
+        },
+        "root['affinity']": {},
+        "root['nodeSelector']": {},
+        "root['containerPorts']": {
+          "http": 8080
+        },
+        "root['extraContainerPorts']": [],
+        "root['resourcesPreset']": "small",
+        "root['resources']": {},
+        "root['podSecurityContext']": {
+          "enabled": true,
+          "fsGroupChangePolicy": "Always",
+          "sysctls": [],
+          "supplementalGroups": [],
+          "fsGroup": 0
+        },
+        "root['containerSecurityContext']": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 0,
+          "runAsGroup": 0,
+          "runAsNonRoot": false,
+          "privileged": false,
+          "allowPrivilegeEscalation": true,
+          "readOnlyRootFilesystem": true,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "root['startupProbe']": {
+          "enabled": false,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        },
+        "root['livenessProbe']": {
+          "enabled": true,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        },
+        "root['readinessProbe']": {
+          "enabled": true,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 5,
+          "timeoutSeconds": 1,
+          "failureThreshold": 5,
+          "successThreshold": 1
+        },
+        "root['customStartupProbe']": {},
+        "root['customLivenessProbe']": {},
+        "root['customReadinessProbe']": {},
+        "root['lifecycleHooks']": {},
+        "root['podAnnotations']": {},
+        "root['podLabels']": {},
+        "root['service']": {
+          "enabled": true,
+          "type": "ClusterIP",
+          "ports": {
+            "http": 8080
+          },
+          "nodePorts": {
+            "http": ""
+          },
+          "clusterIP": "",
+          "externalIPs": [],
+          "externalName": "",
+          "loadBalancerIP": "",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "extraPorts": [],
+          "annotations": {},
+          "labels": {},
+          "sessionAffinity": "None",
+          "sessionAffinityConfig": {}
+        },
+        "root['networkPolicy']": {
+          "enabled": true,
+          "allowExternalEgress": true,
+          "extraIngress": [],
+          "extraEgress": [],
+          "addExternalClientAccess": true,
+          "ingressPodMatchLabels": {},
+          "ingressNSMatchLabels": {},
+          "ingressNSPodMatchLabels": {}
+        },
+        "root['ingress']": {
+          "enabled": false,
+          "selfSigned": false,
+          "pathType": "ImplementationSpecific",
+          "apiVersion": "",
+          "hostname": "cadvisor.local",
+          "path": "/",
+          "annotations": {},
+          "ingressClassName": "",
+          "tls": false,
+          "tlsWwwPrefix": false,
+          "extraHosts": [],
+          "extraPaths": [],
+          "extraTls": [],
+          "secrets": [],
+          "extraRules": []
+        },
+        "root['serviceAccount']": {
+          "create": true,
+          "name": "",
+          "automountServiceAccountToken": false,
+          "annotations": {}
+        },
+        "root['metrics']": {
+          "enabled": false,
+          "annotations": {},
+          "serviceMonitor": {
+            "enabled": false,
+            "annotations": "",
+            "namespace": "",
+            "interval": "",
+            "scrapeTimeout": "",
+            "labels": {},
+            "selector": {},
+            "relabelings": [],
+            "metricRelabelings": [],
+            "honorLabels": false,
+            "jobLabel": ""
+          }
+        }
+      }
+    }
+  },
+  "values": {
+    "format": "deepdiff-json-v1",
+    "baseline_sha256": "4ec58c682b2351c9c98c77ebd737221d66f8f3f4f379a8e14d615dc6a6ef65e9",
+    "result_sha256": "03910628832e1507291c1e97e78a0db29134e6fe8a548a6380eb8990e8108b72",
+    "changes": [
+      {
+        "kind": "iterable_item_added",
+        "path": "$.image.pullSecrets[0]",
+        "segments": [
+          "image",
+          "pullSecrets",
+          0
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": [
+          null,
+          []
+        ]
+      }
+    ],
+    "delta": {
+      "iterable_item_added": {
+        "root['image']['pullSecrets'][0]": [
+          null,
+          []
+        ]
+      }
+    }
+  },
+  "manifests": {
+    "unavailable": "No parsed failing output or successful baseline is available."
+  }
+}

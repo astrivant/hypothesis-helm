@@ -155,6 +155,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
             if args.scan_deadline is not None
             else args.chart_timeout,
             max_examples=args.max_examples,
+            jobs=(os.process_cpu_count() or 1) if getattr(args, "jobs", 1) == "auto" else getattr(args, "jobs", 1),
             seed=args.seed,
             helm=args.helm,
             timeout=args.timeout,
@@ -499,6 +500,8 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         "charts": records,
         "settings": {
             "max_examples": args.max_examples,
+            "jobs": getattr(args, "jobs", 1),
+            "worker_model": "sequential charts, concurrent path properties",
             "filter": args.filter,
             "fail": args.fail,
             "permutations": args.permutations,

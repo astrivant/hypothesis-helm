@@ -69,6 +69,7 @@ class Processes:
         check: bool = False,
         pass_fds: tuple[int, ...] = (),
         stdout: TextIO | None = None,
+        stderr: TextIO | None = None,
         input: str | None = None,
         timeout: float | None = None,
     ) -> subprocess.CompletedProcess[str]:
@@ -84,6 +85,7 @@ class Processes:
             check (bool): Whether nonzero exits raise a subprocess error.
             pass_fds (tuple[int, ...]): Manifest descriptors inherited by the child.
             stdout (TextIO | None): Destination for uncaptured child stdout.
+            stderr (TextIO | None): Destination for uncaptured child stderr.
             input (str | None): Text written to the child's standard input.
             timeout (float | None): Communication deadline in seconds, excluding cleanup.
 
@@ -103,7 +105,7 @@ class Processes:
                             text=text,
                             stdin=subprocess.PIPE if input is not None else None,
                             stdout=subprocess.PIPE if capture_output else stdout,
-                            stderr=subprocess.PIPE if capture_output else None,
+                            stderr=subprocess.PIPE if capture_output else stderr,
                             pass_fds=pass_fds,
                             start_new_session=True,
                         )

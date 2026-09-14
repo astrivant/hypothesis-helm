@@ -31,10 +31,11 @@ individually and logs the reason.<sup>[\[1\]](#interaction-coverage)</sup>
 
 `--paths` explicitly selects the generated-suite workflow: it adds fields discovered
 in templates to the working input model, generates one Python test per values path, and executes the
-suite. Filters, collection, distributed sharding and fixed parallel worker counts
-greater than one also select this workflow unless a finite mode was explicitly
-requested. `--max-examples`
-is a budget **per property**, not a total across the chart. `--match` selects
+suite. Collection and distributed sharding also select this workflow. Recursive
+repository tests support `--jobs N` directly: charts run in sequence, with N workers
+sharing the current chart's path queue and timeout.
+`--max-examples` defaults to **10 per property** for `test` and `scan`, not a total across the chart.
+Shrinking a failure can require additional attempts. `--match` selects
 Python test names with a pytest keyword expression; path segments are included in
 those names. `--collect-only` generates and lists the tests without rendering.
 An empty selection returns a nonzero status rather than reporting success.

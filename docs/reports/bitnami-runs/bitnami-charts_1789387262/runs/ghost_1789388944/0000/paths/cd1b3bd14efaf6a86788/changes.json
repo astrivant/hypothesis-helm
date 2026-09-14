@@ -1,0 +1,1237 @@
+{
+  "overrides": {
+    "format": "deepdiff-json-v1",
+    "baseline_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result_sha256": "cd4822ba7e44dfeebe04e90f94681a6a4915620065f0df0306177b0ca2997cf8",
+    "changes": [
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.affinity",
+        "segments": [
+          "affinity"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.allowEmptyPassword",
+        "segments": [
+          "allowEmptyPassword"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": true
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.args",
+        "segments": [
+          "args"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.automountServiceAccountToken",
+        "segments": [
+          "automountServiceAccountToken"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": false
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.clusterDomain",
+        "segments": [
+          "clusterDomain"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "cluster.local"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.command",
+        "segments": [
+          "command"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.commonAnnotations",
+        "segments": [
+          "commonAnnotations"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.commonLabels",
+        "segments": [
+          "commonLabels"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.containerPorts",
+        "segments": [
+          "containerPorts"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "http": 2368,
+          "https": 2368
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.containerSecurityContext",
+        "segments": [
+          "containerSecurityContext"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "privileged": false,
+          "readOnlyRootFilesystem": true,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.customLivenessProbe",
+        "segments": [
+          "customLivenessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.customReadinessProbe",
+        "segments": [
+          "customReadinessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.diagnosticMode",
+        "segments": [
+          "diagnosticMode"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "command": [
+            "sleep"
+          ],
+          "args": [
+            "infinity"
+          ]
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.existingSecret",
+        "segments": [
+          "existingSecret"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.externalDatabase",
+        "segments": [
+          "externalDatabase"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "host": "localhost",
+          "port": 3306,
+          "user": "bn_ghost",
+          "password": "",
+          "database": "bitnami_ghost",
+          "existingSecret": "",
+          "ssl": false,
+          "sslCaFile": ""
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraContainerPorts",
+        "segments": [
+          "extraContainerPorts"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraDeploy",
+        "segments": [
+          "extraDeploy"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraEnvVars",
+        "segments": [
+          "extraEnvVars"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraEnvVarsCM",
+        "segments": [
+          "extraEnvVarsCM"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraEnvVarsSecret",
+        "segments": [
+          "extraEnvVarsSecret"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraVolumeMounts",
+        "segments": [
+          "extraVolumeMounts"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraVolumes",
+        "segments": [
+          "extraVolumes"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.fullnameOverride",
+        "segments": [
+          "fullnameOverride"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostBlogTitle",
+        "segments": [
+          "ghostBlogTitle"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "User's Blog"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostEmail",
+        "segments": [
+          "ghostEmail"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "user@example.com"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostEnableHttps",
+        "segments": [
+          "ghostEnableHttps"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": false
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostHost",
+        "segments": [
+          "ghostHost"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostPassword",
+        "segments": [
+          "ghostPassword"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostPath",
+        "segments": [
+          "ghostPath"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "/"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostSkipInstall",
+        "segments": [
+          "ghostSkipInstall"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": false
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ghostUsername",
+        "segments": [
+          "ghostUsername"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "user"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.global",
+        "segments": [
+          "global"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "imageRegistry": "",
+          "imagePullSecrets": [],
+          "defaultStorageClass": "",
+          "security": {
+            "allowInsecureImages": false
+          },
+          "compatibility": {
+            "openshift": {
+              "adaptSecurityContext": "auto"
+            }
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.hostAliases",
+        "segments": [
+          "hostAliases"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.image",
+        "segments": [
+          "image"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "registry": "docker.io",
+          "repository": "bitnami/ghost",
+          "tag": "6.0.5-debian-12-r0",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": [],
+          "debug": false
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.ingress",
+        "segments": [
+          "ingress"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "pathType": "ImplementationSpecific",
+          "apiVersion": "",
+          "hostname": "ghost.local",
+          "path": "/",
+          "annotations": {},
+          "tls": false,
+          "selfSigned": false,
+          "extraHosts": [],
+          "extraPaths": [],
+          "extraTls": [],
+          "secrets": [],
+          "ingressClassName": "",
+          "extraRules": []
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.initContainers",
+        "segments": [
+          "initContainers"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.kubeVersion",
+        "segments": [
+          "kubeVersion"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.lifecycleHooks",
+        "segments": [
+          "lifecycleHooks"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.livenessProbe",
+        "segments": [
+          "livenessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "initialDelaySeconds": 120,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 6,
+          "successThreshold": 1
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.mysql",
+        "segments": [
+          "mysql"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "architecture": "standalone",
+          "auth": {
+            "rootPassword": "",
+            "database": "bitnami_ghost",
+            "username": "bn_ghost",
+            "password": "",
+            "existingSecret": ""
+          },
+          "primary": {
+            "persistence": {
+              "enabled": true,
+              "storageClass": "",
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "size": "8Gi"
+            },
+            "resourcesPreset": "small",
+            "resources": {},
+            "service": {
+              "extraPorts": [
+                null
+              ]
+            }
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.nameOverride",
+        "segments": [
+          "nameOverride"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.networkPolicy",
+        "segments": [
+          "networkPolicy"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "allowExternal": true,
+          "allowExternalEgress": true,
+          "extraIngress": [],
+          "extraEgress": [],
+          "ingressNSMatchLabels": {},
+          "ingressNSPodMatchLabels": {}
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.nodeAffinityPreset",
+        "segments": [
+          "nodeAffinityPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "type": "",
+          "key": "",
+          "values": []
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.nodeSelector",
+        "segments": [
+          "nodeSelector"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.pdb",
+        "segments": [
+          "pdb"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "create": true,
+          "minAvailable": "",
+          "maxUnavailable": ""
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.persistence",
+        "segments": [
+          "persistence"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "storageClass": "",
+          "annotations": {},
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "size": "8Gi",
+          "existingClaim": "",
+          "subPath": ""
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podAffinityPreset",
+        "segments": [
+          "podAffinityPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podAnnotations",
+        "segments": [
+          "podAnnotations"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podAntiAffinityPreset",
+        "segments": [
+          "podAntiAffinityPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "soft"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podLabels",
+        "segments": [
+          "podLabels"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.podSecurityContext",
+        "segments": [
+          "podSecurityContext"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "fsGroupChangePolicy": "Always",
+          "sysctls": [],
+          "supplementalGroups": [],
+          "fsGroup": 1001
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.priorityClassName",
+        "segments": [
+          "priorityClassName"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.readinessProbe",
+        "segments": [
+          "readinessProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "initialDelaySeconds": 30,
+          "periodSeconds": 5,
+          "timeoutSeconds": 3,
+          "failureThreshold": 6,
+          "successThreshold": 1
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.replicaCount",
+        "segments": [
+          "replicaCount"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": 1
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.resources",
+        "segments": [
+          "resources"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.resourcesPreset",
+        "segments": [
+          "resourcesPreset"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "micro"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.schedulerName",
+        "segments": [
+          "schedulerName"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.service",
+        "segments": [
+          "service"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "type": "LoadBalancer",
+          "ports": {
+            "http": 80,
+            "https": 443
+          },
+          "nodePorts": {
+            "http": "",
+            "https": ""
+          },
+          "clusterIP": "",
+          "loadBalancerIP": "",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "annotations": {},
+          "extraPorts": [],
+          "sessionAffinity": "None",
+          "sessionAffinityConfig": {}
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.serviceAccount",
+        "segments": [
+          "serviceAccount"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "create": true,
+          "name": "",
+          "automountServiceAccountToken": false,
+          "annotations": {}
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.sidecars",
+        "segments": [
+          "sidecars"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.smtpExistingSecret",
+        "segments": [
+          "smtpExistingSecret"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.smtpHost",
+        "segments": [
+          "smtpHost"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.smtpPassword",
+        "segments": [
+          "smtpPassword"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.smtpPort",
+        "segments": [
+          "smtpPort"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.smtpProtocol",
+        "segments": [
+          "smtpProtocol"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.smtpService",
+        "segments": [
+          "smtpService"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.smtpUser",
+        "segments": [
+          "smtpUser"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.startupProbe",
+        "segments": [
+          "startupProbe"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "initialDelaySeconds": 120,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 6,
+          "successThreshold": 1
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.tolerations",
+        "segments": [
+          "tolerations"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.topologySpreadConstraints",
+        "segments": [
+          "topologySpreadConstraints"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.updateStrategy",
+        "segments": [
+          "updateStrategy"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "type": "RollingUpdate"
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.usePasswordFiles",
+        "segments": [
+          "usePasswordFiles"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": true
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.volumePermissions",
+        "segments": [
+          "volumePermissions"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "image": {
+            "registry": "docker.io",
+            "repository": "bitnami/os-shell",
+            "tag": "12-debian-12-r51",
+            "digest": "",
+            "pullPolicy": "IfNotPresent",
+            "pullSecrets": []
+          },
+          "resourcesPreset": "none",
+          "resources": {},
+          "securityContext": {
+            "seLinuxOptions": {},
+            "runAsUser": 0
+          }
+        }
+      }
+    ],
+    "delta": {
+      "dictionary_item_added": {
+        "root['global']": {
+          "imageRegistry": "",
+          "imagePullSecrets": [],
+          "defaultStorageClass": "",
+          "security": {
+            "allowInsecureImages": false
+          },
+          "compatibility": {
+            "openshift": {
+              "adaptSecurityContext": "auto"
+            }
+          }
+        },
+        "root['kubeVersion']": "",
+        "root['nameOverride']": "",
+        "root['fullnameOverride']": "",
+        "root['commonLabels']": {},
+        "root['commonAnnotations']": {},
+        "root['clusterDomain']": "cluster.local",
+        "root['extraDeploy']": [],
+        "root['usePasswordFiles']": true,
+        "root['diagnosticMode']": {
+          "enabled": false,
+          "command": [
+            "sleep"
+          ],
+          "args": [
+            "infinity"
+          ]
+        },
+        "root['image']": {
+          "registry": "docker.io",
+          "repository": "bitnami/ghost",
+          "tag": "6.0.5-debian-12-r0",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": [],
+          "debug": false
+        },
+        "root['ghostUsername']": "user",
+        "root['ghostPassword']": "",
+        "root['existingSecret']": "",
+        "root['ghostEmail']": "user@example.com",
+        "root['ghostBlogTitle']": "User's Blog",
+        "root['ghostHost']": "",
+        "root['ghostPath']": "/",
+        "root['ghostEnableHttps']": false,
+        "root['smtpHost']": "",
+        "root['smtpPort']": "",
+        "root['smtpUser']": "",
+        "root['smtpPassword']": "",
+        "root['smtpService']": "",
+        "root['smtpProtocol']": "",
+        "root['smtpExistingSecret']": "",
+        "root['allowEmptyPassword']": true,
+        "root['ghostSkipInstall']": false,
+        "root['command']": [],
+        "root['args']": [],
+        "root['extraEnvVars']": [],
+        "root['extraEnvVarsCM']": "",
+        "root['extraEnvVarsSecret']": "",
+        "root['replicaCount']": 1,
+        "root['updateStrategy']": {
+          "type": "RollingUpdate"
+        },
+        "root['priorityClassName']": "",
+        "root['schedulerName']": "",
+        "root['topologySpreadConstraints']": [],
+        "root['automountServiceAccountToken']": false,
+        "root['hostAliases']": [],
+        "root['extraVolumes']": [],
+        "root['extraVolumeMounts']": [],
+        "root['sidecars']": [],
+        "root['initContainers']": [],
+        "root['pdb']": {
+          "create": true,
+          "minAvailable": "",
+          "maxUnavailable": ""
+        },
+        "root['lifecycleHooks']": {},
+        "root['podLabels']": {},
+        "root['podAnnotations']": {},
+        "root['podAffinityPreset']": "",
+        "root['podAntiAffinityPreset']": "soft",
+        "root['nodeAffinityPreset']": {
+          "type": "",
+          "key": "",
+          "values": []
+        },
+        "root['affinity']": {},
+        "root['nodeSelector']": {},
+        "root['tolerations']": [],
+        "root['resourcesPreset']": "micro",
+        "root['resources']": {},
+        "root['containerPorts']": {
+          "http": 2368,
+          "https": 2368
+        },
+        "root['extraContainerPorts']": [],
+        "root['podSecurityContext']": {
+          "enabled": true,
+          "fsGroupChangePolicy": "Always",
+          "sysctls": [],
+          "supplementalGroups": [],
+          "fsGroup": 1001
+        },
+        "root['containerSecurityContext']": {
+          "enabled": true,
+          "seLinuxOptions": {},
+          "runAsUser": 1001,
+          "runAsGroup": 1001,
+          "runAsNonRoot": true,
+          "privileged": false,
+          "readOnlyRootFilesystem": true,
+          "allowPrivilegeEscalation": false,
+          "capabilities": {
+            "drop": [
+              "ALL"
+            ]
+          },
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "root['startupProbe']": {
+          "enabled": false,
+          "initialDelaySeconds": 120,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 6,
+          "successThreshold": 1
+        },
+        "root['livenessProbe']": {
+          "enabled": true,
+          "initialDelaySeconds": 120,
+          "periodSeconds": 10,
+          "timeoutSeconds": 5,
+          "failureThreshold": 6,
+          "successThreshold": 1
+        },
+        "root['readinessProbe']": {
+          "enabled": true,
+          "initialDelaySeconds": 30,
+          "periodSeconds": 5,
+          "timeoutSeconds": 3,
+          "failureThreshold": 6,
+          "successThreshold": 1
+        },
+        "root['customLivenessProbe']": {},
+        "root['customReadinessProbe']": {},
+        "root['service']": {
+          "type": "LoadBalancer",
+          "ports": {
+            "http": 80,
+            "https": 443
+          },
+          "nodePorts": {
+            "http": "",
+            "https": ""
+          },
+          "clusterIP": "",
+          "loadBalancerIP": "",
+          "loadBalancerSourceRanges": [],
+          "externalTrafficPolicy": "Cluster",
+          "annotations": {},
+          "extraPorts": [],
+          "sessionAffinity": "None",
+          "sessionAffinityConfig": {}
+        },
+        "root['ingress']": {
+          "enabled": false,
+          "pathType": "ImplementationSpecific",
+          "apiVersion": "",
+          "hostname": "ghost.local",
+          "path": "/",
+          "annotations": {},
+          "tls": false,
+          "selfSigned": false,
+          "extraHosts": [],
+          "extraPaths": [],
+          "extraTls": [],
+          "secrets": [],
+          "ingressClassName": "",
+          "extraRules": []
+        },
+        "root['persistence']": {
+          "enabled": true,
+          "storageClass": "",
+          "annotations": {},
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "size": "8Gi",
+          "existingClaim": "",
+          "subPath": ""
+        },
+        "root['volumePermissions']": {
+          "enabled": false,
+          "image": {
+            "registry": "docker.io",
+            "repository": "bitnami/os-shell",
+            "tag": "12-debian-12-r51",
+            "digest": "",
+            "pullPolicy": "IfNotPresent",
+            "pullSecrets": []
+          },
+          "resourcesPreset": "none",
+          "resources": {},
+          "securityContext": {
+            "seLinuxOptions": {},
+            "runAsUser": 0
+          }
+        },
+        "root['mysql']": {
+          "enabled": true,
+          "architecture": "standalone",
+          "auth": {
+            "rootPassword": "",
+            "database": "bitnami_ghost",
+            "username": "bn_ghost",
+            "password": "",
+            "existingSecret": ""
+          },
+          "primary": {
+            "persistence": {
+              "enabled": true,
+              "storageClass": "",
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "size": "8Gi"
+            },
+            "resourcesPreset": "small",
+            "resources": {},
+            "service": {
+              "extraPorts": [
+                null
+              ]
+            }
+          }
+        },
+        "root['externalDatabase']": {
+          "host": "localhost",
+          "port": 3306,
+          "user": "bn_ghost",
+          "password": "",
+          "database": "bitnami_ghost",
+          "existingSecret": "",
+          "ssl": false,
+          "sslCaFile": ""
+        },
+        "root['networkPolicy']": {
+          "enabled": true,
+          "allowExternal": true,
+          "allowExternalEgress": true,
+          "extraIngress": [],
+          "extraEgress": [],
+          "ingressNSMatchLabels": {},
+          "ingressNSPodMatchLabels": {}
+        },
+        "root['serviceAccount']": {
+          "create": true,
+          "name": "",
+          "automountServiceAccountToken": false,
+          "annotations": {}
+        }
+      }
+    }
+  },
+  "values": {
+    "format": "deepdiff-json-v1",
+    "baseline_sha256": "c7207eca697ba624c70096b7c00ae266124bef237ae53dddbed611d2c6888132",
+    "result_sha256": "cd4822ba7e44dfeebe04e90f94681a6a4915620065f0df0306177b0ca2997cf8",
+    "changes": [
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.mysql.primary.service",
+        "segments": [
+          "mysql",
+          "primary",
+          "service"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "extraPorts": [
+            null
+          ]
+        }
+      }
+    ],
+    "delta": {
+      "dictionary_item_added": {
+        "root['mysql']['primary']['service']": {
+          "extraPorts": [
+            null
+          ]
+        }
+      }
+    }
+  },
+  "manifests": {
+    "unavailable": "No parsed failing output or successful baseline is available."
+  }
+}

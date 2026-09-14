@@ -174,7 +174,8 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         type=parse_time_limit,
         help="scan budget excluding dependency preparation; default: unlimited",
     )
-    repository.add_argument("--max-examples", type=int, default=100)
+    repository.add_argument("--max-examples", type=int, default=10)
+    repository.add_argument("--jobs", "-j", type=parse_jobs, default="auto", help="path workers per chart; auto: available CPUs")
     repository.add_argument(
         "--permutations",
         type=int,
@@ -230,7 +231,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         "--build-dependencies", action=argparse.BooleanOptionalAction, default=None, help="build dependencies in isolated copies"
     )
     test.add_argument("--fail", action="store_true", help="stop on the first chart failure and save partial results")
-    test.add_argument("--max-examples", type=int, default=100)
+    test.add_argument("--max-examples", type=int, default=10)
     test.add_argument(
         "--time-limit",
         type=parse_time_limit,
@@ -402,7 +403,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             "-j",
             type=parse_jobs,
             default="auto",
-            help="auto (default): PID throughput tuning; N: fixed worker count; 1: serial",
+            help="workers per chart; auto: CPU count for repository tests, PID tuning for suites; 1: serial",
         )
         command.add_argument(
             "--output",
@@ -462,7 +463,6 @@ def local_discovery(args: argparse.Namespace) -> bool:
         "--collect-only": args.collect_only,
         "--dry-run": args.dry_run,
         "--shard": args.shard is not None,
-        "--jobs": args.jobs not in ("auto", 1),
         "--cache-dir": args.cache_dir is not None,
         "--no-cache": args.no_cache,
         "--disable-schema-caching": args.disable_schema_caching,

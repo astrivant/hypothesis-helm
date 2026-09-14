@@ -1,0 +1,310 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "kubeVersion": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "clusterDomain": "cluster.local",
+  "extraDeploy": [],
+  "usePasswordFiles": true,
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/cassandra",
+    "tag": "5.0.5-debian-12-r7",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": [],
+    "debug": false
+  },
+  "dbUser": {
+    "user": "cassandra",
+    "forcePassword": false,
+    "password": "",
+    "existingSecret": ""
+  },
+  "initDB": {},
+  "initDBConfigMap": "",
+  "initDBSecret": "",
+  "existingConfiguration": "",
+  "dynamicSeedDiscovery": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    }
+  },
+  "cluster": {
+    "name": "cassandra",
+    "seedCount": 1,
+    "numTokens": 256,
+    "datacenter": "dc1",
+    "rack": "rack1",
+    "endpointSnitch": "SimpleSnitch",
+    "clientEncryption": false,
+    "extraSeeds": [],
+    "enableUDF": false
+  },
+  "jvm": {
+    "extraOpts": "",
+    "maxHeapSize": "",
+    "newHeapSize": ""
+  },
+  "command": [],
+  "args": [],
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "replicaCount": 1,
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "automountServiceAccountToken": false,
+  "hostAliases": [],
+  "podManagementPolicy": "OrderedReady",
+  "priorityClassName": "",
+  "podAnnotations": {},
+  "podLabels": {},
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "topologySpreadConstraints": [],
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    },
+    "readOnlyRootFilesystem": true
+  },
+  "resourcesPreset": "large",
+  "resources": {},
+  "livenessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 60,
+    "periodSeconds": 30,
+    "timeoutSeconds": 30,
+    "successThreshold": 1,
+    "failureThreshold": 5
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 60,
+    "periodSeconds": 10,
+    "timeoutSeconds": 30,
+    "successThreshold": 1,
+    "failureThreshold": 5
+  },
+  "startupProbe": {
+    "enabled": false,
+    "initialDelaySeconds": 0,
+    "periodSeconds": 10,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 60
+  },
+  "customLivenessProbe": {},
+  "customReadinessProbe": {},
+  "customStartupProbe": {},
+  "lifecycleHooks": {},
+  "schedulerName": "",
+  "terminationGracePeriodSeconds": "",
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "initContainers": [],
+  "sidecars": [],
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "hostNetwork": false,
+  "containerPorts": {
+    "intra": 7000,
+    "tls": 7001,
+    "jmx": 7199,
+    "cql": 9042
+  },
+  "hostPorts": {
+    "intra": "",
+    "tls": "",
+    "jmx": "",
+    "cql": ""
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "annotations": {},
+    "automountServiceAccountToken": false
+  },
+  "service": {
+    "type": "ClusterIP",
+    "ports": {
+      "cql": 9042,
+      "metrics": 8080
+    },
+    "nodePorts": {
+      "cql": "",
+      "metrics": ""
+    },
+    "extraPorts": [],
+    "loadBalancerIP": "",
+    "loadBalancerSourceRanges": [],
+    "clusterIP": "",
+    "externalTrafficPolicy": "Cluster",
+    "annotations": {},
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {},
+    "headless": {
+      "annotations": {}
+    }
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "persistence": {
+    "enabled": true,
+    "existingClaim": "",
+    "storageClass": "",
+    "commitStorageClass": "",
+    "annotations": {},
+    "accessModes": [
+      "ReadWriteOnce"
+    ],
+    "size": "8Gi",
+    "commitLogsize": "2Gi",
+    "mountPath": "/bitnami/cassandra",
+    "commitLogMountPath": ""
+  },
+  "volumePermissions": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/os-shell",
+      "tag": "12-debian-12-r50",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "securityContext": {
+      "seLinuxOptions": {},
+      "runAsUser": 0
+    }
+  },
+  "metrics": {
+    "enabled": false,
+    "image": {
+      "registry": "docker.io",
+      "repository": "bitnami/cassandra-exporter",
+      "tag": "2.3.8-debian-12-r51",
+      "digest": "",
+      "pullPolicy": "IfNotPresent",
+      "pullSecrets": []
+    },
+    "resourcesPreset": "nano",
+    "resources": {},
+    "readinessProbe": {
+      "initialDelaySeconds": 20,
+      "periodSeconds": 10,
+      "timeoutSeconds": 45,
+      "failureThreshold": 3,
+      "successThreshold": 1
+    },
+    "extraVolumeMounts": [],
+    "podAnnotations": {
+      "prometheus.io/scrape": "true",
+      "prometheus.io/port": "8080"
+    },
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "monitoring",
+      "interval": "",
+      "scrapeTimeout": "",
+      "selector": {},
+      "metricRelabelings": [],
+      "relabelings": [],
+      "honorLabels": false,
+      "jobLabel": "",
+      "labels": {}
+    },
+    "containerPorts": {
+      "http": 8080,
+      "jmx": 5555
+    },
+    "hostPorts": {
+      "http": "",
+      "jmx": ""
+    },
+    "configuration": "host: localhost:{{ .Values.containerPorts.jmx }}\nssl: False\nuser:\npassword:\nlistenPort: {{ .Values.metrics.containerPorts.http }}\nblacklist:\n  # To profile the duration of jmx call you can start the program with the following options\n  # > java -Dorg.slf4j.simpleLogger.defaultLogLevel=trace -jar cassandra_exporter.jar config.yml --oneshot\n  #\n  # To get intuition of what is done by cassandra when something is called you can look in cassandra\n  # https://github.com/apache/cassandra/tree/trunk/src/java/org/apache/cassandra/metrics\n  # Please avoid to scrape frequently those calls that are iterating over all sstables\n\n  # Unaccessible metrics (not enough privilege)\n  - java:lang:memorypool:.*usagethreshold.*\n\n  # Leaf attributes not interesting for us but that are presents in many path\n  - .*:999thpercentile\n  - .*:95thpercentile\n  - .*:fifteenminuterate\n  - .*:fiveminuterate\n  - .*:durationunit\n  - .*:rateunit\n  - .*:stddev\n  - .*:meanrate\n  - .*:mean\n  - .*:min\n\n  # Path present in many metrics but uninterresting\n  - .*:viewlockacquiretime:.*\n  - .*:viewreadtime:.*\n  - .*:cas[a-z]+latency:.*\n  - .*:colupdatetimedeltahistogram:.*\n\n  # Mostly for RPC, do not scrap them\n  - org:apache:cassandra:db:.*\n\n  # columnfamily is an alias for Table metrics\n  # https://github.com/apache/cassandra/blob/8b3a60b9a7dbefeecc06bace617279612ec7092d/src/java/org/apache/cassandra/metrics/TableMetrics.java#L162\n  - org:apache:cassandra:metrics:columnfamily:.*\n\n  # Should we export metrics for system keyspaces/tables ?\n  - org:apache:cassandra:metrics:[^:]+:system[^:]*:.*\n\n  # Don't scrap us\n  - com:criteo:nosql:cassandra:exporter:.*\n\nmaxScrapFrequencyInSec:\n  50:\n    - .*\n\n  # Refresh those metrics only every hour as it is costly for cassandra to retrieve them\n  3600:\n    - .*:snapshotssize:.*\n    - .*:estimated.*\n    - .*:totaldiskspaceused:.*\n"
+  },
+  "tls": {
+    "internodeEncryption": "none",
+    "clientEncryption": false,
+    "autoGenerated": false,
+    "existingSecret": "",
+    "passwordsSecret": "",
+    "keystorePassword": "",
+    "truststorePassword": "",
+    "certificatesSecret": "",
+    "tlsEncryptionSecretName": "",
+    "resourcesPreset": "nano",
+    "resources": {}
+  }
+}

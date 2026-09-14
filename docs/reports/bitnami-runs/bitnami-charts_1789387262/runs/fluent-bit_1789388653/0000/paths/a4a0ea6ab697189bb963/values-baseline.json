@@ -1,0 +1,264 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "storageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "apiVersions": [],
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "kubeVersion": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "diagnosticMode": {
+    "enabled": false,
+    "command": [
+      "sleep"
+    ],
+    "args": [
+      "infinity"
+    ]
+  },
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/fluent-bit",
+    "tag": "4.0.8-debian-12-r0",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": [],
+    "debug": false
+  },
+  "daemonset": {
+    "enabled": false,
+    "podSecurityContext": {
+      "enabled": true,
+      "fsGroupChangePolicy": "Always",
+      "sysctls": [],
+      "supplementalGroups": [],
+      "fsGroup": 0
+    },
+    "hostPaths": {
+      "logs": "/var/log",
+      "containerLogs": "/var/lib/docker/containers",
+      "machineId": "/etc/machine-id"
+    }
+  },
+  "hostNetwork": false,
+  "command": [],
+  "args": [],
+  "lifecycleHooks": {},
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "existingConfigMap": "",
+  "automountServiceAccountToken": true,
+  "hostAliases": [],
+  "replicaCount": 1,
+  "livenessProbe": {
+    "enabled": true,
+    "failureThreshold": 3,
+    "initialDelaySeconds": 10,
+    "periodSeconds": 10,
+    "successThreshold": 1,
+    "timeoutSeconds": 1
+  },
+  "startupProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 10,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 15,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 10,
+    "periodSeconds": 10,
+    "timeoutSeconds": 1,
+    "failureThreshold": 15,
+    "successThreshold": 1
+  },
+  "customLivenessProbe": {},
+  "customStartupProbe": {},
+  "customReadinessProbe": {},
+  "resourcesPreset": "nano",
+  "resources": {},
+  "extraVolumeMounts": [],
+  "containerPorts": {
+    "http": 2020
+  },
+  "extraContainerPorts": [],
+  "service": {
+    "type": "ClusterIP",
+    "ports": {
+      "http": 2020
+    },
+    "nodePorts": {
+      "http": ""
+    },
+    "extraPorts": [],
+    "loadBalancerIP": "",
+    "loadBalancerSourceRanges": [],
+    "clusterIP": "",
+    "externalTrafficPolicy": "Cluster",
+    "annotations": {},
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {}
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "kubeAPIServerPorts": [
+      443,
+      6443,
+      8443
+    ],
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "annotations": {},
+    "automountServiceAccountToken": false
+  },
+  "podSecurityContext": {
+    "enabled": true,
+    "fsGroupChangePolicy": "Always",
+    "sysctls": [],
+    "supplementalGroups": [],
+    "fsGroup": 1001
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "privileged": false,
+    "allowPrivilegeEscalation": false,
+    "readOnlyRootFilesystem": true,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "podAnnotations": {},
+  "podLabels": {},
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "priorityClassName": "",
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "topologySpreadConstraints": [],
+  "schedulerName": "",
+  "updateStrategy": {
+    "type": "RollingUpdate",
+    "rollingUpdate": {}
+  },
+  "extraVolumes": [],
+  "initContainers": [],
+  "sidecars": [],
+  "config": {
+    "flush": 1,
+    "logLevel": "info",
+    "service": "[SERVICE]\n    Flush        {{ .Values.config.flush }}\n    Daemon       Off\n    Log_Level    {{ .Values.config.logLevel }}\n    Config_Watch On\n    HTTP_Server  On\n    HTTP_Listen  0.0.0.0\n    HTTP_Port    {{ .Values.containerPorts.http }}\n    Parsers_File /opt/bitnami/fluent-bit/conf/parsers.conf\n    Parsers_File /opt/bitnami/fluent-bit/conf/custom_parsers.conf\n",
+    "inputs": "[INPUT]\n    Name cpu\n",
+    "filters": "",
+    "outputs": "[OUTPUT]\n    Name  stdout\n    Match *\n",
+    "upstream": {},
+    "customParsers": "[PARSER]\n    Name docker_no_time\n    Format json\n    Time_Keep Off\n    Time_Key time\n    Time_Format %Y-%m-%dT%H:%M:%S.%L\n",
+    "extraFiles": {}
+  },
+  "rbac": {
+    "create": false,
+    "nodeAccess": false,
+    "rules": []
+  },
+  "autoscaling": {
+    "vpa": {
+      "enabled": false,
+      "annotations": {},
+      "controlledResources": [],
+      "maxAllowed": {},
+      "minAllowed": {},
+      "updatePolicy": {
+        "updateMode": "Auto"
+      }
+    },
+    "hpa": {
+      "annotations": {},
+      "enabled": false,
+      "minReplicas": 1,
+      "maxReplicas": 3,
+      "targetCPUUtilizationPercentage": 75,
+      "targetMemoryUtilizationPercentage": "",
+      "customRules": [],
+      "behavior": {}
+    }
+  },
+  "ingress": {
+    "enabled": false,
+    "apiVersion": "",
+    "ingressClassName": "",
+    "hostname": "fluent-bit.local",
+    "path": "/",
+    "pathType": "ImplementationSpecific",
+    "annotations": {},
+    "tls": false,
+    "selfSigned": false,
+    "extraHosts": [],
+    "extraPaths": [],
+    "extraTls": [],
+    "secrets": [],
+    "extraRules": []
+  },
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": "50%"
+  },
+  "metrics": {
+    "enabled": false,
+    "serviceMonitor": {
+      "enabled": false,
+      "namespace": "",
+      "annotations": {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/port": "{{ .Values.service.ports.http }}",
+        "prometheus.io/path": "/metrics"
+      },
+      "labels": {},
+      "jobLabel": "",
+      "honorLabels": false,
+      "interval": "",
+      "scrapeTimeout": "",
+      "metricRelabelings": [],
+      "relabelings": [],
+      "selector": {}
+    }
+  },
+  "extraDeploy": []
+}

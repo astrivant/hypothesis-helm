@@ -59,6 +59,22 @@ Per-path dry runs list the same ordered properties without executing them.
 
 ## Parallel execution
 
+Repository tests process one chart at a time. With `--jobs 6`, six Python workers
+share that chart's ordered queue of value paths. Each path is claimed once and
+receives up to **10 generated examples** by default (`--max-examples` overrides this).
+Workers share one `--chart-timeout` deadline, rather than receiving a separate chart
+budget each. They stop and are joined before the next chart starts. Dependency
+preparation happens before testing and is excluded from this budget.
+
+`--jobs auto` uses the available CPU count for this repository path queue. Results
+record completed and interrupted paths separately; workers write isolated records
+which the coordinator merges into the chart report. A fixed seed reproduces the
+queue order, but timing and worker scheduling can change where a timed run stops.
+Render-hash caches remain local to each property; this queue does not introduce a
+shared writable render cache. Finite interaction execution remains serial.
+
+The generated pytest suite uses a separate scheduler:
+
 Each worker runs a generated test for one values path. That test may try many
 inputs, independently of tests for other paths, so several workers can run at once.
 

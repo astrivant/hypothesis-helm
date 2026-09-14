@@ -1,0 +1,90 @@
+{
+  "title": "Local Helm chart tests",
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/fluentd",
+  "started_epoch": 1789388658,
+  "elapsed_seconds": 1.734493666794151,
+  "dependency_preparation_seconds": 0.5740594589151442,
+  "testing_seconds": 1.0758004589006305,
+  "scan_status": "completed",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "error": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "error",
+      "name": "fluentd",
+      "version": "7.2.6",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789387262/runs/fluentd_1789388658/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/fluentd/values.yaml",
+      "dependency_preparation_seconds": 0.5740594589151442,
+      "testing_seconds": 1.0758004589006305,
+      "error": "sequence entries are not allowed here\n  in \"<unicode string>\", line 313, column 19:\n      containerPorts: -\n                      ^ (line: 313)",
+      "failure_type": "ScannerError",
+      "elapsed_seconds": 1.730617250315845,
+      "filtering": {
+        "requested": true,
+        "applied": false,
+        "reason": "Chart did not enter finite permutation testing"
+      },
+      "result": "N/A",
+      "error_refs": [
+        "E001"
+      ]
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "fail": false,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "scan_timeout_excludes_dependency_preparation": true,
+    "helm": "helm",
+    "seed": 0,
+    "traversal_strategy": "random",
+    "sampling": {
+      "percent": 100,
+      "minimum": 128,
+      "aggressive": false
+    },
+    "build_dependencies": true,
+    "values": "values.yaml",
+    "clone_timeout_seconds": 180.0,
+    "chart_version": null
+  },
+  "error_groups": [
+    {
+      "status": "error",
+      "failure_type": "ScannerError",
+      "error": "sequence entries are not allowed here\n  in \"<unicode string>\", line 313, column 19:\n      containerPorts: -\n                      ^ (line: 313)",
+      "source": null,
+      "occurrences": [
+        {
+          "chart": ".",
+          "phase": "chart",
+          "status": "error",
+          "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789387262/runs/fluentd_1789388658/0000",
+          "input": {
+            "recorded": false
+          }
+        }
+      ],
+      "id": "E001",
+      "occurrence_count": 1,
+      "affected_charts": [
+        "."
+      ]
+    }
+  ],
+  "error_summary": {
+    "unique_errors": 1,
+    "occurrences": 1,
+    "duplicates": 0
+  }
+}

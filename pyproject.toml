@@ -61,6 +61,7 @@ numpy = ">=2,<3"
 pytest-xdist = ">=3.8,<4"
 
 [tool.poetry.scripts]
+hypothesis-helm-path-worker = "hypothesis_helm.execution.path_queue:main"
 hypothesis-helm = "hypothesis_helm.cli:main"
 hypothesis-helm-complexity = "hypothesis_helm.compiler.passes.complexity:main"
 hypothesis-helm-benchmark = "hypothesis_helm.benchmarking.cli:main"

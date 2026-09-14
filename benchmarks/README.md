@@ -137,6 +137,10 @@ a defect exposed by one input has only a 70% detection chance when 70% are teste
 [View published flame graphs](studies/flamegraphs/README.md), including combined workers,
 the coordinator and individual processes. These are scaling smoke-test captures.
 
+Repository refreshes process charts sequentially, using six path workers per chart,
+10 generated examples per path and one five-minute chart deadline. Workers finish
+or are stopped and joined before the next chart begins.
+
 Place `--profile DIRECTORY` before the study name to capture Python call stacks
 and generate Matplotlib flame graphs:
 
@@ -186,7 +190,7 @@ poetry install --extras benchmarking && poetry run bash benchmarks/refresh.sh
 This runs lint, type checks, documentation checks, and the full pytest suite with the
 worker count selected from the runner's CPUs (`PYTEST_WORKERS` overrides it), then all fifteen synthetic studies,
 their plots and tables, and the synthetic/Bitnami/Prometheus
-topology catalog. It tests both pinned chart submodules with four workers,
+topology catalog. It tests both pinned chart submodules sequentially, with six path workers per chart,
 `--filter`, seeded random traversal, and five minutes per chart, then verifies and
 publishes the combined Markdown/PDF reports. Dependency preparation is outside
 each chart's testing budget. External kubeconform/kubesec checks are not enabled.

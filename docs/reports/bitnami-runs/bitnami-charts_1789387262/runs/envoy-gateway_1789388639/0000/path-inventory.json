@@ -1,0 +1,7525 @@
+{
+  "sampling": {
+    "algorithm": "sha256-identity-sample-v1",
+    "percent": 100,
+    "minimum": 128,
+    "seed": 0,
+    "eligible": 347,
+    "retained": 347,
+    "omitted": 0,
+    "protected": 0,
+    "applied": false,
+    "bug_recall_guaranteed": false,
+    "unit": "path property"
+  },
+  "seed": 0,
+  "traversal_strategy": "random",
+  "traversal_algorithm": "seeded-path-priority-v1",
+  "eligible_paths": [
+    [
+      "global"
+    ],
+    [
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "global",
+      "imagePullSecrets"
+    ],
+    [
+      "global",
+      "defaultStorageClass"
+    ],
+    [
+      "global",
+      "security"
+    ],
+    [
+      "global",
+      "security",
+      "allowInsecureImages"
+    ],
+    [
+      "global",
+      "compatibility"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "kubeVersion"
+    ],
+    [
+      "apiVersions"
+    ],
+    [
+      "nameOverride"
+    ],
+    [
+      "fullnameOverride"
+    ],
+    [
+      "namespaceOverride"
+    ],
+    [
+      "diagnosticMode"
+    ],
+    [
+      "diagnosticMode",
+      "enabled"
+    ],
+    [
+      "diagnosticMode",
+      "command"
+    ],
+    [
+      "diagnosticMode",
+      "args"
+    ],
+    [
+      "commonLabels"
+    ],
+    [
+      "commonAnnotations"
+    ],
+    [
+      "clusterDomain"
+    ],
+    [
+      "extraDeploy"
+    ],
+    [
+      "image"
+    ],
+    [
+      "image",
+      "registry"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "image",
+      "digest"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "ratelimitImage"
+    ],
+    [
+      "ratelimitImage",
+      "registry"
+    ],
+    [
+      "ratelimitImage",
+      "repository"
+    ],
+    [
+      "ratelimitImage",
+      "tag"
+    ],
+    [
+      "ratelimitImage",
+      "digest"
+    ],
+    [
+      "ratelimitImage",
+      "pullPolicy"
+    ],
+    [
+      "envoyImage"
+    ],
+    [
+      "envoyImage",
+      "registry"
+    ],
+    [
+      "envoyImage",
+      "repository"
+    ],
+    [
+      "envoyImage",
+      "tag"
+    ],
+    [
+      "envoyImage",
+      "digest"
+    ],
+    [
+      "replicaCount"
+    ],
+    [
+      "livenessProbe"
+    ],
+    [
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "readinessProbe"
+    ],
+    [
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "startupProbe"
+    ],
+    [
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "customLivenessProbe"
+    ],
+    [
+      "customReadinessProbe"
+    ],
+    [
+      "customStartupProbe"
+    ],
+    [
+      "watchAllNamespaces"
+    ],
+    [
+      "watchNamespaces"
+    ],
+    [
+      "logLevel"
+    ],
+    [
+      "exposeAdmin"
+    ],
+    [
+      "controllerName"
+    ],
+    [
+      "containerPorts"
+    ],
+    [
+      "containerPorts",
+      "admin"
+    ],
+    [
+      "extraContainerPorts"
+    ],
+    [
+      "overrideConfiguration"
+    ],
+    [
+      "existingConfigMap"
+    ],
+    [
+      "existingTLSSecret"
+    ],
+    [
+      "resourcesPreset"
+    ],
+    [
+      "resources"
+    ],
+    [
+      "podSecurityContext"
+    ],
+    [
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "containerSecurityContext"
+    ],
+    [
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "command"
+    ],
+    [
+      "args"
+    ],
+    [
+      "automountServiceAccountToken"
+    ],
+    [
+      "hostAliases"
+    ],
+    [
+      "podLabels"
+    ],
+    [
+      "podAnnotations"
+    ],
+    [
+      "podAffinityPreset"
+    ],
+    [
+      "podAntiAffinityPreset"
+    ],
+    [
+      "pdb"
+    ],
+    [
+      "pdb",
+      "create"
+    ],
+    [
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "nodeAffinityPreset"
+    ],
+    [
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "updateStrategy"
+    ],
+    [
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "topologySpreadConstraints"
+    ],
+    [
+      "schedulerName"
+    ],
+    [
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "lifecycleHooks"
+    ],
+    [
+      "extraEnvVars"
+    ],
+    [
+      "extraEnvVarsCM"
+    ],
+    [
+      "extraEnvVarsSecret"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "sidecars"
+    ],
+    [
+      "initContainers"
+    ],
+    [
+      "autoscaling"
+    ],
+    [
+      "autoscaling",
+      "vpa"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "enabled"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "annotations"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "controlledResources"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "maxAllowed"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "minAllowed"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "updatePolicy"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "autoscaling",
+      "hpa"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "enabled"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "minReplicas"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "maxReplicas"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "targetCPU"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "targetMemory"
+    ],
+    [
+      "service"
+    ],
+    [
+      "service",
+      "type"
+    ],
+    [
+      "service",
+      "ports"
+    ],
+    [
+      "service",
+      "ports",
+      "admin"
+    ],
+    [
+      "service",
+      "ports",
+      "metrics"
+    ],
+    [
+      "service",
+      "nodePorts"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "grpc"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "ratelimit"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "wasm"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "metrics"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "admin"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "webhook"
+    ],
+    [
+      "service",
+      "clusterIP"
+    ],
+    [
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "service",
+      "loadBalancerClass"
+    ],
+    [
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "service",
+      "labels"
+    ],
+    [
+      "service",
+      "annotations"
+    ],
+    [
+      "service",
+      "extraPorts"
+    ],
+    [
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "networkPolicy"
+    ],
+    [
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "rbac"
+    ],
+    [
+      "rbac",
+      "create"
+    ],
+    [
+      "rbac",
+      "rules"
+    ],
+    [
+      "serviceAccount"
+    ],
+    [
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "certgen"
+    ],
+    [
+      "certgen",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "extraEnvVars"
+    ],
+    [
+      "certgen",
+      "extraEnvVarsCM"
+    ],
+    [
+      "certgen",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "certgen",
+      "extraVolumes"
+    ],
+    [
+      "certgen",
+      "extraVolumeMounts"
+    ],
+    [
+      "certgen",
+      "tolerations"
+    ],
+    [
+      "certgen",
+      "sidecars"
+    ],
+    [
+      "certgen",
+      "initContainers"
+    ],
+    [
+      "certgen",
+      "affinity"
+    ],
+    [
+      "certgen",
+      "nodeSelector"
+    ],
+    [
+      "certgen",
+      "command"
+    ],
+    [
+      "certgen",
+      "args"
+    ],
+    [
+      "certgen",
+      "resourcesPreset"
+    ],
+    [
+      "certgen",
+      "resources"
+    ],
+    [
+      "certgen",
+      "livenessProbe"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "certgen",
+      "readinessProbe"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "certgen",
+      "startupProbe"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "certgen",
+      "customLivenessProbe"
+    ],
+    [
+      "certgen",
+      "customReadinessProbe"
+    ],
+    [
+      "certgen",
+      "customStartupProbe"
+    ],
+    [
+      "certgen",
+      "podSecurityContext"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "certgen",
+      "backoffLimit"
+    ],
+    [
+      "certgen",
+      "parallelism"
+    ],
+    [
+      "certgen",
+      "completions"
+    ],
+    [
+      "certgen",
+      "automountServiceAccountToken"
+    ],
+    [
+      "certgen",
+      "hostAliases"
+    ],
+    [
+      "certgen",
+      "annotations"
+    ],
+    [
+      "certgen",
+      "annotations",
+      "helm.sh/hook"
+    ],
+    [
+      "certgen",
+      "annotations",
+      "helm.sh/hook-delete-policy"
+    ],
+    [
+      "certgen",
+      "annotations",
+      "helm.sh/hook-weight"
+    ],
+    [
+      "certgen",
+      "labels"
+    ],
+    [
+      "certgen",
+      "podLabels"
+    ],
+    [
+      "certgen",
+      "podAnnotations"
+    ],
+    [
+      "certgen",
+      "serviceAccount"
+    ],
+    [
+      "certgen",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "certgen",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "certgen",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "certgen",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "certgen",
+      "networkPolicy"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "topologyInjector"
+    ],
+    [
+      "topologyInjector",
+      "enabled"
+    ],
+    [
+      "topologyInjector",
+      "annotations"
+    ],
+    [
+      "topologyInjector",
+      "annotations",
+      "helm.sh/hook"
+    ],
+    [
+      "topologyInjector",
+      "annotations",
+      "helm.sh/hook-weight"
+    ],
+    [
+      "metrics"
+    ],
+    [
+      "metrics",
+      "enabled"
+    ],
+    [
+      "metrics",
+      "annotations"
+    ],
+    [
+      "metrics",
+      "serviceMonitor"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "annotations"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "labels"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "jobLabel"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "honorLabels"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "relabelings"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "selector"
+    ],
+    [
+      "common"
+    ],
+    [
+      "common",
+      "exampleValue"
+    ],
+    [
+      "common",
+      "global"
+    ],
+    [
+      "common",
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "common",
+      "global",
+      "imagePullSecrets"
+    ],
+    [
+      "common",
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "common",
+      "global",
+      "defaultStorageClass"
+    ],
+    [
+      "common",
+      "global",
+      "security"
+    ],
+    [
+      "common",
+      "global",
+      "security",
+      "allowInsecureImages"
+    ],
+    [
+      "common",
+      "global",
+      "compatibility"
+    ],
+    [
+      "common",
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "common",
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "tags"
+    ],
+    [
+      "tags",
+      "bitnami-common"
+    ],
+    [
+      "args",
+      "*"
+    ],
+    [
+      "command",
+      "*"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "extraContainerPorts",
+      "*"
+    ],
+    [
+      "extraDeploy",
+      "*"
+    ],
+    [
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "hostAliases",
+      "*"
+    ],
+    [
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "initContainers",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "sidecars",
+      "*"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "watchNamespaces",
+      "*"
+    ],
+    [
+      "certgen",
+      "args",
+      "*"
+    ],
+    [
+      "certgen",
+      "command",
+      "*"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "certgen",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "certgen",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "certgen",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "certgen",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "certgen",
+      "initContainers",
+      "*"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "certgen",
+      "sidecars",
+      "*"
+    ],
+    [
+      "certgen",
+      "tolerations",
+      "*"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "diagnosticMode",
+      "args",
+      "*"
+    ],
+    [
+      "diagnosticMode",
+      "command",
+      "*"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "relabelings",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*"
+    ],
+    [
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "apiVersions",
+      "*"
+    ]
+  ],
+  "paths": [
+    [
+      "certgen",
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "topologySpreadConstraints",
+      "*"
+    ],
+    [
+      "initContainers"
+    ],
+    [
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "lifecycleHooks"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "webhook"
+    ],
+    [
+      "ratelimitImage",
+      "digest"
+    ],
+    [
+      "image"
+    ],
+    [
+      "certgen",
+      "labels"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values"
+    ],
+    [
+      "certgen",
+      "customReadinessProbe"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "enabled"
+    ],
+    [
+      "image",
+      "pullSecrets"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "rbac",
+      "rules",
+      "*"
+    ],
+    [
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "nodeSelector"
+    ],
+    [
+      "certgen",
+      "backoffLimit"
+    ],
+    [
+      "certgen",
+      "enabled"
+    ],
+    [
+      "pdb",
+      "maxUnavailable"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "targetMemory"
+    ],
+    [
+      "updateStrategy"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "diagnosticMode",
+      "args",
+      "*"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "interval"
+    ],
+    [
+      "global",
+      "imagePullSecrets"
+    ],
+    [
+      "podSecurityContext"
+    ],
+    [
+      "certgen",
+      "tolerations"
+    ],
+    [
+      "common",
+      "global",
+      "security"
+    ],
+    [
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "image",
+      "pullSecrets",
+      "*"
+    ],
+    [
+      "envoyImage",
+      "tag"
+    ],
+    [
+      "certgen",
+      "parallelism"
+    ],
+    [
+      "common",
+      "global",
+      "defaultStorageClass"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSPodMatchLabels"
+    ],
+    [
+      "ratelimitImage",
+      "repository"
+    ],
+    [
+      "common"
+    ],
+    [
+      "service",
+      "ports",
+      "metrics"
+    ],
+    [
+      "envoyImage",
+      "digest"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "certgen",
+      "extraEnvVarsSecret"
+    ],
+    [
+      "service",
+      "type"
+    ],
+    [
+      "certgen",
+      "networkPolicy"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "annotations"
+    ],
+    [
+      "watchNamespaces"
+    ],
+    [
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "pdb",
+      "minAvailable"
+    ],
+    [
+      "schedulerName"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "common",
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "containerSecurityContext",
+      "readOnlyRootFilesystem"
+    ],
+    [
+      "automountServiceAccountToken"
+    ],
+    [
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "certgen",
+      "hostAliases"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "image",
+      "repository"
+    ],
+    [
+      "certgen",
+      "command"
+    ],
+    [
+      "resources"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "failureThreshold"
+    ],
+    [
+      "certgen",
+      "serviceAccount"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "controllerName"
+    ],
+    [
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "logLevel"
+    ],
+    [
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "service",
+      "externalTrafficPolicy"
+    ],
+    [
+      "service",
+      "nodePorts"
+    ],
+    [
+      "podAffinityPreset"
+    ],
+    [
+      "tags"
+    ],
+    [
+      "envoyImage",
+      "repository"
+    ],
+    [
+      "readinessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "tolerations",
+      "*"
+    ],
+    [
+      "ratelimitImage",
+      "registry"
+    ],
+    [
+      "diagnosticMode",
+      "enabled"
+    ],
+    [
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "nodeSelector"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "metrics",
+      "annotations"
+    ],
+    [
+      "common",
+      "global"
+    ],
+    [
+      "tolerations"
+    ],
+    [
+      "extraEnvVars"
+    ],
+    [
+      "certgen",
+      "annotations",
+      "helm.sh/hook-weight"
+    ],
+    [
+      "certgen",
+      "podLabels"
+    ],
+    [
+      "service",
+      "extraPorts",
+      "*"
+    ],
+    [
+      "extraEnvVarsSecret"
+    ],
+    [
+      "certgen"
+    ],
+    [
+      "networkPolicy",
+      "ingressNSMatchLabels"
+    ],
+    [
+      "service",
+      "loadBalancerSourceRanges",
+      "*"
+    ],
+    [
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "grpc"
+    ],
+    [
+      "containerPorts"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "topologyInjector"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "seLinuxOptions"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings",
+      "*"
+    ],
+    [
+      "service",
+      "ports",
+      "admin"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "admin"
+    ],
+    [
+      "topologyInjector",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "extraVolumeMounts"
+    ],
+    [
+      "certgen",
+      "extraEnvVarsCM"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "nodeAffinityPreset"
+    ],
+    [
+      "common",
+      "global",
+      "security",
+      "allowInsecureImages"
+    ],
+    [
+      "metrics",
+      "serviceMonitor"
+    ],
+    [
+      "rbac",
+      "create"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "selector"
+    ],
+    [
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "networkPolicy"
+    ],
+    [
+      "service",
+      "loadBalancerClass"
+    ],
+    [
+      "exposeAdmin"
+    ],
+    [
+      "metrics"
+    ],
+    [
+      "service",
+      "annotations"
+    ],
+    [
+      "ratelimitImage"
+    ],
+    [
+      "containerSecurityContext",
+      "enabled"
+    ],
+    [
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "networkPolicy",
+      "kubeAPIServerPorts",
+      "*"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "certgen",
+      "initContainers"
+    ],
+    [
+      "watchAllNamespaces"
+    ],
+    [
+      "namespaceOverride"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "runAsGroup"
+    ],
+    [
+      "certgen",
+      "sidecars",
+      "*"
+    ],
+    [
+      "livenessProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "annotations",
+      "helm.sh/hook-delete-policy"
+    ],
+    [
+      "rbac",
+      "rules"
+    ],
+    [
+      "common",
+      "exampleValue"
+    ],
+    [
+      "overrideConfiguration"
+    ],
+    [
+      "extraVolumes"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "timeoutSeconds"
+    ],
+    [
+      "affinity"
+    ],
+    [
+      "certgen",
+      "customLivenessProbe"
+    ],
+    [
+      "sidecars"
+    ],
+    [
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "terminationGracePeriodSeconds"
+    ],
+    [
+      "diagnosticMode",
+      "command",
+      "*"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "service",
+      "sessionAffinityConfig"
+    ],
+    [
+      "certgen",
+      "livenessProbe"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "controlledResources"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "relabelings",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "sidecars",
+      "*"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "certgen",
+      "annotations",
+      "helm.sh/hook"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "initContainers",
+      "*"
+    ],
+    [
+      "extraEnvVarsCM"
+    ],
+    [
+      "command",
+      "*"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "containerPorts",
+      "admin"
+    ],
+    [
+      "certgen",
+      "readinessProbe"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "common",
+      "global",
+      "compatibility",
+      "openshift",
+      "adaptSecurityContext"
+    ],
+    [
+      "autoscaling"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsUser"
+    ],
+    [
+      "customLivenessProbe"
+    ],
+    [
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "extraDeploy"
+    ],
+    [
+      "global",
+      "defaultStorageClass"
+    ],
+    [
+      "service",
+      "labels"
+    ],
+    [
+      "nodeAffinityPreset",
+      "key"
+    ],
+    [
+      "envoyImage",
+      "registry"
+    ],
+    [
+      "service",
+      "loadBalancerSourceRanges"
+    ],
+    [
+      "startupProbe",
+      "successThreshold"
+    ],
+    [
+      "certgen",
+      "podSecurityContext"
+    ],
+    [
+      "commonLabels"
+    ],
+    [
+      "topologyInjector",
+      "annotations",
+      "helm.sh/hook"
+    ],
+    [
+      "kubeVersion"
+    ],
+    [
+      "resourcesPreset"
+    ],
+    [
+      "rbac"
+    ],
+    [
+      "updateStrategy",
+      "type"
+    ],
+    [
+      "image",
+      "digest"
+    ],
+    [
+      "commonAnnotations"
+    ],
+    [
+      "livenessProbe",
+      "successThreshold"
+    ],
+    [
+      "ratelimitImage",
+      "tag"
+    ],
+    [
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "relabelings"
+    ],
+    [
+      "certgen",
+      "affinity"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "namespace"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "failureThreshold"
+    ],
+    [
+      "networkPolicy",
+      "extraEgress",
+      "*"
+    ],
+    [
+      "hostAliases",
+      "*"
+    ],
+    [
+      "common",
+      "global",
+      "compatibility"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "image",
+      "tag"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "sysctls"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "metricRelabelings"
+    ],
+    [
+      "autoscaling",
+      "hpa"
+    ],
+    [
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "common",
+      "global",
+      "imageRegistry"
+    ],
+    [
+      "certgen",
+      "startupProbe"
+    ],
+    [
+      "pdb",
+      "create"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "fsGroupChangePolicy"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "metrics"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "labels"
+    ],
+    [
+      "metrics",
+      "enabled"
+    ],
+    [
+      "image",
+      "pullPolicy"
+    ],
+    [
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "tags",
+      "bitnami-common"
+    ],
+    [
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "watchNamespaces",
+      "*"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "maxAllowed"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "seccompProfile"
+    ],
+    [
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "hostAliases"
+    ],
+    [
+      "certgen",
+      "completions"
+    ],
+    [
+      "certgen",
+      "resources"
+    ],
+    [
+      "certgen",
+      "extraEnvVars",
+      "*"
+    ],
+    [
+      "diagnosticMode",
+      "args"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities",
+      "drop"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "controlledResources",
+      "*"
+    ],
+    [
+      "customStartupProbe"
+    ],
+    [
+      "apiVersions"
+    ],
+    [
+      "certgen",
+      "initContainers",
+      "*"
+    ],
+    [
+      "existingTLSSecret"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "annotations"
+    ],
+    [
+      "service",
+      "extraPorts"
+    ],
+    [
+      "args",
+      "*"
+    ],
+    [
+      "extraDeploy",
+      "*"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "wasm"
+    ],
+    [
+      "certgen",
+      "annotations"
+    ],
+    [
+      "podLabels"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraEgress"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "certgen",
+      "extraVolumes",
+      "*"
+    ],
+    [
+      "readinessProbe",
+      "periodSeconds"
+    ],
+    [
+      "readinessProbe"
+    ],
+    [
+      "global",
+      "compatibility"
+    ],
+    [
+      "certgen",
+      "tolerations",
+      "*"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "scrapeTimeout"
+    ],
+    [
+      "networkPolicy",
+      "extraIngress"
+    ],
+    [
+      "topologyInjector",
+      "annotations"
+    ],
+    [
+      "service",
+      "ports"
+    ],
+    [
+      "customReadinessProbe"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "allowExternal"
+    ],
+    [
+      "podAntiAffinityPreset"
+    ],
+    [
+      "autoscaling",
+      "vpa"
+    ],
+    [
+      "podAnnotations"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "extraIngress",
+      "*"
+    ],
+    [
+      "command"
+    ],
+    [
+      "startupProbe"
+    ],
+    [
+      "diagnosticMode",
+      "command"
+    ],
+    [
+      "livenessProbe"
+    ],
+    [
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "certgen",
+      "serviceAccount",
+      "create"
+    ],
+    [
+      "certgen",
+      "customStartupProbe"
+    ],
+    [
+      "common",
+      "global",
+      "compatibility",
+      "openshift"
+    ],
+    [
+      "certgen",
+      "hostAliases",
+      "*"
+    ],
+    [
+      "readinessProbe",
+      "successThreshold"
+    ],
+    [
+      "containerSecurityContext",
+      "allowPrivilegeEscalation"
+    ],
+    [
+      "replicaCount"
+    ],
+    [
+      "certgen",
+      "extraVolumes"
+    ],
+    [
+      "certgen",
+      "startupProbe",
+      "failureThreshold"
+    ],
+    [
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "updatePolicy"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "honorLabels"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "kubeAPIServerPorts"
+    ],
+    [
+      "serviceAccount",
+      "name"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "periodSeconds"
+    ],
+    [
+      "args"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "apiVersions",
+      "*"
+    ],
+    [
+      "podSecurityContext",
+      "supplementalGroups"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext"
+    ],
+    [
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "certgen",
+      "extraEnvVars"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "capabilities",
+      "drop",
+      "*"
+    ],
+    [
+      "certgen",
+      "podAnnotations"
+    ],
+    [
+      "fullnameOverride"
+    ],
+    [
+      "certgen",
+      "automountServiceAccountToken"
+    ],
+    [
+      "certgen",
+      "serviceAccount",
+      "automountServiceAccountToken"
+    ],
+    [
+      "certgen",
+      "args",
+      "*"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "targetCPU"
+    ],
+    [
+      "diagnosticMode"
+    ],
+    [
+      "existingConfigMap"
+    ],
+    [
+      "certgen",
+      "args"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "minAllowed"
+    ],
+    [
+      "readinessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "startupProbe",
+      "periodSeconds"
+    ],
+    [
+      "priorityClassName"
+    ],
+    [
+      "global"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "supplementalGroups",
+      "*"
+    ],
+    [
+      "certgen",
+      "serviceAccount",
+      "annotations"
+    ],
+    [
+      "service",
+      "loadBalancerIP"
+    ],
+    [
+      "global",
+      "imagePullSecrets",
+      "*"
+    ],
+    [
+      "extraContainerPorts"
+    ],
+    [
+      "certgen",
+      "extraVolumeMounts",
+      "*"
+    ],
+    [
+      "global",
+      "security"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "enabled"
+    ],
+    [
+      "extraContainerPorts",
+      "*"
+    ],
+    [
+      "certgen",
+      "resourcesPreset"
+    ],
+    [
+      "envoyImage"
+    ],
+    [
+      "ratelimitImage",
+      "pullPolicy"
+    ],
+    [
+      "containerSecurityContext",
+      "capabilities"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "enabled"
+    ],
+    [
+      "service",
+      "sessionAffinity"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "seccompProfile",
+      "type"
+    ],
+    [
+      "nodeAffinityPreset",
+      "type"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "maxReplicas"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "enabled"
+    ],
+    [
+      "metrics",
+      "serviceMonitor",
+      "jobLabel"
+    ],
+    [
+      "service",
+      "clusterIP"
+    ],
+    [
+      "certgen",
+      "command",
+      "*"
+    ],
+    [
+      "topologySpreadConstraints"
+    ],
+    [
+      "containerSecurityContext",
+      "privileged"
+    ],
+    [
+      "certgen",
+      "networkPolicy",
+      "allowExternalEgress"
+    ],
+    [
+      "clusterDomain"
+    ],
+    [
+      "certgen",
+      "podSecurityContext",
+      "fsGroup"
+    ],
+    [
+      "podSecurityContext",
+      "sysctls",
+      "*"
+    ],
+    [
+      "serviceAccount"
+    ],
+    [
+      "service",
+      "nodePorts",
+      "ratelimit"
+    ],
+    [
+      "certgen",
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "networkPolicy",
+      "enabled"
+    ],
+    [
+      "nodeAffinityPreset",
+      "values",
+      "*"
+    ],
+    [
+      "image",
+      "registry"
+    ],
+    [
+      "service"
+    ],
+    [
+      "certgen",
+      "livenessProbe",
+      "initialDelaySeconds"
+    ],
+    [
+      "certgen",
+      "sidecars"
+    ],
+    [
+      "pdb"
+    ],
+    [
+      "readinessProbe",
+      "enabled"
+    ],
+    [
+      "nameOverride"
+    ],
+    [
+      "extraVolumeMounts"
+    ],
+    [
+      "global",
+      "security",
+      "allowInsecureImages"
+    ],
+    [
+      "topologyInjector",
+      "annotations",
+      "helm.sh/hook-weight"
+    ],
+    [
+      "autoscaling",
+      "hpa",
+      "minReplicas"
+    ],
+    [
+      "certgen",
+      "containerSecurityContext",
+      "runAsNonRoot"
+    ],
+    [
+      "containerSecurityContext"
+    ],
+    [
+      "autoscaling",
+      "vpa",
+      "updatePolicy",
+      "updateMode"
+    ],
+    [
+      "common",
+      "global",
+      "imagePullSecrets"
+    ]
+  ],
+  "diagnostics": [
+    {
+      "file": "templates/NOTES.txt",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 30,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 44,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 70,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 68,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 74,
+      "message": "unresolved dot context: .Values.exposeAdmin"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 74,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 77,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 77,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 79,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 79,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 80,
+      "message": "unresolved dot context: .Values.service.ports.admin"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 82,
+      "message": "unresolved dot context: .Values.exposeAdmin"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 82,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 84,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 84,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 84,
+      "message": "unresolved dot context: .Values.service.ports.admin"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 85,
+      "message": "unresolved dot context: .Values.service.ports.admin"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 88,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 88,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 89,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 89,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 89,
+      "message": "unresolved dot context: .Values.containerPorts.admin"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 90,
+      "message": "unresolved dot context: .Values.containerPorts.admin"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 94,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 95,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 96,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 97,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 98,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 99,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/NOTES.txt",
+      "line": 100,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 9,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.ratelimitImage"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.envoyImage"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 16,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "unresolved dot context: .Values.image"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 23,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 24,
+      "message": "unresolved dot context: .Values.ratelimitImage"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 24,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 30,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Values.envoyImage"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 37,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 38,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "unresolved dot context: .Values.certgen.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 41,
+      "message": "unresolved dot context: .Values.certgen.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 48,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 55,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 56,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 62,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 63,
+      "message": "unresolved dot context: .Values.serviceAccount.create"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 64,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 66,
+      "message": "unresolved dot context: .Values.serviceAccount.name"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 73,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 74,
+      "message": "unresolved dot context: .Values.existingTLSSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "unresolved dot context: .Values.existingTLSSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 75,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 85,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 86,
+      "message": "unresolved dot context: .Values.existingConfigMap"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 87,
+      "message": "unresolved dot context: .Values.existingConfigMap"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 87,
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 89,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 89,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 96,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 98,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 98,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 109,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 110,
+      "message": "unresolved dot context: .Values.existingTLSSecret"
+    },
+    {
+      "file": "templates/_helpers.tpl",
+      "line": 110,
+      "message": "unresolved dot context: .Values.certgen.enabled"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 26,
+      "message": "variable reassignment requires review: $labels = include \"common.tplvalues.merge\" ( dict \"values\" (list .Values.commonLabels .Values.certgen.podLabels) \"context\" . )"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 39,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 54,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 66,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 66,
+      "message": "variable reassignment requires review: $args = concat $args (list (include \"common.tplvalues.render\" (dict \"value\" .Values.certgen.args \"context\" $)))"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 69,
+      "message": "variable reassignment requires review: $args = append $args \"--disable-topology-injector\""
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 83,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 89,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 93,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 97,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 99,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 101,
+      "message": "unresolved dot context: .Values.certgen.resourcesPreset"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 102,
+      "message": "unresolved dot context: .Values.certgen.resourcesPreset"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 102,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 105,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 104,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 106,
+      "message": "unresolved dot context: .Values.certgen.startupProbe.enabled"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 112,
+      "message": "unresolved dot context: .Values.certgen.startupProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 113,
+      "message": "unresolved dot context: .Values.certgen.startupProbe.periodSeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 114,
+      "message": "unresolved dot context: .Values.certgen.startupProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 115,
+      "message": "unresolved dot context: .Values.certgen.startupProbe.successThreshold"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 116,
+      "message": "unresolved dot context: .Values.certgen.startupProbe.failureThreshold"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 119,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 118,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 120,
+      "message": "unresolved dot context: .Values.certgen.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 126,
+      "message": "unresolved dot context: .Values.certgen.livenessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 127,
+      "message": "unresolved dot context: .Values.certgen.livenessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 128,
+      "message": "unresolved dot context: .Values.certgen.livenessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 129,
+      "message": "unresolved dot context: .Values.certgen.livenessProbe.successThreshold"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 130,
+      "message": "unresolved dot context: .Values.certgen.livenessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 133,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 132,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 134,
+      "message": "unresolved dot context: .Values.certgen.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 140,
+      "message": "unresolved dot context: .Values.certgen.readinessProbe.initialDelaySeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 141,
+      "message": "unresolved dot context: .Values.certgen.readinessProbe.periodSeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 142,
+      "message": "unresolved dot context: .Values.certgen.readinessProbe.timeoutSeconds"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 143,
+      "message": "unresolved dot context: .Values.certgen.readinessProbe.successThreshold"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 144,
+      "message": "unresolved dot context: .Values.certgen.readinessProbe.failureThreshold"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 147,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 150,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 153,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/job.yaml",
+      "line": 156,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/networkpolicy.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 32,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 48,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 68,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 76,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 77,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 78,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 82,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 85,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/rbac.yaml",
+      "line": 86,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/serviceaccount.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/serviceaccount.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/serviceaccount.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/serviceaccount.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/serviceaccount.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/certgen/serviceaccount.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/clusterrolebinding.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterroles.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterroles.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterroles.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterroles.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/clusterroles.yaml",
+      "line": 147,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 7,
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 11,
+      "message": "unresolved dot context: .Values.controllerName"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 14,
+      "message": "unresolved dot context: .Values.logLevel"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 20,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 29,
+      "message": "unresolved dot context: .Values.ratelimitImage.pullPolicy"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 30,
+      "message": "unresolved dot context: .Values.watchAllNamespaces"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 31,
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 31,
+      "message": "unresolved dot context: .Values.watchNamespaces"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 39,
+      "message": "unresolved dot context: .Values.topologyInjector.enabled"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 45,
+      "message": "unresolved dot context: .Values.containerPorts.admin"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 46,
+      "message": "unresolved dot context: .Values.exposeAdmin"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 53,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 54,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 59,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 61,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/configmap.yaml",
+      "line": 64,
+      "message": "variable reassignment requires review: $configuration = mustMergeOverwrite $configuration $overrideConfiguration"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 24,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 26,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 31,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 40,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 41,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 46,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 52,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 55,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 63,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 72,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 75,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 81,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 85,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 88,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 91,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 90,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 92,
+      "message": "unresolved dot context: .Values.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 93,
+      "message": "unresolved dot context: .Values.command"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 93,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 96,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 95,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 97,
+      "message": "unresolved dot context: .Values.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 98,
+      "message": "unresolved dot context: .Values.args"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 98,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 111,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 113,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 115,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 119,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 124,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 128,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 130,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 132,
+      "message": "unresolved dot context: .Values.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 133,
+      "message": "unresolved dot context: .Values.resourcesPreset"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 133,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 155,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 158,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 157,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 159,
+      "message": "unresolved dot context: .Values.livenessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 160,
+      "message": "unresolved dot context: .Values.livenessProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 160,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 166,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 165,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 167,
+      "message": "unresolved dot context: .Values.readinessProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 168,
+      "message": "unresolved dot context: .Values.readinessProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 168,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 174,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 173,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 175,
+      "message": "unresolved dot context: .Values.startupProbe.enabled"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 176,
+      "message": "unresolved dot context: .Values.startupProbe"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 176,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 183,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 193,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 196,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 201,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 206,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/deployment.yaml",
+      "line": 208,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/extra-list.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/hpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/hpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/hpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/hpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/hpa.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/hpa.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/hpa.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 19,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 21,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 60,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 83,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/networkpolicy.yaml",
+      "line": 101,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/pdb.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 16,
+      "message": "unresolved dot context: .Values.commonLabels"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 25,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 28,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 29,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 34,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 47,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 50,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 51,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 54,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 56,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 57,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 58,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 62,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 67,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 70,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/rolebinding.yaml",
+      "line": 71,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 8,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 103,
+      "message": "unresolved dot context: .Values.topologyInjector.enabled"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 120,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 122,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 123,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 124,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 128,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 168,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 170,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 171,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 172,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/roles.yaml",
+      "line": 176,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service-account.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service-account.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service-account.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service-account.yaml",
+      "line": 14,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service-account.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 9,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 17,
+      "message": "variable reassignment requires review: $annotations = include \"common.tplvalues.merge\" (dict \"values\" (list $annotations .Values.service.annotations .Values.commonAnnotations) \"context\" .)"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 20,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 20,
+      "message": "variable reassignment requires review: $annotations = include \"common.tplvalues.merge\" (dict \"values\" (list $annotations $defaultMetricsAnnotations .Values.metrics.annotations) \"context\" .)"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 33,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 57,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 59,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 66,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 68,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 75,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 77,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 85,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 87,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 96,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 98,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 107,
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 109,
+      "message": "unresolved dot context: .Values.service.type"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 115,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 117,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/service.yaml",
+      "line": 118,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 13,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 18,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 27,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 42,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 45,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/servicemonitor.yaml",
+      "line": 49,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/topology-injector-webhook.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/topology-injector-webhook.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/topology-injector-webhook.yaml",
+      "line": 15,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/topology-injector-webhook.yaml",
+      "line": 22,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/topology-injector-webhook.yaml",
+      "line": 23,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/topology-injector-webhook.yaml",
+      "line": 37,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 6,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 7,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 10,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 11,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 12,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 16,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 17,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 36,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "templates/vpa.yaml",
+      "line": 38,
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .values"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .values"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .topologyKey"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .component"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .customLabels"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraMatchLabels"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraPodAffinityTerms"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraNamespaces"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .context.Release.Namespace"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .topologyKey"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraMatchLabels"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .namespaces"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved variable context: $.context.Release.Namespace"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .namespaces"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .topologyKey"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .weight"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .component"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .customLabels"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraMatchLabels"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraPodAffinityTerms"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraNamespaces"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .context.Release.Namespace"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .topologyKey"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .extraMatchLabels"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .namespaces"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved variable context: $.context.Release.Namespace"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .namespaces"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .topologyKey"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_affinities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .Capabilities.KubeVersion.Version"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .Values.kubeVersion"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .Values.global"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .kubeVersion"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .context.Values.apiVersions"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .context.Values.global"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .apiVersions"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .context.Capabilities.APIVersions.Has"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .version"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .version"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_capabilities.tpl",
+      "message": "unresolved dot context: .Capabilities"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .Capabilities.APIVersions.Has"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .secContext"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .context.Values.global"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .compatibility"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .openshift"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .context.Values.global.compatibility.openshift.adaptSecurityContext"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"fsGroup\" \"runAsUser\" \"runAsGroup\""
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .secContext.seLinuxOptions"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"seLinuxOptions\""
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .context.Values.global"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .compatibility"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .omitEmptySeLinuxOptions"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved dot context: .secContext.seLinuxOptions"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"seLinuxOptions\""
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "unresolved variable context: $adaptedContext.privileged"
+    },
+    {
+      "file": "charts/common/templates/_compatibility.tpl",
+      "message": "variable reassignment requires review: $adaptedContext = omit $adaptedContext \"capabilities\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .validationErrors"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .context.Release.IsUpgrade"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print $errorString \"\\n                 Note that even after reinstallation, old credentials may be needed as they may be kept in persistent volume claims.\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print $errorString \"\\n                 Further information can be obtained at https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues/#credential-errors-while-upgrading-chart-releases\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print $errorString \"\\n%s\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .context.Values.global"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .imageRegistry"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .context.Chart.Annotations.images"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .images"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .registry"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .repository"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .tag"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $relocatedImages = append $relocatedImages $fullImageName"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .repository"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $replacedImages = append $replacedImages $fullImageName"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $bitnamiLegacyImages = append $bitnamiLegacyImages $fullImageName"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .repository"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .tag"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $retaggedImages = append $retaggedImages $fullImageName"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .context.Values.global"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .security"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: .allowInsecureImages"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print $errorString \"\\n\\nUnrecognized images:\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print $errorString \"\\n  - \" ."
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print \"\\n\\n\u26a0 WARNING: \" $errorString"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print \"\\n\\n\u26a0 ERROR: \" $errorString"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print $errorString \"\\n\\nIf you are sure you want to proceed with non-standard containers, you can skip container image verification by setting the global parameter 'global.security.allowInsecureImages' to true.\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print $errorString \"\\nFurther information can be obtained at https://github.com/bitnami/charts/issues/30850\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $errorString = print \"\\n\\n\u26a0 WARNING: \" $errorString"
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $warnString = print $warnString \"\\n\\nRetagged images:\""
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_errors.tpl",
+      "message": "variable reassignment requires review: $warnString = print $warnString \"\\n  - \" ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRoot.registry"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .global"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRegistry"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRoot.repository"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRoot.tag"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRoot.tag"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .chart"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .chart.AppVersion"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $termination = .chart.AppVersion | toString"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRoot.digest"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $separator = \"@\""
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRoot.digest"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $termination = .imageRoot.digest | toString"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .global"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imagePullSecrets"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets .name"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .images"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .pullSecrets"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets .name"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved variable context: $context.Values.global"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imagePullSecrets"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" .name \"context\" $context))"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" . \"context\" $context))"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .images"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .pullSecrets"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" .name \"context\" $context))"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "variable reassignment requires review: $pullSecrets = append $pullSecrets (include \"common.tplvalues.render\" (dict \"value\" . \"context\" $context))"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .imageRoot.tag"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved variable context: $version.Major"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved variable context: $version.Minor"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved variable context: $version.Patch"
+    },
+    {
+      "file": "charts/common/templates/_images.tpl",
+      "message": "unresolved dot context: .chart.AppVersion"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "unresolved dot context: .serviceName"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "unresolved dot context: .servicePort"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "unresolved dot context: .servicePort"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "unresolved dot context: .servicePort"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "unresolved dot context: .servicePort"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_ingress.tpl",
+      "message": "unresolved dot context: .annotations"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .context.Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .context.Release.Service"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .context.Chart.AppVersion"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: set"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .customLabels"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: template"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .Release.Service"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .Chart.AppVersion"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .customLabels"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .context.Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: merge"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_labels.tpl",
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Chart.Version"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Values.fullnameOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Chart.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Values.nameOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .chartValues.fullnameOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .chartValues.fullnameOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .chartName"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .chartValues.nameOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .context.Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .context.Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .context.Release.Name"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Release.Namespace"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: .Values.namespaceOverride"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_names.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_resources.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_resources.tpl",
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "charts/common/templates/_resources.tpl",
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "charts/common/templates/_resources.tpl",
+      "message": "unresolved lookup target: index $presets .type | toYaml"
+    },
+    {
+      "file": "charts/common/templates/_resources.tpl",
+      "message": "unresolved dot context: .type"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .defaultNameSuffix"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .defaultNameSuffix"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $name = printf \"%s-%s\" $name .defaultNameSuffix | trunc 63 | trimSuffix \"-\""
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .existingSecret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .name"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $name = ."
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $name = ."
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .existingSecret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .existingSecret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .existingSecret.keyMapping"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .existingSecret.keyMapping"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved variable context: $.key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved lookup target: $key = index .existingSecret.keyMapping $.key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $key = index .existingSecret.keyMapping $.key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .chartName"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .length"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .providedValues"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .data"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved lookup target: $password = index $secretData .key | b64dec"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = index $secretData .key | b64dec"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .failOnNew"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .honorProvidedValues"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = tpl ($providedPasswordValue | toString) .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = tpl ($providedPasswordValue | toString) .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .context.Values.enabled"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $subchart = $chartName"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .failOnNew"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .strong"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = randAscii $passwordLength"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = regexReplaceAllLiteral \"\\\\W\" $password \"@\" | substr 5 $passwordLength"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = printf \"%s%s\" $subStr $password | toString | shuffle"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = randAlphaNum $passwordLength"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .skipB64enc"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $password = $password | b64enc"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .skipQuote"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .data"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved lookup target: $value = index $secretData .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $value = index $secretData .key"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .defaultValue"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .defaultValue"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "variable reassignment requires review: $value = .defaultValue | toString | b64enc"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/_secrets.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_storage.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_storage.tpl",
+      "message": "unresolved dot context: .global"
+    },
+    {
+      "file": "charts/common/templates/_storage.tpl",
+      "message": "unresolved dot context: .storageClass"
+    },
+    {
+      "file": "charts/common/templates/_storage.tpl",
+      "message": "unresolved dot context: .persistence.storageClass"
+    },
+    {
+      "file": "charts/common/templates/_storage.tpl",
+      "message": "unresolved dot context: .defaultStorageClass"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .value"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .value"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .scope"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .scope"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "dynamic template/context or mutation requires review: merge"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "tpl source is dynamic or unsupported"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .values"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved variable context: $.scope"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "dynamic template/context or mutation requires review: merge"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "variable reassignment requires review: $dst = include \"common.tplvalues.render\" (dict \"value\" . \"context\" $.context \"scope\" $.scope) | fromYaml | merge $dst"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: .values"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "unresolved variable context: $.scope"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "dynamic template/context or mutation requires review: mergeOverwrite"
+    },
+    {
+      "file": "charts/common/templates/_tplvalues.tpl",
+      "message": "variable reassignment requires review: $dst = include \"common.tplvalues.render\" (dict \"value\" . \"context\" $.context \"scope\" $.scope) | fromYaml | mergeOverwrite $dst"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .field"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .field"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "variable reassignment requires review: $upperCaseFieldNameSplit = append $upperCaseFieldNameSplit ( upper . )"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved variable context: $.context.Values"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved variable context: $.key"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved lookup target: $value = ( index $latestObj . )"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "variable reassignment requires review: $value = ( index $latestObj . )"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "variable reassignment requires review: $latestObj = $value"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .keys"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .keys"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "variable reassignment requires review: $key = ."
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .context.Template.BasePath"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .path"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/_utils.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .repository"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .tag"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .repository"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .tag"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .context.Chart.Annotations.images"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .images"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .registry"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .repository"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .tag"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .registry"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .repository"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .tag"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $affectedImages = append $affectedImages (printf \"%s/%s:%s\" .registry .repository .tag)"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $printMessage = true"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .context.Values"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: .sections"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved lookup target: if not (index $values \"resources\")"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $affectedSections = append $affectedSections \"resources\""
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $printMessage = true"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved lookup target: $section = index $section ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $section = index $section ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved lookup target: if not (index $section \"resources\")"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved lookup target: if index $section \"enabled\""
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $affectedSections = append $affectedSections (printf \"%s.resources\" .)"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $printMessage = true"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "chained else context requires review"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved lookup target: if (gt (index $section \"replicaCount\" | int) 0)"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $affectedSections = append $affectedSections (printf \"%s.resources\" .)"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $printMessage = true"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $affectedSections = append $affectedSections (printf \"%s.resources\" .)"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "variable reassignment requires review: $printMessage = true"
+    },
+    {
+      "file": "charts/common/templates/_warnings.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "unresolved dot context: .context.Values.cassandra.dbUser.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "unresolved dot context: .context.Values.dbUser.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "unresolved dot context: .context.Values.cassandra.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "unresolved dot context: .context.Values.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_cassandra.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "variable reassignment requires review: $requiredPasswords = append $requiredPasswords $requiredRootPassword"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "variable reassignment requires review: $requiredPasswords = append $requiredPasswords $requiredPassword"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "variable reassignment requires review: $requiredPasswords = append $requiredPasswords $requiredReplicationPassword"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context.Values.mariadb.auth.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context.Values.auth.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context.Values.mariadb.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context.Values.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context.Values.mariadb.architecture"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .context.Values.architecture"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mariadb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .context.Values.mongodb.auth.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .context.Values.auth.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .context.Values.mongodb.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .context.Values.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .context.Values.mongodb.architecture"
+    },
+    {
+      "file": "charts/common/templates/validations/_mongodb.tpl",
+      "message": "unresolved dot context: .context.Values.architecture"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .context.Values.mysql.auth.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .context.Values.auth.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .context.Values.mysql.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .context.Values.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .context.Values.mysql.architecture"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .context.Values.architecture"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_mysql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.global"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.global.postgresql"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.global.postgresql"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .key"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved lookup target: index .context.Values.global.postgresql .key | quote"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.postgresql.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.existingSecret"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.postgresql.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.postgresql.replication.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .context.Values.replication.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_postgresql.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "unresolved dot context: .context.Values.redis.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "unresolved dot context: .context.Values.enabled"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/validations/_redis.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .required"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .valueKey"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .field"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved variable context: $.context"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "named template context is resolved only at runtime"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .valueKey"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .context"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .subchart"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .secret"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .field"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "variable reassignment requires review: $varname = include \"common.utils.fieldToEnvVar\" ."
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: ."
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "dynamic template/context or mutation requires review: include"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "variable reassignment requires review: $getCurrentValue = printf \" To get the current value:\\n\\n        %s\\n\" (include \"common.utils.secret.getvalue\" .)"
+    },
+    {
+      "file": "charts/common/templates/validations/_validations.tpl",
+      "message": "unresolved dot context: .valueKey"
+    },
+    {
+      "path": [
+        "extraContainerPorts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "extraDeploy",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "kubeAPIServerPorts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "certgen",
+        "networkPolicy",
+        "kubeAPIServerPorts",
+        "*"
+      ],
+      "message": "wildcard resolved by schema/item tests; no invented key or item"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    },
+    {
+      "path": [
+        "networkPolicy",
+        "ingressNSPodMatchLabels",
+        "*"
+      ],
+      "message": "no schema for referenced path; generated unconstrained path test"
+    }
+  ]
+}

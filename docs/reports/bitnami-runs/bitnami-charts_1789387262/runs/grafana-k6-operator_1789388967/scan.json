@@ -1,0 +1,89 @@
+{
+  "title": "Local Helm chart tests",
+  "directory": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/grafana-k6-operator",
+  "started_epoch": 1789388967,
+  "elapsed_seconds": 136.119873999618,
+  "dependency_preparation_seconds": 0.6252823751419783,
+  "testing_seconds": 135.44621741678566,
+  "scan_status": "interrupted",
+  "discovery_complete": true,
+  "unstarted_charts": 0,
+  "charts_discovered": 1,
+  "counts": {
+    "interrupted": 1
+  },
+  "charts": [
+    {
+      "chart": ".",
+      "status": "interrupted",
+      "name": "grafana-k6-operator",
+      "version": "1.0.12",
+      "kind": "application",
+      "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789387262/runs/grafana-k6-operator_1789388967/0000",
+      "values_file": "/Users/emmadoyle/projects/personal/hypothesis-helm/third_party/bitnami-charts/bitnami/grafana-k6-operator/values.yaml",
+      "dependency_preparation_seconds": 0.6252823751419783,
+      "testing_seconds": 135.44621741678566,
+      "error": "Interrupted by user",
+      "elapsed_seconds": 136.11572808260098,
+      "filtering": {
+        "requested": true,
+        "applied": false,
+        "reason": "Chart did not enter finite permutation testing"
+      },
+      "result": "N/A",
+      "error_refs": [
+        "E001"
+      ]
+    }
+  ],
+  "settings": {
+    "max_examples": 100,
+    "filter": true,
+    "fail": false,
+    "permutations": null,
+    "chart_timeout_seconds": 300.0,
+    "scan_timeout_seconds": null,
+    "scan_timeout_excludes_dependency_preparation": true,
+    "helm": "helm",
+    "seed": 0,
+    "traversal_strategy": "random",
+    "sampling": {
+      "percent": 100,
+      "minimum": 128,
+      "aggressive": false
+    },
+    "build_dependencies": true,
+    "values": "values.yaml",
+    "clone_timeout_seconds": 180.0,
+    "chart_version": null
+  },
+  "error_groups": [
+    {
+      "status": "interrupted",
+      "failure_type": null,
+      "error": "Interrupted by user",
+      "source": null,
+      "occurrences": [
+        {
+          "chart": ".",
+          "phase": "chart",
+          "status": "interrupted",
+          "artifacts": "/Users/emmadoyle/projects/personal/hypothesis-helm/docs/reports/bitnami-runs/bitnami-charts_1789387262/runs/grafana-k6-operator_1789388967/0000",
+          "input": {
+            "recorded": false
+          }
+        }
+      ],
+      "id": "E001",
+      "occurrence_count": 1,
+      "affected_charts": [
+        "."
+      ]
+    }
+  ],
+  "error_summary": {
+    "unique_errors": 1,
+    "occurrences": 1,
+    "duplicates": 0
+  }
+}

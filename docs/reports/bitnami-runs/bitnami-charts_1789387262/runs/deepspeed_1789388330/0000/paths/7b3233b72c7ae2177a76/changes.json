@@ -1,0 +1,912 @@
+{
+  "overrides": {
+    "format": "deepdiff-json-v1",
+    "baseline_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result_sha256": "ba79e67772316f0e6f45532d4fd591e175bea87dca8d411ef1297db5cba617b7",
+    "changes": [
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.client",
+        "segments": [
+          "client"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "useJob": false,
+          "backoffLimit": 10,
+          "extraEnvVars": [],
+          "extraEnvVarsCM": "",
+          "extraEnvVarsSecret": "",
+          "annotations": {},
+          "command": [],
+          "args": [],
+          "terminationGracePeriodSeconds": "",
+          "livenessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 60,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "readinessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 90,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "startupProbe": {
+            "enabled": false,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "customLivenessProbe": {},
+          "customReadinessProbe": {},
+          "customStartupProbe": {},
+          "resourcesPreset": "medium",
+          "resources": {},
+          "podSecurityContext": {
+            "enabled": true,
+            "fsGroupChangePolicy": "Always",
+            "sysctls": [],
+            "supplementalGroups": [],
+            "fsGroup": 1001
+          },
+          "containerSecurityContext": {
+            "enabled": true,
+            "seLinuxOptions": {},
+            "runAsUser": 1001,
+            "runAsGroup": 1001,
+            "runAsNonRoot": true,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "allowPrivilegeEscalation": false,
+            "capabilities": {
+              "drop": [
+                "ALL"
+              ]
+            },
+            "seccompProfile": {
+              "type": "RuntimeDefault"
+            }
+          },
+          "lifecycleHooks": {},
+          "runtimeClassName": "",
+          "automountServiceAccountToken": false,
+          "hostAliases": [],
+          "labels": {},
+          "podLabels": {},
+          "podAnnotations": {},
+          "podAffinityPreset": "",
+          "podAntiAffinityPreset": "soft",
+          "nodeAffinityPreset": {
+            "type": "",
+            "key": "",
+            "values": []
+          },
+          "affinity": {},
+          "nodeSelector": {},
+          "tolerations": [],
+          "topologySpreadConstraints": [],
+          "priorityClassName": "",
+          "schedulerName": "",
+          "updateStrategy": {
+            "type": "RollingUpdate",
+            "rollingUpdate": {}
+          },
+          "extraVolumes": [],
+          "extraVolumeMounts": [],
+          "sidecars": [],
+          "enableDefaultInitContainers": true,
+          "initContainers": [],
+          "networkPolicy": {
+            "enabled": true,
+            "allowExternalEgress": true,
+            "extraIngress": [],
+            "extraEgress": []
+          },
+          "serviceAccount": {
+            "create": true,
+            "name": "",
+            "automountServiceAccountToken": false,
+            "annotations": {}
+          },
+          "persistence": {
+            "enabled": false,
+            "storageClass": "",
+            "existingClaim": "",
+            "mountPath": "/bitnami/deepspeed/data",
+            "accessModes": [
+              "ReadWriteOnce"
+            ],
+            "dataSource": {},
+            "selector": {},
+            "size": "8Gi",
+            "labels": {},
+            "annotations": {}
+          },
+          "pdb": {
+            "create": true,
+            "minAvailable": "",
+            "maxUnavailable": ""
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.clusterDomain",
+        "segments": [
+          "clusterDomain"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": "cluster.local"
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.commonAnnotations",
+        "segments": [
+          "commonAnnotations"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.commonLabels",
+        "segments": [
+          "commonLabels"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {}
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.config",
+        "segments": [
+          "config"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "defaultHostFile": "{{- $workers := $.Values.worker.replicaCount | int }}\n{{- range $i, $e := until $workers }}\n{{ include \"deepspeed.v0.worker.fullname\" $ }}-{{ $i }}.{{ printf \"%s-headless\" (include \"deepspeed.v0.worker.fullname\" $) }} slots={{ $.Values.worker.slotsPerNode }}\n{{- end }}\n",
+          "overrideHostFile": "",
+          "existingHostFileConfigMap": "",
+          "defaultSSHClient": "{{- $workers := $.Values.worker.replicaCount | int }}\n{{- range $i, $e := until $workers }}\nHost {{ include \"deepspeed.v0.worker.fullname\" $ }}-{{ $i }}.{{ printf \"%s-headless\" (include \"deepspeed.v0.worker.fullname\" $) }}\n  Port {{ $.Values.worker.containerPorts.ssh }}\n  IdentityFile /bitnami/ssh/client-private-key/id_rsa\n  StrictHostKeyChecking no\n{{- end }}\n",
+          "overrideSSHClient": "",
+          "existingSSHClientConfigMap": "",
+          "defaultSSHServer": "Port {{ .Values.worker.containerPorts.ssh }}\nPasswordAuthentication no\nUsePAM no\nPermitUserEnvironment yes\n",
+          "overrideSSHServer": "",
+          "existingSSHServerConfigMap": "",
+          "sshPrivateKey": "",
+          "existingSSHKeySecret": ""
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.diagnosticMode",
+        "segments": [
+          "diagnosticMode"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "command": [
+            "sleep"
+          ],
+          "args": [
+            "infinity"
+          ]
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.extraDeploy",
+        "segments": [
+          "extraDeploy"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": []
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.fullnameOverride",
+        "segments": [
+          "fullnameOverride"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.gitImage",
+        "segments": [
+          "gitImage"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "registry": "docker.io",
+          "repository": "bitnami/git",
+          "tag": "2.51.0-debian-12-r0",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": []
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.global",
+        "segments": [
+          "global"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "imageRegistry": "",
+          "imagePullSecrets": [],
+          "defaultStorageClass": "",
+          "storageClass": "",
+          "security": {
+            "allowInsecureImages": false
+          },
+          "compatibility": {
+            "openshift": {
+              "adaptSecurityContext": "auto"
+            }
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.image",
+        "segments": [
+          "image"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "registry": "docker.io",
+          "repository": "bitnami/deepspeed",
+          "tag": "0.17.5-debian-12-r0",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": []
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.kubeVersion",
+        "segments": [
+          "kubeVersion"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.nameOverride",
+        "segments": [
+          "nameOverride"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": ""
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.source",
+        "segments": [
+          "source"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "type": "configmap",
+          "launchCommand": "",
+          "configMap": {},
+          "existingConfigMap": "",
+          "git": {
+            "repository": "",
+            "revision": "",
+            "extraVolumeMounts": []
+          }
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.volumePermissions",
+        "segments": [
+          "volumePermissions"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": false,
+          "image": {
+            "registry": "docker.io",
+            "repository": "bitnami/os-shell",
+            "tag": "12-debian-12-r51",
+            "digest": "",
+            "pullPolicy": "IfNotPresent",
+            "pullSecrets": []
+          },
+          "resourcesPreset": "nano",
+          "resources": {}
+        }
+      },
+      {
+        "kind": "dictionary_item_added",
+        "path": "$.worker",
+        "segments": [
+          "worker"
+        ],
+        "old_present": false,
+        "new_present": true,
+        "after": {
+          "enabled": true,
+          "slotsPerNode": 1,
+          "extraEnvVars": [],
+          "extraEnvVarsCM": "",
+          "extraEnvVarsSecret": "",
+          "command": [],
+          "args": [],
+          "replicaCount": 3,
+          "terminationGracePeriodSeconds": "",
+          "containerPorts": {
+            "ssh": 2222
+          },
+          "livenessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "readinessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "startupProbe": {
+            "enabled": false,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "customLivenessProbe": {},
+          "customReadinessProbe": {},
+          "customStartupProbe": {},
+          "resourcesPreset": "medium",
+          "resources": {},
+          "podSecurityContext": {
+            "enabled": true,
+            "fsGroupChangePolicy": "Always",
+            "sysctls": [],
+            "supplementalGroups": [],
+            "fsGroup": 1001
+          },
+          "containerSecurityContext": {
+            "enabled": true,
+            "seLinuxOptions": {},
+            "runAsUser": 1001,
+            "runAsGroup": 1001,
+            "runAsNonRoot": true,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "allowPrivilegeEscalation": false,
+            "capabilities": {
+              "drop": [
+                "ALL"
+              ]
+            },
+            "seccompProfile": {
+              "type": "RuntimeDefault"
+            }
+          },
+          "lifecycleHooks": {},
+          "runtimeClassName": "",
+          "automountServiceAccountToken": false,
+          "hostAliases": [],
+          "labels": {},
+          "annotations": {},
+          "podLabels": {},
+          "podAnnotations": {},
+          "podAffinityPreset": "",
+          "podAntiAffinityPreset": "soft",
+          "nodeAffinityPreset": {
+            "type": "",
+            "key": "",
+            "values": []
+          },
+          "affinity": {},
+          "nodeSelector": {},
+          "tolerations": [],
+          "topologySpreadConstraints": [],
+          "podManagementPolicy": "Parallel",
+          "priorityClassName": "",
+          "schedulerName": "",
+          "updateStrategy": {
+            "type": "RollingUpdate",
+            "rollingUpdate": {}
+          },
+          "extraVolumes": [],
+          "extraVolumeMounts": [],
+          "sidecars": [],
+          "enableDefaultInitContainers": true,
+          "initContainers": [],
+          "headlessServiceAnnotations": {},
+          "externalAccess": {
+            "enabled": false,
+            "service": {
+              "type": "ClusterIP",
+              "loadBalancerIPs": [],
+              "externalIPs": [],
+              "loadBalancerAnnotations": [],
+              "publishNotReadyAddresses": false,
+              "ports": {
+                "ssh": 22
+              },
+              "nodePorts": [],
+              "sessionAffinityConfig": {},
+              "sessionAffinity": "None",
+              "loadBalancerSourceRanges": [],
+              "externalTrafficPolicy": "Cluster",
+              "labels": {},
+              "annotations": {},
+              "extraPorts": []
+            }
+          },
+          "serviceAccount": {
+            "create": true,
+            "name": "",
+            "automountServiceAccountToken": false,
+            "annotations": {}
+          },
+          "networkPolicy": {
+            "enabled": true,
+            "allowExternal": true,
+            "allowExternalEgress": true,
+            "extraIngress": [],
+            "extraEgress": [],
+            "ingressNSMatchLabels": {},
+            "ingressNSPodMatchLabels": {}
+          },
+          "persistence": {
+            "enabled": false,
+            "storageClass": "",
+            "existingClaim": "",
+            "mountPath": "/bitnami/deepspeed/data",
+            "accessModes": [
+              "ReadWriteOnce"
+            ],
+            "selector": {},
+            "dataSource": {},
+            "size": "8Gi",
+            "labels": {},
+            "annotations": {}
+          },
+          "pdb": {
+            "maxUnavailable": ">0"
+          }
+        }
+      }
+    ],
+    "delta": {
+      "dictionary_item_added": {
+        "root['global']": {
+          "imageRegistry": "",
+          "imagePullSecrets": [],
+          "defaultStorageClass": "",
+          "storageClass": "",
+          "security": {
+            "allowInsecureImages": false
+          },
+          "compatibility": {
+            "openshift": {
+              "adaptSecurityContext": "auto"
+            }
+          }
+        },
+        "root['kubeVersion']": "",
+        "root['nameOverride']": "",
+        "root['fullnameOverride']": "",
+        "root['commonLabels']": {},
+        "root['commonAnnotations']": {},
+        "root['clusterDomain']": "cluster.local",
+        "root['extraDeploy']": [],
+        "root['diagnosticMode']": {
+          "enabled": false,
+          "command": [
+            "sleep"
+          ],
+          "args": [
+            "infinity"
+          ]
+        },
+        "root['image']": {
+          "registry": "docker.io",
+          "repository": "bitnami/deepspeed",
+          "tag": "0.17.5-debian-12-r0",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": []
+        },
+        "root['source']": {
+          "type": "configmap",
+          "launchCommand": "",
+          "configMap": {},
+          "existingConfigMap": "",
+          "git": {
+            "repository": "",
+            "revision": "",
+            "extraVolumeMounts": []
+          }
+        },
+        "root['config']": {
+          "defaultHostFile": "{{- $workers := $.Values.worker.replicaCount | int }}\n{{- range $i, $e := until $workers }}\n{{ include \"deepspeed.v0.worker.fullname\" $ }}-{{ $i }}.{{ printf \"%s-headless\" (include \"deepspeed.v0.worker.fullname\" $) }} slots={{ $.Values.worker.slotsPerNode }}\n{{- end }}\n",
+          "overrideHostFile": "",
+          "existingHostFileConfigMap": "",
+          "defaultSSHClient": "{{- $workers := $.Values.worker.replicaCount | int }}\n{{- range $i, $e := until $workers }}\nHost {{ include \"deepspeed.v0.worker.fullname\" $ }}-{{ $i }}.{{ printf \"%s-headless\" (include \"deepspeed.v0.worker.fullname\" $) }}\n  Port {{ $.Values.worker.containerPorts.ssh }}\n  IdentityFile /bitnami/ssh/client-private-key/id_rsa\n  StrictHostKeyChecking no\n{{- end }}\n",
+          "overrideSSHClient": "",
+          "existingSSHClientConfigMap": "",
+          "defaultSSHServer": "Port {{ .Values.worker.containerPorts.ssh }}\nPasswordAuthentication no\nUsePAM no\nPermitUserEnvironment yes\n",
+          "overrideSSHServer": "",
+          "existingSSHServerConfigMap": "",
+          "sshPrivateKey": "",
+          "existingSSHKeySecret": ""
+        },
+        "root['client']": {
+          "enabled": true,
+          "useJob": false,
+          "backoffLimit": 10,
+          "extraEnvVars": [],
+          "extraEnvVarsCM": "",
+          "extraEnvVarsSecret": "",
+          "annotations": {},
+          "command": [],
+          "args": [],
+          "terminationGracePeriodSeconds": "",
+          "livenessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 60,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "readinessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 90,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "startupProbe": {
+            "enabled": false,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "customLivenessProbe": {},
+          "customReadinessProbe": {},
+          "customStartupProbe": {},
+          "resourcesPreset": "medium",
+          "resources": {},
+          "podSecurityContext": {
+            "enabled": true,
+            "fsGroupChangePolicy": "Always",
+            "sysctls": [],
+            "supplementalGroups": [],
+            "fsGroup": 1001
+          },
+          "containerSecurityContext": {
+            "enabled": true,
+            "seLinuxOptions": {},
+            "runAsUser": 1001,
+            "runAsGroup": 1001,
+            "runAsNonRoot": true,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "allowPrivilegeEscalation": false,
+            "capabilities": {
+              "drop": [
+                "ALL"
+              ]
+            },
+            "seccompProfile": {
+              "type": "RuntimeDefault"
+            }
+          },
+          "lifecycleHooks": {},
+          "runtimeClassName": "",
+          "automountServiceAccountToken": false,
+          "hostAliases": [],
+          "labels": {},
+          "podLabels": {},
+          "podAnnotations": {},
+          "podAffinityPreset": "",
+          "podAntiAffinityPreset": "soft",
+          "nodeAffinityPreset": {
+            "type": "",
+            "key": "",
+            "values": []
+          },
+          "affinity": {},
+          "nodeSelector": {},
+          "tolerations": [],
+          "topologySpreadConstraints": [],
+          "priorityClassName": "",
+          "schedulerName": "",
+          "updateStrategy": {
+            "type": "RollingUpdate",
+            "rollingUpdate": {}
+          },
+          "extraVolumes": [],
+          "extraVolumeMounts": [],
+          "sidecars": [],
+          "enableDefaultInitContainers": true,
+          "initContainers": [],
+          "networkPolicy": {
+            "enabled": true,
+            "allowExternalEgress": true,
+            "extraIngress": [],
+            "extraEgress": []
+          },
+          "serviceAccount": {
+            "create": true,
+            "name": "",
+            "automountServiceAccountToken": false,
+            "annotations": {}
+          },
+          "persistence": {
+            "enabled": false,
+            "storageClass": "",
+            "existingClaim": "",
+            "mountPath": "/bitnami/deepspeed/data",
+            "accessModes": [
+              "ReadWriteOnce"
+            ],
+            "dataSource": {},
+            "selector": {},
+            "size": "8Gi",
+            "labels": {},
+            "annotations": {}
+          },
+          "pdb": {
+            "create": true,
+            "minAvailable": "",
+            "maxUnavailable": ""
+          }
+        },
+        "root['worker']": {
+          "enabled": true,
+          "slotsPerNode": 1,
+          "extraEnvVars": [],
+          "extraEnvVarsCM": "",
+          "extraEnvVarsSecret": "",
+          "command": [],
+          "args": [],
+          "replicaCount": 3,
+          "terminationGracePeriodSeconds": "",
+          "containerPorts": {
+            "ssh": 2222
+          },
+          "livenessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "readinessProbe": {
+            "enabled": true,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "startupProbe": {
+            "enabled": false,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 30,
+            "timeoutSeconds": 5,
+            "failureThreshold": 5,
+            "successThreshold": 1
+          },
+          "customLivenessProbe": {},
+          "customReadinessProbe": {},
+          "customStartupProbe": {},
+          "resourcesPreset": "medium",
+          "resources": {},
+          "podSecurityContext": {
+            "enabled": true,
+            "fsGroupChangePolicy": "Always",
+            "sysctls": [],
+            "supplementalGroups": [],
+            "fsGroup": 1001
+          },
+          "containerSecurityContext": {
+            "enabled": true,
+            "seLinuxOptions": {},
+            "runAsUser": 1001,
+            "runAsGroup": 1001,
+            "runAsNonRoot": true,
+            "privileged": false,
+            "readOnlyRootFilesystem": true,
+            "allowPrivilegeEscalation": false,
+            "capabilities": {
+              "drop": [
+                "ALL"
+              ]
+            },
+            "seccompProfile": {
+              "type": "RuntimeDefault"
+            }
+          },
+          "lifecycleHooks": {},
+          "runtimeClassName": "",
+          "automountServiceAccountToken": false,
+          "hostAliases": [],
+          "labels": {},
+          "annotations": {},
+          "podLabels": {},
+          "podAnnotations": {},
+          "podAffinityPreset": "",
+          "podAntiAffinityPreset": "soft",
+          "nodeAffinityPreset": {
+            "type": "",
+            "key": "",
+            "values": []
+          },
+          "affinity": {},
+          "nodeSelector": {},
+          "tolerations": [],
+          "topologySpreadConstraints": [],
+          "podManagementPolicy": "Parallel",
+          "priorityClassName": "",
+          "schedulerName": "",
+          "updateStrategy": {
+            "type": "RollingUpdate",
+            "rollingUpdate": {}
+          },
+          "extraVolumes": [],
+          "extraVolumeMounts": [],
+          "sidecars": [],
+          "enableDefaultInitContainers": true,
+          "initContainers": [],
+          "headlessServiceAnnotations": {},
+          "externalAccess": {
+            "enabled": false,
+            "service": {
+              "type": "ClusterIP",
+              "loadBalancerIPs": [],
+              "externalIPs": [],
+              "loadBalancerAnnotations": [],
+              "publishNotReadyAddresses": false,
+              "ports": {
+                "ssh": 22
+              },
+              "nodePorts": [],
+              "sessionAffinityConfig": {},
+              "sessionAffinity": "None",
+              "loadBalancerSourceRanges": [],
+              "externalTrafficPolicy": "Cluster",
+              "labels": {},
+              "annotations": {},
+              "extraPorts": []
+            }
+          },
+          "serviceAccount": {
+            "create": true,
+            "name": "",
+            "automountServiceAccountToken": false,
+            "annotations": {}
+          },
+          "networkPolicy": {
+            "enabled": true,
+            "allowExternal": true,
+            "allowExternalEgress": true,
+            "extraIngress": [],
+            "extraEgress": [],
+            "ingressNSMatchLabels": {},
+            "ingressNSPodMatchLabels": {}
+          },
+          "persistence": {
+            "enabled": false,
+            "storageClass": "",
+            "existingClaim": "",
+            "mountPath": "/bitnami/deepspeed/data",
+            "accessModes": [
+              "ReadWriteOnce"
+            ],
+            "selector": {},
+            "dataSource": {},
+            "size": "8Gi",
+            "labels": {},
+            "annotations": {}
+          },
+          "pdb": {
+            "maxUnavailable": ">0"
+          }
+        },
+        "root['gitImage']": {
+          "registry": "docker.io",
+          "repository": "bitnami/git",
+          "tag": "2.51.0-debian-12-r0",
+          "digest": "",
+          "pullPolicy": "IfNotPresent",
+          "pullSecrets": []
+        },
+        "root['volumePermissions']": {
+          "enabled": false,
+          "image": {
+            "registry": "docker.io",
+            "repository": "bitnami/os-shell",
+            "tag": "12-debian-12-r51",
+            "digest": "",
+            "pullPolicy": "IfNotPresent",
+            "pullSecrets": []
+          },
+          "resourcesPreset": "nano",
+          "resources": {}
+        }
+      }
+    }
+  },
+  "values": {
+    "format": "deepdiff-json-v1",
+    "baseline_sha256": "4f3698d88c4c3ad600a318e7f7cd207bb74dec2c5900338424b44b52bb58573f",
+    "result_sha256": "66d1bee749cb62c7a0f6429657da7996ced95c1c5851f8b4c0703208728d138d",
+    "changes": [
+      {
+        "kind": "values_changed",
+        "path": "$.worker.pdb.maxUnavailable",
+        "segments": [
+          "worker",
+          "pdb",
+          "maxUnavailable"
+        ],
+        "old_present": true,
+        "new_present": true,
+        "before": "",
+        "after": ">0"
+      }
+    ],
+    "delta": {
+      "values_changed": {
+        "root['worker']['pdb']['maxUnavailable']": {
+          "new_value": ">0",
+          "old_value": ""
+        }
+      }
+    }
+  },
+  "manifests": {
+    "unavailable": "No parsed failing output or successful baseline is available."
+  }
+}

@@ -837,6 +837,8 @@ def test_scan_filter_support(
                 "/usr/bin/true",
                 "--no-build-dependencies",
                 "--filter",
+                "--jobs",
+                "1",
                 "--artifact-dir",
                 str(tmp_path / "out"),
             ]

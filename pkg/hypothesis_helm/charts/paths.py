@@ -6,6 +6,7 @@ import hashlib
 import json
 import logging
 import math
+import tempfile
 import time
 from pathlib import Path
 
@@ -94,6 +95,7 @@ def check_paths(
     namespace: str = "default",
     kube_version: str | None = None,
     allow_empty: bool = False,
+    jobs: int = 1,
 ) -> dict[str, object]:
     """
     Schedule each discovered path once after filtering, retaining partial coverage.
@@ -118,12 +120,13 @@ def check_paths(
         namespace (str): Helm release namespace.
         kube_version (str | None): Kubernetes capability version supplied to Helm.
         allow_empty (bool): Accept inputs that render no resources.
+        jobs (int): Concurrent path workers sharing this chart's execution deadline.
 
     Returns:
         dict[str, object]: Visited, completed, incomplete, and remaining path evidence.
     """
     traversal_strategy = validate_strategy(traversal_strategy)
-    if not math.isfinite(budget) or budget <= 0 or max_examples < 1 or timeout <= 0:
+    if not math.isfinite(budget) or budget <= 0 or max_examples < 1 or timeout <= 0 or jobs < 1:
         raise ValueError("budget, max_examples, and timeout must be positive")
     planning_started = time.monotonic()
     sampling_analysis = sampling_profile(chart) if sampling.aggressive else None
@@ -186,7 +189,34 @@ def check_paths(
                 raise RenderFailure("chart rendered no resources")
             baseline["status"] = "passed"
             measured.observe(chart.defaults)
-            for entry in ordered:
+            if jobs > 1:
+                from hypothesis_helm.execution.path_queue import execute
+
+                context: dict[str, object] = {
+                    "chart": str(chart.path),
+                    "schema": chart.schema,
+                    "defaults": json_value(chart.defaults),
+                    "generation_schema": model.schema,
+                    "paths": [{"path": list(entry.path), "schema": entry.schema} for entry in ordered],
+                    "deadline": started + budget,
+                    "resources": resources,
+                    "artifacts": str(artifacts),
+                    "max_examples": max_examples,
+                    "seed": seed,
+                    "helm": helm,
+                    "timeout": timeout,
+                    "filtering": filtering,
+                    "fail_fast": fail_fast,
+                    "release": release,
+                    "namespace": namespace,
+                    "kube_version": kube_version,
+                    "allow_empty": allow_empty,
+                }
+                # Retain queue ownership records alongside diagnostics; never reuse a previous queue.
+                queue_root = Path(tempfile.mkdtemp(prefix="path-workers-", dir=artifacts))
+                phases.extend(execute(context, queue_root / "queue", jobs))
+                stopped = time.monotonic() - started >= budget or any(phase["status"] == "time-limit" for phase in phases)
+            for entry in ordered if jobs == 1 else []:
                 remaining = budget - (time.monotonic() - started)
                 if remaining <= 0:
                     raise TimeLimitReached()
@@ -242,15 +272,23 @@ def check_paths(
             baseline.update(status="failed", error=str(exc), failure_type=type(exc).__name__)
         else:
             raise
+    for phase in phases:
+        observed = phase.get("field_coverage", {})
+        if isinstance(observed, dict):
+            measured.present.update(tuple(path) for path in observed.get("present_fields", []))
+            measured.varied.update(tuple(path) for path in observed.get("varied_fields", []))
     measured.refresh()
     failures = [phase for phase in phases if phase["status"] == "failed"]
     completed = sum(phase["status"] in {"passed", "failed", "configuration-rejected"} for phase in phases)
+    worker_errors = any(phase["status"] == "error" for phase in phases)
     generation_errors = any(phase["status"] == "generation-error" for phase in phases)
     status = (
         "failed"
         if failures or baseline["status"] == "failed"
         else "time-limit"
         if stopped
+        else "error"
+        if worker_errors
         else "generation-error"
         if generation_errors
         else "configuration-rejected"
@@ -260,6 +298,8 @@ def check_paths(
     result: dict[str, object] = {
         "status": status,
         "mode": "paths",
+        "workers": min(jobs, len(ordered)),
+        "worker_model": "shared chart path queue",
         "seed": seed,
         "traversal_strategy": traversal_strategy,
         "traversal_algorithm": ALGORITHM,
@@ -301,6 +341,24 @@ def check_paths(
     elif baseline.get("error"):
         result["error"] = baseline["error"]
     if rejections is not None:
-        result["configuration_rejections"] = rejections.snapshot()
+        rejection_summary = rejections.snapshot()
+        if jobs > 1:
+            worker_rejections = {
+                str(phase["worker_pid"]): phase["configuration_rejections"]
+                for phase in phases
+                if "worker_pid" in phase and "configuration_rejections" in phase
+            }
+            rejection_summary["worker_reports"] = worker_rejections
+            for key in (
+                "rejected_candidates",
+                "filtered_candidates",
+                "adjusted_candidates",
+                "verification_renders",
+                "classifier_disagreements",
+            ):
+                rejection_summary[key] = sum(
+                    int(str(snapshot.get(key, 0))) for snapshot in worker_rejections.values() if isinstance(snapshot, dict)
+                )
+        result["configuration_rejections"] = rejection_summary
     (artifacts / "report.json").write_text(json.dumps(result, indent=2) + "\n")
     return result

@@ -1,0 +1,241 @@
+{
+  "global": {
+    "imageRegistry": "",
+    "imagePullSecrets": [],
+    "defaultStorageClass": "",
+    "storageClass": "",
+    "security": {
+      "allowInsecureImages": false
+    },
+    "compatibility": {
+      "openshift": {
+        "adaptSecurityContext": "auto"
+      }
+    }
+  },
+  "kubeVersion": "",
+  "nameOverride": "",
+  "fullnameOverride": "",
+  "namespaceOverride": "",
+  "commonLabels": {},
+  "commonAnnotations": {},
+  "clusterDomain": "cluster.local",
+  "extraDeploy": [],
+  "image": {
+    "registry": "docker.io",
+    "repository": "bitnami/aspnet-core",
+    "tag": "9.0.8-debian-12-r1",
+    "digest": "",
+    "pullPolicy": "IfNotPresent",
+    "pullSecrets": [],
+    "debug": false
+  },
+  "command": [],
+  "args": [],
+  "bindURLs": "http://+:8080",
+  "extraEnvVars": [],
+  "extraEnvVarsCM": "",
+  "extraEnvVarsSecret": "",
+  "replicaCount": 1,
+  "schedulerName": "",
+  "priorityClassName": "",
+  "topologySpreadConstraints": [],
+  "automountServiceAccountToken": false,
+  "hostAliases": [],
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "sidecars": [],
+  "initContainers": [],
+  "lifecycleHooks": {},
+  "podAnnotations": {},
+  "podLabels": {},
+  "updateStrategy": {
+    "type": "RollingUpdate"
+  },
+  "podAffinityPreset": "",
+  "podAntiAffinityPreset": "soft",
+  "nodeAffinityPreset": {
+    "type": "",
+    "key": "",
+    "values": []
+  },
+  "affinity": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "resourcesPreset": "micro",
+  "resources": {},
+  "containerPorts": {
+    "http": 8080
+  },
+  "extraContainerPorts": [],
+  "podSecurityContext": {
+    "enabled": true,
+    "sysctls": [],
+    "fsGroupChangePolicy": "Always",
+    "supplementalGroups": [],
+    "fsGroup": 0
+  },
+  "containerSecurityContext": {
+    "enabled": true,
+    "seLinuxOptions": {},
+    "runAsUser": 1001,
+    "runAsGroup": 1001,
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "add": [
+        "NET_BIND_SERVICE"
+      ],
+      "drop": [
+        "ALL"
+      ]
+    },
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "livenessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 10,
+    "timeoutSeconds": 1,
+    "periodSeconds": 20,
+    "failureThreshold": 6,
+    "successThreshold": 1
+  },
+  "readinessProbe": {
+    "enabled": true,
+    "initialDelaySeconds": 10,
+    "timeoutSeconds": 1,
+    "periodSeconds": 20,
+    "failureThreshold": 6,
+    "successThreshold": 1
+  },
+  "startupProbe": {
+    "enabled": false,
+    "initialDelaySeconds": 10,
+    "timeoutSeconds": 1,
+    "periodSeconds": 20,
+    "failureThreshold": 6,
+    "successThreshold": 1
+  },
+  "customLivenessProbe": {},
+  "customStartupProbe": {},
+  "customReadinessProbe": {},
+  "pdb": {
+    "create": true,
+    "minAvailable": "",
+    "maxUnavailable": ""
+  },
+  "autoscaling": {
+    "enabled": false,
+    "minReplicas": 1,
+    "maxReplicas": 11,
+    "targetCPU": "",
+    "targetMemory": ""
+  },
+  "appFromExternalRepo": {
+    "enabled": true,
+    "clone": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/git",
+        "tag": "2.51.0-debian-12-r0",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": [
+          [
+            null,
+            []
+          ]
+        ]
+      },
+      "repository": "https://github.com/dotnet/AspNetCore.Docs.git",
+      "revision": "main",
+      "depth": 1,
+      "extraVolumeMounts": []
+    },
+    "publish": {
+      "image": {
+        "registry": "docker.io",
+        "repository": "bitnami/dotnet-sdk",
+        "tag": "9.0.304-debian-12-r1",
+        "digest": "",
+        "pullPolicy": "IfNotPresent",
+        "pullSecrets": []
+      },
+      "subFolder": "aspnetcore/performance/caching/output/samples/8.x/",
+      "extraFlags": []
+    },
+    "startCommand": [
+      "dotnet",
+      "OCMinimal.dll"
+    ]
+  },
+  "appFromExistingPVC": {
+    "enabled": false,
+    "existingClaim": ""
+  },
+  "service": {
+    "type": "ClusterIP",
+    "ports": {
+      "http": 80
+    },
+    "nodePorts": {
+      "http": ""
+    },
+    "clusterIP": "",
+    "extraPorts": [],
+    "loadBalancerIP": "",
+    "loadBalancerSourceRanges": [],
+    "externalTrafficPolicy": "Cluster",
+    "annotations": {},
+    "sessionAffinity": "None",
+    "sessionAffinityConfig": {}
+  },
+  "ingress": {
+    "enabled": false,
+    "pathType": "ImplementationSpecific",
+    "apiVersion": "",
+    "hostname": "aspnet-core.local",
+    "path": "/",
+    "annotations": {},
+    "tls": false,
+    "extraPaths": [],
+    "selfSigned": false,
+    "ingressClassName": "",
+    "extraHosts": [],
+    "extraTls": [],
+    "secrets": [],
+    "extraRules": []
+  },
+  "healthIngress": {
+    "enabled": false,
+    "pathType": "ImplementationSpecific",
+    "path": "/",
+    "hostname": "aspnet-core.local",
+    "annotations": {},
+    "tls": false,
+    "ingressClassName": "",
+    "extraHosts": [],
+    "extraTls": [],
+    "secrets": [],
+    "extraRules": []
+  },
+  "networkPolicy": {
+    "enabled": true,
+    "allowExternal": true,
+    "allowExternalEgress": true,
+    "extraIngress": [],
+    "extraEgress": [],
+    "ingressNSMatchLabels": {},
+    "ingressNSPodMatchLabels": {}
+  },
+  "serviceAccount": {
+    "create": true,
+    "name": "",
+    "annotations": {},
+    "extraLabels": {},
+    "automountServiceAccountToken": false
+  }
+}
