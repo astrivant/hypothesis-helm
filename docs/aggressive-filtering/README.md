@@ -2,9 +2,12 @@
 
 [Execution](../execution/README.md#percentage-sampling) · [Audit complexity](../inputs/README.md#potential-output-complexity)
 
-`--filter-aggressive` applies `--filter`, then uses measured chart profiles to retain about **70% of the remaining cases**.
-It raises that count when needed to meet calibrated case and field floors, and always preserves protected topology representatives.
-Unmatched or unsupported charts keep ordinary filtering without additional percentage sampling.
+`--filter-aggressive` starts with `--filter`, then aims to test about **70% of the
+remaining input configurations**. It uses benchmark measurements to decide whether
+that extra reduction is supported for the current chart. When necessary, it keeps
+more tests to meet a measured minimum or preserve examples of different predicted
+outputs. If suitable measurements are unavailable, it keeps the ordinary filtered
+selection.<sup>[\[1\]](#what-determines-the-minimum)</sup>
 
 Recommended workflow: use `--filter-aggressive` on **MRs/PRs**, `--filter` on **main**, and
 an unfiltered `--exhaustive` search **before tagging**. The pre-tag run must complete its supported
@@ -16,29 +19,47 @@ helm hypothesis scan https://github.com/example/charts.git --filter-aggressive
 ```
 
 Use this preset instead of `--filter` or its individual topology/expansion flags. It also excludes explicit
-`--sample-random` and `--sample-min-cases` overrides. `--trim` remains composable, but changes the calibration context;
-a context without measurements disables the additional sampling.
+`--sample-random` and `--sample-min-cases` overrides. You can also use `--trim`, but
+the benchmark evidence must cover that combination of settings. Otherwise the
+additional percentage sampling is disabled.
 
 ## What determines the minimum?
 
-The audit reports the maximum supported manifest breadth × depth, input-field count, finite domain sizes and types,
-gate depth, and template input fan-in. The planner adds the reachable symbolic region sizes before and after filtering.
-A gate is a template `if` condition; gate depth counts nested conditions required to reach a branch.
-Template fan-in is a conservative interaction descriptor: it counts referenced fields in a template, not a proven minimal interaction order.
+The tool builds a **chart profile**, a set of measurements it compares with charts
+used in the benchmark. The profile includes:
 
-The [calibration study](../../benchmarks/studies/calibration-variation/README.md) measures case floors and changed-field floors separately.
-A configuration can change several fields; a complexity score is neither a case count nor a field count.
-The selected field floor counts distinct paths whose effective values differ from the defaults. Lists count as one changed path.
+- **Maximum output complexity:** how wide and deeply nested the output can become.<sup>[\[2\]](../inputs/README.md#potential-output-complexity)</sup>
+- **Input choices:** the number of fields, their types, and how many allowed values
+  each field has. An allowed set of values is called a **domain**.
+- **Gate depth:** how many nested `if` conditions must be satisfied to reach a
+  template branch. A **gate** is one such condition.
+- **Template fan-in:** how many input fields a template reads. This indicates
+  where interactions may occur; it does not prove those fields interact.
+- **Region sizes:** how many configurations the compiler groups together because
+  they have matching predicted output and branch choices, before and after filtering.<sup>[\[3\]](../execution/README.md#optional-trimming)</sup>
 
-Matching prefers an exact descriptor. Nearby matching is available only when the calibration's
-[evidence matrix](../../benchmarks/studies/calibration-variation/MATRIX.md) enables it. It requires compatible domain types, domain
-cardinalities and filter settings. Every numeric coordinate must lie within the measured range. Distance is the largest
-relative coordinate difference, `abs(a - b) / max(abs(a), abs(b))`, with two zero coordinates treated as equal.
-The policy uses the largest case floor and the largest field floor among all neighbors within its measured radius.
-It does not extrapolate beyond measured ranges.
+The benchmark determines two separate minimums, also called **floors**: how many
+configurations to test, and how many different fields those configurations must
+change from the defaults. One configuration can change several fields. A list
+counts as one changed path. These minimums come from measured bug discovery, not
+from treating the complexity score as a number of tests.<sup>[\[4\]](../../benchmarks/studies/calibration-variation/README.md)</sup>
 
-The radius is selected using the same generated fixtures with each target's exact matches excluded from lookup.
-This is a calibration cross-check, not independent validation. It does not guarantee bug recall on another chart.
+The tool first looks for a measured profile that matches exactly. **Nearby matching**
+can use similar profiles, but only if the benchmark evidence enables that policy.
+Input types, numbers of allowed choices and filter settings must be compatible.
+Every numerical measurement must fall within the range covered by the study.
+
+Similarity is measured one quantity at a time: the relative difference is
+`abs(a - b) / max(abs(a), abs(b))`; two zeros have no difference. The largest of
+these differences determines whether a profile is close enough. The allowed
+difference is called the **radius**. Among all matching profiles, the tool takes
+the largest minimum test count and the largest minimum changed-field count.
+It does not extend the evidence beyond the measured ranges.<sup>[\[5\]](../../benchmarks/studies/calibration-variation/MATRIX.md)</sup>
+
+To evaluate a radius, the study removes a chart's exact matches and checks whether
+nearby profiles still find enough of its known bugs. This reuses the generated
+benchmark charts; it is not a test on independent charts and does not guarantee
+the same fraction of bugs will be found in your chart.
 
 The packaged study covers 30 variants with maximum output score 24. Ordinary filtering leaves 886 cases across these variants;
 exact-profile sampling retains 875, with all known defects found across 100 seeds per variant. Nearby matching remains disabled:
@@ -51,7 +72,8 @@ A previous audit or cached test result does not replace that calculation. Report
 analysis time, maximum complexity and matching decision.
 
 If source bytes change during analysis or selection, additional sampling is disabled. Unsupported template code,
-unknown maxima, unresolved regions, missing calibration and unmatched profiles also retain the ordinary filtered plan.
+an unknown maximum, configurations the compiler cannot classify, missing benchmark
+evidence or a profile with no match also retain the ordinary filtered plan.
 The report records the reason. Baseline failures and charts that cannot be prepared do not reach property selection.
 
 This calibration applies to finite configuration plans. Non-finite path-property testing keeps ordinary filtering and
@@ -62,11 +84,13 @@ reports that no path-property calibration is available. The preset uses the same
 
 For each eligible plan, selection proceeds as follows:
 
-1. Reserve every protected case.
-2. Raise the quota to the larger of 70% (rounded up), the calibrated case floor and the protected-case count.
-3. Fill the quota using a reproducible hash ranking based on case identity and seed.
-4. Continue through that ranking until the calibrated changed-field floor is met.
-   If the floor cannot be met, retain the entire eligible plan.
+1. Keep every **protected case**: configurations the compiler cannot classify and
+   at least one example from each supported group of predicted outputs.
+2. Choose the largest of three counts: 70% of the remaining plan (rounded up),
+   the measured minimum test count, or the number of protected cases.
+3. Fill that count in a reproducible random order determined by the inputs and seed.
+4. Add more cases in that order until enough different fields have been changed.
+   If that minimum cannot be met, keep the entire eligible plan.
 
 Defaults remain a separate baseline check. Failure expansion retains access to the original plan. Traversal orders the selected cases
 for execution; a timeout can prevent some selected cases from completing.
@@ -74,8 +98,9 @@ Reports distinguish eligible, selected, omitted and protected cases, selected fi
 
 See the [proof obligations and regression matrix](TESTS.md) for the deterministic properties checked by tests.
 The [benchmark matrix](../../benchmarks/studies/calibration-variation/MATRIX.md) shows empirical case reduction and known-bug discovery.
-Protected symbolic output regions can account for complete bug discovery in these fixtures; the graphs do not establish the
-same result for random sampling alone.
+Keeping examples from every predicted output group can explain why all known bugs
+were found in these benchmark charts. The graphs do not show that random sampling
+alone would achieve the same result.
 
 ## Reproduce the study
 
@@ -95,11 +120,21 @@ packaged runtime policy; changes to that policy should be reviewed alongside the
 
 ## Computational cost
 
-These bounds describe filtering **after candidate generation**, excluding Helm execution. Let `N` be the candidate count,
-`V` the values-document size, `T` the template-analysis work per case, `P` the number of calibration profiles, and `D` their descriptor size.
-`A` is the cost of fresh maximum-complexity and profile analysis for the chart.
-For trimming, `I` is chart analysis and IR construction, `C` is per-case symbolic evaluation and projection work,
-and `K` is the retained count (`Kᵢ` within region i).
+The table describes how filtering work grows as the problem gets larger. It starts
+**after the input configurations have been generated** and excludes running Helm.
+`O(...)` describes growth in work, not a predicted duration in seconds.
+
+| Symbol | Meaning |
+| --- | --- |
+| `N`, `K` | Configurations considered and configurations kept for execution |
+| `V` | Size of one values document |
+| `T` | Template-analysis work for one configuration |
+| `P`, `D` | Measured profiles available and measurements compared per profile |
+| `A` | Fresh complexity search and profile analysis for the chart |
+| `I`, `C` | Initial template parsing and analysis, then output prediction for one configuration |
+| `Kᵢ` | Configurations kept from output group `i` |
+
+The complexity search has its own budget and can return an unknown maximum.<sup>[\[6\]](../inputs/README.md#how-the-maximum-is-found)</sup>
 
 | Option | Filtering time |
 | --- | --- |

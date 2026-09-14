@@ -2,28 +2,36 @@
 
 [Documentation](../README.md) · [Project](../../README.md)
 
+The compiler reads the chart to identify configurable fields and template
+conditions. It uses that information to generate inputs and choose tests. Helm
+then renders the selected inputs, and validators check the output. Analysis that
+cannot interpret part of a template records that uncertainty instead of treating
+it as evidence that a test can be skipped.<sup>[\[1\]](../safe-pruning.md#contract-and-distance)</sup>
+
 ```mermaid
 flowchart LR
-    Values[values.yaml] --> Coalesce[Round-trip YAML coalescing]
-    Templates[Helm templates] --> AST[Template action AST]
+    Values[values.yaml] --> Coalesce[Combine supplied values and discovered fields]
+    Templates[Helm templates] --> AST[Parse template statements into a tree]
     AST --> Coalesce
-    AST --> Contracts[Explicit rejection contracts]
-    Schema[values.schema.json] --> Paths[Schema path enumeration]
+    AST --> Contracts[Find explicit input requirements]
+    Schema[values.schema.json] --> Paths[List configurable values paths]
     Coalesce --> Paths
-    Paths --> Strategies[Typed Hypothesis strategies]
+    Paths --> Strategies[Generate values allowed by each field type]
     Strategies --> Tests[Generated Python tests]
-    Contracts --> Guidance[Dependent-field generation and rejection witness checks]
+    Contracts --> Guidance[Try related settings and check predicted rejections with Helm]
     Guidance --> Helm
     Tests --> Helm[Temporary chart rendering]
-    Helm --> Assertions[Resource assertions and counterexamples]
+    Helm --> Assertions[Validate resources and save failing inputs]
 ```
 
 ## Input discovery and test generation
 
 The compiler resolves template references to values paths and combines those
 references with supplied values and schema constraints. Each supported path gets
-a typed input-generation strategy. Generated Python properties use those strategies
-to construct complete inputs that satisfy the values schema.
+rules for generating values of its declared or inferred type. A generated
+**property** is a test that tries multiple inputs against the same checks. Those
+inputs are assembled into complete values documents and checked against the
+values schema.<sup>[\[2\]](../getting-started/README.md#quick-start)</sup>
 
 ## Execution and validation
 
@@ -46,14 +54,18 @@ the same owner. Communication errors and timeouts trigger cleanup; a failed clea
 ownership record while other children are still joined. Execution and cleanup failures are reported together.
 The test scheduler stops children and joins worker threads even when scheduling or cleanup raises an error.
 Outer pytest and CI owners allow longer interruption grace periods so inner command owners can finish cleanup.
-The benchmark process pool also joins its replicas when a result raises an exception.
+The benchmark process pool also waits for its replicas to exit when a result raises
+an exception.<sup>[\[3\]](../execution/README.md#shutdown-and-partial-results)</sup>
 Benchmark commands pass arguments and chart workspace owners
 explicitly, without changing the process command line or selecting a workspace through ambient context.
 
 ## Syntax trees and compiler passes
 
 `pkg/hypothesis_helm/compiler/asts/` holds template nodes, expression trees, helper
-definitions, and conservative evaluators. Discovery and symbolic compilation share one lexer. Template syntax forms a tree; named
+definitions, and evaluators for the supported template operations. An **abstract
+syntax tree (AST)** represents the structure of parsed template statements.
+Discovery and output prediction share the code that splits template text into
+tokens. Template syntax forms a tree; named
 helper calls connect those trees into a graph. Source filenames and line numbers
 connect analysis results back to chart code.
 
@@ -66,13 +78,15 @@ Dependency records live in `compiler/asts/dependencies.py`; their discovery and
 generation pass lives in `compiler/passes/dependencies.py`. The pass reads installed
 child directories and archives, qualifies child inputs by alias, and records ordered
 Boolean conditions and shared tag controls. It discovers these controls even when
-they appear only in chart metadata. Nested dependencies retain their ancestor gates.
+they appear only in chart metadata. A nested dependency records both its own
+enablement conditions and those of its parent dependencies.
 
 Path generation proposes an enabled context for child settings while preserving
 the selected value and original parent-schema constraints. The original context
 remains eligible because parent templates may read child values independently of
-activation. Finite planning proposes groups containing one child field and its
-activation chain; existing group-size budgets still apply.
+activation. When allowed values can be enumerated, planning proposes testing a
+child field together with the settings needed to enable that child. Existing
+group-size budgets still apply.<sup>[\[4\]](../scanning/README.md#discovery-and-testing)</sup>
 
 Graph exports connect controls to dependency instances and child templates.
 Activation states are predictions, and every scheduled candidate is rendered by

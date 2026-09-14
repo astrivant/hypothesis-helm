@@ -1,5 +1,11 @@
 # Exact-equivalence pruning
 
+This option skips a Helm render only when the compiler can establish that the
+input would produce exactly the same parsed manifests as an input that already
+passed validation. If the compiler cannot establish that match, Helm runs.
+This differs from trimming or sampling, which deliberately leave some inputs
+untested without proving their outputs equal.<sup>[\[1\]](execution/README.md#optional-trimming)</sup>
+
 ```sh
 helm hypothesis test ./chart --permutations 2 --prune-equivalent
 helm hypothesis test ./chart --prune-equivalent --dry-run
@@ -11,6 +17,11 @@ mode, `--prune-equivalent` selects finite pairwise/automatic exhaustive planning
 candidates. Per-path suites do not enable this compiler.
 
 ## Contract and distance
+
+Here, **distance** answers one question: are the complete parsed outputs equal?
+Equal outputs have distance 0; different outputs have distance 1. This is not a
+percentage similarity score. The rule applies to the configurations selected for
+this run; it does not expand that selection to cover other allowed inputs.<sup>[\[2\]](usage.md#interaction-coverage)</sup>
 
 For the generated candidate set D, let R(x) be the complete parsed manifest bundle
 from a successful Helm invocation in a fixed chart and renderer environment.
@@ -25,11 +36,17 @@ of S. The resulting guarantee is:
     for every successfully covered x in D,
     there exists a successfully rendered s in S with R(x) = R(s).
 
-This does not claim coverage of inputs outside D. Pairwise input coverage does
-not by itself establish an epsilon-cover of the entire schema domain. Full
-finite enumeration supplies the complete supported finite candidate domain.
+This does not claim coverage of inputs outside D. Testing every pair of input
+choices does not necessarily produce every possible output. Full finite
+enumeration supplies every configuration in the supported finite input space.
 
 ## Compiler stages
+
+The compiler uses a structured representation of the template, called an
+**intermediate representation (IR)**, to track the text and values each branch
+would output. **Symbolic** evaluation means reasoning about that output from the
+template and candidate values, before asking Helm to render it. **Opaque** code
+is code this analysis cannot interpret; reaching it forces a render.<sup>[\[3\]](architecture/README.md#syntax-trees-and-compiler-passes)</sup>
 
 1. **Parse/lower:** a separate text-preserving lexer and balanced-block IR retain
    literal output, source locations, Go whitespace trimming and opaque actions.

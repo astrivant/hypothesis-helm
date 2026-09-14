@@ -2,8 +2,10 @@
 
 [Documentation](../README.md) · [Project](../../README.md)
 
-Random text sampling excludes C0/C1 controls except LF and CR, including
-inside nested values and generated map keys. Generated tabs are excluded too. Other Unicode text remains eligible.
+Random text generation excludes tabs and other C0/C1 control characters, such as
+`\u001f`, that are generally not useful chart inputs. Newlines and carriage returns
+remain allowed for multiline configuration, as does other Unicode text. The same
+rules apply inside nested values and generated object keys.
 This applies to whole-chart sampling and newly generated per-path suites; regenerate
 saved suites to update their strategies. Explicit finite domains and chart defaults
 are unchanged. If a schema requires only excluded strings, sampling cannot satisfy
@@ -13,12 +15,13 @@ that schema; an empty or unsatisfiable sample is not a successful test.
 
 `run`, `test`, and `scan` default to `--traversal-strategy random`. Discovery builds
 the path inventory, filtering selects the work, and traversal orders it for execution.
-Each selected path is scheduled once per invocation; its property can generate and
-shrink multiple values. A timeout leaves the unvisited paths explicitly untested.
+Each selected path is scheduled once per invocation. Its **property test** can try
+many values and, on failure, simplify the input to a smaller reproducing example
+(called **shrinking**). A timeout leaves the unvisited paths explicitly untested.<sup>[\[1\]](../architecture/README.md#execution-and-validation)</sup>
 
 | Strategy | Execution order |
 | --- | --- |
-| `random` | Stable random priorities derived from `--seed` and path identity. |
+| `random` | Random order, reproducible with the same seed and selected paths. |
 | `linear` | Original path order. Scans follow supplied values before additional discovered paths. |
 | `root-first` | Increasing path depth: `.global` before `.global.configMaps`. |
 | `leaf-first` | Decreasing path depth: deepest leaves before their parent containers. |
@@ -56,17 +59,16 @@ Per-path dry runs list the same ordered properties without executing them.
 
 ## Parallel execution
 
-The unit of parallel work is a generated property for a values path. Each property
-can render and validate its own inputs without depending on another property's
-results, allowing the suite to execute properties concurrently.
+Each worker runs a generated test for one values path. That test may try many
+inputs, independently of tests for other paths, so several workers can run at once.
 
 1. **Collect and dispatch:** Pytest identifies the selected properties. A thread
    pool dispatches each queued property into a separate pytest process, isolating
    fixtures, Hypothesis state, and temporary chart files. Input generation and
    counterexample shrinking remain sequential within each property.
-2. **Measure and adjust:** With `--jobs auto`, each completion feeds a throughput
-   measurement. A PID controller uses measured changes in throughput to adjust
-   active concurrency, starting at the available CPU count and probing up to four
+2. **Measure and adjust:** With `--jobs auto`, the scheduler measures how many tests
+   finish per second. A feedback controller adjusts the number of active workers
+   based on those measurements, starting at the available CPU count and probing up to four
    times that count, bounded by the number of selected tests. Measurement windows
    smooth timing noise; reducing concurrency lets active tests finish.
 3. **Aggregate results:** The parent merges JUnit results and exit statuses, while
@@ -369,29 +371,31 @@ helm hypothesis test ./chart --filter --time-limit 9m
 
 Failure expansion is enabled automatically by `--filter` in finite permutation
 tests and scans. Without `--filter`, opt in with `--expand-failures`. After a check fails,
-it schedules omitted inputs in the same supported symbolic region, executes each
+it schedules previously omitted inputs that the compiler placed in the same group
+of predicted outputs and branch choices, executes each
 at most once, and continues within the existing `--time-limit`. Added inputs are
 rendered even when `--prune-equivalent` is enabled. The original failure still
 fails the run; reports retain individual failures and additional-work counts.
 The initial selection continues after failures when expansion is enabled;
 without the flag, ordinary execution still stops at the first failure.
 
-This measures how widely a failure applies. In the seeded PCA fixture, 47 tested
-erroneous inputs represented all 51 erroneous inputs' output regions: four regions
-contained a second, output-equivalent input. Expansion can exercise those four
-without discovering a different erroneous output. It does not infer failures for
-unexecuted inputs, and cannot recover an entirely missed failure region.
-Unsupported regions have no automatic expansion membership.
+This measures how widely a failure applies. In one PCA benchmark, testing 47
+failing inputs found every distinct faulty output produced by 51 known failing
+inputs. The other four inputs produced faulty outputs already seen. Expansion
+can test those four as well. It cannot discover a group whose first failing case
+was never tested, or assume an untested input will fail. Cases the compiler cannot
+group are not automatically added through expansion.<sup>[\[2\]](../../benchmarks/studies/expansion/README.md)</sup>
 
 See the [paired failure-expansion matrix](../../benchmarks/studies/expansion/README.md).
 Dry runs report a bound on additional work; the actual count depends on failures.
 
 ## Percentage sampling
 
-`--sample-random 70 --sample-min-cases 128` retains 70% of eligible cases, rounded
-upward, with a floor of 128. Smaller populations run in full. The default is
-`--sample-random 100`, which disables sampling. The floor is a policy choice;
-it is not a guarantee of defect recall.
+`--sample-random 70 --sample-min-cases 128` keeps 70% of the cases left after earlier
+filters, rounded up to a whole case. It keeps at least 128, or all cases if fewer
+than 128 remain. For example, it keeps 700 of 1,000 cases and all 100 of 100 cases.
+The default is `--sample-random 100`, which disables this reduction. The minimum
+test count does not guarantee how many bugs will be found.<sup>[\[3\]](../aggressive-filtering/README.md#what-determines-the-minimum)</sup>
 
 ```sh
 helm hypothesis test ./chart --filter --sample-random 70 --sample-min-cases 128 --seed 2026
@@ -401,7 +405,8 @@ helm hypothesis run ./generated-tests --sample-random 70 --sample-min-cases 128 
 
 For finite plans, sampling selects complete configurations. For generated suites
 and nonfinite chart scans, it selects path properties; each property can generate
-many values. Benchmark configuration recall does not predict path-property recall.
+many values. Finding a measured fraction of bugs when sampling complete
+configurations does not establish the same result when sampling paths instead.
 Unbounded `--whole-chart` generation has no enumerated population and rejects this option.
 
 Existing filters run first, percentage sampling runs next, then traversal and

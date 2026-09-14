@@ -8,8 +8,9 @@ helm hypothesis audit ./chart --export-minimal-values ./review/minimal.yaml
 helm hypothesis scan https://github.com/bitnami/charts.git --filter --report --export-minimal-values
 ```
 
-The compiler compares the original `values.yaml`, `values.schema.json` when
-present, and scoped template references. It reports:
+The compiler reads which values the templates use, then compares those paths with
+the original `values.yaml` and, when present, `values.schema.json`. A path identifies
+a setting, such as `.service.port`. The audit reports:
 
 - **Missing values:** referenced paths absent from `values.yaml`, including paths
   with template fallbacks. Absence is not necessarily an invalid configuration.
@@ -19,19 +20,22 @@ present, and scoped template references. It reports:
   These are candidates for review; dynamic access and helpers can make their use
   unknown. They are not automatically classified as invalid or proven unused.
 
-`lower_bound_fields` counts the identified, leaf-most named template selectors.
-Parent containers are not counted again when a more specific named selector is
-known. Literal `if true` / `if false` branches are simplified first. Wildcard
-key spaces and unresolved contexts are reported separately; they do not create
-an invented finite denominator. This is a lower bound on the static inventory,
-not a proof of the number of inputs that influence rendered output.
+`lower_bound_fields` is the number of specific values paths the compiler could
+identify in the templates. If it finds `.service.port`, it counts that field
+without counting `.service` again as another field. It first removes branches
+that a literal `if true` or `if false` makes unreachable.
+
+This count is a **lower bound**: the chart may read additional fields through
+computed keys or template code the compiler cannot resolve. Those unknowns are
+listed separately. The count tells you what the audit found, not how many fields
+are guaranteed to change the rendered output.<sup>[\[1\]](#export-the-input-to-output-graph)</sup>
 
 Whole-chart tests and scans measure against the same inventory. `present_count`
 counts fields supplied to a render attempt. `varied_count` counts fields whose
 merged values changed or were removed relative to the original baseline.
 Unchanged defaults do not count as variation. Failed render attempts count;
-candidates skipped by equivalence pruning do not. Phase totals union field
-identities, so the same field is counted once. Unvaried paths stay visible.
+candidates skipped because their output is proven equivalent do not. Across testing
+phases, each field is counted only once. Unvaried paths stay visible.
 A zero-field inventory has no percentage, rather than reporting 100% coverage.
 These measurements do not prove branch, interaction, or output coverage.
 Generated path suites record the inventory and planned known fields in
@@ -80,8 +84,10 @@ schema requires at least `1`; validation flags that mismatch for the engineer.
 This file demonstrates configuration and is not a deployment certificate.
 
 `--minimal-values-timeout 30s` bounds verification and reduction. A completed,
-verified reduction establishes deletion-minimality under the observed checks,
-not a global minimum over every value assignment or resource configuration.
+verified reduction establishes **deletion-minimality**: no remaining entry can be
+removed on its own while still passing those checks. It does not prove that a
+different set of values, or removing several entries together, could not produce
+a smaller valid configuration.<sup>[\[2\]](#verification-record)</sup>
 A timeout preserves the last verified candidate, or the deterministic example
 if verification never completed. Elapsed time stays in the CLI/run report so
 repeated completed YAML and proof exports remain stable. Original chart inputs are untouched.
@@ -123,11 +129,11 @@ helm hypothesis audit ./chart --export-topological-graph ./review/topology.json
 helm hypothesis test ./charts --export-topological-graph
 ```
 
-The JSON graph and adjacent Graphviz `.dot` file connect named values to template
-references and control flow, then templates to baseline manifests and their field
-paths. Nodes use the compiler’s shared typed input model. Literal dead branches
-are eliminated; supported symbolic regions include baseline partitions and proven
-live references. Dynamic access and opaque regions remain explicitly unresolved.
+The JSON graph and adjacent Graphviz `.dot` file show where templates read values,
+which conditions control their use, and which resources the default configuration
+produces. A node represents a value, condition, template, resource or manifest field;
+an arrow connects related nodes. The compiler removes branches it can prove will
+never run. Computed lookups and code it cannot interpret are marked unresolved.
 
 Reference edges describe potential influence, and rendered edges describe one
 observed baseline. The graph does not claim exact per-field causality or complete
@@ -146,17 +152,23 @@ hypothesis-helm-benchmark topology --graph ./review/topology.json \
 ```
 
 This writes `topology.png`, `topology.svg`, `metrics.json`, and `positions.csv`.
-The figure represents a directed multigraph: every compiler vertex and edge is
-retained, including parallel references. Vertex kinds distinguish values,
-conditions, opaque control flow, templates, manifests, and manifest fields.
+The figure is a **directed multigraph**: arrows have a direction, and two nodes can
+have more than one arrow between them when the compiler finds multiple references.
+Every node and arrow from the export is retained. Node kinds distinguish values,
+conditions, unresolved template logic, templates, manifests, and manifest fields.
 The JSON/DOT export retains their identities and edge types; the coordinate CSV
 maps every vertex to the drawing.
 
-Horizontal rank is the longest directed dependency path from a source. Vertical
-placement is a deterministic layout, not an output-distance measurement or PCA.
-Reported graph invariants include degrees, weak components, isolates, and longest
-dependency-chain length. The latter is not template nesting depth. A cycle is
-reported as an error rather than silently forced into an acyclic layout.
+Reading left to right follows dependencies: a node is placed one column beyond
+the most distant node that points to it. Vertical positions keep the drawing
+reproducible; the distance between two nodes does not measure how similar their
+outputs are. This layout is separate from the PCA benchmark plots.
+
+The metrics count arrows into and out of each node (**degrees**), connected groups
+when arrow direction is ignored (**weak components**), nodes with no arrows
+(**isolates**), and the longest chain of arrows. That chain measures dependencies,
+not nested `if` statements or manifest nesting. A cycle, where following arrows
+leads back to a previous node, is reported as an error.
 
 These are graphs of the compiler's available evidence. Potential references and
 baseline observations do not prove exact causal influence; opaque access remains
@@ -214,40 +226,90 @@ API schema checks still omit some server-side checks; see
 
 ## Potential output complexity
 
-`helm hypothesis audit ./chart` includes a `complexity` result. It searches the allowed values with deterministic branch-and-bound
-within the existing compiler's supported template subset and scores each valid manifest tree as **breadth × depth**.
-Breadth is the most nodes at any depth; depth is the longest path from the synthetic bundle root. Resource roots,
-field values and array entries are nodes. Field names label edges; scalar text length does not change the score.
+`helm hypothesis audit ./chart` includes a `complexity` result. It asks: **how wide
+and deeply nested could this chart's output become with different allowed values?**
+The score is **breadth × depth**. It describes the structure of the output, not its
+file size, expected bug count or testing time.
 
-The result concerns the largest possible output, including resources disabled by defaults. It does not score the
-source tree or estimate bugs, runtime or test count. A wide branch and a deep branch may be mutually exclusive;
-the reported maximum must be attained by one allowed configuration.
+To calculate it, treat all rendered resources as trees beneath one imaginary
+parent. Each resource starts at level 1. Moving into a field value or list item
+adds one level. Objects and lists count as nodes themselves, as do individual
+values such as strings and numbers. The imaginary parent is not counted.
 
-- `compiled-maximum`: complete local output tables and sound bounds establish the maximum over the declared finite domain.
+- **Breadth:** count the nodes at each level across all resources, then take the
+  largest count. This is the width of the busiest level, not the most children
+  belonging to a single object.
+- **Depth:** the deepest level reached by any value.
+
+For example, this ConfigMap has a breadth of **4**, a depth of **3**, and a score of **12**:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+data:
+  mode: safe
+```
+
+| Level | Nodes counted | Count |
+| --- | --- | --- |
+| 1 | The ConfigMap object | 1 |
+| 2 | `v1`, `ConfigMap`, the `metadata` object, the `data` object | 4 |
+| 3 | `demo`, `safe` | 2 |
+
+Field names such as `metadata` label the connections; they do not add separate
+nodes. Changing `safe` to a longer string leaves the score unchanged. This output
+tree is different from the graph showing which inputs affect which templates.<sup>[\[3\]](#export-the-input-to-output-graph)</sup>
+
+The search includes resources disabled by the defaults. Its maximum must come
+from one allowed configuration: it cannot combine the width of one configuration
+with the depth of another if those settings cannot be used together.
+
+- `compiled-maximum`: the analysis established the largest score across the supported, allowed value choices.
   `maximum_score`, `maximum_output` and `maximizing_values` record the greatest output and a configuration attaining it.
 - `unknown`: an open-ended domain, unsupported operation, dependency, source change or analysis limit prevented a maximum.
-  `lower_bound` records the greatest supported output examined so far, if any. It is not an estimated maximum.
-- `no-valid-output`: the complete supported domain produced no valid resource envelopes.
+  `lower_bound` records the largest score found so far, if any. A larger output may still be possible.
+- `no-valid-output`: every supported configuration was checked, but none produced resources passing the basic manifest checks.
 
-Analysis evaluates at most 4,096 template assignments and complete candidates, with a five-second budget checked between work units. It does not call Helm
-or validate downstream Kubernetes APIs. Each factor domain and all local template tables must fit the analysis limits. The full Cartesian space may be much larger.
+Analysis allows at most 4,096 evaluations of template inputs and complete configurations,
+with a five-second budget checked between work units. It evaluates supported template
+code itself; it does not call Helm or validate Kubernetes API schemas. Each field's
+allowed choices and each template's input-to-output table must fit the analysis
+limits, even when the number of complete configurations is much larger.
 The `verification`, `reason` and `limits` fields state the scope of the result.
 
-The installed `hypothesis-helm-complexity` command repeats the analysis with adjustable `--chart`, `--max-cases` and
-`--time-limit` settings. Its `--nodes N` mode calculates only the mathematical tree ceiling for a given output size:
-`floor((N + 1)² / 4)`, or zero when N is zero. This follows from `breadth + depth - 1 <= N`. The maximizing output's
-`size_ceiling` uses that formula; it is not a claim that the chart can produce every tree shape of that size.
+The installed `hypothesis-helm-complexity` command repeats the analysis with
+adjustable `--chart`, `--max-cases` and `--time-limit` settings. Its `--nodes N`
+mode instead asks how high the score could be for **any tree with N nodes**,
+regardless of the chart. That ceiling is `(N + 1)² / 4` rounded down to an integer,
+or zero for an empty tree. The bound follows from `breadth + depth - 1 <= N`:
+the deepest path and the other nodes at the widest level must all fit within N.
+The output's `size_ceiling` field uses this formula; your chart may never be able
+to produce the tree shape that reaches it.
 
-The search maps each template to its influencing factors and evaluates that local domain once. For a partial assignment,
-it takes the largest possible node count at each depth for each template, then adds those counts across templates.
-This gives an upper bound even when the individual maxima cannot occur together. Shared factor choices remain synchronized;
-full candidates must still pass schema and complete resource-envelope checks. A branch is skipped only when its bound cannot
-beat an already checked result. Canonical domain ordering makes tie-breaking reproducible.
+### How the maximum is found
+
+The search uses **branch-and-bound**. First, it calculates what each template can
+produce from the fields that template reads. Then it chooses values step by step.
+Before trying every remaining choice, it calculates an upper bound: a score at
+least as large as anything those choices could produce. If that bound cannot beat
+an output already found, the search skips those choices.
+
+The bound adds each template's largest possible count at each nesting level.
+Those counts may come from incompatible choices, so the bound can overestimate
+what is possible; it must never underestimate it. Actual candidate outputs use
+one consistent configuration and must pass the values schema and basic manifest
+checks. A fixed order of choices makes ties reproducible.
 
 `template_evaluations`, `examined_configurations`, `search_nodes` and `pruned_configurations` report the work performed.
-The candidate count includes inputs that may fail after defaults merging. Search bounds can remain loose, and a template
-that depends on every factor can still require exponential work. Unsupported behavior never becomes a pruning certificate.
+The candidate count includes inputs that may fail after merging with defaults.
+An upper bound may be too generous to skip much work. If one template reads every
+varying field, the search may still need to try exponentially many choices. Code
+the compiler cannot interpret is never used as evidence to skip a candidate.
 
-The [`--filter-aggressive` preset](../aggressive-filtering/README.md) uses this audit result alongside domain, gate and
-region measurements to select calibrated case and field-coverage floors. The complexity score alone does not determine
-a suitable sample size. Unsupported or unmatched profiles keep ordinary filtering.
+`--filter-aggressive` uses this score together with allowed input choices, nested
+conditions and groups of predicted outputs to choose a minimum number of tests
+and changed fields, based on benchmark measurements. The score alone does not
+determine a suitable sample size. If no suitable measurements are available,
+ordinary filtering still applies, but the extra sampling is disabled.<sup>[\[4\]](../aggressive-filtering/README.md#what-determines-the-minimum)</sup>

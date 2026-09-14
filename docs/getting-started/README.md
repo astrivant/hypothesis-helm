@@ -40,22 +40,26 @@ helm hypothesis generate ./path/to/chart --output generated-tests
 helm hypothesis run generated-tests
 ```
 
-`test` automatically enumerates supported finite configuration spaces with fewer
-than 10,000 candidate assignments when they fit the case budget. Larger finite spaces use
-pairwise coverage plus affordable exhaustive groups inferred from constraints and
-templates. Unbounded or unsupported schemas fall back to per-path properties with
-a logged reason. `--paths` explicitly selects generated per-path testing.
+If every input has a supported, finite set of choices, `test` can list the possible
+configurations. It tests all of them when there are fewer than 10,000 and they fit
+the case budget. For larger finite spaces, it selects configurations that exercise
+every allowed pair of field choices, plus all choices within selected groups of
+related fields when affordable.<sup>[\[1\]](../usage.md#interaction-coverage)</sup>
+
+If the tool cannot list the whole space, it generates tests for individual values
+paths and logs why it chose that mode. Each test tries multiple inputs. `--paths`
+explicitly selects this mode.
 
 The per-path workflow generates a Python property per values path, executes the suite
 inside the plugin environment, and returns its exit status. Generated source, values,
 schemas, JUnit results and a run report stay in `reports/hypothesis-helm` by default.
 Use `--artifact-dir` to choose a different location. Tests default to `--jobs auto`,
-which adjusts concurrency using PID throughput feedback. Set `--jobs N` for a fixed
+which adjusts the number of workers based on how quickly tests finish. Set `--jobs N` for a fixed
 worker count or `--jobs 1` to run serially.
 
 Path order defaults to seeded random traversal. Use `--seed` to reproduce it or
-change the timeout prefix, and `--traversal-strategy linear|shallow|deep` for an
-explicit order. See [value-path traversal](../execution/README.md#value-path-traversal).
+change which paths are likely to be tested before a timeout. Use
+`--traversal-strategy linear|root-first|leaf-first` to choose another order.<sup>[\[2\]](../execution/README.md#value-path-traversal)</sup>
 
 Add `--output json` (or `-o json`) to `test` or `run` to stream rendered
 manifests as JSON Lines, with progress and test reports on stderr. See
@@ -67,10 +71,10 @@ to exist in the original `values.yaml`, including optional fields and values wit
 template fallbacks. Missing fields fail preflight; coalesced defaults and cached
 passes do not satisfy it. See [strict source values](../usage.md#strict-source-values).
 
-Each generated suite includes Python tests, coalesced YAML, an inferred schema,
+Each generated suite includes Python tests, YAML assembled from the chart's inputs, an inferred schema,
 and a path/strategy inventory. Source charts remain unchanged. Inferred contracts
 and unresolved template constructs need review; sampled tests do not prove
-complete template branch coverage or totality.
+that every template branch was exercised or every allowed input can render successfully.
 
 Use `--permutations N` to cover every valid interaction among any `N` finite
 schema factors: `2` covers pairs, `3` covers triples. Small spaces still receive
@@ -106,9 +110,9 @@ for each input. Reports expose duplicate-output and validation-reuse counts;
 indexes are local to a whole-chart run or pytest worker, not shared across CI jobs.
 See [rendered-output comparison](../usage.md#in-memory-rendered-output-comparison).
 
-Permutation planning uses a shared [typed values model](../usage.md#shared-typed-values-model):
-dynamic attrs classes mirror declared values, cattrs preserves their mapping shape,
-and factors and inferred groups reference the same schema-derived field identities.
+Planning keeps one shared model of the chart's field names and types. Input
+generation, interaction groups and template analysis all refer to those same
+fields.<sup>[\[3\]](../usage.md#shared-typed-values-model)</sup>
 
 Use `--prune-equivalent` for conservative pre-render pruning against successfully
 rendered representatives. Unknown behavior still renders, and custom assertions

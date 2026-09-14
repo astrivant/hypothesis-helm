@@ -92,9 +92,11 @@ nested charts. Discovery checks the required `apiVersion`, `name`, and `version`
 before invoking Helm. Directory symlinks and tooling directories such as `.git`
 and `.venv` are not traversed. Invalid metadata remains visible in the report.
 
-Each application chart gets a dependency build, Helm lint, and schema-generated
-property tests. Finite domains use automatic exhaustive/pairwise coverage;
-other charts visit discovered value-path properties in seeded random order.
+Each application chart gets a dependency build, Helm lint, and generated tests.
+When every allowed choice can be listed, the tool tests all configurations in
+small spaces or selects configurations covering every allowed pair of choices.
+For other charts, it tests discovered values paths in a random order determined
+by the seed.<sup>[\[1\]](../usage.md#interaction-coverage)</sup>
 `--permutations N` requests finite interaction coverage explicitly. Charts without a
 values schema receive inferred path strategies from their values and template references.
 Library charts cannot be tested as standalone applications.
@@ -110,9 +112,9 @@ cached outcomes do not replace this per-visit calculation. Unsupported calibrati
 
 Use `--traversal-strategy random|linear|root-first|leaf-first` to choose execution order.
 Random is the default and uses `--seed`; another seed changes the subset reached
-before timeout. Discovery records the path inventory, while execution may visit only
-a prefix. Reports distinguish visited, completed, incomplete, and remaining paths.
-See [traversal semantics and complexity](../execution/README.md#value-path-traversal).
+before timeout. Discovery lists all identified paths, but execution may stop before
+reaching the end of that list. Reports distinguish visited, completed, incomplete,
+and remaining paths.<sup>[\[2\]](../execution/README.md#value-path-traversal)</sup>
 
 Discovery also reads dependency conditions and tags from chart metadata, including
 controls absent from `values.yaml`, and inspects installed child charts under their
@@ -137,12 +139,13 @@ eligible for embedded configuration and application content. This sampling polic
 does not change the chart's schema, edit supplied values, or constrain explicit
 finite enumeration. Historical reports retain their original counterexamples.
 
-The prioritizer uses a generation-only view. The original schema still validates
-every input and remains unchanged. Empty maps, pattern/schema-defined maps, and
-maps accessed dynamically remain open in the generation view. Unsupported
-schema compositions remain unconstrained by this optimization. Opaque helper and
-`tpl` contexts are reported explicitly. Unknown key spaces are not enumerated into
-invented path inventories. No report claims complete coverage of those inputs.
+Filtering changes which inputs the generator tries, not which inputs the chart's
+schema allows. The original schema still validates every input. The generator
+keeps arbitrary keys available in empty maps, maps defined by schema rules or key
+patterns, and maps accessed through computed keys. If it cannot interpret a schema
+rule or template operation, that uncertainty is reported rather than used to rule
+out inputs. The inventory lists identifiable paths; it does not claim to list
+every possible computed key.<sup>[\[3\]](../inputs/README.md)</sup>
 
 Inferred types guide generation; they do not become new validation requirements.
 Generation errors and budget exhaustion remain incomplete coverage, not chart bugs.
@@ -244,8 +247,9 @@ accepted generated inputs is `configuration-rejected`, not a pass. Unknown guard
 remain testable. Automatic exclusions apply to inferred inputs; rejections of
 inputs admitted by an authored values schema remain visible failures, with their
 recovered requirements. See [compiler passes](../architecture/README.md#syntax-trees-and-compiler-passes).
-For charts without dependencies, the first two distinct witnesses for each recognized
-requirement are checked with Helm. Later exclusions use the supported compiler analysis.
+For charts without dependencies, Helm checks the first two different inputs that
+the compiler predicts will violate each recognized requirement. These checks are
+called **witness checks**. Later exclusions use the supported compiler analysis.
 For charts with dependencies, Helm must confirm every predicted rejection before exclusion,
 because child defaults and imported values can change what a parent template sees.
 If Helm accepts a predicted rejection or returns a different error, that requirement is disabled

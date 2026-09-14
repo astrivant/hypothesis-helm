@@ -21,16 +21,16 @@ helm hypothesis test ./chart --collect-only
 
 Inside a chart directory, `helm hypothesis test` uses the current directory.
 
-`test` selects coverage automatically for supported finite schemas. It enumerates
-the whole configuration space when the Cartesian count is **less than 10,000**
-and fits the case budget. Larger finite schemas receive pairwise coverage plus
-affordable exhaustive groups inferred from schema constraints and templates.
-Unbounded or unsupported domains fall back to generated per-path testing with a
-logged reason. See [interaction coverage](#interaction-coverage) for the policy,
-explicit groups and planning statistics.
+`test` chooses coverage automatically when it can list every allowed input choice.
+It multiplies the number of choices for each field to count possible configurations
+before applying constraints between fields. If that count is **less than 10,000**
+and fits the case budget, it tests the full space. Larger finite spaces receive
+coverage of every allowed pair of choices, plus full coverage within selected
+groups of related fields when affordable. Otherwise, it tests values paths
+individually and logs the reason.<sup>[\[1\]](#interaction-coverage)</sup>
 
-`--paths` explicitly selects the generated-suite workflow: it coalesces undocumented
-template levers, generates one Python property per value path, and executes the
+`--paths` explicitly selects the generated-suite workflow: it adds fields discovered
+in templates to the working input model, generates one Python test per values path, and executes the
 suite. Filters, collection, distributed sharding and fixed parallel worker counts
 greater than one also select this workflow unless a finite mode was explicitly
 requested. `--max-examples`
@@ -39,7 +39,7 @@ Python test names with a pytest keyword expression; path segments are included i
 those names. `--collect-only` generates and lists the tests without rendering.
 An empty selection returns a nonzero status rather than reporting success.
 
-Progress is logged for each path as it is coalesced, assigned a generated test,
+Progress is logged for each path as it is added to the input model, assigned a generated test,
 and tested. Generation messages go to stderr so `generate` keeps its JSON output
 on stdout. Test progress appears live, once per selected property rather than once
 per Hypothesis example:
@@ -185,6 +185,13 @@ all template guards were activated or every execution branch was reached.
 
 ### Interaction coverage
 
+A **configuration** is one complete set of input values. A **factor** is a field,
+or a container treated as one choice, that the planner varies. Its **domain** is
+the set of allowed choices. An **interaction** specifies choices for several
+factors together. Pairwise coverage means every allowed pair of choices occurs
+in at least one tested configuration; it does not mean every complete
+configuration is tested.<sup>[\[2\]](getting-started/README.md#quick-start)</sup>
+
 Choose the interaction strength with `--permutations`:
 
 ```sh
@@ -202,9 +209,10 @@ random-example budget. `--max-examples` does not control this mode. The default
 automatic strength for larger finite spaces is `2`.
 
 Small spaces are promoted to full enumeration even with an explicit interaction
-strength. `--exhaustive-threshold 10000` is the default: the **unconstrained
-Cartesian product of factor domain sizes** must be strictly smaller than the
-threshold and fit `--max-cases`. This is a conservative affordability decision,
+strength. `--exhaustive-threshold 10000` is the default: **multiply the number of
+choices for each factor**, including choices that constraints may later rule out.
+That count must be strictly smaller than the threshold and fit `--max-cases`.
+This is a conservative affordability decision,
 not a count of schema-valid inputs. A heavily constrained larger space is not
 automatically classified as small. Set `--exhaustive-threshold 0` to disable
 promotion and retain the requested interaction strength. If the strength already

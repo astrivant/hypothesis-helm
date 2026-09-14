@@ -7,7 +7,7 @@ Hypothesis<sup>[\[1\]](https://github.com/HypothesisWorks/hypothesis/)</sup> tes
 generates inputs from declared or inferred types, renders your charts with Helm, and
 checks for failures. When a property-based test fails, Hypothesis simplifies the input
 to a small example you can reproduce. Filtering skips redundant renders, while optional
-sampling reduces the number of inputs tested so you can cover more charts within your
+sampling techniques reduce the number of inputs tested so you can cover more charts within your
 time budget.
 
 - Audit templates, values schemas, and missing defaults.

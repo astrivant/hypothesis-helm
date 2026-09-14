@@ -8,10 +8,10 @@ Run repository command examples from the checkout root unless stated otherwise.
 - [Bitnami scan report](reports/bitnami.md): combined PDF, per-chart findings, and retained data.
 - [Prometheus Community scan report](reports/prometheus.md): combined PDF, per-chart findings, and retained data.
 - [Repository scanning](scanning/README.md): local testing, remote fetching, recursive discovery, and Markdown/PDF reports.
-- [Input inventory](inputs/README.md): missing fields, coverage measurements, and minimal-values dumps.
+- [Input inventory](inputs/README.md): missing fields, minimal values, input-to-output graphs, and output complexity scores.
 - [Architecture](architecture/README.md): input discovery, test generation, rendering, and validation.
 - [Execution](execution/README.md): parallelism, sharding, dry runs, and execution budgets.
-- [Aggressive filtering](aggressive-filtering/README.md): audit-informed sampling and measured field-coverage floors.
+- [Aggressive filtering](aggressive-filtering/README.md): how benchmark evidence determines which tests can be sampled and how many to keep.
 - [CI examples](ci/README.md): GitHub Action, CircleCI, and GitLab configuration.
 - [Benchmarking](../benchmarks/README.md): local shards, generated charts, and plots.
 - [CLI reference](cli/README.md): generated command help.
