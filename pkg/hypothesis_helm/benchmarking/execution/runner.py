@@ -26,12 +26,14 @@ from hypothesis_helm.benchmarking.charts.workload import (
     partition_indices,
     standard_values,
 )
+from hypothesis_helm.benchmarking.execution.cancellation import Cancellation, initialize
 from hypothesis_helm.benchmarking.execution.profiling import PROFILE_DIRECTORY, capture
 from hypothesis_helm.benchmarking.reporting.progress import BenchmarkProgress
 from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.charts.rendering import RenderFailure, render
 from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.execution.render_hashes import RenderHashes
+from hypothesis_helm.execution.signals import DeferredSignals, Termination
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping, sequence
@@ -162,6 +164,8 @@ def execute_worker(job: Job) -> dict[str, object]:
                     ledger.append((reused, bucket, received, time.perf_counter(), projection))
     except TimeLimitReached:
         status = "time-limit"
+    except KeyboardInterrupt:
+        status = "interrupted"
     except Exception as exc:
         status, error = "failed", f"{type(exc).__name__}: {exc}"
     completed = len(ledger)
@@ -249,14 +253,15 @@ def execute_profiled_worker(job: Job) -> dict[str, object]:
     Returns:
         dict[str, object]: Original measurements, with profiling performed in the owning worker.
     """
-    if job.profile_directory is None:
-        return execute_worker(job)
-    return capture(
-        lambda: execute_worker(job),
-        Path(job.profile_directory),
-        "worker",
-        {"chart": job.chart, "assigned": len(job.indices), "seed": job.seed, "pruning": job.pruning},
-    )
+    with Cancellation():
+        if job.profile_directory is None:
+            return execute_worker(job)
+        return capture(
+            lambda: execute_worker(job),
+            Path(job.profile_directory),
+            "worker",
+            {"chart": job.chart, "assigned": len(job.indices), "seed": job.seed, "pruning": job.pruning},
+        )
 
 
 def measure(
@@ -317,12 +322,48 @@ def measure(
         for indices in assignments
         if indices
     ]
+    cancellation_status = None
     if jobs:
-        with ProcessPoolExecutor(max_workers=len(jobs), mp_context=get_context("spawn")) as pool:
-            futures = [pool.submit(execute_profiled_worker, job) for job in jobs]
-            with BenchmarkProgress("Benchmark: workers") as display:
-                for future in display.track(as_completed(futures), total=len(futures)):
-                    results.append(future.result())
+        context = get_context("spawn")
+        cancel = context.Event()
+        with Termination():
+            pool = ProcessPoolExecutor(max_workers=len(jobs), mp_context=context, initializer=initialize, initargs=(cancel,))
+            futures = []
+            try:
+                with DeferredSignals():
+                    futures = [pool.submit(execute_profiled_worker, job) for job in jobs]
+                with BenchmarkProgress("Benchmark: workers") as display:
+                    for future in display.track(as_completed(futures), total=len(futures)):
+                        future.result()
+            except (KeyboardInterrupt, TimeLimitReached) as interruption:
+                cancellation_status = "time-limit" if isinstance(interruption, TimeLimitReached) else "interrupted"
+                cancel.set()
+            finally:
+                try:
+                    with DeferredSignals():
+                        pool.shutdown(wait=True, cancel_futures=cancellation_status is not None)
+                except (KeyboardInterrupt, TimeLimitReached) as interruption:
+                    cancellation_status = "time-limit" if isinstance(interruption, TimeLimitReached) else "interrupted"
+            for job, future in zip(jobs, futures, strict=True):
+                try:
+                    result = None if future.cancelled() else future.result()
+                except (KeyboardInterrupt, TimeLimitReached):
+                    result = None
+                if result is None:
+                    result = {
+                        "status": cancellation_status or "interrupted",
+                        "assigned": len(job.indices),
+                        "remaining": len(job.indices),
+                        "attempted": 0,
+                        "completed": 0,
+                        "rendered": 0,
+                        "render_invocations": 0,
+                        "pruned": 0,
+                        "oracle_checks": 0,
+                        "checkpoints": [],
+                        "scope": "no completed worker result received",
+                    }
+                results.append(result)
     elapsed = time.perf_counter() - started
     totals = {
         name: sum(int(str(result[name])) for result in results)
@@ -338,7 +379,11 @@ def measure(
         )
     }
     status = (
-        "failed"
+        cancellation_status
+        if cancellation_status is not None
+        else "interrupted"
+        if any(result["status"] == "interrupted" for result in results)
+        else "failed"
         if any(result["status"] == "failed" for result in results)
         else "time-limit"
         if any(result["status"] == "time-limit" for result in results)

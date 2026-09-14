@@ -276,6 +276,8 @@ def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = N
             f"{float(str(measured['elapsed_seconds'])):.2f}s",
             flush=True,
         )
+        if measured["status"] == "interrupted":
+            raise KeyboardInterrupt()
         if measured["status"] == "failed":
             raise RuntimeError(f"benchmark chart failed; inspect {output}/results.json")
         return measured
@@ -364,6 +366,8 @@ def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = N
                         f"{len(checkpoints)} completed checkpoints",
                         flush=True,
                     )
+                    if measured["status"] == "interrupted":
+                        raise KeyboardInterrupt()
                     if measured["status"] == "failed":
                         raise RuntimeError("benchmark output failed; inspect saved worker evidence")
         if args.suite in ("all", "scaling"):

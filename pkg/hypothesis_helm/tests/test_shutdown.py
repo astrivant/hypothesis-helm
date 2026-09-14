@@ -67,7 +67,8 @@ def test_group_permission_denial_is_not_hidden(monkeypatch: pytest.MonkeyPatch) 
 @pytest.mark.parametrize(
     ("jobs", "stubborn", "nested"), [("1", False, False), ("auto", False, False), ("2", True, False), ("1", True, True), ("2", True, True)]
 )
-def test_interrupt_stops_process_groups(tmp_path: Path, jobs: str, stubborn: bool, nested: bool) -> None:
+@pytest.mark.parametrize("interrupt_signal", [signal.SIGINT, signal.SIGTERM])
+def test_interrupt_stops_process_groups(tmp_path: Path, jobs: str, stubborn: bool, nested: bool, interrupt_signal: int) -> None:
     """
     Interrupt only the CLI and verify that workers and descendants are stopped.
 
@@ -76,6 +77,7 @@ def test_interrupt_stops_process_groups(tmp_path: Path, jobs: str, stubborn: boo
         jobs (str): Serial, adaptive, or fixed parallel execution.
         stubborn (bool): Whether the active worker ignores cooperative shutdown signals.
         nested (bool): Whether an inner command owner must finish before pytest is stopped.
+        interrupt_signal (int): Terminal interruption or CI termination delivered to the parent.
 
     Returns:
         None: Exit 130 preserves partial results and leaves no live child processes.
@@ -157,7 +159,7 @@ def test_shutdown(index):
             while not list(tmp_path.glob("workers-*/junit-0.xml")) and time.monotonic() < deadline:
                 time.sleep(0.05)
             assert list(tmp_path.glob("workers-*/junit-0.xml")), diagnostics_file.read_text()
-        process.send_signal(signal.SIGINT)
+        process.send_signal(interrupt_signal)
         process.wait(timeout=15)
         output, diagnostics = output_file.read_text(), diagnostics_file.read_text()
         assert process.returncode == 130, diagnostics
@@ -619,3 +621,124 @@ def test_benchmark_pool_joins_after_replica_failure(tmp_path: Path, monkeypatch:
     with pytest.raises(OSError, match="replica failed"):
         measure(tmp_path, 2, 2, False, seed=0, multiplicity=1, time_limit=5, helm="helm", shard=None)
     assert (tmp_path / "replica-finished").exists()
+
+
+@pytest.mark.parametrize("interrupt_signal", [signal.SIGINT, signal.SIGTERM, signal.SIGALRM])
+def test_registration_finishes_before_cancellation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, interrupt_signal: int) -> None:
+    """
+    Cancel after OS process creation but before the process owner registers the child.
+
+    Args:
+        tmp_path (Path): Child working directory.
+        monkeypatch (pytest.MonkeyPatch): Deliver cancellation at the registration boundary.
+        interrupt_signal (int): Interrupt, termination or active deadline signal.
+
+    Returns:
+        None: The child is registered, stopped and joined before cancellation propagates.
+    """
+    from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+
+    created: list[subprocess.Popen[str]] = []
+    spawn = subprocess.Popen
+
+    def interrupt(*args: object, **kwargs: object) -> subprocess.Popen[str]:
+        """
+        Deliver the signal after creating a real process and before returning its handle.
+
+        Args:
+            *args (object): Native process creation arguments.
+            **kwargs (object): Native process creation options.
+
+        Returns:
+            subprocess.Popen[str]: A handle whose ownership must survive cancellation.
+        """
+        child = cast("subprocess.Popen[str]", spawn(*args, **kwargs))  # type: ignore[call-overload]
+        created.append(child)
+        signal.raise_signal(interrupt_signal)
+        return child
+
+    monkeypatch.setattr(subprocess, "Popen", interrupt)
+    previous = signal.getsignal(interrupt_signal)
+    owner = Processes()
+    expected = TimeLimitReached if interrupt_signal == signal.SIGALRM else KeyboardInterrupt
+    with pytest.raises(expected), execution_timer(30):
+        owner.run([sys.executable, "-c", "import time; time.sleep(30)"], cwd=tmp_path, capture_output=True)
+    assert len(created) == 1 and created[0].returncode is not None
+    assert not owner._children
+    assert not _signal_group(created[0], 0)
+    assert signal.getsignal(interrupt_signal) == previous
+
+
+@pytest.mark.parametrize("interrupt_signal", [signal.SIGINT, signal.SIGTERM])
+def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, interrupt_signal: int) -> None:
+    """
+    Cancel only the coordinator while replicas own renderer processes and descendants.
+
+    Args:
+        tmp_path (Path): Fake renderer, chart and retained shutdown evidence.
+        interrupt_signal (int): Interrupt or termination sent to the coordinator alone.
+
+    Returns:
+        None: Partial statistics survive and all recorded processes have exited.
+    """
+    from hypothesis_helm.benchmarking.charts.generator import generate
+
+    chart = tmp_path / "chart"
+    generate(chart, input_complexity=6)
+    renderer = tmp_path / "helm"
+    renderer.write_text(
+        f"#!{sys.executable}\n"
+        + dedent(
+            """
+            import json, os, signal, subprocess, sys, time
+            from pathlib import Path
+            child = subprocess.Popen([sys.executable, '-c',
+                'import signal,time; signal.signal(signal.SIGINT,signal.SIG_IGN); time.sleep(60)'])
+            Path(f'ready-{os.getpid()}.json').write_text(json.dumps([os.getppid(), os.getpid(), child.pid]))
+            time.sleep(60)
+            """
+        ).lstrip()
+    )
+    renderer.chmod(0o755)
+    driver = tmp_path / "driver.py"
+    driver.write_text(
+        dedent(
+            """
+            import json
+            from pathlib import Path
+            from hypothesis_helm.benchmarking.execution.runner import measure
+            result = measure(Path('chart'), 12, 2, False, seed=0, multiplicity=8,
+                             time_limit=30, helm=str(Path('helm').resolve()), shard=None)
+            Path('result.json').write_text(json.dumps(result))
+            """
+        )
+    )
+    owned: list[int] = []
+    with (tmp_path / "log.txt").open("w") as log:
+        parent = subprocess.Popen([sys.executable, str(driver)], cwd=tmp_path, stdout=log, stderr=log, start_new_session=True)
+    try:
+        deadline = time.monotonic() + 20
+        while len(list(tmp_path.glob("ready-*.json"))) < 2 and time.monotonic() < deadline and parent.poll() is None:
+            time.sleep(0.05)
+        ready = list(tmp_path.glob("ready-*.json"))
+        assert len(ready) == 2, (tmp_path / "log.txt").read_text()
+        owned = [pid for path in ready for pid in json.loads(path.read_text())]
+        parent.send_signal(interrupt_signal)
+        parent.wait(timeout=15)
+        assert parent.returncode == 0, (tmp_path / "log.txt").read_text()
+        report = json.loads((tmp_path / "result.json").read_text())
+        assert report["status"] == "interrupted"
+        assert report["assigned"] == report["completed"] + report["remaining"] == 12
+        assert report["completed"] == 0 and len(report["workers"]) == 2
+        for pid in owned:
+            with pytest.raises(ProcessLookupError):
+                os.kill(pid, 0)
+    finally:
+        for pid in owned:
+            try:
+                os.kill(pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+        if parent.poll() is None:
+            parent.kill()
+        parent.wait(timeout=10)

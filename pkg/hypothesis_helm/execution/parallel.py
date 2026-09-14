@@ -14,7 +14,9 @@ from pathlib import Path
 
 from hypothesis_helm.execution.feedback import ThroughputController
 from hypothesis_helm.execution.processes import Processes
+from hypothesis_helm.execution.signals import DeferredSignals, Termination
 from hypothesis_helm.execution.traversal import validate_strategy
+from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.reporting.display import start_progress
 
 LOGGER = logging.getLogger(__name__)
@@ -48,7 +50,7 @@ def run_parallel(
         tuple[int, int]: Aggregate exit status and number of workers used.
     """
     results = artifact_dir or directory
-    with tempfile.TemporaryDirectory(prefix="workers-", dir=results) as temporary:
+    with Termination(), tempfile.TemporaryDirectory(prefix="workers-", dir=results) as temporary:
         workspace = Path(temporary)
         collected = workspace / "collected.json"
         depths_file = workspace / "path-depths.json"
@@ -131,6 +133,7 @@ def run_parallel(
         next_index = 0
         peak = 0
         interrupted = False
+        stop_status = 130
         progress, task = start_progress(len(nodes), workers, force=force_progress)
         pool = ThreadPoolExecutor(max_workers=maximum, thread_name_prefix="helm-hypothesis")
         try:
@@ -172,21 +175,27 @@ def run_parallel(
                             "throughput": controller.throughput,
                         }
                     )
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, TimeLimitReached) as cancellation:
+            stop_status = 124 if isinstance(cancellation, TimeLimitReached) else 130
             interrupted = True
             LOGGER.info("Interrupted; stopping active tests and preserving partial results")
         finally:
             try:
-                for future in pending:
-                    future.cancel()
-                processes.stop()
-            finally:
-                try:
-                    pool.shutdown(wait=True, cancel_futures=True)
-                finally:
-                    if interrupted:
-                        progress.update(task, description="Interrupted", workers=0)
-                    progress.stop()
+                with DeferredSignals():
+                    try:
+                        for future in pending:
+                            future.cancel()
+                        processes.stop()
+                    finally:
+                        try:
+                            pool.shutdown(wait=True, cancel_futures=True)
+                        finally:
+                            if interrupted:
+                                progress.update(task, description="Interrupted", workers=0)
+                            progress.stop()
+            except (KeyboardInterrupt, TimeLimitReached) as cancellation:
+                interrupted = True
+                stop_status = 124 if isinstance(cancellation, TimeLimitReached) else 130
         if interrupted:
             for future, index in pending.items():
                 if future.cancelled():
@@ -240,4 +249,4 @@ def run_parallel(
         merged.attrib.update({key: str(value) for key, value in totals.items()})
         merged.set("time", str(elapsed))
         ET.ElementTree(root).write(results / "junit.xml", encoding="utf-8", xml_declaration=True)
-        return (130 if interrupted else max(statuses)), peak
+        return (stop_status if interrupted else max(statuses)), peak

@@ -12,6 +12,7 @@ from pathlib import Path
 
 from hypothesis_helm.benchmarking.charts.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.execution.profiling import PROFILE_DIRECTORY, capture
+from hypothesis_helm.execution.signals import Termination
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 
 COMMANDS = {
@@ -65,7 +66,7 @@ def main(argv: list[str] | None = None) -> int:
             """
             from hypothesis_helm.benchmarking.charts.generator import reproduce
 
-            with nullcontext() if args.command == "generate" else FixtureWorkspace() as workspace:
+            with Termination(), nullcontext() if args.command == "generate" else FixtureWorkspace() as workspace:
                 if args.parameters is not None and "--plot-only" not in args.arguments:
                     if args.command not in {"run", "discovery", "sparsity"}:
                         parser.error("global --parameters applies to run, discovery, or sparsity")

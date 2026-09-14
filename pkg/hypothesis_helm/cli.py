@@ -25,6 +25,7 @@ from hypothesis_helm.compiler.passes.inputs import load_input_chart
 from hypothesis_helm.compiler.passes.minimum import export_minimal
 from hypothesis_helm.execution.estimate import estimate_suite
 from hypothesis_helm.execution.sampling import Sampling
+from hypothesis_helm.execution.signals import Termination
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.execution.traversal import STRATEGIES, validate_strategy
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
@@ -532,6 +533,7 @@ def main(argv: list[str] | None = None) -> int:
     logger.setLevel(logging.INFO)
     logger.addHandler(handler)
     stack = ExitStack()
+    stack.enter_context(Termination())
     descriptor = None
     token = None
     if getattr(args, "output", None) == "json" and not getattr(args, "dry_run", False):
