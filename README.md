@@ -27,8 +27,8 @@ Choose coverage for each stage of development:
 | When | Recommended mode | Starting CPU / RAM per CI job | Local workers | CI shards |
 | --- | --- | --- | ---: | ---: |
 | MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
-| Changes on `main` | `--filter` | 4 vCPU / 8 GiB | `--jobs 4` | 1 |
-| Before tagging a release | `--exhaustive` | 8 vCPU / 8 GiB | `--jobs 8` | 1 |
+| Changes on `main` | `--filter` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
+| Before tagging a release | `--exhaustive` | 4 vCPU / 8 GiB | `--jobs 4` | 1 |
 
 These are starting estimates for one chart at a time, not measured minimum requirements.
 For large dependency-heavy charts, start with 8 vCPU / 16 GiB and six path workers.
@@ -160,9 +160,13 @@ See [Repository scanning](docs/scanning/README.md) for authentication, public in
 
 ## Guides
 
+Disable selected checks with [stable rule codes and an ignore file](docs/rules/README.md).
+The [root configuration](.hypothesis-helm.yaml) lists every code commented out.
+
 | Guide | Contents |
 | --- | --- |
 | [Architecture](docs/architecture/README.md) | Input discovery, test generation, rendering, and validation. |
+| [Compiler](docs/compiler/README.md) | Pass flow, syntax trees, and illustrated compiler decisions. |
 | [Execution](docs/execution/README.md) | Parallel workers, sharding, estimates, and time limits. |
 | [CI examples](docs/ci/README.md) | GitHub Action, CircleCI, and GitLab setup. |
 | [Benchmarking](benchmarks/README.md) | Local shard commands, chart generation, and measured plots. |

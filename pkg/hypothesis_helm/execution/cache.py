@@ -57,6 +57,7 @@ def fingerprint(
         str: Content-addressed cache key, independent of absolute checkout paths.
     """
     digest = hashlib.sha256(repr((seed, match, shard, sys.version)).encode())
+    digest.update(os.environ.get("HYPOTHESIS_HELM_IGNORED_RULES", "[]").encode())
     conformity = os.environ.get("HYPOTHESIS_HELM_CONFORMITY")
     if conformity:
         settings = json.loads(conformity)

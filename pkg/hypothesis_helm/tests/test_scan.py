@@ -356,7 +356,8 @@ def test_missing_values_single_and_recursive(tmp_path: Path, capsys: pytest.Capt
     )
     report = json.loads(capsys.readouterr().out)
     assert report["counts"] == {"missing-values": 1, "failed": 1}
-    assert report["charts"][1]["error"] == "chart rendered no resources"
+    assert report["charts"][1]["error"] == "[HH1009] chart rendered no resources"
+    assert report["charts"][1]["baseline"]["code"] == "HH1009"
 
 
 def test_values_override_and_dependency_build(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
@@ -576,6 +577,7 @@ def test_timeout_during_discovery(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     import time
 
     (tmp_path / "Chart.yaml").write_text("apiVersion: v2\nname: a\nversion: '1.0.0'\n")
+    monkeypatch.chdir(tmp_path)  # Keep the slow chart parser separate from caller policy loading.
     monkeypatch.setattr("hypothesis_helm.charts.scan.yamlio.load", lambda text: time.sleep(2))
     assert (
         main(

@@ -156,6 +156,8 @@ def write_reports(report: dict[str, object], stem: Path, *, publication: Publica
     summary = report.get("summary", [])
     if isinstance(summary, list):
         lines[2:2] = [str(line) for line in summary] + [""]
+    if report.get("ignored_rules"):
+        lines.extend(["Disabled checks: " + ", ".join(str(code) for code in sequence(report["ignored_rules"])), ""])
     errors = sequence(report["error_groups"])
     if errors:
         counts = mapping(report["error_summary"])
@@ -237,7 +239,7 @@ def write_reports(report: dict[str, object], stem: Path, *, publication: Publica
             occurrences = [mapping(item) for item in sequence(group["occurrences"]) if mapping(item)["chart"] == chart["chart"]]
             if not occurrences:
                 continue
-            lines.extend([f"#### {group['id']}", ""])
+            lines.extend([f"#### {group['id']}" + (f" ({group['code']})" if group.get("code") else ""), ""])
             source = group.get("source")
             if isinstance(source, dict):
                 lines.extend([f"Source: {source['name']} {source['version']} / {source['template']}", ""])

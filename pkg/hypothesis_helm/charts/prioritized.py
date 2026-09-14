@@ -13,6 +13,7 @@ from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.runner import check_chart
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
+from hypothesis_helm.rules import ignored_codes
 from hypothesis_helm.schemas.priority import PriorityInputs
 
 LOGGER = logging.getLogger(__name__)
@@ -177,10 +178,13 @@ def check_prioritized(
         if any(phase["status"] == "generation-error" for phase in phases)
         else "time-limit"
         if incomplete
+        else "ignored"
+        if phases and all(phase["status"] in {"ignored", "not-needed"} for phase in phases)
         else "passed"
     )
     result: dict[str, object] = {
         "status": status,
+        "ignored_rules": ignored_codes(),
         "attempts": sum(int(str(phase.get("attempts", 0))) for phase in phases),
         "phases": phases,
         "time_limit_seconds": budget,

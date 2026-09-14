@@ -40,6 +40,7 @@ from hypothesis_helm.execution.traversal import order_configurations, validate_s
 from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.reporting.changes import compare
 from hypothesis_helm.reporting.reproductions import changed_values
+from hypothesis_helm.rules import ignored_codes
 from hypothesis_helm.schemas.contracts import (
     configuration_key,
     mapping,
@@ -351,6 +352,12 @@ def check_chart(
         Returns:
             None: In-place additions preserve successful and failed execution counts separately.
         """
+        result["ignored_rules"] = ignored_codes()
+        result["ignored_failures"] = dict(checks.ignored_failures)
+        if checks.ignored_failures:
+            result["coverage_complete"] = False
+            if result["status"] == "passed" and checks.completed_count == 0:
+                result["status"] = "ignored"
         if parallel is not None:
             result["parallel_execution"] = {
                 "workers": parallel.workers,
@@ -504,6 +511,7 @@ def check_chart(
             "input_changes": changed_values(values, chart.defaults),
             "comparisons": comparisons(values, documents),
             "failure_type": type(exc).__name__,
+            "code": getattr(exc, "code", None),
             "render_hashes": hashes.snapshot(),
             **({"pruning": pruner.report()} if pruner is not None else {}),
         }
@@ -647,7 +655,7 @@ def check_chart(
             "coverage_complete": not bool(trimmed_cases),
         }
         if statistics is not None:
-            result.update(statistics.finish("passed"))
+            result.update(statistics.finish("ignored" if checks.ignored_failures and checks.completed_count == 0 else "passed"))
         expansion_report(result)
         if artifact_dir is not None and (statistics is not None or pruner is not None):
             artifact_dir.mkdir(parents=True, exist_ok=True)
@@ -681,13 +689,15 @@ def check_chart(
         # counterexample without invoking Helm again in fail-fast mode.
         if first_sample_failure is not None:
             raise first_sample_failure
+        ignored_before = sum(checks.ignored_failures.values())
         try:
             accepted = check(values)
         except Exception as exc:
             if fail_fast:
                 first_sample_failure = exc
             raise
-        assume(accepted)
+        # Disabled failures consume an example without becoming a successful witness.
+        assume(accepted or sum(checks.ignored_failures.values()) > ignored_before)
 
     try:
         property_test()

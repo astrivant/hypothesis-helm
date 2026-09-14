@@ -46,7 +46,7 @@ The compiler uses a structured representation of the template, called an
 **intermediate representation (IR)**, to track the text and values each branch
 would output. **Symbolic** evaluation means reasoning about that output from the
 template and candidate values, before asking Helm to render it. **Opaque** code
-is code this analysis cannot interpret; reaching it forces a render.<sup>[\[3\]](architecture/README.md#syntax-trees-and-compiler-passes)</sup>
+is code this analysis cannot interpret; reaching it forces a render.<sup>[\[3\]](compiler/syntax-trees.md)</sup>
 
 1. **Parse/lower:** a separate text-preserving lexer and balanced-block IR retain
    literal output, source locations, Go whitespace trimming and opaque actions.

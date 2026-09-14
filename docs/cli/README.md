@@ -29,12 +29,13 @@ for title, command in parsers:
 
 ~~~text
 usage: helm hypothesis [-h]
-                       {replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas} ...
+                       {rules,replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas} ...
 
 Audit and property-test Helm chart values.
 
 positional arguments:
-  {replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
+  {rules,replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
+    rules               list stable built-in check codes and descriptions
     replay-changes      verify and replay saved values or manifest changes
     aggregate           verify piped shard reports and write one final report
     export-minimal-values
@@ -48,6 +49,18 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis rules</summary>
+
+~~~text
+usage: helm hypothesis rules [-h]
+
+options:
+  -h, --help  show this help message and exit
 ~~~
 
 </details>
@@ -149,7 +162,8 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--base-ref BASE_REF]
                             [--export-topological-graph [FILENAME]]
                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
-                            [--export-minimal-values [FILENAME]]
+                            [--export-minimal-values [FILENAME]] [--config CONFIG]
+                            [--ignore CODE]
                             SOURCE
 
 positional arguments:
@@ -215,6 +229,9 @@ options:
                         export example values with validation status and missing
                         fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
                         separate files per chart)
+  --config CONFIG       rule policy YAML; default: .hypothesis-helm.yaml in the
+                        working directory
+  --ignore CODE         disable one built-in check; repeat to add codes
 ~~~
 
 </details>
@@ -226,7 +243,8 @@ options:
 usage: helm hypothesis generate [-h] [--output OUTPUT] [--max-examples MAX_EXAMPLES]
                                 [--strict] [--export-topological-graph [FILENAME]]
                                 [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
-                                [--export-minimal-values [FILENAME]]
+                                [--export-minimal-values [FILENAME]] [--config CONFIG]
+                                [--ignore CODE]
                                 chart
 
 positional arguments:
@@ -248,6 +266,9 @@ options:
                         export example values with validation status and missing
                         fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
                         separate files per chart)
+  --config CONFIG       rule policy YAML; default: .hypothesis-helm.yaml in the
+                        working directory
+  --ignore CODE         disable one built-in check; repeat to add codes
 ~~~
 
 </details>
@@ -258,7 +279,8 @@ options:
 ~~~text
 usage: helm hypothesis audit [-h] [--strict] [--export-topological-graph [FILENAME]]
                              [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
-                             [--export-minimal-values [FILENAME]]
+                             [--export-minimal-values [FILENAME]] [--config CONFIG]
+                             [--ignore CODE]
                              chart
 
 positional arguments:
@@ -277,6 +299,9 @@ options:
                         export example values with validation status and missing
                         fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
                         separate files per chart)
+  --config CONFIG       rule policy YAML; default: .hypothesis-helm.yaml in the
+                        working directory
+  --ignore CODE         disable one built-in check; repeat to add codes
 ~~~
 
 </details>
@@ -295,7 +320,8 @@ usage: helm hypothesis run [-h] [--seed SEED] [--match MATCH] [--collect-only]
                            [--cache-dir CACHE_DIR] [--disable-schema-caching]
                            [--progress] [--run-id RUN_ID] [--no-cache]
                            [--rerun {auto,all,failed}] [--shard SHARD] [--jobs JOBS]
-                           [--output {json}] [--strict]
+                           [--output {json}] [--strict] [--config CONFIG]
+                           [--ignore CODE]
                            suite
 
 positional arguments:
@@ -343,6 +369,9 @@ options:
                         go to stderr
   --strict              require all configurable fields in source values.yaml and a
                         clean audit
+  --config CONFIG       rule policy YAML; default: .hypothesis-helm.yaml in the
+                        working directory
+  --ignore CODE         disable one built-in check; repeat to add codes
 ~~~
 
 </details>
@@ -380,7 +409,8 @@ usage: helm hypothesis test [-h] [--report [PATH]] [--values VALUES]
                             [--jobs JOBS] [--output {json}] [--strict]
                             [--export-topological-graph [FILENAME]]
                             [--minimal-values-timeout MINIMAL_VALUES_TIMEOUT]
-                            [--export-minimal-values [FILENAME]]
+                            [--export-minimal-values [FILENAME]] [--config CONFIG]
+                            [--ignore CODE]
                             [chart]
 
 positional arguments:
@@ -487,6 +517,9 @@ options:
                         export example values with validation status and missing
                         fields; default: values-minimal-<checksum>-<epoch>.yaml (scan:
                         separate files per chart)
+  --config CONFIG       rule policy YAML; default: .hypothesis-helm.yaml in the
+                        working directory
+  --ignore CODE         disable one built-in check; repeat to add codes
 
 filtering:
   Use --filter or the individual methods below; random trimming is independent.

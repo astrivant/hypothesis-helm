@@ -206,6 +206,35 @@ From a checkout with Helm 4 and GNU Parallel on `PATH`:
 poetry install --extras benchmarking && poetry run bash benchmarks/refresh.sh
 ```
 
+The installed `hypothesis-helm-refresh` command owns the operation queue. Inspect
+the full plan without running tests or changing artifacts:
+
+```sh
+poetry run hypothesis-helm-refresh --dry-run
+poetry run hypothesis-helm-refresh --workers 3
+```
+
+`--workers` limits independent refresh operations; `auto` uses the available CPU
+count. Timing studies and repository scans reserve the queue. Independent tables
+and plot preparation can overlap. Nested workers retain their own settings,
+including six path workers per chart in the repository tests.
+
+The [operation inventory](../pkg/hypothesis_helm/benchmarking/refresh/plan.py) declares
+all 15 studies, fresh profiling captures, diagrams, verification gates, repository
+reports, and documentation updates. [Workgraph](../pkg/workgraph/README.md) is the
+reusable scheduler in a sibling Python package; the Helm-specific inventory and
+Bash commands stay in this project. Both import packages use the root Poetry
+configuration and ship in the same wheel.
+
+Each run writes an atomic `operations.json` journal and one log per operation.
+Failures stop scheduling, join owned children, and mark pending operations blocked.
+Repository command failures are retained for their finalizer to inspect; missing
+or invalid reports still prevent the next repository and final publication.
+
+Flame graphs come from a separate four-case scaling capture with one and two
+workers, after the uninstrumented measurements. Fresh process IDs replace earlier
+capture filenames; publication records which old profile artifacts were superseded.
+
 This runs lint, type checks, documentation checks, and the full pytest suite with the
 worker count selected from the runner's CPUs (`PYTEST_WORKERS` overrides it), then all fifteen synthetic studies,
 their plots and tables, and the synthetic/Bitnami/Prometheus

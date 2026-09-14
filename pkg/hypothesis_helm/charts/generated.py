@@ -10,6 +10,7 @@ import tempfile
 from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
+from unittest import SkipTest
 
 from attrs import frozen
 from hypothesis import assume, note
@@ -21,6 +22,7 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.charts.rendering import RenderFailure, render
 from hypothesis_helm.compiler.passes.dependencies import Dependencies
+from hypothesis_helm.rules import check, ignored
 from hypothesis_helm.schemas.contracts import json_value, mapping, schema_strategy, sequence
 
 
@@ -288,15 +290,20 @@ def check_path(
         values = data.draw(st.sampled_from(contexts), label="dependency context")
         note("dependency-aware overrides:\n" + yamlio.dump(values))
     selected = options or RenderOptions(timeout=timeout, allow_empty=allow_empty)
-    resources = render(
-        chart,
-        values,
-        timeout=selected.timeout,
-        helm=selected.helm,
-        release=selected.release,
-        namespace=selected.namespace,
-        kube_version=selected.kube_version,
-    )
-    if not resources and not selected.allow_empty:
-        raise RenderFailure("chart rendered no resources")
+    try:
+        resources = render(
+            chart,
+            values,
+            timeout=selected.timeout,
+            helm=selected.helm,
+            release=selected.release,
+            namespace=selected.namespace,
+            kube_version=selected.kube_version,
+        )
+        if not resources and not selected.allow_empty:
+            check(False, "HH1009", "chart rendered no resources")
+    except RenderFailure as exc:
+        if ignored(exc.code):
+            raise SkipTest(f"Ignored {exc.code}: dependent checks could not run: {exc}") from exc
+        raise
     return resources

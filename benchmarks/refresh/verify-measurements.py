@@ -10,6 +10,7 @@ from pathlib import Path
 from attrs import asdict
 from hypothesis_helm.benchmarking.charts.stress import Stress, progression
 from hypothesis_helm.benchmarking.charts.structures import STRUCTURES
+from hypothesis_helm.benchmarking.refresh.plan import STUDIES
 from hypothesis_helm.benchmarking.studies.error_surface import METHODS, METRICS, RATES, verify
 from hypothesis_helm.benchmarking.studies.matrix import STRATEGIES
 from hypothesis_helm.charts import yamlio
@@ -17,23 +18,7 @@ from hypothesis_helm.charts import yamlio
 root = Path(sys.argv[1])
 expected = json.loads((root / "provenance.json").read_text())["code_sha256"]
 summary = {}
-for study in [
-    "performance",
-    "discovery",
-    "bug-density",
-    "sparsity",
-    "topology-sparsity",
-    "matrix",
-    "pca",
-    "expansion",
-    "topology-depth",
-    "nesting",
-    "stress",
-    "sampling",
-    "calibration-variation",
-    "filtering",
-    "error-surface",
-]:
+for study in STUDIES:
     directory = root / "outputs" / study
     result = json.loads((directory / "results.json").read_text())
     metadata = result["metadata"]

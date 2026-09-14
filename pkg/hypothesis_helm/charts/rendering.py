@@ -19,6 +19,8 @@ from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
 from hypothesis_helm.reporting.output import emit_manifest
+from hypothesis_helm.rules import RenderFailure as RenderFailure
+from hypothesis_helm.rules import check, ignored_codes
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, validate
 from hypothesis_helm.schemas.contracts import (
     mapping,
@@ -26,17 +28,6 @@ from hypothesis_helm.schemas.contracts import (
 )
 
 LOGGER = logging.getLogger(__name__)
-
-
-class RenderFailure(AssertionError):
-    """
-    A reproducible values input failed the rendering contract.
-
-    Attributes:
-        resources (list[object] | None): Parsed output available before a manifest validation failure.
-    """
-
-    resources: list[object] | None = None
 
 
 def validate_resources(resources: Sequence[object]) -> None:
@@ -52,26 +43,29 @@ def validate_resources(resources: Sequence[object]) -> None:
     identities = set()
     for resource in resources:
         if not isinstance(resource, dict):
-            raise RenderFailure("rendered document is not an object")
+            check(False, "HH1004", "rendered document is not an object")
+            continue
         for key in ("apiVersion", "kind"):
             if not isinstance(resource.get(key), str) or not resource[key]:
-                raise RenderFailure(f"resource has no nonempty {key}")
-        if resource["kind"] == "List":
+                check(False, "HH1005", f"resource has no nonempty {key}")
+        if resource.get("kind") == "List":
             if not isinstance(resource.get("items"), list):
-                raise RenderFailure("List resource has no items array")
+                check(False, "HH1006", "List resource has no items array")
+                continue
             validate_resources(sequence(resource["items"]))
             continue
         metadata = resource.get("metadata")
         if not isinstance(metadata, dict) or not isinstance(metadata.get("name"), str) or not metadata["name"]:
-            raise RenderFailure("resource has no metadata.name")
+            check(False, "HH1007", "resource has no metadata.name")
+            continue
         identity = (
-            resource["apiVersion"],
-            resource["kind"],
+            resource.get("apiVersion"),
+            resource.get("kind"),
             metadata.get("namespace"),
             metadata["name"],
         )
         if identity in identities:
-            raise RenderFailure(f"duplicate resource: {identity}")
+            check(False, "HH1008", f"duplicate resource: {identity}")
         identities.add(identity)
 
 
@@ -120,7 +114,7 @@ def render_output(
         try:
             process = (processes if processes is not None else Processes()).run(command, capture_output=True, text=True, timeout=timeout)
         except subprocess.TimeoutExpired as exc:
-            raise RenderFailure(f"helm exceeded {timeout}s") from exc
+            raise RenderFailure(f"helm exceeded {timeout}s", "HH1002") from exc
         if process.returncode:
             raise RenderFailure(process.stderr.strip() or f"helm exited {process.returncode}")
         return process.stdout
@@ -174,7 +168,7 @@ def render(
     try:
         resources = [item for item in yamlio.load_all(output) if item is not None]
     except YAMLError as exc:
-        raise RenderFailure(f"invalid rendered YAML: {exc}") from exc
+        raise RenderFailure(f"invalid rendered YAML: {exc}", "HH1003") from exc
     if stream:
         for resource in resources:
             emit_manifest(resource)
@@ -190,10 +184,10 @@ def render(
         try:
             validate(output, timeout)
         except AssertionError as exc:
-            raise RenderFailure(str(exc)) from exc
+            raise RenderFailure(str(exc), "HH1010") from exc
 
     context = json.dumps(
-        {"resource_contract": 1, "conformity": os.environ.get(ENVIRONMENT), "timeout": timeout},
+        {"resource_contract": 1, "conformity": os.environ.get(ENVIRONMENT), "timeout": timeout, "ignored_rules": ignored_codes()},
         sort_keys=True,
     )
     try:
@@ -202,7 +196,7 @@ def render(
         exc.resources = resources
         raise
     except (TypeError, ValueError) as exc:
-        failure = RenderFailure(f"invalid rendered manifest: {exc}")
+        failure = RenderFailure(f"invalid rendered manifest: {exc}", "HH1011")
         failure.resources = resources
         raise failure from exc
-    return [mapping(resource) for resource in resources]
+    return [mapping(resource) for resource in resources if isinstance(resource, dict)]

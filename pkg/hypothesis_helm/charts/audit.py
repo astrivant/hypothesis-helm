@@ -13,6 +13,7 @@ from hypothesis_helm.compiler.passes.complexity import measure
 from hypothesis_helm.compiler.passes.inputs import InputInventory
 from hypothesis_helm.compiler.passes.sampling import profile as sampling_profile
 from hypothesis_helm.reporting.progress import format_path
+from hypothesis_helm.rules import AUDIT_RULES, ignored, ignored_codes
 
 LOGGER = logging.getLogger(__name__)
 
@@ -57,6 +58,11 @@ def audit(chart: Chart) -> dict[str, object]:
                     "message": "Configurable field is absent from the original values.yaml",
                 }
             )
+    for finding in findings:
+        finding["code"] = AUDIT_RULES[str(finding["issue"])]
+    unresolved = [{**asdict(d), "code": "HH2005"} for d in diagnostics]
+    suppressed = [finding for finding in [*findings, *unresolved] if ignored(str(finding["code"]))]
+    findings = [finding for finding in findings if not ignored(str(finding["code"]))]
     complexity = measure(chart)
     return {
         "chart": str(chart.path),
@@ -64,6 +70,8 @@ def audit(chart: Chart) -> dict[str, object]:
         "sampling_profile": sampling_profile(chart, complexity),
         "references": [asdict(r) for r in references],
         "findings": findings,
-        "unresolved": [asdict(d) for d in diagnostics],
+        "unresolved": [finding for finding in unresolved if not ignored("HH2005")],
+        "ignored_findings": suppressed,
+        "ignored_rules": ignored_codes(),
         "input_inventory": InputInventory.build(chart).report(),
     }

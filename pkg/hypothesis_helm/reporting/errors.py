@@ -122,7 +122,7 @@ def chart_errors(record: dict[str, object], chart: Path | None = None) -> list[d
             expanded_sources.append(source)
     errors: list[dict[str, object]] = []
     for source in expanded_sources:
-        if source.get("status") in {"pending", "not-started", "not-needed"}:
+        if source.get("status") in {"pending", "not-started", "not-needed", "ignored"}:
             continue
         diagnostic = str(source["error"]).strip()
         identity = None
@@ -138,6 +138,7 @@ def chart_errors(record: dict[str, object], chart: Path | None = None) -> list[d
                 "phase": source.get("phase", "chart"),
                 "status": source["status"],
                 "failure_type": source.get("failure_type"),
+                "code": source.get("code") or (match.group(1) if (match := re.search(r"\[(HH\d{4})\]", str(source["error"]))) else None),
                 "error": diagnostic,
                 "source": identity,
                 "input": failing_input(source),

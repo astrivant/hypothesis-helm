@@ -28,6 +28,7 @@ from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.traversal import ALGORITHM, order_paths, validate_strategy
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.progress import format_path
+from hypothesis_helm.rules import check, ignored, ignored_codes
 from hypothesis_helm.schemas.contracts import json_value, schema_strategy
 from hypothesis_helm.schemas.paths import ValuePath, enumerate_paths
 from hypothesis_helm.schemas.priority import PriorityInputs
@@ -187,7 +188,7 @@ def check_paths(
                 chart, {}, helm=helm, timeout=min(timeout, budget), release=release, namespace=namespace, kube_version=kube_version
             )
             if not resources and not allow_empty:
-                raise RenderFailure("chart rendered no resources")
+                check(False, "HH1009", "chart rendered no resources")
             baseline["status"] = "passed"
             measured.observe(chart.defaults)
             if jobs > 1:
@@ -270,7 +271,12 @@ def check_paths(
             baseline["status"] = "time-limit"
     except Exception as exc:
         if baseline["status"] != "passed":
-            baseline.update(status="failed", error=str(exc), failure_type=type(exc).__name__)
+            baseline.update(
+                status="ignored" if isinstance(exc, RenderFailure) and ignored(exc.code) else "failed",
+                error=str(exc),
+                failure_type=type(exc).__name__,
+                code=getattr(exc, "code", None),
+            )
         else:
             raise
     for phase in phases:
@@ -292,6 +298,8 @@ def check_paths(
         if worker_errors
         else "generation-error"
         if generation_errors
+        else "ignored"
+        if baseline["status"] == "ignored" or (phases and all(phase["status"] == "ignored" for phase in phases))
         else "configuration-rejected"
         if phases and all(phase["status"] == "configuration-rejected" for phase in phases)
         else "passed"
@@ -299,6 +307,7 @@ def check_paths(
     result: dict[str, object] = {
         "status": status,
         "mode": "paths",
+        "ignored_rules": ignored_codes(),
         "workers": min(jobs, len(ordered)),
         "worker_model": "shared chart path queue",
         "seed": seed,

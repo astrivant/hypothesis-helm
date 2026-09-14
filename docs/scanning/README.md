@@ -294,7 +294,7 @@ verification renders; exclusions never count as passing tests. A property with n
 accepted generated inputs is `configuration-rejected`, not a pass. Unknown guards
 remain testable. Automatic exclusions apply to inferred inputs; rejections of
 inputs admitted by an authored values schema remain visible failures, with their
-recovered requirements. See [compiler passes](../architecture/README.md#syntax-trees-and-compiler-passes).
+recovered requirements. See [compiler passes](../compiler/selection.md#rejection-guided-generation).
 For charts without dependencies, Helm checks the first two different inputs that
 the compiler predicts will violate each recognized requirement. These checks are
 called **witness checks**. Later exclusions use the supported compiler analysis.

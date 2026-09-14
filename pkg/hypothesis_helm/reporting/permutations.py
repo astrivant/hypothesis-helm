@@ -226,7 +226,9 @@ class PermutationStatistics:
             dict[str, object]: Final statistics for the run report.
         """
         stats = self.snapshot()
-        stats["exit_code"] = 0 if status == "passed" else 130 if status == "interrupted" else 124 if status == "time-limit" else 1
+        stats["exit_code"] = (
+            0 if status in {"passed", "ignored"} else 130 if status == "interrupted" else 124 if status == "time-limit" else 1
+        )
         LOGGER.info("Permutation run %s", status)
         self.log_progress(stats)
         destination = self.history_path()
@@ -239,6 +241,7 @@ class PermutationStatistics:
                     "name": "helm-permutations",
                     "tests": "1",
                     "failures": "1" if status == "failed" else "0",
+                    "skipped": "1" if status == "ignored" else "0",
                     "errors": "1" if status in ("interrupted", "time-limit") else "0",
                     "time": str(stats["elapsed_seconds"]),
                 },
@@ -255,7 +258,7 @@ class PermutationStatistics:
             if status != "passed":
                 failure = ET.SubElement(
                     case,
-                    "error" if status in ("interrupted", "time-limit") else "failure",
+                    "skipped" if status == "ignored" else "error" if status in ("interrupted", "time-limit") else "failure",
                     {"message": error or f"Permutation run {status}; see report.json"},
                 )
                 failure.text = error or "Coverage is incomplete; see report.json"

@@ -23,8 +23,20 @@ previous = json.loads((root / "previous-artifact-inventory.json").read_text())
 retained = json.loads((root / "retained-fixture-sha256.json").read_text())
 for name, expected in retained.items():
     assert hashlib.sha256((benchmarks / name).read_bytes()).hexdigest() == expected, name
+flamegraphs = benchmarks / "studies/flamegraphs"
+profile = json.loads((flamegraphs / "index.json").read_text())
+assert profile["worker_processes"] > 0 and profile["incomplete_captures"] == 0
+assert (flamegraphs / "captures.tar.gz").is_file()
+assert any(figure["name"] == "workers-combined" for figure in profile["figures"])
+assert any(figure["name"].startswith("coordinator-") for figure in profile["figures"])
+assert all((flamegraphs / figure[extension]).is_file() for figure in profile["figures"] for extension in ("png", "svg"))
+superseded = []
 for name in previous:
     path = Path(name)
+    if path.parent == flamegraphs and str(path.relative_to(benchmarks)) not in checksums:
+        # Fresh process captures replace prior PID-named artifacts as a verified family.
+        superseded.append(name)
+        continue
     assert str(path.relative_to(benchmarks)) in checksums or str(path.relative_to(benchmarks)) in retained, (
         f"Previous artifact not refreshed: {path}"
     )
@@ -76,6 +88,8 @@ result = {
     "measured_source_files_unchanged": len(sources),
     "local_documentation_links_checked": links,
     "repository_scans": scans,
+    "superseded_profile_artifacts": superseded,
+    "fresh_profile_captures": profile["captures"],
 }
 (root / "publication-verification.json").write_text(json.dumps(result, indent=2) + "\n")
 print(json.dumps(result, indent=2))

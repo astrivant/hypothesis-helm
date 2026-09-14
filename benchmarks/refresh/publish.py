@@ -8,26 +8,12 @@ import shutil
 import sys
 from pathlib import Path
 
+from hypothesis_helm.benchmarking.refresh.plan import STUDIES
+
 root = Path(sys.argv[1])
 target = Path("benchmarks")
 statuses = dict(line.split("\t") for line in (root / "status.tsv").read_text().splitlines())
-assert set(statuses) == {
-    "performance",
-    "discovery",
-    "bug-density",
-    "sparsity",
-    "topology-sparsity",
-    "matrix",
-    "pca",
-    "expansion",
-    "topology-depth",
-    "nesting",
-    "stress",
-    "sampling",
-    "calibration-variation",
-    "filtering",
-    "error-surface",
-}
+assert set(statuses) == set(STUDIES)
 assert all(status == "0" for status in statuses.values()), statuses
 assert (root / "topology-finished-epoch.txt").exists()
 assert (root / "topology-retry-finished-epoch.txt").exists()
@@ -36,6 +22,9 @@ assert (root / "outputs/chart-topologies/results.json").exists()
 shutil.copy2(root / "logs/performance.log", root / "outputs/performance/run.log")
 for directory in sorted((root / "outputs").iterdir()):
     destination = target / "studies" / directory.name
+    if directory.name == "flamegraphs" and destination.exists():
+        # Process IDs change between captures; stale graphs cannot appear to be current.
+        shutil.rmtree(destination)
     shutil.copytree(directory, destination, dirs_exist_ok=True)
 shutil.copytree(root / "parameters", target / "fixture/parameters", dirs_exist_ok=True)
 records = target / "refresh"
@@ -44,7 +33,9 @@ records.mkdir(exist_ok=True)
 for name in ("visual-verification.json", "snapshot-transition.json", "publication-verification.json"):
     (records / name).unlink(missing_ok=True)
 record_names = [
-    "run.sh",
+    "operations.sh",
+    "studies.sh",
+    "publish-flamegraphs.py",
     "initialize.py",
     "repository-run.sh",
     "repository-chart.sh",
@@ -53,7 +44,6 @@ record_names = [
     "verify-publication.py",
     "measured-source.tar.gz",
     "prepare-fixtures.py",
-    "finish-refresh.sh",
     "plan-topology-retries.py",
     "run-topologies.sh",
     "chart-topology.sh",

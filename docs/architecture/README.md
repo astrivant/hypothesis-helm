@@ -61,62 +61,10 @@ explicitly, without changing the process command line or selecting a workspace t
 
 ## Syntax trees and compiler passes
 
-`pkg/hypothesis_helm/compiler/asts/` holds template nodes, expression trees, helper
-definitions, and evaluators for the supported template operations. An **abstract
-syntax tree (AST)** represents the structure of parsed template statements.
-Discovery and output prediction share the code that splits template text into
-tokens. Template syntax forms a tree; named
-helper calls connect those trees into a graph. Source filenames and line numbers
-connect analysis results back to chart code.
-
-`pkg/hypothesis_helm/compiler/passes/` holds input discovery, topology analysis,
-equivalence pruning, rejection-guided generation, and export passes. Constants
-remain at the compiler root. Rejection analysis navigates parsed nodes rather than searching
-comments or message strings for words such as `fail`.
-
-Dependency records live in `compiler/asts/dependencies.py`; their discovery and
-generation pass lives in `compiler/passes/dependencies.py`. The pass reads installed
-child directories and archives, qualifies child inputs by alias, and records ordered
-Boolean conditions and shared tag controls. It discovers these controls even when
-they appear only in chart metadata. A nested dependency records both its own
-enablement conditions and those of its parent dependencies.
-
-Path generation proposes an enabled context for child settings while preserving
-the selected value and original parent-schema constraints. The original context
-remains eligible because parent templates may read child values independently of
-activation. When allowed values can be enumerated, planning proposes testing a
-child field together with the settings needed to enable that child. Existing
-group-size budgets still apply.<sup>[\[4\]](../scanning/README.md#discovery-and-testing)</sup>
-
-Graph exports connect controls to dependency instances and child templates.
-Activation states are predictions, and every scheduled candidate is rendered by
-Helm. Missing or ambiguous sources, unresolved imports, and unsupported forwarding
-remain explicit limitations. Dependency activation never authorizes skipping a
-render: exact-equivalence and topology proofs still exclude charts with dependencies.
-
-With `--filter`, local tests and repository scans evaluate supported branches
-leading to explicit `fail` and `required` calls, including statically named helper
-calls. The first two distinct rejected inputs for each requirement are checked
-against Helm; charts with dependencies require native confirmation for every
-predicted rejection because coalescing and imports may alter the input context.
-A different native outcome disables that requirement's filtering;
-an unexpected rendering failure remains a failure.
-
-Automatic exclusions apply to inferred input domains. When an authored
-`values.schema.json` admits an input that a template rejects, the tool retains the
-failure and reports the requirement as a schema/validation conflict. Template
-guards do not silently narrow the declared contract.
-
-Sampled path tests try at most 32 single-field adjustments using supplied defaults,
-Boolean alternatives, and adjacent integers. They preserve the selected path and
-the original schema, then render and test any replacement. Finite permutation
-assignments are preserved; rejected assignments are counted separately. Supplied
-defaults always receive normal validation.
-
-Unknown expressions, dynamic helper contexts, unsupported scope mutation, and
-recursive helper calls beyond the bounded evaluator remain ordinary test inputs.
-These contracts describe chart-authored validation, not proof that its rules are
-correct. This generation policy is separate from proved output equivalence.
+The [compiler guide](../compiler/README.md) describes the flow from template
+parsing and typed values to input discovery, output analysis, selection, and
+exports. It includes a pass reference and
+[panel-by-panel decision diagrams](../compiler/decisions.md).
 
 ## Finite permutation planning
 
@@ -128,4 +76,4 @@ has already passed validation.
 
 See [execution and coverage](../execution/README.md), the
 [pruning contract](../safe-pruning.md), and the
-[introductory example](../../README.md#example-catch-a-failure-hidden-by-defaults).
+[introductory examples](../../README.md#examples-failures-hidden-by-defaults).

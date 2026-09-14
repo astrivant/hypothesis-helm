@@ -97,7 +97,7 @@ def test_piped_reports(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, encoding
     assert report["properties"]["selected"] == report["properties"]["tests"] == 6
 
 
-@pytest.mark.parametrize("damage", ["missing", "duplicate", "run-id", "suite", "checksum", "inventory", "traversal"])
+@pytest.mark.parametrize("damage", ["missing", "duplicate", "run-id", "suite", "checksum", "inventory", "traversal", "ignored-rules"])
 def test_incompatible_reports_never_publish(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, damage: str) -> None:
     """
     Reject missing or mixed pipeline artifacts before publishing any final report.
@@ -121,6 +121,8 @@ def test_incompatible_reports_never_publish(tmp_path: Path, monkeypatch: pytest.
         reports[1]["suite_fingerprint"] = "another-source"
     elif damage == "checksum":
         reports[1]["junit_xml"] = "<testsuites/>"
+    elif damage == "ignored-rules":
+        reports[1]["ignored_rules"] = ["HH1008"]
     elif damage == "traversal":
         reports[1]["traversal_strategy"] = "random"
     else:

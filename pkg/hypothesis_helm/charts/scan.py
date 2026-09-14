@@ -35,6 +35,7 @@ from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer
 from hypothesis_helm.reporting.errors import chart_errors, deduplicate_errors
 from hypothesis_helm.reporting.repository import write_reports
+from hypothesis_helm.rules import ignored, ignored_codes, record_ignored
 from hypothesis_helm.schemas.contracts import mapping
 from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
@@ -112,13 +113,15 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
     artifacts.mkdir(parents=True, exist_ok=True)
     diagnostic = baseline.stdout + baseline.stderr
     (artifacts / "lint.txt").write_text(diagnostic)
-    if baseline.returncode:
+    if baseline.returncode and ignored("HH1012"):
+        record_ignored("HH1012", diagnostic)
+    if baseline.returncode and not ignored("HH1012"):
         status = (
             "missing-dependencies"
             if "dependencies" in diagnostic.lower() and ("missing" in diagnostic.lower() or "not found" in diagnostic.lower())
             else "baseline-failed"
         )
-        return {"status": status, "error": diagnostic, "coverage": "defaults only"}
+        return {"status": status, "code": "HH1012", "error": diagnostic, "coverage": "defaults only"}
     has_schema = (path / "values.schema.json").is_file()
     try:
         chart = (
@@ -180,7 +183,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
             **result,
             "coverage": "unique discovered paths; time-bounded property testing",
             "schema_source": "declared" if has_schema else "inferred generation; no values schema",
-            "lint": "passed",
+            "lint": "ignored" if baseline.returncode else "passed",
         }
     filtering["applied"] = args.filter and strength is not None
     result = check_chart(
@@ -221,7 +224,7 @@ def exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> dic
     return {
         **result,
         "coverage": "schema-generated values",
-        "lint": "passed",
+        "lint": "ignored" if baseline.returncode else "passed",
         "filtering": filtering,
     }
 
@@ -517,7 +520,9 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         "counts": counts,
         "charts": records,
         "git_comparison": changes,
+        "ignored_rules": ignored_codes(),
         "settings": {
+            "ignored_rules": ignored_codes(),
             "max_examples": args.max_examples,
             "jobs": getattr(args, "jobs", 1),
             "worker_model": "sequential charts, concurrent path properties",
@@ -591,4 +596,4 @@ def scan_checkout(args: argparse.Namespace, source: RepositorySource, started: f
         return 1
     if any(status in counts for status in ("invalid-metadata", "baseline-failed", "failed", "error")):
         return 1
-    return 0 if records and set(counts) <= {"passed", "cached-pass"} else 2
+    return 0 if records and set(counts) <= {"passed", "cached-pass", "ignored"} else 2

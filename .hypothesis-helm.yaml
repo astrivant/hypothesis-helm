@@ -1,0 +1,21 @@
+# Uncomment rule codes to disable specific built-in checks. All checks are enabled by default.
+# List current rules with: helm hypothesis rules
+# CLI --ignore CODE adds to this list. See docs/rules/README.md.
+ignored:
+  # - HH1001  # Helm template execution failed
+  # - HH1002  # Helm render exceeded its invocation timeout
+  # - HH1003  # Rendered YAML cannot be parsed
+  # - HH1004  # Rendered document is not an object
+  # - HH1005  # Resource lacks a nonempty apiVersion or kind
+  # - HH1006  # List resource lacks an items array
+  # - HH1007  # Resource lacks a nonempty metadata.name
+  # - HH1008  # Duplicate resource identity in a manifest bundle
+  # - HH1009  # Chart renders no resources
+  # - HH1010  # Kubernetes API schema validation failed
+  # - HH1011  # Rendered manifest cannot be represented as JSON
+  # - HH1012  # Helm lint failed on the chart defaults
+  # - HH2001  # Values path is undocumented in the schema
+  # - HH2002  # Values path has no declared type, enum or constant
+  # - HH2003  # Values path has no schema description
+  # - HH2004  # Values path has no supplied default
+  # - HH2005  # Template value access cannot be resolved statically

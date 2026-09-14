@@ -75,7 +75,8 @@ for study in ["sparsity", "topology-sparsity"]:
             "ordering. High distribution coverage does not establish a generally safe trimming level for bug discovery. "
             "Rare faults can be lost.",
             "",
-            "See [trimming controls](../../execution/README.md#optional-trimming) and [refresh commands](../refresh/run.sh).",
+            "See [trimming controls](../../execution/README.md#optional-trimming) "
+            "and [refresh commands](../../README.md#reproduce-the-full-project-run).",
             "",
         ]
     )

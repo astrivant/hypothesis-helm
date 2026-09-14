@@ -34,6 +34,8 @@ from hypothesis_helm.reporting.changes import replay_file
 from hypothesis_helm.reporting.output import MANIFEST_FD
 from hypothesis_helm.reporting.progressive import plot_progression
 from hypothesis_helm.reporting.shards import aggregate
+from hypothesis_helm.rules import ENVIRONMENT as RULE_ENVIRONMENT
+from hypothesis_helm.rules import RULES, ignored, load_ignored
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, prepare
 from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
@@ -110,6 +112,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(prog=prog, description="Audit and property-test Helm chart values.")
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("rules", help="list stable built-in check codes and descriptions")
     replay = commands.add_parser("replay-changes", help="verify and replay saved values or manifest changes")
     replay.add_argument("record", type=Path, help="changes.json from a failing case")
     replay.add_argument("--section", choices=("overrides", "values", "manifests"), default="overrides")
@@ -443,6 +446,11 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             help="export example values with validation status and missing fields; default: "
             "values-minimal-<checksum>-<epoch>.yaml (scan: separate files per chart)",
         )
+    for command in (repository, inspect, generate, test, run):
+        command.add_argument("--config", type=Path, help="rule policy YAML; default: .hypothesis-helm.yaml in the working directory")
+        command.add_argument(
+            "--ignore", action="append", default=[], metavar="CODE", help="disable one built-in check; repeat to add codes"
+        )
     return parser
 
 
@@ -544,15 +552,26 @@ def main(argv: list[str] | None = None) -> int:
         descriptor = os.dup(sys.stdout.fileno())
         token = MANIFEST_FD.set(descriptor)
         stack.enter_context(redirect_stdout(sys.stderr))
+    previous_rules = os.environ.get(RULE_ENVIRONMENT)
     previous_conformity = os.environ.pop(ENVIRONMENT, None)
     try:
+        if args.command == "rules":
+            print("\n".join(f"{code}  {description}" for code, description in RULES.items()))
+            return 0
+        if hasattr(args, "ignore"):
+            args.ignored_rules = load_ignored(args.config, args.ignore)
+            os.environ[RULE_ENVIRONMENT] = json.dumps(args.ignored_rules)
+            if args.ignored_rules:
+                logger.info("Disabled checks: %s", ", ".join(args.ignored_rules))
+        else:
+            os.environ.pop(RULE_ENVIRONMENT, None)
         if args.command == "replay-changes":
             replay_file(args.record, args.baseline, args.section, args.output)
             return 0
         if args.command == "aggregate":
             return aggregate(args.reports, args.shards, args.run_id, args.output_dir)
         if args.command == "export-minimal-values":
-            if args.kubeconform:
+            if args.kubeconform and not ignored("HH1010"):
                 os.environ[ENVIRONMENT] = prepare(args.schema_cache_dir, args.schema_version, args.kubeconform_binary, args.schema_offline)
             return export_repository(
                 args.source,
@@ -568,7 +587,7 @@ def main(argv: list[str] | None = None) -> int:
             selector = args.shard
             args.shard, _ = resolve_shard(args.shard, os.environ)
             if local_discovery(args):
-                if args.kubeconform:
+                if args.kubeconform and not ignored("HH1010"):
                     os.environ[ENVIRONMENT] = prepare(
                         args.schema_cache_dir, args.schema_version, args.kubeconform_binary, args.schema_offline
                     )
@@ -597,7 +616,7 @@ def main(argv: list[str] | None = None) -> int:
                 print(json.dumps(dict(strict_report, status="failed", reason="strict audit failed"), indent=2))
                 return 1
         if args.command in ("test", "run"):
-            if args.kubeconform and not args.collect_only and not args.dry_run:
+            if args.kubeconform and not ignored("HH1010") and not args.collect_only and not args.dry_run:
                 os.environ[ENVIRONMENT] = prepare(
                     args.schema_cache_dir,
                     args.schema_version,
@@ -688,7 +707,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.command == "test" and args.timeout <= 0:
                 raise ValueError("timeout must be positive")
             schema_state = None
-            if args.kubeconform:
+            if args.kubeconform and not ignored("HH1010"):
                 schema_state = {
                     "status": "unavailable",
                     "requested_version": args.schema_version,
@@ -880,7 +899,7 @@ def main(argv: list[str] | None = None) -> int:
                 prune_equivalent=args.prune_equivalent,
                 filter_rejections=args.filter,
             )
-            status = 0 if report["status"] in ("passed", "dry-run") else 124 if report["status"] == "time-limit" else 1
+            status = 0 if report["status"] in ("passed", "dry-run", "ignored") else 124 if report["status"] == "time-limit" else 1
         if getattr(args, "dry_run", False):
             plot_progression(report)
         if minimal_values is not None:
@@ -896,6 +915,9 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"status": "error", "error": str(exc), "type": type(exc).__name__}))
         return 2
     finally:
+        os.environ.pop(RULE_ENVIRONMENT, None)
+        if previous_rules is not None:
+            os.environ[RULE_ENVIRONMENT] = previous_rules
         os.environ.pop(ENVIRONMENT, None)
         if previous_conformity is not None:
             os.environ[ENVIRONMENT] = previous_conformity

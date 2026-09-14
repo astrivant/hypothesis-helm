@@ -17,7 +17,13 @@ from hypothesis_helm.charts.scan import discover_charts
 from hypothesis_helm.execution.processes import Processes
 
 root = Path(sys.argv[1])
-root.mkdir(parents=True, exist_ok=False)
+if root.exists():
+    # The queue creates only its journal and logs before initialization runs.
+    allowed = {"operations.json", "operations.json.pending", "logs"}
+    if {path.name for path in root.iterdir()} - allowed:
+        raise ValueError(f"Refresh workspace already contains artifacts: {root}")
+else:
+    root.mkdir(parents=True, exist_ok=False)
 stamp = int(root.name.rsplit("-", 1)[1])
 recipes = Path(__file__).resolve().parent
 for recipe in recipes.iterdir():
@@ -36,6 +42,7 @@ empty_repositories = dedent(
 hashes = {}
 sources = [
     *Path("pkg/hypothesis_helm").rglob("*.py"),
+    *Path("pkg/workgraph").rglob("*.py"),
     Path("pkg/hypothesis_helm/execution/calibration.json"),
     Path("pkg/hypothesis_helm/reporting/assets/logo.png"),
 ]

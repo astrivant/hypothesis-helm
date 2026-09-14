@@ -183,3 +183,40 @@ def test_path_candidates_exclude_tabs_in_context(chart: Chart) -> None:
         assert values == chart.defaults
 
     check()
+
+
+def test_ignored_work_cannot_hide_chart_deadline(chart: Chart, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Retain the timeout outcome when workers return only ignored cases after the chart deadline.
+
+    Args:
+        chart (Chart): Nested values fixture.
+        tmp_path (Path): Artifact directory.
+        monkeypatch (pytest.MonkeyPatch): Controlled queue and monotonic clock.
+
+    Returns:
+        None: The chart budget takes precedence over an ignored result.
+    """
+    clock = [0.0]
+    monkeypatch.setattr("hypothesis_helm.charts.paths.time.monotonic", lambda: clock[0])
+    monkeypatch.setattr("hypothesis_helm.charts.paths.render", lambda *args, **kwargs: [{"kind": "ConfigMap"}])
+
+    def execute(context: dict[str, object], queue: Path, jobs: int) -> list[dict[str, object]]:
+        """
+        Return a blocked property after the shared deadline has elapsed.
+
+        Args:
+            context (dict[str, object]): Prepared chart job.
+            queue (Path): Queue artifact directory.
+            jobs (int): Requested worker count.
+
+        Returns:
+            list[dict[str, object]]: An ignored result that does not override elapsed time.
+        """
+        clock[0] = 2.0
+        return [{"status": "ignored", "phase": "$.replicas", "kind": "value-path", "path": ["replicas"], "attempts": 1}]
+
+    monkeypatch.setattr("hypothesis_helm.execution.path_queue.execute", execute)
+    result = check_paths(chart, budget=1, max_examples=1, seed=0, helm="helm", timeout=1, artifacts=tmp_path / "out", jobs=2)
+    assert result["status"] == "time-limit"
+    assert result["coverage_complete"] is False

@@ -282,6 +282,7 @@ def run_suite(
             "exit_code": status,
             "suite": str(directory),
             "render_hashes": render_statistics,
+            "ignored_rules": json.loads(environment.get("HYPOTHESIS_HELM_IGNORED_RULES", "[]")),
             "values_structure": marker.report() if marker is not None else None,
             "conformity": json.loads(environment["HYPOTHESIS_HELM_CONFORMITY"]) if "HYPOTHESIS_HELM_CONFORMITY" in environment else None,
             "shard": assignment,

@@ -73,6 +73,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
         signatures: set[str] = set()
         traversal: set[tuple[str, str]] = set()
         sampling_policies: set[str] = set()
+        ignored_policies: set[str] = set()
         inventories: set[str] = set()
         selected: set[str] = set()
         matched: set[int] = set()
@@ -101,6 +102,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             if not isinstance(signature, str) or not isinstance(inventory, str):
                 raise ValueError(f"Shard {index}/{total} lacks suite or collection identity")
             signatures.add(signature)
+            ignored_policies.add(json.dumps(record.get("ignored_rules", []), sort_keys=True))
             sampling_policies.add(json.dumps(record.get("sampling"), sort_keys=True))
             traversal.add((str(record.get("traversal_strategy", "linear")), str(record.get("traversal_algorithm", "legacy"))))
             inventories.add(inventory)
@@ -140,6 +142,8 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             records.append(record)
             input_hash.update(raw)
             input_hash.update(junit)
+        if len(ignored_policies) != 1:
+            raise ValueError("Shards used different ignored-rule policies")
         if len(sampling_policies) != 1:
             raise ValueError("Shards used different random sampling policies or populations")
         if len(traversal) != 1:
@@ -189,6 +193,7 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
             record["error"] = "\n\n".join(failures)
         report: dict[str, object] = {
             "title": "Helm sharded test results",
+            "ignored_rules": json.loads(next(iter(ignored_policies))),
             "directory": str(directory) if directory is not None else "piped shard reports",
             "run_id": run_id,
             "input_digest": identity,

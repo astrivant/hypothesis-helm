@@ -14,6 +14,7 @@ import tempfile
 from pathlib import Path
 
 from hypothesis_helm.execution.processes import Processes
+from hypothesis_helm.rules import ignored
 
 ENVIRONMENT = "HYPOTHESIS_HELM_CONFORMITY"
 REPOSITORY = "https://github.com/yannh/kubernetes-json-schema.git"
@@ -183,7 +184,7 @@ def validate(manifests: str, timeout: float) -> None:
         None: Every resource conforms, or validation raises an assertion failure.
     """
     configuration = os.environ.get(ENVIRONMENT)
-    if not configuration:
+    if not configuration or ignored("HH1010"):
         return
     settings = json.loads(configuration)
     location = settings["schemas"] + "/{{ .ResourceKind }}{{ .KindSuffix }}.json"

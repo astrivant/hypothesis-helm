@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -503,6 +504,11 @@ def test_refresh_scans_follow_published_diagrams(tmp_path: Path, failure: str | 
     """
     from textwrap import dedent
 
+    from workgraph import OperationQueue
+
+    from hypothesis_helm.benchmarking.refresh.plan import Refresh
+    from hypothesis_helm.execution.processes import Processes
+
     project = Path(__file__).resolve().parents[3]
     root = tmp_path / "refresh"
     (root / "logs").mkdir(parents=True)
@@ -526,6 +532,10 @@ def test_refresh_scans_follow_published_diagrams(tmp_path: Path, failure: str | 
         )
     )
     interpreter.chmod(0o755)
+    (root / "operations.sh").write_text((project / "benchmarks/refresh/operations.sh").read_text())
+    profiler = binary / "hypothesis-helm-benchmark"
+    profiler.write_text("#!/usr/bin/env bash\nexit 0\n")
+    profiler.chmod(0o755)
     for name in ("run-topologies.sh", "retry-topologies.sh"):
         (root / name).write_text(f"printf '%s\\n' {name} >>\"$STAGES\"\n")
     for name in ("bitnami", "prometheus"):
@@ -534,16 +544,25 @@ def test_refresh_scans_follow_published_diagrams(tmp_path: Path, failure: str | 
         (directory / "run.sh").write_text(f"printf '%s\\n' {name} >>\"$STAGES\"\nexit 1\n")
     (root / "repositories.tsv").write_text("".join(f"{name}\t{tmp_path / name}\n" for name in ("bitnami", "prometheus")))
     stages = tmp_path / "stages.txt"
-    result = subprocess.run(
-        ["bash", str(project / "benchmarks/refresh/finish-refresh.sh"), str(root)],
+    stages_plan = Refresh(root).operations()
+    start = next(index for index, operation in enumerate(stages_plan) if operation.name == "verify-measurements")
+    end = next(index for index, operation in enumerate(stages_plan) if operation.name == "update-documentation")
+    selected = stages_plan[start:end]
+    names = {operation.name for operation in selected}
+    queue = OperationQueue(
+        [replace(operation, requires=tuple(name for name in operation.requires if name in names)) for operation in selected],
+        workers=3,
+        owner_factory=Processes,
+        directory=root,
         cwd=tmp_path,
-        env=dict(os.environ, PATH=f"{binary}:{os.environ['PATH']}", STAGES=str(stages), FAIL_STAGE=failure or ""),
-        capture_output=True,
-        text=True,
-        check=False,
+        environment=dict(os.environ, PATH=f"{binary}:{os.environ['PATH']}", STAGES=str(stages), FAIL_STAGE=failure or ""),
     )
+    if failure:
+        with pytest.raises(RuntimeError, match="Operation"):
+            queue.run()
+    else:
+        queue.run()
     visited = stages.read_text().splitlines()
-    assert (result.returncode == 0) == (failure is None), result.stdout + result.stderr
     if failure == "verify-topologies.py":
         assert "publish.py" not in visited and "bitnami" not in visited
         assert not (root / "diagrams-finished-epoch.txt").exists()

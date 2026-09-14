@@ -8,7 +8,7 @@ import copy
 import subprocess
 from collections.abc import Callable, Sequence
 
-from attrs import define
+from attrs import define, field
 from jsonschema import validators
 
 from hypothesis_helm.charts.model import Chart, merge_values
@@ -20,6 +20,8 @@ from hypothesis_helm.execution.render_hashes import RenderHashes
 from hypothesis_helm.reporting.budget import execution_timer
 from hypothesis_helm.reporting.output import emit_manifest
 from hypothesis_helm.reporting.permutations import PermutationStatistics
+from hypothesis_helm.rules import check as check_rule
+from hypothesis_helm.rules import ignored, record_ignored
 from hypothesis_helm.schemas.contracts import json_value
 
 
@@ -50,6 +52,7 @@ class CandidateChecks:
         finite_values (Sequence[dict[str, object]] | None): Retained finite overrides, or None for Hypothesis generation.
         allow_empty (bool): Whether a render with no resource documents is accepted.
         baseline_documents (list[object] | None): Successful baseline resources retained for failure comparisons.
+        ignored_failures (dict[str, int]): Cases blocked by disabled checks, never successful validation witnesses.
         count (int): Number of attempted candidates, including failures.
         completed_count (int): Number of candidates that passed all configured checks.
         last_failure (tuple[dict[str, object], str, list[object] | None] | None): Exact overrides, message and available output from the
@@ -73,6 +76,7 @@ class CandidateChecks:
     finite_values: Sequence[dict[str, object]] | None
     allow_empty: bool
     baseline_documents: list[object] | None
+    ignored_failures: dict[str, int] = field(factory=dict)
     count: int = 0
     completed_count: int = 0
     last_failure: tuple[dict[str, object], str, list[object] | None] | None = None
@@ -165,7 +169,7 @@ class CandidateChecks:
                 pristine = copy.deepcopy(resources) if self.pruner is not None or self.properties else resources
                 observed = list(pristine)
                 if not resources and not self.allow_empty:
-                    raise RenderFailure("chart rendered no resources (use allow_empty explicitly)")
+                    check_rule(False, "HH1009", "chart rendered no resources (use allow_empty explicitly)")
                 for prop in self.properties:
                     self.remaining_time()
                     prop(resources)
@@ -182,6 +186,10 @@ class CandidateChecks:
                 attempted = True
             if isinstance(exc.__cause__, subprocess.TimeoutExpired):
                 self.remaining_time()
+            if ignored(exc.code):
+                record_ignored(exc.code, str(exc))
+                self.ignored_failures[exc.code] = self.ignored_failures.get(exc.code, 0) + 1
+                return False
             if self.policy is not None and self.policy.declared_schema:
                 declared_rejection = self.policy.predict(merge_values(self.chart.defaults, values))
                 if declared_rejection is not None and matches_rejection(str(exc), declared_rejection):
