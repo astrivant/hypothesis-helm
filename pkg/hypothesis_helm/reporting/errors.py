@@ -13,6 +13,8 @@ from pathlib import Path, PurePosixPath
 from ruamel.yaml.error import YAMLError
 
 from hypothesis_helm.charts import yamlio
+from hypothesis_helm.findings.catalog import CATALOG
+from hypothesis_helm.findings.generator import FindingGenerator
 from hypothesis_helm.reporting.reproductions import failing_input
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -133,12 +135,15 @@ def chart_errors(record: dict[str, object], chart: Path | None = None) -> list[d
             identity = template_source(chart, location)
             if identity is not None:
                 diagnostic = diagnostic[leaf.start() :].replace(location, f"{identity['name']}/{identity['template']}", 1)
+        code = source.get("code") or (match.group(1) if (match := re.search(r"\[(HH\d{4})\]", str(source["error"]))) else None)
+        finding = FindingGenerator.create(str(code), diagnostic).record() if code in CATALOG else None
         errors.append(
             {
                 "phase": source.get("phase", "chart"),
                 "status": source["status"],
                 "failure_type": source.get("failure_type"),
-                "code": source.get("code") or (match.group(1) if (match := re.search(r"\[(HH\d{4})\]", str(source["error"]))) else None),
+                "code": code,
+                "finding": finding,
                 "error": diagnostic,
                 "source": identity,
                 "input": failing_input(source),

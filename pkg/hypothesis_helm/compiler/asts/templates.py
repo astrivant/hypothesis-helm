@@ -200,6 +200,8 @@ def specialize(nodes: tuple[Node, ...], values: dict[str, object], model: Values
     Returns:
         SymbolicOutput: Equality witness or an explicit unknown result.
     """
+    from hypothesis_helm.compiler.asts.conditions import parse_condition
+
     atoms: list[tuple[str, str]] = []
     partition: list[tuple[int, bool]] = []
     influences: set[tuple[str, ...]] = set()
@@ -243,10 +245,11 @@ def specialize(nodes: tuple[Node, ...], values: dict[str, object], model: Values
             if node.kind == "text":
                 atoms.append(("text", node.text))
             elif node.kind == "if":
-                condition = evaluate(node.text)
-                if type(condition) is not bool:
-                    raise ValueError("only Boolean conditions have a control-flow proof")
-                partition.append((node.line, bool(condition)))
+                predicate = parse_condition(node.text)
+                if predicate is None:
+                    raise ValueError(f"unsupported condition: {node.text}")
+                condition = predicate.evaluate(evaluate)
+                partition.append((node.line, condition))
                 visit(node.children if condition else node.otherwise)
             elif node.kind == "emit":
                 if node.text in (".Release.Name", ".Release.Namespace"):

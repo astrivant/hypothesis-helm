@@ -35,7 +35,7 @@ Audit and property-test Helm chart values.
 
 positional arguments:
   {rules,replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
-    rules               list stable built-in check codes and descriptions
+    rules               list classified chart findings and diagnostics
     replay-changes      verify and replay saved values or manifest changes
     aggregate           verify piped shard reports and write one final report
     export-minimal-values
@@ -57,10 +57,12 @@ options:
 <summary>helm hypothesis rules</summary>
 
 ~~~text
-usage: helm hypothesis rules [-h]
+usage: helm hypothesis rules [-h] [--format {text,json,config,markdown}]
 
 options:
-  -h, --help  show this help message and exit
+  -h, --help            show this help message and exit
+  --format {text,json,config,markdown}
+                        catalog output format
 ~~~
 
 </details>

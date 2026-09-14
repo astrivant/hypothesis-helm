@@ -19,6 +19,7 @@ from ruamel.yaml.error import YAMLError
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.charts.rendering import RenderFailure, validate_resources
+from hypothesis_helm.compiler.asts.conditions import condition_path
 from hypothesis_helm.compiler.asts.templates import Node, specialize, value_path, walk
 from hypothesis_helm.compiler.complexity import maximum_score, output_profile
 from hypothesis_helm.compiler.passes.pruning import Pruner, safe_values
@@ -282,14 +283,19 @@ def measure(chart: Chart, *, max_cases: int = 4096, time_limit: float = 5.0) -> 
         for name, program in sorted(compiler.programs.items()):
             if name.rsplit("/", 1)[-1].startswith("_") or name.endswith("/NOTES.txt"):
                 continue
-            references = {path for node in walk(program) if node.kind in ("if", "emit") and (path := value_path(node.text)) is not None}
+            references = {
+                path
+                for node in walk(program)
+                if (path := condition_path(node.text) if node.kind == "if" else value_path(node.text) if node.kind == "emit" else None)
+                is not None
+            }
             factors = tuple(
                 index
                 for index, path in enumerate(space.paths)
                 if any(reference[: len(path)] == path or path[: len(reference)] == reference for reference in references)
             )
             for node in walk(program):
-                path = value_path(node.text) if node.kind == "if" else None
+                path = condition_path(node.text) if node.kind == "if" else None
                 if path is not None:
                     for index in factors:
                         control_uses[index] += int(path[: len(space.paths[index])] == space.paths[index])
@@ -371,6 +377,7 @@ def measure(chart: Chart, *, max_cases: int = 4096, time_limit: float = 5.0) -> 
         result.update({"status": "unknown", "maximum_score": None, "lower_bound": None, "maximizing_values": None})
         result.pop("maximum_output", None)
         result["reason"] = "chart source changed during complexity analysis"
+    result["branch_analysis"] = compiler.branch_analysis if compiler is not None else {}
     result["analysis_seconds"] = time.perf_counter() - started
     return result
 

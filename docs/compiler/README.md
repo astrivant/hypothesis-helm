@@ -25,8 +25,9 @@ flowchart TD
     Model --> Inventory
     Dependencies --> Inventory
     Parse --> Contracts[Identify explicit fail and required conditions]
-    Parse --> Output[Compile supported output behavior]
-    Model --> Output
+    Parse --> Branches[Narrow branch facts and merge alternatives]
+    Model --> Branches
+    Branches --> Output[Compile supported output behavior]
     Inventory --> Plan[Generate and select candidate values]
     Output --> Plan
     Plan --> Check[Check one candidate]
@@ -56,6 +57,7 @@ eligible for execution; it cannot establish a successful result.<sup>[\[1\]](sel
 | [Syntax trees and values model](syntax-trees.md) | Parsed templates, field types, and representations for discovery and proof. |
 | [Decisions, panel by panel](decisions.md) | Matched diagrams showing why branches are visited, inputs retained, or work skipped. |
 | [Analysis passes](analysis.md) | Input inventory, dependencies, rejection conditions, maximum output complexity, and sampling profiles. |
+| [Branch knowledge lattice](lattice.md) | Possible values, branch narrowing, merging and conservative handling of unknown operations. |
 | [Selection and execution passes](selection.md) | Trimming, equality proofs, rejection filtering, and failure expansion. |
 | [Export passes](exports.md) | Input inventories, topology graphs, minimal values, and their verification records. |
 | [Exact-equivalence contract](../safe-pruning.md) | Supported Helm operations, equality bounds, assumptions, and proof evidence. |

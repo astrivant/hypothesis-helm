@@ -12,6 +12,7 @@ from hypothesis_helm.charts.templates import discover
 from hypothesis_helm.compiler.passes.complexity import measure
 from hypothesis_helm.compiler.passes.inputs import InputInventory
 from hypothesis_helm.compiler.passes.sampling import profile as sampling_profile
+from hypothesis_helm.findings.generator import FindingGenerator
 from hypothesis_helm.reporting.progress import format_path
 from hypothesis_helm.rules import AUDIT_RULES, ignored, ignored_codes
 
@@ -36,7 +37,7 @@ def audit(chart: Chart) -> dict[str, object]:
     defaults = set(_default_paths(chart.defaults))
     declared = {entry.path: entry.schema for entry in enumerate_paths(chart.schema)}
     paths = defaults | {r.path for r in references if r.path} | declared.keys()
-    findings = []
+    findings: list[dict[str, object]] = []
     for path in sorted(paths, key=repr):
         LOGGER.info("Auditing path %s", format_path(path))
         nodes = _schema_nodes(chart.schema, tuple(str(segment) for segment in path), chart.schema)
@@ -60,7 +61,11 @@ def audit(chart: Chart) -> dict[str, object]:
             )
     for finding in findings:
         finding["code"] = AUDIT_RULES[str(finding["issue"])]
-    unresolved = [{**asdict(d), "code": "HH2005"} for d in diagnostics]
+    unresolved: list[dict[str, object]] = [{**asdict(d), "code": "HH2005"} for d in diagnostics]
+    for finding in [*findings, *unresolved]:
+        finding["finding"] = FindingGenerator.create(
+            str(finding["code"]), str(finding.get("message", finding.get("issue", "Unresolved value access")))
+        ).record()
     suppressed = [finding for finding in [*findings, *unresolved] if ignored(str(finding["code"]))]
     findings = [finding for finding in findings if not ignored(str(finding["code"]))]
     complexity = measure(chart)

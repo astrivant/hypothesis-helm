@@ -8,28 +8,12 @@ import os
 from pathlib import Path
 
 from hypothesis_helm.charts import yamlio
+from hypothesis_helm.findings.catalog import CATALOG
+from hypothesis_helm.findings.generator import Finding, FindingGenerator
 
 ENVIRONMENT = "HYPOTHESIS_HELM_IGNORED_RULES"
 LOGGER = logging.getLogger(__name__)
-RULES = {
-    "HH1001": "Helm template execution failed",
-    "HH1002": "Helm render exceeded its invocation timeout",
-    "HH1003": "Rendered YAML cannot be parsed",
-    "HH1004": "Rendered document is not an object",
-    "HH1005": "Resource lacks a nonempty apiVersion or kind",
-    "HH1006": "List resource lacks an items array",
-    "HH1007": "Resource lacks a nonempty metadata.name",
-    "HH1008": "Duplicate resource identity in a manifest bundle",
-    "HH1009": "Chart renders no resources",
-    "HH1010": "Kubernetes API schema validation failed",
-    "HH1011": "Rendered manifest cannot be represented as JSON",
-    "HH1012": "Helm lint failed on the chart defaults",
-    "HH2001": "Values path is undocumented in the schema",
-    "HH2002": "Values path has no declared type, enum or constant",
-    "HH2003": "Values path has no schema description",
-    "HH2004": "Values path has no supplied default",
-    "HH2005": "Template value access cannot be resolved statically",
-}
+RULES = {code: rule.title for code, rule in CATALOG.items()}
 AUDIT_RULES = {
     "undocumented": "HH2001",
     "untyped": "HH2002",
@@ -126,10 +110,12 @@ class RenderFailure(AssertionError):
 
     Attributes:
         code (str): Stable identifier, independent of report grouping order.
+        finding (Finding): Structured observation carried by this exception.
         resources (list[object] | None): Parsed output available before validation failed.
     """
 
     code: str
+    finding: Finding
     resources: list[object] | None = None
 
     def __init__(self, message: str, code: str = "HH1001") -> None:
@@ -138,10 +124,11 @@ class RenderFailure(AssertionError):
 
         Args:
             message (str): Original renderer or validator diagnostic.
-            code (str): Stable rule identifier.
+            code (str): Explicit detected condition, or an unclassified template failure.
         """
-        self.code = code
-        super().__init__(f"[{code}] {message}")
+        self.finding = FindingGenerator.create(code, message)
+        self.code = self.finding.rule.code
+        super().__init__(f"[{self.code}] {message}")
 
 
 def check(condition: bool, code: str, message: str) -> None:

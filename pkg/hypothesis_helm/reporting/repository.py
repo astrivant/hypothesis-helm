@@ -240,6 +240,14 @@ def write_reports(report: dict[str, object], stem: Path, *, publication: Publica
             if not occurrences:
                 continue
             lines.extend([f"#### {group['id']}" + (f" ({group['code']})" if group.get("code") else ""), ""])
+            finding = group.get("finding")
+            if isinstance(finding, dict):
+                lines.extend(
+                    [
+                        f"**{finding['title']}** ({finding['category']} / {finding['kind']}). {finding['remediation']}",
+                        "",
+                    ]
+                )
             source = group.get("source")
             if isinstance(source, dict):
                 lines.extend([f"Source: {source['name']} {source['version']} / {source['template']}", ""])

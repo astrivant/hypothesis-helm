@@ -76,7 +76,8 @@ is code this analysis cannot interpret; reaching it forces a render.<sup>[\[3\]]
    can still describe identical manifests.
 
 The current subset supports literal text, direct declared `.Values.a.b` scalar
-lookups (Boolean, integer, string), Boolean `if`/`else`, Boolean constants and
+lookups (Boolean, integer, string), Boolean `if`/`else`, Boolean constants, `not` on Boolean paths,
+and `eq`/`ne` between a direct values path and a same-type unescaped string or Boolean literal, plus
 fixed `.Release.Name`/`.Release.Namespace` output references. Equal output text
 is a stronger sufficient condition than equal parsed manifests, so some genuinely
 equivalent candidates conservatively render.
@@ -87,7 +88,10 @@ For an admitted chart and candidate, the proof is by structural induction on the
 executed IR. Literal nodes emit the same bytes. Scalar nodes with equal typed
 values produce equal Go template output. Fixed context nodes have equal renderer
 inputs. Equal Boolean branch decisions select the same inductively equivalent
-subtrees. Concatenation and lexical whitespace trimming preserve equality.
+subtrees. Supported same-type string/Boolean equality and Boolean negation have the same deterministic predicate results.
+Before specialization, the [branch knowledge pass](compiler/lattice.md) narrows schema-admitted possibilities,
+removes contradictory alternatives and merges branch exits. Unknown operations discard facts rather than preserving stale assumptions.
+Concatenation and lexical whitespace trimming preserve equality.
 Consequently, equal per-file output witnesses imply the same complete manifest
 bundle under the fixed Helm renderer. An opaque executed node prevents the
 induction and forces rendering.
@@ -140,6 +144,7 @@ can still fail; callback mutation cannot contaminate later candidates.
 - actual renderer invocation attempts and pruned candidate counts;
 - compiler version, chart fingerprint, scope and fallback reasons;
 - the sparse input-to-output influence matrix;
+- source-level branch narrowing and removal decisions;
 - individual candidate/representative iteration links, exact bounds, partitions,
   live inputs and eliminated inputs.
 

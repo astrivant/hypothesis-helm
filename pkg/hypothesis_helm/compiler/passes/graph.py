@@ -16,7 +16,8 @@ from ruamel.yaml.error import YAMLError
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import validate_resources
-from hypothesis_helm.compiler.asts.templates import fold, lower, specialize, value_path, walk
+from hypothesis_helm.compiler.asts.conditions import condition_path
+from hypothesis_helm.compiler.asts.templates import fold, lower, specialize, walk
 from hypothesis_helm.compiler.passes.inputs import InputInventory
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.schemas.contracts import mapping
@@ -136,7 +137,7 @@ def export_graph(
                     file=relative,
                 )
                 edges.append({"from": control, "to": template, "kind": "control-flow"})
-                selector = value_path(branch.text)
+                selector = condition_path(branch.text)
                 if selector is not None:
                     value = "values:" + json.dumps(selector)
                     if value not in nodes:

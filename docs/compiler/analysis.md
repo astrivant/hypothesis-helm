@@ -5,6 +5,14 @@
 These passes describe what the chart can consume or produce. Their results guide
 testing and populate audits; an analysis result alone is not a passed chart test.
 
+## Branch knowledge
+
+[`branches.py`](../../pkg/hypothesis_helm/compiler/passes/branches.py) narrows possible values inside supported conditions,
+removes contradictory nested branches, and merges the surviving alternatives before analyzing later statements.
+It runs after literal folding in the exact-equivalence compiler, which is also used by maximum-output analysis.
+The [branch knowledge lattice](lattice.md) defines the operations, supported conditions and uncertainty rules.
+Audits expose source-level decisions under `complexity.branch_analysis`; test reports include them under `pruning.branch_analysis`.
+
 ## Input inventory
 
 [`inputs.py`](../../pkg/hypothesis_helm/compiler/passes/inputs.py) compares three

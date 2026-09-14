@@ -1,5 +1,7 @@
 """
-Schedule an explicit operation graph above owned external process trees.
+Make your own pipeline of executions that need to occur easily in your project.
+
+I will probably make this its own module at some point. It helps automate local runtime / benchmarking / graph regeneration.
 """
 
 import json

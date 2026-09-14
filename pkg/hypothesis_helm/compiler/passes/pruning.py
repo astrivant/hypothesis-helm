@@ -19,12 +19,15 @@ from ruamel.yaml.nodes import MappingNode, ScalarNode, SequenceNode
 from ruamel.yaml.nodes import Node as YamlNode
 
 from hypothesis_helm.charts import yamlio
+from hypothesis_helm.compiler.asts.conditions import condition_path
+from hypothesis_helm.compiler.asts.lattice import State
 from hypothesis_helm.compiler.asts.templates import Node, fold, lower, specialize, value_path, walk
+from hypothesis_helm.compiler.passes.branches import analyze
 from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping
 from hypothesis_helm.schemas.model import ValuesModel
 
 LOGGER = logging.getLogger(__name__)
-VERSION = "helm-pure-equivalence-v1"
+VERSION = "helm-pure-equivalence-v2"
 EPSILON = 0.5
 
 
@@ -292,6 +295,7 @@ class Pruner:
         considered (int): Candidate proof lookups.
         rendered (int): Actual renderer invocations attempted.
         influence_matrix (list[dict[str, object]]): Schema fields mapped to surviving output spans.
+        branch_analysis (dict[str, tuple[dict[str, object], ...]]): Per-template lattice decisions with source locations.
         stamp (str): Human-readable chart fingerprint; never used alone as proof identity.
     """
 
@@ -307,6 +311,7 @@ class Pruner:
     considered: int = 0
     rendered: int = 0
     influence_matrix: list[dict[str, object]] = field(factory=list)
+    branch_analysis: dict[str, tuple[dict[str, object], ...]] = field(factory=dict)
     stamp: str = ""
 
     def __attrs_post_init__(self) -> None:
@@ -335,6 +340,7 @@ class Pruner:
                 raise ValueError("schema validation is outside the shared proof contract")
             if not safe_values(self.defaults, self.defaults):
                 raise ValueError("default coalescing or scalar types are outside the proof contract")
+            initial = State.from_model(self.model)
             for name, source in self.files.items():
                 if name.casefold().startswith("templates/"):
                     if not name.startswith("templates/"):
@@ -342,10 +348,12 @@ class Pruner:
                     lowered = lower(source.decode())
                     if any(node.kind == "opaque" and node.text.split(maxsplit=1)[0] in ("define", "block") for node in walk(lowered)):
                         raise ValueError("parse-global template definitions are outside the proof contract")
-                    nodes = fold(lowered)
+                    analysis = analyze(fold(lowered), initial)
+                    nodes = analysis.nodes
+                    self.branch_analysis[name] = analysis.decisions
                     self.programs[name] = nodes
                     for node in walk(nodes):
-                        path = value_path(node.text) if node.kind in ("if", "emit") else None
+                        path = condition_path(node.text) if node.kind == "if" else value_path(node.text) if node.kind == "emit" else None
                         if path is not None:
                             self.influence_matrix.append(
                                 {
@@ -518,6 +526,7 @@ class Pruner:
             "successful_representatives": len(self.representatives),
             "fallback_reasons": dict(self.reasons),
             "influence_matrix": self.influence_matrix,
+            "branch_analysis": self.branch_analysis,
             "certificates": self.certificates,
             "coverage_evidence": "rendered-or-proved-equivalent; assertions checked per candidate",
             "proof_scope": ("supported pure expressions, admitted schema/coalescing, fixed trusted Helm and chart environment"),

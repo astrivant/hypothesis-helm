@@ -18,6 +18,7 @@ from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.render_hashes import RenderHashes, process_hashes
+from hypothesis_helm.findings.generator import FindingGenerator
 from hypothesis_helm.reporting.output import emit_manifest
 from hypothesis_helm.rules import RenderFailure as RenderFailure
 from hypothesis_helm.rules import check, ignored_codes
@@ -116,7 +117,8 @@ def render_output(
         except subprocess.TimeoutExpired as exc:
             raise RenderFailure(f"helm exceeded {timeout}s", "HH1002") from exc
         if process.returncode:
-            raise RenderFailure(process.stderr.strip() or f"helm exited {process.returncode}")
+            finding = FindingGenerator.helm(process.stderr.strip() or f"helm exited {process.returncode}")
+            raise RenderFailure(finding.evidence, finding.rule.code)
         return process.stdout
 
 

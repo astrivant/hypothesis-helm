@@ -28,6 +28,7 @@ from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.execution.signals import Termination
 from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.execution.traversal import STRATEGIES, validate_strategy
+from hypothesis_helm.findings.generator import FindingGenerator
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 from hypothesis_helm.reporting.budget import parse_time_limit
 from hypothesis_helm.reporting.changes import replay_file
@@ -35,7 +36,7 @@ from hypothesis_helm.reporting.output import MANIFEST_FD
 from hypothesis_helm.reporting.progressive import plot_progression
 from hypothesis_helm.reporting.shards import aggregate
 from hypothesis_helm.rules import ENVIRONMENT as RULE_ENVIRONMENT
-from hypothesis_helm.rules import RULES, ignored, load_ignored
+from hypothesis_helm.rules import ignored, load_ignored
 from hypothesis_helm.schemas.conformity import ENVIRONMENT, prepare
 from hypothesis_helm.schemas.factors import factor_space
 from hypothesis_helm.schemas.finite import NonFiniteSchema
@@ -112,7 +113,8 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(prog=prog, description="Audit and property-test Helm chart values.")
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser("rules", help="list stable built-in check codes and descriptions")
+    rules = commands.add_parser("rules", help="list classified chart findings and diagnostics")
+    rules.add_argument("--format", choices=("text", "json", "config", "markdown"), default="text", help="catalog output format")
     replay = commands.add_parser("replay-changes", help="verify and replay saved values or manifest changes")
     replay.add_argument("record", type=Path, help="changes.json from a failing case")
     replay.add_argument("--section", choices=("overrides", "values", "manifests"), default="overrides")
@@ -556,7 +558,7 @@ def main(argv: list[str] | None = None) -> int:
     previous_conformity = os.environ.pop(ENVIRONMENT, None)
     try:
         if args.command == "rules":
-            print("\n".join(f"{code}  {description}" for code, description in RULES.items()))
+            print(FindingGenerator.render(args.format), end="")
             return 0
         if hasattr(args, "ignore"):
             args.ignored_rules = load_ignored(args.config, args.ignore)
