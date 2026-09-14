@@ -13,6 +13,24 @@ from hypothesis_helm.execution.suite import run_suite
 from hypothesis_helm.integrations.sharding import Shard
 
 
+@pytest.mark.parametrize("jobs", [0, -1])
+def test_invalid_worker_limits(tmp_path: Path, jobs: int) -> None:
+    """
+    Reject invalid concurrency before collection or execution creates artifacts.
+
+    Args:
+        tmp_path (Path): Empty prospective suite location.
+        jobs (int): Invalid fixed worker count.
+
+    Returns:
+        None: Execution and estimation reject the same settings without side effects.
+    """
+    for operation in (run_suite, estimate_suite):
+        with pytest.raises(ValueError, match="jobs must be positive"):
+            operation(tmp_path, jobs=jobs)
+    assert not list(tmp_path.iterdir())
+
+
 def test_saved_suite_cache_policy(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Count failures, successes, CI defaults, and explicit cache overrides without execution.

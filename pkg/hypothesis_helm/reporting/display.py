@@ -2,8 +2,6 @@
 Render test progress on stderr without capturing the manifest stream.
 """
 
-import os
-
 from rich.console import Console
 from rich.progress import (
     BarColumn,
@@ -15,18 +13,7 @@ from rich.progress import (
     TimeRemainingColumn,
 )
 
-
-def in_ci() -> bool:
-    """
-    Detect CI environments even when a runner allocates a terminal.
-
-    Returns:
-        bool: Whether a common CI marker has an enabled value.
-    """
-    return any(
-        os.environ.get(name, "").lower() not in {"", "0", "false", "no"}
-        for name in ("CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "TF_BUILD", "JENKINS_URL", "BUILD_BUILDID", "BUILDKITE")
-    )
+from hypothesis_helm.execution.environment import in_ci
 
 
 def start_progress(total: int, workers: int, *, force: bool = False) -> tuple[Progress, TaskID]:
@@ -41,6 +28,7 @@ def start_progress(total: int, workers: int, *, force: bool = False) -> tuple[Pr
     Returns:
         tuple[Progress, TaskID]: Live display and its test task identifier.
     """
+    ci = in_ci(honor_override=False)
     progress = Progress(
         TextColumn("{task.description}"),
         BarColumn(),
@@ -49,8 +37,8 @@ def start_progress(total: int, workers: int, *, force: bool = False) -> tuple[Pr
         TimeElapsedColumn(),
         TextColumn("ETA"),
         TimeRemainingColumn(),
-        console=Console(stderr=True, force_terminal=True if force and not in_ci() else None),
-        disable=in_ci(),
+        console=Console(stderr=True, force_terminal=True if force and not ci else None),
+        disable=ci,
         auto_refresh=False,
         redirect_stdout=False,
         redirect_stderr=False,

@@ -640,8 +640,10 @@ CI=true helm hypothesis test ./chart --rerun failed  # explicitly retry in CI
 
 `--rerun auto` is the default. CI runs execute every selected path while recording
 results. `$CI` is case-insensitive: empty, `0`, `false`, `no`, and `off` mean local;
-other nonempty values mean CI. If `$CI` is absent, `GITHUB_ACTIONS`, `GITLAB_CI`, and
-`CIRCLECI` provide fallback detection. An explicit `$CI` takes precedence.
+other nonempty values mean CI. If `$CI` is absent, provider markers for GitHub Actions,
+GitLab CI, CircleCI, Azure Pipelines, Jenkins, and Buildkite provide fallback detection.
+An explicit `$CI` takes precedence for retry defaults. Progress bars stay disabled when
+any provider marker is enabled, even with `CI=false`.
 
 Cache keys include the suite source, coalesced values, schema, original chart files
 (including dependencies), framework source, Python version, seed, keyword selection,

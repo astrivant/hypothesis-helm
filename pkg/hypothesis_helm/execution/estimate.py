@@ -10,7 +10,9 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Literal
 
-from hypothesis_helm.execution.cache import fingerprint, in_ci, read_outcomes, seed_key
+from hypothesis_helm.execution.cache import fingerprint, read_outcomes, seed_key
+from hypothesis_helm.execution.environment import in_ci
+from hypothesis_helm.execution.parallel import worker_limit
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.sampling import ENVIRONMENT as SAMPLING_ENVIRONMENT
@@ -84,6 +86,7 @@ def estimate_suite(
     Returns:
         dict[str, object]: Work estimate with exact property counts and nominal budgets.
     """
+    maximum = worker_limit(jobs)
     directory = directory.resolve()
     logical = (suite_location or directory).resolve()
     module = directory / "test_chart_values.py"
@@ -178,7 +181,6 @@ def estimate_suite(
     scheduled = [entry for entry in properties if entry["action"] == "run"]
     known = [entry["max_examples"] for entry in scheduled]
     budget = sum(value for value in known if isinstance(value, int))
-    maximum = jobs if isinstance(jobs, int) else 4 * (os.process_cpu_count() or 1)
     return {
         "status": "dry-run",
         "seed": seed,

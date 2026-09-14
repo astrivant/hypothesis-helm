@@ -7,7 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from hypothesis_helm.execution.cache import fingerprint, in_ci, read_outcomes
+from hypothesis_helm.execution.cache import fingerprint, read_outcomes
+from hypothesis_helm.execution.environment import in_ci
 from hypothesis_helm.execution.suite import run_suite
 
 

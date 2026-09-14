@@ -11,6 +11,7 @@ import time
 import xml.etree.ElementTree as ET
 from concurrent.futures import FIRST_COMPLETED, Future, ThreadPoolExecutor, wait
 from pathlib import Path
+from typing import Literal
 
 from hypothesis_helm.execution.feedback import ThroughputController
 from hypothesis_helm.execution.processes import Processes
@@ -20,6 +21,26 @@ from hypothesis_helm.reporting.budget import TimeLimitReached
 from hypothesis_helm.reporting.display import start_progress
 
 LOGGER = logging.getLogger(__name__)
+
+
+def worker_limit(jobs: int | Literal["auto"]) -> int:
+    """
+    Resolve the same suite concurrency ceiling for execution and dry-run estimates.
+
+    Args:
+        jobs (int | Literal["auto"]): Fixed worker count or automatic throughput tuning.
+
+    Returns:
+        int: Positive fixed count or four times the available process CPUs.
+
+    Raises:
+        ValueError: The fixed worker count is not positive.
+    """
+    if isinstance(jobs, int):
+        if jobs < 1:
+            raise ValueError("jobs must be positive")
+        return jobs
+    return 4 * (os.process_cpu_count() or 1)
 
 
 def run_parallel(

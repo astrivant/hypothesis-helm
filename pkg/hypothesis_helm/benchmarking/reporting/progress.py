@@ -13,7 +13,7 @@ from typing import Self, TypeVar
 from rich.console import Console
 from rich.progress import BarColumn, MofNCompleteColumn, Progress, TextColumn, TimeElapsedColumn, TimeRemainingColumn
 
-from hypothesis_helm.reporting.display import in_ci
+from hypothesis_helm.execution.environment import in_ci
 
 T = TypeVar("T")
 ACTIVE: ContextVar[Progress | None] = ContextVar("benchmark_progress", default=None)
@@ -35,7 +35,7 @@ class BenchmarkProgress:
         self.parent: Progress | None = None
         self.token: Token[Progress | None] | None = None
         console = Console(stderr=True)
-        self.interactive = console.is_terminal and not in_ci() and current_process().name == "MainProcess"
+        self.interactive = console.is_terminal and not in_ci(honor_override=False) and current_process().name == "MainProcess"
         self.progress = Progress(
             TextColumn("{task.description}"),
             BarColumn(),

@@ -8,7 +8,7 @@ import json
 import logging
 import os
 import sys
-from collections.abc import Iterator, Mapping
+from collections.abc import Iterator
 from importlib.metadata import version
 from pathlib import Path
 from uuid import uuid4
@@ -18,24 +18,6 @@ import pytest
 LOGGER = logging.getLogger(__name__)
 OUTCOMES: dict[str, str] = {}
 CALLED: set[str] = set()
-
-
-def in_ci(environment: Mapping[str, str]) -> bool:
-    """
-    Interpret explicit CI booleans before provider-specific indicators.
-
-    Args:
-        environment (Mapping[str, str]): Process environment.
-
-    Returns:
-        bool: Whether the invocation should use CI defaults.
-    """
-    if "CI" in environment:
-        return environment["CI"].strip().lower() not in {"", "0", "false", "no", "off"}
-    return any(
-        environment.get(key, "").strip().lower() not in {"", "0", "false", "no", "off"}
-        for key in ("GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI")
-    )
 
 
 def seed_key(seed: int) -> str:

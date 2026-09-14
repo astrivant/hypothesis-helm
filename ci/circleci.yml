@@ -100,6 +100,9 @@ jobs:
   test-chart:
     description: Install Hypothesis Helm and test a chart with automatic sharding.
     parameters:
+      binary-cache:
+        type: boolean
+        default: true
       chart:
         type: string
         default: ./chart
@@ -167,33 +170,91 @@ jobs:
       - restore_cache:
           keys:
             - helm-schemas-v1-{{ arch }}-<< parameters.schema-version >>-
+      - when:
+          condition: << parameters.binary-cache >>
+          steps:
+            - restore_cache:
+                keys:
+                  - hh-binary-v1-linux-amd64-helm-<< parameters.helm-version >>-exact
+            - restore_cache:
+                keys:
+                  - hh-binary-v1-linux-amd64-kubeconform-<< parameters.kubeconform-version >>-exact
+            - restore_cache:
+                keys:
+                  - hh-binary-v1-linux-amd64-kubesec-<< parameters.kubesec-version >>-exact
       - run:
-          name: Install Helm and Hypothesis Helm
+          name: Install Helm and validators
           environment:
             HH_KUBESEC: "<< parameters.kubesec >>"
             HH_KUBESEC_VERSION: << parameters.kubesec-version >>
             HH_KUBECONFORM_VERSION: << parameters.kubeconform-version >>
             HH_HELM_VERSION: << parameters.helm-version >>
-            HH_PLUGIN_PATH: << parameters.plugin-path >>
+            HH_BINARY_CACHE: "<< parameters.binary-cache >>"
           command: |
-            install_dir="$(mktemp -d)"
-            curl -fsSL "https://get.helm.sh/helm-${HH_HELM_VERSION}-linux-amd64.tar.gz" \
-              -o "$install_dir/helm.tar.gz"
-            tar -xzf "$install_dir/helm.tar.gz" -C "$install_dir"
-            sudo install "$install_dir/linux-amd64/helm" /usr/local/bin/helm
-            curl -fsSL "https://github.com/yannh/kubeconform/releases/download/${HH_KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" \
-              -o "$install_dir/kubeconform.tar.gz"
-            tar -xzf "$install_dir/kubeconform.tar.gz" -C "$install_dir" kubeconform
-            sudo install "$install_dir/kubeconform" /usr/local/bin/kubeconform
+            platform=linux
+            architecture=amd64
+            binary_root=".cache/hypothesis-helm/binaries"
+            if [[ "$HH_BINARY_CACHE" != "true" ]]; then binary_root="$(mktemp -d)"; fi
+            binary_dir="$binary_root/helm-${HH_HELM_VERSION}-${platform}-${architecture}"
+            if [[ ! -x "$binary_dir/helm" ]]; then
+              download_dir="$(mktemp -d)"
+              curl -fsSL "https://get.helm.sh/helm-${HH_HELM_VERSION}-${platform}-${architecture}.tar.gz" -o "$download_dir/archive.tar.gz"
+              tar -xzf "$download_dir/archive.tar.gz" -C "$download_dir" "${platform}-${architecture}/helm"
+              mkdir -p "$binary_dir"
+              install "$download_dir/${platform}-${architecture}/helm" "$binary_dir/helm.pending"
+              mv "$binary_dir/helm.pending" "$binary_dir/helm"
+              rm -rf "$download_dir"
+            fi
+            sudo install "$binary_dir/helm" /usr/local/bin/helm
+            binary_dir="$binary_root/kubeconform-${HH_KUBECONFORM_VERSION}-${platform}-${architecture}"
+            if [[ ! -x "$binary_dir/kubeconform" ]]; then
+              download_dir="$(mktemp -d)"
+              curl -fsSL "https://github.com/yannh/kubeconform/releases/download/${HH_KUBECONFORM_VERSION}/kubeconform-${platform}-${architecture}.tar.gz" -o "$download_dir/archive.tar.gz"
+              tar -xzf "$download_dir/archive.tar.gz" -C "$download_dir" kubeconform
+              mkdir -p "$binary_dir"
+              install "$download_dir/kubeconform" "$binary_dir/kubeconform.pending"
+              mv "$binary_dir/kubeconform.pending" "$binary_dir/kubeconform"
+              rm -rf "$download_dir"
+            fi
+            sudo install "$binary_dir/kubeconform" /usr/local/bin/kubeconform
             if [[ "$HH_KUBESEC" == "true" ]]; then
               sudo apt-get update
               sudo apt-get install -y parallel
-              curl -fsSL "https://github.com/controlplaneio/kubesec/releases/download/${HH_KUBESEC_VERSION}/kubesec_linux_amd64.tar.gz" \
-                -o "$install_dir/kubesec.tar.gz"
-              tar -xzf "$install_dir/kubesec.tar.gz" -C "$install_dir" kubesec
-              sudo install "$install_dir/kubesec" /usr/local/bin/kubesec
+              binary_dir="$binary_root/kubesec-${HH_KUBESEC_VERSION}-${platform}-${architecture}"
+              if [[ ! -x "$binary_dir/kubesec" ]]; then
+                download_dir="$(mktemp -d)"
+                curl -fsSL "https://github.com/controlplaneio/kubesec/releases/download/${HH_KUBESEC_VERSION}/kubesec_${platform}_${architecture}.tar.gz" -o "$download_dir/archive.tar.gz"
+                tar -xzf "$download_dir/archive.tar.gz" -C "$download_dir" kubesec
+                mkdir -p "$binary_dir"
+                install "$download_dir/kubesec" "$binary_dir/kubesec.pending"
+                mv "$binary_dir/kubesec.pending" "$binary_dir/kubesec"
+                rm -rf "$download_dir"
+              fi
+              sudo install "$binary_dir/kubesec" /usr/local/bin/kubesec
             fi
-            PYTHON=python3.13 helm plugin install "$HH_PLUGIN_PATH"
+      - when:
+          condition: << parameters.binary-cache >>
+          steps:
+            - save_cache:
+                key: hh-binary-v1-linux-amd64-helm-<< parameters.helm-version >>-exact
+                paths:
+                  - .cache/hypothesis-helm/binaries/helm-<< parameters.helm-version >>-linux-amd64
+            - save_cache:
+                key: hh-binary-v1-linux-amd64-kubeconform-<< parameters.kubeconform-version >>-exact
+                paths:
+                  - .cache/hypothesis-helm/binaries/kubeconform-<< parameters.kubeconform-version >>-linux-amd64
+            - when:
+                condition: << parameters.kubesec >>
+                steps:
+                  - save_cache:
+                      key: hh-binary-v1-linux-amd64-kubesec-<< parameters.kubesec-version >>-exact
+                      paths:
+                        - .cache/hypothesis-helm/binaries/kubesec-<< parameters.kubesec-version >>-linux-amd64
+      - run:
+          name: Install Hypothesis Helm plugin
+          environment:
+            HH_PLUGIN_PATH: << parameters.plugin-path >>
+          command: PYTHON=python3.13 helm plugin install "$HH_PLUGIN_PATH"
       - run:
           name: Prepare Kubernetes schemas before testing
           environment:

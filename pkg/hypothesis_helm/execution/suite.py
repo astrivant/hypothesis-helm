@@ -18,12 +18,12 @@ from rich.console import Console
 
 from hypothesis_helm.execution.cache import (
     fingerprint,
-    in_ci,
     merge_outcomes,
     read_outcomes,
     seed_key,
 )
-from hypothesis_helm.execution.parallel import run_parallel
+from hypothesis_helm.execution.environment import in_ci
+from hypothesis_helm.execution.parallel import run_parallel, worker_limit
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.render_hashes import (
     STATISTICS_DIRECTORY,
@@ -86,9 +86,7 @@ def run_suite(
     traversal_strategy = validate_strategy(traversal_strategy)
     if rerun not in {"auto", "all", "failed"}:
         raise ValueError("rerun must be auto, all, or failed")
-    if isinstance(jobs, int) and jobs < 1:
-        raise ValueError("jobs must be positive")
-    workers = jobs if isinstance(jobs, int) else 4 * (os.process_cpu_count() or 1)
+    workers = worker_limit(jobs)
     directory = directory.resolve()
     module = directory / "test_chart_values.py"
     if not module.is_file():

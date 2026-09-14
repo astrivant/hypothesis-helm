@@ -97,6 +97,25 @@ states the conditions under which each bound and expected saving applies.
 hypothesis-helm-benchmark filtering --output benchmarks/runs/filtering --time-limit 9m
 ```
 
+### Error rates and failure placement
+
+Compare every filtering method over error rates from 0% to 100%, varying condition depth,
+equivalent-output redundancy, or failure clustering on the second axis:
+
+```bash
+hypothesis-helm-benchmark error-surface --time-limit 9m --output benchmarks/runs/error-surface
+```
+
+The full refresh includes these sweeps, paired seeds, heatmaps, and numerical tables.
+Templates stay fixed within each error-rate sweep; seeded input-aware assertions determine which rendered results fail.
+This lets us measure expansion without also changing the template's branches.
+The nine-minute ceiling applies to each method's execution, not the entire study.
+The default sweep schedules 3,264 measurements. Use `--axes clustering` for just the failure-placement comparison.
+
+[Results and interpretation](studies/error-surface/README.md)
+
+![Error rate and failure clustering](studies/error-surface/clustering-error-recall.png)
+
 ### Random sampling and defect discovery
 
 The [sample-size study](studies/sampling/README.md) renders the shared chart's complete
@@ -162,7 +181,7 @@ poetry install --extras benchmarking && poetry run bash benchmarks/refresh.sh
 ```
 
 This runs lint, type checks, documentation checks, and the full pytest suite with the
-worker count selected from the runner's CPUs (`PYTEST_WORKERS` overrides it), then all fourteen synthetic studies,
+worker count selected from the runner's CPUs (`PYTEST_WORKERS` overrides it), then all fifteen synthetic studies,
 their plots and tables, and the synthetic/Bitnami/Prometheus
 topology catalog. It tests both pinned chart submodules with four workers,
 `--filter`, seeded random traversal, and five minutes per chart, then verifies and
@@ -181,7 +200,8 @@ in reports; incomplete workers or failed verification stop publication.
 
 GitHub Actions and CircleCI run `bash benchmarks/smoke.sh` on changes. It
 generates all 22 parameter recipes, measures the first three steps with one-second
-ceilings, and checks chart replay and topology plots. These short runs verify the
+ceilings, checks error-rate endpoints and intermediate cells across every method,
+and checks chart replay and topology plots. These short runs verify the
 automation; their timings are not performance comparisons.
 
 For the complete hosted run, open **Actions > Benchmarks > Run workflow** and enable

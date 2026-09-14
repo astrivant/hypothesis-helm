@@ -15,9 +15,10 @@ from attrs import asdict
 
 from hypothesis_helm.benchmarking.charts.stress import Stress, progression
 from hypothesis_helm.benchmarking.charts.structures import STRUCTURES
+from hypothesis_helm.benchmarking.studies.error_surface import METHODS, METRICS, RATES
 from hypothesis_helm.benchmarking.studies.matrix import STRATEGIES
 from hypothesis_helm.charts import yamlio
-from hypothesis_helm.schemas.contracts import mapping
+from hypothesis_helm.schemas.contracts import configuration_key, mapping
 
 
 @pytest.mark.integration
@@ -124,6 +125,9 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
         "calibration-trials",
         "calibration-reference",
         "calibration-duplicate",
+        "error-surface-count",
+        "error-surface-zero-recall",
+        "error-surface-chart",
         "filtering-count",
         "filtering-duplicate",
         "filtering-timing",
@@ -162,6 +166,7 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
         "sampling",
         "calibration-variation",
         "filtering",
+        "error-surface",
     )
     for study in studies:
         directory = tmp_path / "outputs" / study
@@ -319,6 +324,63 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
             for name in ("filtering-runtime", "filtering-planning", "filtering-completed", "filtering-phases"):
                 for extension in ("png", "svg"):
                     (directory / f"{name}.{extension}").write_bytes(b"x" * 1001)
+        if study == "error-surface":
+            axes: dict[str, list[int | float]] = {"depth": list(range(6)), "redundancy": list(range(8)), "clustering": [0, 0.5, 1]}
+            mapping(document["metadata"]).update(
+                status="complete", input_fields=8, repeats=3, axes=axes, error_rates=list(RATES), methods=list(METHODS)
+            )
+            surface_rows: list[dict[str, object]] = []
+            populations = {}
+            for axis, surface_settings in axes.items():
+                for value in surface_settings:
+                    for rate in RATES:
+                        indices = list(range(256 * rate // 100))
+                        identity = hashlib.sha256(configuration_key({"failed": indices}).encode()).hexdigest()
+                        populations[identity] = indices
+                        for repeat in range(3):
+                            for method in METHODS:
+                                surface_rows.append(
+                                    {
+                                        "axis": axis,
+                                        "axis_value": value,
+                                        "error_percent": rate,
+                                        "repeat": repeat,
+                                        "strategy": method,
+                                        "status": "passed",
+                                        "valid_domain": 256,
+                                        "selected": 256,
+                                        "completed": 256,
+                                        "remaining": 0,
+                                        "initial_selected": 256,
+                                        "additional_executed": 0,
+                                        "additional_scheduled": 0,
+                                        "render_invocations": 256,
+                                        "proved_equivalent": 0,
+                                        "errors_detected": len(indices),
+                                        "error_count": len(indices),
+                                        "errors_missed": 0,
+                                        "error_recall": 1 if indices else None,
+                                        "actual_error_percent": 100 * len(indices) / 256,
+                                        "total_seconds": 3,
+                                        "execution_seconds": 2,
+                                        "planning_seconds": 0.5,
+                                        "analysis_seconds": 0.5,
+                                        "population_sha256": identity,
+                                        "chart_sha256": f"{axis}-{value}",
+                                    }
+                                )
+            if damage == "error-surface-count":
+                surface_rows.pop()
+            elif damage == "error-surface-zero-recall":
+                surface_rows[0]["error_recall"] = 0
+            elif damage == "error-surface-chart":
+                surface_rows[0]["chart_sha256"] = "modified"
+            document.update(rows=surface_rows, populations=populations)
+            (directory / "summary.csv").write_text("measured means and ranges")
+            for axis in axes:
+                for metric in METRICS:
+                    for extension in ("png", "svg"):
+                        (directory / f"{axis}-{metric.replace('_', '-')}.{extension}").write_bytes(b"x" * 1001)
         (directory / "results.json").write_text(json.dumps(document))
     result = subprocess.run(
         [sys.executable, str(project / "benchmarks/refresh/verify-measurements.py"), str(tmp_path)],
@@ -399,6 +461,7 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
         "sampling",
         "calibration-variation",
         "filtering",
+        "error-surface",
     )
     (run / "status.tsv").write_text("".join(f"{name}\t0\n" for name in studies))
     (run / "started-epoch.txt").write_text("0")

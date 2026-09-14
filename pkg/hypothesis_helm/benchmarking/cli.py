@@ -29,6 +29,7 @@ COMMANDS = {
     "sampling": "studies.sampling",
     "calibration": "studies.calibration",
     "filtering": "studies.filtering",
+    "error-surface": "studies.error_surface",
     "topology": "studies.topology",
     "flamegraph": "reporting.flamegraph",
 }

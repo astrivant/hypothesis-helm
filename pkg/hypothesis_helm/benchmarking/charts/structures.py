@@ -195,6 +195,8 @@ def valid_assignment(values: dict[str, object], spec: dict[str, object]) -> bool
         bool: Assignment is allowed by the fixture contract.
     """
     structure = mapping(spec["structure"])
+    if structure["name"] == "error-surface":
+        return True
     if structure["name"] == "stress":
         import cattrs
 
@@ -222,6 +224,10 @@ def expected_manifests(values: dict[str, object], spec: dict[str, object]) -> li
         list[dict[str, object]]: Full expected manifest bundle, independent of Helm and compiler.
     """
     structure = mapping(spec["structure"])
+    if structure["name"] == "error-surface":
+        from hypothesis_helm.benchmarking.charts.error_surface import surface_manifests
+
+        return surface_manifests(values, spec)
     if structure["name"] == "stress":
         import cattrs
 

@@ -77,5 +77,10 @@ hypothesis-helm-benchmark filtering --time-limit 9m --output "$root/outputs/filt
 status=$?
 printf 'filtering\t%s\n' "$status" >>"$root/status.tsv"
 [[ "$status" -eq 0 ]] || exit "$status"
+printf '%s\n' 'error-surface' >"$root/current.txt"
+hypothesis-helm-benchmark error-surface --time-limit 9m --output "$root/outputs/error-surface" >"$root/logs/error-surface.log"
+status=$?
+printf 'error-surface\t%s\n' "$status" >>"$root/status.tsv"
+[[ "$status" -eq 0 ]] || exit "$status"
 printf '%s\n' 'complete' >"$root/current.txt"
 date +%s >"$root/finished-epoch.txt"

@@ -8,10 +8,12 @@ import itertools
 import json
 import logging
 import platform
+import random
 import shutil
 import subprocess
 import time
 from collections import Counter
+from collections.abc import Callable
 from pathlib import Path
 
 from jsonschema import validators
@@ -33,6 +35,7 @@ from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.compiler.passes.topology import trim_topology
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.execution.render_hashes import RenderHashes
+from hypothesis_helm.execution.sampling import Sampling
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
 from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping, sequence
@@ -100,6 +103,8 @@ def measure(
     seconds: float,
     helm: str,
     reference: tuple[set[str], Counter[str]],
+    strength: int | None = None,
+    failure_oracle: Callable[[dict[str, object], list[dict[str, object]]], bool] | None = None,
 ) -> dict[str, object]:
     """
     Plan afresh, apply production selectors, and validate every completed output against its oracle.
@@ -114,21 +119,27 @@ def measure(
         seconds (float): Execution deadline excluding planning and analysis.
         helm (str): Pinned Helm binary.
         reference (tuple[set[str], Counter[str]]): Exact input and output truth.
+        strength (int | None): Fixed interaction strength; otherwise use the field count.
+        failure_oracle (Callable[[dict[str, object], list[dict[str, object]]], bool] | None): Optional input-aware property assertion.
 
     Returns:
         dict[str, object]: Measured row, including censored work and correctness evidence.
     """
-    if strategy not in STRATEGIES:
+    if strategy not in (*STRATEGIES, "sample-random"):
         raise ValueError(f"unknown matrix strategy: {strategy}")
     started = time.perf_counter()
     model = ValuesModel.from_schema(chart.schema)
-    plan = plan_interactions(model, len(mapping(chart.schema["properties"])), max_cases=limit, max_candidates=limit)
+    selection_strength = 2 if strength is None else strength
+    strength = len(mapping(chart.schema["properties"])) if strength is None else strength
+    plan = plan_interactions(model, strength, max_cases=limit, max_candidates=limit)
     baseline_key = configuration_key(chart.defaults)
     planned = {configuration_key(value): value for value in plan.values}
     planned[baseline_key] = chart.defaults
     if set(planned) != reference[0]:
         raise AssertionError("finite planner disagrees with independent valid-domain oracle")
     candidates = [value for key, value in planned.items() if key != baseline_key]
+    if failure_oracle is not None:
+        random.Random(seed).shuffle(candidates)
     all_candidates = [chart.defaults, *candidates]
     positions = {configuration_key(value): index for index, value in enumerate(all_candidates)}
     planning_seconds = time.perf_counter() - started
@@ -136,7 +147,7 @@ def measure(
     topology: dict[str, object] = {}
     evidence: dict[str, object] = {}
     if strategy in PRESETS:
-        candidates, evidence = select_preset(chart, candidates, strategy, seed)
+        candidates, evidence = select_preset(chart, candidates, strategy, seed, strength=selection_strength)
         topology = mapping(evidence["topology"])
     elif strategy in {"topology", "combined"}:
         candidates, topology = trim_topology(
@@ -150,6 +161,8 @@ def measure(
         )
     elif strategy == "random":
         candidates = trim_values(candidates, level, seed)
+    elif strategy == "sample-random":
+        candidates, evidence = Sampling(70).select(candidates, configuration_key, seed)
     candidates = [chart.defaults, *candidates]
     initial_selected = len(candidates)
     expansion = (
@@ -206,6 +219,8 @@ def measure(
                         if str(mapping(resource.get("metadata", {})).get("name", "")).startswith("defect-")
                         and mapping(resource.get("data", {})).get("status") == "incorrect"
                     }
+                    if failure_oracle is not None and failure_oracle(current, resources):
+                        defects.add("input-aware-property")
                     found_defects.update(defects)
                     if defects and expansion is not None:
                         candidates.extend(all_candidates[index] for index in expansion.failed(positions[configuration_key(current)]))
@@ -214,6 +229,10 @@ def measure(
                     ledger.append((actual, reused))
     except TimeLimitReached:
         status = "time-limit"
+    except KeyboardInterrupt:
+        if failure_oracle is None:
+            raise
+        status = "interrupted"
     except Exception as exc:
         if isinstance(exc.__cause__, subprocess.TimeoutExpired) and time.perf_counter() - started >= seconds:
             status = "time-limit"
@@ -233,6 +252,7 @@ def measure(
         "initial_selected": initial_selected,
         "expand_failures": strategy in PRESETS,
         "additional_scheduled": len(expansion.added) if expansion else 0,
+        "additional_executed": max(0, completed - initial_selected),
         "selection_evidence": evidence,
         **decision(evidence),
         "seed": seed,

@@ -12,7 +12,9 @@ from hypothesis_helm.benchmarking.reporting.progress import BenchmarkProgress
 from hypothesis_helm.reporting.display import start_progress
 
 
-@pytest.mark.parametrize("marker", ["CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "TF_BUILD", "JENKINS_URL", "BUILDKITE"])
+@pytest.mark.parametrize(
+    "marker", ["CI", "GITHUB_ACTIONS", "GITLAB_CI", "CIRCLECI", "TF_BUILD", "JENKINS_URL", "BUILD_BUILDID", "BUILDKITE"]
+)
 def test_ci_disables_even_forced_bars(marker: str, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     """
     Suppress terminal bars in CI while retaining readable benchmark counts.
@@ -25,6 +27,7 @@ def test_ci_disables_even_forced_bars(marker: str, monkeypatch: pytest.MonkeyPat
     Returns:
         None: CI never prints bars or escapes even when progress is forced.
     """
+    monkeypatch.setenv("CI", "false")
     monkeypatch.setenv(marker, "true")
     monkeypatch.setattr(progress, "Console", lambda **kwargs: Console(stderr=True, force_terminal=True))
     with BenchmarkProgress("Matrix checks") as display:
@@ -52,7 +55,7 @@ def test_terminal_bar_tracks_expansion(monkeypatch: pytest.MonkeyPatch) -> None:
         None: The bar finishes at the expanded count and restores its live display.
     """
     stream = io.StringIO()
-    monkeypatch.setattr(progress, "in_ci", lambda: False)
+    monkeypatch.setattr(progress, "in_ci", lambda **kwargs: False)
     monkeypatch.setattr(progress, "Console", lambda **kwargs: Console(file=stream, force_terminal=True, width=120))
     items = [1, 2]
     visited = []
@@ -122,7 +125,7 @@ def test_nested_progress_shares_terminal_owner(monkeypatch: pytest.MonkeyPatch) 
         None: Inner cleanup leaves the outer display alive and resets ownership.
     """
     stream = io.StringIO()
-    monkeypatch.setattr(progress, "in_ci", lambda: False)
+    monkeypatch.setattr(progress, "in_ci", lambda **kwargs: False)
     monkeypatch.setattr(progress, "Console", lambda **kwargs: Console(file=stream, force_terminal=True))
     with BenchmarkProgress("Study") as outer:
         with pytest.raises(ValueError), BenchmarkProgress("Case") as inner:

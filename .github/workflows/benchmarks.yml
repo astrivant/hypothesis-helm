@@ -9,6 +9,8 @@ on:
         description: Run all benchmarks, topology exports, and Bitnami/Prometheus tests
         type: boolean
         default: false
+env:
+  HELM_VERSION: v4.3.0
 permissions:
   contents: read
 jobs:
@@ -22,11 +24,38 @@ jobs:
           python-version: '3.13'
       - run: pip install poetry==2.1.3
       - run: poetry install --extras benchmarking
+      - name: Restore Helm binary
+        id: helm-cache
+        if: ${{ vars.HH_BINARY_CACHE != 'false' }}
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
+          key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
       - name: Install Helm 4
+        env:
+          BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' }}
         run: |
-          curl -fsSL https://get.helm.sh/helm-v4.3.0-linux-amd64.tar.gz -o /tmp/helm.tar.gz
-          tar -xzf /tmp/helm.tar.gz -C /tmp
-          sudo install /tmp/linux-amd64/helm /usr/local/bin/helm
+          platform=linux
+          architecture=amd64
+          binary_root="$RUNNER_TEMP/hypothesis-helm-binaries"
+          if [[ "$BINARY_CACHE" != "true" ]]; then binary_root="$(mktemp -d)"; fi
+          binary_dir="$binary_root/helm-${HELM_VERSION}-${platform}-${architecture}"
+          if [[ ! -x "$binary_dir/helm" ]]; then
+            download_dir="$(mktemp -d)"
+            curl -fsSL "https://get.helm.sh/helm-${HELM_VERSION}-${platform}-${architecture}.tar.gz" -o "$download_dir/archive.tar.gz"
+            tar -xzf "$download_dir/archive.tar.gz" -C "$download_dir" "${platform}-${architecture}/helm"
+            mkdir -p "$binary_dir"
+            install "$download_dir/${platform}-${architecture}/helm" "$binary_dir/helm.pending"
+            mv "$binary_dir/helm.pending" "$binary_dir/helm"
+            rm -rf "$download_dir"
+          fi
+          echo "$binary_dir" >> "$GITHUB_PATH"
+      - name: Save Helm binary
+        if: ${{ vars.HH_BINARY_CACHE != 'false' && steps.helm-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
+          key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
       - run: bash benchmarks/smoke.sh
       - uses: actions/upload-artifact@v7
         if: ${{ always() }}
@@ -46,13 +75,42 @@ jobs:
           python-version: '3.13'
       - run: pip install poetry==2.1.3
       - run: poetry install --extras benchmarking
-      - name: Install Helm 4 and GNU Parallel
+      - name: Install GNU Parallel
         run: |
           sudo apt-get update
           sudo apt-get install -y parallel
-          curl -fsSL https://get.helm.sh/helm-v4.3.0-linux-amd64.tar.gz -o /tmp/helm.tar.gz
-          tar -xzf /tmp/helm.tar.gz -C /tmp
-          sudo install /tmp/linux-amd64/helm /usr/local/bin/helm
+      - name: Restore Helm binary
+        id: helm-cache
+        if: ${{ vars.HH_BINARY_CACHE != 'false' }}
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
+          key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
+      - name: Install Helm 4
+        env:
+          BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' }}
+        run: |
+          platform=linux
+          architecture=amd64
+          binary_root="$RUNNER_TEMP/hypothesis-helm-binaries"
+          if [[ "$BINARY_CACHE" != "true" ]]; then binary_root="$(mktemp -d)"; fi
+          binary_dir="$binary_root/helm-${HELM_VERSION}-${platform}-${architecture}"
+          if [[ ! -x "$binary_dir/helm" ]]; then
+            download_dir="$(mktemp -d)"
+            curl -fsSL "https://get.helm.sh/helm-${HELM_VERSION}-${platform}-${architecture}.tar.gz" -o "$download_dir/archive.tar.gz"
+            tar -xzf "$download_dir/archive.tar.gz" -C "$download_dir" "${platform}-${architecture}/helm"
+            mkdir -p "$binary_dir"
+            install "$download_dir/${platform}-${architecture}/helm" "$binary_dir/helm.pending"
+            mv "$binary_dir/helm.pending" "$binary_dir/helm"
+            rm -rf "$download_dir"
+          fi
+          echo "$binary_dir" >> "$GITHUB_PATH"
+      - name: Save Helm binary
+        if: ${{ vars.HH_BINARY_CACHE != 'false' && steps.helm-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
+          key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
       - name: Refresh all measurements and reports
         run: |
           git config --global url."https://github.com/".insteadOf 'git@github.com:'

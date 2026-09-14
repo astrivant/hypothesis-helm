@@ -225,6 +225,42 @@ Its [Bash invocation](../../pkg/hypothesis_helm/integrations/github_action.sh) k
 command flags at the execution site; Python handles shard metadata, cancellation
 and action outputs.
 
+## Binary downloads and caching
+
+Helm, Kubeconform and optional Kubesec binaries are cached **by default** across
+GitHub Actions, GitLab and CircleCI runs. Each binary has its own key containing
+the tool name, requested version, operating system and CPU architecture. Updating
+one tool's version downloads that tool again without invalidating the others.
+For example: `hh-binary-v1-linux-amd64-helm-v4.3.0-exact`.
+
+A restored executable is used without downloading its release archive. Missing
+executables are downloaded and extracted into a temporary directory before being
+installed in the cache. Failed downloads do not become usable cache entries.
+GitHub and CircleCI save binaries before running chart tests; GitLab uploads them
+even when tests fail. Each shard restores its own local copy.
+
+| Integration | Disable caching |
+| --- | --- |
+| GitHub Action | Set `binary-cache: 'false'` in the action's `with` inputs. |
+| CircleCI `test-chart` job | Set `binary-cache: false` in the job parameters. |
+| GitLab `helm-properties` job | Override `cache: []`. This disables both binary and schema caches. |
+
+GitHub and CircleCI bypass restored binaries when the switch is disabled. Their
+schema and test-result cache settings remain independent. To keep schema caching
+in GitLab while disabling binary caching, override `cache` with only the schema
+entry from the shared job.<sup>[\[1\]](https://docs.gitlab.com/ci/caching/#disable-cache-for-specific-jobs)</sup>
+
+Custom `kubeconform-binary` and `kubesec-binary` inputs still use the executable you
+provide. GNU Parallel and OS prerequisites remain installed through the package
+manager; these release-binary caches do not replace package-manager caches.
+
+The repository's own benchmark workflows use the same policy. Set the GitHub
+repository variable `HH_BINARY_CACHE=false` or CircleCI pipeline parameter
+`binary-cache: false` to disable it there.
+
+Cache retention is controlled by the CI provider. An evicted cache is downloaded
+again automatically.<sup>[\[2\]](#retention-between-sprints)</sup>
+
 ## Validation and caches
 
 Every sharded example has a downstream aggregation job. Its core command is:

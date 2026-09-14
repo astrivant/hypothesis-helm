@@ -74,6 +74,7 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         "sampling",
         "calibration",
         "filtering",
+        "error-surface",
         "topology",
         "flamegraph",
     ):

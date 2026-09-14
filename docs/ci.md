@@ -178,6 +178,15 @@ idle shards, and writes the final PDF, Markdown, JSON, and JUnit bundle.
 CircleCI detects its node coordinates automatically. The GitLab version/shard
 matrix passes explicit indices so each Kubernetes version covers the whole suite.
 
+## Caching installed binaries
+
+The GitHub Action caches Helm, Kubeconform and optional Kubesec binaries by tool,
+version, operating system and architecture. Set `binary-cache: 'false'` to disable
+both persistence and reuse. This is separate from `cache`, which controls test
+outcomes, and `schema-cache`, which controls Kubernetes schemas. Preinstalled
+validator overrides are unchanged. The shared GitLab and CircleCI definitions
+also cache release binaries by default.<sup>[\[1\]](ci/README.md#binary-downloads-and-caching)</sup>
+
 ## Persisting path outcomes
 
 The action accepts `cache-dir`, `cache` (default `true`), and `rerun` (default `auto`).

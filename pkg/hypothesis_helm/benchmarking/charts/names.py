@@ -33,7 +33,10 @@ def name_inputs(chart: Path, spec: dict[str, object], names: list[str] | None = 
         ]
     if len(names) != count or len(set(names)) != count:
         raise ValueError("input names must match the number of distinct input fields")
-    replacements = {f"input{index:03d}": name for index, name in enumerate(names)}
+    previous = spec.get("input_names", [f"input{index:03d}" for index in range(count)])
+    if not isinstance(previous, list) or len(previous) != count:
+        raise ValueError("existing input names must match the field count")
+    replacements = {str(old): name for old, name in zip(previous, names, strict=True)}
 
     def renamed(document: object) -> object:
         """

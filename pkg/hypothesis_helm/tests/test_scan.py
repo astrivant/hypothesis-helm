@@ -140,6 +140,9 @@ def test_report_paths_and_pagination(tmp_path: Path) -> None:
     assert md.name == "custom.md"
     assert pdf.name == "custom.pdf"
     assert "failure" in md.read_text()
+    assert "<img " not in md.read_text()
+    assert not (tmp_path / "hypothesis-helm-logo.png").exists()
+    assert b"/Subtype /Image" in pdf.read_bytes()
     assert all(len(line) <= 140 for line in md.read_text().splitlines())
     assert pdf.read_bytes().startswith(b"%PDF-")
     assert pdf.read_bytes().count(b"/Type /Page\n") == 1

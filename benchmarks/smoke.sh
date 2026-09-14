@@ -18,6 +18,9 @@ mkdir "$output"
 export MPLCONFIGDIR="$(cd "$output" && pwd)/matplotlib"
 bash scripts/project-run.sh hypothesis-helm-benchmark stress --generate-only --output "$output/plan"
 bash scripts/project-run.sh hypothesis-helm-benchmark stress --steps 3 --time-limit 1s --output "$output/stress"
+bash scripts/project-run.sh hypothesis-helm-benchmark error-surface --input-complexity 3 \
+  --axes depth redundancy clustering --depths 0 2 --redundant-inputs 0 2 --clustering 0 1 \
+  --error-rates 0 25 100 --repeats 1 --time-limit 1s --output "$output/error-surface"
 bash scripts/project-run.sh hypothesis-helm-benchmark generate \
   --parameters "$output/plan/cases/00-worst-case.yaml" --output "$output/chart"
 bash scripts/project-run.sh hypothesis-helm audit "$output/chart" --export-topological-graph "$output/graph.json" >"$output/audit.json"
@@ -33,3 +36,5 @@ test -s "$output/stress/topology-stress.png"
 test -s "$output/stress/topology-stress.svg"
 test -s "$output/topology/topology.png"
 test -s "$output/topology/topology.svg"
+test -s "$output/error-surface/results.json"
+test -s "$output/error-surface/clustering-error-recall.png"

@@ -239,6 +239,7 @@ def generate(
             previous.unlink()
     if force:
         (output / "templates/stress.yaml").unlink(missing_ok=True)
+        (output / "templates/surface.yaml").unlink(missing_ok=True)
         (output / "templates/benchmark-error.yaml").unlink(missing_ok=True)
         (output / "topology-parameters.yaml").unlink(missing_ok=True)
     name = "benchmark"
@@ -360,6 +361,10 @@ def reproduce(source: Path, output: Path, *, force: bool = False, workspace: Fix
     parameters = converter.structure(document.get("parameters", document), Parameters)
     generate(output, **asdict(parameters, recurse=False), force=force, workspace=workspace)
     operations = mapping(document.get("operations", {}))
+    if "error_surface" in operations:
+        from hypothesis_helm.benchmarking.charts.error_surface import configure_surface
+
+        configure_surface(output, int(str(mapping(operations["error_surface"])["depth"])), workspace=workspace)
     if "faults" in operations:
         faults = converter.structure(sequence(mapping(operations["faults"])["faults"]), list[Fault])
         write_faults(output, faults, workspace=workspace, symbolic=bool(mapping(operations["faults"]).get("symbolic", False)))

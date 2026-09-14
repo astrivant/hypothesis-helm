@@ -10,6 +10,7 @@ Each directory contains one study's recorded inputs, results and available plots
 | calibration-variation | [Browse](calibration-variation/README.md) |
 | chart-topologies | [Browse](chart-topologies/README.md) |
 | discovery | [Browse](discovery/README.md) |
+| error-surface | [Browse](error-surface/README.md) |
 | expansion | [Browse](expansion/README.md) |
 | filtering | [Browse](filtering/README.md) |
 | matrix | [Browse](matrix/README.md) |

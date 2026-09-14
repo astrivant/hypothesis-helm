@@ -34,7 +34,11 @@ empty_repositories = dedent(
 (root / "helm/repositories.yaml").write_text(empty_repositories)
 (root / "plotting-order.patch").write_text("")
 hashes = {}
-sources = [*Path("pkg/hypothesis_helm").rglob("*.py"), Path("pkg/hypothesis_helm/execution/calibration.json")]
+sources = [
+    *Path("pkg/hypothesis_helm").rglob("*.py"),
+    Path("pkg/hypothesis_helm/execution/calibration.json"),
+    Path("pkg/hypothesis_helm/reporting/assets/logo.png"),
+]
 for path in sorted(sources):
     if "tests" in path.parts:
         continue

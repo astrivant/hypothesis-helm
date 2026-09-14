@@ -10,6 +10,7 @@ from pathlib import Path
 from attrs import asdict
 from hypothesis_helm.benchmarking.charts.stress import Stress, progression
 from hypothesis_helm.benchmarking.charts.structures import STRUCTURES
+from hypothesis_helm.benchmarking.studies.error_surface import METHODS, METRICS, RATES, verify
 from hypothesis_helm.benchmarking.studies.matrix import STRATEGIES
 from hypothesis_helm.charts import yamlio
 
@@ -31,6 +32,7 @@ for study in [
     "sampling",
     "calibration-variation",
     "filtering",
+    "error-surface",
 ]:
     directory = root / "outputs" / study
     result = json.loads((directory / "results.json").read_text())
@@ -41,7 +43,9 @@ for study in [
     rows = result.get("points", result.get("rows", result.get("runs", [])))
     assert rows, study
     statuses = Counter(row.get("status", "unreported") for row in rows)
-    assert set(statuses) <= ({"passed", "time-limit"} if study in {"performance", "stress", "filtering"} else {"passed", "complete"}), (
+    assert set(statuses) <= (
+        {"passed", "time-limit"} if study in {"performance", "stress", "filtering", "error-surface"} else {"passed", "complete"}
+    ), (
         study,
         statuses,
     )
@@ -87,6 +91,16 @@ for study in [
             assert row["planning_seconds"] >= row["complexity_seconds"] >= 0
         for name in ("filtering-runtime", "filtering-planning", "filtering-completed", "filtering-phases"):
             assert (directory / f"{name}.png").is_file() and (directory / f"{name}.svg").is_file()
+    if study == "error-surface":
+        verify(result)
+        assert metadata["methods"] == list(METHODS) and metadata["error_rates"] == list(RATES)
+        assert metadata["input_fields"] == 8 and metadata["repeats"] == 3
+        assert metadata["axes"] == {"depth": list(range(6)), "redundancy": list(range(8)), "clustering": [0, 0.5, 1]}
+        for axis in metadata["axes"]:
+            for metric in METRICS:
+                for extension in ("png", "svg"):
+                    assert (directory / f"{axis}-{metric.replace('_', '-')}.{extension}").is_file()
+        assert (directory / "summary.csv").is_file()
     if study == "calibration-variation":
         calibration = json.loads((directory / "calibration.json").read_text())
         assert calibration["status"] == "complete" and len(calibration["profiles"]) == 30

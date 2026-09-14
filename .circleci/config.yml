@@ -1,7 +1,13 @@
 version: 2.1
+parameters:
+  binary-cache:
+    type: boolean
+    default: true
 
 jobs:
   test-python:
+    environment:
+      HELM_VERSION: v4.3.0
     docker:
       - image: cimg/python:3.13
     steps:
@@ -9,12 +15,39 @@ jobs:
       - run: pip install poetry==2.1.3 pre-commit==4.6.0
       - run: poetry install --extras benchmarking
       - run: sudo apt-get update && sudo apt-get install -y parallel
+      - when:
+          condition: << pipeline.parameters.binary-cache >>
+          steps:
+            - restore_cache:
+                keys:
+                  - hh-binary-v1-linux-amd64-helm-{{ .Environment.HELM_VERSION }}-exact
       - run:
           name: Install Helm for chart integration tests
+          environment:
+            BINARY_CACHE: "<< pipeline.parameters.binary-cache >>"
           command: |
-            curl -fsSL https://get.helm.sh/helm-v4.3.0-linux-amd64.tar.gz -o /tmp/helm.tar.gz
-            tar -xzf /tmp/helm.tar.gz -C /tmp
-            sudo install /tmp/linux-amd64/helm /usr/local/bin/helm
+            platform=linux
+            architecture=amd64
+            binary_root=".cache/hypothesis-helm/binaries"
+            if [[ "$BINARY_CACHE" != "true" ]]; then binary_root="$(mktemp -d)"; fi
+            binary_dir="$binary_root/helm-${HELM_VERSION}-${platform}-${architecture}"
+            if [[ ! -x "$binary_dir/helm" ]]; then
+              download_dir="$(mktemp -d)"
+              curl -fsSL "https://get.helm.sh/helm-${HELM_VERSION}-${platform}-${architecture}.tar.gz" -o "$download_dir/archive.tar.gz"
+              tar -xzf "$download_dir/archive.tar.gz" -C "$download_dir" "${platform}-${architecture}/helm"
+              mkdir -p "$binary_dir"
+              install "$download_dir/${platform}-${architecture}/helm" "$binary_dir/helm.pending"
+              mv "$binary_dir/helm.pending" "$binary_dir/helm"
+              rm -rf "$download_dir"
+            fi
+            sudo install "$binary_dir/helm" /usr/local/bin/helm
+      - when:
+          condition: << pipeline.parameters.binary-cache >>
+          steps:
+            - save_cache:
+                key: hh-binary-v1-linux-amd64-helm-{{ .Environment.HELM_VERSION }}-exact
+                paths:
+                  - .cache/hypothesis-helm/binaries
       - run: bash scripts/check.sh --junitxml=reports/pytest.xml
       - run:
           name: Exercise the shared benchmark chart and stress plots

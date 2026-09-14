@@ -10,12 +10,9 @@ import textwrap
 from pathlib import Path
 from urllib.parse import quote
 
-from reportlab.lib.styles import ParagraphStyle  # type: ignore[import-untyped]
-from reportlab.pdfgen.canvas import Canvas  # type: ignore[import-untyped]
-from reportlab.platypus import Paragraph  # type: ignore[import-untyped]
-
 from hypothesis_helm.reporting.errors import deduplicate_errors
-from hypothesis_helm.reporting.links import LINK, Publication, linked_prose, publish_links
+from hypothesis_helm.reporting.links import Publication, publish_links
+from hypothesis_helm.reporting.pdf import write_pdf
 from hypothesis_helm.reporting.reproductions import input_summary
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -274,48 +271,5 @@ def write_reports(report: dict[str, object], stem: Path, *, publication: Publica
             elif not fence:
                 lines[index] = publish_links(line, markdown, publication)
     markdown.write_text(wrap_markdown("\n".join(lines)))
-    canvas = Canvas(str(pdf), pagesize=(612, 792))
-    canvas.setTitle(str(report.get("title", "Helm chart scan")))
-    y = 750
-    canvas.setFont("Courier", 8)
-    code_fence = ""
-    for line in "\n".join(lines).splitlines():
-        if not line.strip():
-            y -= 4
-            continue
-        marker = re.match(r"^(`{3,})(.*)$", line)
-        if not code_fence and marker:
-            code_fence = marker[1]
-            continue
-        if code_fence and re.fullmatch(re.escape(code_fence) + r"`*\s*", line):
-            code_fence = ""
-            continue
-        if not code_fence and LINK.search(line):
-            paragraph = Paragraph(linked_prose(line), ParagraphStyle("links", fontName="Courier", fontSize=8, leading=12))
-            _, height = paragraph.wrap(540, 708)
-            if y - height < 42:
-                canvas.showPage()
-                y = 750
-            paragraph.drawOn(canvas, 36, y + 8 - height)
-            y -= height
-            continue
-        if not code_fence:
-            line = re.sub(r"\[([^\]]+)\]\(<\1>\)", r"\1", line)
-            line = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", line)
-            line = line.replace("**", "").replace("`", "")
-        heading = not code_fence and line.startswith("#")
-        if heading and y < 120:
-            canvas.showPage()
-            y = 750
-        font = "Helvetica-Bold" if heading else "Courier"
-        size = 14 if line.startswith("# ") else 11 if heading else 8
-        content = line.lstrip("# ") if heading else line
-        for wrapped in textwrap.wrap(content, width=85 if heading else 100) or [""]:
-            if y < 42:
-                canvas.showPage()
-                y = 750
-            canvas.setFont(font, size)
-            canvas.drawString(36, y, wrapped.encode("latin-1", "backslashreplace").decode("latin-1"))
-            y -= size + 4
-    canvas.save()
+    write_pdf("\n".join(lines), pdf, title=str(report.get("title", "Helm chart scan")))
     return markdown, pdf
