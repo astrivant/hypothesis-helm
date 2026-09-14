@@ -10,13 +10,13 @@ import hashlib
 import json
 import os
 import shutil
-import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
 from textwrap import dedent
 
 from hypothesis_helm.charts import yamlio
+from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.repository import write_reports
 from hypothesis_helm.schemas.contracts import supported_generated_text
 
@@ -34,10 +34,11 @@ run = Path(sys.argv[1])
 name = sys.argv[2]
 metadata = json.loads((run / "run-metadata.json").read_text())
 inventory = json.loads((run / "inventory.json").read_text())
-assert subprocess.check_output(["git", "-C", metadata["source"], "rev-parse", "HEAD"], text=True).strip() == metadata["revision"], (
-    "Source revision changed during scan"
-)
-assert not subprocess.check_output(["git", "-C", metadata["source"], "status", "--porcelain"], text=True).strip(), (
+assert (
+    Processes().run(["git", "-C", metadata["source"], "rev-parse", "HEAD"], capture_output=True, check=True).stdout.strip()
+    == metadata["revision"]
+), "Source revision changed during scan"
+assert not Processes().run(["git", "-C", metadata["source"], "status", "--porcelain"], capture_output=True, check=True).stdout.strip(), (
     "Source checkout contains unrecorded modifications"
 )
 for filename, expected_hash in metadata["implementation_sha256"].items():

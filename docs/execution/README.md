@@ -291,6 +291,30 @@ Library calls from a non-main thread, or applications that already own an alarm,
 instead stop between operations and cap Helm's timeout to the remaining budget;
 an in-flight custom callback in those cases must return before execution can stop.
 
+### Shutdown and partial results
+
+Deadlines stop new work before cleanup. Process owners stop their child groups and
+wait for their direct children; executor owners then join their threads or replicas.
+Cancellation during registration or joining is deferred until ownership is secure.
+SIGTERM uses the same cleanup path as Ctrl-C unless the embedding application has
+installed its own signal handler.
+
+The shutdown regression tests cover these boundaries:
+
+| Hierarchy | Verified cases |
+| --- | --- |
+| CLI → pytest → Helm or nested command | Serial, fixed and adaptive workers; SIGINT and SIGTERM; stubborn descendants |
+| Git, Helm registry or validator command → descendants | Successful exit, communication failure and timeout |
+| Benchmark coordinator → replicas → renderer → descendants | Coordinator cancellation, worker deadline and outer GNU Parallel timeout |
+| Shared process owner → multiple children | One cleanup failure or repeated cancellation does not skip sibling joins |
+
+Benchmark results retain completed and remaining counts when stopped. A timeout is
+incomplete work, not a chart defect or complete coverage. Cleanup can extend elapsed
+time beyond the testing budget. GNU Parallel wrappers allow ten seconds between
+termination and forced killing so Python workers can finish cleanup and reporting.
+SIGKILL, machine loss and CI runners that forcibly destroy the job cannot run Python
+cleanup handlers; these cases require the runner's process or container teardown.
+
 ## Optional trimming
 
 Both controls default to zero and can be combined:

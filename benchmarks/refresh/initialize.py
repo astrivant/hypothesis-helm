@@ -6,7 +6,6 @@ import hashlib
 import json
 import platform
 import shutil
-import subprocess
 import sys
 import tarfile
 import time
@@ -15,6 +14,7 @@ from textwrap import dedent
 
 from hypothesis_helm.benchmarking.execution.provenance import code_digest
 from hypothesis_helm.charts.scan import discover_charts
+from hypothesis_helm.execution.processes import Processes
 
 root = Path(sys.argv[1])
 root.mkdir(parents=True, exist_ok=False)
@@ -46,7 +46,7 @@ for path in sorted(sources):
 with tarfile.open(root / "measured-source.tar.gz", "w:gz") as archive:
     for name in hashes:
         archive.add(root / "frozen-source" / name, arcname=name)
-helm_version = subprocess.check_output(["helm", "version", "--short"], text=True).strip()
+helm_version = Processes().run(["helm", "version", "--short"], capture_output=True, check=True).stdout.strip()
 revisions = {}
 repositories = {}
 topologies = []
@@ -54,8 +54,8 @@ for name, source in (
     ("bitnami", Path("third_party/bitnami-charts")),
     ("prometheus", Path("third_party/prometheus-community-helm-charts")),
 ):
-    revision = subprocess.check_output(["git", "-C", str(source), "rev-parse", "HEAD"], text=True).strip()
-    if subprocess.check_output(["git", "-C", str(source), "status", "--porcelain"], text=True).strip():
+    revision = Processes().run(["git", "-C", str(source), "rev-parse", "HEAD"], capture_output=True, check=True).stdout.strip()
+    if Processes().run(["git", "-C", str(source), "status", "--porcelain"], capture_output=True, check=True).stdout.strip():
         raise ValueError(f"Chart checkout has unrecorded changes: {source}")
     revisions[name] = revision
     inventory = discover_charts(source)

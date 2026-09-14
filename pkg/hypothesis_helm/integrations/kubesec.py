@@ -104,6 +104,8 @@ def scan(
     command = [
         parallel,
         "--plain",
+        "--term-seq",
+        "TERM,10000,KILL,1000",
         "--jobs",
         str(workers),
         "--halt",
@@ -133,7 +135,7 @@ def scan(
     status = 0
     if selected:
         with (output / "parallel.stdout").open("w") as stdout:
-            result = Processes().run(command, cwd=Path.cwd(), env={**os.environ, "GOMAXPROCS": "1"}, stdout=stdout)
+            result = Processes(interrupt_grace=12).run(command, cwd=Path.cwd(), env={**os.environ, "GOMAXPROCS": "1"}, stdout=stdout)
         status = int(result.returncode != 0)
     conformity_status = 0
     if validate_rest and skipped:

@@ -76,7 +76,7 @@ for ((index = 1; index <= shards; index++)); do indices+=("$index"); done
 printf 'Running %s local shards; measurements: %s\n' "$shards" "$output" >&2
 # --plain ignores personal Parallel profiles; --halt never completes every shard
 # while GNU Parallel still returns nonzero when any job fails.
-exec parallel --plain --jobs "$shards" --halt never --quote \
+exec parallel --plain --term-seq TERM,10000,KILL,1000 --jobs "$shards" --halt never --quote \
   --joblog "$output/joblog.tsv" --results "$output/parallel" \
   --replace '__HH_SHARD_INDEX__' \
   helm hypothesis run "$suite" "$@" \

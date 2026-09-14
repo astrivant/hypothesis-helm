@@ -4,6 +4,7 @@ Verify graceful interruption, descendant cleanup, and partial reports.
 
 import json
 import os
+import shutil
 import signal
 import subprocess
 import sys
@@ -295,6 +296,42 @@ def test_one_cleanup_failure_does_not_skip_other_children(monkeypatch: pytest.Mo
     blocked.wait.assert_called_once()
     finished.wait.assert_called_once()
     assert processes._children == {blocked}
+
+
+def test_repeated_cancellation_during_join_preserves_siblings(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Deliver repeated termination while joining the first of two owned children.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Mark process groups gone without sending real signals.
+
+    Returns:
+        None: Both children are joined before pending termination reaches the caller.
+    """
+    children = [Mock(spec=subprocess.Popen, pid=pid, stdin=None, stdout=None, stderr=None) for pid in (10001, 10002)]
+
+    def interrupted_join(*, timeout: float) -> None:
+        """
+        Inject repeated cancellation at the join boundary.
+
+        Args:
+            timeout (float): Bound applied by the process owner.
+
+        Returns:
+            None: The protected join completes despite both signals.
+        """
+        signal.raise_signal(signal.SIGTERM)
+        signal.raise_signal(signal.SIGTERM)
+
+    children[0].wait.side_effect = interrupted_join
+    monkeypatch.setattr("hypothesis_helm.execution.processes._signal_group", lambda child, sig: False)
+    owner = Processes()
+    owner._children.update(children)
+    with pytest.raises(KeyboardInterrupt):
+        owner.stop()
+    for child in children:
+        child.wait.assert_called_once()
+    assert not owner._children
 
 
 @pytest.mark.parametrize("transport", ["command", "git", "helm"])
@@ -669,20 +706,22 @@ def test_registration_finishes_before_cancellation(tmp_path: Path, monkeypatch: 
     assert signal.getsignal(interrupt_signal) == previous
 
 
-@pytest.mark.parametrize("interrupt_signal", [signal.SIGINT, signal.SIGTERM])
-def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, interrupt_signal: int) -> None:
+@pytest.mark.parametrize("stop", ["interrupt", "terminate", "deadline", "parallel-timeout"])
+def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str) -> None:
     """
     Cancel only the coordinator while replicas own renderer processes and descendants.
 
     Args:
         tmp_path (Path): Fake renderer, chart and retained shutdown evidence.
-        interrupt_signal (int): Interrupt or termination sent to the coordinator alone.
+        stop (str): Parent signal, worker deadline, or GNU Parallel job timeout.
 
     Returns:
         None: Partial statistics survive and all recorded processes have exited.
     """
     from hypothesis_helm.benchmarking.charts.generator import generate
 
+    if stop == "parallel-timeout" and shutil.which("parallel") is None:
+        pytest.skip("GNU Parallel is required for the outer timeout test")
     chart = tmp_path / "chart"
     generate(chart, input_complexity=6)
     renderer = tmp_path / "helm"
@@ -707,15 +746,35 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, interrupt_
             import json
             from pathlib import Path
             from hypothesis_helm.benchmarking.execution.runner import measure
-            result = measure(Path('chart'), 12, 2, False, seed=0, multiplicity=8,
-                             time_limit=30, helm=str(Path('helm').resolve()), shard=None)
-            Path('result.json').write_text(json.dumps(result))
+            if __name__ == '__main__':
+                result = measure(Path('chart'), 12, 2, False, seed=0, multiplicity=8,
+                                 time_limit=5 if Path('deadline').exists() else 30,
+                                 helm=str(Path('helm').resolve()), shard=None)
+                Path('result.json').write_text(json.dumps(result))
             """
         )
     )
+    if stop == "deadline":
+        (tmp_path / "deadline").touch()
+    command = [sys.executable, str(driver)]
+    if stop == "parallel-timeout":
+        command = [
+            "parallel",
+            "--plain",
+            "--jobs",
+            "1",
+            "--timeout",
+            "5",
+            "--term-seq",
+            "TERM,10000,KILL,1000",
+            "--quote",
+            *command,
+            ":::",
+            "one",
+        ]
     owned: list[int] = []
     with (tmp_path / "log.txt").open("w") as log:
-        parent = subprocess.Popen([sys.executable, str(driver)], cwd=tmp_path, stdout=log, stderr=log, start_new_session=True)
+        parent = subprocess.Popen(command, cwd=tmp_path, stdout=log, stderr=log, start_new_session=True)
     try:
         deadline = time.monotonic() + 20
         while len(list(tmp_path.glob("ready-*.json"))) < 2 and time.monotonic() < deadline and parent.poll() is None:
@@ -723,11 +782,12 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, interrupt_
         ready = list(tmp_path.glob("ready-*.json"))
         assert len(ready) == 2, (tmp_path / "log.txt").read_text()
         owned = [pid for path in ready for pid in json.loads(path.read_text())]
-        parent.send_signal(interrupt_signal)
+        if stop in {"interrupt", "terminate"}:
+            parent.send_signal(signal.SIGINT if stop == "interrupt" else signal.SIGTERM)
         parent.wait(timeout=15)
-        assert parent.returncode == 0, (tmp_path / "log.txt").read_text()
+        assert parent.returncode == (1 if stop == "parallel-timeout" else 0), (tmp_path / "log.txt").read_text()
         report = json.loads((tmp_path / "result.json").read_text())
-        assert report["status"] == "interrupted"
+        assert report["status"] == ("time-limit" if stop == "deadline" else "interrupted")
         assert report["assigned"] == report["completed"] + report["remaining"] == 12
         assert report["completed"] == 0 and len(report["workers"]) == 2
         for pid in owned:
