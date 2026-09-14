@@ -10,11 +10,11 @@ The new GitLab and CircleCI URLs become available when these files are published
 
 Use progressively broader coverage as changes approach a release:
 
-| Stage | Mode | Starting CPU / RAM per CI job | Local workers | CI shards |
+| When | Recommended mode | Starting CPU / RAM per CI job | Local workers | CI shards |
 | --- | --- | --- | ---: | ---: |
-| MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 1` | 1 |
-| `main` | `--filter` | 4 vCPU / 4 GiB | `--jobs 1` | 1 |
-| Before tagging | `--exhaustive` | 4 vCPU / 4 GiB | `--jobs 2` | 1 |
+| MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
+| Changes on `main` | `--filter` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
+| Before tagging a release | `--exhaustive` | 2 vCPU / 4 GiB | `--jobs 2` | 2 |
 
 These are starting allocations, not measured resource minimums or completion guarantees.
 Large dependency-heavy charts can start at 8 vCPU / 16 GiB with six path workers.

@@ -28,7 +28,7 @@ Choose coverage for each stage of development:
 | --- | --- | --- | ---: | ---: |
 | MR / PR | `--filter-aggressive` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
 | Changes on `main` | `--filter` | 2 vCPU / 4 GiB | `--jobs 2` | 1 |
-| Before tagging a release | `--exhaustive` | 4 vCPU / 8 GiB | `--jobs 4` | 1 |
+| Before tagging a release | `--exhaustive` | 2 vCPU / 4 GiB | `--jobs 2` | 2 |
 
 These are starting estimates for one chart at a time, not measured minimum requirements.
 For large dependency-heavy charts, start with 8 vCPU / 16 GiB and six path workers.
