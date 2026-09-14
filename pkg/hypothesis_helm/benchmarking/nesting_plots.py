@@ -12,6 +12,8 @@ from textwrap import dedent
 import numpy as np
 
 from hypothesis_helm.benchmarking.fixture import read_spec
+from hypothesis_helm.benchmarking.selection import LABELS as PRESET_LABELS
+from hypothesis_helm.benchmarking.selection import explanation
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -25,6 +27,7 @@ LABELS = {
     "random": "Random",
     "topology": "Topology",
     "combined": "Both trims",
+    **PRESET_LABELS,
 }
 
 
@@ -44,10 +47,11 @@ def plot(output: Path, document: dict[str, object]) -> None:
     metadata = mapping(document["metadata"])
     if any(row["status"] != "complete" for row in [*references, *rows]):
         raise ValueError("complete references and policies are required")
-    labels = {**LABELS, "before": f"Strength {metadata['permutations']}"}
+    labels = {key: label for key, label in LABELS.items() if any(row["strategy"] == key for row in rows)}
+    labels["before"] = f"Strength {metadata['permutations']}"
     indexed = {(r["structure"], r["strategy"], r["expand_failures"]): r for r in rows}
     columns = [(strategy, expanded) for strategy in labels for expanded in (False, True)]
-    figure, axes = plt.subplots(2, 1, figsize=(17, 10))
+    figure, axes = plt.subplots(2, 1, figsize=(max(17, 3.5 * len(labels)), 10))
     for axis, metric, title in zip(
         axes,
         ("erroneous_input_recall", "checked_inputs"),
@@ -64,7 +68,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         )
         axis.set_title(title)
         axis.set_yticks(range(len(references)), [str(ref["structure"]) for ref in references])
-        axis.set_xticks(range(len(columns)), [labels[s] + (" + expansion" if e else "") for s, e in columns])
+        axis.set_xticks(range(len(columns)), [labels[s] + ("\n+ expansion" if e else "\nexpansion off") for s, e in columns])
         for i, ref in enumerate(references):
             for j, (strategy, expanded) in enumerate(columns):
                 row = indexed[(ref["structure"], strategy, expanded)]
@@ -97,7 +101,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         variance = sequence(mapping(frame["basis"])["explained_variance_ratio"])
         largest = max(max(Counter(sequence(ref["outcome_indices"])).values()) for ref in refs)
         for expanded in (False, True):
-            figure, axes = plt.subplots(len(refs), 5, figsize=(21, 11), squeeze=False)
+            figure, axes = plt.subplots(len(refs), len(labels) + 1, figsize=(4.2 * (len(labels) + 1), 11), squeeze=False)
             for i, ref in enumerate(refs):
                 points = np.asarray(coordinates[str(ref["structure"])], dtype=float)
                 identities = [int(number(value)) for value in sequence(ref["outcome_indices"])]
@@ -208,7 +212,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         Input constraints remain global even when a component's resources are gated off.
 
         Trimming stays at level 2; the matrix compares random trimming, topology trimming,
-        both together, and each with failure expansion off/on. Errors occupy 5% of valid
+        both together, the filter presets, and each with failure expansion off/on. Errors occupy 5% of valid
         assignments (rounded down), fault seed 1729; topology and selection seed 2026.
         Automatic exhaustive promotion and inferred groups are disabled so strength eight
         is actually exercised. Complete populations are rendered separately for ground truth.
@@ -264,4 +268,5 @@ def plot(output: Path, document: dict[str, object]) -> None:
           --time-limit 9m --output reports/nesting
         ```
         """)
+    text += "\n".join(explanation(rows))
     (output / "README.md").write_text(text)

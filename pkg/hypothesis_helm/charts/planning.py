@@ -121,6 +121,75 @@ class PlannedRun:
     dry_report: dict[str, object] | None
 
 
+def select_cases(
+    chart: Chart,
+    values: list[dict[str, object]],
+    options: PlanningOptions,
+    sampling_analysis: dict[str, object] | None,
+) -> tuple[list[dict[str, object]], dict[str, object], dict[str, object]]:
+    """
+    Apply the shared production selectors before ordering retained configurations.
+
+    Args:
+        chart (Chart): Current chart and defaults.
+        values (list[dict[str, object]]): Unique non-default configurations from the finite plan.
+        options (PlanningOptions): Filtering, sampling and traversal settings.
+        sampling_analysis (dict[str, object] | None): Fresh complexity profile for aggressive sampling.
+
+    Returns:
+        tuple[list[dict[str, object]], dict[str, object], dict[str, object]]:
+            Ordered configurations, topology evidence and sampling decisions.
+    """
+    topology: dict[str, object] = {}
+    memberships: dict[str, str] = {}
+    if options.trim_topology:
+        selected, topology = topology_trim(
+            chart.path,
+            chart.defaults,
+            values,
+            [merge_values(chart.defaults, item) for item in values],
+            options.trim_topology,
+            options.random_seed,
+            random_steps=options.trim,
+            memberships=memberships,
+            fixed_names=bool(options.release and options.namespace),
+        )
+    else:
+        selected = trim_values(values, options.trim, options.random_seed)
+    protected: set[str] = set()
+    regions: set[str] = set()
+    if options.trim_topology:
+        for value in selected:
+            identity = configuration_key(value)
+            region = memberships.get(identity)
+            if region is None or region not in regions:
+                protected.add(identity)
+                if region is not None:
+                    regions.add(region)
+    if sampling_analysis is not None:
+        selected, sampling_report = select_aggressive(
+            chart,
+            options.sampling,
+            selected,
+            options.random_seed,
+            protected=protected,
+            analysis=sampling_analysis,
+            topology=topology,
+            context={"strength": options.permutations, "trim": options.trim, "trim_topology": options.trim_topology},
+        )
+    else:
+        selected, sampling_report = options.sampling.select(selected, configuration_key, options.random_seed, protected=protected)
+    sampling_report["unit"] = "non-default configuration"
+    ordered = order_configurations(
+        selected,
+        lambda value: merge_values(chart.defaults, value),
+        chart.defaults,
+        strategy=options.traversal_strategy,
+        seed=options.random_seed,
+    )
+    return ordered, topology, sampling_report
+
+
 def build_plan(
     chart: Chart,
     model: ValuesModel | None,
@@ -195,70 +264,12 @@ def build_plan(
     topology: dict[str, object] = {}
     sampling_report: dict[str, object] = {}
 
-    def select_cases(values: list[dict[str, object]]) -> list[dict[str, object]]:
-        """
-        Apply composable sampling controls with topology representatives protected.
-
-        Args:
-            values (list[dict[str, object]]): Distinct non-default planned overrides.
-
-        Returns:
-            list[dict[str, object]]: Retained overrides ordered only after selection.
-        """
-        nonlocal topology, sampling_report
-        memberships: dict[str, str] = {}
-        if options.trim_topology:
-            selected, topology = topology_trim(
-                chart.path,
-                chart.defaults,
-                values,
-                [merge_values(chart.defaults, item) for item in values],
-                options.trim_topology,
-                options.random_seed,
-                random_steps=options.trim,
-                memberships=memberships,
-                fixed_names=bool(options.release and options.namespace),
-            )
-        else:
-            selected = trim_values(values, options.trim, options.random_seed)
-        protected: set[str] = set()
-        regions: set[str] = set()
-        if options.trim_topology:
-            for value in selected:
-                identity = configuration_key(value)
-                region = memberships.get(identity)
-                if region is None or region not in regions:
-                    protected.add(identity)
-                    if region is not None:
-                        regions.add(region)
-        if sampling_analysis is not None:
-            selected, sampling_report = select_aggressive(
-                chart,
-                options.sampling,
-                selected,
-                options.random_seed,
-                protected=protected,
-                analysis=sampling_analysis,
-                topology=topology,
-                context={"strength": options.permutations, "trim": options.trim, "trim_topology": options.trim_topology},
-            )
-        else:
-            selected, sampling_report = options.sampling.select(selected, configuration_key, options.random_seed, protected=protected)
-        sampling_report["unit"] = "non-default configuration"
-        return order_configurations(
-            selected,
-            lambda value: merge_values(chart.defaults, value),
-            chart.defaults,
-            strategy=options.traversal_strategy,
-            seed=options.random_seed,
-        )
-
     expansion_values = [{}, *(finite_values or [])] if options.expand_failures else []
     untrimmed_cases = len(finite_values) if finite_values is not None else 0
     if interaction_plan is not None:
-        interaction_plan.values = select_cases(interaction_plan.values)
+        interaction_plan.values, topology, sampling_report = select_cases(chart, interaction_plan.values, options, sampling_analysis)
     elif finite_values is not None:
-        finite_values = select_cases(finite_values)
+        finite_values, topology, sampling_report = select_cases(chart, finite_values, options, sampling_analysis)
     trimmed_cases = (
         untrimmed_cases - len(finite_values or []) if interaction_plan is None else untrimmed_cases - len(interaction_plan.values)
     )
@@ -397,7 +408,7 @@ def build_plan(
                 max_cases=options.max_cases,
                 max_candidates=options.max_candidates,
                 history=statistics.previous if statistics.previous.get("context") == statistics.context and not options.properties else {},
-                selector=select_cases,
+                selector=lambda values: select_cases(chart, values, options, sampling_analysis)[0],
                 trim_topology=options.trim_topology,
                 trim=options.trim,
                 random_seed=options.random_seed,

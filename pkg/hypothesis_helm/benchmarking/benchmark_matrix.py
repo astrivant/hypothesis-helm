@@ -21,10 +21,13 @@ from hypothesis_helm.benchmarking.benchmark_sparsity import quality
 from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
 from hypothesis_helm.benchmarking.profiling import profile_settings
+from hypothesis_helm.benchmarking.selection import PRESETS, decision
+from hypothesis_helm.benchmarking.selection import select as select_preset
 from hypothesis_helm.benchmarking.structures import STRUCTURES, expected_manifests, valid_assignment
 from hypothesis_helm.benchmarking.workload import source_digest
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
+from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.compiler.passes.topology import trim_topology
 from hypothesis_helm.execution.processes import Processes
@@ -34,7 +37,7 @@ from hypothesis_helm.schemas.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping, sequence
 from hypothesis_helm.schemas.model import ValuesModel
 
-STRATEGIES = ("default", "exact-equivalence", "random", "topology", "combined")
+STRATEGIES = ("default", "exact-equivalence", "random", "topology", "combined", *PRESETS)
 
 
 def bundle_key(resources: list[dict[str, object]]) -> str:
@@ -114,6 +117,8 @@ def measure(
     Returns:
         dict[str, object]: Measured row, including censored work and correctness evidence.
     """
+    if strategy not in STRATEGIES:
+        raise ValueError(f"unknown matrix strategy: {strategy}")
     started = time.perf_counter()
     model = ValuesModel.from_schema(chart.schema)
     plan = plan_interactions(model, len(mapping(chart.schema["properties"])), max_cases=limit, max_candidates=limit)
@@ -123,10 +128,16 @@ def measure(
     if set(planned) != reference[0]:
         raise AssertionError("finite planner disagrees with independent valid-domain oracle")
     candidates = [value for key, value in planned.items() if key != baseline_key]
+    all_candidates = [chart.defaults, *candidates]
+    positions = {configuration_key(value): index for index, value in enumerate(all_candidates)}
     planning_seconds = time.perf_counter() - started
     analysis_started = time.perf_counter()
     topology: dict[str, object] = {}
-    if strategy in {"topology", "combined"}:
+    evidence: dict[str, object] = {}
+    if strategy in PRESETS:
+        candidates, evidence = select_preset(chart, candidates, strategy, seed)
+        topology = mapping(evidence["topology"])
+    elif strategy in {"topology", "combined"}:
         candidates, topology = trim_topology(
             chart.path,
             chart.defaults,
@@ -139,6 +150,14 @@ def measure(
     elif strategy == "random":
         candidates = trim_values(candidates, level, seed)
     candidates = [chart.defaults, *candidates]
+    initial_selected = len(candidates)
+    expansion = (
+        FailureExpansion.build(
+            chart.path, chart.defaults, all_candidates, all_candidates, [positions[configuration_key(value)] for value in candidates]
+        )
+        if strategy in PRESETS
+        else None
+    )
     compiler = Pruner(chart.path, chart.defaults, model) if strategy == "exact-equivalence" else None
     analysis_seconds = time.perf_counter() - analysis_started
     hashes = RenderHashes(scope="matrix-run-local")
@@ -186,6 +205,8 @@ def measure(
                     and mapping(resource.get("data", {})).get("status") == "incorrect"
                 }
                 found_defects.update(defects)
+                if defects and expansion is not None:
+                    candidates.extend(all_candidates[index] for index in expansion.failed(positions[configuration_key(current)]))
                 erroneous_inputs += bool(defects)
                 rendered_erroneous_inputs += bool(defects) and not reused
                 ledger.append((actual, reused))
@@ -206,7 +227,12 @@ def measure(
         "strategy": strategy,
         "trim_level": level,
         "trim_random": level if strategy in {"random", "combined"} else 0,
-        "trim_topology": level if strategy in {"topology", "combined"} else 0,
+        "trim_topology": 2 if strategy in PRESETS else level if strategy in {"topology", "combined"} else 0,
+        "initial_selected": initial_selected,
+        "expand_failures": strategy in PRESETS,
+        "additional_scheduled": len(expansion.added) if expansion else 0,
+        "selection_evidence": evidence,
+        **decision(evidence),
         "seed": seed,
         "status": status,
         "error": error,

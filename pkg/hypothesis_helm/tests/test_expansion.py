@@ -466,3 +466,28 @@ def test_topology_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.Monkey
     assert len(stopped) == 1
     assert stopped[0]["status"] == "time-limit"
     assert stopped[0]["remaining"] == 3
+
+
+def test_pca_presets_expand_only_observed_failures(expansion_chart: Chart) -> None:
+    """
+    Include default preset expansion in PCA without consulting injected fault identities.
+
+    Args:
+        expansion_chart (Chart): Two-region chart with one independently observed failing output.
+
+    Returns:
+        None: Correct observations do not expand; observed failures add each region member once.
+    """
+    from itertools import product
+
+    from hypothesis_helm.benchmarking.benchmark_pca import expand_selections
+    from hypothesis_helm.benchmarking.selection import PRESETS
+
+    values: list[dict[str, object]] = [dict(zip(("a", "b", "c"), items, strict=True)) for items in product((False, True), repeat=3)]
+    selected = {strategy: [0, 4] for strategy in PRESETS}
+    added = expand_selections(expansion_chart, values, selected, [error_output(values[0])] * len(values))
+    assert all(count == 0 for count in added.values())
+    assert all(indices == [0, 4] for indices in selected.values())
+    added = expand_selections(expansion_chart, values, selected, [error_output(value) for value in values])
+    assert all(count == 3 for count in added.values())
+    assert all(set(indices) == {0, 4, 5, 6, 7} and len(indices) == 5 for indices in selected.values())

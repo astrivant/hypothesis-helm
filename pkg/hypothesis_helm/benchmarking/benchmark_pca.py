@@ -16,10 +16,13 @@ from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
 from hypothesis_helm.benchmarking.pca import inject_errors, project
 from hypothesis_helm.benchmarking.profiling import profile_settings
+from hypothesis_helm.benchmarking.selection import PRESETS
+from hypothesis_helm.benchmarking.selection import select as select_preset
 from hypothesis_helm.benchmarking.structures import STRUCTURES, configmap, expected_manifests
 from hypothesis_helm.benchmarking.workload import source_digest
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
+from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.compiler.passes.topology import trim_topology
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import TimeLimitReached, execution_timer, parse_time_limit
@@ -28,7 +31,9 @@ from hypothesis_helm.schemas.contracts import configuration_key, mapping
 from hypothesis_helm.schemas.model import ValuesModel
 
 
-def selections(chart: Chart, values: list[dict[str, object]], level: int, seed: int) -> tuple[dict[str, list[int]], dict[str, object]]:
+def selections(
+    chart: Chart, values: list[dict[str, object]], level: int, seed: int, *, strength: int = 2
+) -> tuple[dict[str, list[int]], dict[str, object]]:
     """
     Apply production trimming to the faulty chart, retaining the default once.
 
@@ -37,6 +42,7 @@ def selections(chart: Chart, values: list[dict[str, object]], level: int, seed: 
         values (list[dict[str, object]]): Complete valid domain with defaults first.
         level (int): Quarter-retention depth for each enabled trim.
         seed (int): Common selector seed independent of error placement.
+        strength (int): Interaction strength of the supplied plan for calibration matching.
 
     Returns:
         tuple[dict[str, list[int]], dict[str, object]]:
@@ -46,8 +52,10 @@ def selections(chart: Chart, values: list[dict[str, object]], level: int, seed: 
     candidates = values[1:]
     groups = {"before": list(range(len(values)))}
     evidence: dict[str, object] = {}
-    for strategy in ("random", "topology", "combined"):
-        if strategy == "random":
+    for strategy in ("random", "topology", "combined", *PRESETS):
+        if strategy in PRESETS:
+            selected, evidence[strategy] = select_preset(chart, candidates, strategy, seed, strength=strength)
+        elif strategy == "random":
             selected = trim_values(candidates, level, seed)
         else:
             selected, evidence[strategy] = trim_topology(
@@ -61,6 +69,40 @@ def selections(chart: Chart, values: list[dict[str, object]], level: int, seed: 
             )
         groups[strategy] = [0, *(positions[configuration_key(value)] for value in selected)]
     return groups, evidence
+
+
+def expand_selections(
+    chart: Chart,
+    values: list[dict[str, object]],
+    selected: dict[str, list[int]],
+    bundles: list[list[dict[str, object]]],
+) -> dict[str, int]:
+    """
+    Replay observed failures in order to include each preset's failure expansion in PCA.
+
+    Args:
+        chart (Chart): Faulty chart whose complete population was verified with Helm.
+        values (list[dict[str, object]]): Complete reference configurations.
+        selected (dict[str, list[int]]): Initial indices, extended in place for public presets.
+        bundles (list[list[dict[str, object]]]): Actual rendered outputs, consulted only when a case is visited.
+
+    Returns:
+        dict[str, int]: Additional scheduled checks per preset; every retained index is unique.
+    """
+    added: dict[str, int] = {}
+    for strategy in PRESETS:
+        queue = selected[strategy]
+        scheduler = FailureExpansion.build(chart.path, chart.defaults, values, values, queue)
+        for index in queue:
+            failed = any(
+                mapping(resource.get("metadata", {})).get("name") == "benchmark-error"
+                and mapping(resource.get("data", {})).get("status") == "incorrect"
+                for resource in bundles[index]
+            )
+            if failed:
+                queue.extend(scheduler.failed(index))
+        added[strategy] = len(scheduler.added)
+    return added
 
 
 def run_case(
@@ -166,9 +208,11 @@ def run_case(
         "topology": evidence,
         "values": values,
         "selected_indices": selected,
+        "initial_selected_indices": {strategy: list(indices) for strategy, indices in selected.items()},
     }
     if status != "complete":
         return row
+    row["failure_expansion"] = expand_selections(chart, values, selected, bundles)
     coordinates, basis = project(bundles)
     keys = [bundle_key(bundle) for bundle in bundles]
     outcomes = sorted(set(keys))

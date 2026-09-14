@@ -5,6 +5,7 @@ Plot structural strategy comparisons using measured runs and exact fixture cover
 import csv
 from pathlib import Path
 
+from hypothesis_helm.benchmarking.selection import LABELS, explanation
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -32,8 +33,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "random": "Random trim",
         "topology": "Topology trim",
         "combined": "Both trims",
+        **LABELS,
     }
-    figure, axes = plt.subplots(2, 2, figsize=(15, 10))
+    figure, axes = plt.subplots(2, 2, figsize=(max(15, 3 * len(strategies)), 10))
     panels = (
         ("Outcome coverage (%)", "coverage", "YlGn", 100),
         ("Total time incl. planning (s)", "total_seconds", "YlOrRd", None),
@@ -65,7 +67,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 axis.text(
                     j,
                     i,
-                    f"{values[i][j]:.1f}" + ("*" if capped else ""),
+                    f"{values[i][j]:.1f}"
+                    + ("*" if capped else "")
+                    + (" F" if indexed[(structure, strategy)].get("sampling_fallback") else ""),
                     ha="center",
                     va="center",
                     color="black",
@@ -78,7 +82,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     figure.text(
         0.04,
         0.02,
-        "One seeded run per cell; finite jobs stop when complete. * = execution deadline. Coverage uses exact fixture outputs.",
+        "One seeded run per cell. * = execution deadline; F = aggressive sampling fallback. Coverage uses exact fixture outputs.",
         fontsize=9,
     )
     figure.tight_layout(rect=(0, 0.05, 1, 0.94))
@@ -105,6 +109,16 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "analysis_seconds",
         "execution_seconds",
         "total_seconds",
+        "initial_selected",
+        "expand_failures",
+        "additional_scheduled",
+        "sample_eligible",
+        "sample_retained",
+        "sample_minimum",
+        "sample_minimum_fields",
+        "profile_match",
+        "sampling_fallback",
+        "calibration_id",
     ]
     with (output / "results.csv").open("w") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
@@ -119,8 +133,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         f"{metadata['time_limit_seconds']:g}s execution ceiling per run; "
         f"trim level {metadata['trim_level']}; seed {metadata['seed']}.",
         "",
-        "Default, exact-equivalence pruning, random trimming, topology trimming, and both trims "
-        "use the same complete valid input domain within each case. Planning and analysis are "
+        "All strategy columns use the same complete valid input domain within each case. Planning and analysis are "
         "timed separately and excluded from the execution ceiling. Fresh caches; sequential runs.",
         "",
         "Each trim column uses the stated level; combined enables both at that level. "
@@ -154,6 +167,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "bug-discovery guarantees or population-wide confidence intervals.",
         "",
     ]
+    lines.extend(explanation(rows))
     (output / "README.md").write_text("\n".join(lines))
     svg = output / "strategy-matrix.svg"
     svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")

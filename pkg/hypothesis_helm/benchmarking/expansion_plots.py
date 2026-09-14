@@ -7,6 +7,8 @@ import os
 import tempfile
 from pathlib import Path
 
+from hypothesis_helm.benchmarking.selection import LABELS as PRESET_LABELS
+from hypothesis_helm.benchmarking.selection import explanation
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -21,6 +23,7 @@ LABELS = {
     "random": "Random",
     "topology": "Topology",
     "combined": "Both trims",
+    **PRESET_LABELS,
 }
 
 
@@ -40,9 +43,10 @@ def plot(output: Path, document: dict[str, object]) -> None:
     if any(row["status"] != "complete" for row in [*rows, *references]):
         raise ValueError("matrix requires completed references and expansion checks")
     structures = [str(row["structure"]) for row in references]
-    columns = [(strategy, enabled) for strategy in LABELS for enabled in (False, True)]
+    labels = {key: label for key, label in LABELS.items() if any(row["strategy"] == key for row in rows)}
+    columns = [(strategy, enabled) for strategy in labels for enabled in (False, True)]
     indexed = {(row["structure"], row["strategy"], row["expand_failures"]): row for row in rows}
-    figure, axes = plt.subplots(2, 2, figsize=(19, 11))
+    figure, axes = plt.subplots(2, 2, figsize=(max(19, 5 * len(labels)), 11))
     panels = (
         ("Distinct erroneous outputs covered", "erroneous_output_coverage", "YlGn", 100),
         ("Erroneous inputs exercised", "erroneous_input_recall", "YlGn", 100),
@@ -68,7 +72,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         axis.set_title(title)
         axis.set_xticks(
             range(len(columns)),
-            [LABELS[strategy] + ("\n+ expansion" if enabled else "\nunchanged") for strategy, enabled in columns],
+            [labels[strategy] + ("\n+ expansion" if enabled else "\nexpansion off") for strategy, enabled in columns],
             rotation=25,
             ha="right",
         )
@@ -149,12 +153,12 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "Cells below show **erroneous inputs found before → after expansion (extra executions)**. "
         "The figure also shows the exact percentage missed.",
         "",
-        "| Structure | " + " | ".join(LABELS.values()) + " |",
-        "|---|" + "---|" * len(LABELS),
+        "| Structure | " + " | ".join(labels.values()) + " |",
+        "|---|" + "---|" * len(labels),
     ]
     for structure in structures:
         cells = []
-        for strategy in LABELS:
+        for strategy in labels:
             before, after = (indexed[(structure, strategy, enabled)] for enabled in (False, True))
             counts = []
             for result in (before, after):
@@ -170,12 +174,12 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
         "**Distinct erroneous outputs covered, before → after:**",
         "",
-        "| Structure | " + " | ".join(LABELS.values()) + " |",
-        "|---|" + "---|" * len(LABELS),
+        "| Structure | " + " | ".join(labels.values()) + " |",
+        "|---|" + "---|" * len(labels),
     ]
     for structure in structures:
         cells = []
-        for strategy in LABELS:
+        for strategy in labels:
             before, after = (indexed[(structure, strategy, enabled)] for enabled in (False, True))
             cells.append(
                 f"{before['erroneous_outputs_found']}/{before['erroneous_outputs_total']} → "
@@ -208,4 +212,5 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "```",
         "",
     ]
+    lines.extend(explanation(rows))
     (output / "README.md").write_text("\n".join(lines))

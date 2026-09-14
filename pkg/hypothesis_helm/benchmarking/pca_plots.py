@@ -11,6 +11,8 @@ from pathlib import Path
 import numpy as np
 from matplotlib.lines import Line2D
 
+from hypothesis_helm.benchmarking.selection import LABELS as PRESET_LABELS
+from hypothesis_helm.benchmarking.selection import decision, explanation
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -25,6 +27,7 @@ LABELS = {
     "random": "Random trim",
     "topology": "Topology trim",
     "combined": "Both trims",
+    **PRESET_LABELS,
 }
 
 
@@ -43,7 +46,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
     if not rows or any(row["status"] != "complete" for row in rows):
         raise ValueError("PCA comparison requires complete reference populations")
     metadata = mapping(document["metadata"])
-    figure, axes = plt.subplots(len(rows), 4, figsize=(18, 3.8 * len(rows)), squeeze=False)
+    labels = {key: label for key, label in LABELS.items() if key in mapping(rows[0]["strategies"])}
+    width = 4.5 * len(labels)
+    figure, axes = plt.subplots(len(rows), len(labels), figsize=(width, 3.8 * len(rows)), squeeze=False)
     csv_rows: list[dict[str, object]] = []
     for row_index, row in enumerate(rows):
         coordinates = np.asarray(row["coordinates"], dtype=float)
@@ -55,8 +60,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
         variance = sequence(mapping(row["pca"])["explained_variance_ratio"])
         low, high = coordinates.min(axis=0), coordinates.max(axis=0)
         pad = np.maximum((high - low) * 0.12, 0.5)
-        individual, panels = plt.subplots(1, 4, figsize=(18, 4.8))
-        for column, (strategy, label) in enumerate(LABELS.items()):
+        individual, panels = plt.subplots(1, len(labels), figsize=(width, 4.8))
+        for column, (strategy, label) in enumerate(labels.items()):
             indices = [int(number(value)) for value in sequence(mapping(row["selected_indices"])[strategy])]
             counts = Counter(outcome_ids[index] for index in indices)
             stats = mapping(mapping(row["strategies"])[strategy])
@@ -67,6 +72,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     "valid_inputs": row["valid_inputs"],
                     "faulty_inputs": len(faults),
                     **stats,
+                    **decision(mapping(mapping(row.get("topology", {})).get(strategy, {}))),
                 }
             )
             for axis in (axes[row_index, column], panels[column]):
@@ -194,14 +200,14 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "Several erroneous inputs can produce the same output. "
         "Percentages are exact miss rates within this seeded fixture.",
         "",
-        "| Structure | Before | Random | Topology | Both |",
-        "|---|---:|---:|---:|---:|",
+        "| Structure | " + " | ".join(labels.values()) + " |",
+        "|---|" + "---:|" * len(labels),
     ]
     for row in rows:
         stats = mapping(row["strategies"])
         errors = len(sequence(row["faulty_indices"]))
         cells = []
-        for strategy in LABELS:
+        for strategy in labels:
             result = mapping(stats[strategy])
             missed = f"{100 * number(result['errors_missed']) / errors:.1f}% missed" if errors else "N/A"
             cells.append(f"{result['errors_detected']}/{errors} ({missed})")
@@ -247,4 +253,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "Use `--plot-only --output reports/pca` to redraw recorded observations.",
         "",
     ]
+    lines.extend(explanation(csv_rows))
+    if "filter-aggressive" in labels:
+        lines += ["Preset PCA columns include failure expansion, replaying each visited input's actual Helm result.", ""]
     (output / "README.md").write_text("\n".join(lines))

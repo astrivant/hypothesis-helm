@@ -39,8 +39,11 @@ Maximum output complexity alone cannot bound the probability of a rare defect.
 | Matrix artifacts retain a complete reference and plots can be regenerated | `test_calibration_command_writes_reproducible_matrix_and_plots` | Native Helm study, PNG/SVG, JSON/CSV and plot-only execution |
 | Topology retention equals the sum of rounded group quotas | `test_supported_region_retention_formula` | Generated group sizes, trim depths and seeds |
 | Runtime comparisons use paired seeds, real execution and consistent phase accounting | `test_native_filtering_load_matrix` | Native four-method study and plot-only reproduction |
+| Benchmark presets match the real engine's calibrated selection | `test_benchmark_preset_matches_native_calibrated_selection` | Packaged calibration, nonzero omissions and real Helm execution |
+| Unmatched structural cases retain ordinary filtering | `test_matrix_strategy_contracts` | All six topology families and seven strategies |
+| PCA expansion uses visited Helm observations and never duplicates a case | `test_pca_presets_expand_only_observed_failures` | Paired correct and failing observations |
 | Time-limited measurements retain unfinished counts | `test_execution_ceiling_is_not_a_completed_timing` | Native execution with a deliberately short deadline |
-| Publication rejects missing or duplicated runs and inconsistent timing phases | `test_refresh_requires_complete_stress_matrix` | Deliberately damaged calibration and load-test ledgers |
+| Publication rejects missing presets, duplicated runs and inconsistent timing phases | `test_refresh_requires_complete_stress_matrix` | Damaged structural, PCA, expansion, nesting, stress, calibration and load-test ledgers |
 
 Tests live in [test_aggressive.py](../../pkg/hypothesis_helm/tests/test_aggressive.py) and
 [test_calibration_matrix.py](../../pkg/hypothesis_helm/tests/test_calibration_matrix.py).

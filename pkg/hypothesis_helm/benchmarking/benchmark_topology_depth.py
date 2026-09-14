@@ -54,7 +54,7 @@ def sweep(
         indices = [0, *(positions[configuration_key(value)] for value in selected)]
         paired = compare(
             chart,
-            {**reference, "selected_indices": {"topology": indices}},
+            {**reference, "selected_indices": {"topology": indices}, "initial_selected_indices": {"topology": indices}},
             helm,
             max(0, seconds - spent),
         )

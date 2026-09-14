@@ -50,10 +50,13 @@ def test_matrix_strategy_contracts(tmp_path: Path, monkeypatch: pytest.MonkeyPat
         for strategy in STRATEGIES
     }
     assert all(report["status"] == "passed" for report in reports.values())
-    for strategy in ("default", "exact-equivalence", "topology", "combined"):
+    for strategy in ("default", "exact-equivalence", "topology", "combined", "filter", "filter-aggressive"):
         assert reports[strategy]["observed_outcomes"] == reports[strategy]["possible_outcomes"]
     assert reports["default"]["completed"] == len(truth[0])
     assert int(str(reports["random"]["selected"])) < len(truth[0])
+    assert reports["filter-aggressive"]["sampling_fallback"]
+    assert reports["filter-aggressive"]["selected_sha256"] == reports["filter"]["selected_sha256"]
+    assert reports["filter-aggressive"]["expand_failures"] is True
     if structure in {"constraints", "control-flow", "boundaries"}:
         assert reports["topology"]["omitted"] == reports["combined"]["omitted"] == 0
     stopped = measure(
@@ -154,3 +157,41 @@ def test_matrix_distinguishes_deadline_from_render_timeout(
     assert result["completed"] == 0
     assert result["remaining"] == result["selected"]
     assert (result["error"] is None) == (status == "time-limit")
+
+
+def test_benchmark_preset_matches_native_calibrated_selection(tmp_path: Path) -> None:
+    """
+    Exercise a measured profile through the benchmark and actual chart-testing engine.
+
+    Args:
+        tmp_path (Path): Independently generated fixture matching a packaged calibration cell.
+
+    Returns:
+        None: Both paths apply the same nontrivial sample floor and exact calibration descriptor.
+    """
+    from hypothesis_helm.benchmarking.faults import Fault, write_faults
+    from hypothesis_helm.benchmarking.selection import select
+    from hypothesis_helm.charts.runner import check_chart
+    from hypothesis_helm.execution.sampling import Sampling
+    from hypothesis_helm.schemas.combinations import plan_interactions
+    from hypothesis_helm.schemas.contracts import mapping, sequence
+    from hypothesis_helm.schemas.model import ValuesModel
+
+    spec = generate(tmp_path, input_complexity=7, output_bins=2, readable_inputs=True)
+    names = [str(name) for name in sequence(spec["input_names"])]
+    write_faults(
+        tmp_path, [Fault("bug0", {names[0]: True}), Fault("bug1", {names[3]: True}), Fault("bug2", {names[0]: True})], symbolic=True
+    )
+    chart = Chart.load(tmp_path)
+    plan = plan_interactions(ValuesModel.from_schema(chart.schema), 2)
+    values = [value for value in plan.values if value != chart.defaults]
+    selected, evidence = select(chart, values, "filter-aggressive", 2026)
+    native = check_chart(chart, permutations=2, trim_topology=2, expand_failures=True, sampling=Sampling(aggressive=True), random_seed=2026)
+    sampling = mapping(evidence["sampling"])
+    assert native["status"] == "passed"
+    assert native["completed_iterations"] == len(selected) + 1
+    assert int(str(sampling["omitted"])) > 0
+    assert mapping(sampling["aggressive"])["match"] == "exact"
+    assert mapping(sampling["aggressive"])["fallback"] is None
+    assert mapping(sampling["aggressive"])["descriptor"] == mapping(mapping(native["sampling"])["aggressive"])["descriptor"]
+    assert sampling["minimum_fields"] == mapping(native["sampling"])["minimum_fields"]

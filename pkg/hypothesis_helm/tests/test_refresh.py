@@ -15,6 +15,7 @@ from attrs import asdict
 
 from hypothesis_helm.benchmarking.benchmark_matrix import STRATEGIES
 from hypothesis_helm.benchmarking.stress import Stress, progression
+from hypothesis_helm.benchmarking.structures import STRUCTURES
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.schemas.contracts import mapping
 
@@ -126,6 +127,11 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
         "filtering-count",
         "filtering-duplicate",
         "filtering-timing",
+        "matrix-missing-aggressive",
+        "pca-missing-aggressive",
+        "expansion-missing-aggressive",
+        "nesting-missing-aggressive",
+        "stress-missing-aggressive",
     ],
 )
 def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | None) -> None:
@@ -207,6 +213,39 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
             },
             "rows": rows,
         }
+        if study == "matrix":
+            rows = [
+                {"structure": structure, "strategy": strategy, "status": "passed"} for structure in STRUCTURES for strategy in STRATEGIES
+            ]
+        elif study == "pca":
+            policies = ("before", "random", "topology", "combined", "filter", "filter-aggressive")
+            rows = [
+                {
+                    "structure": structure,
+                    "status": "complete",
+                    "strategies": dict.fromkeys(policies, {}),
+                    "selected_indices": dict.fromkeys(policies, [0]),
+                }
+                for structure in STRUCTURES
+            ]
+        elif study in {"expansion", "nesting"}:
+            structures = (
+                STRUCTURES
+                if study == "expansion"
+                else tuple(f"{family}-{profile}" for family in ("uniform", "supported") for profile in ("shallow", "deep", "random"))
+            )
+            rows = [
+                {"structure": structure, "strategy": strategy, "expand_failures": expanded, "status": "complete"}
+                for structure in structures
+                for strategy in ("before", "random", "topology", "combined", "filter", "filter-aggressive")
+                for expanded in (False, True)
+            ]
+        if damage == f"{study}-missing-aggressive":
+            if study == "pca":
+                mapping(rows[0]["strategies"]).pop("filter-aggressive")
+            else:
+                rows = [row for row in rows if row.get("strategy") != "filter-aggressive"]
+        document["rows"] = rows
         if study == "sampling":
             document.update(
                 status="complete",

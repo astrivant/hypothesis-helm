@@ -46,7 +46,7 @@ families. The [fixture guide](fixture/README.md) explains its controls and fixed
 hypothesis-helm-benchmark stress --time-limit 9m --output benchmarks/runs/stress
 ```
 
-This measures 22 settings with five filtering strategies, decreasing one control by
+This measures 22 settings with seven filtering strategies, decreasing one control by
 one per step. The nine-minute ceiling applies separately to each strategy at each
 step. Use `--steps 3` for a shorter study or `--generate-only` to inspect the recipes.
 Results include Matplotlib PNG/SVG plots, CSV/JSON measurements, and a Markdown table.
@@ -314,6 +314,10 @@ error is assigned to unordered topology outcomes.
 [Compare strategies across six structural cases](matrix/README.md).
 The matrix uses fully enumerable fixtures to measure exact outcome coverage,
 with a nine-minute execution ceiling for each independent run.
+The structural, stress, PCA, expansion and nesting comparisons include `--filter`
+and `--filter-aggressive`. They use the production selectors, refresh complexity for
+each aggressive selection, and report calibration matches or conservative fallback.
+Both presets enable failure expansion; paired expansion-off columns isolate its effect.
 
 ```sh
 hypothesis-helm-benchmark matrix \

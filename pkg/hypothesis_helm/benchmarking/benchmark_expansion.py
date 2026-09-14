@@ -13,6 +13,7 @@ from hypothesis_helm.benchmarking.benchmark_matrix import bundle_key
 from hypothesis_helm.benchmarking.benchmark_pca import run_case
 from hypothesis_helm.benchmarking.fixture import FixtureWorkspace, chart_path
 from hypothesis_helm.benchmarking.profiling import profile_settings
+from hypothesis_helm.benchmarking.selection import decision
 from hypothesis_helm.benchmarking.structures import STRUCTURES
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.rendering import render
@@ -62,7 +63,7 @@ def compare(chart: Chart, reference: dict[str, object], helm: str, seconds: floa
     candidate_values = [values[index] for index in candidates]
     rows: list[dict[str, object]] = []
     spent = 0.0
-    for strategy, raw_indices in mapping(reference["selected_indices"]).items():
+    for strategy, raw_indices in mapping(reference.get("initial_selected_indices", reference["selected_indices"])).items():
         initial = [int(number(index)) for index in sequence(raw_indices)]
         for enabled in (False, True):
             scheduler = FailureExpansion.build(
@@ -117,6 +118,7 @@ def compare(chart: Chart, reference: dict[str, object], helm: str, seconds: floa
                     "structure": reference["structure"],
                     "strategy": strategy,
                     "expand_failures": enabled,
+                    **decision(mapping(mapping(reference.get("topology", {})).get(strategy, {}))),
                     "status": status,
                     "initial_checks": len(initial),
                     "checked_inputs": len(checked),

@@ -18,6 +18,7 @@ from hypothesis_helm.benchmarking.generate_benchmark_chart import generate
 from hypothesis_helm.benchmarking.parameters import Parameters
 from hypothesis_helm.benchmarking.plots import finish
 from hypothesis_helm.benchmarking.profiling import profile_settings
+from hypothesis_helm.benchmarking.selection import explanation
 from hypothesis_helm.benchmarking.stress import FAMILIES, Stress, progression, stress_manifests
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.charts.model import Chart
@@ -80,6 +81,16 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "erroneous_inputs_rendered",
         "status",
         "execution_seconds",
+        "initial_selected",
+        "expand_failures",
+        "additional_scheduled",
+        "sample_eligible",
+        "sample_retained",
+        "sample_minimum",
+        "sample_minimum_fields",
+        "profile_match",
+        "sampling_fallback",
+        "calibration_id",
     )
     with (output / "results.csv").open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=columns, extrasaction="ignore")
@@ -115,6 +126,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
             "",
         ]
     )
+    lines.extend(explanation(rows))
     (output / "README.md").write_text("\n".join(lines))
 
 
@@ -173,6 +185,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             else None,
             "fault_families": list(FAMILIES),
             "starting_parameters": asdict(parameters),
+            "strategies": list(STRATEGIES),
         },
         "rows": rows,
     }

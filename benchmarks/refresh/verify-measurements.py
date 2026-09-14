@@ -10,6 +10,7 @@ from pathlib import Path
 from attrs import asdict
 from hypothesis_helm.benchmarking.benchmark_matrix import STRATEGIES
 from hypothesis_helm.benchmarking.stress import Stress, progression
+from hypothesis_helm.benchmarking.structures import STRUCTURES
 from hypothesis_helm.charts import yamlio
 
 root = Path(sys.argv[1])
@@ -44,6 +45,28 @@ for study in [
         study,
         statuses,
     )
+    if study == "matrix":
+        expected_rows = {(structure, strategy) for structure in STRUCTURES for strategy in STRATEGIES}
+        assert len(rows) == len(expected_rows) and {(row["structure"], row["strategy"]) for row in rows} == expected_rows
+    if study == "pca":
+        expected_strategies = {"before", "random", "topology", "combined", "filter", "filter-aggressive"}
+        assert {row["structure"] for row in rows} == set(STRUCTURES) and len(rows) == len(STRUCTURES)
+        assert all(set(row["strategies"]) == expected_strategies for row in rows)
+        assert all(set(row["selected_indices"]) == expected_strategies for row in rows)
+    if study in {"expansion", "nesting"}:
+        structures = (
+            set(STRUCTURES)
+            if study == "expansion"
+            else {f"{family}-{profile}" for family in ("uniform", "supported") for profile in ("shallow", "deep", "random")}
+        )
+        expected_rows = {
+            (structure, strategy, expanded)
+            for structure in structures
+            for strategy in ("before", "random", "topology", "combined", "filter", "filter-aggressive")
+            for expanded in (False, True)
+        }
+        assert len(rows) == len(expected_rows)
+        assert {(row["structure"], row["strategy"], row["expand_failures"]) for row in rows} == expected_rows
     if study == "filtering":
         assert metadata["status"] == "complete" and metadata["repeats"] == 2
         expected_rows = {

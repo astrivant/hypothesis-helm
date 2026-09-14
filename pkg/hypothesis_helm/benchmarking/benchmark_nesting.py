@@ -55,11 +55,14 @@ def select_plan(chart: Chart, reference: dict[str, object], strength: int, level
         *(value for value in plan.values if configuration_key(value) != baseline),
     ]
     candidates = [positions[configuration_key(value)] for value in planned]
-    selected, _ = selections(chart, planned, level, seed)
+    selected, evidence = selections(chart, planned, level, seed, strength=strength)
+    mapped = {name: [candidates[index] for index in indices] for name, indices in selected.items()}
     return {
         **reference,
         "candidate_indices": candidates,
-        "selected_indices": {name: [candidates[index] for index in indices] for name, indices in selected.items()},
+        "selected_indices": mapped,
+        "initial_selected_indices": mapped,
+        "topology": evidence,
         "planning": {
             "requested_strength": strength,
             "effective_strength": plan.strength,
@@ -188,7 +191,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                     )
                 )
             # The pooled frame below supersedes the per-fixture PCA and full-domain selections.
-            for key in ("pca", "coordinates", "strategies", "topology"):
+            for key in ("pca", "coordinates", "strategies"):
                 reference.pop(key, None)
             references.append(reference)
             (args.output / "results.json").write_text(json.dumps(document) + "\n")
