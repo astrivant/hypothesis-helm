@@ -200,9 +200,14 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--time-limit", type=parse_time_limit, default=540)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
+    parser.add_argument("--symbolic-fit", action="store_true", help="also compare optional PySR fits with quadratics on held-out data")
     args = parser.parse_args(argv)
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
+        if args.symbolic_fit:
+            from hypothesis_helm.benchmarking.studies.symbolic_surface import main as symbolic_main
+
+            return symbolic_main(["--input", str(args.output / "results.json")])
         return 0
     grid_clustering, grid_rates = grid_values(args.output_size)
     if args.clustering is None:
@@ -362,4 +367,8 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     if not failed:
         verify(document)
     plot(args.output, document)
+    if args.symbolic_fit and not failed:
+        from hypothesis_helm.benchmarking.studies.symbolic_surface import main as symbolic_main
+
+        return symbolic_main(["--input", str(args.output / "results.json")])
     return int(failed)

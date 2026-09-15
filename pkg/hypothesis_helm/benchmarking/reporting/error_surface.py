@@ -249,4 +249,6 @@ def plot(output: Path, document: dict[str, object]) -> None:
 
     plot_quadratic(output, document)
     lines.extend(["[Fitted response surfaces: measurements, quadratic predictions and residuals](quadratic-fits.md)", ""])
+    if (output / "symbolic" / "README.md").is_file():
+        lines.extend(["[Symbolic equations versus quadratics on held-out data](symbolic/README.md)", ""])
     (output / "README.md").write_text("\n".join(lines))

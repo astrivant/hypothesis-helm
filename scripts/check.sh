@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the same shell and Python checks locally and in CircleCI.
+# Run the same shell and Python checks locally and in CI.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 for script in scripts/*.sh benchmarks/*.sh benchmarks/refresh/*.sh pkg/hypothesis_helm/integrations/*.sh; do

@@ -47,7 +47,11 @@ case "$study" in
     hypothesis-helm-benchmark filtering --time-limit 9m --output "$root/outputs/filtering"
     ;;
   error-surface)
-    hypothesis-helm-benchmark error-surface --time-limit 9m --output "$root/outputs/error-surface"
+    if [[ "${BENCHMARK_SYMBOLIC_FIT:-false}" == "true" ]]; then
+      hypothesis-helm-benchmark error-surface --symbolic-fit --time-limit 9m --output "$root/outputs/error-surface"
+    else
+      hypothesis-helm-benchmark error-surface --time-limit 9m --output "$root/outputs/error-surface"
+    fi
     ;;
   *)
     echo "Unknown refresh study: $study" >&2

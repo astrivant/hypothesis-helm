@@ -1,0 +1,59 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags: ['v[0-9]*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pypi-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Install Poetry
+        run: pip install poetry==2.1.3
+      - name: Check release version
+        id: package-version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          version="$(poetry version --short)"
+          if [[ "$RELEASE_TAG" != "v$version" ]]; then
+            echo "::error::Release tag must be v$version to match pyproject.toml"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Download verified distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: python-distributions-${{ steps.package-version.outputs.version }}
+          path: dist/
+      - name: Publish wheel and source distribution
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
+          PACKAGE_VERSION: ${{ steps.package-version.outputs.version }}
+        run: |
+          if [[ -z "$POETRY_PYPI_TOKEN_PYPI" ]]; then
+            echo '::error::Set the PYPI_API_TOKEN repository secret before publishing'
+            exit 1
+          fi
+          echo "Publishing hypothesis-helm $PACKAGE_VERSION to PyPI"
+          poetry publish --no-interaction

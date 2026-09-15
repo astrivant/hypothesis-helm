@@ -30,6 +30,7 @@ def installer_commands(root: Path, provider: str) -> list[str]:
         "gitlab": "ci/gitlab.yml",
         "circleci": "ci/circleci.yml",
         "github-benchmark": ".github/workflows/benchmarks.yml",
+        "github-project": ".github/workflows/ci.yml",
         "circleci-project": ".circleci/config.yml",
     }[provider]
     document = mapping(YAML(typ="safe").load((root / filename).read_text()))
@@ -42,7 +43,9 @@ def installer_commands(root: Path, provider: str) -> list[str]:
             for step in steps
             if mapping(step).get("name") in {"Install Helm", "Install kubeconform", "Install Kubesec"}
         ]
-    job = {"circleci": "test-chart", "github-benchmark": "smoke", "circleci-project": "test-python"}[provider]
+    job = {"circleci": "test-chart", "github-benchmark": "smoke", "circleci-project": "test-python", "github-project": "test-python"}[
+        provider
+    ]
     steps = sequence(mapping(mapping(document["jobs"])[job])["steps"])
     commands = []
     for step in steps:
@@ -65,6 +68,7 @@ def installer_commands(root: Path, provider: str) -> list[str]:
         ("circleci", "Linux", "X64"),
         ("github-benchmark", "Linux", "X64"),
         ("circleci-project", "Linux", "X64"),
+        ("github-project", "Linux", "X64"),
     ],
 )
 def test_binary_installers_reuse_exact_versions(tmp_path: Path, provider: str, platform: str, architecture: str) -> None:

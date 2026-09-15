@@ -60,3 +60,5 @@ The CSV includes sample SD and observed ranges. These describe seed variation, n
 ![Measured clustering, independent of filter selection](clustering-observed.png)
 
 [Fitted response surfaces: measurements, quadratic predictions and residuals](quadratic-fits.md)
+
+[Symbolic equations versus quadratics on held-out data](symbolic/README.md)

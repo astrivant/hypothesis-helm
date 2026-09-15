@@ -72,12 +72,39 @@ helm hypothesis generate examples/workload --output /tmp/generated-workload
 helm hypothesis run /tmp/generated-workload
 ```
 
-CircleCI checks the framework and the end-user plugin workflow, then builds the
-wheel and source distribution. Generated-suite execution uses the plugin's
+[GitHub Actions CI](../.github/workflows/ci.yml) runs the framework checks, benchmark smoke tests,
+package builds, and end-user plugin commands on pull requests, pushes to `main`, and manual dispatch.
+Every pull request update runs all configured pre-commit hooks against all files and tests the PR's head commit.
+Pytest uses all available CPUs. The verification job defaults to `ubuntu-latest-8-cores`;
+enable an eight-core Ubuntu x64 larger runner with that name, or set the repository variable `HH_CI_RUNNER`
+to your configured runner's label. See [GitHub's larger runner setup](https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/manage-larger-runners).
+JUnit results, distributions, and smoke outputs are retained as artifacts for 30 days, including after failures.
+The versioned Helm binary cache is enabled by default; disable it with the manual `binary-cache` input
+or the repository variable `HH_BINARY_CACHE=false`.
+Generated-suite execution uses the plugin's
 interpreter, with unrelated pytest configuration and auto-loaded plugins disabled.
 The saved suite's own code and conftest remain editable.
 
 Publishing and remote repository-setting changes are not automated by local checks.
+
+## Publishing to PyPI
+
+Add your PyPI API token as the GitHub repository secret `PYPI_API_TOKEN`.
+Set the version with `poetry version 0.1.0` and commit the updated `pyproject.toml` before tagging that commit:
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Only a pushed version tag triggers the [publishing workflow](../.github/workflows/publish.yml).
+Branch pushes, pull requests, and publishing a GitHub release do not upload to PyPI.
+CI rejects a tag that does not exactly match `v` followed by the package version, before building.
+Poetry embeds that version in the wheel and source distribution. CI names the artifact
+`python-distributions-<version>`; the publishing job checks the version again and uploads that exact artifact
+with `poetry publish`. Full CI must pass before publication.
+The token is available only to the publishing step, using [Poetry's token configuration](https://python-poetry.org/docs/repositories/#configuring-credentials).
+No `.pypirc` is needed: Poetry uses its own configuration and the token environment variable above.
 
 ## Pre-commit hook
 
@@ -147,6 +174,6 @@ cache fingerprints cover implementation modules recursively across all subpackag
 | [`scripts/`](../scripts) | Project command runner, validation command and Helm plugin hooks. |
 | [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
 | [`plugin.yaml`](../plugin.yaml) | Installable Helm plugin manifest. |
-| [`.circleci/`](../.circleci) | Python checks, Helm integration and package build verification. |
+| [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | Python checks, Helm integration and package build verification. |
 | [`.github/settings.yml`](../.github/settings.yml) | Declarative repository settings. |
 | [`docs/`](.) | Development setup, CLI behavior and testing limitations. |

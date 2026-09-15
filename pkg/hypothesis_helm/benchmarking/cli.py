@@ -30,6 +30,8 @@ COMMANDS = {
     "calibration": "studies.calibration",
     "filtering": "studies.filtering",
     "error-surface": "studies.error_surface",
+    "polynomial-surface": "studies.polynomial_surface",
+    "symbolic-surface": "studies.symbolic_surface",
     "topology": "studies.topology",
     "flamegraph": "reporting.flamegraph",
 }

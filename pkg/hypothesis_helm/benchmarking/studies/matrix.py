@@ -105,6 +105,7 @@ def measure(
     reference: tuple[set[str], Counter[str]],
     strength: int | None = None,
     failure_oracle: Callable[[dict[str, object], list[dict[str, object]]], bool] | None = None,
+    manifest_oracle: Callable[[dict[str, object], dict[str, object]], list[dict[str, object]]] = expected_manifests,
 ) -> dict[str, object]:
     """
     Plan afresh, apply production selectors, and validate every completed output against its oracle.
@@ -121,6 +122,7 @@ def measure(
         reference (tuple[set[str], Counter[str]]): Exact input and output truth.
         strength (int | None): Fixed interaction strength; otherwise use the field count.
         failure_oracle (Callable[[dict[str, object], list[dict[str, object]]], bool] | None): Optional input-aware property assertion.
+        manifest_oracle (Callable[[dict[str, object], dict[str, object]], list[dict[str, object]]]): Independent expected manifest builder.
 
     Returns:
         dict[str, object]: Measured row, including censored work and correctness evidence.
@@ -210,7 +212,7 @@ def measure(
                             hashes=hashes,
                         )
                     actual = bundle_key(resources)
-                    if actual != bundle_key(expected_manifests(current, spec)):
+                    if actual != bundle_key(manifest_oracle(current, spec)):
                         raise AssertionError("Helm output differs from the independent manifest oracle")
                     if compiler:
                         compiler.remember(witness, attempted, resources)

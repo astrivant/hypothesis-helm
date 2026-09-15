@@ -153,6 +153,10 @@ With eight methods and three seeds, the clustering sweep runs `columns Ã— rows Ã
 the collected measurements and their residuals. The [model guide](../docs/benchmarking/response-surface.md)
 defines the six coefficients and explains where the approximation can fail.
 
+Optional [symbolic regression](../docs/benchmarking/response-surface.md#optional-symbolic-regression)
+compares PySR equations with quadratics on reserved cells and seeds, using retained measurements without rerunning Helm.
+See the [quick comparison](studies/error-surface/symbolic/README.md) for equations, validation scores and plots.
+
 ![Error rate and failure clustering](studies/error-surface/clustering-error-recall.png)
 
 ### Random sampling and defect discovery
@@ -517,3 +521,7 @@ To redraw a completed run's plots without repeating Helm measurements:
 ```bash
 bash scripts/project-run.sh hypothesis-helm-benchmark calibration --plot-only --output benchmarks/runs/calibration-sweep-<epoch>
 ```
+
+[Quadratic versus quartic comparison](studies/error-surface-quartic/polynomial-comparison/README.md)
+uses identical training data and reports errors on reserved settings and repeats.
+See [how to compare a completed surface](../docs/benchmarking/response-surface.md#quadratic-versus-quartic-comparison).

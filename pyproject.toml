@@ -47,9 +47,11 @@ matplotlib = {version = ">=3.10,<4", optional = true}
 numpy = {version = ">=2,<3", optional = true}
 reportlab = ">=4,<5"
 immutables = ">=0.21,<1"
+pysr = {version = ">=1.5,<2", optional = true}
 
 [tool.poetry.extras]
 benchmarking = ["matplotlib", "numpy"]
+symbolic = ["matplotlib", "numpy", "pysr"]
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.15"
