@@ -416,7 +416,7 @@ def test_filter_exclusivity(individual: list[str], preset_first: bool) -> None:
     assert (parsed.trim, parsed.trim_topology, parsed.expand_failures) == (1, 2, True)
 
 
-def test_topology_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_structure_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Keep depth comparisons matched and preserve pending expansion when the budget expires.
 
@@ -429,7 +429,7 @@ def test_topology_depth_sweep(expansion_chart: Chart, monkeypatch: pytest.Monkey
     """
     from itertools import product
 
-    from hypothesis_helm.benchmarking.studies.topology_depth import sweep
+    from hypothesis_helm.benchmarking.studies.structure_depth import sweep
 
     values: list[dict[str, object]] = [dict(zip(("a", "b", "c"), items, strict=True)) for items in product((False, True), repeat=3)]
     reference: dict[str, object] = {

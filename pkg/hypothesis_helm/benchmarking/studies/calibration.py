@@ -186,7 +186,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "Every input was rendered with Helm and compared with an independent defect-trigger oracle.",
         "Floors include protected symbolic regions. Field coverage counts changed paths separately from configurations.",
         f"Measured maximum output scores: **{', '.join(map(str, scores))}**. Other scores are outside this calibration's range.",
-        "[Comparison matrix and graphs](MATRIX.md) · [Proof obligations and tests](../../../docs/adaptive-filtering/TESTS.md)",
+        "[Comparison matrix and graphs](MATRIX.md) · [Proof obligations and tests](../../docs/adaptive-filtering/TESTS.md)",
         "",
         "![Measured sample floors and recall](calibration.png)",
         "",

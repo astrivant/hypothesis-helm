@@ -40,7 +40,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Fitted response surfaces",
         "",
-        "[Measurements](README.md) · [Model definition](../../../docs/benchmarking/response-surface.md)",
+        "[Measurements](README.md) · [Model definition](../../docs/benchmarking/response-surface.md)",
         "",
         "Quadratics fitted to collected cell means, separately for each method and response. Coefficients are not theoretical predictions.",
         "Only cells with every requested repeat completed enter the fit. Missing or timed-out cells remain blank.",

@@ -8,7 +8,7 @@ Benchmark assets live together here:
 | --- | --- |
 | `chart/` | The shared, configurable Helm chart. |
 | `fixture/` | Parameter recipes and the chart guide. |
-| [`studies/`](studies/README.md) | Complete study outputs, including plots, tables and recorded measurements. |
+| [`studies/`](../studies/README.md) | Complete study outputs, including plots, tables and recorded measurements. |
 | `refresh/` | Refresh automation and recorded provenance. |
 | `runs/` | New local outputs and refresh workspaces, excluded from Git. |
 
@@ -97,8 +97,8 @@ hypothesis-helm-benchmark generate \
 
 ### Complexity-informed sampling
 
-The [calibration study](studies/calibration-variation/README.md) compares 30 generated chart variants across 100 seeds each.
-Its [matrix and graphs](studies/calibration-variation/MATRIX.md) show retained cases, known-bug discovery and nearby-profile fallback.
+The [calibration study](../studies/calibration-variation/README.md) compares 30 generated chart variants across 100 seeds each.
+Its [matrix and graphs](../studies/calibration-variation/MATRIX.md) show retained cases, known-bug discovery and nearby-profile fallback.
 The [test matrix](../docs/adaptive-filtering/TESTS.md) separates deterministic selector properties from empirical results.
 
 ```sh
@@ -107,7 +107,7 @@ hypothesis-helm-benchmark calibration --output benchmarks/runs/calibration --tim
 
 ### Filtering runtime
 
-The [filtering load test](studies/filtering/README.md) compares an unfiltered baseline, 70% random sampling, ordinary filtering and adaptive filtering.
+The [filtering load test](../studies/filtering/README.md) compares an unfiltered baseline, 70% random sampling, ordinary filtering and adaptive filtering.
 It varies the finite input-space size and gate depth, using paired seeds and real Helm execution. Graphs separate planning from test execution;
 time-limited observations retain their unfinished counts. The [theoretical comparison](../docs/adaptive-filtering/README.md#conditions-behind-the-comparison)
 states the conditions under which each bound and expected saving applies.
@@ -147,25 +147,25 @@ Explicit `--clustering` or `--error-rates` lists override the corresponding dime
 This controls measured settings, not image pixels; other structural axes keep their own depth/redundancy settings.
 With eight methods and three seeds, the clustering sweep runs `columns × rows × 24` measurements.
 
-[Results and interpretation](studies/error-surface/README.md)
+[Results and interpretation](../studies/error-surface/README.md)
 
-[Fitted response surfaces](studies/error-surface/quadratic-fits.md) place quadratic predictions beside
+[Fitted response surfaces](../studies/error-surface/quadratic-fits.md) place quadratic predictions beside
 the collected measurements and their residuals. The [model guide](../docs/benchmarking/response-surface.md)
 defines the six coefficients and explains where the approximation can fail.
 
 Optional [symbolic regression](../docs/benchmarking/response-surface.md#optional-symbolic-regression)
 compares PySR equations with quadratics on reserved cells and seeds, using retained measurements without rerunning Helm.
-See the [quick comparison](studies/error-surface/symbolic/README.md) for equations, validation scores and plots.
+See the [quick comparison](../studies/error-surface/symbolic/README.md) for equations, validation scores and plots.
 
-![Error rate and failure clustering](studies/error-surface/clustering-error-recall.png)
+![Error rate and failure clustering](../studies/error-surface/clustering-error-recall.png)
 
 ### Random sampling and defect discovery
 
-The [sample-size study](studies/sampling/README.md) renders the shared chart's complete
+The [sample-size study](../studies/sampling/README.md) renders the shared chart's complete
 population, then measures distinct defect recall across 500 reproducible seeds.
 It distinguishes repeated defect patterns from erroneous input assignments.
 
-![Sample size and defect discovery](studies/sampling/sampling-recall.png)
+![Sample size and defect discovery](../studies/sampling/sampling-recall.png)
 
 ```sh
 hypothesis-helm-benchmark sampling --time-limit 9m --output benchmarks/runs/sampling
@@ -177,7 +177,7 @@ a defect exposed by one input has only a 70% detection chance when 70% are teste
 
 ### Flame graphs across worker cores
 
-[View published flame graphs](studies/flamegraphs/README.md), including combined workers,
+[View published flame graphs](../studies/flamegraphs/README.md), including combined workers,
 the coordinator and individual processes. These are scaling smoke-test captures.
 
 Repository refreshes process charts sequentially, using six path workers per chart,
@@ -245,7 +245,7 @@ including six path workers per chart in the repository tests.
 
 The [operation inventory](../pkg/hypothesis_helm/benchmarking/refresh/plan.py) declares
 all 15 studies, fresh profiling captures, diagrams, verification gates, repository
-reports, and documentation updates. [Workgraph](../pkg/workgraph/README.md) is the
+reports, and documentation updates. [Workgraph](../pkg/workgraph/) is the
 reusable scheduler in a sibling Python package; the Helm-specific inventory and
 Bash commands stay in this project. Both import packages use the root Poetry
 configuration and ship in the same wheel.
@@ -303,7 +303,7 @@ hypothesis-helm-benchmark topology --graph topology.json --output benchmarks/run
 
 The PNG/SVG plots retain all vertices and directed edges. See
 [what the graph and its layout represent](../docs/inputs/README.md#render-the-mathematical-graph).
-Browse the [synthetic and real-chart topology catalog](studies/chart-topologies/README.md)
+Browse the [synthetic and real-chart topology catalog](../studies/chart-topologies/README.md)
 for complete graphs, per-chart measurements, and downloadable graph data.
 
 ## Local shard wrapper
@@ -346,29 +346,29 @@ outputs are checked against expected values calculated independently of Helm.
 Renders are skipped when the compiler proves they match an already validated output.
 Use each script's `--help` for options.
 
-The figures below use local Python workers and the [standard chart](studies/performance/standard-chart).
+The figures below use local Python workers and the [standard chart](../studies/performance/standard-chart).
 <!-- refresh:performance:start -->
 In this Helm 4 run, pruning completed **163,122 checks with 256 renders**, compared
 with **11,583 checks** without pruning, within each nine-minute budget.
 <!-- refresh:performance:end -->
-[Raw measurements](studies/performance/results.json), [CSV](studies/performance/results.csv), and
+[Raw measurements](../studies/performance/results.json), [CSV](../studies/performance/results.csv), and
 [refresh provenance](refresh/README.md) include the host and run details.
 These are single-run measurements; they do not establish timing variability.
 
 The progressive plot follows one continuous run, recording progress at each input
 count. Dashed lines show targets the run did not finish before its time limit.
 
-![Measured permutation runtime and completed-work plateau](studies/performance/progressive.png)
+![Measured permutation runtime and completed-work plateau](../studies/performance/progressive.png)
 
-![Observed Helm values and expected normal distribution](studies/performance/output-distribution.png)
+![Observed Helm values and expected normal distribution](../studies/performance/output-distribution.png)
 
 **Strong scaling** keeps total work fixed. **Weak scaling** keeps work per worker fixed.
 
-![Strong scaling against permutation count and worker replicas](studies/performance/strong-scaling.png)
+![Strong scaling against permutation count and worker replicas](../studies/performance/strong-scaling.png)
 
-![Weak scaling against permutation count and worker replicas](studies/performance/weak-scaling.png)
+![Weak scaling against permutation count and worker replicas](../studies/performance/weak-scaling.png)
 
-![Parallel replica throughput and render skips](studies/performance/replicas.png)
+![Parallel replica throughput and render skips](../studies/performance/replicas.png)
 
 ## Bug discovery by permutation strength
 
@@ -392,18 +392,23 @@ several faults, so 5% of triggers does not mean 5% of complete inputs fail.
 The x-axis is `--permutations` interaction strength. The chart, its 256 possible
 configurations, and its injected faults stay fixed. Runs use the application's
 planner and real Helm renders, with automatic enumeration and inferred groups
-disabled to isolate strength. [Raw results](studies/bug-density/results.json) retain the
+disabled to isolate strength. [Raw results](../studies/bug-density/results.json) retain the
 first failing case for each fault. These discovery rates describe the seeded fixture.
 
 The recorded 5% fixture contains 261 faults: pairs found 136, triples found 208,
 and strength five found all 261.
 
-![Known bugs discovered as permutation strength increases](studies/bug-density/bug-discovery.png)
+![Known bugs discovered as permutation strength increases](../studies/bug-density/bug-discovery.png)
 
-![Discovery rate by fault interaction order](studies/bug-density/bug-order.png)
+![Discovery rate by fault interaction order](../studies/bug-density/bug-order.png)
 
-The separate [Sparsity and Stochasticity study](studies/sparsity/README.md) measures distribution
+The separate [Sparsity and Stochasticity study](../studies/sparsity/README.md) measures distribution
 coverage as the number of cases falls.
+
+[Structural sparsity](../studies/structural-sparsity/README.md) holds the four variable fields and known failures fixed
+while growing the surrounding values tree and moving those fields farther apart. Its plots compare loading time,
+compiler analysis, total runtime and missed errors for each filtering method.
+See [the study definition and commands](../docs/benchmarking/structural-sparsity.md).
 
 ## Topology fixture
 
@@ -428,7 +433,7 @@ complete comparisons. See [sampling controls and complexity](../docs/execution/R
 ```sh
 hypothesis-helm-benchmark --parameters benchmarks/fixture/topology.yaml sparsity \
   --count 1024 --levels 5 \
-  --output benchmarks/runs/topology-sparsity
+  --output benchmarks/runs/structure-sparsity
 ```
 
 Raw results include `topology_counts` and `topology_quality` (categorical outcome
@@ -437,7 +442,7 @@ error is assigned to unordered topology outcomes.
 
 ## Strategy matrix
 
-[Compare strategies across six structural cases](studies/matrix/README.md).
+[Compare strategies across six structural cases](../studies/matrix/README.md).
 The matrix uses fully enumerable fixtures to measure exact outcome coverage,
 with a nine-minute execution ceiling for each independent run.
 The structural, stress, PCA, expansion and nesting comparisons include `--filter`
@@ -458,7 +463,7 @@ than assuming every parameter is Boolean.
 
 ## Output-space PCA
 
-[Before and after trimming, with 5% seeded errors](studies/pca/README.md).
+[Before and after trimming, with 5% seeded errors](../studies/pca/README.md).
 Compare random trimming, topology trimming, and both across the six structural
 cases. Each category keeps fixed PCA axes and reports exact error recall and
 output coverage alongside the projection.
@@ -471,7 +476,7 @@ hypothesis-helm-benchmark pca \
 
 ## Failure expansion
 
-[Compare each strategy with and without `--expand-failures`](studies/expansion/README.md).
+[Compare each strategy with and without `--expand-failures`](../studies/expansion/README.md).
 The paired matrix separates distinct erroneous outputs from erroneous inputs
 exercised, and records the additional physical renders.
 
@@ -483,13 +488,13 @@ hypothesis-helm-benchmark expansion \
 
 ## Topology distributions and trim depth
 
-[Generate mixed topology fixtures](studies/topology-mixtures/README.md) with seeded category
-weights and shared input wiring. [Compare trim depths 0–5](studies/topology-depth/README.md)
+[Generate mixed chart structures](../studies/structure-mixtures/README.md) with seeded category
+weights and shared input wiring. [Compare trim depths 0–5](../studies/structure-depth/README.md)
 with random trimming disabled and failure expansion enabled.
 
 ## Chart nesting at permutation strength eight
 
-[Matrix and shared-frame PCA](studies/nesting/README.md) compare shallow (1), deep (5),
+[Matrix and shared-frame PCA](../studies/nesting/README.md) compare shallow (1), deep (5),
 and seeded random nesting depths (1–5). `--permutations 8` stays fixed; each
 chart retains 12 topology components. Shared PCA axes make depth profiles
 comparable within each topology family.
@@ -522,6 +527,6 @@ To redraw a completed run's plots without repeating Helm measurements:
 bash scripts/project-run.sh hypothesis-helm-benchmark calibration --plot-only --output benchmarks/runs/calibration-sweep-<epoch>
 ```
 
-[Quadratic versus quartic comparison](studies/error-surface-quartic/polynomial-comparison/README.md)
+[Quadratic versus quartic comparison](../studies/error-surface-quartic/polynomial-comparison/README.md)
 uses identical training data and reports errors on reserved settings and repeats.
 See [how to compare a completed surface](../docs/benchmarking/response-surface.md#quadratic-versus-quartic-comparison).

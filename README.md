@@ -82,10 +82,10 @@ hypothesis-helm-benchmark --help
 ```
 
 See [Benchmarking](benchmarks/README.md) for chart generation and plot commands.
-Browse the [flame graphs](benchmarks/studies/flamegraphs/README.md) to see time spent in Python calls during a scaling smoke test.
+Browse the [flame graphs](studies/flamegraphs/README.md) to see time spent in Python calls during a scaling smoke test.
 The [configurable stress chart](benchmarks/chart) combines known defects and topology
 controls in one fixture; its [guide](benchmarks/fixture/README.md) explains how to reduce them one step at a time.
-See [random sampling results](benchmarks/studies/sampling/README.md) for the measured
+See [random sampling results](studies/sampling/README.md) for the measured
 tradeoff between sample size and known defect discovery.
 To rerun all project checks, benchmarks, plots, and repository reports, see the
 [full refresh command](benchmarks/README.md#reproduce-the-full-project-run).
@@ -189,7 +189,7 @@ Read the [scan results](docs/reports/bitnami.md) for per-chart findings and
 reproducing inputs, download the [combined PDF](docs/reports/bitnami.pdf), or inspect
 the [retained logs and data](docs/reports/bitnami-runs/bitnami-charts_1789311940/README.md).
 <!-- refresh:bitnami:end -->
-The [chart topology catalog](benchmarks/studies/chart-topologies/README.md) includes
+The [chart topology catalog](studies/chart-topologies/README.md) includes
 directed dependency graphs and their mathematical measurements.
 
 ## Test case: Prometheus Community charts
@@ -203,7 +203,7 @@ Read the [scan results](docs/reports/prometheus.md), download the
 [combined PDF](docs/reports/prometheus.pdf), or inspect the
 [retained logs and data](docs/reports/prometheus-runs/prometheus-charts_1789311940/README.md).
 <!-- refresh:prometheus:end -->
-Its dependency graphs are also in the [topology catalog](benchmarks/studies/chart-topologies/README.md).
+Its dependency graphs are also in the [topology catalog](studies/chart-topologies/README.md).
 
 ## Development
 

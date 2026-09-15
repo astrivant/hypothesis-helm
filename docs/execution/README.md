@@ -419,9 +419,9 @@ failing inputs found every distinct faulty output produced by 51 known failing
 inputs. The other four inputs produced faulty outputs already seen. Expansion
 can test those four as well. It cannot discover a group whose first failing case
 was never tested, or assume an untested input will fail. Cases the compiler cannot
-group are not automatically added through expansion.<sup>[\[2\]](../../benchmarks/studies/expansion/README.md)</sup>
+group are not automatically added through expansion.<sup>[\[2\]](../../studies/expansion/README.md)</sup>
 
-See the [paired failure-expansion matrix](../../benchmarks/studies/expansion/README.md).
+See the [paired failure-expansion matrix](../../studies/expansion/README.md).
 Dry runs report a bound on additional work; the actual count depends on failures.
 
 ## Percentage sampling
@@ -462,7 +462,7 @@ eligible, retained, omitted, and protected counts. Omissions are not successful 
 For N eligible cases, sampling uses O(N log N) time to rank stable case identities
 and O(N) memory. When every case is retained, it skips ranking and takes O(N) time.
 
-See the [measured sample-size study](../../benchmarks/studies/sampling/README.md). Repeated
+See the [measured sample-size study](../../studies/sampling/README.md). Repeated
 bugs can be found from a small sample. An error that occurs for only one input
 requires sampling most of the population to obtain a high discovery probability.
 

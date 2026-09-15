@@ -1,10 +1,10 @@
 # Sampling proof obligations and test matrix
 
-[Policy](README.md) · [Measured matrix and graphs](../../benchmarks/studies/calibration-variation/MATRIX.md)
+[Policy](README.md) · [Measured matrix and graphs](../../studies/calibration-variation/MATRIX.md)
 
 These checks establish selector behavior. They do not prove that omitted inputs cannot reveal a bug.
 The empirical matrix measures that separate question on generated charts with known defects.
-The [load test](../../benchmarks/studies/filtering/README.md) separately measures runtime against input count and nested template conditions.
+The [load test](../../studies/filtering/README.md) separately measures runtime against input count and nested template conditions.
 
 ## Deterministic argument
 

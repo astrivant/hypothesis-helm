@@ -126,14 +126,14 @@ provenance = {
 (root / "topology-inventory.json").write_text(json.dumps(topologies, indent=2) + "\n")
 (root / "graph-source-ready.txt").write_text("Source checkouts verified.\n")
 (root / "repositories.tsv").write_text("".join(f"{name}\t{run}\n" for name, run in repositories.items()))
-published = Path("benchmarks")
+published = Path(".")
 ledger = {
     str(path.relative_to(published)): hashlib.sha256(path.read_bytes()).hexdigest()
     for study in (*STUDIES, "chart-topologies", "flamegraphs")
     for path in sorted((published / "studies" / study).rglob("*"))
     if path.is_file() and path.name != "verification.json"
 }
-(root / "previous-artifact-inventory.json").write_text(json.dumps([f"benchmarks/{name}" for name in ledger], indent=2) + "\n")
+(root / "previous-artifact-inventory.json").write_text(json.dumps(list(ledger), indent=2) + "\n")
 retained = {}
 for name, checksum in ledger.items():
     path = published / name

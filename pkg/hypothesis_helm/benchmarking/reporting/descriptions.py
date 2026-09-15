@@ -109,7 +109,7 @@ INTRODUCTIONS = {
         "Does expanding around a discovered failure recover errors missed by trimming? Compare added checks and "
         "detected errors from matched starting samples.",
     ),
-    "topology-depth": (
+    "structure-depth": (
         "Sensitivity to topology trim depth",
         "How far can topology trimming reduce checks before errors are missed? Vary trim depth while holding the chart "
         "and other settings fixed.",

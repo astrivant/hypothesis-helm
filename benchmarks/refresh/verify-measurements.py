@@ -13,6 +13,7 @@ from hypothesis_helm.benchmarking.charts.structures import STRUCTURES
 from hypothesis_helm.benchmarking.refresh.plan import STUDIES
 from hypothesis_helm.benchmarking.studies.error_surface import METHODS, METRICS, RATES, verify
 from hypothesis_helm.benchmarking.studies.matrix import STRATEGIES
+from hypothesis_helm.benchmarking.studies.structural_sparsity import verify as verify_structural_sparsity
 from hypothesis_helm.charts import yamlio
 
 root = Path(sys.argv[1])
@@ -29,7 +30,9 @@ for study in STUDIES:
     assert rows, study
     statuses = Counter(row.get("status", "unreported") for row in rows)
     assert set(statuses) <= (
-        {"passed", "time-limit"} if study in {"performance", "stress", "filtering", "error-surface"} else {"passed", "complete"}
+        {"passed", "time-limit"}
+        if study in {"performance", "stress", "filtering", "error-surface", "structural-sparsity"}
+        else {"passed", "complete"}
     ), (
         study,
         statuses,
@@ -37,6 +40,11 @@ for study in STUDIES:
     if study == "matrix":
         expected_rows = {(structure, strategy) for structure in STRUCTURES for strategy in STRATEGIES}
         assert len(rows) == len(expected_rows) and {(row["structure"], row["strategy"]) for row in rows} == expected_rows
+    if study == "structural-sparsity":
+        verify_structural_sparsity(result)
+        for suffix in ("runtime", "discovery", "analysis", "errors"):
+            for extension in ("png", "svg"):
+                assert (directory / f"structural-sparsity-{suffix}.{extension}").is_file()
     if study == "pca":
         expected_strategies = {"before", "random", "topology", "combined", "filter", "filter-adaptive"}
         assert {row["structure"] for row in rows} == set(STRUCTURES) and len(rows) == len(STRUCTURES)

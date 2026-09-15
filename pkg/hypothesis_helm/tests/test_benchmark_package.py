@@ -69,7 +69,7 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         "matrix",
         "pca",
         "expansion",
-        "topology-depth",
+        "structure-depth",
         "nesting",
         "stress",
         "sampling",

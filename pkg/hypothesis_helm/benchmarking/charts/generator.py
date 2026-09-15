@@ -361,6 +361,18 @@ def reproduce(source: Path, output: Path, *, force: bool = False, workspace: Fix
     parameters = converter.structure(document.get("parameters", document), Parameters)
     generate(output, **asdict(parameters, recurse=False), force=force, workspace=workspace)
     operations = mapping(document.get("operations", {}))
+    if "structural_sparsity" in operations:
+        from hypothesis_helm.benchmarking.charts.structural_sparsity import configure
+
+        operation = mapping(operations["structural_sparsity"])
+        configure(
+            output,
+            int(str(operation["breadth"])),
+            int(str(operation["depth"])),
+            str(operation["placement"]),
+            int(str(operation["seed"])),
+            workspace=workspace,
+        )
     if "error_surface" in operations:
         from hypothesis_helm.benchmarking.charts.error_surface import configure_surface
 

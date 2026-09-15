@@ -13,7 +13,7 @@ root = Path(sys.argv[1])
 benchmarks = Path("benchmarks")
 checksums = json.loads((root / "sha256.json").read_text())
 for name, expected in checksums.items():
-    path = benchmarks / name
+    path = Path(name)
     assert path.is_file(), path
     assert hashlib.sha256(path.read_bytes()).hexdigest() == expected, path
     if path.suffix == ".svg":
@@ -22,8 +22,8 @@ for name, expected in checksums.items():
 previous = json.loads((root / "previous-artifact-inventory.json").read_text())
 retained = json.loads((root / "retained-fixture-sha256.json").read_text())
 for name, expected in retained.items():
-    assert hashlib.sha256((benchmarks / name).read_bytes()).hexdigest() == expected, name
-flamegraphs = benchmarks / "studies/flamegraphs"
+    assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == expected, name
+flamegraphs = Path("studies/flamegraphs")
 profile = json.loads((flamegraphs / "index.json").read_text())
 assert profile["worker_processes"] > 0 and profile["incomplete_captures"] == 0
 assert (flamegraphs / "captures.tar.gz").is_file()
@@ -35,13 +35,11 @@ for name in previous:
     path = Path(name)
     if path.name == "verification.json":
         continue
-    if path.parent == flamegraphs and str(path.relative_to(benchmarks)) not in checksums:
+    if path.parent == flamegraphs and str(path) not in checksums:
         # Fresh process captures replace prior PID-named artifacts as a verified family.
         superseded.append(name)
         continue
-    assert str(path.relative_to(benchmarks)) in checksums or str(path.relative_to(benchmarks)) in retained, (
-        f"Previous artifact not refreshed: {path}"
-    )
+    assert str(path) in checksums or str(path) in retained, f"Previous artifact not refreshed: {path}"
 
 sources = json.loads((root / "measured-source-hashes.json").read_text())
 for name, expected in sources.items():
@@ -61,7 +59,7 @@ for name, directory in json.loads((root / "provenance.json").read_text())["repos
 
 documents = [Path("README.md"), Path("docs/reports/bitnami.md"), Path("docs/reports/prometheus.md")]
 documents.append(benchmarks / "README.md")
-documents.extend((benchmarks / "studies").rglob("README.md"))
+documents.extend(Path("studies").rglob("README.md"))
 documents.extend(
     Path(directory) / "README.md" for directory in json.loads((root / "provenance.json").read_text())["repository_scans"].values()
 )
@@ -85,7 +83,7 @@ for document in documents:
 
 result = {
     "verified_benchmark_artifacts": len(checksums),
-    "previous_artifacts_refreshed": sum(str(Path(name).relative_to(benchmarks)) in checksums for name in previous),
+    "previous_artifacts_refreshed": sum(name in checksums for name in previous),
     "historical_fixture_files_verified": len(retained),
     "measured_source_files_unchanged": len(sources),
     "local_documentation_links_checked": links,

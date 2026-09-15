@@ -11,7 +11,7 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.refresh.plan import STUDIES
 
 root = Path(sys.argv[1])
-target = Path("benchmarks")
+target = Path(".")
 statuses = dict(line.split("\t") for line in (root / "status.tsv").read_text().splitlines())
 assert set(statuses) == set(STUDIES)
 assert all(status == "0" for status in statuses.values()), statuses
@@ -27,7 +27,7 @@ for directory in sorted((root / "outputs").iterdir()):
         shutil.rmtree(destination)
     shutil.copytree(directory, destination, dirs_exist_ok=True, ignore=shutil.ignore_patterns("verification.json"))
     (destination / "verification.json").unlink(missing_ok=True)
-shutil.copytree(root / "parameters", target / "fixture/parameters", dirs_exist_ok=True)
+shutil.copytree(root / "parameters", target / "benchmarks/fixture/parameters", dirs_exist_ok=True)
 checksums = {}
 for directory in (root / "outputs").iterdir():
     destination = target / "studies" / directory.name

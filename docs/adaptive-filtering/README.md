@@ -42,7 +42,7 @@ The benchmark determines two separate minimums, also called **floors**: how many
 configurations to test, and how many different fields those configurations must
 change from the defaults. One configuration can change several fields. A list
 counts as one changed path. These minimums come from measured bug discovery, not
-from treating the complexity score as a number of tests.<sup>[\[4\]](../../benchmarks/studies/calibration-variation/README.md)</sup>
+from treating the complexity score as a number of tests.<sup>[\[4\]](../../studies/calibration-variation/README.md)</sup>
 
 The tool first looks for a measured profile that matches exactly. **Nearby matching**
 can use similar profiles, but only if the benchmark evidence enables that policy.
@@ -54,7 +54,7 @@ Similarity is measured one quantity at a time: the relative difference is
 these differences determines whether a profile is close enough. The allowed
 difference is called the **radius**. Among all matching profiles, the tool takes
 the largest minimum test count and the largest minimum changed-field count.
-It does not extend the evidence beyond the measured ranges.<sup>[\[5\]](../../benchmarks/studies/calibration-variation/MATRIX.md)</sup>
+It does not extend the evidence beyond the measured ranges.<sup>[\[5\]](../../studies/calibration-variation/MATRIX.md)</sup>
 
 To evaluate a radius, the study removes a chart's exact matches and checks whether
 nearby profiles still find enough of its known bugs. This reuses the generated
@@ -97,7 +97,7 @@ for execution; a timeout can prevent some selected cases from completing.
 Reports distinguish eligible, selected, omitted and protected cases, selected fields, calibration ID and matching distance.
 
 See the [proof obligations and regression matrix](TESTS.md) for the deterministic properties checked by tests.
-The [benchmark matrix](../../benchmarks/studies/calibration-variation/MATRIX.md) shows empirical case reduction and known-bug discovery.
+The [benchmark matrix](../../studies/calibration-variation/MATRIX.md) shows empirical case reduction and known-bug discovery.
 Keeping examples from every predicted output group can explain why all known bugs
 were found in these benchmark charts. The graphs do not show that random sampling
 alone would achieve the same result.
@@ -206,5 +206,5 @@ For independent, uniformly chosen Boolean fields, a specified chain of `g` gates
 Constraints or correlated fields invalidate that calculation. The load fixture has unconstrained Boolean fields; its gate depths
 therefore provide controlled changes in branch rarity and symbolic region structure.
 
-See the [real Helm load test](../../benchmarks/studies/filtering/README.md) for runtime, planning, completed-work and phase graphs.
+See the [real Helm load test](../../studies/filtering/README.md) for runtime, planning, completed-work and phase graphs.
 Reproduce it with `hypothesis-helm-benchmark filtering --output benchmarks/runs/filtering --time-limit 9m`.

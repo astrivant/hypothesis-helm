@@ -50,7 +50,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Error rate and filtering",
         "",
-        "[Benchmarking](../../README.md)",
+        "[Benchmarking](../../benchmarks/README.md)",
         "",
         "Measured axes in this run: " + ", ".join(mapping(metadata["axes"])) + ". The default refresh runs all three axes.",
         "",

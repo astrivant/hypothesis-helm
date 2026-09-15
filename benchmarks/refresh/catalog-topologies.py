@@ -151,7 +151,7 @@ counts = Counter(row["status"] for row in rows)
 lines = [
     "# Chart topology graphs",
     "",
-    "[Benchmarking](../../README.md)",
+    "[Benchmarking](../../benchmarks/README.md)",
     "",
     f"{len(rows)} charts: "
     f"{counts['rendered']} graphs with rendered baselines, "

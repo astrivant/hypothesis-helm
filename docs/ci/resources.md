@@ -16,7 +16,7 @@ Across **115 pinned Bitnami charts**, the supplied `values.yaml` files contain a
 median of **320 distinct key paths**. At least 90% contain **1,007 or fewer**; the
 largest contains **1,497**. Containers and their nested keys are counted separately.
 These counts describe the supplied files, before dependencies and template-only
-fields are added.<sup>[\[1\]](../../benchmarks/studies/resource-sizing/README.md)</sup>
+fields are added.<sup>[\[1\]](../../studies/resource-sizing/README.md)</sup>
 
 Actual discovery can produce a much larger queue: the current Airflow run selected
 **2,754 paths**. At ten examples per path, that allows up to 27,540 generated examples

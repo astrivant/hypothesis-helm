@@ -14,7 +14,7 @@ records = json.loads((root / "topology-inventory.json").read_text())
 recipes = [path for path in (root / "outputs").rglob("*.yaml") if path.parent.name == "cases" or path.name.endswith("-parameters.yaml")]
 for recipe in sorted(recipes):
     relative = recipe.relative_to(root / "outputs")
-    if relative.parts[0] in {"performance", "topology-sparsity"}:
+    if relative.parts[0] in {"performance", "structure-sparsity"}:
         continue
     if recipe.parent.name == "cases":
         name = str(relative.parent.parent / "charts" / recipe.stem)

@@ -35,7 +35,7 @@ for study in ["discovery", "bug-density"]:
     lines = [
         "# Bug discovery by interaction strength",
         "",
-        "[Benchmarking](../../README.md)",
+        "[Benchmarking](../../benchmarks/README.md)",
         "",
         f"This fixed fixture contains "
         f"{total} injected faults. The planner varies interaction strength from one to six, with automatic enumeration "

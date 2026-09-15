@@ -157,11 +157,12 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
         "discovery",
         "bug-density",
         "sparsity",
-        "topology-sparsity",
+        "structure-sparsity",
+        "structural-sparsity",
         "matrix",
         "pca",
         "expansion",
-        "topology-depth",
+        "structure-depth",
         "nesting",
         "stress",
         "sampling",
@@ -219,6 +220,31 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
             },
             "rows": rows,
         }
+        if study == "structural-sparsity":
+            mapping(document["metadata"]).update(
+                status="complete", breadths=[4], depths=[1], placements=["near"], methods=["default"], repeats=1
+            )
+            rows = [
+                {
+                    "breadth": 4,
+                    "depth": 1,
+                    "placement": "near",
+                    "strategy": "default",
+                    "repeat": 0,
+                    "status": "passed",
+                    "error": None,
+                    "valid_domain": 16,
+                    "erroneous_inputs_evaluated": 7,
+                    "errors_missed": 0,
+                    "value_nodes": 25,
+                    "completed": 16,
+                    "selected": 16,
+                    "remaining": 0,
+                }
+            ]
+            for suffix in ("runtime", "discovery", "analysis", "errors"):
+                for extension in ("png", "svg"):
+                    (directory / f"structural-sparsity-{suffix}.{extension}").write_bytes(b"x" * 1001)
         if study == "matrix":
             rows = [
                 {"structure": structure, "strategy": strategy, "status": "passed"} for structure in STRUCTURES for strategy in STRATEGIES
@@ -452,11 +478,12 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
         "discovery",
         "bug-density",
         "sparsity",
-        "topology-sparsity",
+        "structure-sparsity",
+        "structural-sparsity",
         "matrix",
         "pca",
         "expansion",
-        "topology-depth",
+        "structure-depth",
         "nesting",
         "stress",
         "sampling",
@@ -483,16 +510,17 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
     published = tmp_path / "benchmarks"
     assert not (published / "results.json").exists()
     assert not (published / "matrix").exists()
+    assert not (published / "studies").exists()
     assert not (published / "parameters").exists()
     assert (published / "fixture/parameters/standard.yaml").read_text() == "parameters: {}\n"
     checksums = json.loads((run / "sha256.json").read_text())
     assert not (published / "refresh/sha256.json").exists()
     assert not (published / "refresh/logs").exists()
-    assert not (published / "studies/chart-topologies/verification.json").exists()
+    assert not (tmp_path / "studies/chart-topologies/verification.json").exists()
     for name in (*studies, "chart-topologies"):
-        path = published / "studies" / name / "results.json"
+        path = tmp_path / "studies" / name / "results.json"
         assert json.loads(path.read_text()) == {"study": name}
-        assert checksums[str(path.relative_to(published))] == hashlib.sha256(path.read_bytes()).hexdigest()
+        assert checksums[str(path.relative_to(tmp_path))] == hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 @pytest.mark.parametrize("failure", [None, "verify-topologies.py", "bitnami/finalize.py"])

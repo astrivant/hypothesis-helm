@@ -97,7 +97,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Random sampling and defect discovery",
         "",
-        "[Benchmarking](../../README.md)",
+        "[Benchmarking](../../benchmarks/README.md)",
         "",
         f"The shared stress chart has {metadata['valid_inputs']} valid inputs and six known defect families. "
         f"Every input was rendered with Helm; {metadata['trials']} seeded samples were evaluated at each size.",

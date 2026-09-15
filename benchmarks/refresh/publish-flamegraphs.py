@@ -27,7 +27,7 @@ with tarfile.open(target / "captures.tar.gz", "w:gz") as archive:
 lines = [
     "# Flame graphs",
     "",
-    "[Benchmarking](../../README.md#flame-graphs-across-worker-cores)",
+    "[Benchmarking](../../benchmarks/README.md#flame-graphs-across-worker-cores)",
     "",
     "Fresh captures from a separate scaling run with four cases and one or two workers.",
     "Profiling adds overhead, so these captures do not contribute to the uninstrumented timing studies.",

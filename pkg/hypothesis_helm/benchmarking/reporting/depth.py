@@ -64,12 +64,12 @@ def plot(output: Path, document: dict[str, object]) -> None:
             axis.set_ylim(0, 105)
     handles, labels = axes[0, 0].get_legend_handles_labels()
     figure.legend(handles, labels, loc="lower center", ncol=4)
-    figure.suptitle("Topology depth sweep · random trim 0 · failure expansion enabled", fontsize=17)
-    figure.tight_layout(rect=(0, 0.08, 1, describe(figure, "topology-depth")))
+    figure.suptitle("Structure depth sweep · random trim 0 · failure expansion enabled", fontsize=17)
+    figure.tight_layout(rect=(0, 0.08, 1, describe(figure, "structure-depth")))
     for extension in ("png", "svg"):
-        figure.savefig(output / f"topology-depth.{extension}", dpi=160, facecolor="white")
+        figure.savefig(output / f"structure-depth.{extension}", dpi=160, facecolor="white")
     plt.close(figure)
-    svg = output / "topology-depth.svg"
+    svg = output / "structure-depth.svg"
     svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
     fields = [key for key in rows[0] if key not in {"topology", "checked_indices", "additional_indices"}]
     with (output / "results.csv").open("w") as stream:
@@ -77,9 +77,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
         writer.writeheader()
         writer.writerows(rows)
     lines = [
-        "# Topology trim depth",
+        "# Structure depth sweep",
         "",
-        "[Benchmarking](../../README.md)",
+        "[Benchmarking](../../benchmarks/README.md)",
         "",
         "Only topology trim depth varies. Random trimming stays at zero and failure expansion stays enabled.",
         "",
@@ -90,7 +90,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         f"Mixed charts contain {metadata['topology_components']} components with "
         f"shared sampled input wiring.",
         "",
-        "![Topology depth sensitivity](topology-depth.png)",
+        "![Structure depth sensitivity](structure-depth.png)",
         "",
         "Each cell below is **checks; erroneous inputs found / total (missed percentage)** after expansion.",
         "",
@@ -154,7 +154,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "[Raw observations](results.json) · [CSV](results.csv)",
         "",
         "```sh",
-        "hypothesis-helm-benchmark topology-depth --time-limit 9m --output reports/topology-depth",
+        "hypothesis-helm-benchmark structure-depth --time-limit 9m --output reports/structure-depth",
         "```",
         "",
     ]

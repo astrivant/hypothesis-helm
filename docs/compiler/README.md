@@ -71,8 +71,8 @@ options and report fields.
 
 | Location | Responsibility |
 | --- | --- |
-| [`compiler/asts/`](../../pkg/hypothesis_helm/compiler/asts/) | Tokens, template nodes, rejection expressions, and dependency records. |
-| [`compiler/passes/`](../../pkg/hypothesis_helm/compiler/passes/) | Analyses, selection policies, and exports described in this guide. |
+| [`compiler/asts/`](../../pkg/hypothesis_helm/compiler/asts) | Tokens, template nodes, rejection expressions, and dependency records. |
+| [`compiler/passes/`](../../pkg/hypothesis_helm/compiler/passes) | Analyses, selection policies, and exports described in this guide. |
 | [`schemas/model.py`](../../pkg/hypothesis_helm/schemas/model.py) | Shared schema-derived values tree and attrs/cattrs conversion. |
 | [`charts/templates.py`](../../pkg/hypothesis_helm/charts/templates.py) | Scope-aware reference discovery using the action tree. |
 | [`charts/planning.py`](../../pkg/hypothesis_helm/charts/planning.py) | Finite candidate planning and selection orchestration. |

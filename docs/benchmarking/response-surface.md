@@ -1,6 +1,6 @@
 # Quadratic response surfaces
 
-[Benchmarking](../../benchmarks/README.md) · [Collected and fitted surfaces](../../benchmarks/studies/error-surface/quadratic-fits.md)
+[Benchmarking](../../benchmarks/README.md) · [Collected and fitted surfaces](../../studies/error-surface/quadratic-fits.md)
 
 We expect each control to affect runtime and error discovery, and one control to change
 another's effect. A quadratic gives these hypotheses explicit terms without assuming
@@ -60,7 +60,7 @@ The existing refresh's `error-surface` study generates these fits with its other
 To regenerate them from retained measurements without running Helm again:
 
 ```sh
-hypothesis-helm-benchmark error-surface --plot-only --output benchmarks/studies/error-surface
+hypothesis-helm-benchmark error-surface --plot-only --output studies/error-surface
 ```
 
 The polynomial follows the two-factor quadratic form described in the
@@ -95,7 +95,7 @@ The original quick study has only three clustering settings, so its quartic is e
 We do not interpolate new training observations or silently substitute a different polynomial.
 
 ```sh
-hypothesis-helm-benchmark polynomial-surface --input benchmarks/studies/error-surface/results.json
+hypothesis-helm-benchmark polynomial-surface --input studies/error-surface/results.json
 ```
 
 For a completed higher-resolution run, replace the input with that run's `results.json`.
@@ -104,9 +104,9 @@ PNG/SVG comparisons, coefficients, exact splits and RMSE/R² scores go into a se
 and `--seed` to change the reproducible holdout. The command returns 1 when a model is unavailable,
 while still saving the available results and reasons. Neither Helm nor PySR is run by this command.
 
-[Original quick study: sparse-grid limitations](../../benchmarks/studies/error-surface/polynomial-comparison/README.md)
+[Original quick study: sparse-grid limitations](../../studies/error-surface/polynomial-comparison/README.md)
 
-[Additional 5×5 comparison](../../benchmarks/studies/error-surface-quartic/polynomial-comparison/README.md)
+[Additional 5×5 comparison](../../studies/error-surface-quartic/polynomial-comparison/README.md)
 uses eight input fields, combined filtering, two repeats and 50 completed runs.
 The original quick study and its fitted results remain unchanged.
 
@@ -119,7 +119,7 @@ Install it with `pip install 'hypothesis-helm[symbolic]'`.
 To compare models using existing measurements only:
 
 ```sh
-hypothesis-helm-benchmark symbolic-surface --input benchmarks/studies/error-surface/results.json --iterations 20 --fit-timeout 15
+hypothesis-helm-benchmark symbolic-surface --input studies/error-surface/results.json --iterations 20 --fit-timeout 15
 ```
 
 Results go to `symbolic/` beside the measurement file, or to `--output DIR`.

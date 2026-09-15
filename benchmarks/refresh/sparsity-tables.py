@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 root = Path(sys.argv[1])
-for study in ["sparsity", "topology-sparsity"]:
+for study in ["sparsity", "structure-sparsity"]:
     directory = root / "outputs" / study
     result = json.loads((directory / "results.json").read_text())
     rows = []
@@ -36,9 +36,9 @@ for study in ["sparsity", "topology-sparsity"]:
         writer.writeheader()
         writer.writerows(rows)
     lines = [
-        "# Sparsity and Stochasticity" if study == "sparsity" else "# Sparsity across topology outcomes",
+        "# Sparsity and Stochasticity" if study == "sparsity" else "# Sparsity across structural outcomes",
         "",
-        "[Benchmarking](../../README.md)",
+        "[Benchmarking](../../benchmarks/README.md)",
         "",
         "Each stage uses a smaller nested random subset of the same input prefix, fresh caches, and a nine-minute "
         "ceiling. Case count varies; interaction strength does not. Scalar and categorical outcome distributions are "
@@ -81,7 +81,7 @@ for study in ["sparsity", "topology-sparsity"]:
         ]
     )
     if study == "sparsity":
-        original = Path("benchmarks/studies/sparsity/README.md").read_text()
+        original = Path("studies/sparsity/README.md").read_text()
         marker = "\n## Fresh measurements\n"
         original = original.split(marker)[0]
         table = lines[6 : lines.index("![Outcome coverage and distribution error](sparsity-quality.png)")]
