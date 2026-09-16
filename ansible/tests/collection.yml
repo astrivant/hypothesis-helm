@@ -1,0 +1,106 @@
+---
+# Local role integration test. It creates no VMs and starts no systemd services.
+- name: Exercise collection of a failed shard and its cache without cloud credentials
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+    worker_user: "{{ lookup('env', 'USER') }}"
+    worker_group: "{{ lookup('pipe', 'id -gn') }}"
+    run_id: collection-test
+    shard_index: 1
+    shard_total: 3
+    collect_cache: true
+    unit_name: hypothesis-collection-test
+    job_timeout_seconds: 1
+    worker_jobs: 2
+    seed: 2026
+    helm_version: v4.3.0
+  tasks:
+    - name: Allocate an isolated test workspace
+      ansible.builtin.tempfile:
+        state: directory
+        prefix: hypothesis-collection-
+      register: temporary
+    - name: Set isolated paths
+      ansible.builtin.set_fact:
+        remote_root: "{{ temporary.path }}/remote"
+        remote_run: "{{ temporary.path }}/remote/runs/test"
+        remote_cache: "{{ temporary.path }}/remote/cache/shard-1-of-3"
+        local_results: "{{ temporary.path }}/local"
+    - name: Exercise the real collection role with a controlled systemd status
+      block:
+        - name: Create test data directories
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0700'
+          loop: ["{{ temporary.path }}/bin", "{{ remote_run }}/results", "{{ remote_cache }}"]
+        - name: Render the actual worker launcher
+          ansible.builtin.template:
+            src: ../roles/compute_worker/templates/worker.sh.j2
+            dest: "{{ temporary.path }}/worker.sh"
+            mode: '0700'
+        - name: Check Bash syntax after quoting the worker environment
+          ansible.builtin.command:
+            argv: [bash, -n, "{{ temporary.path }}/worker.sh"]
+          changed_when: false
+        - name: Provide a deterministic failed-service status
+          ansible.builtin.copy:
+            dest: "{{ temporary.path }}/bin/systemctl"
+            mode: '0700'
+            content: |
+              #!/bin/sh
+              case "$*" in
+                *--value*) echo failed ;;
+                *) printf 'ActiveState=failed\nSubState=failed\nResult=exit-code\nExecMainStatus=1\n' ;;
+              esac
+        - name: Create a failed shard exit record
+          ansible.builtin.copy:
+            dest: "{{ remote_run }}/results/status.json"
+            mode: '0600'
+            content: '{"run_id":"collection-test","shard_index":1,"exit_code":1}'
+        - name: Create retained cache evidence
+          ansible.builtin.copy:
+            dest: "{{ remote_cache }}/evidence.txt"
+            mode: '0600'
+            content: cached
+        - name: Fetch the failing shard with the actual role
+          ansible.builtin.include_role:
+            name: collect_artifacts
+            apply:
+              environment:
+                PATH: "{{ temporary.path }}/bin:{{ lookup('env', 'PATH') }}"
+        - name: Verify collection preserved the failure status
+          ansible.builtin.assert:
+            that:
+              - artifacts_collected
+              - workload_status.exit_code == 1
+              - lookup('file', local_results + '/shards/localhost/cache/shard-1-of-3/evidence.txt') == 'cached'
+              - (lookup('file', local_results + '/shards/localhost/results/status.json') | from_json).run_id == run_id
+        - name: Simulate termination before the job could write a status record
+          ansible.builtin.file:
+            path: "{{ remote_run }}/results/status.json"
+            state: absent
+        - name: Fetch the interrupted shard without marking it successful
+          ansible.builtin.include_role:
+            name: collect_artifacts
+            apply:
+              environment:
+                PATH: "{{ temporary.path }}/bin:{{ lookup('env', 'PATH') }}"
+        - name: Require explicit incomplete status
+          ansible.builtin.assert:
+            that: workload_status.exit_code == -1
+        - name: Check that recovery removed stale files from the prior extraction
+          ansible.builtin.stat:
+            path: "{{ local_results }}/shards/localhost/results/status.json"
+          register: stale_status
+        - name: Reject stale success or failure evidence
+          ansible.builtin.assert:
+            that: not stale_status.stat.exists
+      always:
+        - name: Remove the isolated test data
+          ansible.builtin.file:
+            path: "{{ temporary.path }}"
+            state: absent

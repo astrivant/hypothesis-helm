@@ -177,7 +177,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     from hypothesis_helm.benchmarking.reporting.error_surface import plot
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/error-surface"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/error-surface"))
     parser.add_argument("--input-complexity", type=int, default=8)
     parser.add_argument(
         "--output-size",

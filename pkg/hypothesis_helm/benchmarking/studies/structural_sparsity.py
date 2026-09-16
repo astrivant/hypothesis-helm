@@ -62,7 +62,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero for complete or explicitly timed-out measurements, one for unexpected failures.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/structural-sparsity"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/structural-sparsity"))
     parser.add_argument("--breadths", type=int, nargs="+", default=[50, 200, 800])
     parser.add_argument("--depths", type=int, nargs="+", default=[2, 8, 24])
     parser.add_argument("--placements", choices=PLACEMENTS, nargs="+", default=list(PLACEMENTS))

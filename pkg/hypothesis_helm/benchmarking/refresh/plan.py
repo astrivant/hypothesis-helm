@@ -62,7 +62,7 @@ class Refresh:
                 None: The immutable operation is appended to the inventory.
             """
             recipe = (
-                Path("benchmarks/refresh/operations.sh")
+                Path("pkg/hypothesis_helm/benchmarking/refresh/recipes/operations.sh")
                 if name in {"checks", "dependencies", "initialize"}
                 else self.root / "operations.sh"
             )

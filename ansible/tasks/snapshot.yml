@@ -1,0 +1,47 @@
+---
+- name: Check that the run ID has not been used
+  ansible.builtin.stat:
+    path: "{{ local_root }}"
+  register: local_run
+- name: Refuse to mix source snapshots or overwrite an existing run
+  ansible.builtin.assert:
+    that: not local_run.stat.exists
+    fail_msg: Use a new run_id, or remote_action=collect to recover existing workers.
+- name: Create the private controller workspace
+  ansible.builtin.file:
+    path: "{{ local_root }}"
+    state: directory
+    mode: '0700'
+- name: Archive only the required application source, excluding local environments and caches
+  ansible.builtin.command:
+    argv:
+      - tar
+      - -czf
+      - "{{ local_root }}/source.tar.gz"
+      - --exclude=__pycache__
+      - --exclude=.pytest_cache
+      - --exclude=.DS_Store
+      - -C
+      - "{{ source_root }}"
+      - pkg
+      - scripts
+      - pyproject.toml
+      - poetry.lock
+      - README.md
+      - LICENSE
+      - plugin.yaml
+  changed_when: true
+- name: Archive the requested chart with its local dependencies
+  ansible.builtin.command:
+    argv: [tar, -czf, "{{ local_root }}/chart.tar.gz", --exclude=.git, -C, "{{ chart_source }}", .]
+  changed_when: true
+- name: Snapshot the workload script
+  ansible.builtin.copy:
+    src: "{{ job_script }}"
+    dest: "{{ local_root }}/job.sh"
+    mode: '0600'
+- name: Preserve the exact worker inventory for this run
+  ansible.builtin.copy:
+    content: "{{ target | to_nice_json }}"
+    dest: "{{ local_root }}/workers.json"
+    mode: '0600'

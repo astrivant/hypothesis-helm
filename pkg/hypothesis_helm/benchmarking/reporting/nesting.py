@@ -204,7 +204,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     text = dedent(f"""
         # Chart nesting and output-space PCA
 
-        [Benchmarking](../../benchmarks/README.md)
+        [Benchmarking](../../docs/benchmarking/README.md)
 
         **8 is permutation interaction strength, not component count.** This study holds
         `--permutations {metadata["permutations"]}` fixed and varies additional Boolean gate depth:

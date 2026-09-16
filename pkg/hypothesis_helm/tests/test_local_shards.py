@@ -6,17 +6,16 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
-
-ROOT = Path(__file__).resolve().parents[3]
 
 
 @pytest.mark.parametrize("shards", [1, 2, 3, 4])
 def test_local_shards(tmp_path: Path, shards: int) -> None:
     """
-    Launch the real scheduler with a recording Helm executable and one failing shard.
+    Launch the packaged CLI outside the checkout with a recording Helm and one failing shard.
 
     Args:
         tmp_path (Path): Isolated executables, output and invocation records.
@@ -44,8 +43,8 @@ def test_local_shards(tmp_path: Path, shards: int) -> None:
     output = tmp_path / "results with spaces {}"
     result = subprocess.run(
         [
-            "bash",
-            str(ROOT / "benchmarks/shards.sh"),
+            str(Path(sys.executable).with_name("hypothesis-helm-benchmark")),
+            "shards",
             "--shards",
             str(shards),
             "--output-dir",

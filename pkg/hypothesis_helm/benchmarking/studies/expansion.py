@@ -158,7 +158,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero for a complete comparison; one for a censored reference or expansion.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/expansion"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/expansion"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--error-percent", type=float, default=5)
     parser.add_argument("--error-seed", type=int, default=1729)

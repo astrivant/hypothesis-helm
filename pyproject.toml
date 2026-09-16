@@ -27,7 +27,13 @@ packages = [
     {include = "workgraph", from = "pkg"},
     {include = "workbalance", from = "pkg"},
 ]
-include = [{path = "plugin.yaml", format = ["sdist"]}, {path = "scripts", format = ["sdist"]}]
+include = [
+    {path = "plugin.yaml", format = ["sdist"]},
+    {path = "scripts", format = ["sdist"]},
+    {path = "pkg/hypothesis_helm/benchmarking/assets", format = ["sdist", "wheel"]},
+    {path = "pkg/hypothesis_helm/benchmarking/scripts", format = ["sdist", "wheel"]},
+    {path = "pkg/hypothesis_helm/benchmarking/refresh/recipes", format = ["sdist", "wheel"]},
+]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/astrivant/hypothesis-helm/issues"
@@ -99,6 +105,8 @@ ignore = ["D200", "D212"]
 convention = "google"
 
 [tool.mypy]
+# Bash-executed recipe snapshots retain their pre-migration type-checking scope.
+exclude = ["^pkg/hypothesis_helm/benchmarking/refresh/recipes/"]
 python_version = "3.13"
 strict = true
 files = ["pkg"]

@@ -1,6 +1,6 @@
 # Chart topology graphs
 
-[Benchmarking](../../benchmarks/README.md)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 197 charts: 191 graphs with rendered baselines, 5 static-only graphs, and 1 chart without a values file. Verification checks account for every exported vertex and edge.
 

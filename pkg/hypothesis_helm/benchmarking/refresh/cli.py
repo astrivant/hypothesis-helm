@@ -101,7 +101,7 @@ def main(argv: list[str] | None = None) -> int:
         if workers < 1:
             raise ValueError("workers must be a positive integer or auto")
         project = Path.cwd()
-        if not (project / "benchmarks/refresh/operations.sh").is_file():
+        if not (project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/operations.sh").is_file():
             raise ValueError("Run hypothesis-helm-refresh from the project checkout root")
         root = args.root or Path(f".cache/refresh/refresh-{int(time.time())}")
         if args.ci_phase:

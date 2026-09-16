@@ -1,6 +1,6 @@
 # Structural sparsity
 
-[Results and plots](../../studies/structural-sparsity/README.md) · [Benchmark guide](../../benchmarks/README.md)
+[Results and plots](../../studies/structural-sparsity/README.md) · [Benchmark guide](README.md)
 
 This extends the sparsity study in a different direction: enlarge the chart while keeping the
 parts that affect output small. It asks whether irrelevant structure adds discovery cost or
@@ -31,7 +31,7 @@ always has a common root. Distant fields can still be connected through shared r
 The report includes a diagram of the two dependency arrangements.
 
 ```sh
-hypothesis-helm-benchmark structural-sparsity --time-limit 9m --output benchmarks/runs/structural-sparsity
+hypothesis-helm-benchmark structural-sparsity --time-limit 9m --output .cache/benchmarks/structural-sparsity
 ```
 
 The full refresh includes this command after the existing structure sparsity study. Defaults sweep
@@ -41,7 +41,7 @@ Use a fresh output directory for new measurements; `--plot-only` redraws existin
 
 ```sh
 hypothesis-helm-benchmark structural-sparsity --breadths 50 200 --depths 2 8 --repeats 2 \
-  --time-limit 30s --output benchmarks/runs/structural-sparsity-quick
+  --time-limit 30s --output .cache/benchmarks/structural-sparsity-quick
 ```
 
 Each run uses production selectors and real Helm renders, checked against an independent oracle.
@@ -66,6 +66,6 @@ in its topology visualization inventory.
 Replay a retained case through the common generator:
 
 ```sh
-hypothesis-helm-benchmark generate --parameters benchmarks/runs/structural-sparsity/cases/breadth-50-depth-2-far.yaml \
+hypothesis-helm-benchmark generate --parameters .cache/benchmarks/structural-sparsity/cases/breadth-50-depth-2-far.yaml \
   --output /tmp/structural-sparsity-chart
 ```

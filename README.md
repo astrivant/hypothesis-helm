@@ -81,14 +81,14 @@ pip install "hypothesis-helm[benchmarking]"
 hypothesis-helm-benchmark --help
 ```
 
-See [Benchmarking](benchmarks/README.md) for chart generation and plot commands.
+See [Benchmarking](docs/benchmarking/README.md) for chart generation and plot commands.
 Browse the [flame graphs](studies/flamegraphs/README.md) to see time spent in Python calls during a scaling smoke test.
-The [configurable stress chart](benchmarks/chart) combines known defects and topology
-controls in one fixture; its [guide](benchmarks/fixture/README.md) explains how to reduce them one step at a time.
+The [configurable stress chart](pkg/hypothesis_helm/benchmarking/assets/chart) combines known defects and topology
+controls in one fixture; its [guide](docs/benchmarking/fixture.md) explains how to reduce them one step at a time.
 See [random sampling results](studies/sampling/README.md) for the measured
 tradeoff between sample size and known defect discovery.
 To rerun all project checks, benchmarks, plots, and repository reports, see the
-[full refresh command](benchmarks/README.md#reproduce-the-full-project-run).
+[full refresh command](docs/benchmarking/README.md#reproduce-the-full-project-run).
 
 ## Examples: failures hidden by defaults
 
@@ -171,7 +171,7 @@ The [root configuration](.hypothesis-helm.yaml) lists every code commented out.
 | [Compiler](docs/compiler/README.md) | Pass flow, syntax trees, and illustrated compiler decisions. |
 | [Execution](docs/execution/README.md) | Parallel workers, sharding, estimates, and time limits. |
 | [CI examples](docs/ci/README.md) | GitHub Action, CircleCI, and GitLab setup. |
-| [Benchmarking](benchmarks/README.md) | Local shard commands, chart generation, and measured plots. |
+| [Benchmarking](docs/benchmarking/README.md) | Local shard commands, chart generation, and measured plots. |
 | [CLI reference](docs/cli/README.md) | Generated command and option reference. |
 | [Development](docs/development.md) | Contributor setup, checks, and repository map. |
 

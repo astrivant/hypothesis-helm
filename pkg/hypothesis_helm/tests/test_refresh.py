@@ -64,9 +64,9 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
             capture_output=True,
         )
     environment = dict(os.environ, PYTHONPATH=str(project / "pkg"), PATH=f"{Path(sys.executable).parent}{os.pathsep}{os.environ['PATH']}")
-    run_root = Path("benchmarks/runs/refresh-1234")
+    run_root = Path(".cache/benchmarks/refresh-1234")
     initialized = subprocess.run(
-        [sys.executable, str(project / "benchmarks/refresh/initialize.py"), str(run_root)],
+        [sys.executable, str(project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/initialize.py"), str(run_root)],
         cwd=tmp_path,
         env=environment,
         capture_output=True,
@@ -74,7 +74,7 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
         check=False,
     )
     assert initialized.returncode == 0, initialized.stdout + initialized.stderr
-    assert (tmp_path / "benchmarks/runs/latest-refresh.txt").read_text().strip() == str(run_root)
+    assert (tmp_path / ".cache/benchmarks/latest-refresh.txt").read_text().strip() == str(run_root)
     snapshot = tmp_path / run_root / "frozen-source"
     for name, expected in json.loads((tmp_path / run_root / "measured-source-hashes.json").read_text()).items():
         assert hashlib.sha256((snapshot / name).read_bytes()).hexdigest() == expected
@@ -423,7 +423,7 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                         (directory / f"{axis}-{metric.replace('_', '-')}.{extension}").write_bytes(b"x" * 1001)
         (directory / "results.json").write_text(json.dumps(document))
     result = subprocess.run(
-        [sys.executable, str(project / "benchmarks/refresh/verify-measurements.py"), str(tmp_path)],
+        [sys.executable, str(project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/verify-measurements.py"), str(tmp_path)],
         capture_output=True,
         text=True,
         check=False,
@@ -451,12 +451,12 @@ def test_refresh_includes_every_stress_topology(tmp_path: Path) -> None:
     for name, settings in progression(Stress()):
         (cases / f"{name}.yaml").write_text(yamlio.dump({"parameters": {"stress": asdict(settings)}}))
     subprocess.run(
-        [sys.executable, str(project / "benchmarks/refresh/prepare-fixtures.py"), str(tmp_path)],
+        [sys.executable, str(project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/prepare-fixtures.py"), str(tmp_path)],
         check=True,
         capture_output=True,
     )
     subprocess.run(
-        [sys.executable, str(project / "benchmarks/refresh/prepare-topologies.py"), str(tmp_path)],
+        [sys.executable, str(project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/prepare-topologies.py"), str(tmp_path)],
         check=True,
         capture_output=True,
     )
@@ -480,7 +480,7 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
         None: Published paths, retained recipes and checksums use the grouped layout.
     """
     project = Path(__file__).resolve().parents[3]
-    recipes = project / "benchmarks/refresh"
+    recipes = project / "pkg/hypothesis_helm/benchmarking/refresh/recipes"
     run = tmp_path / "refresh"
     run.mkdir()
     for source in recipes.iterdir():
@@ -521,7 +521,7 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
         (output / "results.json").write_text(json.dumps({"study": name}))
     (run / "outputs/chart-topologies/verification.json").write_text("{}")
     subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, check=True, capture_output=True)
-    published = tmp_path / "benchmarks"
+    published = tmp_path / "pkg/hypothesis_helm/benchmarking/assets"
     assert not (published / "results.json").exists()
     assert not (published / "matrix").exists()
     assert not (published / "studies").exists()
@@ -579,7 +579,7 @@ def test_refresh_scans_follow_published_diagrams(tmp_path: Path, failure: str | 
         )
     )
     interpreter.chmod(0o755)
-    (root / "operations.sh").write_text((project / "benchmarks/refresh/operations.sh").read_text())
+    (root / "operations.sh").write_text((project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/operations.sh").read_text())
     profiler = binary / "hypothesis-helm-benchmark"
     profiler.write_text("#!/usr/bin/env bash\nexit 0\n")
     profiler.chmod(0o755)
@@ -639,13 +639,13 @@ def test_refresh_summaries_replace_numbers_and_preserve_prose(tmp_path: Path, mo
     import runpy
 
     project = Path(__file__).resolve().parents[3]
-    script = project / "benchmarks/refresh/update-documentation.py"
+    script = project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/update-documentation.py"
     monkeypatch.chdir(tmp_path)
     root = tmp_path / "refresh"
     output = root / "outputs/performance"
     output.mkdir(parents=True)
-    benchmark = tmp_path / "benchmarks/README.md"
-    benchmark.parent.mkdir()
+    benchmark = tmp_path / "docs/benchmarking/README.md"
+    benchmark.parent.mkdir(parents=True)
     benchmark.write_text("My introduction\n<!-- refresh:performance:start -->old wording<!-- refresh:performance:end -->\nKeep this.")
     readme = tmp_path / "README.md"
     readme.write_text(
@@ -729,7 +729,7 @@ def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str) -> None:
     project = Path(__file__).resolve().parents[3]
     root = tmp_path / "refresh"
     root.mkdir()
-    shutil.copy2(project / "benchmarks/refresh/studies.sh", root / "studies.sh")
+    shutil.copy2(project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/studies.sh", root / "studies.sh")
     binary = tmp_path / "bin"
     binary.mkdir()
     recorder = binary / "hypothesis-helm-benchmark"
@@ -756,7 +756,7 @@ def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str) -> None:
     }
     for study in STUDIES:
         subprocess.run(
-            ["bash", str(project / "benchmarks/refresh/operations.sh"), study, str(root)],
+            ["bash", str(project / "pkg/hypothesis_helm/benchmarking/refresh/recipes/operations.sh"), study, str(root)],
             env=environment,
             check=True,
             capture_output=True,

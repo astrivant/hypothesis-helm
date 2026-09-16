@@ -96,7 +96,7 @@ jobs:
       - name: Run framework checks and parallel tests
         run: bash scripts/check.sh --junitxml=reports/pytest.xml
       - name: Exercise the shared benchmark chart and stress plots
-        run: bash benchmarks/smoke.sh
+        run: bash scripts/project-run.sh hypothesis-helm-benchmark smoke
       - name: Build wheel and source distribution
         run: poetry build
       - name: Verify end-user Helm testing commands
@@ -125,5 +125,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: python-benchmark-smoke
-          path: benchmarks/runs/smoke/
+          path: .cache/benchmarks/smoke/
+          include-hidden-files: true
           retention-days: 30

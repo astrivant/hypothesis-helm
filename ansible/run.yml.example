@@ -1,0 +1,11 @@
+# Copy to ansible/run.yml. Use a new run_id for each execution.
+outputs_file: /absolute/path/to/terraform/shards/outputs.json
+expected_project: your-existing-project
+run_id: chart-check-20260916-01
+worker_jobs: 4
+job_timeout_seconds: 3600
+# Optional OS Login POSIX username; resolved through gcloud when omitted.
+# os_login_user: your_os_login_username
+# chart_source: /absolute/path/to/chart-with-vendored-dependencies
+# job_script: /absolute/path/to/ansible/jobs/performance.sh
+# aggregate_script: ""  # Benchmark measurements are not chart-test reports.

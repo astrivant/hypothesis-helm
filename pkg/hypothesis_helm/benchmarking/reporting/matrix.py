@@ -132,7 +132,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Structural strategy matrix",
         "",
-        "[Benchmarking](../../benchmarks/README.md)",
+        "[Benchmarking](../../docs/benchmarking/README.md)",
         "",
         f"Helm `{metadata['helm']}`; "
         f"{metadata['time_limit_seconds']:g}s execution ceiling per run; "

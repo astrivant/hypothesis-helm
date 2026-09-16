@@ -1,6 +1,6 @@
 # Error rate and filtering
 
-[Benchmarking](../../benchmarks/README.md)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 Measured axes in this run: clustering. The default refresh runs all three axes.
 

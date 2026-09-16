@@ -16,6 +16,8 @@ from hypothesis_helm.execution.signals import Termination
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 
 COMMANDS = {
+    "smoke": "execution.shell",
+    "shards": "execution.shell",
     "generate": "charts.generator",
     "run": "studies.performance",
     "discovery": "studies.discovery",
@@ -59,7 +61,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         module = importlib.import_module(f"hypothesis_helm.benchmarking.{COMMANDS[args.command]}")
-        arguments = list(args.arguments)
+        arguments = [args.command, *args.arguments] if args.command in {"smoke", "shards"} else list(args.arguments)
         entry = getattr(module, "main", None) or module.run
 
         def invoke() -> int:
@@ -83,7 +85,7 @@ def main(argv: list[str] | None = None) -> int:
                     if options.chart is not None:
                         parser.error("choose either --parameters or --chart")
                     if options.output is None:
-                        options.output = Path("benchmarks/runs") / args.command
+                        options.output = Path(".cache/benchmarks") / args.command
                         arguments.extend(["--output", str(options.output)])
                     destination = options.output
                     if args.command == "run":

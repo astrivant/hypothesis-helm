@@ -20,7 +20,7 @@ repos:
         entry: bash scripts/project-run.sh shfmt -w
         language: system
         types: [shell]
-        files: ^(scripts/|benchmarks/|pkg/hypothesis_helm/integrations/)
+        files: ^(scripts/|ansible/|pkg/hypothesis_helm/(integrations|benchmarking)/)
       - id: ruff-check
         name: Ruff lint
         entry: bash scripts/project-run.sh ruff check

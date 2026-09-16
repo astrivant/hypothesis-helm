@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+umask 077
+export RUN_ROOT={{ remote_run | quote }}
+export HH_RUN_ID={{ run_id | quote }}
+export SHARD_INDEX={{ shard_index | string | quote }}
+export SHARD_TOTAL={{ shard_total | string | quote }}
+export JOBS={{ worker_jobs | string | quote }}
+export SEED={{ seed | string | quote }}
+export HH_CHART="$RUN_ROOT/chart"
+export RESULTS_DIR="$RUN_ROOT/results"
+export CACHE_DIR={{ remote_cache | quote }}
+export PATH={{ (remote_run + '/source/.venv/bin:' + remote_root + '/tools/helm-' + helm_version + '/linux-amd64:/usr/local/bin:/usr/bin:/bin') | quote }}
+export MPLCONFIGDIR="$CACHE_DIR/matplotlib"
+export CI=true
+exec >"$RESULTS_DIR/stdout.log" 2>"$RESULTS_DIR/stderr.log"
+# Never let concurrent runs mutate the same worker's persistent cache.
+exec 9>"$CACHE_DIR/worker.lock"
+if ! flock -n 9; then
+  printf '{"run_id":"%s","shard_index":%s,"exit_code":75}\n' "$HH_RUN_ID" "$SHARD_INDEX" >"$RESULTS_DIR/status.json"
+  exit 75
+fi
+sha256sum "$RUN_ROOT/source.tar.gz" "$RUN_ROOT/chart.tar.gz" "$RUN_ROOT/job.sh" >"$RESULTS_DIR/inputs.sha256"
+set +e
+bash "$RUN_ROOT/job.sh"
+status=$?
+set -e
+printf '{"run_id":"%s","shard_index":%s,"exit_code":%s}\n' "$HH_RUN_ID" "$SHARD_INDEX" "$status" >"$RESULTS_DIR/status.json.pending"
+mv "$RESULTS_DIR/status.json.pending" "$RESULTS_DIR/status.json"
+exit "$status"

@@ -1,0 +1,18 @@
+---
+remote_action: run
+source_root: "{{ playbook_dir }}/.."
+chart_source: "{{ source_root }}/examples/configmap"
+job_script: "{{ playbook_dir }}/jobs/chart-tests.sh"
+aggregate_script: "{{ playbook_dir }}/jobs/aggregate-tests.sh"
+local_root: "{{ source_root }}/.cache/remote/{{ run_id }}"
+local_results: "{{ local_root }}/results"
+remote_root: /opt/hypothesis-helm
+worker_user: hypothesis
+worker_group: "{{ worker_user }}"
+worker_jobs: 4
+seed: 2026
+job_timeout_seconds: 3600
+collect_cache: true
+remote_run: "{{ remote_root }}/runs/{{ run_id }}"
+remote_cache: "{{ remote_root }}/cache/shard-{{ shard_index }}-of-{{ shard_total }}"
+unit_name: "hypothesis-{{ run_id }}"

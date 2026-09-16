@@ -393,3 +393,8 @@ they used the same policy and population.
 
 The [sampling guide](../execution/README.md#percentage-sampling) explains selection
 units, protected cases, and why this does not guarantee a particular bug recall.
+
+## Remote VM shards
+
+Use the [Terraform and Ansible worker setup](../../ansible/README.md) to run generated-suite path shards on private GCP VMs,
+collect every worker's artifacts locally, and build one verified aggregate report.

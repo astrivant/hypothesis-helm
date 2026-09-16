@@ -1,0 +1,116 @@
+---
+- name: Prepare the local snapshot and authenticate to the applied VM inventory
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files: [defaults.yml]
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  tasks:
+    - name: Read the Terraform handoff
+      ansible.builtin.set_fact:
+        target: "{{ (lookup('file', outputs_file) | from_json).shard_workers.value }}"
+    - name: Validate the run and complete shard inventory
+      ansible.builtin.assert:
+        that:
+          - target.project_id == expected_project
+          - target.shard_total | int > 0
+          - target.workers | length == target.shard_total | int
+          - target.workers | map(attribute='shard_index') | sort == range(1, (target.shard_total | int) + 1) | list
+          - target.workers | map(attribute='name') | unique | length == target.shard_total | int
+          - run_id is match('^[a-z][a-z0-9-]{0,49}$')
+          - remote_action in ['run', 'collect']
+          - worker_user is match('^[a-z_][a-z0-9_-]{0,30}$')
+          - worker_user != 'root'
+          - worker_group is match('^[a-z_][a-z0-9_-]{0,30}$')
+          - worker_jobs | int > 0
+          - job_timeout_seconds | int > 0
+    - name: Prepare immutable local inputs
+      ansible.builtin.import_tasks: tasks/snapshot.yml
+      when: remote_action == 'run'
+    - name: Require the original fleet when recovering artifacts
+      ansible.builtin.assert:
+        that: lookup('file', local_root + '/workers.json') | from_json == target
+        fail_msg: The exported fleet differs from this run's snapshot; use its original Terraform outputs.
+    - name: Resolve the current OS Login profile
+      ansible.builtin.command:
+        argv: [gcloud, compute, os-login, describe-profile, --project, "{{ expected_project }}", --format=json]
+      register: login_profile
+      changed_when: false
+      when: os_login_user | default('') | length == 0
+    - name: Select the OS Login user
+      ansible.builtin.set_fact:
+        login_user: >-
+          {{ os_login_user | default('', true) | default(
+          ((login_profile.stdout | default('{}') | from_json).posixAccounts | default([]) |
+          selectattr('primary', 'equalto', true) | map(attribute='username') | first | default('')), true) }}
+    - name: Require a resolved login identity
+      ansible.builtin.assert:
+        that: login_user | length > 0
+    - name: Verify and connect each VM
+      ansible.builtin.include_tasks: tasks/connect.yml
+      loop: "{{ target.workers }}"
+      loop_control:
+        loop_var: worker
+
+- name: Stage and start every shard
+  hosts: shard_workers
+  become: true
+  gather_facts: true
+  vars_files: [defaults.yml]
+  roles:
+    - role: compute_worker
+      when: remote_action == 'run'
+
+- name: Wait for workers and fetch their independent artifacts
+  hosts: shard_workers
+  become: true
+  gather_facts: false
+  vars_files: [defaults.yml]
+  tasks:
+    - name: Collect outputs including failed test runs
+      ansible.builtin.include_role:
+        name: collect_artifacts
+
+- name: Verify collection and aggregate on the controller
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files: [defaults.yml]
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  tasks:
+    - name: Require collection from every expected worker, including idle shards
+      ansible.builtin.assert:
+        that:
+          - hostvars[item.name].artifacts_collected | default(false)
+          - hostvars[item.name].workload_status.run_id == run_id
+          - hostvars[item.name].workload_status.shard_index | int == item.shard_index | int
+        fail_msg: "Missing artifacts from {{ item.name }}; rerun with remote_action=collect before aggregation."
+      loop: "{{ target.workers }}"
+    - name: Run the local aggregation command after every transfer
+      ansible.builtin.command:
+        argv: [bash, "{{ aggregate_script }}"]
+        chdir: "{{ source_root }}"
+      environment:
+        LOCAL_RESULTS: "{{ local_results }}"
+        HH_RUN_ID: "{{ run_id }}"
+        SHARD_TOTAL: "{{ target.shard_total | string }}"
+        PATH: "{{ source_root }}/.venv/bin:{{ lookup('env', 'PATH') }}"
+      register: aggregation
+      failed_when: false
+      changed_when: true
+      when: aggregate_script | length > 0
+    - name: Report the aggregation exit status after retaining all data
+      ansible.builtin.assert:
+        that: aggregation.rc == 0
+        fail_msg: "Aggregation returned {{ aggregation.rc }}. Reports and evidence remain in {{ local_results }}. {{ aggregation.stderr }}"
+      when: aggregate_script | length > 0
+    - name: Require a successful computation and process-tree exit on every VM
+      ansible.builtin.assert:
+        that:
+          - hostvars[item.name].workload_status.run_id == run_id
+          - hostvars[item.name].workload_status.exit_code | int == 0
+          - "'Result=success' in hostvars[item.name].service_status.stdout_lines"
+        fail_msg: "{{ item.name }} failed or was interrupted; inspect {{ local_results }}."
+      loop: "{{ target.workers }}"

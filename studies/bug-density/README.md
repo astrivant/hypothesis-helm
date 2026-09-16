@@ -1,6 +1,6 @@
 # Bug discovery by interaction strength
 
-[Benchmarking](../../benchmarks/README.md)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 This fixed fixture contains 261 injected faults. The planner varies interaction strength from one to six, with automatic enumeration and inferred exhaustive groups disabled to isolate strength. Every selected input is rendered with Helm 4.
 

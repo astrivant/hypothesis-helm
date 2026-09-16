@@ -58,7 +58,7 @@ jobs:
       - run: bash scripts/check.sh --junitxml=reports/pytest.xml
       - run:
           name: Exercise the shared benchmark chart and stress plots
-          command: bash benchmarks/smoke.sh
+          command: bash scripts/project-run.sh hypothesis-helm-benchmark smoke
       - run: poetry build
       - run:
           name: Verify end-user Helm testing commands
@@ -73,7 +73,7 @@ jobs:
       - store_artifacts:
           path: dist
       - store_artifacts:
-          path: benchmarks/runs/smoke
+          path: .cache/benchmarks/smoke
 
 workflows:
   verify-all:

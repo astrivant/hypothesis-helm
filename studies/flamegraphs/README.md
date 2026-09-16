@@ -1,6 +1,6 @@
 # Flame graphs
 
-[Benchmarking](../../benchmarks/README.md#flame-graphs-across-worker-cores)
+[Benchmarking](../../docs/benchmarking/README.md#flame-graphs-across-worker-cores)
 
 These captures come from a scaling smoke test with four cases and worker settings of one and two.
 They illustrate the profiler; they are not measurements from the Bitnami or Prometheus scans.

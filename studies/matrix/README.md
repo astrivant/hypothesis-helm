@@ -1,6 +1,6 @@
 # Structural strategy matrix
 
-[Benchmarking](../../benchmarks/README.md)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 Helm `v4.3.0+gbec5b06`; 540s execution ceiling per run; trim level 2; seed 2026.
 

@@ -303,7 +303,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero for completed or deadline-censored measurements; one for incorrect renders.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/matrix"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/matrix"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--max-cases", type=int, default=4096)
     parser.add_argument("--trim-level", type=int, default=2)

@@ -131,7 +131,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Failure expansion",
         "",
-        "[Benchmarking](../../benchmarks/README.md)",
+        "[Benchmarking](../../docs/benchmarking/README.md)",
         "",
         "Topology trimming previously exercised 47 of 51 erroneous inputs in three cases. "
         "The remaining four each produced the same complete manifests as a retained failing input. "

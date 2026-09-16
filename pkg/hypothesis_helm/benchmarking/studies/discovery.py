@@ -156,7 +156,7 @@ def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = N
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/bug-density"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/bug-density"))
     args = parser.parse_args(argv)
     if not 2 <= args.max_strength <= args.input_complexity <= 16:
         parser.error("require 2 <= max-strength <= input-complexity <= 16")

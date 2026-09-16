@@ -18,9 +18,13 @@ generated-tests/
 !docs/reports/
 !docs/reports/**
 
-# Refresh helpers are source files; generated bookkeeping belongs under .cache/refresh/.
-benchmarks/refresh/*
-!benchmarks/refresh/README.md
-!benchmarks/refresh/*.py
-!benchmarks/refresh/*.sh
 studies/chart-topologies/verification.json
+
+# Local infrastructure state, credentials and downloaded providers.
+terraform/**/.terraform/
+terraform/**/*.tfstate*
+terraform/**/*.tfplan
+terraform/**/terraform.tfvars
+terraform/**/outputs.json
+ansible/run.yml
+ansible/.collections/

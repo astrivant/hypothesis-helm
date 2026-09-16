@@ -169,8 +169,8 @@ def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = N
         int: Zero for a completed study, one for failure, or 124 at the deadline.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--chart", type=Path, default=Path("benchmarks/runs/chart"))
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/sparsity"))
+    parser.add_argument("--chart", type=Path, default=Path(".cache/benchmarks/chart"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/sparsity"))
     parser.add_argument("--count", type=int, default=32768, help="initial distinct-input count")
     parser.add_argument("--retain", type=float, default=0.25, help="fraction retained per run")
     parser.add_argument("--levels", type=int, default=8)

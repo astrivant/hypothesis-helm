@@ -1,0 +1,60 @@
+---
+- name: Check that the VM has not been replaced since exporting Terraform outputs
+  ansible.builtin.command:
+    argv: [gcloud, compute, instances, describe, "{{ worker.name }}", --project, "{{ expected_project }}", --zone, "{{ worker.zone }}", '--format=value(id)']
+  register: instance_identity
+  changed_when: false
+- name: Require the applied instance identity
+  ansible.builtin.assert:
+    that: instance_identity.stdout | trim == worker.instance_id | string
+- name: Establish the OS Login key and known host through IAP
+  ansible.builtin.command:
+    argv:
+      - gcloud
+      - compute
+      - ssh
+      - "{{ login_user }}@{{ worker.name }}"
+      - --project
+      - "{{ expected_project }}"
+      - --zone
+      - "{{ worker.zone }}"
+      - --tunnel-through-iap
+      - --quiet
+      - --command=true
+  register: ssh_ready
+  changed_when: false
+  retries: 20
+  delay: 10
+  until: ssh_ready.rc == 0
+- name: Read the host key established by gcloud for the verified instance ID
+  ansible.builtin.command:
+    argv:
+      - ssh-keygen
+      - -F
+      - "compute.{{ worker.instance_id }}"
+      - -f
+      - "{{ lookup('env', 'HOME') }}/.ssh/google_compute_known_hosts"
+  register: instance_host_key
+  changed_when: false
+- name: Require an established host key before using the Ansible IAP alias
+  ansible.builtin.assert:
+    that: instance_host_key.stdout_lines | reject('match', '^#') | list | length > 0
+- name: Bind the verified key to the instance-name alias used by google.cloud.iap
+  ansible.builtin.known_hosts:
+    path: "{{ lookup('env', 'HOME') }}/.ssh/google_compute_known_hosts"
+    name: "{{ worker.name }}"
+    key: "{{ item | regex_replace('^\\S+', worker.name) }}"
+  loop: "{{ instance_host_key.stdout_lines | reject('match', '^#') | list }}"
+- name: Add the worker through the Google IAP connection
+  ansible.builtin.add_host:
+    name: "{{ worker.name }}"
+    groups: shard_workers
+    ansible_connection: google.cloud.iap
+    ansible_gcloud_host: "{{ worker.name }}"
+    ansible_gcloud_project: "{{ expected_project }}"
+    ansible_gcloud_zone: "{{ worker.zone }}"
+    ansible_host_key_checking: true
+    ansible_user: "{{ login_user }}"
+    ansible_ssh_private_key_file: "{{ lookup('env', 'HOME') }}/.ssh/google_compute_engine"
+    shard_index: "{{ worker.shard_index }}"
+    shard_total: "{{ target.shard_total }}"

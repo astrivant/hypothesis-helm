@@ -274,7 +274,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero after successful or time-limited runs, one for unexpected chart failures.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/filtering"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/filtering"))
     parser.add_argument("--inputs", type=int, nargs="+", default=[6, 7, 8, 9])
     parser.add_argument("--depths", type=int, nargs="+", default=[1, 3, 5])
     parser.add_argument("--repeats", type=int, default=2)

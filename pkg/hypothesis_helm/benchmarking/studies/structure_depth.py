@@ -89,7 +89,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero for complete plots, one for execution-budget censoring.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/structure-depth"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/structure-depth"))
     parser.add_argument("--depths", type=int, nargs="+", default=list(range(6)))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--error-percent", type=float, default=5)

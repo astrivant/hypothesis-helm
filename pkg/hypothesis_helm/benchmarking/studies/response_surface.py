@@ -82,7 +82,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     from hypothesis_helm.benchmarking.reporting.response_surface import plot
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/response-surface"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/response-surface"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--planes", nargs="+", choices=("structure", "failures"), default=["structure", "failures"])
     parser.add_argument("--depths", nargs="+", type=int, default=[0, 2, 5])

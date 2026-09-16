@@ -55,9 +55,9 @@ def parser() -> argparse.ArgumentParser:
         argparse.ArgumentParser: Workload, sharding, replication and plotting controls.
     """
     result = argparse.ArgumentParser(description=__doc__)
-    result.add_argument("--chart", type=Path, default=Path("benchmarks/runs/chart"))
+    result.add_argument("--chart", type=Path, default=Path(".cache/benchmarks/chart"))
     result.add_argument("--values", type=Path, help="distinct JSONL overrides for a custom chart")
-    result.add_argument("--output", type=Path, default=Path("benchmarks/runs"))
+    result.add_argument("--output", type=Path, default=Path(".cache/benchmarks"))
     result.add_argument("--helm", default="helm")
     result.add_argument(
         "--time-limit",

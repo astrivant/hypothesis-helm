@@ -299,7 +299,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero for completed calibration, one when the execution budget expires.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/calibration"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/calibration"))
     parser.add_argument("--inputs", type=int, nargs="+", default=[6, 7, 8])
     parser.add_argument("--depths", type=int, nargs="+", default=[1, 2, 3, 4, 5])
     parser.add_argument("--breadths", type=int, nargs="+", default=[1], help="sibling copies of the fault resource (1..16)")

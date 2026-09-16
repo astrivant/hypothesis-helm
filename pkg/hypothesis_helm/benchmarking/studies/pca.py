@@ -254,7 +254,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero for a complete study; one when a reference population hits its deadline.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/pca"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/pca"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--error-percent", type=float, default=5.0)
     parser.add_argument("--error-seed", type=int, default=1729)

@@ -1,6 +1,6 @@
 # Quadratic response surfaces
 
-[Benchmarking](../../benchmarks/README.md) · [Collected and fitted surfaces](../../studies/error-surface/quadratic-fits.md)
+[Benchmarking](README.md) · [Collected and fitted surfaces](../../studies/error-surface/quadratic-fits.md)
 
 We expect each control to affect runtime and error discovery, and one control to change
 another's effect. A quadratic gives these hypotheses explicit terms without assuming

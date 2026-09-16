@@ -79,7 +79,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Structure depth sweep",
         "",
-        "[Benchmarking](../../benchmarks/README.md)",
+        "[Benchmarking](../../docs/benchmarking/README.md)",
         "",
         "Only topology trim depth varies. Random trimming stays at zero and failure expansion stays enabled.",
         "",

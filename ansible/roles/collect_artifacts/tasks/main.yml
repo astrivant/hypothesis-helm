@@ -1,0 +1,95 @@
+---
+- name: Wait for the whole systemd computation unit to finish
+  ansible.builtin.command:
+    argv: [systemctl, show, "{{ unit_name }}", --property=SubState, --value]
+  register: unit_state
+  changed_when: false
+  failed_when: false
+  until: unit_state.stdout | trim in ['exited', 'failed', 'dead']
+  retries: "{{ ((job_timeout_seconds | int) / (collection_poll_seconds | int)) | round(0, 'ceil') | int + 12 }}"
+  delay: "{{ collection_poll_seconds }}"
+- name: Refuse a snapshot of a computation that is still running
+  ansible.builtin.assert:
+    that: unit_state.stdout | trim in ['exited', 'failed', 'dead']
+- name: Capture systemd status including timeout and signal failures
+  ansible.builtin.command:
+    argv: [systemctl, show, "{{ unit_name }}", --property=ActiveState, --property=SubState, --property=Result, --property=ExecMainStatus]
+  register: service_status
+  changed_when: false
+  failed_when: false
+- name: Keep process-tree status alongside computation results
+  ansible.builtin.copy:
+    content: "{{ service_status.stdout }}\n"
+    dest: "{{ remote_run }}/results/systemd-status.txt"
+    owner: "{{ worker_user }}"
+    group: "{{ worker_group }}"
+    mode: '0600'
+- name: Check for the workload exit record
+  ansible.builtin.stat:
+    path: "{{ remote_run }}/results/status.json"
+  register: status_file
+- name: Read the workload exit record
+  ansible.builtin.slurp:
+    src: "{{ remote_run }}/results/status.json"
+  register: status_record
+  when: status_file.stat.exists
+- name: Distinguish failed or interrupted workers from successful computations
+  ansible.builtin.set_fact:
+    workload_status: "{{ (status_record.content | b64decode | from_json) if status_file.stat.exists else {'run_id': run_id, 'shard_index': shard_index, 'exit_code': -1} }}"
+- name: Archive generated data and optional per-shard caches under the cache lock
+  become_user: "{{ worker_user }}"
+  ansible.builtin.shell: |
+    set -euo pipefail
+    exec 9>{{ (remote_cache + '/worker.lock') | quote }}
+    flock -n 9
+    {% if collect_cache | bool %}
+    tar -czf {{ (remote_run + '/artifacts.tar.gz') | quote }} -C {{ remote_run | quote }} results -C {{ remote_root | quote }} {{ ('cache/shard-' + (shard_index | string) + '-of-' + (shard_total | string)) | quote }}
+    {% else %}
+    tar -czf {{ (remote_run + '/artifacts.tar.gz') | quote }} -C {{ remote_run | quote }} results
+    {% endif %}
+  args:
+    executable: /bin/bash
+  changed_when: true
+- name: Create a collision-free local destination per VM
+  delegate_to: localhost
+  become: false
+  ansible.builtin.file:
+    path: "{{ local_results }}/shards/{{ inventory_hostname }}"
+    state: directory
+    mode: '0700'
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+- name: Fetch and checksum the compressed artifact bundle through IAP
+  ansible.builtin.fetch:
+    src: "{{ remote_run }}/artifacts.tar.gz"
+    dest: "{{ local_results }}/shards/{{ inventory_hostname }}.tar.gz"
+    flat: true
+    validate_checksum: true
+- name: Replace only this VM's previous extraction after a verified transfer
+  delegate_to: localhost
+  become: false
+  ansible.builtin.file:
+    path: "{{ local_results }}/shards/{{ inventory_hostname }}"
+    state: "{{ item }}"
+    mode: '0700'
+  loop: [absent, directory]
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+- name: Expand collected artifacts using the controller's BSD or GNU tar
+  delegate_to: localhost
+  become: false
+  ansible.builtin.command:
+    argv:
+      - tar
+      - --no-same-owner
+      - --no-same-permissions
+      - -xzf
+      - "{{ local_results }}/shards/{{ inventory_hostname }}.tar.gz"
+      - -C
+      - "{{ local_results }}/shards/{{ inventory_hostname }}"
+  changed_when: true
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+- name: Record successful collection
+  ansible.builtin.set_fact:
+    artifacts_collected: true

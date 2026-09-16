@@ -185,7 +185,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines = [
         "# Output-space PCA",
         "",
-        "[Benchmarking](../../benchmarks/README.md)",
+        "[Benchmarking](../../docs/benchmarking/README.md)",
         "",
         f"Real Helm `{metadata['helm']}` renders. Errors occupy "
         f"{metadata['error_percent']:g}% of valid input assignments "

@@ -1,13 +1,10 @@
 # Python's CSV writer emits standard CRLF record separators.
-benchmarks/**/*.csv whitespace=cr-at-eol
 studies/**/*.csv whitespace=cr-at-eol
 docs/reports/**/*.csv whitespace=cr-at-eol
 *.pdf binary
 # Matplotlib vector exports are generated artifacts.
-benchmarks/**/*.svg binary
 studies/**/*.svg binary
 # Raw measurements and retained scan evidence; rendered reports stay browsable in Git.
-benchmarks/**/*.log filter=lfs diff=lfs merge=lfs -text
 studies/**/*.log filter=lfs diff=lfs merge=lfs -text
 docs/reports/**/*.csv filter=lfs diff=lfs merge=lfs -text
 docs/reports/**/*.tsv filter=lfs diff=lfs merge=lfs -text
@@ -15,12 +12,10 @@ docs/reports/**/*.gz filter=lfs diff=lfs merge=lfs -text
 docs/reports/**/*.err filter=lfs diff=lfs merge=lfs -text
 studies/**/*.json filter=lfs diff=lfs merge=lfs -text
 studies/**/*.tsv filter=lfs diff=lfs merge=lfs -text
-benchmarks/**/*.err filter=lfs diff=lfs merge=lfs -text
 studies/**/*.err filter=lfs diff=lfs merge=lfs -text
 docs/reports/**/*.json filter=lfs diff=lfs merge=lfs -text
 docs/reports/**/*.log filter=lfs diff=lfs merge=lfs -text
 studies/**/*.csv filter=lfs diff=lfs merge=lfs -text
-benchmarks/**/*.gz filter=lfs diff=lfs merge=lfs -text
 studies/**/*.gz filter=lfs diff=lfs merge=lfs -text
 # Chart schemas are fixture source, including those beside benchmark results.
 studies/**/values.schema.json !filter !diff !merge text

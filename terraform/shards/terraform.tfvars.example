@@ -1,0 +1,9 @@
+project_id = "your-existing-project"
+region     = "us-central1"
+zone       = "us-central1-a"
+workers = {
+  replicas         = 3
+  machine_type     = "e2-standard-4"
+  disk_gib         = 50
+  operator_members = ["user:you@example.com"]
+}

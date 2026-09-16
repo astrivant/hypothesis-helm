@@ -1,6 +1,6 @@
 # Random sampling and defect discovery
 
-[Benchmarking](../../benchmarks/README.md)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 The shared stress chart has 1024 valid inputs and six known defect families. Every input was rendered with Helm; 500 seeded samples were evaluated at each size.
 

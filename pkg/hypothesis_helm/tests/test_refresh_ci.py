@@ -87,7 +87,7 @@ def test_ci_study_retains_status_and_logs(tmp_path: Path, monkeypatch: pytest.Mo
     (restored / "logs").mkdir(parents=True)
     (restored / "provenance.json").write_text("{}")
     for name in ("operations.sh", "studies.sh"):
-        (restored / name).write_text((project / "benchmarks/refresh" / name).read_text())
+        (restored / name).write_text((project / "pkg/hypothesis_helm/benchmarking/refresh/recipes" / name).read_text())
     binary = tmp_path / "bin"
     binary.mkdir()
     executable = binary / "hypothesis-helm-benchmark"

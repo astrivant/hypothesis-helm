@@ -117,7 +117,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         int: Zero for complete comparisons; one for an execution deadline.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/runs/nesting"))
+    parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/nesting"))
     parser.add_argument("--permutations", type=int, default=8)
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")

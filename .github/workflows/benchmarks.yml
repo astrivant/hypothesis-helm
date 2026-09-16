@@ -59,12 +59,13 @@ jobs:
         with:
           path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
           key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
-      - run: bash benchmarks/smoke.sh
+      - run: bash scripts/project-run.sh hypothesis-helm-benchmark smoke
       - uses: actions/upload-artifact@v7
         if: ${{ always() }}
         with:
           name: benchmark-smoke
-          path: benchmarks/runs/smoke/
+          path: .cache/benchmarks/smoke/
+          include-hidden-files: true
           retention-days: 30
   refresh-prepare:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.full-refresh }}
@@ -172,7 +173,8 @@ jobs:
           name: benchmark-refresh
           path: |
             studies/
-            benchmarks/
+            pkg/hypothesis_helm/benchmarking/assets/fixture/parameters/
+            docs/benchmarking/
             docs/reports/
             .cache/refresh/refresh-*/logs/
             .cache/refresh/refresh-*/ci-jobs/

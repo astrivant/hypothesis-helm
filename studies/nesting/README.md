@@ -1,6 +1,6 @@
 # Chart nesting and output-space PCA
 
-[Benchmarking](../../benchmarks/README.md)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 **8 is permutation interaction strength, not component count.** This study holds
 `--permutations 8` fixed and varies additional Boolean gate depth:
