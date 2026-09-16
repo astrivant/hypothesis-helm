@@ -1,5 +1,11 @@
 # prometheus/prometheus-sql-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-sql-exporter](#prometheusprometheus-sql-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-sql-exporter`.

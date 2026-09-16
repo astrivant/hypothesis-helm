@@ -1,5 +1,11 @@
 # bitnami/clickhouse-operator
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/clickhouse-operator](#bitnamiclickhouse-operator)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/clickhouse-operator`.

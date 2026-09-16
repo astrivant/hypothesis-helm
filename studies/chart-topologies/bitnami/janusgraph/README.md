@@ -1,5 +1,11 @@
 # bitnami/janusgraph
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/janusgraph](#bitnamijanusgraph)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/janusgraph`.

@@ -1,5 +1,11 @@
 # synthetic/nesting/charts/uniform-random
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/nesting/charts/uniform-random](#syntheticnestingchartsuniform-random)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/nesting/charts/uniform-random`.

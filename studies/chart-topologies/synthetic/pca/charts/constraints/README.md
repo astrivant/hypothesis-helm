@@ -1,5 +1,11 @@
 # synthetic/pca/charts/constraints
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/pca/charts/constraints](#syntheticpcachartsconstraints)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/pca/charts/constraints`.

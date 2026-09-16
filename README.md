@@ -1,16 +1,19 @@
 # Hypothesis
 
-- [Hypothesis](#hypothesis)
-  - [Install](#install)
-  - [Examples: failures hidden by defaults](#examples-failures-hidden-by-defaults)
-  - [Audit, test, or scan?](#audit-test-or-scan)
-    - [Quick start](#quick-start)
-  - [Guides](#guides)
-  - [Test case: Bitnami charts](#test-case-bitnami-charts)
-  - [Test case: Prometheus Community charts](#test-case-prometheus-community-charts)
-  - [Development](#development)
-  - [License](#license)
-  - [Citation](#citation)
+<!-- toc:start -->
+**Table of contents**
+
+- [Install](#install)
+- [Examples: failures hidden by defaults](#examples-failures-hidden-by-defaults)
+- [Audit, test, or scan?](#audit-test-or-scan)
+  - [Quick start](#quick-start)
+- [Guides](#guides)
+- [Test case: Bitnami charts](#test-case-bitnami-charts)
+- [Test case: Prometheus Community charts](#test-case-prometheus-community-charts)
+- [Development](#development)
+- [License](#license)
+- [Citation](#citation)
+<!-- toc:end -->
 
 Test Helm charts with automatically generated `values.yaml` inputs. Built on Python's
 Hypothesis<sup>[\[1\]](https://github.com/HypothesisWorks/hypothesis/)</sup> testing framework, this tool

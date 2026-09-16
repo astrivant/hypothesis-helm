@@ -1,5 +1,11 @@
 # prometheus/alertmanager-snmp-notifier
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/alertmanager-snmp-notifier](#prometheusalertmanager-snmp-notifier)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/alertmanager-snmp-notifier`.

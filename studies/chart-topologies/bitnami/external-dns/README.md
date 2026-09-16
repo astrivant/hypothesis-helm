@@ -1,5 +1,11 @@
 # bitnami/external-dns
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/external-dns](#bitnamiexternal-dns)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/external-dns`.

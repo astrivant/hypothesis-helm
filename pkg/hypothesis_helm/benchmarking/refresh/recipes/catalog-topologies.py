@@ -12,6 +12,7 @@ from textwrap import dedent
 
 import matplotlib
 from hypothesis_helm.benchmarking.reporting.descriptions import describe
+from hypothesis_helm.reporting.contents import with_contents
 
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
@@ -67,7 +68,8 @@ for item in inventory:
         directory.mkdir(parents=True, exist_ok=True)
         diagram = status.get("reason", "Graph unavailable; inspect retained diagnostics.")
     (directory / "README.md").write_text(
-        dedent(f"""
+        with_contents(
+            dedent(f"""
         # {directory.relative_to(output).as_posix()}
 
         [All chart topologies]({"../" * len(directory.relative_to(output).parts)}README.md)
@@ -77,8 +79,9 @@ for item in inventory:
         Baseline-unavailable graphs contain static evidence only.
 
         """).lstrip()
-        + diagram
-        + "\n"
+            + diagram
+            + "\n"
+        )
     )
     rows.append(base)
     for name in ["graph.json", "graph.dot", "positions.csv", "audit.json"]:
@@ -204,5 +207,5 @@ lines.extend(
         "",
     ]
 )
-(output / "README.md").write_text("\n".join(lines))
+(output / "README.md").write_text(with_contents("\n".join(lines)))
 print(dict(Counter(row["status"] for row in rows)))

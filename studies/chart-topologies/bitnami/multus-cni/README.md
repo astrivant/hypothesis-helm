@@ -1,5 +1,11 @@
 # bitnami/multus-cni
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/multus-cni](#bitnamimultus-cni)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/multus-cni`.

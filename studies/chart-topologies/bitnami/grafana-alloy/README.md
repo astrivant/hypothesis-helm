@@ -1,5 +1,11 @@
 # bitnami/grafana-alloy
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/grafana-alloy](#bitnamigrafana-alloy)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/grafana-alloy`.

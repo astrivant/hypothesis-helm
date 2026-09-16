@@ -1,5 +1,11 @@
 # bitnami/kube-prometheus/charts/kube-prometheus-crds
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/kube-prometheus/charts/kube-prometheus-crds](#bitnamikube-prometheuschartskube-prometheus-crds)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/kube-prometheus/charts/kube-prometheus-crds`.

@@ -1,5 +1,20 @@
 # CI integration
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Provider detection](#provider-detection)
+- [GitHub Action](#github-action)
+  - [Inputs](#inputs)
+  - [Publishing](#publishing)
+- [CircleCI and GitLab](#circleci-and-gitlab)
+- [Caching installed binaries](#caching-installed-binaries)
+- [Persisting path outcomes](#persisting-path-outcomes)
+- [Kubernetes API schema validation](#kubernetes-api-schema-validation)
+- [Optional Kubesec scans](#optional-kubesec-scans)
+  - [Minimal values and aggregation](#minimal-values-and-aggregation)
+<!-- toc:end -->
+
 Use `--filter-adaptive` on MRs/PRs, `--filter` on `main`, and an unfiltered exhaustive search before tagging.
 See the [recommended workflow](ci/README.md#recommended-workflow) for commands and release coverage requirements.
 

@@ -1,5 +1,11 @@
 # synthetic/discovery/chart
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/discovery/chart](#syntheticdiscoverychart)
+<!-- toc:end -->
+
 [All chart topologies](../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/discovery/chart`.

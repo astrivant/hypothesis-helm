@@ -10,6 +10,7 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.analysis.selection import LABELS as PRESET_LABELS
 from hypothesis_helm.benchmarking.analysis.selection import explanation
 from hypothesis_helm.benchmarking.reporting.descriptions import describe
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -218,4 +219,4 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
     ]
     lines.extend(explanation(rows))
-    (output / "README.md").write_text("\n".join(lines))
+    (output / "README.md").write_text(with_contents("\n".join(lines)))

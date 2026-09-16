@@ -1,5 +1,11 @@
 # bitnami/deepspeed
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/deepspeed](#bitnamideepspeed)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/deepspeed`.

@@ -1,5 +1,13 @@
 # Getting started
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Caching and validation](#caching-and-validation)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 ## Install

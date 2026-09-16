@@ -1,5 +1,11 @@
 # prometheus/prometheus-fastly-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-fastly-exporter](#prometheusprometheus-fastly-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-fastly-exporter`.

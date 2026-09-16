@@ -1,5 +1,11 @@
 # Aggressive sampling calibration
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Breadth and depth sweep](#breadth-and-depth-sweep)
+<!-- toc:end -->
+
 Generated-chart calibration only. No held-out validation or arbitrary-chart recall guarantee.
 
 Every input was rendered with Helm and compared with an independent defect-trigger oracle.

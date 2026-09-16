@@ -1,5 +1,14 @@
 # Branch knowledge lattice
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Representation and operations](#representation-and-operations)
+- [Supported deductions](#supported-deductions)
+- [Unknown operations](#unknown-operations)
+- [Evidence and validation](#evidence-and-validation)
+<!-- toc:end -->
+
 [Compiler](README.md) · [Analysis passes](analysis.md) · [Exact-equivalence contract](../safe-pruning.md)
 
 The compiler tracks which values remain possible at each supported branch. A condition narrows that set inside its branches.

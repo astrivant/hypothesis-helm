@@ -1,5 +1,11 @@
 # Failure clustering: measured counts
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Failure clustering: measured counts](#failure-clustering-measured-counts)
+<!-- toc:end -->
+
 [Graphs and methodology](README.md)
 
 Compare rows with the same rate: the erroneous-input count and chart stay fixed while placement changes.

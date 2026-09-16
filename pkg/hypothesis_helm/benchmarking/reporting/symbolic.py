@@ -5,6 +5,7 @@ Publish held-out symbolic-regression comparisons alongside measured surfaces.
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.reporting.descriptions import describe
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -115,4 +116,4 @@ def plot(output: Path, ledger: dict[str, object]) -> None:
                 "",
             ]
         )
-    (output / "README.md").write_text("\n".join([*lines, "", *figures]) + "\n")
+    (output / "README.md").write_text(with_contents("\n".join([*lines, "", *figures]) + "\n"))

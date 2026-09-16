@@ -1,5 +1,11 @@
 # prometheus/prometheus-json-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-json-exporter](#prometheusprometheus-json-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-json-exporter`.

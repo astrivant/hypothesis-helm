@@ -1,5 +1,11 @@
 # bitnami/mariadb
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/mariadb](#bitnamimariadb)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/mariadb`.

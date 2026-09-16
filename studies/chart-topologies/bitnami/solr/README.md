@@ -1,5 +1,11 @@
 # bitnami/solr
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/solr](#bitnamisolr)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/solr`.

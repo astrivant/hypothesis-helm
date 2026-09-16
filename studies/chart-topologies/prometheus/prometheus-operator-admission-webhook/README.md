@@ -1,5 +1,11 @@
 # prometheus/prometheus-operator-admission-webhook
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-operator-admission-webhook](#prometheusprometheus-operator-admission-webhook)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-operator-admission-webhook`.

@@ -1,5 +1,16 @@
 # Adaptive filtering
 
+<!-- toc:start -->
+**Table of contents**
+
+- [What determines the minimum?](#what-determines-the-minimum)
+- [Recompute before visiting each chart](#recompute-before-visiting-each-chart)
+- [Selection and evidence](#selection-and-evidence)
+- [Reproduce the study](#reproduce-the-study)
+- [Computational cost](#computational-cost)
+  - [Conditions behind the comparison](#conditions-behind-the-comparison)
+<!-- toc:end -->
+
 [Execution](../execution/README.md#percentage-sampling) · [Audit complexity](../inputs/README.md#potential-output-complexity)
 
 `--filter-adaptive` starts with `--filter`, then aims to test about **70% of the

@@ -1,5 +1,11 @@
 # CI sizing observations
 
+<!-- toc:start -->
+**Table of contents**
+
+- [CI sizing observations](#ci-sizing-observations)
+<!-- toc:end -->
+
 [Recommended resources](../../docs/ci/resources.md) · [Benchmarking](../../docs/benchmarking/README.md)
 
 These are inventory counts and short process observations, not a resource-scaling benchmark.

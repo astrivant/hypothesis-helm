@@ -1,5 +1,11 @@
 # prometheus/prometheus-systemd-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-systemd-exporter](#prometheusprometheus-systemd-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-systemd-exporter`.

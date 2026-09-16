@@ -1,5 +1,11 @@
 # bitnami/parse
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/parse](#bitnamiparse)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/parse`.

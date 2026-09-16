@@ -1,5 +1,11 @@
 # prometheus/prometheus-yet-another-cloudwatch-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-yet-another-cloudwatch-exporter](#prometheusprometheus-yet-another-cloudwatch-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-yet-another-cloudwatch-exporter`.

@@ -1,5 +1,11 @@
 # bitnami/cilium
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/cilium](#bitnamicilium)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/cilium`.

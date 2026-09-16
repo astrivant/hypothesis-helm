@@ -1,5 +1,15 @@
 # Selection and execution passes
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Topology trimming](#topology-trimming)
+- [Exact-equivalence pruning](#exact-equivalence-pruning)
+- [Rejection-guided generation](#rejection-guided-generation)
+- [Failure expansion](#failure-expansion)
+- [Where the passes run](#where-the-passes-run)
+<!-- toc:end -->
+
 [Compiler](README.md) · [Analysis passes](analysis.md) · [Export passes](exports.md)
 
 These policies use different evidence. Their counters remain separate so a report

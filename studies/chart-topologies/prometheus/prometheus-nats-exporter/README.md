@@ -1,5 +1,11 @@
 # prometheus/prometheus-nats-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-nats-exporter](#prometheusprometheus-nats-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-nats-exporter`.

@@ -1,5 +1,11 @@
 # bitnami/zipkin
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/zipkin](#bitnamizipkin)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **static-only**. Source: `third_party/bitnami-charts/bitnami/zipkin`.

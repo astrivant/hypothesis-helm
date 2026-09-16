@@ -1,5 +1,11 @@
 # Benchmark studies
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Benchmark studies](#benchmark-studies)
+<!-- toc:end -->
+
 [Benchmarking](../docs/benchmarking/README.md)
 
 Each directory contains one study's recorded inputs, results and available plots. Benchmark runs stay in `../benchmarks/runs/`; sensitivity benchmarks update `sensitivity/` automatically and retain each run in `sensitivity/runs/`.

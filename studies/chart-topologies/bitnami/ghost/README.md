@@ -1,5 +1,11 @@
 # bitnami/ghost
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/ghost](#bitnamighost)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/ghost`.

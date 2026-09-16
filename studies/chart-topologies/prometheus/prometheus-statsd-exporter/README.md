@@ -1,5 +1,11 @@
 # prometheus/prometheus-statsd-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-statsd-exporter](#prometheusprometheus-statsd-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-statsd-exporter`.

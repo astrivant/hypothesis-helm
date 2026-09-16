@@ -1,5 +1,14 @@
 # Local chart testing and remote repository scans
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Incremental repository tests](#incremental-repository-tests)
+- [Helm repositories and registries](#helm-repositories-and-registries)
+- [Discovery and testing](#discovery-and-testing)
+- [Bitnami](#bitnami)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 ```sh

@@ -1,5 +1,11 @@
 # bitnami/aspnet-core
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/aspnet-core](#bitnamiaspnet-core)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/aspnet-core`.

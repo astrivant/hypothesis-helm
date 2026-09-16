@@ -1,5 +1,11 @@
 # synthetic/matrix/charts/boundaries
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/matrix/charts/boundaries](#syntheticmatrixchartsboundaries)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/matrix/charts/boundaries`.

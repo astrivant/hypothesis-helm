@@ -1,5 +1,11 @@
 # Documentation
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Detailed reference](#detailed-reference)
+<!-- toc:end -->
+
 [Project README](../README.md)
 
 Run repository command examples from the checkout root unless stated otherwise.

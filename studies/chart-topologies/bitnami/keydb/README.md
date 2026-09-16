@@ -1,5 +1,11 @@
 # bitnami/keydb
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/keydb](#bitnamikeydb)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/keydb`.

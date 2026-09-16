@@ -1,5 +1,11 @@
 # prometheus/kube-state-metrics
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/kube-state-metrics](#prometheuskube-state-metrics)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/kube-state-metrics`.

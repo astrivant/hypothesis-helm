@@ -1,5 +1,11 @@
 # prometheus/prometheus-modbus-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-modbus-exporter](#prometheusprometheus-modbus-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-modbus-exporter`.

@@ -11,6 +11,7 @@ from pathlib import Path
 from hypothesis_helm.benchmarking.reporting.plots import finish
 from hypothesis_helm.benchmarking.reporting.variation import repeated_line
 from hypothesis_helm.benchmarking.studies.error_surface import METRICS
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -217,7 +218,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                         f"| {rate:g}% | {value:g} | {fraction} | {method} | "
                         f"{statistics.mean(counts):g} / {batch[0]['error_count']} ({min(counts)}-{max(counts)}) | {added:g} |"
                     )
-        (output / "clustering-counts.md").write_text("\n".join(findings) + "\n")
+        (output / "clustering-counts.md").write_text(with_contents("\n".join(findings) + "\n"))
         lines.extend(["[Compare clustering at a fixed error count](clustering-counts.md)", ""])
         figure, panel = plt.subplots(figsize=(9, 5))
         for index, value in enumerate(sorted({float(str(row["axis_value"])) for row in clustering_rows})):
@@ -255,4 +256,4 @@ def plot(output: Path, document: dict[str, object]) -> None:
 
     if plot_highlight(output, document):
         lines.extend(["![Failing inputs found, Helm renders and total runtime](errors-found-fast.png)", ""])
-    (output / "README.md").write_text("\n".join(lines))
+    (output / "README.md").write_text(with_contents("\n".join(lines)))

@@ -1,5 +1,12 @@
 # Fitted response surfaces
 
+<!-- toc:start -->
+**Table of contents**
+
+- [clustering: combined, Total runtime (seconds)](#clustering-combined-total-runtime-seconds)
+- [clustering: combined, Erroneous inputs missed](#clustering-combined-erroneous-inputs-missed)
+<!-- toc:end -->
+
 [Measurements](README.md) · [Model definition](../../docs/benchmarking/response-surface.md)
 
 Quadratics fitted to collected cell means, separately for each method and response. Coefficients are not theoretical predictions.

@@ -19,6 +19,7 @@ from hypothesis_helm.benchmarking.execution.provenance import code_digest
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.execution.processes import Processes
 from hypothesis_helm.reporting.budget import parse_time_limit
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -129,6 +130,8 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             f"--components {args.components} --seed {args.seed} --time-limit {budget}\n"
             "```\n"
         )
+    readme = args.output / "README.md"
+    readme.write_text(with_contents(readme.read_text()))
     if publish:
         successful = (
             status == 0

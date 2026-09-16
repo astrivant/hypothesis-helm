@@ -1,5 +1,22 @@
 # CI examples
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Recommended workflow](#recommended-workflow)
+- [Recommended release check](#recommended-release-check)
+- [GitLab](#gitlab)
+- [CircleCI](#circleci)
+- [GitHub Actions](#github-actions)
+- [Binary downloads and caching](#binary-downloads-and-caching)
+- [Validation and caches](#validation-and-caches)
+  - [Retention between sprints](#retention-between-sprints)
+  - [Memory-backed schemas](#memory-backed-schemas)
+- [Minimal values in CI](#minimal-values-in-ci)
+- [Optional percentage sampling](#optional-percentage-sampling)
+- [Remote VM shards](#remote-vm-shards)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 Use the remote definitions below and change `./chart` to your chart directory.

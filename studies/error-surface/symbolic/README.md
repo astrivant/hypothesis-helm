@@ -1,5 +1,26 @@
 # Symbolic response surfaces
 
+<!-- toc:start -->
+**Table of contents**
+
+- [clustering / combined / total_seconds](#clustering--combined--total_seconds)
+- [clustering / combined / errors_missed](#clustering--combined--errors_missed)
+- [clustering / default / total_seconds](#clustering--default--total_seconds)
+- [clustering / default / errors_missed](#clustering--default--errors_missed)
+- [clustering / exact-equivalence / total_seconds](#clustering--exact-equivalence--total_seconds)
+- [clustering / exact-equivalence / errors_missed](#clustering--exact-equivalence--errors_missed)
+- [clustering / filter / total_seconds](#clustering--filter--total_seconds)
+- [clustering / filter / errors_missed](#clustering--filter--errors_missed)
+- [clustering / filter-adaptive / total_seconds](#clustering--filter-adaptive--total_seconds)
+- [clustering / filter-adaptive / errors_missed](#clustering--filter-adaptive--errors_missed)
+- [clustering / random / total_seconds](#clustering--random--total_seconds)
+- [clustering / random / errors_missed](#clustering--random--errors_missed)
+- [clustering / sample-random / total_seconds](#clustering--sample-random--total_seconds)
+- [clustering / sample-random / errors_missed](#clustering--sample-random--errors_missed)
+- [clustering / topology / total_seconds](#clustering--topology--total_seconds)
+- [clustering / topology / errors_missed](#clustering--topology--errors_missed)
+<!-- toc:end -->
+
 Each model was trained without the last repeat and without 25% of factor cells. The four corners remain in training.
 Predictions below were frozen before scoring. These are empirical equations, not pruning proofs or recall guarantees.
 The observed panel uses the reserved repeat; both models use identical training data and held-out groups.

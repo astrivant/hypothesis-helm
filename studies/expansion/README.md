@@ -1,5 +1,11 @@
 # Failure expansion
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Failure expansion](#failure-expansion)
+<!-- toc:end -->
+
 [Benchmarking](../../docs/benchmarking/README.md)
 
 Topology trimming previously exercised 47 of 51 erroneous inputs in three cases. The remaining four each produced the same complete manifests as a retained failing input. The 51 erroneous inputs occupied 43 singleton regions and four two-input regions. All distinct erroneous outputs were already covered.

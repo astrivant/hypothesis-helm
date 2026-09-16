@@ -1,5 +1,11 @@
 # bitnami/appsmith
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/appsmith](#bitnamiappsmith)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/appsmith`.

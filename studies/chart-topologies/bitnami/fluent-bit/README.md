@@ -1,5 +1,11 @@
 # bitnami/fluent-bit
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/fluent-bit](#bitnamifluent-bit)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/fluent-bit`.

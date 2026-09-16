@@ -1,5 +1,11 @@
 # bitnami/rabbitmq-cluster-operator
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/rabbitmq-cluster-operator](#bitnamirabbitmq-cluster-operator)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/rabbitmq-cluster-operator`.

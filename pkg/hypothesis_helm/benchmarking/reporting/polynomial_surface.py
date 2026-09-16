@@ -5,6 +5,7 @@ Show held-out measurements beside quadratic and quartic predictions.
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.reporting.descriptions import describe
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -100,4 +101,4 @@ def plot(output: Path, ledger: dict[str, object]) -> None:
     for index, value in enumerate(sequence(ledger["fits"])):
         if "split" in mapping(value):
             lines.extend([f"![Held-out observations and model predictions](comparison-{index + 1}.png)", ""])
-    (output / "README.md").write_text("\n".join(lines) + "\n")
+    (output / "README.md").write_text(with_contents("\n".join(lines) + "\n"))

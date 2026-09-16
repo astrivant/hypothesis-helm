@@ -74,6 +74,7 @@ numpy = ">=2,<3"
 pytest-xdist = ">=3.8,<4"
 
 [tool.poetry.scripts]
+hypothesis-helm-docs = "hypothesis_helm.reporting.contents:main"
 hypothesis-helm-sensitivity = "hypothesis_helm.analysis.cli:main"
 workbalance-example = "workbalance.example:main"
 hypothesis-helm-path-worker = "hypothesis_helm.execution.path_queue:main"

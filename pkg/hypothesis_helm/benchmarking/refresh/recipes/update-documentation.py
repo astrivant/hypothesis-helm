@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 from statistics import mean
 
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.reporting.links import Publication
 from hypothesis_helm.reporting.repository import write_reports
 
@@ -94,5 +95,5 @@ for name, report in reports:
         publication=Publication(Path.cwd(), "https://github.com/astrivant/hypothesis-helm", "main"),
     )
 for path, content in updates.items():
-    path.write_text(content)
+    path.write_text(with_contents(content))
 print("Updated benchmark summaries" if args.benchmarks_only else "Updated benchmark summaries and both repository summaries and links")

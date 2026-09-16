@@ -1,5 +1,11 @@
 # prometheus/prometheus-cloudwatch-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-cloudwatch-exporter](#prometheusprometheus-cloudwatch-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-cloudwatch-exporter`.

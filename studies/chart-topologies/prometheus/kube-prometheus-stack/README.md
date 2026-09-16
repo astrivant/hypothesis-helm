@@ -1,5 +1,11 @@
 # prometheus/kube-prometheus-stack
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/kube-prometheus-stack](#prometheuskube-prometheus-stack)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/kube-prometheus-stack`.

@@ -1,5 +1,21 @@
 # Input inventory and minimal values
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Declared and inferred types](#declared-and-inferred-types)
+- [Inventory values](#inventory-values)
+- [Inspect the baseline](#inspect-the-baseline)
+- [Verification record](#verification-record)
+- [Export beside every chart](#export-beside-every-chart)
+- [Export the input-to-output graph](#export-the-input-to-output-graph)
+  - [Render the mathematical graph](#render-the-mathematical-graph)
+- [Deterministic type constants](#deterministic-type-constants)
+  - [Why can minimal values be invalid?](#why-can-minimal-values-be-invalid)
+- [Potential output complexity](#potential-output-complexity)
+  - [How the maximum is found](#how-the-maximum-is-found)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 ## Declared and inferred types

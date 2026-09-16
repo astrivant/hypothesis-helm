@@ -1,5 +1,11 @@
 # synthetic/topology-depth/charts/equivalence
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/topology-depth/charts/equivalence](#synthetictopology-depthchartsequivalence)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/topology-depth/charts/equivalence`.

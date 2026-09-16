@@ -1,5 +1,11 @@
 # bitnami/grafana-k6-operator
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/grafana-k6-operator](#bitnamigrafana-k6-operator)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/grafana-k6-operator`.

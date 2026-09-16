@@ -1,5 +1,36 @@
 # Chart findings and ignored checks
 
+<!-- toc:start -->
+<details>
+<summary>Table of contents</summary>
+
+- [What ignoring changes](#what-ignoring-changes)
+- [Shared finding library](#shared-finding-library)
+- [Finding catalog](#finding-catalog)
+  - [HH1001: Unclassified template failure](#hh1001-unclassified-template-failure)
+  - [HH1002: Render invocation timed out](#hh1002-render-invocation-timed-out)
+  - [HH1003: Invalid YAML in rendered output](#hh1003-invalid-yaml-in-rendered-output)
+  - [HH1004: Manifest document is not an object](#hh1004-manifest-document-is-not-an-object)
+  - [HH1005: Missing resource API version or kind](#hh1005-missing-resource-api-version-or-kind)
+  - [HH1006: Invalid resource list](#hh1006-invalid-resource-list)
+  - [HH1007: Missing resource name](#hh1007-missing-resource-name)
+  - [HH1008: Duplicate resource identity](#hh1008-duplicate-resource-identity)
+  - [HH1009: Empty resource bundle](#hh1009-empty-resource-bundle)
+  - [HH1010: Kubernetes schema validation failed](#hh1010-kubernetes-schema-validation-failed)
+  - [HH1011: Rendered output cannot be encoded as JSON](#hh1011-rendered-output-cannot-be-encoded-as-json)
+  - [HH1012: Unclassified baseline lint failure](#hh1012-unclassified-baseline-lint-failure)
+  - [HH2001: Undocumented values path](#hh2001-undocumented-values-path)
+  - [HH2002: Unspecified values type](#hh2002-unspecified-values-type)
+  - [HH2003: Missing values description](#hh2003-missing-values-description)
+  - [HH2004: No supplied default for a values path](#hh2004-no-supplied-default-for-a-values-path)
+  - [HH2005: Unresolved template value access](#hh2005-unresolved-template-value-access)
+  - [HH3001: Template accesses a missing object](#hh3001-template-accesses-a-missing-object)
+  - [HH3002: Incompatible value type in template](#hh3002-incompatible-value-type-in-template)
+  - [HH3003: Undefined named template](#hh3003-undefined-named-template)
+
+</details>
+<!-- toc:end -->
+
 [Project](../../README.md) · [CLI reference](../cli/README.md)
 
 Codes describe observed conditions across runs, independently of Python exceptions.

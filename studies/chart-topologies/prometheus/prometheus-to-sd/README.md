@@ -1,5 +1,11 @@
 # prometheus/prometheus-to-sd
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-to-sd](#prometheusprometheus-to-sd)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-to-sd`.

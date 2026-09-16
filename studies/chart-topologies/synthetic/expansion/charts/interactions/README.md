@@ -1,5 +1,11 @@
 # synthetic/expansion/charts/interactions
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/expansion/charts/interactions](#syntheticexpansionchartsinteractions)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/expansion/charts/interactions`.

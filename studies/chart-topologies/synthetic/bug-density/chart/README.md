@@ -1,5 +1,11 @@
 # synthetic/bug-density/chart
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/bug-density/chart](#syntheticbug-densitychart)
+<!-- toc:end -->
+
 [All chart topologies](../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/bug-density/chart`.

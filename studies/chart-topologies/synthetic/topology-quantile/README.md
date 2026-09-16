@@ -1,5 +1,11 @@
 # synthetic/topology-quantile
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/topology-quantile](#synthetictopology-quantile)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `examples/topology-benchmark`.

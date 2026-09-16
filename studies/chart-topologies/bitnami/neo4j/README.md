@@ -1,5 +1,11 @@
 # bitnami/neo4j
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/neo4j](#bitnamineo4j)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/neo4j`.

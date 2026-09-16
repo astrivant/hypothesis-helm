@@ -1,5 +1,11 @@
 # bitnami/seaweedfs
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/seaweedfs](#bitnamiseaweedfs)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/seaweedfs`.

@@ -1,5 +1,11 @@
 # Bug discovery by interaction strength
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Bug discovery by interaction strength](#bug-discovery-by-interaction-strength)
+<!-- toc:end -->
+
 [Benchmarking](../../docs/benchmarking/README.md)
 
 This fixed fixture contains 60 injected faults. The planner varies interaction strength from one to six, with automatic enumeration and inferred exhaustive groups disabled to isolate strength. Every selected input is rendered with Helm 4.

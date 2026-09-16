@@ -1,5 +1,11 @@
 # bitnami/phpmyadmin
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/phpmyadmin](#bitnamiphpmyadmin)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/phpmyadmin`.

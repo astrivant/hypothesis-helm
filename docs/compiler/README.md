@@ -1,5 +1,14 @@
 # Compiler
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Flow](#flow)
+- [Guide](#guide)
+- [Code map](#code-map)
+- [Measured output sensitivity](#measured-output-sensitivity)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Architecture](../architecture/README.md) · [Project](../../README.md)
 
 The compiler identifies the values a chart uses, the conditions that change its

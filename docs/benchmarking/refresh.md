@@ -1,5 +1,11 @@
 # Repository refresh helpers
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Parallel refresh on GitHub Actions](#parallel-refresh-on-github-actions)
+<!-- toc:end -->
+
 [Full refresh command](README.md#reproduce-the-full-project-run) · [Benchmark results](../../studies/README.md)
 
 These scripts prepare charts, run measurements, generate plots and publish reports.

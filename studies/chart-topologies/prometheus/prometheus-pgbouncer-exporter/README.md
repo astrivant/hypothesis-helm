@@ -1,5 +1,11 @@
 # prometheus/prometheus-pgbouncer-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-pgbouncer-exporter](#prometheusprometheus-pgbouncer-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-pgbouncer-exporter`.

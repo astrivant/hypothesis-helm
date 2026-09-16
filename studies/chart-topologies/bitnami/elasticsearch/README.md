@@ -1,5 +1,11 @@
 # bitnami/elasticsearch
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/elasticsearch](#bitnamielasticsearch)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/elasticsearch`.

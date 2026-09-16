@@ -7,6 +7,8 @@ import json
 import sys
 from pathlib import Path
 
+from hypothesis_helm.reporting.contents import with_contents
+
 root = Path(sys.argv[1])
 for study in ["sparsity", "structure-sparsity"]:
     directory = root / "outputs" / study
@@ -85,6 +87,8 @@ for study in ["sparsity", "structure-sparsity"]:
         marker = "\n## Fresh measurements\n"
         original = original.split(marker)[0]
         table = lines[6 : lines.index("![Outcome coverage and distribution error](sparsity-quality.png)")]
-        (directory / "README.md").write_text(original + marker + "\n" + "\n".join(table) + "\n[CSV measurements](results.csv)\n")
+        (directory / "README.md").write_text(
+            with_contents(original + marker + "\n" + "\n".join(table) + "\n[CSV measurements](results.csv)\n")
+        )
     else:
-        (directory / "README.md").write_text("\n".join(lines))
+        (directory / "README.md").write_text(with_contents("\n".join(lines)))

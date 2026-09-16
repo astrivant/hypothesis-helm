@@ -1,5 +1,15 @@
 # Run computations on remote shards
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Roles and execution](#roles-and-execution)
+- [Start a run](#start-a-run)
+- [Results, errors and recovery](#results-errors-and-recovery)
+- [Other computations](#other-computations)
+- [Checks](#checks)
+<!-- toc:end -->
+
 The [Terraform compute module](../terraform/README.md) supplies a non-secret VM inventory. Ansible snapshots the required local
 application source and selected chart, connects through OS Login/IAP, runs one application shard on each VM, then fetches data
 for local aggregation. This follows the connection strategy in the neighboring Astrivant project.

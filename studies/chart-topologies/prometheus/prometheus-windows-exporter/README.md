@@ -1,5 +1,11 @@
 # prometheus/prometheus-windows-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-windows-exporter](#prometheusprometheus-windows-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-windows-exporter`.

@@ -1,5 +1,11 @@
 # bitnami/mastodon
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/mastodon](#bitnamimastodon)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/mastodon`.

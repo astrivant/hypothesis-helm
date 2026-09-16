@@ -1,5 +1,11 @@
 # bitnami/schema-registry
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/schema-registry](#bitnamischema-registry)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/schema-registry`.

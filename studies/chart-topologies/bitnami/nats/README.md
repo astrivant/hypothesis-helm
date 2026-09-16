@@ -1,5 +1,11 @@
 # bitnami/nats
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/nats](#bitnaminats)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/nats`.

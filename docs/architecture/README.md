@@ -1,5 +1,15 @@
 # Architecture
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Input discovery and test generation](#input-discovery-and-test-generation)
+- [Execution and validation](#execution-and-validation)
+- [Syntax trees and compiler passes](#syntax-trees-and-compiler-passes)
+- [Finite permutation planning](#finite-permutation-planning)
+- [Cooperative workload balancing](#cooperative-workload-balancing)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 The compiler reads the chart to identify configurable fields and template

@@ -1,5 +1,63 @@
 # Prometheus Community Helm chart scan
 
+<!-- toc:start -->
+<details>
+<summary>Table of contents</summary>
+
+- [Status counts](#status-counts)
+- [Settings](#settings)
+- [Errors](#errors)
+- [Charts](#charts)
+  - [charts/alertmanager](#chartsalertmanager)
+  - [charts/alertmanager-snmp-notifier](#chartsalertmanager-snmp-notifier)
+  - [charts/jiralert](#chartsjiralert)
+  - [charts/kube-prometheus-stack](#chartskube-prometheus-stack)
+  - [charts/kube-prometheus-stack/charts/crds](#chartskube-prometheus-stackchartscrds)
+  - [charts/kube-state-metrics](#chartskube-state-metrics)
+  - [charts/prom-label-proxy](#chartsprom-label-proxy)
+  - [charts/prometheus](#chartsprometheus)
+  - [charts/prometheus-adapter](#chartsprometheus-adapter)
+  - [charts/prometheus-blackbox-exporter](#chartsprometheus-blackbox-exporter)
+  - [charts/prometheus-cloudwatch-exporter](#chartsprometheus-cloudwatch-exporter)
+  - [charts/prometheus-conntrack-stats-exporter](#chartsprometheus-conntrack-stats-exporter)
+  - [charts/prometheus-consul-exporter](#chartsprometheus-consul-exporter)
+  - [charts/prometheus-couchdb-exporter](#chartsprometheus-couchdb-exporter)
+  - [charts/prometheus-druid-exporter](#chartsprometheus-druid-exporter)
+  - [charts/prometheus-elasticsearch-exporter](#chartsprometheus-elasticsearch-exporter)
+  - [charts/prometheus-fastly-exporter](#chartsprometheus-fastly-exporter)
+  - [charts/prometheus-ipmi-exporter](#chartsprometheus-ipmi-exporter)
+  - [charts/prometheus-json-exporter](#chartsprometheus-json-exporter)
+  - [charts/prometheus-kafka-exporter](#chartsprometheus-kafka-exporter)
+  - [charts/prometheus-memcached-exporter](#chartsprometheus-memcached-exporter)
+  - [charts/prometheus-modbus-exporter](#chartsprometheus-modbus-exporter)
+  - [charts/prometheus-mongodb-exporter](#chartsprometheus-mongodb-exporter)
+  - [charts/prometheus-mysql-exporter](#chartsprometheus-mysql-exporter)
+  - [charts/prometheus-nats-exporter](#chartsprometheus-nats-exporter)
+  - [charts/prometheus-nginx-exporter](#chartsprometheus-nginx-exporter)
+  - [charts/prometheus-node-exporter](#chartsprometheus-node-exporter)
+  - [charts/prometheus-operator-admission-webhook](#chartsprometheus-operator-admission-webhook)
+  - [charts/prometheus-operator-crds](#chartsprometheus-operator-crds)
+  - [charts/prometheus-operator-crds/charts/crds](#chartsprometheus-operator-crdschartscrds)
+  - [charts/prometheus-pgbouncer-exporter](#chartsprometheus-pgbouncer-exporter)
+  - [charts/prometheus-pingdom-exporter](#chartsprometheus-pingdom-exporter)
+  - [charts/prometheus-pingmesh-exporter](#chartsprometheus-pingmesh-exporter)
+  - [charts/prometheus-postgres-exporter](#chartsprometheus-postgres-exporter)
+  - [charts/prometheus-pushgateway](#chartsprometheus-pushgateway)
+  - [charts/prometheus-rabbitmq-exporter](#chartsprometheus-rabbitmq-exporter)
+  - [charts/prometheus-redis-exporter](#chartsprometheus-redis-exporter)
+  - [charts/prometheus-smartctl-exporter](#chartsprometheus-smartctl-exporter)
+  - [charts/prometheus-snmp-exporter](#chartsprometheus-snmp-exporter)
+  - [charts/prometheus-sql-exporter](#chartsprometheus-sql-exporter)
+  - [charts/prometheus-stackdriver-exporter](#chartsprometheus-stackdriver-exporter)
+  - [charts/prometheus-statsd-exporter](#chartsprometheus-statsd-exporter)
+  - [charts/prometheus-systemd-exporter](#chartsprometheus-systemd-exporter)
+  - [charts/prometheus-to-sd](#chartsprometheus-to-sd)
+  - [charts/prometheus-windows-exporter](#chartsprometheus-windows-exporter)
+  - [charts/prometheus-yet-another-cloudwatch-exporter](#chartsprometheus-yet-another-cloudwatch-exporter)
+
+</details>
+<!-- toc:end -->
+
 Visited all **46 discovered charts** with **--filter**, four workers, and a **five-minute test budget per chart**. No scan-wide deadline was
 imposed.
 

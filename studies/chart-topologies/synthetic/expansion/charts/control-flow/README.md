@@ -1,5 +1,11 @@
 # synthetic/expansion/charts/control-flow
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/expansion/charts/control-flow](#syntheticexpansionchartscontrol-flow)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/expansion/charts/control-flow`.

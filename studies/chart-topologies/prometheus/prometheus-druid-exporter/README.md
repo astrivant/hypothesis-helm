@@ -1,5 +1,11 @@
 # prometheus/prometheus-druid-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-druid-exporter](#prometheusprometheus-druid-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-druid-exporter`.

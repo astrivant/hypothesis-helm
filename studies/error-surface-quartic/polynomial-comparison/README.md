@@ -1,5 +1,11 @@
 # Quadratic versus quartic
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Comparisons](#comparisons)
+<!-- toc:end -->
+
 Both models train on the same cells, excluding 25% of settings and the last repeat. Corners remain in training.
 Outlined cells are held out in both setting and repeat. All observed panels show the reserved repeat.
 Scores compare unmodified predictions: lower RMSE is better. A quartic is not assumed to improve prediction.

@@ -1,5 +1,11 @@
 # bitnami/mongodb-sharded
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/mongodb-sharded](#bitnamimongodb-sharded)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/mongodb-sharded`.

@@ -1,5 +1,11 @@
 # bitnami/valkey-cluster
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/valkey-cluster](#bitnamivalkey-cluster)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/valkey-cluster`.

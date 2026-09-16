@@ -1,5 +1,11 @@
 # prometheus/kube-prometheus-stack/charts/crds
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/kube-prometheus-stack/charts/crds](#prometheuskube-prometheus-stackchartscrds)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/kube-prometheus-stack/charts/crds`.

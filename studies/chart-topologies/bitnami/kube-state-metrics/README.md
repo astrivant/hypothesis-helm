@@ -1,5 +1,11 @@
 # bitnami/kube-state-metrics
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/kube-state-metrics](#bitnamikube-state-metrics)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/kube-state-metrics`.

@@ -1,5 +1,14 @@
 # Exact-equivalence pruning
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Contract and distance](#contract-and-distance)
+- [Compiler stages](#compiler-stages)
+- [Soundness argument and assumptions](#soundness-argument-and-assumptions)
+- [Runtime behavior and evidence](#runtime-behavior-and-evidence)
+<!-- toc:end -->
+
 This option skips a Helm render only when the compiler can establish that the
 input would produce exactly the same parsed manifests as an input that already
 passed validation. If the compiler cannot establish that match, Helm runs.

@@ -1,5 +1,11 @@
 # prometheus/prometheus-elasticsearch-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-elasticsearch-exporter](#prometheusprometheus-elasticsearch-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-elasticsearch-exporter`.

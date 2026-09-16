@@ -1,5 +1,11 @@
 # prometheus/prometheus-couchdb-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-couchdb-exporter](#prometheusprometheus-couchdb-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-couchdb-exporter`.

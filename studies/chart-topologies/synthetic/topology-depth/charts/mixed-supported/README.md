@@ -1,5 +1,11 @@
 # synthetic/topology-depth/charts/mixed-supported
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/topology-depth/charts/mixed-supported](#synthetictopology-depthchartsmixed-supported)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/topology-depth/charts/mixed-supported`.

@@ -1,5 +1,11 @@
 # prometheus/prometheus-rabbitmq-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-rabbitmq-exporter](#prometheusprometheus-rabbitmq-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-rabbitmq-exporter`.

@@ -1,5 +1,11 @@
 # bitnami/common
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/common](#bitnamicommon)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **static-only**. Source: `third_party/bitnami-charts/bitnami/common`.

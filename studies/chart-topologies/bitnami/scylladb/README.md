@@ -1,5 +1,11 @@
 # bitnami/scylladb
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/scylladb](#bitnamiscylladb)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/scylladb`.

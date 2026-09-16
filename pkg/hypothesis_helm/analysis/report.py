@@ -5,6 +5,7 @@ Publish concise sensitivity evidence and optional diagnostic plots.
 import json
 from pathlib import Path
 
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -84,7 +85,7 @@ def write_report(output: Path, document: dict[str, object], *, plots: bool = Fal
         "",
         "[Full measurements and render errors](results.json)",
     ]
-    (output / "README.md").write_text("\n".join(lines) + "\n")
+    (output / "README.md").write_text(with_contents("\n".join(lines) + "\n"))
 
 
 def plot(output: Path, document: dict[str, object]) -> None:

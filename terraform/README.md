@@ -1,5 +1,12 @@
 # Remote shard workers
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Provision](#provision)
+- [Validate without provisioning](#validate-without-provisioning)
+<!-- toc:end -->
+
 [Ansible execution and collection](../ansible/README.md) deploys the local source snapshot to these VMs and brings results back.
 The compute module follows Astrivant's OS Login/IAP handoff pattern. It does not run Ansible during Terraform apply.
 

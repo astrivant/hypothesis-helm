@@ -1,5 +1,11 @@
 # Sparsity across structural outcomes
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Sparsity across structural outcomes](#sparsity-across-structural-outcomes)
+<!-- toc:end -->
+
 [Benchmarking](../../docs/benchmarking/README.md)
 
 Each stage uses a smaller nested random subset of the same input prefix, fresh caches, and a nine-minute ceiling. Case count varies; interaction strength does not. Scalar and categorical outcome distributions are checked against independent finite references.

@@ -1,5 +1,11 @@
 # One configurable benchmark chart
 
+<!-- toc:start -->
+**Table of contents**
+
+- [One configurable benchmark chart](#one-configurable-benchmark-chart)
+<!-- toc:end -->
+
 [Benchmarking](README.md) · [Chart](../../pkg/hypothesis_helm/benchmarking/assets/chart)
 
 The generator is the common chart definition for every synthetic study. A command

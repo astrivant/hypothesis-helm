@@ -1,5 +1,11 @@
 # bitnami/kube-arangodb
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/kube-arangodb](#bitnamikube-arangodb)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/kube-arangodb`.

@@ -1,5 +1,12 @@
 # Mutation sensitivity
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Parameter interactions](#parameter-interactions)
+- [Reproduce this study](#reproduce-this-study)
+<!-- toc:end -->
+
 Status: **complete**. Helm render attempts: **1223**.
 
 Distance counts added and removed JSON path/value indicators. A changed value counts twice.

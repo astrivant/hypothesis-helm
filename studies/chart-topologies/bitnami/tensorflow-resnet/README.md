@@ -1,5 +1,11 @@
 # bitnami/tensorflow-resnet
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/tensorflow-resnet](#bitnamitensorflow-resnet)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/tensorflow-resnet`.

@@ -1,5 +1,13 @@
 # Starting CI resources
 
+<!-- toc:start -->
+**Table of contents**
+
+- [What the Bitnami data tells us](#what-the-bitnami-data-tells-us)
+- [Workers and shards do different jobs](#workers-and-shards-do-different-jobs)
+- [Adjust after the first run](#adjust-after-the-first-run)
+<!-- toc:end -->
+
 [Recommended workflow](README.md#recommended-workflow)
 
 For a single chart, start with **2 vCPU / 4 GiB and two workers** for filtered MR/PR and main-branch checks.

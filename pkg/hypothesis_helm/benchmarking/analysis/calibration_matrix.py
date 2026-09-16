@@ -13,6 +13,7 @@ from hypothesis_helm.benchmarking.reporting.plots import finish
 from hypothesis_helm.benchmarking.reporting.variation import repeated_line
 from hypothesis_helm.execution.aggressive import changed_fields, matching_profiles
 from hypothesis_helm.execution.sampling import Sampling
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.combinations import trim_values
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
 
@@ -226,4 +227,4 @@ def plot(output: Path, rows: list[dict[str, object]], policy: dict[str, object])
             f"{row['target_successes']} / {row['trials']} |"
         )
     lines += ["", "[CSV](matrix.csv) · [JSON and matching decision](matrix.json)", ""]
-    (output / "MATRIX.md").write_text("\n".join(lines))
+    (output / "MATRIX.md").write_text(with_contents("\n".join(lines)))

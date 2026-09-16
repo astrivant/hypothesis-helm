@@ -1,5 +1,11 @@
 # bitnami/contour
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/contour](#bitnamicontour)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/contour`.

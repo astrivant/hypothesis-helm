@@ -17,6 +17,7 @@ from textwrap import dedent
 
 from hypothesis_helm.charts import yamlio
 from hypothesis_helm.execution.processes import Processes
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.reporting.repository import write_reports
 from hypothesis_helm.schemas.contracts import supported_generated_text
 
@@ -318,6 +319,8 @@ Cache directories under `helm/cache-*` are disposable and excluded from provenan
 A completed repository traversal does not establish exhaustive input coverage.
 """).lstrip()
 )
+readme = run / "README.md"
+readme.write_text(with_contents(readme.read_text()))
 (run / "finalize.py").write_text(Path(__file__).read_text())
 for path in sorted(run.rglob("*.json")):
     if any(part.startswith("cache-") for part in path.relative_to(run).parts):

@@ -1,5 +1,11 @@
 # bitnami/apisix
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/apisix](#bitnamiapisix)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/apisix`.

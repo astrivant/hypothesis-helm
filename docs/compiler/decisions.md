@@ -1,5 +1,16 @@
 # Compiler decisions, panel by panel
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Which branch does the compiler visit?](#which-branch-does-the-compiler-visit)
+- [When may an equal output skip Helm?](#when-may-an-equal-output-skip-helm)
+- [Why does an unsupported branch sometimes still permit analysis?](#why-does-an-unsupported-branch-sometimes-still-permit-analysis)
+- [Why keep some region members and restore others later?](#why-keep-some-region-members-and-restore-others-later)
+- [Why can the same template rejection have different outcomes?](#why-can-the-same-template-rejection-have-different-outcomes)
+- [Why can the maximum-complexity search drop a whole subtree?](#why-can-the-maximum-complexity-search-drop-a-whole-subtree)
+<!-- toc:end -->
+
 [Compiler](README.md) · [Analysis passes](analysis.md) · [Selection passes](selection.md)
 
 Each row of panels follows one decision. Green marks an executed or retained

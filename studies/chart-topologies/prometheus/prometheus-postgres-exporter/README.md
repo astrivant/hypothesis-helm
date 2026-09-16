@@ -1,5 +1,11 @@
 # prometheus/prometheus-postgres-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-postgres-exporter](#prometheusprometheus-postgres-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **static-only**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-postgres-exporter`.

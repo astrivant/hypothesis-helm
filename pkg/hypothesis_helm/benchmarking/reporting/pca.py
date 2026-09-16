@@ -14,6 +14,7 @@ from matplotlib.lines import Line2D
 from hypothesis_helm.benchmarking.analysis.selection import LABELS as PRESET_LABELS
 from hypothesis_helm.benchmarking.analysis.selection import decision, explanation
 from hypothesis_helm.benchmarking.reporting.descriptions import describe
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, number, sequence
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "hypothesis-helm-matplotlib"))
@@ -261,4 +262,4 @@ def plot(output: Path, document: dict[str, object]) -> None:
     lines.extend(explanation(csv_rows))
     if "filter-adaptive" in labels:
         lines += ["Preset PCA columns include failure expansion, replaying each visited input's actual Helm result.", ""]
-    (output / "README.md").write_text("\n".join(lines))
+    (output / "README.md").write_text(with_contents("\n".join(lines)))

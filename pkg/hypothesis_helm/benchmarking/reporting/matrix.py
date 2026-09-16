@@ -7,6 +7,7 @@ from pathlib import Path
 
 from hypothesis_helm.benchmarking.analysis.selection import LABELS, explanation
 from hypothesis_helm.benchmarking.reporting.descriptions import describe
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -173,6 +174,6 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
     ]
     lines.extend(explanation(rows))
-    (output / "README.md").write_text("\n".join(lines))
+    (output / "README.md").write_text(with_contents("\n".join(lines)))
     svg = output / "strategy-matrix.svg"
     svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")

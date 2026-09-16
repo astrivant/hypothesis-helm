@@ -1,5 +1,29 @@
 # Benchmarking
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Install and run](#install-and-run)
+  - [Reading variation bands](#reading-variation-bands)
+  - [One configurable chart](#one-configurable-chart)
+  - [Complexity-informed sampling](#complexity-informed-sampling)
+  - [Filtering runtime](#filtering-runtime)
+  - [Error rates and failure placement](#error-rates-and-failure-placement)
+  - [Random sampling and defect discovery](#random-sampling-and-defect-discovery)
+  - [Flame graphs across worker cores](#flame-graphs-across-worker-cores)
+  - [Reproduce the full project run](#reproduce-the-full-project-run)
+- [Local shard wrapper](#local-shard-wrapper)
+  - [Performance and scaling](#performance-and-scaling)
+- [Bug discovery by permutation strength](#bug-discovery-by-permutation-strength)
+- [Topology fixture](#topology-fixture)
+- [Strategy matrix](#strategy-matrix)
+- [Output-space PCA](#output-space-pca)
+- [Failure expansion](#failure-expansion)
+- [Topology distributions and trim depth](#topology-distributions-and-trim-depth)
+- [Chart nesting at permutation strength eight](#chart-nesting-at-permutation-strength-eight)
+- [Sweep chart breadth and depth](#sweep-chart-breadth-and-depth)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 Benchmark code, shell helpers, refresh recipes and chart assets ship together in

@@ -1,5 +1,20 @@
 # Workbalance
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Scheduling and feedback](#scheduling-and-feedback)
+- [Cooperative execution](#cooperative-execution)
+- [Logs and diagrams](#logs-and-diagrams)
+- [Composing graphs](#composing-graphs)
+- [Feedback graphs and daemon-like work](#feedback-graphs-and-daemon-like-work)
+- [Shutdown conditions and finalizers](#shutdown-conditions-and-finalizers)
+- [Graph traversal ordering](#graph-traversal-ordering)
+- [Try a live graph rewrite](#try-a-live-graph-rewrite)
+  - [What the rewrites produce](#what-the-rewrites-produce)
+- [Boolean routing rules](#boolean-routing-rules)
+<!-- toc:end -->
+
 `workbalance` schedules cooperative `workgraph.Workload` implementations. It ships alongside `workgraph` in this project's
 Python distribution. It does not depend on Helm and is not yet a separately published PyPI distribution.
 

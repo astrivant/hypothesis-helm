@@ -1,5 +1,11 @@
 # synthetic/matrix/charts/control-flow
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/matrix/charts/control-flow](#syntheticmatrixchartscontrol-flow)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/matrix/charts/control-flow`.

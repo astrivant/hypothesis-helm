@@ -12,5 +12,6 @@ bash scripts/project-run.sh mypy
 bash scripts/project-run.sh pydocstyle --config=pyproject.toml pkg
 bash scripts/project-run.sh pydoclint --config=pyproject.toml pkg
 bash scripts/project-run.sh cog --check docs/cli/README.md docs/rules/README.md
+bash scripts/project-run.sh hypothesis-helm-docs --check
 # Keep these flags here so generated chart suites do not inherit another worker pool.
 bash scripts/project-run.sh pytest -n "${PYTEST_WORKERS:-auto}" --dist worksteal "$@"

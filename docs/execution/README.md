@@ -1,5 +1,23 @@
 # Execution and estimates
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Value-path traversal](#value-path-traversal)
+- [Parallel execution](#parallel-execution)
+  - [Input memory](#input-memory)
+  - [Runtime estimates](#runtime-estimates)
+- [Distributed sharding](#distributed-sharding)
+- [One final report](#one-final-report)
+- [Progressive dry runs](#progressive-dry-runs)
+  - [Shutdown and partial results](#shutdown-and-partial-results)
+- [Optional trimming](#optional-trimming)
+  - [Expanding observed failures](#expanding-observed-failures)
+- [Percentage sampling](#percentage-sampling)
+  - [Adaptive preset](#adaptive-preset)
+  - [Parallel exhaustive execution](#parallel-exhaustive-execution)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 Random text generation excludes tabs and other C0/C1 control characters, such as

@@ -7,6 +7,7 @@ import statistics
 from pathlib import Path
 
 from hypothesis_helm.benchmarking.reporting.plots import finish
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -138,4 +139,4 @@ def plot(output: Path, document: dict[str, object]) -> None:
             question="Does a larger values tree or greater separation increase cost or hide the same seven erroneous inputs?",
         )
         lines.extend([f"![{title}]({filename}.png)", ""])
-    (output / "README.md").write_text("\n".join(lines) + "\n")
+    (output / "README.md").write_text(with_contents("\n".join(lines) + "\n"))

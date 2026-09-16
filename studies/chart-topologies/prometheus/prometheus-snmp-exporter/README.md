@@ -1,5 +1,11 @@
 # prometheus/prometheus-snmp-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-snmp-exporter](#prometheusprometheus-snmp-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-snmp-exporter`.

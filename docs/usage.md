@@ -1,5 +1,35 @@
 # Helm command reference
 
+<!-- toc:start -->
+<details>
+<summary>Table of contents</summary>
+
+- [Test a chart](#test-a-chart)
+- [Inspect and rerun generated suites](#inspect-and-rerun-generated-suites)
+- [Coalescing, paths, and strategies](#coalescing-paths-and-strategies)
+- [Audit and rendering limits](#audit-and-rendering-limits)
+- [Whole-chart modes](#whole-chart-modes)
+  - [Interaction coverage](#interaction-coverage)
+  - [Sampling and full enumeration](#sampling-and-full-enumeration)
+- [Examples and Astrivant](#examples-and-astrivant)
+- [Stream rendered manifests](#stream-rendered-manifests)
+- [Adaptive parallel test execution](#adaptive-parallel-test-execution)
+- [Progress and interruption](#progress-and-interruption)
+- [Distributed sharding](#distributed-sharding)
+- [Values structure baselines](#values-structure-baselines)
+- [Persistent path results](#persistent-path-results)
+- [Kubernetes API conformity](#kubernetes-api-conformity)
+  - [Preparing schemas independently](#preparing-schemas-independently)
+  - [Timing estimates](#timing-estimates)
+- [Cache-aware dry runs](#cache-aware-dry-runs)
+- [Strict source values](#strict-source-values)
+  - [In-memory rendered-output comparison](#in-memory-rendered-output-comparison)
+  - [Shared typed values model](#shared-typed-values-model)
+  - [Exact-equivalence pruning](#exact-equivalence-pruning)
+
+</details>
+<!-- toc:end -->
+
 Install with Helm 4 and Python 3.13+ available:
 
 ```sh

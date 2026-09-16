@@ -1,5 +1,11 @@
 # bitnami/oauth2-proxy
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/oauth2-proxy](#bitnamioauth2-proxy)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/oauth2-proxy`.

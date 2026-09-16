@@ -1,5 +1,11 @@
 # bitnami/redmine
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/redmine](#bitnamiredmine)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/redmine`.

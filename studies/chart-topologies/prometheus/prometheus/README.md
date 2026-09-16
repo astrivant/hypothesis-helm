@@ -1,5 +1,11 @@
 # prometheus/prometheus
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus](#prometheusprometheus)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **static-only**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus`.

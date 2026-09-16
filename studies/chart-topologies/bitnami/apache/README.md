@@ -1,5 +1,11 @@
 # bitnami/apache
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/apache](#bitnamiapache)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/apache`.

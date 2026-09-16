@@ -1,5 +1,11 @@
 # prometheus/prometheus-stackdriver-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-stackdriver-exporter](#prometheusprometheus-stackdriver-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-stackdriver-exporter`.

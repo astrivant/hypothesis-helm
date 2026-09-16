@@ -1,5 +1,11 @@
 # prometheus/prometheus-adapter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-adapter](#prometheusprometheus-adapter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-adapter`.

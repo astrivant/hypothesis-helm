@@ -1,5 +1,11 @@
 # bitnami/cassandra
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/cassandra](#bitnamicassandra)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/cassandra`.

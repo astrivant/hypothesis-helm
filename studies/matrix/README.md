@@ -1,5 +1,11 @@
 # Structural strategy matrix
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Structural strategy matrix](#structural-strategy-matrix)
+<!-- toc:end -->
+
 [Benchmarking](../../docs/benchmarking/README.md)
 
 Helm `v4.3.0+gbec5b06`; 540s execution ceiling per run; trim level 2; seed 2026.

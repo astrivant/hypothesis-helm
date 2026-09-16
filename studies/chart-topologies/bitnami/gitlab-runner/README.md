@@ -1,5 +1,11 @@
 # bitnami/gitlab-runner
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/gitlab-runner](#bitnamigitlab-runner)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/gitlab-runner`.

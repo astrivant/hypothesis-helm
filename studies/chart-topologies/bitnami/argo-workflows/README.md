@@ -1,5 +1,11 @@
 # bitnami/argo-workflows
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/argo-workflows](#bitnamiargo-workflows)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/argo-workflows`.

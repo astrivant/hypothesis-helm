@@ -1,5 +1,14 @@
 # Export passes
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Input inventory export](#input-inventory-export)
+- [Minimal values](#minimal-values)
+- [Topological graph export](#topological-graph-export)
+- [Repository export](#repository-export)
+<!-- toc:end -->
+
 [Compiler](README.md) · [Analysis passes](analysis.md) · [Input and export CLI guide](../inputs/README.md)
 
 Exports make compiler findings inspectable. Each artifact distinguishes static

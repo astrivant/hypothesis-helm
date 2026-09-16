@@ -1,5 +1,11 @@
 # Output-space PCA
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Output-space PCA](#output-space-pca)
+<!-- toc:end -->
+
 [Benchmarking](../../docs/benchmarking/README.md)
 
 Real Helm `v4.3.0+gbec5b06` renders. Errors occupy 5% of valid input assignments per category, rounded down; error seed 1729, selection seed 2026, trim level 2.

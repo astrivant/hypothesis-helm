@@ -1,5 +1,13 @@
 # Syntax trees and values model
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Shared lexer, different representations](#shared-lexer-different-representations)
+- [Output compilation stages](#output-compilation-stages)
+- [Shared values model](#shared-values-model)
+<!-- toc:end -->
+
 [Compiler](README.md) · [Analysis passes](analysis.md) · [Selection passes](selection.md)
 
 An **abstract syntax tree (AST)** records how statements nest inside a template.

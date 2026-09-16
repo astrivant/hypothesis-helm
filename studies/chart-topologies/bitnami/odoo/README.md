@@ -1,5 +1,11 @@
 # bitnami/odoo
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/odoo](#bitnamiodoo)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/odoo`.

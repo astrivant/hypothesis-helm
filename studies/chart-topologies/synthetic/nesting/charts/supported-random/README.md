@@ -1,5 +1,11 @@
 # synthetic/nesting/charts/supported-random
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/nesting/charts/supported-random](#syntheticnestingchartssupported-random)
+<!-- toc:end -->
+
 [All chart topologies](../../../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/outputs/nesting/charts/supported-random`.

@@ -1,5 +1,11 @@
 # bitnami/mysql
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/mysql](#bitnamimysql)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/mysql`.

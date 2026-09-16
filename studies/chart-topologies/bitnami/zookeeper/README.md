@@ -1,5 +1,11 @@
 # bitnami/zookeeper
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/zookeeper](#bitnamizookeeper)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/zookeeper`.

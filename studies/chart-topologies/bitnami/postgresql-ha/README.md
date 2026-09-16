@@ -1,5 +1,11 @@
 # bitnami/postgresql-ha
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/postgresql-ha](#bitnamipostgresql-ha)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/postgresql-ha`.

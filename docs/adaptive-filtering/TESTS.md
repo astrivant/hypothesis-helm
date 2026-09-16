@@ -1,5 +1,13 @@
 # Sampling proof obligations and test matrix
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Deterministic argument](#deterministic-argument)
+- [Regression matrix](#regression-matrix)
+- [Empirical matrix](#empirical-matrix)
+<!-- toc:end -->
+
 [Policy](README.md) · [Measured matrix and graphs](../../studies/calibration-variation/MATRIX.md)
 
 These checks establish selector behavior. They do not prove that omitted inputs cannot reveal a bug.

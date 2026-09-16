@@ -1,5 +1,11 @@
 # Sampling evidence matrix
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Sampling evidence matrix](#sampling-evidence-matrix)
+<!-- toc:end -->
+
 [Calibration](README.md)
 
 ![Selection and known-bug recall](matching-matrix.png)

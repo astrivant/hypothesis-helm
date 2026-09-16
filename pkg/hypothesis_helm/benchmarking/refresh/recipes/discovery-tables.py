@@ -7,6 +7,8 @@ import json
 import sys
 from pathlib import Path
 
+from hypothesis_helm.reporting.contents import with_contents
+
 root = Path(sys.argv[1])
 for study in ["discovery", "bug-density"]:
     directory = root / "outputs" / study
@@ -66,4 +68,4 @@ for study in ["discovery", "bug-density"]:
             "",
         ]
     )
-    (directory / "README.md").write_text("\n".join(lines))
+    (directory / "README.md").write_text(with_contents("\n".join(lines)))

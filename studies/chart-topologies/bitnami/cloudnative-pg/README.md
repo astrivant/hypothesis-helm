@@ -1,5 +1,11 @@
 # bitnami/cloudnative-pg
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/cloudnative-pg](#bitnamicloudnative-pg)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/cloudnative-pg`.

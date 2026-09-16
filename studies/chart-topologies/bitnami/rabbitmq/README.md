@@ -1,5 +1,11 @@
 # bitnami/rabbitmq
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/rabbitmq](#bitnamirabbitmq)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/rabbitmq`.

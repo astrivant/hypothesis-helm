@@ -1,5 +1,11 @@
 # prometheus/prom-label-proxy
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prom-label-proxy](#prometheusprom-label-proxy)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prom-label-proxy`.

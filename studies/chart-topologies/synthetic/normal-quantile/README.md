@@ -1,5 +1,11 @@
 # synthetic/normal-quantile
 
+<!-- toc:start -->
+**Table of contents**
+
+- [synthetic/normal-quantile](#syntheticnormal-quantile)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `.cache/benchmark-refresh-1789311940/standard-chart`.

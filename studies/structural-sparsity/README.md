@@ -1,5 +1,11 @@
 # Structural sparsity: large charts with separated relevant fields
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Structural sparsity: large charts with separated relevant fields](#structural-sparsity-large-charts-with-separated-relevant-fields)
+<!-- toc:end -->
+
 Can filtering avoid irrelevant structure without missing interactions between distant values?
 
 Every case has four variable Boolean fields, 16 valid assignments, two pairwise defects and seven erroneous assignments.

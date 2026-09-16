@@ -1,5 +1,13 @@
 # Mutation sensitivity
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Run it](#run-it)
+- [What the measurements mean](#what-the-measurements-mean)
+- [Scope and reproducibility](#scope-and-reproducibility)
+<!-- toc:end -->
+
 [Compiler guide](README.md) · [CLI reference](../cli/README.md)
 
 This diagnostic answers three questions:

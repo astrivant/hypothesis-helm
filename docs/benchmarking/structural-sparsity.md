@@ -1,5 +1,11 @@
 # Structural sparsity
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Structural sparsity](#structural-sparsity)
+<!-- toc:end -->
+
 [Results and plots](../../studies/structural-sparsity/README.md) · [Benchmark guide](README.md)
 
 This extends the sparsity study in a different direction: enlarge the chart while keeping the

@@ -1,5 +1,11 @@
 # bitnami/kubernetes-event-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/kubernetes-event-exporter](#bitnamikubernetes-event-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/kubernetes-event-exporter`.

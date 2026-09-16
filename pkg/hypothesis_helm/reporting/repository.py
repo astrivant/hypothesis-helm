@@ -10,6 +10,7 @@ import textwrap
 from pathlib import Path
 from urllib.parse import quote
 
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.reporting.errors import deduplicate_errors
 from hypothesis_helm.reporting.links import Publication, publish_links
 from hypothesis_helm.reporting.pdf import write_pdf
@@ -280,6 +281,6 @@ def write_reports(report: dict[str, object], stem: Path, *, publication: Publica
                 fence = ""
             elif not fence:
                 lines[index] = publish_links(line, markdown, publication)
-    markdown.write_text(wrap_markdown("\n".join(lines)))
+    markdown.write_text(with_contents(wrap_markdown("\n".join(lines))))
     write_pdf("\n".join(lines), pdf, title=str(report.get("title", "Helm chart scan")))
     return markdown, pdf

@@ -1,5 +1,19 @@
 # Development
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Environment](#environment)
+- [Checks](#checks)
+- [Plugin verification](#plugin-verification)
+- [Documentation contents](#documentation-contents)
+- [Publishing to PyPI](#publishing-to-pypi)
+- [Pre-commit hook](#pre-commit-hook)
+- [Package organization](#package-organization)
+- [Repository map](#repository-map)
+- [Preserved scheduler and separate Reflow project](#preserved-scheduler-and-separate-reflow-project)
+<!-- toc:end -->
+
 This document is for contributors modifying the framework. End-user chart testing
 is entirely through [Helm commands](usage.md).
 
@@ -86,6 +100,13 @@ interpreter, with unrelated pytest configuration and auto-loaded plugins disable
 The saved suite's own code and conftest remain editable.
 
 Publishing and remote repository-setting changes are not automated by local checks.
+
+## Documentation contents
+
+Run `hypothesis-helm-docs` from the checkout root after editing headings. It updates linked tables of contents in maintained
+Markdown pages; `hypothesis-helm-docs --check` verifies them without writing. Pre-commit updates the Markdown files in a commit,
+and project checks verify the full documentation set. Regenerated study and scan reports include contents automatically.
+Archived run snapshots and third-party sources are excluded to preserve recorded checksums and upstream files.
 
 ## Publishing to PyPI
 

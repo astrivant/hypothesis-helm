@@ -1,5 +1,11 @@
 # bitnami/dremio
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/dremio](#bitnamidremio)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/dremio`.

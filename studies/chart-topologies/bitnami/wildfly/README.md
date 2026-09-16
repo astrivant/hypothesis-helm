@@ -1,5 +1,11 @@
 # bitnami/wildfly
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/wildfly](#bitnamiwildfly)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/wildfly`.

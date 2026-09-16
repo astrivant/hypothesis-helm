@@ -1,5 +1,22 @@
 # CLI reference
 
+<!-- toc:start -->
+**Table of contents**
+
+- [helm hypothesis](#helm-hypothesis)
+- [helm hypothesis rules](#helm-hypothesis-rules)
+- [helm hypothesis replay-changes](#helm-hypothesis-replay-changes)
+- [helm hypothesis aggregate](#helm-hypothesis-aggregate)
+- [helm hypothesis export-minimal-values](#helm-hypothesis-export-minimal-values)
+- [helm hypothesis scan](#helm-hypothesis-scan)
+- [helm hypothesis generate](#helm-hypothesis-generate)
+- [helm hypothesis audit](#helm-hypothesis-audit)
+- [helm hypothesis run](#helm-hypothesis-run)
+- [helm hypothesis test](#helm-hypothesis-test)
+- [helm hypothesis schemas](#helm-hypothesis-schemas)
+- [Mutation sensitivity diagnostic](#mutation-sensitivity-diagnostic)
+<!-- toc:end -->
+
 [Documentation](../README.md) · [Project](../../README.md)
 
 Generated from the argument parser with cogapp. After changing CLI arguments, run
@@ -19,11 +36,14 @@ for action in parser._actions:
     if isinstance(action, argparse._SubParsersAction):
         parsers.extend((f"helm hypothesis {name}", child) for name, child in action.choices.items())
 for title, command in parsers:
+    cog.outl(f"## {title}\n")
     cog.outl(f"<details>\n<summary>{title}</summary>\n")
     cog.outl("~~~text")
     cog.out(command.format_help())
     cog.outl("~~~\n\n</details>\n")
 ]]] -->
+## helm hypothesis
+
 <details>
 <summary>helm hypothesis</summary>
 
@@ -53,6 +73,8 @@ options:
 
 </details>
 
+## helm hypothesis rules
+
 <details>
 <summary>helm hypothesis rules</summary>
 
@@ -66,6 +88,8 @@ options:
 ~~~
 
 </details>
+
+## helm hypothesis replay-changes
 
 <details>
 <summary>helm hypothesis replay-changes</summary>
@@ -87,6 +111,8 @@ options:
 
 </details>
 
+## helm hypothesis aggregate
+
 <details>
 <summary>helm hypothesis aggregate</summary>
 
@@ -107,6 +133,8 @@ options:
 ~~~
 
 </details>
+
+## helm hypothesis export-minimal-values
 
 <details>
 <summary>helm hypothesis export-minimal-values</summary>
@@ -142,6 +170,8 @@ options:
 ~~~
 
 </details>
+
+## helm hypothesis scan
 
 <details>
 <summary>helm hypothesis scan</summary>
@@ -238,6 +268,8 @@ options:
 
 </details>
 
+## helm hypothesis generate
+
 <details>
 <summary>helm hypothesis generate</summary>
 
@@ -275,6 +307,8 @@ options:
 
 </details>
 
+## helm hypothesis audit
+
 <details>
 <summary>helm hypothesis audit</summary>
 
@@ -307,6 +341,8 @@ options:
 ~~~
 
 </details>
+
+## helm hypothesis run
 
 <details>
 <summary>helm hypothesis run</summary>
@@ -377,6 +413,8 @@ options:
 ~~~
 
 </details>
+
+## helm hypothesis test
 
 <details>
 <summary>helm hypothesis test</summary>
@@ -534,6 +572,8 @@ filtering:
 ~~~
 
 </details>
+
+## helm hypothesis schemas
 
 <details>
 <summary>helm hypothesis schemas</summary>

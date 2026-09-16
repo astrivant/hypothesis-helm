@@ -10,6 +10,7 @@ from attrs import asdict
 
 from hypothesis_helm.benchmarking.analysis.quadratic import fit
 from hypothesis_helm.benchmarking.reporting.descriptions import describe
+from hypothesis_helm.reporting.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -160,4 +161,4 @@ def plot(output: Path, document: dict[str, object]) -> None:
         )
         + "\n"
     )
-    (output / "quadratic-fits.md").write_text("\n".join(lines) + "\n")
+    (output / "quadratic-fits.md").write_text(with_contents("\n".join(lines) + "\n"))

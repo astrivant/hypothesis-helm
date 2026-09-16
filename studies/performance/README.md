@@ -1,5 +1,11 @@
 # Performance and scaling
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Performance and scaling](#performance-and-scaling)
+<!-- toc:end -->
+
 [Benchmarking](../../docs/benchmarking/README.md#performance-and-scaling)
 
 Recorded permutation throughput and worker scaling for the retained [standard chart](standard-chart).

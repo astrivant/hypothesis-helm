@@ -1,5 +1,26 @@
 # Fitted response surfaces
 
+<!-- toc:start -->
+**Table of contents**
+
+- [clustering: default, Total runtime (seconds)](#clustering-default-total-runtime-seconds)
+- [clustering: default, Erroneous inputs missed](#clustering-default-erroneous-inputs-missed)
+- [clustering: exact-equivalence, Total runtime (seconds)](#clustering-exact-equivalence-total-runtime-seconds)
+- [clustering: exact-equivalence, Erroneous inputs missed](#clustering-exact-equivalence-erroneous-inputs-missed)
+- [clustering: random, Total runtime (seconds)](#clustering-random-total-runtime-seconds)
+- [clustering: random, Erroneous inputs missed](#clustering-random-erroneous-inputs-missed)
+- [clustering: topology, Total runtime (seconds)](#clustering-topology-total-runtime-seconds)
+- [clustering: topology, Erroneous inputs missed](#clustering-topology-erroneous-inputs-missed)
+- [clustering: combined, Total runtime (seconds)](#clustering-combined-total-runtime-seconds)
+- [clustering: combined, Erroneous inputs missed](#clustering-combined-erroneous-inputs-missed)
+- [clustering: filter, Total runtime (seconds)](#clustering-filter-total-runtime-seconds)
+- [clustering: filter, Erroneous inputs missed](#clustering-filter-erroneous-inputs-missed)
+- [clustering: filter-aggressive, Total runtime (seconds)](#clustering-filter-aggressive-total-runtime-seconds)
+- [clustering: filter-aggressive, Erroneous inputs missed](#clustering-filter-aggressive-erroneous-inputs-missed)
+- [clustering: sample-random, Total runtime (seconds)](#clustering-sample-random-total-runtime-seconds)
+- [clustering: sample-random, Erroneous inputs missed](#clustering-sample-random-erroneous-inputs-missed)
+<!-- toc:end -->
+
 [Measurements](README.md) · [Model definition](../../docs/benchmarking/response-surface.md)
 
 Quadratics fitted to collected cell means, separately for each method and response. Coefficients are not theoretical predictions.

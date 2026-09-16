@@ -9,6 +9,8 @@ import sys
 import tarfile
 from pathlib import Path
 
+from hypothesis_helm.reporting.contents import with_contents
+
 root = Path(sys.argv[1])
 profiles = list((root / "profiles").glob("profile-*"))
 if len(profiles) != 1:
@@ -54,7 +56,7 @@ for figure in index["figures"]:
             "",
         ]
     )
-(target / "README.md").write_text("\n".join(lines))
+(target / "README.md").write_text(with_contents("\n".join(lines)))
 checksums = {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in target.iterdir() if path.is_file()}
 (target / "sha256.json").write_text(json.dumps(checksums, indent=2) + "\n")
 print(f"Published {len(index['figures'])} fresh flame graphs with raw captures")

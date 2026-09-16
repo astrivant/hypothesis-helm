@@ -1,5 +1,11 @@
 # prometheus/alertmanager
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/alertmanager](#prometheusalertmanager)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **static-only**. Source: `third_party/prometheus-community-helm-charts/charts/alertmanager`.

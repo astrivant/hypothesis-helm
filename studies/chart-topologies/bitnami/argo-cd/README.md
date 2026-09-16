@@ -1,5 +1,11 @@
 # bitnami/argo-cd
 
+<!-- toc:start -->
+**Table of contents**
+
+- [bitnami/argo-cd](#bitnamiargo-cd)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/bitnami-charts/bitnami/argo-cd`.

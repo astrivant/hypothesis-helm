@@ -1,5 +1,16 @@
 # Analysis passes
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Branch knowledge](#branch-knowledge)
+- [Input inventory](#input-inventory)
+- [Dependency discovery and activation](#dependency-discovery-and-activation)
+- [Explicit rejection discovery](#explicit-rejection-discovery)
+- [Maximum output complexity](#maximum-output-complexity)
+- [Sampling profile](#sampling-profile)
+<!-- toc:end -->
+
 [Compiler](README.md) · [Syntax trees](syntax-trees.md) · [Selection passes](selection.md)
 
 These passes describe what the chart can consume or produce. Their results guide

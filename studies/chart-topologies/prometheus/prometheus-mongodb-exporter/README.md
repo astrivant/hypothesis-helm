@@ -1,5 +1,11 @@
 # prometheus/prometheus-mongodb-exporter
 
+<!-- toc:start -->
+**Table of contents**
+
+- [prometheus/prometheus-mongodb-exporter](#prometheusprometheus-mongodb-exporter)
+<!-- toc:end -->
+
 [All chart topologies](../../README.md)
 
 Status: **rendered**. Source: `third_party/prometheus-community-helm-charts/charts/prometheus-mongodb-exporter`.

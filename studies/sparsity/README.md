@@ -1,5 +1,11 @@
 # Sparsity and Stochasticity
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Fresh measurements](#fresh-measurements)
+<!-- toc:end -->
+
 [Benchmarking](../../docs/benchmarking/README.md)
 
 This study varies case count, not `--permutations` interaction strength. It measures

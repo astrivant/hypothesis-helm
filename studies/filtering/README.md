@@ -1,5 +1,11 @@
 # Filtering load test
 
+<!-- toc:start -->
+**Table of contents**
+
+- [Filtering load test](#filtering-load-test)
+<!-- toc:end -->
+
 [Theory and conditions](../../docs/adaptive-filtering/README.md#computational-cost)
 
 A gate is a template `if` condition. Depth counts nested conditions required to reach the innermost branch.
