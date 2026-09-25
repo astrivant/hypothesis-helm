@@ -229,6 +229,9 @@ Its dependency graphs are also in the [topology catalog](<studies/chart-topologi
 
 ## Development
 
+[CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml): checks, chart validation, packaging,
+manual benchmark refreshes and tag-only PyPI releases in one run. See [CI controls](docs/development.md#github-ci).
+
 See [dependency maintenance](docs/dependencies.md) for version pins, nested Go modules, source catalogs and upgrade checks.
 
 ```sh
@@ -368,6 +371,13 @@ usage: helm hypothesis export-minimal-values [-h] [--filename FILENAME] [--helm 
                                              [--schema-version SCHEMA_VERSION]
                                              [--schema-cache-dir SCHEMA_CACHE_DIR]
                                              [--schema-offline]
+                                             [--log-color [{auto,always,never}]]
+                                             [--log-file PATH] [--config CONFIG]
+                                             [--character-sets {ascii,unicode}]
+                                             [--renderer-policy {auto,native,strict}]
+                                             [--yaml-parser {ruamel,ruamel-safe,pyyaml}]
+                                             [--ignore CODE]
+                                             [--disable-codes CODE[,CODE...]]
                                              source
 
 Create an example minimal values file beside each chart found in a local directory.
@@ -391,6 +401,25 @@ options:
                         Kubernetes schema version: latest or X.Y.Z
   --schema-cache-dir SCHEMA_CACHE_DIR
   --schema-offline      reuse cached schemas without network access
+  --log-color [{auto,always,never}]
+                        color log severity labels; bare flag: always; auto: terminals
+                        unless NO_COLOR is set; default: never
+  --log-file PATH       append logs to PATH; default: stdout (-), or stderr when
+                        streaming manifests
+  --config CONFIG       finding and input-domain policy YAML; default: .hypothesis-
+                        helm.yaml in the working directory
+  --character-sets {ascii,unicode}
+                        generated text alphabet; overrides config; default: ascii
+  --renderer-policy {auto,native,strict}
+                        auto controls supported random inputs with visible native
+                        fallback (default); native uses Helm; strict requires replay
+  --yaml-parser {ruamel,ruamel-safe,pyyaml}
+                        manifest parser backend; overrides yaml_parser in config;
+                        default: ruamel, or the saved suite's parser
+  --ignore CODE         disable one built-in check; repeat to add codes
+  --disable-codes CODE[,CODE...]
+                        disable comma-delimited finding codes; adds to --ignore and
+                        the config file; repeatable
 ~~~
 
 </details>

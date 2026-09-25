@@ -1,12 +1,12 @@
 name: Hypothesis Helm
-description: Property-test Helm chart values with CI sharding and adaptive parallel workers.
+description: Test or audit local and remote Helm charts, generate and run saved suites, and report findings.
 author: Emma Doyle
 branding:
   icon: check-circle
   color: purple
 inputs:
   chart:
-    description: Chart directory relative to the workspace.
+    description: Local chart or source relative to the workspace; source takes precedence when supplied.
     default: .
   export-minimal-values:
     description: Export deterministic concrete values beside each chart after testing (shard 1 only).
@@ -45,25 +45,25 @@ inputs:
     description: Common run identifier for combining all shards into one final report.
     default: ''
   max-examples:
-    description: Maximum Hypothesis examples per property.
-    default: '100'
+    description: Maximum Hypothesis examples per property; empty inherits config, then the CLI default (test/scan 10, generate 100).
+    default: ''
   sample-random:
     description: Percentage of eligible path properties to retain; 100 disables sampling.
-    default: '100'
+    default: ''
   sample-min-cases:
     description: Minimum retained sample; smaller suites run in full.
-    default: '128'
+    default: ''
   seed:
     description: Shared Hypothesis seed for reproducible runs.
-    default: '0'
+    default: ''
   timeout:
     description: Timeout in seconds per Helm render.
-    default: '30'
+    default: ''
   match:
     description: Optional pytest keyword expression applied before sharding.
     default: ''
   schema-validation:
-    description: Enable strict API validation when Kubesec routing is disabled.
+    description: 'Validate Kubernetes API schemas; with Kubesec, route validation through the security dispatcher.'
     default: 'true'
   kubesec:
     description: Route fresh and verified cached manifests to Kubesec and other resources to native schema validation.
@@ -125,7 +125,194 @@ inputs:
   artifact-retention-days:
     description: Report retention in days, subject to repository policy; does not change CI cache eviction.
     default: '30'
+  command:
+    description: 'CLI command: test (local charts), scan (remote sources), audit, generate, or run (saved suite).'
+    default: test
+  source:
+    description: Chart directory, remote repository/chart reference, or saved suite directory. When empty, use chart.
+    default: ''
+  config-inline:
+    description: Inline policy YAML merged over config. Mappings merge; lists and scalars replace. Relative paths use the workspace.
+    default: ''
+  report:
+    description: 'Write Markdown/PDF reports; true writes scan.md/pdf inside artifacts, a path chooses a location, false or empty omits.'
+    default: ''
+  pca-samples:
+    description: 'with --report, measure up to N reference configurations per chart for output PCA; 0 disables it (default: 64)'
+    default: ''
+  pca-timeout:
+    description: 'additional output-PCA measurement budget per chart with --report (default: 1m)'
+    default: ''
+  max-mutations:
+    description: with --report, measure sensitivity for up to N fields per chart and all their pairs (opt-in)
+    default: ''
+  sensitivity-timeout:
+    description: 'additional sensitivity measurement budget per chart with --max-mutations (default: 3m)'
+    default: ''
+  values:
+    description: baseline file relative to each chart, or an absolute path
+    default: ''
+  chart-timeout:
+    description: 'property-test budget per discovered chart (default: 3m)'
+    default: ''
+  scan-timeout:
+    description: total local discovery/testing budget, excluding dependency preparation
+    default: ''
+  build-dependencies:
+    description: build dependencies in isolated copies; true/false, empty inherits the CLI/config default
+    default: ''
+  fail:
+    description: 'stop at this severity or higher and exit 1; bare flag: any finding; lower findings remain reported; true uses the default, false
+      or empty omits'
+    default: ''
+  time-limit:
+    description: 'whole-chart execution budget, e.g. 30s or 3m (default: 3m); excludes planning'
+    default: ''
+  paths:
+    description: force generated per-path testing; true enables, false or empty omits
+    default: ''
+  exhaustive:
+    description: enumerate finite whole-chart inputs; true enables, false or empty omits
+    default: ''
+  whole-chart:
+    description: sample whole-chart inputs; true enables, false or empty omits
+    default: ''
+  permutations:
+    description: cover valid N-way finite interactions; non-finite charts fall back to path sampling
+    default: ''
+  filter:
+    description: enable --filter-topology 2 and --expand-failures; true enables, false or empty omits
+    default: ''
+  filter-random:
+    description: 'retain a seeded quarter of finite permutation cases per step; default: 0'
+    default: ''
+  filter-topology:
+    description: thin symbolic output/branch regions; retain representatives and unknowns; combines with --filter-random
+    default: ''
+  expand-failures:
+    description: test omitted members of failed symbolic regions within the execution budget; true enables, false or empty omits
+    default: ''
+  prune-equivalent:
+    description: skip Helm only for proved output equivalence to a successful render; true enables, false or empty omits
+    default: ''
+  collect-only:
+    description: generate and list tests; true enables, false or empty omits
+    default: ''
+  max-cases:
+    description: bound exhaustive domains or permutation suites and factor domains
+    default: ''
+  max-candidates:
+    description: bound permutation planning work
+    default: ''
+  exhaustive-threshold:
+    description: enumerate finite spaces smaller than this count; 0 disables promotion
+    default: ''
+  exhaustive-group:
+    description: require exhaustive coverage of a group of value paths or containers; repeatable; one comma-separated group per line
+    default: ''
+  no-infer-groups:
+    description: disable inferred exhaustive groups; true enables, false or empty omits
+    default: ''
+  max-group-cases:
+    description: bound automatically inferred group domains
+    default: ''
+  filter-adaptive:
+    description: enable --filter and retain 70% subject to measured topology sample floors; unmatched charts keep all filtered cases; true
+      enables, false or empty omits
+    default: ''
+  sampling-calibration:
+    description: override the packaged adaptive-sampling calibration JSON
+    default: ''
+  sensitivity-order:
+    description: 'maximum measured interaction order for sensitivity-first; 1..permutations, default: min(2, permutations)'
+    default: ''
+  traversal-strategy:
+    description: seeded random (default), linear, root-first, leaf-first, or sensitivity-first (finite coverage defaults to pairs)
+    default: ''
+  helm:
+    description: helm
+    default: ''
+  release:
+    description: release
+    default: ''
+  namespace:
+    description: namespace
+    default: ''
+  kube-version:
+    description: kube-version
+    default: ''
+  allow-empty:
+    description: allow-empty; true enables, false or empty omits
+    default: ''
+  strict:
+    description: require schemas for custom resources; otherwise skip schema validation when their schema is missing; true/false, empty
+      inherits the CLI/config default
+    default: ''
+  dry-run:
+    description: plot coverage and forecast filtering or cached property work without execution; true enables, false or empty omits
+    default: ''
+  progress:
+    description: force a live progress bar on stderr, including redirected output; true enables, false or empty omits
+    default: ''
+  output-format:
+    description: stream rendered manifests as JSON lines or YAML documents on stdout; logs and reports go to stderr
+    default: ''
+  export-suppressions:
+    description: write categorized suppressions.yaml in each chart's artifacts after testing; review before applying; true enables, false or
+      empty omits
+    default: ''
+  export-topological-graph:
+    description: 'Export JSON/DOT input-output graphs; true writes topology.json inside artifacts, or provide a filename.'
+    default: ''
+  log-color:
+    description: 'Color severity labels: auto, always or never. true selects always; false selects never; empty inherits the CLI default.'
+    default: ''
+  log-file:
+    description: 'Append logs to this file; empty keeps diagnostics visible on stderr while stdout is saved as an Action output.'
+    default: ''
+  config:
+    description: 'finding and input-domain policy YAML; default: .hypothesis-helm.yaml in the working directory'
+    default: ''
+  character-sets:
+    description: 'generated text alphabet; overrides config; default: ascii'
+    default: ''
+  renderer-policy:
+    description: auto controls supported random inputs with visible native fallback (default); native uses Helm; strict requires replay
+    default: ''
+  yaml-parser:
+    description: "manifest parser backend; overrides yaml_parser in config; default: ruamel, or the saved suite's parser"
+    default: ''
+  ignore:
+    description: disable one built-in check; repeat to add codes; one code per line
+    default: ''
+  disable-codes:
+    description: disable comma-delimited finding codes; adds to --ignore and the config file; repeatable
+    default: ''
+  helm-repository:
+    description: interpret SOURCE as a Helm repository name or HTTP(S) base URL; true enables, false or empty omits
+    default: ''
+  chart-version:
+    description: 'Helm chart version or constraint; default: latest stable release per chart'
+    default: ''
+  clone-timeout:
+    description: 'Git checkout or Helm source preparation budget, also bounded by --scan-timeout (default: 3m)'
+    default: ''
+  suite-output:
+    description: 'Generated suite directory (generate --output); empty writes generated-tests inside the artifact directory.'
+    default: ''
 outputs:
+  suite-path:
+    description: Generated suite directory for command generate.
+    value: ${{ steps.test.outputs.suite-path }}
+  report-path:
+    description: Requested Markdown report location; may not exist after setup failure.
+    value: ${{ steps.test.outputs.report-path }}
+  pdf-path:
+    description: Requested PDF report location; may not exist after setup failure.
+    value: ${{ steps.test.outputs.pdf-path }}
+  command-output:
+    description: Captured stdout for audit, generation, dry-run or collection.
+    value: ${{ steps.test.outputs.command-output }}
   report-dir:
     description: Absolute path to this shard's artifact directory.
     value: ${{ steps.test.outputs.report-dir }}
@@ -133,7 +320,7 @@ outputs:
     description: Absolute path to the JUnit report.
     value: ${{ steps.test.outputs.junit-path }}
   manifest-path:
-    description: Absolute path to the JSON Lines manifest stream.
+    description: Absolute path to the manifest stream (JSON Lines or YAML); empty for non-rendering commands.
     value: ${{ steps.test.outputs.manifest-path }}
   shard:
     description: Resolved one-based shard coordinates, or none.
@@ -318,6 +505,63 @@ runs:
         HYPOTHESIS_HELM_JOB_INDEX: ${{ inputs.job-index }}
         HYPOTHESIS_HELM_JOB_TOTAL: ${{ inputs.job-total }}
         HH_CHART: ${{ inputs.chart }}
+        HH_COMMAND: ${{ inputs.command }}
+        HH_SOURCE: ${{ inputs.source }}
+        HH_CONFIG_INLINE: ${{ inputs.config-inline }}
+        HH_REPORT: ${{ inputs.report }}
+        HH_PCA_SAMPLES: ${{ inputs.pca-samples }}
+        HH_PCA_TIMEOUT: ${{ inputs.pca-timeout }}
+        HH_MAX_MUTATIONS: ${{ inputs.max-mutations }}
+        HH_SENSITIVITY_TIMEOUT: ${{ inputs.sensitivity-timeout }}
+        HH_VALUES: ${{ inputs.values }}
+        HH_CHART_TIMEOUT: ${{ inputs.chart-timeout }}
+        HH_SCAN_TIMEOUT: ${{ inputs.scan-timeout }}
+        HH_BUILD_DEPENDENCIES: ${{ inputs.build-dependencies }}
+        HH_FAIL: ${{ inputs.fail }}
+        HH_TIME_LIMIT: ${{ inputs.time-limit }}
+        HH_PATHS: ${{ inputs.paths }}
+        HH_EXHAUSTIVE: ${{ inputs.exhaustive }}
+        HH_WHOLE_CHART: ${{ inputs.whole-chart }}
+        HH_PERMUTATIONS: ${{ inputs.permutations }}
+        HH_FILTER: ${{ inputs.filter }}
+        HH_FILTER_RANDOM: ${{ inputs.filter-random }}
+        HH_FILTER_TOPOLOGY: ${{ inputs.filter-topology }}
+        HH_EXPAND_FAILURES: ${{ inputs.expand-failures }}
+        HH_PRUNE_EQUIVALENT: ${{ inputs.prune-equivalent }}
+        HH_COLLECT_ONLY: ${{ inputs.collect-only }}
+        HH_MAX_CASES: ${{ inputs.max-cases }}
+        HH_MAX_CANDIDATES: ${{ inputs.max-candidates }}
+        HH_EXHAUSTIVE_THRESHOLD: ${{ inputs.exhaustive-threshold }}
+        HH_EXHAUSTIVE_GROUP: ${{ inputs.exhaustive-group }}
+        HH_NO_INFER_GROUPS: ${{ inputs.no-infer-groups }}
+        HH_MAX_GROUP_CASES: ${{ inputs.max-group-cases }}
+        HH_FILTER_ADAPTIVE: ${{ inputs.filter-adaptive }}
+        HH_SAMPLING_CALIBRATION: ${{ inputs.sampling-calibration }}
+        HH_SENSITIVITY_ORDER: ${{ inputs.sensitivity-order }}
+        HH_TRAVERSAL_STRATEGY: ${{ inputs.traversal-strategy }}
+        HH_HELM: ${{ inputs.helm }}
+        HH_RELEASE: ${{ inputs.release }}
+        HH_NAMESPACE: ${{ inputs.namespace }}
+        HH_KUBE_VERSION: ${{ inputs.kube-version }}
+        HH_ALLOW_EMPTY: ${{ inputs.allow-empty }}
+        HH_STRICT: ${{ inputs.strict }}
+        HH_DRY_RUN: ${{ inputs.dry-run }}
+        HH_PROGRESS: ${{ inputs.progress }}
+        HH_OUTPUT_FORMAT: ${{ inputs.output-format }}
+        HH_EXPORT_SUPPRESSIONS: ${{ inputs.export-suppressions }}
+        HH_EXPORT_TOPOLOGICAL_GRAPH: ${{ inputs.export-topological-graph }}
+        HH_LOG_COLOR: ${{ inputs.log-color }}
+        HH_LOG_FILE: ${{ inputs.log-file }}
+        HH_CONFIG: ${{ inputs.config }}
+        HH_CHARACTER_SETS: ${{ inputs.character-sets }}
+        HH_RENDERER_POLICY: ${{ inputs.renderer-policy }}
+        HH_YAML_PARSER: ${{ inputs.yaml-parser }}
+        HH_IGNORE: ${{ inputs.ignore }}
+        HH_DISABLE_CODES: ${{ inputs.disable-codes }}
+        HH_HELM_REPOSITORY: ${{ inputs.helm-repository }}
+        HH_CHART_VERSION: ${{ inputs.chart-version }}
+        HH_CLONE_TIMEOUT: ${{ inputs.clone-timeout }}
+        HH_SUITE_OUTPUT: ${{ inputs.suite-output }}
         HH_SHARD: ${{ inputs.shard }}
         HH_JOBS: ${{ inputs.jobs }}
         HH_RUN_ID: ${{ inputs.run-id }}
@@ -343,15 +587,25 @@ runs:
         HH_INCREMENTAL: ${{ inputs.incremental }}
         HH_BASE_REF: ${{ inputs.base-ref }}
         HH_ARTIFACT_DIR: ${{ inputs.artifact-dir }}
+        HH_EXPORT_MINIMAL_VALUES: ${{ inputs.export-minimal-values }}
+        HH_COMMIT_MINIMAL_VALUES: ${{ inputs.commit-minimal-values }}
+        HH_MINIMAL_VALUES_FILENAME: ${{ inputs.minimal-values-filename }}
+        HH_MINIMAL_VALUES_TIMEOUT: ${{ inputs.minimal-values-timeout }}
       run: '"$ACTION_PATH/.plugin-venv/bin/hypothesis-helm-github-action"'
     - name: Export minimal example values
-      if: ${{ always() && steps.test.outputs.shard != '' && (inputs.export-minimal-values == 'true' || inputs.commit-minimal-values == 'true') }}
+      if: ${{ always() && steps.test.outputs.effective-config-ready == 'true' && inputs.command != 'scan' && inputs.command != 'run' && (inputs.export-minimal-values == 'true' || inputs.commit-minimal-values == 'true') }}
       shell: bash
       env:
         ACTION_PATH: ${{ github.action_path }}
         HELM_DATA_HOME: ${{ steps.install.outputs.data }}
         HELM_PLUGINS: ${{ steps.install.outputs.plugins }}
-        HH_CHART: ${{ inputs.chart }}
+        HH_CHART: ${{ inputs.source || inputs.chart }}
+        HH_CONFIG: ${{ steps.test.outputs.effective-config }}
+        HH_HELM: ${{ inputs.helm }}
+        HH_TIMEOUT: ${{ inputs.timeout }}
+        HH_CHARACTER_SETS: ${{ inputs.character-sets }}
+        HH_RENDERER_POLICY: ${{ inputs.renderer-policy }}
+        HH_YAML_PARSER: ${{ inputs.yaml-parser }}
         HH_RESOLVED_SHARD: ${{ steps.test.outputs.shard }}
         HH_MINIMAL_VALUES_FILENAME: ${{ inputs.minimal-values-filename }}
         HH_MINIMAL_VALUES_TIMEOUT: ${{ inputs.minimal-values-timeout }}
@@ -375,7 +629,12 @@ runs:
       with:
         include-hidden-files: true
         name: ${{ inputs.artifact-name }}-${{ github.job }}-${{ steps.test.outputs.shard-id }}
-        path: ${{ steps.test.outputs.report-dir }}
+        path: |
+          ${{ steps.test.outputs.report-dir }}
+          ${{ steps.test.outputs.report-path }}
+          ${{ steps.test.outputs.pdf-path }}
+          ${{ steps.test.outputs.report-images }}
+          ${{ steps.test.outputs.suite-path }}
         if-no-files-found: warn
         retention-days: ${{ inputs.artifact-retention-days }}
     - name: Upload this shard's security results

@@ -75,8 +75,9 @@ original paths; use the latest completed journal when inspecting those archived 
 
 ## Parallel refresh on GitHub Actions
 
-Run the [**Benchmark and report refresh** workflow](../../.github/workflows/benchmark-refresh.yml) manually.
-It first runs the benchmark smoke tests. Preparation then rebuilds the pinned dependencies, checks the project and snapshots its inputs once.
+Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml), select **Run workflow**,
+and enable **refresh**. Once code checks, chart validation, packaging and smoke tests pass, preparation rebuilds the pinned
+dependencies, checks the generated project and snapshots its inputs once.
 GitHub runs each declared study on a separate runner, using the same source snapshot and parameters.
 The matrix comes from the Python study inventory, so adding a study also adds its CI job.
 There is no `max-parallel` setting: GitHub schedules as many jobs as the account's capacity and runner availability permit.
@@ -86,12 +87,12 @@ Each study owns its output directory, status file and process journal. A failed 
 other studies. The final job requires every study to succeed, verifies the merged measurements, and publishes pages and plots
 under `studies/`, then runs Bitnami followed by Prometheus. Reports, studies, and the separate `refresh-resume-data` artifact
 are retained for 30 days.
-Set `HH_CI_RUNNER` to override the default `ubuntu-latest-8-cores` runner label.
+Jobs default to `ubuntu-latest`. Set `HH_CI_RUNNER` to the label of an available larger Ubuntu x64 runner to use more cores.
 
 After pushing the workflow changes, launch it with:
 
 ```sh
-gh workflow run benchmark-refresh.yml
+gh workflow run ci.yml -f refresh=true
 ```
 
 Local `bash scripts/project-run.sh hypothesis-helm-refresh` still runs timing studies sequentially on one machine to avoid CPU contention affecting

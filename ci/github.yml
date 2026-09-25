@@ -29,6 +29,13 @@ jobs:
       - uses: astrivant/hypothesis-helm@main
         with:
           chart: ./chart
+          command: test
+          traversal-strategy: random
+          config-inline: |
+            hypothesis:
+              max_examples: 10
+              control_characters:
+                allow: []
           incremental: 'true'
           shard: ${{ matrix.shard }}/3
           jobs: '2'

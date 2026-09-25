@@ -590,7 +590,7 @@ def test_ci_security_aggregation(tmp_path: Path, provider: str, outcome: str) ->
     from hypothesis_helm.schemas.contracts import sequence
 
     root = PROJECT_ROOT
-    source = root / (".github/workflows/chart-validation.yml" if provider == "github" else f"ci/{provider}.yml")
+    source = root / (".github/workflows/ci.yml" if provider == "github" else f"ci/{provider}.yml")
     document = mapping(YAML(typ="safe").load(source.read_text()))
     if provider == "gitlab":
         script = str(sequence(mapping(document["helm-report"])["script"])[0])
@@ -687,7 +687,7 @@ def test_ci_aggregation_commands(tmp_path: Path, provider: str, outcome: str) ->
     from hypothesis_helm.schemas.contracts import sequence
 
     root = PROJECT_ROOT
-    source = root / (".github/workflows/chart-validation.yml" if provider == "github" else f"ci/{provider}.yml")
+    source = root / (".github/workflows/ci.yml" if provider == "github" else f"ci/{provider}.yml")
     document = mapping(YAML(typ="safe").load(source.read_text()))
     if provider == "gitlab":
         script = str(sequence(mapping(document["helm-report"])["script"])[0])

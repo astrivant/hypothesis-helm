@@ -2,7 +2,7 @@ name: Set up project tools
 description: Install Python, Go, Helm and the project dependencies for checks, builds and benchmarks
 inputs:
   binary-cache:
-    description: Reuse the versioned Helm binary unless HH_BINARY_CACHE disables caching
+    description: Reuse the versioned Helm binary; the calling workflow resolves its cache policy
     default: 'true'
 runs:
   using: composite
@@ -27,14 +27,14 @@ runs:
       shell: bash
     - name: Restore Helm binary
       id: helm-cache
-      if: ${{ vars.HH_BINARY_CACHE != 'false' && inputs.binary-cache == 'true' }}
+      if: ${{ inputs.binary-cache == 'true' }}
       uses: actions/cache/restore@v5
       with:
         path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
         key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
     - name: Install Helm 4
       env:
-        BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' && inputs.binary-cache == 'true' }}
+        BINARY_CACHE: ${{ inputs.binary-cache == 'true' }}
       run: |
         platform=linux
         architecture=amd64
@@ -55,7 +55,7 @@ runs:
         echo "$binary_dir" >>"$GITHUB_PATH"
       shell: bash
     - name: Save Helm binary
-      if: ${{ vars.HH_BINARY_CACHE != 'false' && inputs.binary-cache == 'true' && steps.helm-cache.outputs.cache-hit != 'true' }}
+      if: ${{ inputs.binary-cache == 'true' && steps.helm-cache.outputs.cache-hit != 'true' }}
       uses: actions/cache/save@v5
       with:
         path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64

@@ -35,7 +35,7 @@ Run the commands below from the repository root, with the [development tools](de
 | Kubernetes source and schema snapshots | [sources.py](../pkg/hypothesis_helm_catalog/sources.py), [builder.py](../pkg/hypothesis_helm_catalog/builder.py), [source lock](../pkg/hypothesis_helm_catalog/data/kubernetes-source-lock.json) | Separate Kubernetes Go and JSON Schema repository revisions; reviewed schema supplements and bundled domains. |
 | Local and CI tools | [setup-dev.sh](../scripts/setup-dev.sh), [setup-project action](../.github/actions/setup-project/action.yml), [pre-commit config](../.pre-commit-config.yaml) | Go, Helm, Poetry, uv, Python and lint tools; publishing also installs Poetry. |
 | Consumer CI and optional Kubesec | [Root action](../action.yml), [GitHub](../ci/github.yml), [GitLab](../ci/gitlab.yml), [CircleCI](../ci/circleci.yml) | Helm/Kubesec downloads, Python images, schema versions and versioned cache keys. |
-| GitHub Actions | [Workflows](../.github/workflows), [setup-project action](../.github/actions/setup-project/action.yml), [root action](../action.yml), [GitHub example](../ci/github.yml) | Every `uses: owner/action@version` reference is independent of Poetry and Go. |
+| GitHub Actions | [CI workflow](../.github/workflows/ci.yml), [setup-project action](../.github/actions/setup-project/action.yml), [root action](../action.yml), [GitHub example](../ci/github.yml) | Every `uses: owner/action@version` reference is independent of Poetry and Go. |
 | Remote workers | [Ansible requirements](../ansible/requirements.txt), [collections](../ansible/requirements.yml), [worker defaults](../ansible/roles/compute_worker/defaults/main.yml) | Ansible Core, Google Cloud collection, worker Helm/Poetry versions and Debian image assumptions. |
 | Infrastructure providers | [Compute versions](../terraform/modules/compute/versions.tf), [shards versions](../terraform/shards/versions.tf) | Terraform minimum and Google provider constraint; each directory has its own `.terraform.lock.hcl`. |
 | Real-chart study inputs | [.gitmodules](../.gitmodules) and the committed submodule revisions | Bitnami and Prometheus chart snapshots; chart dependencies belong to each chart's `Chart.yaml` and `Chart.lock`. |
@@ -125,8 +125,8 @@ For a catalog upgrade, review these together:
 4. Exact API field bindings in `sources.py` and [reviewed-domains.json](../pkg/hypothesis_helm_catalog/data/reviewed-domains.json).
    Check whether upstream now expresses each supplement, whether its checked descriptions changed, and whether a shim can be removed.
    Keep the [public shim inventory](../README.md#upstream-schema-shims) current.
-5. CI schema matrices and cache keys in [chart validation](../.github/workflows/chart-validation.yml),
-   [package releases](../.github/workflows/package.yml) and `ci/`. Different tested schema versions may be intentional;
+5. CI schema matrices and release cache keys in the [CI workflow](../.github/workflows/ci.yml)
+   and `ci/`. Different tested schema versions may be intentional;
    they do not all need to equal the catalog's source version.
 
 Publish regenerated data only after the source checks and boundary comparisons pass:
@@ -156,7 +156,7 @@ for the complete constraints, including type stubs, test tools and both build ba
 | Tool | Additional update locations |
 | --- | --- |
 | Python | `.python-version`; both package manifests; root Ruff/mypy settings; `.pre-commit-config.yaml`; setup script; root action, GitHub setup/publishing, and `ci/` images. |
-| Poetry | `scripts/setup-dev.sh`, `.github/actions/setup-project/action.yml`, `.github/workflows/publish-pypi.yml`, Ansible worker defaults. Local/CI currently use `2.1.3`; workers use `2.2.1`. |
+| Poetry | `scripts/setup-dev.sh`, `.github/actions/setup-project/action.yml`, `.github/workflows/ci.yml`, Ansible worker defaults. Local/CI currently use `2.1.3`; workers use `2.2.1`. |
 | uv bootstrap | `uv_version` in `scripts/setup-dev.sh` (currently `0.8.17`). |
 | Go launcher | `go_version` in `scripts/setup-dev.sh`, `go-version` in the setup action, both Go modules and toolchain diagnostics. |
 | pydocstyle / pydoclint | Root development dependencies **and** their isolated `rev` pins in `.pre-commit-config.yaml`. |
@@ -219,8 +219,8 @@ bash scripts/check.sh
 poetry build
 ```
 
-Use the [packaging workflow](../.github/workflows/package.yml) to check release catalog consistency and installed Helm commands,
-and the [shared chart validation workflow](../.github/workflows/chart-validation.yml) for the test and Kubesec gates.
+The [CI workflow](../.github/workflows/ci.yml) checks release catalog consistency and installed Helm commands,
+then gates publishing on code checks, chart tests, Kubesec and benchmark smoke tests.
 Build the add-on separately if its manifest changed; its [publishing instructions](../pkg/hypothesis_helm_benchmarking/README.md#develop-and-publish)
 are separate from the [core tag-release workflow](development.md#publishing-to-pypi).
 

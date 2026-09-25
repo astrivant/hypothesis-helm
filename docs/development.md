@@ -8,7 +8,7 @@
   - [Shell checks](#shell-checks)
   - [Project checks](#project-checks)
 - [Plugin verification](#plugin-verification)
-- [GitHub workflows](#github-workflows)
+- [GitHub CI](#github-ci)
 - [Documentation contents](#documentation-contents)
 - [Publishing to PyPI](#publishing-to-pypi)
 - [Pre-commit hook](#pre-commit-hook)
@@ -172,29 +172,38 @@ helm hypothesis generate examples/workload --output /tmp/generated-workload
 helm hypothesis run /tmp/generated-workload
 ```
 
-## GitHub workflows
+## GitHub CI
 
-Each workflow has one purpose, with the same name shown in GitHub's Actions list:
+Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml) for all project jobs,
+logs and artifacts. One [workflow file](../.github/workflows/ci.yml) owns PR checks, branch builds, releases and manual refreshes.
 
-| Workflow | Purpose | When it runs |
+| Jobs | Purpose | When they run |
 | --- | --- | --- |
-| [Code checks and tests](../.github/workflows/checks.yml) | Pre-commit hooks, Go tests and parallel Python tests. | PRs, `main`, manual, release verification. |
-| [Chart tests and security](../.github/workflows/chart-validation.yml) | Test the example chart, validate schemas, run Kubesec and aggregate shards. | PRs, `main`, manual, release verification. |
-| [Package build and plugin tests](../.github/workflows/package.yml) | Build distributions and exercise the installed Helm plugin; verify the catalog on tags. | PRs, `main`, manual, release verification. |
-| [Benchmark smoke tests](../.github/workflows/benchmark-smoke.yml) | Check benchmark recipes and plot generation with short runs. | PRs, `main`, manual, release verification and full refresh. |
-| [Benchmark and report refresh](../.github/workflows/benchmark-refresh.yml) | Run all studies, regenerate plots and scan Bitnami and Prometheus. | Manual only. |
-| [Publish to PyPI](../.github/workflows/publish-pypi.yml) | Require all four verification workflows, then publish their versioned distributions. | Pushed version tags only. |
+| Code checks | Pre-commit hooks, Go tests and parallel Python tests. | PR updates, `main`, version tags and manual runs. |
+| Chart tests and aggregation | Validate schemas, run Kubesec and combine shard reports. | Every CI run. |
+| Package build | Build distributions and test the installed Helm plugin. Tags also verify the catalog. | Every CI run. |
+| Benchmark smoke tests | Check benchmark recipes and plot generation with short runs. | Every CI run. |
+| Full refresh | Run all studies, regenerate plots and scan the chart repositories. | Manual runs with `refresh=true`, after verification passes. |
+| Publish to PyPI | Publish the verified versioned distributions using the `pypi` environment. | Pushed version tags, after every verification job passes. |
 
-The four verification workflows run independently, so their results are visible separately.
-The full refresh is a dedicated manual workflow; there is no additional switch to enable it.
+Code checks, chart tests, package builds and smoke tests run in parallel within the same run.
+Full refresh and publishing have separate conditions; neither runs on an ordinary PR or branch push.
+To start the full refresh from the same entry point:
+
+```sh
+gh workflow run ci.yml -f refresh=true
+```
+
 The shared [project setup action](../.github/actions/setup-project/action.yml) installs the same tools for checks, builds and benchmarks.
 Every pull request update runs all configured pre-commit hooks against all files and tests the PR's head commit.
-Pytest uses all available CPUs. The verification job defaults to `ubuntu-latest-8-cores`;
-enable an eight-core Ubuntu x64 larger runner with that name, or set the repository variable `HH_CI_RUNNER`
-to your configured runner's label. See [GitHub's larger runner setup](https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/manage-larger-runners).
+Pytest uses all available CPUs. Jobs default to the standard `ubuntu-latest` runner so no custom runner setup is required.
+For an eight-core or larger Ubuntu x64 runner, configure it in GitHub and set `HH_CI_RUNNER` to its actual label.
+See [GitHub's runner labels](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job)
+and [larger runner setup](https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/manage-larger-runners).
 JUnit results, distributions, and smoke outputs are retained as artifacts for 30 days, including after failures.
-The versioned Helm binary cache is enabled by default; disable it with the manual `binary-cache` input
-or the repository variable `HH_BINARY_CACHE=false`.
+The versioned binary cache is enabled by default; disable it with the manual `binary-cache` input
+or the repository variable `HH_BINARY_CACHE=false`. The workflow passes the resolved setting into the setup action.
+Newer PR commits cancel obsolete checks; manual refreshes and tag releases are allowed to finish.
 Generated-suite execution uses the plugin's
 interpreter, with unrelated pytest configuration and auto-loaded plugins disabled.
 The saved suite's own code and conftest remain editable.
@@ -220,7 +229,7 @@ git tag v0.1.0
 git push origin v0.1.0
 ```
 
-Only a pushed version tag triggers the [publishing workflow](../.github/workflows/publish-pypi.yml).
+Only a pushed version tag enables the publishing job in the [CI pipeline](../.github/workflows/ci.yml).
 Branch pushes, pull requests, and publishing a GitHub release do not upload to PyPI.
 CI checks that the tag matches the package version before building. Prerelease names normalize to Python's version format:
 
@@ -356,7 +365,7 @@ Project folders and Python modules under `pkg/` use underscores, as in
 | [`scripts/`](../scripts) | Project command runner, validation command and Helm plugin hooks. |
 | [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
 | [`plugin.yaml`](../plugin.yaml) | Installable Helm plugin manifest. |
-| [`.github/workflows/`](../.github/workflows/) | Separate code checks, chart validation, package verification, benchmarks, refresh and publication. |
+| [`.github/workflows/`](../.github/workflows/) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
 | [`.github/settings.yml`](../.github/settings.yml) | Declarative repository settings. |
 | [`docs/`](.) | Development setup, CLI behavior and testing limitations. |
 

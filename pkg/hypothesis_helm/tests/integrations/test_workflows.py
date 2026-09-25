@@ -1,9 +1,8 @@
 """
-Verify workflow dependency graphs and the release artifact handoff after CI separation.
+Verify the unified CI graph, setup contexts and release artifact handoff.
 """
 
 from graphlib import TopologicalSorter
-from pathlib import Path
 
 from ruamel.yaml import YAML
 
@@ -25,16 +24,14 @@ def workflows() -> dict[str, dict[str, object]]:
 
 def test_workflow_references_and_dependencies() -> None:
     """
-    Reject dangling local actions, missing job prerequisites and recursive workflow calls.
+    Keep one workflow entry point with valid local actions and acyclic job dependencies.
 
     Returns:
-        None: Renamed workflows resolve, have distinct display names, and form valid job graphs.
+        None: All jobs appear in one run and their prerequisites resolve.
     """
     documents = workflows()
-    assert len({document["name"] for document in documents.values()}) == len(documents)
-    calls: dict[str, set[str]] = {}
+    assert set(documents) == {"ci.yml"}
     for filename, document in documents.items():
-        calls[filename] = set()
         jobs = mapping(document["jobs"])
         dependencies: dict[str, set[str]] = {}
         for job_id, raw in jobs.items():
@@ -43,43 +40,33 @@ def test_workflow_references_and_dependencies() -> None:
             needs = job.get("needs", [])
             dependencies[job_id] = {needs} if isinstance(needs, str) else {str(item) for item in sequence(needs)}
             assert dependencies[job_id] <= jobs.keys(), (filename, job_id, dependencies[job_id])
-            reference = str(job.get("uses", ""))
-            if reference.startswith("./"):
-                target = Path(reference).name
-                assert (ROOT / reference).is_file(), reference
-                assert "workflow_call" in mapping(documents[target]["on"]), reference
-                calls[filename].add(target)
+            assert "uses" not in job  # Jobs stay visible in this graph, rather than separate workflow runs.
             for raw_step in sequence(job.get("steps", [])):
                 action = str(mapping(raw_step).get("uses", ""))
                 if action.startswith("./"):
                     assert (ROOT / action / "action.yml").is_file(), action
         assert set(TopologicalSorter(dependencies).static_order()) == jobs.keys()
-    assert set(TopologicalSorter(calls).static_order()) == documents.keys()
 
 
 def test_release_requires_all_verification_and_matching_artifacts() -> None:
     """
-    Keep tag-only publishing behind every verification workflow and its exact built distributions.
+    Keep tag-only publishing behind every verification job and its exact built distributions.
 
     Returns:
         None: Release gates cannot be bypassed and the builder's artifact matches the publisher's download.
     """
     documents = workflows()
-    release = documents["publish-pypi.yml"]
-    assert release["on"] == {"push": {"tags": ["v[0-9]*"]}}
+    release = documents["ci.yml"]
+    triggers = mapping(release["on"])
+    assert triggers["push"] == {"branches": ["main"], "tags": ["v[0-9]*"]}
+    assert "pull_request" in triggers
     jobs = {name: mapping(job) for name, job in mapping(release["jobs"]).items()}
     publish = jobs["publish"]
-    assert set(sequence(publish["needs"])) == jobs.keys() - {"publish"}
-    assert "if" not in publish  # GitHub's default success condition must reject failed or skipped gates.
+    assert set(sequence(publish["needs"])) == {"checks", "sharded-chart", "aggregate", "build", "smoke"}
+    # No status override: GitHub's implicit success() still rejects failed or skipped prerequisites.
+    assert publish["if"] == "${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}"
     assert publish["environment"] == "pypi"
-    targets = {str(job["uses"]) for name, job in jobs.items() if name != "publish"}
-    assert targets == {
-        "./.github/workflows/checks.yml",
-        "./.github/workflows/chart-validation.yml",
-        "./.github/workflows/package.yml",
-        "./.github/workflows/benchmark-smoke.yml",
-    }
-    build = mapping(mapping(documents["package.yml"]["jobs"])["build"])
+    build = jobs["build"]
     build_steps = [mapping(step) for step in sequence(build["steps"])]
     publish_steps = [mapping(step) for step in sequence(publish["steps"])]
     upload = next(step for step in build_steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
@@ -91,7 +78,59 @@ def test_release_requires_all_verification_and_matching_artifacts() -> None:
         assert "--tag" in str(version["run"])
     catalog = next(step for step in build_steps if "hypothesis-helm-catalog --check" in str(step.get("run", "")))
     assert catalog["if"] == "startsWith(github.ref, 'refs/tags/')"
-    assert documents["benchmark-refresh.yml"]["on"] == {"workflow_dispatch": None}
+
+
+def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
+    """
+    Reserve full measurements for manual requests without skipping release verification.
+
+    Returns:
+        None: Ordinary CI remains parallel; refresh waits for verification and every study before publication.
+    """
+    document = workflows()["ci.yml"]
+    inputs = mapping(mapping(mapping(document["on"])["workflow_dispatch"])["inputs"])
+    assert inputs["refresh"] == {
+        "description": "Run the full benchmark and report refresh after verification",
+        "type": "boolean",
+        "default": False,
+    }
+    jobs = {name: mapping(job) for name, job in mapping(document["jobs"]).items()}
+    for name in ("checks", "sharded-chart", "build", "smoke"):
+        assert "needs" not in jobs[name] and "if" not in jobs[name]
+    prepare = jobs["refresh-prepare"]
+    assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
+    assert set(sequence(prepare["needs"])) == {"checks", "sharded-chart", "aggregate", "build", "smoke"}
+    study = jobs["refresh-study"]
+    assert study["needs"] == "refresh-prepare"
+    assert mapping(study["strategy"])["fail-fast"] is False
+    assert "max-parallel" not in mapping(study["strategy"])
+    assert set(sequence(jobs["refresh-finish"]["needs"])) == {"refresh-prepare", "refresh-study"}
+    # Optional jobs cannot block the tag-only publisher.
+    assert not set(sequence(jobs["publish"]["needs"])) & {"refresh-prepare", "refresh-study", "refresh-finish"}
+    assert mapping(document["concurrency"])["cancel-in-progress"] == "${{ github.event_name == 'pull_request' }}"
+
+
+def test_setup_receives_workflow_resolved_cache_policy() -> None:
+    """
+    Resolve repository variables before entering the composite action's restricted context.
+
+    Returns:
+        None: Every setup call honors manual and repository cache switches without invalid vars expressions.
+    """
+    document = workflows()["ci.yml"]
+    assert mapping(document["env"])["HH_BINARY_CACHE"] == (
+        "${{ vars.HH_BINARY_CACHE != 'false' && (github.event_name != 'workflow_dispatch' || inputs.binary-cache) }}"
+    )
+    setup_text = (ROOT / ".github/actions/setup-project/action.yml").read_text()
+    assert "vars." not in setup_text
+    assert "inputs.binary-cache == 'true'" in setup_text
+    for raw_job in mapping(document["jobs"]).values():
+        job = mapping(raw_job)
+        assert "ubuntu-latest-8-cores" not in str(job["runs-on"])
+        for raw_step in sequence(job["steps"]):
+            step = mapping(raw_step)
+            if step.get("uses") in {"./.github/actions/setup-project", "./"}:
+                assert mapping(step["with"])["binary-cache"] == "${{ env.HH_BINARY_CACHE }}"
 
 
 def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
@@ -101,7 +140,7 @@ def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
     Returns:
         None: Independent caches persist complete evidence and tags force new property tests.
     """
-    job = mapping(mapping(workflows()["chart-validation.yml"]["jobs"])["sharded-chart"])
+    job = mapping(mapping(workflows()["ci.yml"]["jobs"])["sharded-chart"])
     steps = [mapping(step) for step in sequence(job["steps"])]
     checkout = next(step for step in steps if str(step.get("uses", "")).startswith("actions/checkout@"))
     assert mapping(checkout["with"])["fetch-depth"] == 0

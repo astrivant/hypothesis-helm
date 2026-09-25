@@ -1,0 +1,456 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v[0-9]*']
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: Run the full benchmark and report refresh after verification
+        type: boolean
+        default: false
+      binary-cache:
+        description: Reuse versioned binaries unless HH_BINARY_CACHE disables caching
+        type: boolean
+        default: true
+      kubesec-score-minimum:
+        description: Minimum Kubesec score (defaults to HH_KUBESEC_SCORE_MINIMUM or 0)
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  # Manual refreshes and tag releases keep their work; newer PR commits supersede older checks.
+  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  HELM_VERSION: v4.3.0
+  POETRY_VIRTUALENVS_IN_PROJECT: 'true'
+  HH_BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' && (github.event_name != 'workflow_dispatch' || inputs.binary-cache) }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  checks:
+    name: Lint, Go tests and parallel Python tests
+    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 30
+    steps:
+      - name: Check out source and Git LFS data
+        uses: actions/checkout@v7
+        with:
+          lfs: true
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Set up project tools
+        uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Check the Kubernetes and compiler source extractors
+        run: go -C pkg/hypothesis_helm_catalog/upstream test ./...
+      - name: Cache the pinned random-input renderer
+        uses: actions/cache@v5
+        with:
+          path: .cache/random-renderer/
+          key: hh-random-renderer-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pkg/hypothesis_helm/compiler/assets/renderer/*') }}
+      - name: Build the random-input renderer for native integration tests
+        run: bash scripts/project-run.sh hypothesis-helm-renderer --build
+      - name: Run every pre-commit hook
+        run: bash scripts/project-run.sh pre-commit run --all-files --show-diff-on-failure
+      - name: Run framework checks and parallel tests
+        run: bash scripts/check.sh --junitxml=.cache/tests/pytest.xml
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: python-test-results
+          path: .cache/tests/
+          include-hidden-files: true
+          retention-days: 30
+
+  sharded-chart:
+    name: "Chart tests and Kubesec (Kubernetes ${{ matrix.kubernetes }}, shard ${{ matrix.shard }})"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+        kubernetes: ['1.34.0', '1.35.0']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Restore chart outcomes and manifests
+        id: outcomes
+        uses: actions/cache/restore@v5
+        with:
+          path: .cache/hypothesis-helm/outcomes
+          key: chart-outcomes-v2-${{ runner.os }}-${{ runner.arch }}-${{ matrix.kubernetes }}-${{ matrix.shard }}-of-3-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            chart-outcomes-v2-${{ runner.os }}-${{ runner.arch }}-${{ matrix.kubernetes }}-${{ matrix.shard }}-of-3-
+      - uses: ./
+        id: hypothesis
+        with:
+          chart: examples/workload
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+          incremental: 'true'
+          cache-dir: .cache/hypothesis-helm/outcomes
+          rerun: ${{ startsWith(github.ref, 'refs/tags/') && 'all' || 'auto' }}
+          command: test
+          traversal-strategy: random
+          config-inline: |
+            hypothesis:
+              max_examples: 5
+              control_characters:
+                allow: []
+          schema-validation: 'true'
+          schema-version: ${{ matrix.kubernetes }}
+          kubesec: 'true'
+          kubesec-jobs: auto
+          kubesec-score-minimum: ${{ inputs.kubesec-score-minimum || vars.HH_KUBESEC_SCORE_MINIMUM || '0' }}
+          artifact-name: hypothesis-helm-${{ matrix.kubernetes }}
+          schema-cache-dir: schemas
+          job-index: ${{ matrix.shard }}
+          job-total: '3'
+          run-id: ${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.kubernetes }}
+      - name: Save chart outcomes and manifests
+        if: ${{ always() && steps.outcomes.outputs.cache-primary-key != '' }}
+        uses: actions/cache/save@v5
+        with:
+          path: .cache/hypothesis-helm/outcomes
+          key: ${{ steps.outcomes.outputs.cache-primary-key }}
+      - name: Check shard outputs
+        shell: bash
+        env:
+          REPORT: ${{ steps.hypothesis.outputs.junit-path }}
+          MANIFESTS: ${{ steps.hypothesis.outputs.manifest-path }}
+        run: |
+          test -f "$REPORT"
+          test -f "$MANIFESTS"
+  aggregate:
+    name: "Combine shard reports (Kubernetes ${{ matrix.kubernetes }})"
+    needs: sharded-chart
+    if: ${{ always() && needs.sharded-chart.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kubernetes: ['1.34.0', '1.35.0']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: pip install .
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: hypothesis-helm-${{ matrix.kubernetes }}-sharded-chart-*
+          path: downloaded
+      - uses: actions/download-artifact@v8
+        if: ${{ always() }}
+        with:
+          pattern: hypothesis-helm-${{ matrix.kubernetes }}-kubesec-sharded-chart-*
+          path: downloaded-security
+      - name: Write final report for this Kubernetes version
+        if: ${{ always() }}
+        env:
+          HH_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.kubernetes }}
+          HH_KUBESEC: 'true'
+          HH_SCHEMA_VERSION: ${{ matrix.kubernetes }}
+          HH_KUBESEC_SCORE_MINIMUM: ${{ inputs.kubesec-score-minimum || vars.HH_KUBESEC_SCORE_MINIMUM || '0' }}
+        run: |
+          aggregate_status=0
+          cat downloaded/*/report.json | hypothesis-helm aggregate \
+              --shards 3 --run-id "$HH_RUN_ID" --output-dir docs/reports/final || aggregate_status=$?
+          if [[ "${HH_KUBESEC:-false}" == "true" ]]; then
+              security_status=0
+              hypothesis-helm-kubesec downloaded-security --aggregate --shards 3 \
+                  --run-id "$HH_RUN_ID" --schema-version "$HH_SCHEMA_VERSION" \
+                  --score-minimum "$HH_KUBESEC_SCORE_MINIMUM" \
+                  --output docs/reports/final/kubesec || security_status=$?
+              if ((aggregate_status == 0)); then
+                  aggregate_status=$security_status
+              fi
+          fi
+          exit "$aggregate_status"
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: hypothesis-helm-final-${{ matrix.kubernetes }}
+          path: docs/reports/final/
+          if-no-files-found: error
+          retention-days: 30
+
+  build:
+    name: Build distributions and test Helm commands
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source and Git LFS data
+        uses: actions/checkout@v7
+        with:
+          lfs: true
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Set up project tools
+        uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Verify package version before building
+        id: package-version
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ "$REF_TYPE" == "tag" ]]; then
+              python .github/release-version.py --tag "$REF_NAME" --output "$GITHUB_OUTPUT"
+          else
+              python .github/release-version.py --output "$GITHUB_OUTPUT"
+          fi
+      - name: Cache catalog rebuild sources
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/cache@v5
+        with:
+          path: schemas/
+          key: catalog-v1-${{ runner.os }}-${{ runner.arch }}-1.35.0-${{ hashFiles('pkg/hypothesis_helm_catalog/data/kubernetes-source-lock.json', 'pkg/hypothesis_helm_catalog/upstream/go.sum') }}
+      - name: Verify bundled input domains before a release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: poetry run hypothesis-helm-catalog --check
+      - name: Cache pinned compiler sources
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/cache@v5
+        with:
+          path: .cache/compiler-builtins/
+          key: compiler-builtins-v2-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pkg/hypothesis_helm_catalog/data/builtin-sources.json', 'pkg/hypothesis_helm_catalog/upstream/go.sum') }}
+      - name: Verify compiler function inventory before a release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: poetry run hypothesis-helm-builtins --check
+      - name: Build wheel and source distribution
+        run: poetry build
+      - name: Verify end-user Helm testing commands
+        run: |
+          PYTHON=python3.13 helm plugin install .
+          helm hypothesis test examples/workload --max-examples 5
+          helm hypothesis run examples/generated-workload
+          helm hypothesis generate examples/workload --output "$RUNNER_TEMP/generated-workload" --max-examples 5
+          helm hypothesis run "$RUNNER_TEMP/generated-workload"
+      - name: Upload distributions
+        if: ${{ always() && steps.package-version.outputs.version != '' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: python-distributions-${{ steps.package-version.outputs.version }}
+          path: dist/
+          retention-days: 30
+
+  smoke:
+    name: Check benchmark recipes and plot generation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source and Git LFS data
+        uses: actions/checkout@v7
+        with:
+          lfs: true
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Set up project tools
+        uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Exercise benchmark recipes and plots
+        run: bash scripts/project-run.sh hypothesis-helm-benchmark smoke
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: benchmark-smoke
+          path: .cache/benchmarks/smoke/
+          include-hidden-files: true
+          retention-days: 30
+
+  refresh-prepare:
+    name: Prepare shared inputs
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
+    needs: [checks, sharded-chart, aggregate, build, smoke]
+    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 60
+    outputs:
+      root: ${{ steps.prepare.outputs.root }}
+      matrix: ${{ steps.prepare.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Cache pinned sources and native builds
+        uses: actions/cache@v5
+        with:
+          path: |
+            schemas/
+            .cache/compiler-builtins/
+            .cache/random-renderer/
+          key: refresh-dependencies-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pkg/hypothesis_helm_catalog/data/*.json', 'pkg/hypothesis_helm_catalog/builder.py', 'pkg/hypothesis_helm_catalog/sources.py', 'pkg/hypothesis_helm_catalog/upstream/*', 'pkg/hypothesis_helm/compiler/assets/renderer/*') }}
+      - name: Check project and prepare shared inputs
+        id: prepare
+        run: poetry run hypothesis-helm-refresh --ci-phase prepare
+      - name: Package prepared workspace
+        env:
+          ROOT: ${{ steps.prepare.outputs.root }}
+        run: |
+          tar -czf "$RUNNER_TEMP/refresh-prepared.tar.gz" "$ROOT" \
+              pkg/hypothesis_helm/compiler/assets/builtin_inventory.json \
+              pkg/hypothesis_helm_catalog/data/input-domains.json \
+              README.md docs/cli/README.md docs/rules/README.md \
+              docs/input-domains/README.md docs/compiler/functions.md
+      - uses: actions/upload-artifact@v7
+        with:
+          name: refresh-prepared
+          path: ${{ runner.temp }}/refresh-prepared.tar.gz
+          retention-days: 30
+      - uses: actions/upload-artifact@v7
+        if: ${{ failure() }}
+        with:
+          name: refresh-prepare-diagnostics
+          path: .cache/refresh/
+          include-hidden-files: true
+          retention-days: 30
+  refresh-study:
+    name: "Study: ${{ matrix.study }}"
+    needs: refresh-prepare
+    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      # No max-parallel cap: GitHub schedules as many jobs as capacity permits.
+      matrix: ${{ fromJSON(needs.refresh-prepare.outputs.matrix) }}
+    env:
+      ROOT: ${{ needs.refresh-prepare.outputs.root }}
+      STUDY: ${{ matrix.study }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-prepared
+          path: ${{ runner.temp }}/refresh-input
+      - name: Restore common source snapshot and inputs
+        run: tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
+      - name: Run isolated study
+        run: poetry run hypothesis-helm-refresh --ci-phase study --root "$ROOT" --study "$STUDY"
+      - name: Package study outputs and journal
+        if: ${{ always() }}
+        run: |
+          mkdir -p "$ROOT/outputs/$STUDY" "$ROOT/statuses" "$ROOT/ci-jobs/$STUDY" "$ROOT/logs"
+          tar -czf "$RUNNER_TEMP/refresh-study-$STUDY.tar.gz" \
+              "$ROOT/outputs/$STUDY" "$ROOT/statuses" "$ROOT/ci-jobs/$STUDY" "$ROOT/logs"
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: refresh-study-${{ matrix.study }}
+          path: ${{ runner.temp }}/refresh-study-${{ matrix.study }}.tar.gz
+          retention-days: 30
+  refresh-finish:
+    name: Verify plots and scan chart repositories
+    needs: [refresh-prepare, refresh-study]
+    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 360
+    env:
+      ROOT: ${{ needs.refresh-prepare.outputs.root }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Restore pinned chart repositories
+        run: git submodule update --init --recursive
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-prepared
+          path: ${{ runner.temp }}/refresh-input
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: refresh-study-*
+          merge-multiple: true
+          path: ${{ runner.temp }}/refresh-studies
+      - name: Restore all completed study artifacts
+        run: |
+          tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
+          for archive in "$RUNNER_TEMP"/refresh-studies/*.tar.gz; do
+              tar -xzf "$archive"
+          done
+      - name: Verify measurements, publish diagrams, then test chart repositories
+        run: poetry run hypothesis-helm-refresh --ci-phase finish --root "$ROOT"
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: benchmark-refresh
+          path: |
+            pkg/hypothesis_helm/compiler/assets/builtin_inventory.json
+            pkg/hypothesis_helm_catalog/data/input-domains.json
+            pkg/hypothesis_helm_benchmarking/assets/fixture/parameters/
+            README.md
+            docs/cli/README.md
+            docs/rules/README.md
+            docs/input-domains/README.md
+            docs/compiler/functions.md
+            docs/benchmarking/
+            docs/reports/
+            studies/
+          retention-days: 30
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: refresh-resume-data
+          path: ${{ env.ROOT }}
+          include-hidden-files: true
+          retention-days: 30
+
+  publish:
+    name: Publish verified distributions to PyPI
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+    needs: [checks, sharded-chart, aggregate, build, smoke]
+    environment: pypi
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Install Poetry
+        run: pip install poetry==2.1.3
+      - name: Check release version
+        id: package-version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python .github/release-version.py --tag "$RELEASE_TAG" --output "$GITHUB_OUTPUT"
+      - name: Download verified distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: python-distributions-${{ steps.package-version.outputs.version }}
+          path: dist/
+      - name: Publish wheel and source distribution
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
+          PACKAGE_VERSION: ${{ steps.package-version.outputs.version }}
+        run: |
+          if [[ -z "$POETRY_PYPI_TOKEN_PYPI" ]]; then
+              echo '::error::Set PYPI_API_TOKEN in the pypi environment before publishing'
+              exit 1
+          fi
+          echo "Publishing hypothesis-helm $PACKAGE_VERSION to PyPI"
+          poetry publish --no-interaction

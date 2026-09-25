@@ -37,7 +37,7 @@ For filtering modes, worker counts and release coverage requirements, see
 For large production deployments, use the [validation flow](../../README.md#production-validation)
 to find failures before taking progressively more expensive actions. These are recommended release gates;
 the CI examples below provide chart tests and scanner integration. Our own
-[Chart tests and security workflow](../../.github/workflows/chart-validation.yml) exercises
+[CI chart and security jobs](../../.github/workflows/ci.yml) exercise
 the published action with Kubesec enabled across three shards and two Kubernetes versions.
 It runs independently on PRs and `main`, and is also required before publishing to PyPI.
 Add cluster validation and deployment jobs
@@ -180,7 +180,7 @@ matching `report-group`. Set `aggregate.package` to the same plugin revision use
 
 ## GitHub Actions
 
-Our [chart validation workflow](../../.github/workflows/chart-validation.yml) uses incremental
+Our [CI chart validation jobs](../../.github/workflows/ci.yml) use incremental
 testing on PRs and `main`. It fetches full Git history and restores outcomes and manifest
 streams separately for each shard and Kubernetes version. Set the action's `incremental: 'true'`
 to use the same behavior: unchanged charts reuse matching successful properties; changed charts,
@@ -232,7 +232,7 @@ entry from the shared job.<sup>[\[1\]](https://docs.gitlab.com/ci/caching/#disab
 The `kubesec-binary` input can select a preinstalled security scanner. GNU Parallel and OS prerequisites remain installed through the package
 manager; these release-binary caches do not replace package-manager caches.
 
-The repository's own benchmark workflows use the same policy. Set the GitHub
+The repository's own benchmark jobs use the same policy. Set the GitHub
 repository variable `HH_BINARY_CACHE=false` or CircleCI pipeline parameter
 `binary-cache: false` to disable it there.
 

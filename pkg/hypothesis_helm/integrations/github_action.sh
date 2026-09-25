@@ -1,33 +1,203 @@
 #!/usr/bin/env bash
-# Execute the action's Helm command; optional flags remain visible at the call site.
+# Keep each executable invocation explicit; Python validates inputs, never builds shell source.
 set -euo pipefail
 
-validate_api=
-schema_offline=
-disable_schema_caching=
-disable_cache=
-if [[ ${HH_VALIDATE_SCHEMAS:-true} == true && ${HH_KUBESEC:-false} != true ]]; then validate_api=1; fi
-if [[ ${HH_SCHEMA_OFFLINE:-false} == true ]]; then schema_offline=1; fi
-if [[ ${HH_DISABLE_SCHEMA_CACHING:-false} == true ]]; then disable_schema_caching=1; fi
-if [[ ${HH_CACHE:-true} == false ]]; then disable_cache=1; fi
+# Repeatable groups are data, one group per line. Bash 3.2 works on macOS runners.
+exhaustive_groups=()
+while IFS= read -r group; do
+    if [[ -n "$group" ]]; then exhaustive_groups+=(--exhaustive-group "$group"); fi
+done <<<"${HH_EXHAUSTIVE_GROUP:-}"
 
-exec helm hypothesis test "${HH_CHART:-.}" \
-    --shard "$HH_RESOLVED_SHARD" \
-    --jobs "${HH_JOBS:-auto}" \
-    ${HH_RUN_ID:+--run-id "$HH_RUN_ID"} \
-    --max-examples "${HH_MAX_EXAMPLES:-100}" \
-    --seed "${HH_SEED:-0}" \
-    --sample-random "${HH_SAMPLE_RANDOM:-100}" \
-    --sample-min-cases "${HH_SAMPLE_MIN_CASES:-128}" \
-    --timeout "${HH_TIMEOUT:-30}" \
-    --artifact-dir "$HH_ARTIFACT_DIR" \
-    --output-format json \
-    --rerun "${HH_RERUN:-auto}" \
-    ${HH_MATCH:+--match "$HH_MATCH"} \
-    --cache-dir "${HH_CACHE_DIR:-$HH_RESULT_DIR/cache}" \
-    ${disable_schema_caching:+--disable-schema-caching} \
-    ${disable_cache:+--no-cache} \
-    ${validate_api:+--validate-schemas} \
-    --schema-version "${HH_SCHEMA_VERSION:-latest}" \
-    --schema-cache-dir "${HH_SCHEMA_CACHE_DIR:-schemas}" \
-    ${schema_offline:+--schema-offline}
+case "$HH_COMMAND" in
+    test)
+        exec helm hypothesis test "$HH_SOURCE" \
+            ${HH_REPORT:+--report "$HH_REPORT"} \
+            ${HH_PCA_SAMPLES:+--pca-samples "$HH_PCA_SAMPLES"} \
+            ${HH_PCA_TIMEOUT:+--pca-timeout "$HH_PCA_TIMEOUT"} \
+            ${HH_MAX_MUTATIONS:+--max-mutations "$HH_MAX_MUTATIONS"} \
+            ${HH_SENSITIVITY_TIMEOUT:+--sensitivity-timeout "$HH_SENSITIVITY_TIMEOUT"} \
+            ${HH_VALUES:+--values "$HH_VALUES"} \
+            ${HH_CHART_TIMEOUT:+--chart-timeout "$HH_CHART_TIMEOUT"} \
+            ${HH_SCAN_TIMEOUT:+--scan-timeout "$HH_SCAN_TIMEOUT"} \
+            ${HH_BUILD_DEPENDENCIES:+--build-dependencies} ${HH_NO_BUILD_DEPENDENCIES:+--no-build-dependencies} \
+            ${HH_FAIL:+--fail "$HH_FAIL"} \
+            ${HH_MAX_EXAMPLES:+--max-examples "$HH_MAX_EXAMPLES"} \
+            ${HH_TIME_LIMIT:+--time-limit "$HH_TIME_LIMIT"} \
+            ${HH_PATHS:+--paths} \
+            ${HH_EXHAUSTIVE:+--exhaustive} \
+            ${HH_WHOLE_CHART:+--whole-chart} \
+            ${HH_PERMUTATIONS:+--permutations "$HH_PERMUTATIONS"} \
+            ${HH_FILTER:+--filter} \
+            ${HH_FILTER_RANDOM:+--filter-random "$HH_FILTER_RANDOM"} \
+            ${HH_FILTER_TOPOLOGY:+--filter-topology "$HH_FILTER_TOPOLOGY"} \
+            ${HH_EXPAND_FAILURES:+--expand-failures} \
+            ${HH_PRUNE_EQUIVALENT:+--prune-equivalent} \
+            ${HH_MATCH:+--match "$HH_MATCH"} \
+            ${HH_COLLECT_ONLY:+--collect-only} \
+            ${HH_MAX_CASES:+--max-cases "$HH_MAX_CASES"} \
+            ${HH_MAX_CANDIDATES:+--max-candidates "$HH_MAX_CANDIDATES"} \
+            ${HH_EXHAUSTIVE_THRESHOLD:+--exhaustive-threshold "$HH_EXHAUSTIVE_THRESHOLD"} \
+            "${exhaustive_groups[@]}" \
+            ${HH_NO_INFER_GROUPS:+--no-infer-groups} \
+            ${HH_MAX_GROUP_CASES:+--max-group-cases "$HH_MAX_GROUP_CASES"} \
+            ${HH_SEED:+--seed "$HH_SEED"} \
+            ${HH_FILTER_ADAPTIVE:+--filter-adaptive} \
+            ${HH_SAMPLING_CALIBRATION:+--sampling-calibration "$HH_SAMPLING_CALIBRATION"} \
+            ${HH_SENSITIVITY_ORDER:+--sensitivity-order "$HH_SENSITIVITY_ORDER"} \
+            ${HH_SAMPLE_RANDOM:+--sample-random "$HH_SAMPLE_RANDOM"} \
+            ${HH_SAMPLE_MIN_CASES:+--sample-min-cases "$HH_SAMPLE_MIN_CASES"} \
+            ${HH_TRAVERSAL_STRATEGY:+--traversal-strategy "$HH_TRAVERSAL_STRATEGY"} \
+            ${HH_TIMEOUT:+--timeout "$HH_TIMEOUT"} \
+            ${HH_HELM:+--helm "$HH_HELM"} \
+            ${HH_RELEASE:+--release "$HH_RELEASE"} \
+            ${HH_NAMESPACE:+--namespace "$HH_NAMESPACE"} \
+            ${HH_KUBE_VERSION:+--kube-version "$HH_KUBE_VERSION"} \
+            ${HH_ALLOW_EMPTY:+--allow-empty} \
+            ${HH_ARTIFACT_DIR:+--artifact-dir "$HH_ARTIFACT_DIR"} \
+            ${HH_STRICT:+--strict} ${HH_NO_STRICT:+--no-strict} \
+            ${HH_VALIDATE_SCHEMAS:+--validate-schemas} \
+            ${HH_SCHEMA_VERSION:+--schema-version "$HH_SCHEMA_VERSION"} \
+            ${HH_SCHEMA_CACHE_DIR:+--schema-cache-dir "$HH_SCHEMA_CACHE_DIR"} \
+            ${HH_SCHEMA_OFFLINE:+--schema-offline} \
+            ${HH_BASE_REF:+--base-ref "$HH_BASE_REF"} \
+            ${HH_DRY_RUN:+--dry-run} \
+            ${HH_CACHE_DIR:+--cache-dir "$HH_CACHE_DIR"} \
+            ${HH_DISABLE_SCHEMA_CACHING:+--disable-schema-caching} \
+            ${HH_PROGRESS:+--progress} \
+            ${HH_RUN_ID:+--run-id "$HH_RUN_ID"} \
+            ${HH_NO_CACHE:+--no-cache} \
+            ${HH_RERUN:+--rerun "$HH_RERUN"} \
+            ${HH_SHARD:+--shard "$HH_SHARD"} \
+            ${HH_JOBS:+--jobs "$HH_JOBS"} \
+            ${HH_OUTPUT_FORMAT:+--output-format "$HH_OUTPUT_FORMAT"} \
+            ${HH_EXPORT_SUPPRESSIONS:+--export-suppressions} \
+            ${HH_EXPORT_TOPOLOGICAL_GRAPH:+--export-topological-graph "$HH_EXPORT_TOPOLOGICAL_GRAPH"} \
+            ${HH_MINIMAL_VALUES_TIMEOUT:+--minimal-values-timeout "$HH_MINIMAL_VALUES_TIMEOUT"} \
+            ${HH_LOG_COLOR:+--log-color "$HH_LOG_COLOR"} \
+            ${HH_LOG_FILE:+--log-file "$HH_LOG_FILE"} \
+            ${HH_CONFIG:+--config "$HH_CONFIG"} \
+            ${HH_CHARACTER_SETS:+--character-sets "$HH_CHARACTER_SETS"} \
+            ${HH_RENDERER_POLICY:+--renderer-policy "$HH_RENDERER_POLICY"} \
+            ${HH_YAML_PARSER:+--yaml-parser "$HH_YAML_PARSER"} \
+            ${HH_DISABLE_CODES:+--disable-codes "$HH_DISABLE_CODES"}
+        ;;
+    scan)
+        exec helm hypothesis scan "$HH_SOURCE" \
+            ${HH_HELM_REPOSITORY:+--helm-repository} \
+            ${HH_CHART_VERSION:+--chart-version "$HH_CHART_VERSION"} \
+            ${HH_CLONE_TIMEOUT:+--clone-timeout "$HH_CLONE_TIMEOUT"} \
+            ${HH_REPORT:+--report "$HH_REPORT"} \
+            ${HH_ARTIFACT_DIR:+--artifact-dir "$HH_ARTIFACT_DIR"} \
+            ${HH_HELM:+--helm "$HH_HELM"} \
+            ${HH_VALUES:+--values "$HH_VALUES"} \
+            ${HH_TIMEOUT:+--timeout "$HH_TIMEOUT"} \
+            ${HH_CHART_TIMEOUT:+--chart-timeout "$HH_CHART_TIMEOUT"} \
+            ${HH_SCAN_TIMEOUT:+--scan-timeout "$HH_SCAN_TIMEOUT"} \
+            ${HH_MAX_EXAMPLES:+--max-examples "$HH_MAX_EXAMPLES"} \
+            ${HH_CACHE_DIR:+--cache-dir "$HH_CACHE_DIR"} \
+            ${HH_NO_CACHE:+--no-cache} \
+            ${HH_JOBS:+--jobs "$HH_JOBS"} \
+            ${HH_PERMUTATIONS:+--permutations "$HH_PERMUTATIONS"} \
+            ${HH_FILTER:+--filter} \
+            ${HH_FAIL:+--fail "$HH_FAIL"} \
+            ${HH_SEED:+--seed "$HH_SEED"} \
+            ${HH_BUILD_DEPENDENCIES:+--build-dependencies} ${HH_NO_BUILD_DEPENDENCIES:+--no-build-dependencies} \
+            ${HH_PCA_SAMPLES:+--pca-samples "$HH_PCA_SAMPLES"} \
+            ${HH_PCA_TIMEOUT:+--pca-timeout "$HH_PCA_TIMEOUT"} \
+            ${HH_MAX_MUTATIONS:+--max-mutations "$HH_MAX_MUTATIONS"} \
+            ${HH_SENSITIVITY_TIMEOUT:+--sensitivity-timeout "$HH_SENSITIVITY_TIMEOUT"} \
+            ${HH_FILTER_ADAPTIVE:+--filter-adaptive} \
+            ${HH_SAMPLING_CALIBRATION:+--sampling-calibration "$HH_SAMPLING_CALIBRATION"} \
+            ${HH_SENSITIVITY_ORDER:+--sensitivity-order "$HH_SENSITIVITY_ORDER"} \
+            ${HH_SAMPLE_RANDOM:+--sample-random "$HH_SAMPLE_RANDOM"} \
+            ${HH_SAMPLE_MIN_CASES:+--sample-min-cases "$HH_SAMPLE_MIN_CASES"} \
+            ${HH_TRAVERSAL_STRATEGY:+--traversal-strategy "$HH_TRAVERSAL_STRATEGY"} \
+            ${HH_STRICT:+--strict} ${HH_NO_STRICT:+--no-strict} \
+            ${HH_VALIDATE_SCHEMAS:+--validate-schemas} \
+            ${HH_SCHEMA_VERSION:+--schema-version "$HH_SCHEMA_VERSION"} \
+            ${HH_SCHEMA_CACHE_DIR:+--schema-cache-dir "$HH_SCHEMA_CACHE_DIR"} \
+            ${HH_SCHEMA_OFFLINE:+--schema-offline} \
+            ${HH_BASE_REF:+--base-ref "$HH_BASE_REF"} \
+            ${HH_OUTPUT_FORMAT:+--output-format "$HH_OUTPUT_FORMAT"} \
+            ${HH_EXPORT_SUPPRESSIONS:+--export-suppressions} \
+            ${HH_EXPORT_TOPOLOGICAL_GRAPH:+--export-topological-graph "$HH_EXPORT_TOPOLOGICAL_GRAPH"} \
+            ${HH_MINIMAL_VALUES_TIMEOUT:+--minimal-values-timeout "$HH_MINIMAL_VALUES_TIMEOUT"} \
+            ${HH_LOG_COLOR:+--log-color "$HH_LOG_COLOR"} \
+            ${HH_LOG_FILE:+--log-file "$HH_LOG_FILE"} \
+            ${HH_CONFIG:+--config "$HH_CONFIG"} \
+            ${HH_CHARACTER_SETS:+--character-sets "$HH_CHARACTER_SETS"} \
+            ${HH_RENDERER_POLICY:+--renderer-policy "$HH_RENDERER_POLICY"} \
+            ${HH_YAML_PARSER:+--yaml-parser "$HH_YAML_PARSER"} \
+            ${HH_DISABLE_CODES:+--disable-codes "$HH_DISABLE_CODES"} \
+            ${HH_REMOTE_MINIMAL_VALUES:+--export-minimal-values "$HH_REMOTE_MINIMAL_VALUES"}
+        ;;
+    audit)
+        exec helm hypothesis audit "$HH_SOURCE" \
+            ${HH_FAIL:+--fail "$HH_FAIL"} \
+            ${HH_ARTIFACT_DIR:+--artifact-dir "$HH_ARTIFACT_DIR"} \
+            ${HH_EXPORT_SUPPRESSIONS:+--export-suppressions} \
+            ${HH_EXPORT_TOPOLOGICAL_GRAPH:+--export-topological-graph "$HH_EXPORT_TOPOLOGICAL_GRAPH"} \
+            ${HH_MINIMAL_VALUES_TIMEOUT:+--minimal-values-timeout "$HH_MINIMAL_VALUES_TIMEOUT"} \
+            ${HH_LOG_COLOR:+--log-color "$HH_LOG_COLOR"} \
+            ${HH_LOG_FILE:+--log-file "$HH_LOG_FILE"} \
+            ${HH_CONFIG:+--config "$HH_CONFIG"} \
+            ${HH_CHARACTER_SETS:+--character-sets "$HH_CHARACTER_SETS"} \
+            ${HH_RENDERER_POLICY:+--renderer-policy "$HH_RENDERER_POLICY"} \
+            ${HH_YAML_PARSER:+--yaml-parser "$HH_YAML_PARSER"} \
+            ${HH_DISABLE_CODES:+--disable-codes "$HH_DISABLE_CODES"}
+        ;;
+    generate)
+        exec helm hypothesis generate "$HH_SOURCE" \
+            ${HH_SUITE_OUTPUT:+--output "$HH_SUITE_OUTPUT"} \
+            ${HH_MAX_EXAMPLES:+--max-examples "$HH_MAX_EXAMPLES"} \
+            ${HH_STRICT:+--strict} ${HH_NO_STRICT:+--no-strict} \
+            ${HH_FAIL:+--fail "$HH_FAIL"} \
+            ${HH_EXPORT_TOPOLOGICAL_GRAPH:+--export-topological-graph "$HH_EXPORT_TOPOLOGICAL_GRAPH"} \
+            ${HH_MINIMAL_VALUES_TIMEOUT:+--minimal-values-timeout "$HH_MINIMAL_VALUES_TIMEOUT"} \
+            ${HH_LOG_COLOR:+--log-color "$HH_LOG_COLOR"} \
+            ${HH_LOG_FILE:+--log-file "$HH_LOG_FILE"} \
+            ${HH_CONFIG:+--config "$HH_CONFIG"} \
+            ${HH_CHARACTER_SETS:+--character-sets "$HH_CHARACTER_SETS"} \
+            ${HH_RENDERER_POLICY:+--renderer-policy "$HH_RENDERER_POLICY"} \
+            ${HH_YAML_PARSER:+--yaml-parser "$HH_YAML_PARSER"} \
+            ${HH_DISABLE_CODES:+--disable-codes "$HH_DISABLE_CODES"}
+        ;;
+    run)
+        exec helm hypothesis run "$HH_SOURCE" \
+            ${HH_SEED:+--seed "$HH_SEED"} \
+            ${HH_MATCH:+--match "$HH_MATCH"} \
+            ${HH_COLLECT_ONLY:+--collect-only} \
+            ${HH_ARTIFACT_DIR:+--artifact-dir "$HH_ARTIFACT_DIR"} \
+            ${HH_SAMPLE_RANDOM:+--sample-random "$HH_SAMPLE_RANDOM"} \
+            ${HH_SAMPLE_MIN_CASES:+--sample-min-cases "$HH_SAMPLE_MIN_CASES"} \
+            ${HH_TRAVERSAL_STRATEGY:+--traversal-strategy "$HH_TRAVERSAL_STRATEGY"} \
+            ${HH_STRICT:+--strict} ${HH_NO_STRICT:+--no-strict} \
+            ${HH_VALIDATE_SCHEMAS:+--validate-schemas} \
+            ${HH_SCHEMA_VERSION:+--schema-version "$HH_SCHEMA_VERSION"} \
+            ${HH_SCHEMA_CACHE_DIR:+--schema-cache-dir "$HH_SCHEMA_CACHE_DIR"} \
+            ${HH_SCHEMA_OFFLINE:+--schema-offline} \
+            ${HH_DRY_RUN:+--dry-run} \
+            ${HH_CACHE_DIR:+--cache-dir "$HH_CACHE_DIR"} \
+            ${HH_DISABLE_SCHEMA_CACHING:+--disable-schema-caching} \
+            ${HH_PROGRESS:+--progress} \
+            ${HH_RUN_ID:+--run-id "$HH_RUN_ID"} \
+            ${HH_NO_CACHE:+--no-cache} \
+            ${HH_RERUN:+--rerun "$HH_RERUN"} \
+            ${HH_SHARD:+--shard "$HH_SHARD"} \
+            ${HH_JOBS:+--jobs "$HH_JOBS"} \
+            ${HH_OUTPUT_FORMAT:+--output-format "$HH_OUTPUT_FORMAT"} \
+            ${HH_EXPORT_SUPPRESSIONS:+--export-suppressions} \
+            ${HH_FAIL:+--fail "$HH_FAIL"} \
+            ${HH_LOG_COLOR:+--log-color "$HH_LOG_COLOR"} \
+            ${HH_LOG_FILE:+--log-file "$HH_LOG_FILE"} \
+            ${HH_CONFIG:+--config "$HH_CONFIG"} \
+            ${HH_CHARACTER_SETS:+--character-sets "$HH_CHARACTER_SETS"} \
+            ${HH_RENDERER_POLICY:+--renderer-policy "$HH_RENDERER_POLICY"} \
+            ${HH_YAML_PARSER:+--yaml-parser "$HH_YAML_PARSER"} \
+            ${HH_DISABLE_CODES:+--disable-codes "$HH_DISABLE_CODES"}
+        ;;
+    *)
+        echo "Unsupported action command: $HH_COMMAND" >&2
+        exit 2
+        ;;
+esac

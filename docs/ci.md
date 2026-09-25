@@ -6,6 +6,8 @@
 - [Provider detection](#provider-detection)
 - [GitHub Action](#github-action)
   - [Inputs](#inputs)
+  - [Inline configuration](#inline-configuration)
+  - [Other commands](#other-commands)
   - [Publishing](#publishing)
 - [CircleCI and GitLab](#circleci-and-gitlab)
 - [Caching installed binaries](#caching-installed-binaries)
@@ -68,11 +70,10 @@ an error. See [sharding details](usage.md#distributed-sharding).
 
 The repository-root [action.yml](../action.yml) is a composite action for Linux
 and macOS runners. It installs Python, Helm, and the plugin from the action's own
-checkout, so the tested plugin version follows the action reference. It executes
-`helm hypothesis test`, saves the JSON manifest stream, and uploads generated
-tests and reports by default, including after a test failure. Failures still fail
-the action. Chart dependencies must already be available; add a dependency-build
-step for charts that require one.
+checkout, so the tested plugin version follows the action reference. Choose `command: test` (default), `scan`, `audit`, `generate`, or `run`.
+The Action uploads results even after findings fail a command, and preserves its
+exit status. Use `build-dependencies: 'true'` for recursive local testing or remote
+scans; dependencies for generated single-chart suites must already be available.
 
 Callers can reference the remote action directly:
 
@@ -142,33 +143,135 @@ or versions and want full coverage for each combination, pass an explicit
 
 ### Inputs
 
-| Input | Default | Purpose |
-| --- | --- | --- |
-| `chart` | `.` | Chart path relative to the workspace |
-| `shard` | `auto` | CI detection, explicit `INDEX/TOTAL`, or `none` |
-| `job-index`, `job-total` | Empty | GitHub strategy coordinates |
-| `jobs` | `auto` | PID tuning or a fixed worker count |
-| `max-examples` | `100` | Example budget per property |
-| `seed` | `0` | Hypothesis seed |
-| `timeout` | `30` | Seconds per Helm render |
-| `match` | Empty | Keyword selection before partitioning |
-| `artifact-dir` | `.cache/hypothesis-helm/runs` | Root for generated tests and reports |
-| `upload-artifacts` | `true` | Upload the resulting directory |
-| `artifact-name` | `hypothesis-helm` | Upload prefix; job and shard IDs are appended |
-| `artifact-retention-days` | `30` | Report retention, subject to repository policy; independent of cache lifetime |
-| `python-version` | `3.13` | Python version, at least 3.13 |
-| `helm-version` | `v4.3.0` | Helm 4 version |
+CLI options use the same hyphenated names under `with:`, without `--`.
+For example, `chart-timeout: 5m`, `filter: 'true'`, `fail: error`, and
+`traversal-strategy: sensitivity-first`. Empty optional inputs inherit the CLI
+or config default. In particular, `max-examples` no longer forces 100 examples:
+`test` and `scan` default to 10 unless your config changes that budget.
 
-Outputs are `report-dir`, `junit-path`, `manifest-path`, `shard`, and
-`exit-code`. Files may be incomplete after cancellation or setup failure.
+| Input | Purpose |
+| --- | --- |
+| `command` | `test`, `scan`, `audit`, `generate`, or `run` |
+| `source` | Local chart/directory, remote source for `scan`, or saved suite for `run`; falls back to `chart` |
+| `config` | Policy filename; defaults to `.hypothesis-helm.yaml` in the workspace |
+| `config-inline` | Inline YAML overrides; see precedence below |
+| `report` | `true` writes Markdown/PDF inside artifacts; a filename chooses another location |
+| `output-format` | `json` (default) or `yaml`; the stream is saved at output `manifest-path` |
+| `suite-output` | The `generate --output` directory; defaults inside the artifact directory |
+| `schema-validation` | The Action's name for `--validate-schemas`; enabled by default |
+| `cache` | `false` passes `--no-cache`; enabled by default |
+
+See the **[complete generated input reference](ci/action.md)** for every option,
+accepted command, default and output. CLI restrictions still apply: an audit does
+not accept execution budgets, remote scans do not support sharding, and filter
+presets cannot be mixed with their individual methods. Unsupported options fail
+rather than being silently ignored. `report`, custom `values`, dependency builds,
+and chart/scan timeouts select recursive execution, which requires `shard: none`;
+use `time-limit` with a generated single-chart suite.
+
+`exhaustive-group` accepts one comma-separated group per line. `ignore` accepts
+one finding code per line; `disable-codes` accepts comma-separated codes.
+Boolean inputs accept `true` or `false`; empty inherits the default.
+`strict: 'false'` explicitly passes `--no-strict`. `fail: 'true'` means any finding;
+`fail: error` stops only on errors. Omitted/false `fail` leaves config thresholds
+in effect. For `export-topological-graph`, use `true` or a filename.
+
+### Inline configuration
+
+```yaml
+- uses: astrivant/hypothesis-helm@main
+  id: hypothesis
+  with:
+    command: test
+    source: ./charts
+    shard: none
+    filter: 'true'
+    jobs: '4'
+    chart-timeout: 5m
+    scan-timeout: 30m
+    report: 'true'
+    fail: error
+    config: .hypothesis-helm.yaml # Optional; the workspace default is discovered automatically.
+    config-inline: |
+      hypothesis:
+        max_examples: 10
+        control_characters:
+          allow: []
+      findings:
+        severity:
+          HH2003: info
+      input_constraints:
+        - charts: [my-app]
+          path: $.credentials
+          hypothesis:
+            max_examples: 30
+```
+
+The selected file is the base; `config-inline` overrides it. Nested mappings merge,
+while scalars and entire lists replace. For example, `ignored: []` clears the base
+ignored list, and `input_constraints` replaces all base rules. Normal CLI precedence
+then applies: an explicit `max-examples` input overrides the global Hypothesis
+budget, while more specific branch budgets remain effective.
+
+Relative schema files and local chart selectors from a file stay relative to that
+file. Inline references are relative to the workspace. The effective config is
+validated and written to a private runner temporary file without modifying the
+checkout. It is also used for minimal-values export, and is not uploaded as an
+artifact. Do not put secrets into chart values unless you intend them to appear
+in the normal finding/reproduction artifacts.
+
+### Other commands
+
+```yaml
+# Remote Git, registered Helm repository, public chart index or OCI reference.
+- uses: astrivant/hypothesis-helm@main
+  with:
+    command: scan
+    source: https://github.com/example/charts.git
+    filter-adaptive: 'true'
+    chart-timeout: 3m
+    report: 'true'
+
+# Inspect input/schema gaps without running property tests.
+- uses: astrivant/hypothesis-helm@main
+  with:
+    command: audit
+    source: ./chart
+    schema-validation: 'false'
+    export-topological-graph: 'true'
+
+# Generate and then execute a reusable suite.
+- uses: astrivant/hypothesis-helm@main
+  id: suite
+  with:
+    command: generate
+    source: ./chart
+    schema-validation: 'false'
+    artifact-dir: .cache/generated
+    artifact-name: generated-suite
+- uses: astrivant/hypothesis-helm@main
+  with:
+    command: run
+    source: ${{ steps.suite.outputs.suite-path }}
+    jobs: '4'
+    artifact-dir: .cache/executed
+```
+
+Outputs include `report-dir`, `junit-path`, `manifest-path`, `command-output`,
+`suite-path`, `report-path`, `pdf-path`, `shard`, `kubesec-report-dir`,
+`kubesec-exit-code`, and `exit-code`. `command-output` captures audit/generation,
+dry-run and collection output; these do not produce a manifest stream and cannot
+be combined with Kubesec. Requested paths may not exist after an early failure.
+
 Sharded output uses `ARTIFACT_DIR/shards/INDEX-of-TOTAL/`; unsharded output uses
-the artifact root. Each directory includes `manifests.jsonl` for downstream
-validation. Set `upload-artifacts: 'false'` to handle outputs in your workflow.
-Give repeated action invocations distinct artifact roots and name prefixes.
+the artifact root. The manifest stream is `manifests.jsonl` or `manifests.yaml`.
+Kubesec can consume either choice; YAML is converted to JSON Lines for its dispatcher.
+Set `upload-artifacts: 'false'` to handle outputs in your workflow. Give repeated
+Action invocations distinct artifact roots and name prefixes.
 
-The [Chart tests and security workflow](../.github/workflows/chart-validation.yml) exercises the
-local action with three shards for each of two Kubernetes versions. It runs on PRs, pushes to `main`,
-manual dispatch and release verification. It uses `uses: ./`, so it can run before any release is published.
+The [CI chart and security jobs](../.github/workflows/ci.yml) exercise the local
+Action with three shards for each of two Kubernetes versions. They run on PRs,
+pushes to `main`, manual dispatch and release verification.
 
 ### Publishing
 

@@ -674,7 +674,7 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
             help="export example values with validation status and missing fields; default: "
             "values-minimal-<checksum>-<epoch>.yaml (scan: separate files per chart)",
         )
-    for command in (repository, inspect, generate, test, run):
+    for command in (repository, inspect, generate, test, run, exports):
         command.add_argument(
             "--log-color",
             nargs="?",
