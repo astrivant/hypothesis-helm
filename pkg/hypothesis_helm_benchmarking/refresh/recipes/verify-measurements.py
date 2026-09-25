@@ -2,8 +2,8 @@
 Validate completed study ledgers before publication.
 """
 
+import argparse
 import json
-import sys
 from collections import Counter
 from pathlib import Path
 
@@ -21,10 +21,14 @@ from hypothesis_helm_benchmarking.studies.structural_sparsity import verify as v
 __all__ = ()
 
 
-root = Path(sys.argv[1])
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("root", type=Path)
+parser.add_argument("--study", choices=STUDIES, help="validate one study immediately after its measurement completes")
+args = parser.parse_args()
+root = args.root
 expected = json.loads((root / "provenance.json").read_text())["code_sha256"]
 summary = {}
-for study in STUDIES:
+for study in (args.study,) if args.study else STUDIES:
     directory = root / "outputs" / study
     result = json.loads((directory / "results.json").read_text())
     metadata = result["metadata"]
@@ -178,5 +182,6 @@ for study in STUDIES:
         "figures": len(figures),
         "vector_figures": len(vectors),
     }
-(root / "measurement-verification.json").write_text(json.dumps(summary, indent=2) + "\n")
+destination = root / "outputs" / args.study / "verification.json" if args.study else root / "measurement-verification.json"
+destination.write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary, indent=2))

@@ -113,6 +113,8 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
         run = run_root / "repositories" / f"{name}-charts_1234"
         result = subprocess.run(["bash", str(run / "run.sh"), str(run)], cwd=tmp_path, env=environment, capture_output=True, check=False)
         assert result.returncode == 1, result.stdout + result.stderr
+        assert b"Results saved: " in result.stdout
+        assert "Results saved: " in (tmp_path / run / "jobs/1.out").read_text()
         # This fixture fails before traversal, so attach a consistent traversal ledger
         # to exercise the finalizer's order contract without relying on random failures.
         worker_path = tmp_path / run / "jobs/1.json"
@@ -578,6 +580,14 @@ def test_refresh_includes_every_stress_topology(tmp_path: Path) -> None:
     assert {Path(record["source"]).stem for record in stress} == {name for name, _ in progression(Stress())}
     assert all(Path(record["source"]).is_file() for record in records)
     assert not list(tmp_path.rglob("Chart.yaml"))
+    # Re-entering the topology stage must not schedule each synthetic chart twice.
+    inventory = (tmp_path / "topology-inventory.json").read_bytes()
+    subprocess.run(
+        [sys.executable, str(project / "pkg/hypothesis_helm_benchmarking/refresh/recipes/prepare-topologies.py"), str(tmp_path)],
+        check=True,
+        capture_output=True,
+    )
+    assert (tmp_path / "topology-inventory.json").read_bytes() == inventory
 
 
 def test_topology_retries_include_recipe_files(tmp_path: Path) -> None:
@@ -881,17 +891,20 @@ def test_refresh_summaries_replace_numbers_and_preserve_prose(tmp_path: Path, mo
 
 
 @pytest.mark.parametrize("symbolic", ["false", "true"])
-def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str) -> None:
+def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Exercise every study recipe through the operation dispatcher without running measurements.
 
     Args:
         tmp_path (Path): Isolated recipes and recording executable.
         symbolic (str): Optional symbolic fitting switch.
+        monkeypatch (pytest.MonkeyPatch): Stop native command dispatch after real argument parsing.
 
     Returns:
         None: Every declared study uses an installed command and its own output directory.
     """
+    import argparse
+    import importlib
     from textwrap import dedent
 
     from hypothesis_helm_benchmarking.cli import COMMANDS
@@ -901,6 +914,7 @@ def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str) -> None:
     root = tmp_path / "refresh"
     root.mkdir()
     shutil.copy2(project / "pkg/hypothesis_helm_benchmarking/refresh/recipes/studies.sh", root / "studies.sh")
+    (root / "verify-measurements.py").write_text("# Measurements are not produced by this argument-contract test.\n")
     binary = tmp_path / "bin"
     binary.mkdir()
     recorder = binary / "hypothesis-helm-benchmark"
@@ -939,9 +953,35 @@ def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str) -> None:
         )
     calls = [json.loads(line) for line in commands.read_text().splitlines()]
     assert len(calls) == len(STUDIES)
+
+    class Parsed(BaseException):
+        """Stop before running a study, but only after its real parser accepted all arguments."""
+
+    original_parse = argparse.ArgumentParser.parse_args
+
+    def parse(parser: argparse.ArgumentParser, *args: object, **kwargs: object) -> None:
+        """
+        Validate a recipe against the installed command rather than just its name.
+
+        Args:
+            parser (argparse.ArgumentParser): Study's real command-line parser.
+            *args (object): Forwarded parser inputs.
+            **kwargs (object): Forwarded namespace options.
+
+        Returns:
+            None: Never returns; stops immediately after successful parsing.
+        """
+        original_parse(parser, *args, **kwargs)
+        raise Parsed
+
+    monkeypatch.setattr(argparse.ArgumentParser, "parse_args", parse)
     for study, arguments in zip(STUDIES, calls, strict=True):
         command_index = 2 if arguments[0] == "--parameters" else 0
         assert arguments[command_index] in COMMANDS
         assert arguments[arguments.index("--output") + 1] == str(root / "outputs" / study)
+        module = importlib.import_module(f"hypothesis_helm_benchmarking.{COMMANDS[arguments[command_index]]}")
+        entry = getattr(module, "main", None) or module.run
+        with pytest.raises(Parsed):
+            entry(arguments[command_index + 1 :])
     assert ("--symbolic-fit" in calls[-1]) == (symbolic == "true")
     assert (root / "status.tsv").read_text().splitlines() == [f"{study}\t0" for study in STUDIES]

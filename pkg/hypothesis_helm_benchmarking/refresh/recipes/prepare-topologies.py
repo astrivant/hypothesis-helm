@@ -4,16 +4,17 @@ Add newly measured synthetic fixtures to the pinned real-chart graph inventory.
 
 import json
 import sys
-import time
 from pathlib import Path
 
 __all__ = ()
 
 
 root = Path(sys.argv[1])
-while not (root / "graph-source-ready.txt").exists():
-    time.sleep(5)
-records = json.loads((root / "topology-inventory.json").read_text())
+if not (root / "graph-source-ready.txt").is_file():
+    raise ValueError("Topology exports require initialized chart sources; resume initialization first")
+# A retry rebuilds synthetic entries from the retained recipes, rather than
+# appending the same charts to the inventory again.
+records = [item for item in json.loads((root / "topology-inventory.json").read_text()) if item["repository"] != "synthetic"]
 recipes = [path for path in (root / "outputs").rglob("*.yaml") if path.parent.name == "cases" or path.name.endswith("-parameters.yaml")]
 for recipe in sorted(recipes):
     relative = recipe.relative_to(root / "outputs")

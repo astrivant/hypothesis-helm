@@ -101,6 +101,7 @@ def test_ci_study_retains_status_and_logs(
     restored = tmp_path / root
     (restored / "logs").mkdir(parents=True)
     (restored / "provenance.json").write_text("{}")
+    (restored / "verify-measurements.py").write_text("# This test isolates status transport and live logs.\n")
     for name in ("operations.sh", "studies.sh"):
         (restored / name).write_text((project / "pkg/hypothesis_helm_benchmarking/refresh/recipes" / name).read_text())
     binary = tmp_path / "bin"

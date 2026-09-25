@@ -455,10 +455,15 @@ def test_refresh_tees_logs_and_preserves_report(tmp_path: Path) -> None:
         dedent(f"""
             #!{sys.executable}
             import sys
+            from pathlib import Path
+            from hypothesis_helm.reporting.console.summary import print_summary
             assert sys.argv[sys.argv.index('--log-file') + 1] == '/dev/stderr'
             assert sys.argv[sys.argv.index('--disable-codes') + 1] == 'HH2006'
             assert sys.argv[sys.argv.index('--shard') + 1] == 'none'
-            print('{{"status":"failed"}}')
+            report = Path('run/saved results/scan.json')
+            report.parent.mkdir(parents=True)
+            report.write_text('{{"status":"failed"}}')
+            print_summary({{'status': 'failed'}}, report)
             print('[WARNING] Finding observed: [HH1101] invalid YAML', file=sys.stderr, flush=True)
             raise SystemExit(1)
         """).lstrip()
@@ -476,5 +481,10 @@ def test_refresh_tees_logs_and_preserves_report(tmp_path: Path) -> None:
     )
     assert process.returncode == 1
     assert "[HH1101]" in process.stdout
-    assert (tmp_path / "run/jobs/1.err").read_text() == process.stdout
+    log = (tmp_path / "run/jobs/1.err").read_text()
+    summary = (tmp_path / "run/jobs/1.out").read_text()
+    assert log == "[WARNING] Finding observed: [HH1101] invalid YAML\n"
+    assert summary == "Test failed.\nResults saved: run/saved results/scan.json\n"
+    assert process.stdout == log + summary
     assert json.loads((tmp_path / "run/jobs/1.json").read_text()) == {"status": "failed"}
+    assert not (tmp_path / "run/jobs/1.json.pending").exists()

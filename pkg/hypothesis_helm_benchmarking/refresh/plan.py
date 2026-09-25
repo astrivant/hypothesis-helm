@@ -7,7 +7,10 @@ from pathlib import Path
 from attrs import frozen
 from pipeline import Operation
 
-__all__ = ("Refresh", "STUDIES", "source_path")
+__all__ = ("PREPARATION", "Refresh", "STUDIES", "source_path")
+
+
+PREPARATION = ("compiler-builtins", "schema-catalog", "native-renderer", "dependency-docs", "checks", "dependencies", "initialize")
 
 
 STUDIES = (
@@ -80,8 +83,7 @@ class Refresh:
             """
             recipe = (
                 Path("pkg/hypothesis_helm_benchmarking/refresh/recipes/operations.sh")
-                if name
-                in {"compiler-builtins", "schema-catalog", "native-renderer", "dependency-docs", "checks", "dependencies", "initialize"}
+                if name in PREPARATION
                 else self.root / "operations.sh"
             )
             operations.append(Operation(name, ("bash", str(recipe), name, str(self.root)), requires, exclusive, allow_failure))

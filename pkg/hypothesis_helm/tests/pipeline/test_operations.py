@@ -480,11 +480,15 @@ def test_repository_diagnostics_reach_queue_before_chart_exit(tmp_path: Path) ->
         dedent(
             """
             #!/usr/bin/env bash
-            printf '{"chart":"example-chart"}\n'
             printf 'chart diagnostic\n' >&2
             for ((attempt = 0; attempt < 500; attempt++)); do
-              if [[ -f release ]]; then exit 7; fi
-              sleep .01
+                if [[ -f release ]]; then
+                    mkdir -p scan/runs
+                    printf '{"chart":"example-chart"}\n' >scan/runs/scan.json
+                    printf 'Results saved: scan/runs/scan.json\n'
+                    exit 7
+                fi
+                sleep .01
             done
             exit 99
             """
@@ -515,6 +519,7 @@ def test_repository_diagnostics_reach_queue_before_chart_exit(tmp_path: Path) ->
     assert (tmp_path / "release").exists()
     assert json.loads((scan / "jobs/1.json").read_text()) == {"chart": "example-chart"}
     assert (scan / "jobs/1.err").read_text() == "chart diagnostic\n"
+    assert (scan / "jobs/1.out").read_text() == "Results saved: scan/runs/scan.json\n"
     assert not any('"chart"' in message for message in messages)
     columns, row = (scan / "joblog.tsv").read_text().splitlines()
     assert dict(zip(columns.split("\t"), row.split("\t"), strict=True))["Exitval"] == "7"

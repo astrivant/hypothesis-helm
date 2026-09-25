@@ -109,7 +109,8 @@ def test_shutdown(index):
         Processes().run([sys.executable, "-c",
             "import json,os,signal,time; from pathlib import Path; "
             "signal.signal(signal.SIGINT, signal.SIG_IGN); signal.signal(signal.SIGTERM, signal.SIG_IGN); "
-            "Path('ready.json').write_text(json.dumps([os.getppid(),os.getpid()])); time.sleep(60)"])
+            "Path('ready.pending').write_text(json.dumps([os.getppid(),os.getpid()])); "
+            "Path('ready.pending').replace('ready.json'); time.sleep(60)"])
         return
     if stubborn:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
@@ -118,7 +119,9 @@ def test_shutdown(index):
         "import signal,time; signal.signal(signal.SIGINT, signal.SIG_IGN); "
         + ("signal.signal(signal.SIGTERM, signal.SIG_IGN); " if stubborn else "")
         + "time.sleep(60)"])
-    Path("ready.json").write_text(json.dumps([os.getpid(), child.pid]))
+    # Publish readiness only after both child identifiers have been written.
+    Path("ready.pending").write_text(json.dumps([os.getpid(), child.pid]))
+    Path("ready.pending").replace("ready.json")
     time.sleep(60)
 """
     )
@@ -740,7 +743,9 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str)
             from pathlib import Path
             child = subprocess.Popen([sys.executable, '-c',
                 'import signal,time; signal.signal(signal.SIGINT,signal.SIG_IGN); time.sleep(60)'])
-            Path(f'ready-{os.getpid()}.json').write_text(json.dumps([os.getppid(), os.getpid(), child.pid]))
+            pending = Path(f'ready-{os.getpid()}.pending')
+            pending.write_text(json.dumps([os.getppid(), os.getpid(), child.pid]))
+            pending.replace(pending.with_suffix('.json'))
             time.sleep(60)
             """
         ).lstrip()

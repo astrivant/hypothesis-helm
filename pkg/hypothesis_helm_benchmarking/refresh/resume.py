@@ -15,7 +15,57 @@ from hypothesis_helm.execution.runtime.signals import DeferredSignals, Terminati
 from hypothesis_helm.schemas.contracts import mapping, sequence
 from pipeline import Operation, OperationQueue
 
-__all__ = ("remaining", "resume")
+from hypothesis_helm_benchmarking.refresh.plan import PREPARATION, STUDIES, source_path
+
+__all__ = ("latest_journal", "remaining", "resume")
+
+
+def latest_journal(parent: Path = Path(".cache/refresh")) -> Path:
+    """
+    Find the newest continuation of the checkout's last refresh.
+
+    Args:
+        parent (Path): Directory containing latest-refresh.txt and refresh workspaces.
+
+    Returns:
+        Path: Original or continuation journal with the most recent state.
+
+    Raises:
+        ValueError: No previous refresh or resumable journal exists.
+    """
+    pointer = parent / "latest-refresh.txt"
+    if not pointer.is_file():
+        raise ValueError("No previous refresh; start hypothesis-helm-refresh without --resume")
+    root = Path(pointer.read_text().strip())
+    candidates = [root / "operations.json", *root.glob("resumed-*/operations.json"), *root.glob("logs/resumed-*/operations.json")]
+    journals = [path for path in candidates if path.is_file()]
+    if not journals:
+        raise ValueError(f"No refresh journal found under {root}")
+    return max(journals, key=lambda path: path.stat().st_mtime_ns)
+
+
+def _retain_attempts(root: Path, directory: Path, operations: tuple[Operation, ...]) -> None:
+    """
+    Preserve partial measurements before restarting commands that require fresh output.
+
+    Args:
+        root (Path): Original refresh workspace.
+        directory (Path): New continuation journal directory.
+        operations (tuple[Operation, ...]): Unfinished work only; completed studies remain untouched.
+
+    Returns:
+        None: Earlier evidence is moved to prior-attempts beside the continuation journal.
+    """
+    for operation in operations:
+        paths = [root / "outputs" / operation.name] if operation.name in (*STUDIES, "flamegraphs") else []
+        if operation.name == "profile":
+            paths = [root / "profiles", root / "profile-run"]
+        for path in paths:
+            if path.exists():
+                target = directory / "prior-attempts" / path.relative_to(root)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                path.rename(target)
+                print(f"Retained unfinished {operation.name} output: {target}", file=sys.stderr, flush=True)
 
 
 def remaining(journal: Path) -> tuple[Operation, ...]:
@@ -49,6 +99,42 @@ def remaining(journal: Path) -> tuple[Operation, ...]:
     )
 
 
+def _workspace(journal: Path) -> tuple[Path, bool]:
+    """
+    Locate measured sources, or prove that the refresh failed before initialization began.
+
+    Args:
+        journal (Path): Original or continuation journal.
+
+    Returns:
+        tuple[Path, bool]: Workspace and whether it already contains a measured source snapshot.
+    """
+    for root in journal.parents:
+        if (root / "measured-source-hashes.json").is_file():
+            return root, True
+    # Preparation uses the checkout so engineers can fix failing checks. Once
+    # initialization starts, recovery must keep the original measured sources.
+    for root in reversed(journal.parents):
+        original = root / "operations.json"
+        if not original.is_file():
+            continue
+        records = [mapping(item) for item in sequence(mapping(json.loads(original.read_text()))["operations"])]
+        if not any(item["name"] == "initialize" for item in records):
+            continue
+        current = [mapping(item) for item in sequence(mapping(json.loads(journal.read_text()))["operations"])]
+        for items in (records, current):
+            if not any(item["name"] == "initialize" for item in items):
+                raise ValueError("Resume requires a measured source snapshot after initialization")
+            for item in items:
+                if item["name"] == "initialize" or item["name"] not in PREPARATION:
+                    if item.get("status") not in {"pending", "blocked"} or item.get("started_epoch") is not None:
+                        raise ValueError("Resume requires a measured source snapshot after initialization has started")
+        if (root / "frozen-source").exists():
+            raise ValueError("Incomplete frozen source snapshot; cannot resume preparation")
+        return root, False
+    raise ValueError("Resume requires a refresh journal with initialization or a measured source snapshot")
+
+
 def resume(journal: Path, workers: int, *, dry_run: bool = False) -> None:
     """
     Verify measured sources and resume under the normal refresh ownership contract.
@@ -67,11 +153,9 @@ def resume(journal: Path, workers: int, *, dry_run: bool = False) -> None:
     if journal.is_dir():
         journal /= "operations.json"
     operations = remaining(journal)
-    root = next((path for path in journal.parents if (path / "measured-source-hashes.json").is_file()), None)
-    if root is None:
-        raise ValueError("Resume requires a prepared refresh workspace with measured-source-hashes.json")
+    root, prepared = _workspace(journal)
     # Resume the measured implementation; mixing newer code into old measurements would invalidate the comparison.
-    sources = mapping(json.loads((root / "measured-source-hashes.json").read_text()))
+    sources = mapping(json.loads((root / "measured-source-hashes.json").read_text())) if prepared else {}
     for name, expected in sources.items():
         if hashlib.sha256((root / "frozen-source" / name).read_bytes()).hexdigest() != expected:
             raise ValueError(f"Frozen measured source changed: {name}")
@@ -82,9 +166,11 @@ def resume(journal: Path, workers: int, *, dry_run: bool = False) -> None:
         print("This journal has no unfinished operations")
         return
     with RefreshLock(root.parent / "full-refresh.lock"):
-        directory = root / f"resumed-{time.time_ns()}"
+        # Before initialization, keep continuation journals in the allowed logs
+        # directory so initialization can still reject unexpected artifacts.
+        directory = (root if prepared else root / "logs") / f"resumed-{time.time_ns()}"
         environment = dict(env, MPLBACKEND="Agg")
-        environment["PYTHONPATH"] = str(root / "frozen-source/pkg")
+        environment["PYTHONPATH"] = str(root / "frozen-source/pkg") if prepared else source_path(Path.cwd())
         environment["PATH"] = str(Path(sys.executable).parent) + os.pathsep + environment.get("PATH", "")
         queue = OperationQueue(
             operations,
@@ -97,5 +183,8 @@ def resume(journal: Path, workers: int, *, dry_run: bool = False) -> None:
             critical_scope=DeferredSignals,
             notify=lambda message: print(message, file=sys.stderr, flush=True),
         )
+        # The source snapshot stays immutable. A failed measurement gets an empty
+        # destination, while its previous data and every successful study survive.
+        _retain_attempts(root, directory, operations)
         print(f"Resume: {directory}; previous journal: {journal}", file=sys.stderr, flush=True)
         queue.run()

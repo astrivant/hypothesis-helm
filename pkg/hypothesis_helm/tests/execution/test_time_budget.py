@@ -141,11 +141,11 @@ def test_active_assertion_is_stopped_and_alarm_restored(monkeypatch: pytest.Monk
 @pytest.mark.parametrize("stage", ["construction", "draw"])
 def test_generation_obeys_execution_deadline(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, stage: str) -> None:
     """
-    Bound generation before the test body, retaining only actual render attempts.
+    Handle timer expiry inside generation, retaining only actual render attempts.
 
     Args:
         tmp_path (Path): Partial execution evidence.
-        monkeypatch (pytest.MonkeyPatch): Replace rendering and install slow generation.
+        monkeypatch (pytest.MonkeyPatch): Replace rendering and expire the active timer inside generation.
         stage (str): Strategy construction or a lazy draw before property execution.
 
     Returns:
@@ -158,7 +158,7 @@ def test_generation_obeys_execution_deadline(tmp_path: Path, monkeypatch: pytest
     @st.composite
     def slow_draw(draw: DrawFn) -> dict[str, object]:
         """
-        Model expensive constraint canonicalization inside a path strategy.
+        Expire the execution timer during a lazy draw, after Hypothesis startup completes.
 
         Args:
             draw (DrawFn): Hypothesis example generator.
@@ -167,12 +167,14 @@ def test_generation_obeys_execution_deadline(tmp_path: Path, monkeypatch: pytest
             dict[str, object]: A candidate only if the execution timer fails to interrupt.
         """
         entered.append("draw")
-        time.sleep(10)
+        assert signal.getsignal(signal.SIGALRM) != previous
+        assert signal.getitimer(signal.ITIMER_REAL)[0] > 0
+        signal.raise_signal(signal.SIGALRM)
         return {"replicas": draw(st.integers(min_value=1, max_value=3))}
 
     def slow_strategy(chart: Chart) -> SearchStrategy[dict[str, object]]:
         """
-        Model a schema strategy that blocks during its initial construction.
+        Expire the execution timer during strategy construction.
 
         Args:
             chart (Chart): Prepared input chart.
@@ -181,7 +183,9 @@ def test_generation_obeys_execution_deadline(tmp_path: Path, monkeypatch: pytest
             SearchStrategy[dict[str, object]]: Defaults only if the timer fails to interrupt.
         """
         entered.append("construction")
-        time.sleep(10)
+        assert signal.getsignal(signal.SIGALRM) != previous
+        assert signal.getitimer(signal.ITIMER_REAL)[0] > 0
+        signal.raise_signal(signal.SIGALRM)
         return st.just(chart.defaults)
 
     if stage == "construction":
@@ -191,7 +195,9 @@ def test_generation_obeys_execution_deadline(tmp_path: Path, monkeypatch: pytest
     report = check_chart(
         "examples/workload",
         input_strategy=slow_draw() if stage == "draw" else None,
-        time_limit=0.2,
+        # Startup can take longer under parallel load. Deliver the real signal at
+        # the intended stage; the separate callback test checks wall-clock expiry.
+        time_limit=30,
         artifact_dir=tmp_path,
     )
     assert time.monotonic() - started < 5

@@ -5,9 +5,11 @@ stage="${1:?operation name}"
 root="${2:?refresh directory}"
 export MPLBACKEND=Agg
 if [[ -d "$root/frozen-source/pkg" ]]; then
-    export PYTHONPATH="$PWD/$root/frozen-source/pkg"
-    export HELM_PLUGINS="$PWD/$root/helm/plugins"
-    export MPLCONFIGDIR="$PWD/$root/matplotlib-$stage"
+    workspace="$root"
+    if [[ "$workspace" != /* ]]; then workspace="$PWD/$workspace"; fi
+    export PYTHONPATH="$workspace/frozen-source/pkg"
+    export HELM_PLUGINS="$workspace/helm/plugins"
+    export MPLCONFIGDIR="$workspace/matplotlib-$stage"
 fi
 case "$stage" in
     compiler-builtins)

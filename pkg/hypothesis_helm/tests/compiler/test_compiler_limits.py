@@ -21,6 +21,7 @@ from hypothesis_helm.environment import refresh_env
 from hypothesis_helm.exceptions.rendering import RenderFailure
 from hypothesis_helm.execution.state.cache import fingerprint
 from hypothesis_helm.schemas.configuration.policy import ENVIRONMENT, load_policy
+from hypothesis_helm.tests.fixtures.cli import result_text
 
 
 def helper_chart(directory: Path, depth: int) -> Chart:
@@ -218,7 +219,7 @@ def test_parallel_workers_inherit_compiler_configuration(tmp_path: Path, capfd: 
 
     Args:
         tmp_path (Path): Chart and artifact directories.
-        capfd (pytest.CaptureFixture[str]): Capture the machine-readable CLI report.
+        capfd (pytest.CaptureFixture[str]): Capture the saved report location from the CLI summary.
         scoped (bool): Configure depth globally or only for a matching chart/source selector.
 
     Returns:
@@ -268,7 +269,7 @@ def test_parallel_workers_inherit_compiler_configuration(tmp_path: Path, capfd: 
         )
         == 0
     )
-    report = json.loads(capfd.readouterr().out)
+    report = json.loads(result_text(capfd.readouterr().out))
     expected = {**DEFAULT_LIMITS, "max_call_depth": 32, "max_files": 4321, "max_steps": 23456}
     assert report["settings"]["input_policy"]["compiler"] == {**expected, "max_call_depth": 1 if scoped else 32}
     assert report["charts"][0]["compiler_limits"] == expected

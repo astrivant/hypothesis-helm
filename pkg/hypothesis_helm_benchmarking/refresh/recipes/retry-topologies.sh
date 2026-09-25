@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -uo pipefail
 root="${1:?refresh directory}"
+workspace="$root"
+if [[ "$workspace" != /* ]]; then workspace="$PWD/$workspace"; fi
 export MPLBACKEND=Agg
-export MPLCONFIGDIR="$PWD/$root/matplotlib"
+export MPLCONFIGDIR="$workspace/matplotlib"
 parallel --will-cite --term-seq TERM,10000,KILL,1000 --jobs 4 --timeout 540 --colsep '\t' --joblog "$root/topology-retry-plots-joblog.tsv" \
     hypothesis-helm-benchmark topology --graph '{1}' --output '{2}' --title '{3}' \
     :::: "$root/topology-retry-plots.tsv" >"$root/topology-retry-plots.log" 2>&1

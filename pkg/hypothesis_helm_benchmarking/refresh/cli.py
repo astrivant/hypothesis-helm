@@ -94,7 +94,14 @@ def main(argv: list[str] | None = None) -> int:
     """
     refresh_env()
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--resume", type=Path, help="retry unfinished operations from a saved operations.json or its directory")
+    parser.add_argument(
+        "--resume",
+        type=Path,
+        nargs="?",
+        const=Path("latest"),
+        metavar="JOURNAL",
+        help="retry unfinished operations; omit JOURNAL to use the latest refresh continuation",
+    )
     parser.add_argument("--workers", default="auto", help="concurrent independent refresh operations; auto uses available CPUs")
     parser.add_argument("--dry-run", action="store_true", help="print every operation and prerequisite without launching commands")
     parser.add_argument("--ci-phase", choices=("prepare", "study", "finish"), help="run one artifact-connected GitHub refresh phase")
@@ -106,11 +113,11 @@ def main(argv: list[str] | None = None) -> int:
         if workers < 1:
             raise ValueError("workers must be a positive integer or auto")
         if args.resume is not None:
-            from hypothesis_helm_benchmarking.refresh.resume import resume
+            from hypothesis_helm_benchmarking.refresh.resume import latest_journal, resume
 
             if args.ci_phase or args.root or args.study:
                 raise ValueError("--resume cannot be combined with CI phase options")
-            resume(args.resume, workers, dry_run=args.dry_run)
+            resume(latest_journal() if args.resume == Path("latest") else args.resume, workers, dry_run=args.dry_run)
             return 0
         project = Path.cwd()
         if not (project / "pkg/hypothesis_helm_benchmarking/refresh/recipes/operations.sh").is_file():

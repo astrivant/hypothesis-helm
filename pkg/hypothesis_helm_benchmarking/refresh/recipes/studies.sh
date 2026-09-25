@@ -68,5 +68,10 @@ case "$study" in
         ;;
 esac
 status=$?
+# Validate this handoff immediately, while the failed study is still the unit
+# retried by resume. The final gate checks the complete inventory again.
+if ((status == 0)); then
+    python "$root/verify-measurements.py" "$root" --study "$study" || status=$?
+fi
 printf '%s\t%s\n' "$study" "$status" >>"$root/status.tsv"
 exit "$status"

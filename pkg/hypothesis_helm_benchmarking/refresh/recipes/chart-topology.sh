@@ -3,6 +3,8 @@ set -uo pipefail
 source_chart="${1:?chart directory}"
 output="${2:?output directory}"
 root="${3:?refresh directory}"
+workspace="$root"
+if [[ "$workspace" != /* ]]; then workspace="$PWD/$workspace"; fi
 mkdir -p "$output"
 if [[ ! -f "$source_chart" && ! -f "$source_chart/values.yaml" ]]; then
     printf '%s\n' '{"status":"missing-values","reason":"Source chart has no values.yaml; input graph export was not attempted."}' >"$output/status.json"
@@ -21,10 +23,10 @@ if [[ -f "$source_chart" ]]; then
 else
     cp -RL "$source_chart/." "$scratch/chart/"
 fi
-export HELM_PLUGINS="$PWD/$root/helm/plugins"
-export HELM_REPOSITORY_CONFIG="$PWD/$root/helm/repositories.yaml"
+export HELM_PLUGINS="$workspace/helm/plugins"
+export HELM_REPOSITORY_CONFIG="$workspace/helm/repositories.yaml"
 export HELM_CACHE_HOME="$scratch/helm-cache"
-export MPLCONFIGDIR="$PWD/$root/matplotlib-topology-${PARALLEL_JOBSLOT:-0}"
+export MPLCONFIGDIR="$workspace/matplotlib-topology-${PARALLEL_JOBSLOT:-0}"
 export MPLBACKEND=Agg
 export XDG_CACHE_HOME="$scratch/cache"
 helm dependency build "$scratch/chart" >"$output/dependencies.txt" 2>&1

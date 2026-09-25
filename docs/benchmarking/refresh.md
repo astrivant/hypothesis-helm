@@ -35,11 +35,20 @@ Charts run sequentially, with six path workers per chart; CI shard variables do 
 Successful report verification updates both Markdown/PDF reports and the root README's counts and links.
 `HH2006` suppression hides opaque-object warnings while leaving their inputs testable and all other findings enabled.
 Saved runs retain their recorded policy when resumed.
+Each study validates its measurements and required plots before the next study starts. A final verification checks the
+complete set before publication, so an invalid study cannot silently contribute to the published results.
 
 ## Recovering an interrupted refresh
 
 Refresh keeps completed measurements in its workspace after a failure. Keep that directory, including its
-`operations.json`, logs, frozen source and checksum records. Resume from the journal of the latest failed attempt:
+`operations.json`, logs, frozen source and checksum records. To continue the latest attempt:
+
+```sh
+bash scripts/project-run.sh hypothesis-helm-refresh --resume --dry-run
+bash scripts/project-run.sh hypothesis-helm-refresh --resume
+```
+
+You can also select a particular journal:
 
 ```sh
 hypothesis-helm-refresh --resume .cache/refresh/refresh-<epoch>/operations.json --dry-run
@@ -47,9 +56,16 @@ hypothesis-helm-refresh --resume .cache/refresh/refresh-<epoch>/operations.json
 ```
 
 Completed operations are preserved. Failed and unstarted operations run again in dependency order, under the refresh lock.
-Each continuation writes a new `resumed-<timestamp>/operations.json` and logs. If that continuation fails, pass **its** journal
-on the next attempt. Recovery verifies the frozen source hashes; it does not resume inside an individual benchmark.
+Each continuation writes a new `resumed-<timestamp>/operations.json` and logs. Bare `--resume` selects the latest continuation;
+when supplying a path explicitly, use **that continuation's** journal on the next attempt.
+Recovery verifies the frozen source hashes; it does not resume inside an individual benchmark. An unfinished study or profiling
+stage starts again with a fresh output directory. Its previous output is retained under the continuation's `prior-attempts/`;
+completed studies are not rerun or moved. Topology inventory rebuilding avoids duplicate chart jobs.
 Fix the cause of the failure before resuming. Starting a fresh refresh still refuses an unfinished workspace.
+
+If checks fail before initialization, resume uses the current checkout so your fixes take effect. Continuation journals live
+under `logs/resumed-<timestamp>/` until initialization creates the measured source snapshot. Once initialization has started,
+recovery requires that snapshot and verifies its hashes before continuing.
 
 The refresh workspace owns all files needed for recovery, including repository scans under `repositories/`.
 Published reports are replaceable outputs; keep the workspace if you want to resume or redraw a run.
