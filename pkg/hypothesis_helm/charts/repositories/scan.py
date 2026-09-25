@@ -228,7 +228,7 @@ def _exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> di
     except NonFiniteSchema as exc:
         filtering["reason"] = f"Cannot enumerate the input domain: {exc}"
         unavailable_options = [
-            "--trim-random" if option == "trim" else "--" + option.replace("_", "-")
+            {"trim": "--filter-random", "trim_topology": "--filter-topology"}.get(option, "--" + option.replace("_", "-"))
             for option in ("trim", "trim_topology", "expand_failures", "prune_equivalent", "exhaustive_group")
             if getattr(args, option, False)
         ]

@@ -1,3 +1,3 @@
 """
-Verify sampling, calibration, trimming, and input prioritization.
+Verify sampling, calibration, filtering, and input prioritization.
 """

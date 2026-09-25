@@ -64,14 +64,14 @@ def plot(output: Path, document: dict[str, object]) -> None:
                 alpha=0.8,
             )
         axis.set_title(title)
-        axis.set_xlabel(r"Structural trim depth, $d$")
+        axis.set_xlabel(r"Topology filter level, $d$")
         axis.set_xticks(sequence(metadata["depths"]))
         axis.grid(alpha=0.25)
         if multiplier == 100:
             axis.set_ylim(0, 105)
     handles, labels = axes[0, 0].get_legend_handles_labels()
     figure.legend(handles, labels, loc="lower center", ncol=4)
-    figure.suptitle("Structure depth sweep · random trim 0 · failure expansion enabled", fontsize=17)
+    figure.suptitle("Structure depth sweep · random filter 0 · failure expansion enabled", fontsize=17)
     figure.tight_layout(rect=(0, 0.08, 1, describe(figure, "structure-depth")))
     for extension in ("png", "svg"):
         figure.savefig(output / f"structure-depth.{extension}", dpi=160, facecolor="white")
@@ -88,7 +88,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
         "[Benchmarking](../../docs/benchmarking/README.md)",
         "",
-        "Only topology trim depth varies. Random trimming stays at zero and failure expansion stays enabled.",
+        "Only the topology filter level varies. Random filtering stays at zero and failure expansion stays enabled.",
         "",
         f"Fixed settings: {metadata['input_complexity']} inputs, four normal-quantile outputs, "
         f"{metadata['error_percent']:g}% erroneous valid inputs (rounded down), fault "

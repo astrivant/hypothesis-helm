@@ -12,8 +12,8 @@
 This option skips a Helm render only when the compiler can establish that the
 input would produce exactly the same parsed manifests as an input that already
 passed validation. If the compiler cannot establish that match, Helm runs.
-This differs from trimming or sampling, which deliberately leave some inputs
-untested without proving their outputs equal.<sup>[\[1\]](execution/README.md#optional-trimming)</sup>
+This differs from filtering or sampling, which deliberately leave some inputs
+untested without proving their outputs equal.<sup>[\[1\]](execution/README.md#optional-filtering)</sup>
 
 ```sh
 helm hypothesis test ./chart --permutations 2 --prune-equivalent

@@ -39,7 +39,7 @@ def sweep(
     Args:
         chart (Chart): Fixed fixture with faults present before filtering.
         reference (dict[str, object]): Independently verified complete reference population.
-        depths (list[int]): Nonnegative topology trim depths.
+        depths (list[int]): Nonnegative topology filter depths.
         seed (int): Fixed selection seed.
         helm (str): Fixed Helm executable.
         seconds (float): Shared remaining execution budget after reference rendering.

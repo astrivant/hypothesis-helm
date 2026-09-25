@@ -118,7 +118,7 @@ def measure(
         chart (Chart): Structural fixture.
         spec (dict[str, object]): Independent oracle parameters.
         strategy (str): Execution strategy to measure.
-        level (int): Quarter-retention depth for each enabled trim control.
+        level (int): Quarter-retention depth for each enabled filter control.
         seed (int): Common reproducible sampling seed.
         limit (int): Finite planning bound.
         seconds (float): Execution deadline excluding planning and analysis.
@@ -310,7 +310,14 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--output", type=Path, default=Path(".cache/benchmarks/matrix"))
     parser.add_argument("--input-complexity", type=int, default=10)
     parser.add_argument("--max-cases", type=int, default=4096)
-    parser.add_argument("--trim-level", type=int, default=2)
+    parser.add_argument(
+        "--filter-level",
+        dest="trim_level",
+        type=int,
+        default=2,
+        metavar="N",
+        help="quarter-retention steps for random and topology filters (default: 2)",
+    )
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
@@ -322,7 +329,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
     if not 0 < args.time_limit <= 540 or args.trim_level < 1 or not 6 <= args.input_complexity <= 12:
-        parser.error("require time limit <=9m, positive trim level, and 6..12 inputs")
+        parser.error("require time limit <=9m, positive filter level, and 6..12 inputs")
     helm = shutil.which(args.helm)
     if helm is None:
         parser.error("Helm is required")

@@ -139,7 +139,7 @@ def test_single_chart_explicit_permutations_fall_back(
     monkeypatch.setattr("hypothesis_helm.charts.repositories.scan.check_paths", paths)
     monkeypatch.setattr("hypothesis_helm.charts.repositories.scan.audit_findings", lambda chart: {"findings": [], "unresolved": []})
     monkeypatch.chdir(tmp_path)
-    options = ["--trim-topology", "2", "--expand-failures"] if finite_options else []
+    options = ["--filter-topology", "2", "--expand-failures"] if finite_options else []
     assert (
         main(
             ["test", str(tmp_path), "--helm", "/usr/bin/true", "--permutations", "10", "--jobs", "8", "--log-file", "/dev/stderr", *options]
@@ -150,7 +150,7 @@ def test_single_chart_explicit_permutations_fall_back(
     assert paths.call_args.kwargs["jobs"] == 8
     assert report["attempts"] == 2
     assert report["charts"][0]["coverage_fallback"]["unavailable_options"] == (
-        ["--trim-topology", "--expand-failures"] if finite_options else []
+        ["--filter-topology", "--expand-failures"] if finite_options else []
     )
 
 

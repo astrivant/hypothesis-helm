@@ -8,13 +8,13 @@
 
 [Benchmarking](<../../docs/benchmarking/README.md>)
 
-Topology trimming previously exercised 47 of 51 erroneous inputs in three cases. The remaining four each produced the same complete manifests as a retained failing input. The 51 erroneous inputs occupied 43 singleton regions and four two-input regions. All distinct erroneous outputs were already covered.
+Topology filtering previously exercised 47 of 51 erroneous inputs in three cases. The remaining four each produced the same complete manifests as a retained failing input. The 51 erroneous inputs occupied 43 singleton regions and four two-input regions. All distinct erroneous outputs were already covered.
 
 `--expand-failures` is opt-in: after an observed failure, execute omitted members of that symbolic region within the existing time limit. This measures the extent of a failure and permits additional checks; it need not discover a new failure class. Region membership does not label an unexecuted input as a failure.
 
 ```sh
-helm hypothesis test ./chart --permutations 2 --trim-topology 2 \
-  --trim-random 2 --expand-failures --time-limit 9m
+helm hypothesis test ./chart --permutations 2 --filter-topology 2 \
+  --filter-random 2 --expand-failures --time-limit 9m
 ```
 
 Expansion continues the initial selection after failures and schedules each omitted input at most once. The default CLI still stops at its first failure. Unsupported regions cannot be expanded automatically. An entirely missed failure region cannot trigger expansion.
@@ -23,7 +23,7 @@ Expansion continues the initial selection after failures and schedules each omit
 
 Cells below show **erroneous inputs found before → after expansion (extra executions)**. The figure also shows the exact percentage missed.
 
-| Structure | Untrimmed | Random | Topology | Both trims | --filter | --filter-adaptive |
+| Structure | Unfiltered | Random | Topology | Both filters | --filter | --filter-adaptive |
 |---|---|---|---|---|---|---|
 | constraints | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 2/25 (92.0% missed) → 2/25 (92.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) |
 | control-flow | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 5/51 (90.2% missed) → 5/51 (90.2% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) |
@@ -34,7 +34,7 @@ Cells below show **erroneous inputs found before → after expansion (extra exec
 
 **Distinct erroneous outputs covered, before → after:**
 
-| Structure | Untrimmed | Random | Topology | Both trims | --filter | --filter-adaptive |
+| Structure | Unfiltered | Random | Topology | Both filters | --filter | --filter-adaptive |
 |---|---|---|---|---|---|---|
 | constraints | 8/8 → 8/8 | 2/8 → 2/8 | 8/8 → 8/8 | 8/8 → 8/8 | 8/8 → 8/8 | 8/8 → 8/8 |
 | control-flow | 14/14 → 14/14 | 4/14 → 4/14 | 14/14 → 14/14 | 14/14 → 14/14 | 14/14 → 14/14 | 14/14 → 14/14 |
@@ -43,7 +43,7 @@ Cells below show **erroneous inputs found before → after expansion (extra exec
 | equivalence | 4/4 → 4/4 | 4/4 → 4/4 | 4/4 → 4/4 | 4/4 → 4/4 | 4/4 → 4/4 | 4/4 → 4/4 |
 | boundaries | 12/12 → 12/12 | 2/12 → 2/12 | 12/12 → 12/12 | 12/12 → 12/12 | 12/12 → 12/12 | 12/12 → 12/12 |
 
-Helm `v4.3.0+gbec5b06`; 5% erroneous valid inputs (rounded down), error seed 1729, selection seed 2026, trim level 2. The same placement is reused across matching domains.
+Helm `v4.3.0+gbec5b06`; 5% erroneous valid inputs (rounded down), error seed 1729, selection seed 2026, filter level 2. The same placement is reused across matching domains.
 
 Each category has a fresh complete Helm reference checked against the independent manifest/error oracle. Policies replay the same initial observations and only consult a case's observed failure when it is reached. Added inputs are physically rendered again for each enabled policy. Ground truth is used for scoring, not scheduling.
 
@@ -54,7 +54,7 @@ Raw references and execution records (local run data) · CSV (local run data)
 ```sh
 hypothesis-helm-benchmark expansion \
   --input-complexity 10 --error-percent 5 --error-seed 1729 \
-  --seed 2026 --trim-level 2 --time-limit 9m --output .cache/benchmarks/expansion
+  --seed 2026 --filter-level 2 --time-limit 9m --output .cache/benchmarks/expansion
 ```
 
 

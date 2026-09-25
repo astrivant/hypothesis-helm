@@ -161,11 +161,11 @@ Library charts cannot be tested as standalone applications.
 If a finite plan cannot be constructed, `test` and `scan` still run generated path tests using the requested
 workers, example count, seed, and chart timeout. A warning and the report's `coverage_fallback` record explain
 why the requested interaction coverage was unavailable. This sampling does not guarantee N-way coverage;
-finite-only trimming, expansion, and grouping options are listed when they cannot apply.
+finite-only filtering, expansion, and grouping options are listed when they cannot apply.
 Preparation failures remain failures or incomplete results. A fresh execution cannot pass with zero manifest
 test attempts; verified cache reuse and empty shards remain explicit no-work outcomes.
 
-`--filter` applies topology trimming and failure expansion to supported finite
+`--filter` applies topology filtering and failure expansion to supported finite
 charts. For non-finite charts it restricts generation to known schema, default, and
 template paths where analysis permits. Filtering precedes traversal. Each discovered
 path is scheduled at most once; failed properties retain their reproducing values.
@@ -326,7 +326,7 @@ Set `--pca-samples N` to change the reference size (`0` disables it), and `--pca
 its separate per-chart budget. These measurements do not consume the chart-testing timeout or add
 findings. They use schema-valid Boolean and integer changes around the baseline, not every possible
 output. Failed renders and unavailable measurements are excluded, not plotted as zero. Without
-trimming, both panels match. Finite selectors are replayed on this bounded sample; path scans use
+filtering, both panels match. Finite selectors are replayed on this bounded sample; path scans use
 their saved selection inventory. See the report's **Output-space PCA** appendix for the limits of
 this comparison.
 

@@ -39,9 +39,9 @@ def plot(output: Path, document: dict[str, object]) -> None:
     labels = {
         "default": "Default",
         "exact-equivalence": "Exact equivalence",
-        "random": "Random trim",
-        "topology": "Topology trim",
-        "combined": "Both trims",
+        "random": "Random filter",
+        "topology": "Topology filter",
+        "combined": "Both filters",
         **LABELS,
     }
     figure, axes = plt.subplots(2, 2, figsize=(max(15, 3 * len(strategies)), 10))
@@ -140,12 +140,12 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
         f"Helm `{metadata['helm']}`; "
         f"{metadata['time_limit_seconds']:g}s execution ceiling per run; "
-        f"trim level {metadata['trim_level']}; seed {metadata['seed']}.",
+        f"filter level {metadata['trim_level']}; seed {metadata['seed']}.",
         "",
         "All strategy columns use the same complete valid input domain within each case. Planning and analysis are "
         "timed separately and excluded from the execution ceiling. Fresh caches; sequential runs.",
         "",
-        "Each trim column uses the stated level; combined enables both at that level. "
+        "Each filter column uses the stated level; combined enables both at that level. "
         "Exact-equivalence pruning is enabled only in its own column.",
         "",
         "Cells show **outcome coverage / total seconds / Helm invocations**.",

@@ -3,7 +3,7 @@
 <!-- toc:start -->
 **Table of contents**
 
-- [Topology trimming](#topology-trimming)
+- [Topology filtering](#topology-filtering)
 - [Exact-equivalence pruning](#exact-equivalence-pruning)
 - [Rejection-guided generation](#rejection-guided-generation)
 - [Failure expansion](#failure-expansion)
@@ -18,26 +18,26 @@ input rejection, and an input omitted by sampling.
 
 | Policy | Evidence | Effect |
 | --- | --- | --- |
-| Topology trimming | Predicted output and branch regions. | Retains a sample within each supported region; no success is inferred. |
+| Topology filtering | Predicted output and branch regions. | Retains a sample within each supported region; no success is inferred. |
 | Exact-equivalence pruning | Exact match to a successful output witness. | Reuses manifests and replays candidate assertions. |
 | Rejection filtering | Chart requirement checked against Helm. | Adjusts or excludes inferred inputs; retains schema conflicts. |
 | Failure expansion | An actual test failure in a classified region. | Adds omitted members of that region to the execution queue. |
 
-## Topology trimming
+## Topology filtering
 
 [`topology.py`](../../pkg/hypothesis_helm/compiler/passes/topology.py) specializes
 supported templates for each candidate. Inputs with the same symbolic output and
 executed branch decisions form a **region**. Selection keeps at least one member
 of each region and applies seeded thinning within it.
 
-`--trim-topology N` retains roughly one quarter of each region per step, rounding
-up so a nonempty region remains represented. Combined random trimming adds steps
+`--filter-topology N` retains roughly one quarter of each region per step, rounding
+up so a nonempty region remains represented. Combined random filtering adds steps
 within these same regions. Unsupported candidates stay selected. If the chart
 changes during analysis, the pass retains the original selection.
 
 Unlike exact-equivalence pruning, this pass selects cases before observing their
 test results. It reports `coverage_guarantee: false`. Baseline handling and other
-sampling policies are coordinated by the planner.<sup>[\[1\]](../execution/README.md#optional-trimming)
+sampling policies are coordinated by the planner.<sup>[\[1\]](../execution/README.md#optional-filtering)
 
 ## Exact-equivalence pruning
 
@@ -111,7 +111,7 @@ initially selected work from additional cases.<sup>[\[2\]](../execution/README.m
 ## Where the passes run
 
 [`charts/testing/planning.py`](../../pkg/hypothesis_helm/charts/testing/planning.py) assembles finite
-plans using the schema, dependency interactions, trimming, and sampling policies.
+plans using the schema, dependency interactions, filtering, and sampling policies.
 The planner applies the requested seeded traversal after selection. Per-path
 repository testing uses its own planning route; finite topology regions require a
 supported finite domain.

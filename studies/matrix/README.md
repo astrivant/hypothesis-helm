@@ -8,15 +8,15 @@
 
 [Benchmarking](<../../docs/benchmarking/README.md>)
 
-Helm `v4.3.0+gbec5b06`; 540s execution ceiling per run; trim level 2; seed 2026.
+Helm `v4.3.0+gbec5b06`; 540s execution ceiling per run; filter level 2; seed 2026.
 
 All strategy columns use the same complete valid input domain within each case. Planning and analysis are timed separately and excluded from the execution ceiling. Fresh caches; sequential runs.
 
-Each trim column uses the stated level; combined enables both at that level. Exact-equivalence pruning is enabled only in its own column.
+Each filter column uses the stated level; combined enables both at that level. Exact-equivalence pruning is enabled only in its own column.
 
 Cells show **outcome coverage / total seconds / Helm invocations**.
 
-| Structure | Default | Exact equivalence | Random trim | Topology trim | Both trims | --filter | --filter-adaptive |
+| Structure | Default | Exact equivalence | Random filter | Topology filter | Both filters | --filter | --filter-adaptive |
 |---|---|---|---|---|---|---|---|
 | constraints | 100% / 19.2s / 512 | 100% / 19.2s / 512 | 100% / 1.4s / 33 | 100% / 19.2s / 512 | 100% / 18.9s / 512 | 100% / 19.2s / 512 | 100% / 19.7s / 512 |
 | control-flow | 100% / 39.2s / 1024 | 100% / 40.1s / 1024 | 100% / 2.7s / 65 | 100% / 38.9s / 1024 | 100% / 38.8s / 1024 | 100% / 39.0s / 1024 | 100% / 40.0s / 1024 |

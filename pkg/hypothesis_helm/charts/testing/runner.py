@@ -199,7 +199,7 @@ def check_chart(
         or trim_topology < 0
         or ((trim or trim_topology) and permutations is None)
     ):
-        raise ValueError("trim must be nonnegative and requires finite permutation planning")
+        raise ValueError("filter level must be nonnegative and requires finite permutation planning")
     if input_inventory is None:
         from hypothesis_helm.schemas.opaque import warn_opaque
 

@@ -244,7 +244,7 @@ def trim_values(values: Sequence[dict[str, object]], steps: int, seed: int) -> S
     Args:
         values (Sequence[dict[str, object]]): Distinct non-default planned configurations.
         steps (int): Nonnegative thinning depth; zero preserves the original order.
-        seed (int): Seed shared across trim levels for reproducible nested subsets.
+        seed (int): Seed shared across filter levels for reproducible nested subsets.
 
     Returns:
         Sequence[dict[str, object]]: Retained configurations in their original execution order.
@@ -266,7 +266,7 @@ def trim_indices(size: int, steps: int, seed: int) -> Sequence[int]:
         Sequence[int]: Selected positions in original population order.
     """
     if type(steps) is not int or steps < 0:
-        raise ValueError("trim must be a nonnegative integer")
+        raise ValueError("filter level must be a nonnegative integer")
     if not steps or not size:
         return range(size)
     count = size

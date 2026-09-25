@@ -9,7 +9,7 @@
 
 [Benchmarking](<../../docs/benchmarking/README.md>)
 
-Only topology trim depth varies. Random trimming stays at zero and failure expansion stays enabled.
+Only topology filter level varies. Random filtering stays at zero and failure expansion stays enabled.
 
 Fixed settings: 10 inputs, four normal-quantile outputs, 5% erroneous valid inputs (rounded down), fault seed 1729, selection seed 2026, topology seed 2026. Mixed charts contain 12 components with shared sampled input wiring.
 

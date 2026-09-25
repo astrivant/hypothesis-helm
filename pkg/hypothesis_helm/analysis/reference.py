@@ -66,7 +66,7 @@ def _retained(
     settings: dict[str, object],
 ) -> tuple[set[str] | None, dict[str, object]]:
     """
-    Use saved path ownership or the production finite selectors without inventing a trim decision.
+    Use saved path ownership or the production finite selectors without inventing a filtering decision.
 
     Args:
         chart (Chart): Prepared measurement chart.
@@ -108,11 +108,11 @@ def _retained(
             "scope": "reference changes reachable through retained path properties",
         }
     if not filtering and not trim and not topology and float(str(sampling.get("percent", 100))) == 100:
-        return {configuration_key(values) for values, _ in candidates}, {"label": "No trimming", "scope": "same reference in both panels"}
+        return {configuration_key(values) for values, _ in candidates}, {"label": "No filtering", "scope": "same reference in both panels"}
     if path_mode:
         return None, {"label": "Selection unavailable", "reason": "The scan's path inventory is unavailable."}
     if not all(key in settings for key in ("trim", "trim_topology")):
-        return None, {"label": "Selection unavailable", "reason": "The historical scan did not record all finite trimming options."}
+        return None, {"label": "Selection unavailable", "reason": "The historical scan did not record all finite filtering options."}
     policy = Sampling(
         float(str(sampling.get("percent", 100))),
         int(str(sampling.get("minimum", 128))),
@@ -128,13 +128,13 @@ def _retained(
     selected_values, regions, sampling_report = select_cases(
         chart, [values for values, _ in candidates[1:]], options, profile(chart) if policy.aggressive else None
     )
-    label = "--filter-adaptive" if policy.aggressive else "--filter" if filtering else f"random trim {trim}; topology trim {topology}"
+    label = "--filter-adaptive" if policy.aggressive else "--filter" if filtering else f"random filter {trim}; topology filter {topology}"
     return {baseline, *(configuration_key(values) for values in selected_values)}, {
         "label": label,
         "scope": "production selectors replayed on the bounded reference; not a reconstruction of the full test plan",
         "topology": regions,
         "sampling": sampling_report,
-        "excludes": "runtime rejection, equivalence reuse and failure expansion; these are not selection-stage trimming",
+        "excludes": "runtime rejection, equivalence reuse and failure expansion; these are not selection-stage filtering",
     }
 
 

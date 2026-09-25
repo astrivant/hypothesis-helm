@@ -47,7 +47,7 @@ percentage of complete valid assignments after generating each chart.
 The fixture oracle evaluates every component independently and checks the schema's
 combined constraints. The depth benchmark verifies complete rendered manifests,
 including resource multiplicity and Service/Ingress references. Unsupported
-constructs can conservatively prevent trimming across the entire chart.
+constructs can conservatively prevent filtering across the entire chart.
 
 ## Nesting-depth distributions
 
@@ -73,5 +73,5 @@ retain the original ungated mixture behavior.
 
 The [nesting matrix and shared-frame PCA](../nesting/README.md) hold
 `--permutations 8` fixed while comparing shallow, deep, and mixed-depth charts.
-Permutation strength, component count, chart nesting depth, and trim depth are
+Permutation strength, component count, chart nesting depth, and filter depth are
 separate controls.

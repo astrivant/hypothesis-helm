@@ -138,7 +138,7 @@ Unit and integration tests live under [`pkg/hypothesis_helm/tests`](../pkg/hypot
 | --- | --- |
 | `compiler/` | Template parsing, value origins, helper contracts, destination constraints, and analysis limits. |
 | `generation/` | Typed values, field settings, finite domains, and interaction coverage. |
-| `filtering/` | Sampling, calibration, trimming, and input prioritization. |
+| `filtering/` | Sampling, calibration, filtering, and input prioritization. |
 | `execution/` | Workers, traversal, caching, sharding, time limits, and shutdown. |
 | `charts/` | Chart discovery, repository scans, saved suites, and minimal-values exports. |
 | `findings/` | Finding codes, severity thresholds, suppressions, and fail-fast behavior. |

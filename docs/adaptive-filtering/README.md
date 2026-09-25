@@ -30,7 +30,7 @@ helm hypothesis scan https://github.com/example/charts.git --filter-adaptive
 ```
 
 Use this preset instead of `--filter` or its individual topology/expansion flags. It also excludes explicit
-`--sample-random` and `--sample-min-cases` overrides. You can also use `--trim`, but
+`--sample-random` and `--sample-min-cases` overrides. You can also use `--filter-random`, but
 the benchmark evidence must cover that combination of settings. Otherwise the
 additional percentage sampling is disabled.
 
@@ -47,7 +47,7 @@ used in the benchmark. The profile includes:
 - **Template fan-in:** how many input fields a template reads. This indicates
   where interactions may occur. Measuring interactions requires testing their effects.
 - **Region sizes:** how many configurations the compiler groups together because
-  they have matching predicted output and branch choices, before and after filtering.<sup>[\[3\]](../execution/README.md#optional-trimming)</sup>
+  they have matching predicted output and branch choices, before and after filtering.<sup>[\[3\]](../execution/README.md#optional-filtering)</sup>
 
 The benchmark determines two separate minimums, also called **floors**: how many
 configurations to test, and how many different fields those configurations must
@@ -149,17 +149,17 @@ The complexity search has its own budget and can return an unknown maximum.<sup>
 | Option | Filtering time |
 | --- | --- |
 | No filtering | No additional filtering pass; execute all `N` planned cases |
-| `--trim-random` | `O(N + K log K)` to shuffle indices and restore retained cases to execution order |
-| `--trim-topology` | `O(I + NC + Σ(Kᵢ log Kᵢ))` to classify candidates and sample within regions |
-| Both trims | Same form as topology trimming; add levels within each region and retain unclassified cases |
+| `--filter-random` | `O(N + K log K)` to shuffle indices and restore retained cases to execution order |
+| `--filter-topology` | `O(I + NC + Σ(Kᵢ log Kᵢ))` to classify candidates and sample within regions |
+| Both filters | Same form as topology filtering; add levels within each region and retain unclassified cases |
 | `--sample-random` | `O(N log N + NV)` for seeded ranking and case identities |
 | `--filter` | `O(NT + N log N + NV)` for symbolic regions, identities and selection |
 | `--filter-adaptive` | `O(A + PD + NT + N log N + NV)` including calibration lookup and changed-field floors |
 
 Exact and nearby lookup both scan the calibration: `O(PD)`. The packaged calibration has 30 profiles. Nearby lookup does not
 enumerate chart values again. The field-floor check can inspect every remaining case, including cases it ultimately omits.
-All modes retain the full plan. Cases and their identities use `O(NV)` storage; random trimming also uses `O(N)` indices.
-Topology membership, predicted outputs, calibration and compiler tables add their own storage. The trimming bounds assume
+All modes retain the full plan. Cases and their identities use `O(NV)` storage; random filtering also uses `O(N)` indices.
+Topology membership, predicted outputs, calibration and compiler tables add their own storage. The filtering bounds assume
 bounded-size values; larger values add copying and serialization work, including the work represented by `C`.
 
 `A` can be exponential in the number of independently varying fields. With `F` Boolean fields, the input space has `2^F`
@@ -173,7 +173,7 @@ when the exponential search exceeds its budget.
 Total runtime adds candidate generation and roughly `K × H` for execution, where `H` is the average Helm/property-test cost.
 A completed unfiltered plan has `K = N`. These expressions omit the single defaults check. Planning may dominate: full enumeration grows
 with the product of field-domain sizes, while strength-t planning must cover every valid assignment to each set of t fields.
-Trimming happens after planning and does not reduce that cost. Failure expansion can increase `K` toward the original plan. Thus filtering reduces typical execution volume without improving
+Filtering happens after planning and does not reduce that cost. Failure expansion can increase `K` toward the original plan. Thus filtering reduces typical execution volume without improving
 its worst-case asymptotic bound. The measured matrix records case counts; the load test measures runtime.
 
 ### Conditions behind the comparison
@@ -187,7 +187,7 @@ For unique non-default inputs, the number retained before execution is more prec
 | Method | Retained non-default cases | Conditions |
 | --- | --- | --- |
 | Random 70% | `min(N, max(128, ceil(0.7N)))` | Default case floor; no additional protected cases or preceding filters |
-| `--filter` | `sum(ceil(n_j / 16))` | Topology depth two, supported groups of sizes `n_j`, no extra trim or failure expansion yet |
+| `--filter` | `sum(ceil(n_j / 16))` | Topology depth two, supported groups of sizes `n_j`, no extra filtering or failure expansion yet |
 | Adaptive | At least `min(M, max(ceil(0.7M), case_floor, protected_count))` | A matching calibration; `M` is the ordinary filtered count |
 
 Adaptive selection can add further cases to meet its field floor. An unmatched chart retains `M`. Unknown topology cases are

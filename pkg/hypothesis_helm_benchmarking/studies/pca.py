@@ -1,5 +1,5 @@
 """
-Compare output-space PCA before and after trimming with seeded five-percent input faults.
+Compare output-space PCA before and after filtering with seeded five-percent input faults.
 """
 
 import argparse
@@ -41,12 +41,12 @@ def selections(
     chart: Chart, values: list[dict[str, object]], level: int, seed: int, *, strength: int = 2
 ) -> tuple[dict[str, list[int]], dict[str, object]]:
     """
-    Apply production trimming to the faulty chart, retaining the default once.
+    Apply production filtering to the faulty chart, retaining the default once.
 
     Args:
         chart (Chart): Fixture with faults already present in its templates.
         values (list[dict[str, object]]): Complete valid domain with defaults first.
-        level (int): Quarter-retention depth for each enabled trim.
+        level (int): Quarter-retention depth for each enabled filter.
         seed (int): Common selector seed independent of error placement.
         strength (int): Interaction strength of the supplied plan for calibration matching.
 
@@ -138,8 +138,8 @@ def run_case(
         complexity (int): Number of declared input fields.
         percent (float): Uniformly placed error percentage over valid assignments.
         error_seed (int): Independent fault seed.
-        seed (int): Trimming seed.
-        level (int): Depth for each enabled trim strategy.
+        seed (int): Filtering seed.
+        level (int): Depth for each enabled filter strategy.
         helm (str): Pinned Helm executable.
         seconds (float): Execution ceiling for the complete reference render.
         topology_components (int): Sampled component count, replacing the isolated structure.
@@ -263,7 +263,14 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--error-percent", type=float, default=5.0)
     parser.add_argument("--error-seed", type=int, default=1729)
     parser.add_argument("--seed", type=int, default=2026)
-    parser.add_argument("--trim-level", type=int, default=2)
+    parser.add_argument(
+        "--filter-level",
+        dest="trim_level",
+        type=int,
+        default=2,
+        metavar="N",
+        help="quarter-retention steps for random and topology filters (default: 2)",
+    )
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
@@ -274,7 +281,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
     if not (6 <= args.input_complexity <= 12 and 0 <= args.error_percent <= 100 and args.trim_level >= 0 and 0 < args.time_limit <= 540):
-        parser.error("require 6..12 inputs, 0..100% errors, nonnegative trim level, and time limit <=9m")
+        parser.error("require 6..12 inputs, 0..100% errors, nonnegative filter level, and time limit <=9m")
     helm = shutil.which(args.helm)
     if helm is None:
         parser.error("Helm is required")

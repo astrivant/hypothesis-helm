@@ -333,10 +333,10 @@ def test_expansion_scheduler_and_benchmark(expansion_chart: Chart, monkeypatch: 
 @pytest.mark.parametrize(
     "options",
     [
-        ["--expand-failures", "--trim-topology", "2"],
+        ["--expand-failures", "--filter-topology", "2"],
         ["--filter"],
-        ["--filter", "--trim", "1"],
-        ["--trim-random", "1", "--filter"],
+        ["--filter", "--filter-random", "1"],
+        ["--filter-random", "1", "--filter"],
     ],
 )
 def test_expansion_cli_dry_run(expansion_chart: Chart, capsys: pytest.CaptureFixture[str], options: list[str]) -> None:
@@ -442,7 +442,7 @@ def test_filter_cli_expands_observed_failures(
 
 @pytest.mark.parametrize(
     "individual",
-    [["--trim-topology", "0"], ["--expand-failures"]],
+    [["--filter-topology", "0"], ["--expand-failures"]],
 )
 @pytest.mark.parametrize("preset_first", [False, True])
 def test_filter_exclusivity(individual: list[str], preset_first: bool) -> None:
@@ -463,7 +463,7 @@ def test_filter_exclusivity(individual: list[str], preset_first: bool) -> None:
     with pytest.raises(SystemExit) as error:
         parser.parse_args(["test", *options])
     assert error.value.code == 2
-    parsed = parser.parse_args(["test", "--trim-random", "1", "--trim-topology", "2", "--expand-failures"])
+    parsed = parser.parse_args(["test", "--filter-random", "1", "--filter-topology", "2", "--expand-failures"])
     assert (parsed.trim, parsed.trim_topology, parsed.expand_failures) == (1, 2, True)
 
 

@@ -361,7 +361,7 @@ def test_pruning_dry_run_does_not_render_or_create_artifacts(
 )
 def test_supported_control_ir_matches_helm(proof_chart: Chart, body: str) -> None:
     """
-    Differentially exercise trimming, nested partitions and quoted-delimiter comments.
+    Differentially exercise whitespace trimming, nested partitions and quoted-delimiter comments.
 
     Args:
         proof_chart (Chart): Finite chart source.

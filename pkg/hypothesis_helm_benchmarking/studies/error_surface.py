@@ -200,7 +200,14 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--error-seed", type=int, default=1729)
     parser.add_argument("--permutations", type=int, default=2)
-    parser.add_argument("--trim-level", type=int, default=2)
+    parser.add_argument(
+        "--filter-level",
+        dest="trim_level",
+        type=int,
+        default=2,
+        metavar="N",
+        help="quarter-retention steps for random and topology filters (default: 2)",
+    )
     parser.add_argument("--time-limit", type=parse_time_limit, default=540)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
@@ -222,7 +229,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         parser.error("require 2..10 fields and a positive interaction strength no larger than the field count")
     redundant = args.redundant_inputs if args.redundant_inputs is not None else list(range(args.input_complexity))
     if args.repeats < 1 or args.trim_level < 0 or not 0 < args.time_limit <= 540:
-        parser.error("require positive repeats, nonnegative trim level, and an execution ceiling in (0, 9m]")
+        parser.error("require positive repeats, nonnegative filter level, and an execution ceiling in (0, 9m]")
     if not all(math.isfinite(rate) and 0 <= rate <= 100 for rate in args.error_rates):
         parser.error("error rates must be finite percentages in 0..100")
     axes = {

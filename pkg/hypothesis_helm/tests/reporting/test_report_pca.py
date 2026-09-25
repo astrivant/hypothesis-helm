@@ -54,11 +54,11 @@ def test_projection_preserves_types_and_uses_one_reference_frame() -> None:
 @pytest.mark.parametrize("path_mode", [False, True])
 def test_reference_uses_real_selectors_and_preserves_baseline(tmp_path: Path, path_mode: bool) -> None:
     """
-    Measure one bounded population and apply finite trimming or recorded path ownership.
+    Measure one bounded population and apply finite filtering or recorded path ownership.
 
     Args:
         tmp_path (Path): Chart identity and saved path inventory.
-        path_mode (bool): Exercise recorded path selection instead of finite random trimming.
+        path_mode (bool): Exercise recorded path selection instead of finite random filtering.
 
     Returns:
         None: Retained outputs form an exact subset of the measured reference, including defaults.

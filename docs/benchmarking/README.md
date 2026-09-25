@@ -19,7 +19,7 @@
 - [Strategy matrix](#strategy-matrix)
 - [Output-space PCA](#output-space-pca)
 - [Failure expansion](#failure-expansion)
-- [Topology distributions and trim depth](#topology-distributions-and-trim-depth)
+- [Topology distributions and filter level](#topology-distributions-and-filter-level)
 - [Chart nesting at permutation strength eight](#chart-nesting-at-permutation-strength-eight)
 - [Sweep chart breadth and depth](#sweep-chart-breadth-and-depth)
 <!-- toc:end -->
@@ -459,7 +459,7 @@ for the added behavior and checks the rendered manifests against them.
 Fault injection (`--bug-percent`, `--bug-orders`, `--bug-seed`) remains available.
 
 The [topology preset](../../pkg/hypothesis_helm_benchmarking/assets/fixture/topology.yaml) has 1,024 possible inputs for
-complete comparisons. See [sampling controls and complexity](../execution/README.md#optional-trimming).
+complete comparisons. See [sampling controls and complexity](../execution/README.md#optional-filtering).
 
 ```sh
 hypothesis-helm-benchmark --parameters pkg/hypothesis_helm_benchmarking/assets/fixture/topology.yaml sparsity \
@@ -483,7 +483,7 @@ Both presets enable failure expansion; paired expansion-off columns isolate its 
 
 ```sh
 hypothesis-helm-benchmark matrix \
-  --input-complexity 10 --trim-level 2 --seed 2026 --time-limit 9m \
+  --input-complexity 10 --filter-level 2 --seed 2026 --time-limit 9m \
   --output .cache/benchmarks/strategy-matrix
 ```
 
@@ -494,14 +494,14 @@ than assuming every parameter is Boolean.
 
 ## Output-space PCA
 
-[Before and after trimming, with 5% seeded errors](<../../studies/pca/README.md>).
-Compare random trimming, topology trimming, and both across the six structural
+[Before and after filtering, with 5% seeded errors](<../../studies/pca/README.md>).
+Compare random filtering, topology filtering, and both across the six structural
 cases. Each category keeps fixed PCA axes and reports exact error recall and
 output coverage alongside the projection.
 
 ```sh
 hypothesis-helm-benchmark pca \
-  --input-complexity 10 --error-percent 5 --trim-level 2 \
+  --input-complexity 10 --error-percent 5 --filter-level 2 \
   --time-limit 9m --output .cache/benchmarks/pca
 ```
 
@@ -513,15 +513,15 @@ exercised, and records the additional physical renders.
 
 ```sh
 hypothesis-helm-benchmark expansion \
-  --input-complexity 10 --error-percent 5 --trim-level 2 \
+  --input-complexity 10 --error-percent 5 --filter-level 2 \
   --time-limit 9m --output .cache/benchmarks/expansion
 ```
 
-## Topology distributions and trim depth
+## Topology distributions and filter level
 
 [Generate mixed chart structures](<../../studies/structure-mixtures/README.md>) with seeded category
-weights and shared input wiring. [Compare trim depths 0–5](<../../studies/structure-depth/README.md>)
-with random trimming disabled and failure expansion enabled.
+weights and shared input wiring. [Compare filter levels 0–5](<../../studies/structure-depth/README.md>)
+with random filtering disabled and failure expansion enabled.
 
 ## Chart nesting at permutation strength eight
 

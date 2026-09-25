@@ -19,13 +19,13 @@ of the same ordering. Structural bodies may already contain branches:
 the reported depth counts the **added outer gates**.
 Input constraints remain global even when a component's resources are gated off.
 
-Trimming stays at level 2; the matrix compares random trimming, topology trimming,
+Filtering stays at level 2; the matrix compares random filtering, topology filtering,
 both together, the filter presets, and each with failure expansion off/on. Errors occupy 5% of valid
 assignments (rounded down), fault seed 1729; topology and selection seed 2026.
 Automatic exhaustive promotion and inferred groups are disabled so strength eight
 is actually exercised. Complete populations are rendered separately for ground truth.
 Expansion only revisits omitted members of that strength-eight plan.
-Strength eight describes the unfiltered plan; trimming can remove that coverage.
+Strength eight describes the unfiltered plan; filtering can remove that coverage.
 
 ![Policy matrix](matrix.png)
 

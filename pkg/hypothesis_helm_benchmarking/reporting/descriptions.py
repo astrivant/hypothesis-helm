@@ -109,12 +109,12 @@ INTRODUCTIONS = {
     ),
     "failure-expansion": (
         "Testing more inputs after a failure",
-        "Does expanding around a discovered failure recover errors missed by trimming? Compare added checks and "
+        "Does expanding around a discovered failure recover errors missed by filtering? Compare added checks and "
         "detected errors from matched starting samples.",
     ),
     "structure-depth": (
-        "Sensitivity to topology trim depth",
-        "How far can topology trimming reduce checks before errors are missed? Vary trim depth while holding the chart "
+        "Sensitivity to topology filter level",
+        "How far can topology filtering reduce checks before errors are missed? Vary filter level while holding the chart "
         "and other settings fixed.",
     ),
     "output-pca": (

@@ -167,7 +167,14 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--error-percent", type=float, default=5)
     parser.add_argument("--error-seed", type=int, default=1729)
     parser.add_argument("--seed", type=int, default=2026)
-    parser.add_argument("--trim-level", type=int, default=2)
+    parser.add_argument(
+        "--filter-level",
+        dest="trim_level",
+        type=int,
+        default=2,
+        metavar="N",
+        help="quarter-retention steps for random and topology filters (default: 2)",
+    )
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0)
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--plot-only", action="store_true")
@@ -178,7 +185,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
     if not (6 <= args.input_complexity <= 12 and 0 <= args.error_percent <= 100 and args.trim_level >= 0 and 0 < args.time_limit <= 540):
-        parser.error("require 6..12 inputs, 0..100% errors, nonnegative trim and a ceiling <=9m")
+        parser.error("require 6..12 inputs, 0..100% errors, nonnegative filter level and a ceiling <=9m")
     helm = shutil.which(args.helm)
     if not helm:
         parser.error("Helm is required")

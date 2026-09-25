@@ -149,7 +149,14 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--parameters", type=Path, help="starting chart parameter file with stress controls")
     parser.add_argument("--steps", type=int, help="measure only this many steps from the fixed progression")
     parser.add_argument("--seed", type=int, default=2026)
-    parser.add_argument("--trim-level", type=int, default=2)
+    parser.add_argument(
+        "--filter-level",
+        dest="trim_level",
+        type=int,
+        default=2,
+        metavar="N",
+        help="quarter-retention steps for random and topology filters (default: 2)",
+    )
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0, help="execution ceiling per strategy and step (default: 9m)")
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--generate-only", action="store_true", help="save the complete parameter progression without measuring")
@@ -159,7 +166,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
     if not 0 < args.time_limit <= 540 or args.trim_level < 0 or (args.steps is not None and args.steps < 1):
-        parser.error("require a ceiling in (0, 9m], nonnegative trim, and a positive step count")
+        parser.error("require a ceiling in (0, 9m], nonnegative filter level, and a positive step count")
     parameters = Parameters(input_complexity=12, output_bins=4, stress=Stress())
     if args.parameters:
         source = mapping(yamlio.load(args.parameters.read_text()))

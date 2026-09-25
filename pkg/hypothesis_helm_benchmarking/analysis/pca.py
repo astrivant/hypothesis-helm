@@ -186,5 +186,5 @@ def project(
         "explained_variance_ratio": variance.tolist(),
         "weighting": "one row per valid input, including repeated outputs",
         "encoding": ("resource presence, numeric leaves, typed one-hot categories; numeric strings remain categorical"),
-        "fit": "complete faulty chart population once per category; no refit after trimming",
+        "fit": "complete faulty chart population once per category; no refit after filtering",
     }

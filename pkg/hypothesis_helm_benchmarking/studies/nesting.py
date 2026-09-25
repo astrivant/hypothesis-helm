@@ -36,7 +36,7 @@ def select_plan(chart: Chart, reference: dict[str, object], strength: int, level
         chart (Chart): Fixed faulty fixture.
         reference (dict[str, object]): Complete independently verified population.
         strength (int): Requested interaction strength without exhaustive promotion.
-        level (int): Fixed random and topology trim level.
+        level (int): Fixed random and topology filter level.
         seed (int): Fixed selection seed.
 
     Returns:

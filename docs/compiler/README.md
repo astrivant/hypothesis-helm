@@ -68,7 +68,7 @@ eligible for execution; it cannot establish a successful result.<sup>[\[1\]](sel
 | [Decisions, panel by panel](decisions.md) | Matched diagrams showing why branches are visited, inputs retained, or work skipped. |
 | [Analysis passes](analysis.md) | Input inventory, dependencies, rejection conditions, maximum output complexity, and sampling profiles. |
 | [Branch knowledge lattice](lattice.md) | Possible values, branch narrowing, merging and conservative handling of unknown operations. |
-| [Selection and execution passes](selection.md) | Trimming, equality proofs, rejection filtering, and failure expansion. |
+| [Selection and execution passes](selection.md) | Filtering, equality proofs, rejection filtering, and failure expansion. |
 | [Export passes](exports.md) | Input inventories, topology graphs, minimal values, and their verification records. |
 | [Exact-equivalence contract](../safe-pruning.md) | Supported Helm operations, equality bounds, assumptions, and proof evidence. |
 

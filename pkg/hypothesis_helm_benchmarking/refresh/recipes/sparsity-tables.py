@@ -77,10 +77,10 @@ for study in ["sparsity", "structure-sparsity"]:
             "[Raw JSON](results.json) · [CSV measurements](results.csv)",
             "",
             "One seeded trajectory is shown. Errors need not increase monotonically; categorical outcomes have no CDF "
-            "ordering. High distribution coverage does not establish a generally safe trimming level for bug discovery. "
+            "ordering. High distribution coverage does not establish a generally safe filtering level for bug discovery. "
             "Rare faults can be lost.",
             "",
-            "See [trimming controls](../../docs/execution/README.md#optional-trimming) "
+            "See [filtering controls](../../docs/execution/README.md#optional-filtering) "
             "and [refresh commands](../../docs/benchmarking/README.md#reproduce-the-full-project-run).",
             "",
         ]

@@ -12,7 +12,7 @@
 - [One final report](#one-final-report)
 - [Progressive dry runs](#progressive-dry-runs)
   - [Shutdown and partial results](#shutdown-and-partial-results)
-- [Optional trimming](#optional-trimming)
+- [Optional filtering](#optional-filtering)
   - [Expanding observed failures](#expanding-observed-failures)
 - [Percentage sampling](#percentage-sampling)
   - [Adaptive preset](#adaptive-preset)
@@ -61,7 +61,7 @@ the remaining paths. Root-first and leaf-first traversal finish all paths at one
 before starting the next depth within each shard. Independent CI shards do not
 wait for one another. Paths at the same depth keep their original order.
 
-Finite permutation runs order distinct configurations after trimming, with defaults
+Finite permutation runs order distinct configurations after filtering, with defaults
 checked first. Fields necessarily recur across joint configurations. In these modes,
 root-first uses the shallowest changed field and leaf-first the deepest, relative to defaults.
 A render can be skipped as equivalent only after another input has passed validation
@@ -438,28 +438,30 @@ termination and forced killing so Python workers can finish cleanup and reportin
 SIGKILL, machine loss and CI runners that forcibly destroy the job cannot run Python
 cleanup handlers; these cases require the runner's process or container teardown.
 
-## Optional trimming
+## Optional filtering
 
-Both controls default to zero and can be combined:
+Filtering selects which planned cases to execute. The individual controls below
+default to zero and can be combined; `--filter` is a preset described under
+[expanding observed failures](#expanding-observed-failures).
 
 ```sh
-helm hypothesis test CHART --permutations 2 --trim-random 1 --trim-topology 1 --seed 2026
+helm hypothesis test CHART --permutations 2 --filter-random 1 --filter-topology 1 --seed 2026
 ```
 
-- `--trim-random N`: randomly keep one quarter of the cases for each increase in N.
-  `--trim` remains an alias. Levels 1–3 retain about 25%, 6.25%, and 1.56%.
-- `--trim-topology N`: group inputs whose predicted template output and branch
+- `--filter-random N`: randomly keep one quarter of the cases for each increase in N.
+  Levels 1–3 retain about 25%, 6.25%, and 1.56%.
+- `--filter-topology N`: group inputs whose predicted template output and branch
   choices match, then keep one quarter of each group for each increase in N.
   Keep at least one input per group and every input the compiler cannot classify.
 - Together: add the two levels and sample within each topology group. Still keep
   at least one input per group and all unclassified inputs. This can keep more
-  cases than random trimming alone at the same total level.
+  cases than random filtering alone at the same total level.
 
-The chart's default values are always checked before the trimmed cases.
+The chart's default values are always checked before the retained cases.
 Each quarter-size selection is rounded up to a whole number of cases: 17 non-default cases
 become 5 at level 1, then 2 at level 2. With the same planned cases, seed, and
-other options, increasing the trim level only removes cases. For example, every
-case kept by `--trim-random 2` is also kept by `--trim-random 1`.
+other options, increasing the filter level only removes cases. For example, every
+case kept by `--filter-random 2` is also kept by `--filter-random 1`.
 
 Topology groups come from template analysis before testing. Execution determines
 whether their inputs pass the selected checks. If the compiler cannot analyze an expression or
@@ -468,22 +470,22 @@ inputs affect each template, branch choices, group sizes, and omitted cases.
 Sampling within groups preserves examples of different outputs, but it can change
 how often each output appears compared with the full input space.
 
-The planner builds the test cases and removes duplicates before trimming. Trimming
+The planner builds the test cases and removes duplicates before filtering. Filtering
 reduces the number of cases executed; it does not reduce the work needed to plan
-them. A passing trimmed run means all executed checks passed. It does not establish
+them. A passing filtered run means all executed checks passed. It does not establish
 the original plan's interaction coverage or exhaustive group coverage.
-Exact-equivalence pruning remains a separate control. Trimming applies to finite
+Exact-equivalence pruning remains a separate control. These two filters apply to finite
 permutation plans, including automatic enumeration. It does not apply to per-path
 suites, random whole-chart sampling, or explicit exhaustive mode.
 
 See [computational cost](../adaptive-filtering/README.md#computational-cost) for the shared comparison
-of unfiltered execution, trimming, percentage sampling and both filter presets.
+of unfiltered execution, individual filters, percentage sampling and both filter presets.
 
 ### Expanding observed failures
 
-Use `--filter` as shorthand for `--trim-topology 2 --expand-failures`.
+Use `--filter` as shorthand for `--filter-topology 2 --expand-failures`.
 It cannot be combined with either of those individual options; they can still be
-used together. Random trimming is independent: add `--trim-random N` (or `--trim N`)
+used together. Random filtering is independent: add `--filter-random N`
 alongside `--filter` if wanted. Its default remains zero.
 
 ```sh
@@ -536,7 +538,7 @@ sharding. Chart plans and scans still test defaults before the selected cases.
 With topology filtering, unknown cases and one
 representative per region remain protected, so more than the requested percentage
 may run. Failure expansion may subsequently add cases. Combining this option with
-`--trim-random` applies both reductions; the minimum applies to the population left
+`--filter-random` applies both reductions; the minimum applies to the population left
 by preceding filters and does not restore cases they already removed.
 
 A fixed seed chooses the same identities independently of traversal order. Increasing

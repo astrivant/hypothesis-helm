@@ -45,7 +45,7 @@ class FailureExpansion:
         fixed_names: bool = True,
     ) -> FailureExpansion:
         """
-        Classify the existing finite plan with the same partitioner used by topology trimming.
+        Classify the existing finite plan with the same partitioner used by topology filtering.
 
         Args:
             chart (Path): Chart templates supplying the static regions.

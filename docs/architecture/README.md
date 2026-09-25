@@ -211,7 +211,7 @@ exports. It includes a pass reference and
 
 When fields have finite value choices, the planner can select complete input
 configurations for the requested interaction coverage or enumerate a small space.
-Optional trimming reduces the planned cases. Exact-equivalence pruning skips a
+Optional filtering reduces the planned cases. Exact-equivalence pruning skips a
 render only when the compiler establishes that its output matches an input that
 has already passed validation.
 

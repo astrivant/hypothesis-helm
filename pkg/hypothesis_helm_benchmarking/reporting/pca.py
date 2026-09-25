@@ -30,10 +30,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 LABELS = {
-    "before": "Before trimming",
-    "random": "Random trim",
-    "topology": "Topology trim",
-    "combined": "Both trims",
+    "before": "Before filtering",
+    "random": "Random filter",
+    "topology": "Topology filter",
+    "combined": "Both filters",
     **PRESET_LABELS,
 }
 
@@ -138,7 +138,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     weight="bold",
                 )
         individual.suptitle(
-            f"{row['structure']} · {row['actual_error_percent']:.2f}% erroneous inputs · trim level {metadata['trim_level']}"
+            f"{row['structure']} · {row['actual_error_percent']:.2f}% erroneous inputs · filter level {metadata['trim_level']}"
         )
         individual.tight_layout(rect=(0, 0.08, 1, describe(individual, "output-pca")))
         individual.text(
@@ -156,7 +156,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         individual.savefig(output / f"{row['structure']}.png", dpi=160, facecolor="white")
         plt.close(individual)
     figure.suptitle(
-        (f"Output space before and after trimming · {metadata['error_percent']:g}% seeded errors · trim level {metadata['trim_level']}"),
+        (f"Output space before and after filtering · {metadata['error_percent']:g}% seeded errors · filter level {metadata['trim_level']}"),
         fontsize=17,
     )
     figure.legend(
@@ -197,7 +197,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         f"{metadata['error_percent']:g}% of valid input assignments "
         f"per category, rounded down; "
         f"error seed {metadata['error_seed']}, selection seed "
-        f"{metadata['seed']}, trim level {metadata['trim_level']}.",
+        f"{metadata['seed']}, filter level {metadata['trim_level']}.",
         "",
         "Faults emit an incorrect status in an added ConfigMap. "
         "They are present before topology analysis. "
@@ -205,7 +205,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "of distinct software defects or arbitrary corruptions "
         "of Kubernetes fields.",
         "",
-        "![PCA before and after trimming](output-pca.png)",
+        "![PCA before and after filtering](output-pca.png)",
         "",
         "**Errors found / all erroneous inputs (percentage missed)**. "
         "Several erroneous inputs can produce the same output. "
@@ -231,7 +231,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "leaves become standardized features; "
         "numeric strings remain categorical. Constant features "
         "are removed. Both axes and marker-size scale stay fixed "
-        "after trimming. "
+        "after filtering. "
         "Axes are not comparable across categories.",
         "",
         "Marker area tracks retained input mass (with a visibility "
@@ -258,7 +258,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "```sh",
         "hypothesis-helm-benchmark pca \\",
         "  --input-complexity 10 --error-percent 5 --error-seed 1729 \\",
-        "  --seed 2026 --trim-level 2 --time-limit 9m --output .cache/benchmarks/pca",
+        "  --seed 2026 --filter-level 2 --time-limit 9m --output .cache/benchmarks/pca",
         "```",
         "",
         "Use `--plot-only --output .cache/benchmarks/pca` to redraw recorded observations.",

@@ -2,6 +2,7 @@
 Check structural truth, strategy comparisons and censored matrix measurements.
 """
 
+import importlib
 import subprocess
 from contextlib import nullcontext
 from pathlib import Path
@@ -13,6 +14,32 @@ from hypothesis_helm_benchmarking.studies.matrix import STRATEGIES, measure, ref
 
 from hypothesis_helm.charts.testing.runner import Chart
 from hypothesis_helm.exceptions.rendering import RenderFailure
+
+
+@pytest.mark.parametrize("study", ["matrix", "pca", "expansion", "stress", "error_surface"])
+def test_filter_level_cli(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], study: str) -> None:
+    """
+    Accept the filter-level flag in each study and reject its retired spelling.
+
+    Args:
+        tmp_path (Path): Saved measurement placeholder for a plotting-only invocation.
+        monkeypatch (pytest.MonkeyPatch): Replace plotting to avoid irrelevant figure work.
+        capsys (pytest.CaptureFixture[str]): Parser diagnostics.
+        study (str): Benchmark command with a shared filter level.
+
+    Returns:
+        None: Current commands can redraw saved data; old flags fail before executing work.
+    """
+    module = importlib.import_module(f"hypothesis_helm_benchmarking.studies.{study}")
+    plot_module = module if study == "stress" else importlib.import_module(f"hypothesis_helm_benchmarking.reporting.{study}")
+    monkeypatch.setattr(plot_module, "plot", lambda *args: None)
+    (tmp_path / "results.json").write_text("{}")
+    arguments = ["--plot-only", "--output", str(tmp_path)]
+    assert module.main([*arguments, "--filter-level", "1"]) == 0
+    with pytest.raises(SystemExit) as failure:
+        module.main([*arguments, "--trim-level", "1"])
+    assert failure.value.code == 2
+    assert "unrecognized arguments: --trim-level" in capsys.readouterr().err
 
 
 @pytest.mark.parametrize("structure", STRUCTURES)

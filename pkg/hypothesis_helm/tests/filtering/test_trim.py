@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from hypothesis_helm.charts.testing.runner import check_chart
-from hypothesis_helm.cli import main
+from hypothesis_helm.cli import argument_parser, main
 from hypothesis_helm.schemas.contracts import mapping, sequence
 from hypothesis_helm.schemas.generation.combinations import trim_values
 
@@ -71,7 +71,7 @@ def test_trim_reports(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     assert rendered[0] == {}
     assert result["status"] == "passed"
     assert result["coverage_complete"] is False
-    assert result["coverage_strategy"] == "trimmed"
+    assert result["coverage_strategy"] == "filtered"
     assert result["coverage_guaranteed_by_plan"] is False
     assert result["untrimmed_iterations"] == baseline["planned_iterations"]
     assert result["trimmed_iterations"] == -int(str(result["iteration_delta"]))
@@ -83,7 +83,7 @@ def test_trim_reports(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     assert progressive["trim"] == 1
 
 
-@pytest.mark.parametrize("arguments", [["--trim", "-1"], ["--trim", "1", "--paths"]])
+@pytest.mark.parametrize("arguments", [["--filter-random", "-1"], ["--filter-random", "1", "--paths"]])
 def test_invalid_trim_cli(arguments: list[str]) -> None:
     """
     Reject invalid depths and incompatible testing modes before execution.
@@ -95,6 +95,27 @@ def test_invalid_trim_cli(arguments: list[str]) -> None:
         None: The CLI fails rather than silently ignoring requested thinning.
     """
     assert main(["test", "examples/workload", *arguments]) == 2
+
+
+@pytest.mark.parametrize("flag", ["--trim", "--trim-random", "--trim-topology"])
+def test_removed_filter_spellings(flag: str, capsys: pytest.CaptureFixture[str]) -> None:
+    """
+    Reject the retired flags instead of silently retaining compatibility aliases.
+
+    Args:
+        flag (str): Removed filtering option.
+        capsys (pytest.CaptureFixture[str]): Captured parser diagnostics.
+
+    Returns:
+        None: Testing accepts the new names and identifies obsolete options as errors.
+    """
+    parser = argument_parser()
+    args = parser.parse_args(["test", "--filter-random", "1", "--filter-topology", "2"])
+    assert (args.trim, args.trim_topology) == (1, 2)
+    with pytest.raises(SystemExit) as failure:
+        parser.parse_args(["test", flag, "1"])
+    assert failure.value.code == 2
+    assert f"unrecognized arguments: {flag}" in capsys.readouterr().err
 
 
 def test_topology_sampling(tmp_path: Path) -> None:
@@ -110,7 +131,6 @@ def test_topology_sampling(tmp_path: Path) -> None:
     from hypothesis_helm_benchmarking.charts.generator import generate
 
     from hypothesis_helm.charts.testing.runner import Chart
-    from hypothesis_helm.cli import argument_parser
     from hypothesis_helm.compiler.passes.topology import trim_topology
     from hypothesis_helm.schemas.generation.finite import enumerate_values
 
@@ -125,9 +145,9 @@ def test_topology_sampling(tmp_path: Path) -> None:
     assert report["unknown_cases_retained"] == 0
     assert all(int(str(mapping(region)["retained"])) >= 1 for region in sequence(report["regions"]))
     assert report["coverage_guarantee"] is False
-    args = argument_parser().parse_args(["test", "--trim-random", "1", "--trim-topology", "2"])
+    args = argument_parser().parse_args(["test", "--filter-random", "1", "--filter-topology", "2"])
     assert args.trim == 1 and args.trim_topology == 2
-    assert argument_parser().parse_args(["test", "--trim", "1"]).trim == 1
+    assert argument_parser().parse_args(["test", "--filter-random", "1"]).trim == 1
     generate(tmp_path, input_complexity=10, output_bins=4, topology_opaque=True, force=True)
     kept, unknown = trim_topology(tmp_path, chart.defaults, values, values, 3, 2026, random_steps=3)
     assert kept == values

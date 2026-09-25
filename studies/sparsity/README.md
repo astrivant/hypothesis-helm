@@ -26,9 +26,9 @@ Raw results (local run data) retain counts and run details.
 
 ![Received distributions as case counts decrease](sparsity-distributions.png)
 
-The application exposes this tradeoff through `--trim-random N` (default `0`): each step
-retains 25% of non-default planned cases, rounded upward. See [trimming](<../../docs/execution/README.md#optional-trimming>).
-This fixture's distribution coverage does not establish a generally safe trim
+The application exposes this tradeoff through `--filter-random N` (default `0`): each step
+retains 25% of non-default planned cases, rounded upward. See [filtering](<../../docs/execution/README.md#optional-filtering>).
+This fixture's distribution coverage does not establish a generally safe filter
 level for bug discovery; rare faults can be lost when cases are omitted.
 
 ## Fresh measurements

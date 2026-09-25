@@ -45,7 +45,7 @@ Maximum output complexity alone cannot bound the probability of a rare defect.
 | Conflicting presets are rejected in either order | `test_presets_are_exclusive` | Local test and remote scan parsers |
 | Nearby comparisons exclude exact targets; weak evidence or missed rare bugs disables activation | `test_matrix_excludes_target_and_requires_useful_measured_reduction` | Controlled reference population and generated matrix |
 | Matrix artifacts retain a complete reference and plots can be regenerated | `test_calibration_command_writes_reproducible_matrix_and_plots` | Native Helm study, PNG/SVG, JSON/CSV and plot-only execution |
-| Topology retention equals the sum of rounded group quotas | `test_supported_region_retention_formula` | Generated group sizes, trim depths and seeds |
+| Topology retention equals the sum of rounded group quotas | `test_supported_region_retention_formula` | Generated group sizes, filter depths and seeds |
 | Runtime comparisons use paired seeds, real execution and consistent phase accounting | `test_native_filtering_load_matrix` | Native four-method study and plot-only reproduction |
 | Benchmark presets match the real engine's calibrated selection | `test_benchmark_preset_matches_native_calibrated_selection` | Packaged calibration, nonzero omissions and real Helm execution |
 | Unmatched structural cases retain ordinary filtering | `test_matrix_strategy_contracts` | All six topology families and seven strategies |

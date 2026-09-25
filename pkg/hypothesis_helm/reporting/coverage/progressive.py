@@ -99,7 +99,7 @@ def estimate_progression(
         selector (Callable[[Sequence[dict[str, object]]], Sequence[dict[str, object]]] | None):
             Configured sampling policy for preview plans.
         trim_topology (int): Topology sampling depth for report provenance.
-        trim (int): Quarter-retention steps for preview plans; selected is already trimmed.
+        trim (int): Quarter-retention steps for preview plans; selected is already filtered.
         random_seed (int): Seed matching the configured execution subset.
         fixed_names (bool): Whether release and namespace satisfy the fixed-context contract.
         time_limit (float): Execution budget used for advisory strength recommendations.
@@ -304,9 +304,9 @@ def estimate_progression(
         "actual_renders": 0,
         "pruning_certificates": [],
         "notes": [
-            "Strength previews plan groups before applying the configured seeded trim.",
+            "Strength previews plan groups before applying the configured seeded filter.",
             "The configured run retains its actual promotion and pruning settings.",
-            "Trimmed forecasts describe sampled plans; omitted cases may leave interactions uncovered.",
+            "Filtered forecasts describe sampled plans; omitted cases may leave interactions uncovered.",
             "Stages need not be nested: incremental counts use set unions, not summed stage sizes.",
             "Static filtering forecasts do not certify successful renders or authorize pruning.",
             "Opaque inputs require rendering; higher strengths can change filtering rates.",

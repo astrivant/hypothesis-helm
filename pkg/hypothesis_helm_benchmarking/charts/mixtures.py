@@ -51,7 +51,7 @@ def write_mixture(
         complexity (int): Total number of declared inputs.
         count (int): Number of structural components.
         weights (dict[str, float] | None): Relative categorical topology weights.
-        seed (int): Reproducible placement seed independent of fault and trim seeds.
+        seed (int): Reproducible placement seed independent of fault and filter seeds.
         depth_weights (dict[int, float] | None): Probabilities for added Boolean gate depths.
 
     Returns:

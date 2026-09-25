@@ -31,9 +31,9 @@ import matplotlib.pyplot as plt
 
 LABELS = {
     "before": "Strength 8",
-    "random": "Random",
-    "topology": "Topology",
-    "combined": "Both trims",
+    "random": "Random filter",
+    "topology": "Topology filter",
+    "combined": "Both filters",
     **PRESET_LABELS,
 }
 
@@ -97,7 +97,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
                     fontsize=9,
                     bbox={"facecolor": "white", "alpha": 0.75, "edgecolor": "none"},
                 )
-    figure.suptitle(f"Chart nesting × permutation strength {metadata['permutations']} · fixed trim level 2")
+    figure.suptitle(f"Chart nesting × permutation strength {metadata['permutations']} · fixed filter level 2")
     figure.tight_layout(rect=(0, 0, 1, describe(figure, "nesting-matrix")))
     for extension in ("png", "svg"):
         figure.savefig(output / f"matrix.{extension}", dpi=160, facecolor="white")
@@ -222,13 +222,13 @@ def plot(output: Path, document: dict[str, object]) -> None:
         the reported depth counts the **added outer gates**.
         Input constraints remain global even when a component's resources are gated off.
 
-        Trimming stays at level 2; the matrix compares random trimming, topology trimming,
+        Filtering stays at level 2; the matrix compares random filtering, topology filtering,
         both together, the filter presets, and each with failure expansion off/on. Errors occupy 5% of valid
         assignments (rounded down), fault seed 1729; topology and selection seed 2026.
         Automatic exhaustive promotion and inferred groups are disabled so strength eight
         is actually exercised. Complete populations are rendered separately for ground truth.
         Expansion only revisits omitted members of that strength-eight plan.
-        Strength eight describes the unfiltered plan; trimming can remove that coverage.
+        Strength eight describes the unfiltered plan; filtering can remove that coverage.
 
         ![Policy matrix](matrix.png)
 

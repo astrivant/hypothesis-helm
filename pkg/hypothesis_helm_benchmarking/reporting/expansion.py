@@ -27,10 +27,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 LABELS = {
-    "before": "Untrimmed",
-    "random": "Random",
-    "topology": "Topology",
-    "combined": "Both trims",
+    "before": "Unfiltered",
+    "random": "Random filter",
+    "topology": "Topology filter",
+    "combined": "Both filters",
     **PRESET_LABELS,
 }
 
@@ -140,7 +140,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
         "[Benchmarking](../../docs/benchmarking/README.md)",
         "",
-        "Topology trimming previously exercised 47 of 51 erroneous inputs in three cases. "
+        "Topology filtering previously exercised 47 of 51 erroneous inputs in three cases. "
         "The remaining four each produced the same complete manifests as a retained failing input. "
         "The 51 erroneous inputs occupied 43 singleton regions and four two-input regions. "
         "All distinct erroneous outputs were already covered.",
@@ -151,8 +151,8 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "Region membership does not label an unexecuted input as a failure.",
         "",
         "```sh",
-        "helm hypothesis test ./chart --permutations 2 --trim-topology 2 \\",
-        "  --trim-random 2 --expand-failures --time-limit 9m",
+        "helm hypothesis test ./chart --permutations 2 --filter-topology 2 \\",
+        "  --filter-random 2 --expand-failures --time-limit 9m",
         "```",
         "",
         "Expansion continues the initial selection after failures and schedules each omitted "
@@ -202,7 +202,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "",
         f"Helm `{metadata['helm']}`; {metadata['error_percent']:g}% erroneous valid inputs "
         f"(rounded down), error seed {metadata['error_seed']}, selection seed {metadata['seed']}, "
-        f"trim level {metadata['trim_level']}. "
+        f"filter level {metadata['trim_level']}. "
         "The same placement is reused across matching domains.",
         "",
         "Each category has a fresh complete Helm reference checked against the independent "
@@ -220,7 +220,7 @@ def plot(output: Path, document: dict[str, object]) -> None:
         "```sh",
         "hypothesis-helm-benchmark expansion \\",
         "  --input-complexity 10 --error-percent 5 --error-seed 1729 \\",
-        "  --seed 2026 --trim-level 2 --time-limit 9m --output .cache/benchmarks/expansion",
+        "  --seed 2026 --filter-level 2 --time-limit 9m --output .cache/benchmarks/expansion",
         "```",
         "",
     ]

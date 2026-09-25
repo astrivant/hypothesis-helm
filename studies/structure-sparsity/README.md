@@ -32,6 +32,6 @@ Each stage uses a smaller nested random subset of the same input prefix, fresh c
 
 Raw JSON (local run data) · CSV measurements (local run data)
 
-One seeded trajectory is shown. Errors need not increase monotonically; categorical outcomes have no CDF ordering. High distribution coverage does not establish a generally safe trimming level for bug discovery. Rare faults can be lost.
+One seeded trajectory is shown. Errors need not increase monotonically; categorical outcomes have no CDF ordering. High distribution coverage does not establish a generally safe filtering level for bug discovery. Rare faults can be lost.
 
-See [trimming controls](<../../docs/execution/README.md#optional-trimming>) and [refresh commands](<../../README.md#reproduce-the-full-project-run>).
+See [filtering controls](<../../docs/execution/README.md#optional-filtering>) and [refresh commands](<../../README.md#reproduce-the-full-project-run>).

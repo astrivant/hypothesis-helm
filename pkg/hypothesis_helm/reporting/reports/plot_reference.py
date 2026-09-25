@@ -40,11 +40,11 @@ DEFINITIONS = {
         "and bins are standardized before PCA. Hash collisions and projection can overlap distinct manifests. "
         "One observation represents one measured configuration, including repeated outputs. "
         "References use schema-valid Boolean flips, adjacent integers and joint changes from the supplied baseline; they do not enumerate "
-        "the full input or output space. Path scans use recorded retained properties. Finite trimming selectors are replayed on the "
+        "the full input or output space. Path scans use recorded retained properties. Finite filtering selectors are replayed on the "
         "bounded reference, so their sampling floors apply to that reference size. Runtime rejection, equivalence reuse and failure "
         "expansion are not reconstructed. Failed renders have no coordinate. "
         "Missing or unfinished measurements do not imply zero variation. "
-        "With no trimming, the two panels show the same reference sample."
+        "With no filtering, the two panels show the same reference sample."
     ),
 }
 

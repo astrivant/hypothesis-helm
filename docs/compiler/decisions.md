@@ -132,9 +132,9 @@ also outside that contract. An unknown analysis result is never a passing test.
 
 ## Why keep some region members and restore others later?
 
-Topology trimming selects tests before their outcomes are known. Suppose four
+Topology filtering selects tests before their outcomes are known. Suppose four
 eligible inputs share a supported output-and-branch region, another input belongs
-to a second region, and one input cannot be classified. One topology trim step
+to a second region, and one input cannot be classified. One topology filter step
 keeps one of the four, the second region's sole member, and the unknown input.
 The chosen member depends on the seed; A is the illustrative choice here.
 
@@ -146,7 +146,7 @@ flowchart LR
         g2[Region 2: E]
         gx[Unclassified: X]
     end
-    subgraph K["B. Trim within each region"]
+    subgraph K["B. Filter within each region"]
         direction TB
         k1[Keep A; omit B, C, D]
         k2[Keep E: preserve its region]
@@ -170,7 +170,7 @@ flowchart LR
 Panel B makes no claim that the omitted cases passed. Panel C also makes no claim
 that they will fail; their membership only explains why testing expands there.
 If A passes, this expansion policy does not restore B, C, and D. A timeout can
-leave restored cases unfinished. See [topology trimming](selection.md#topology-trimming)
+leave restored cases unfinished. See [topology filtering](selection.md#topology-filtering)
 and [failure expansion](selection.md#failure-expansion).
 
 ## Why can the same template rejection have different outcomes?

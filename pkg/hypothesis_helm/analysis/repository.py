@@ -111,7 +111,7 @@ def measure_chart(
         pca_samples (int): Additional reference configurations; zero disables output PCA measurements.
         pca_seconds (float): Separate per-chart reference measurement budget.
         scan_record (dict[str, object] | None): Recorded chart selection and artifacts.
-        scan_settings (dict[str, object] | None): Recorded trimming and sampling configuration.
+        scan_settings (dict[str, object] | None): Recorded filtering and sampling configuration.
 
     Returns:
         dict[str, object]: Actual measurements or an explicit reason measurements were unavailable.

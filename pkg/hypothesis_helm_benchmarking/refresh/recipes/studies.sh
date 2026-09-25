@@ -23,13 +23,13 @@ case "$study" in
         hypothesis-helm-benchmark structural-sparsity --time-limit 9m --output "$root/outputs/structural-sparsity"
         ;;
     matrix)
-        hypothesis-helm-benchmark matrix --input-complexity 10 --trim-level 2 --seed 2026 --time-limit 9m --output "$root/outputs/matrix"
+        hypothesis-helm-benchmark matrix --input-complexity 10 --filter-level 2 --seed 2026 --time-limit 9m --output "$root/outputs/matrix"
         ;;
     pca)
-        hypothesis-helm-benchmark pca --input-complexity 10 --error-percent 5 --error-seed 1729 --seed 2026 --trim-level 2 --time-limit 9m --output "$root/outputs/pca"
+        hypothesis-helm-benchmark pca --input-complexity 10 --error-percent 5 --error-seed 1729 --seed 2026 --filter-level 2 --time-limit 9m --output "$root/outputs/pca"
         ;;
     expansion)
-        hypothesis-helm-benchmark expansion --input-complexity 10 --error-percent 5 --error-seed 1729 --seed 2026 --trim-level 2 --time-limit 9m --output "$root/outputs/expansion"
+        hypothesis-helm-benchmark expansion --input-complexity 10 --error-percent 5 --error-seed 1729 --seed 2026 --filter-level 2 --time-limit 9m --output "$root/outputs/expansion"
         ;;
     structure-depth)
         hypothesis-helm-benchmark structure-depth --depths 0 1 2 3 4 5 --time-limit 9m --output "$root/outputs/structure-depth"

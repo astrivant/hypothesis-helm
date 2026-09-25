@@ -106,7 +106,7 @@ class PlannedRun:
         duplicate_cases_removed (int): Configurations already represented by defaults or another input.
         trimmed_cases (int): Non-default configurations omitted by the selected filters.
         expansion (FailureExpansion | None): Failure-region scheduling state, when expansion is enabled.
-        expansion_values (Sequence[dict[str, object]]): Untrimmed inputs available for failure-region expansion.
+        expansion_values (Sequence[dict[str, object]]): Unfiltered inputs available for failure-region expansion.
         expansion_positions (dict[str, int]): Stable configuration identities mapped to expansion indices.
         coverage (dict[str, object]): Plan and input-coverage evidence included in execution reports.
         statistics (PermutationStatistics | None): Per-iteration timing and completion accounting, when planning is finite.
@@ -328,9 +328,9 @@ def build_plan(
             "trimmed_iterations": trimmed_cases,
             "retained_fraction": (len(interaction_plan.values) / untrimmed_cases) if untrimmed_cases else 1.0,
             "coverage_guaranteed_by_plan": not bool(trimmed_cases),
-            "coverage_strategy": "trimmed" if trimmed_cases else interaction_plan.strategy,
+            "coverage_strategy": "filtered" if trimmed_cases else interaction_plan.strategy,
             "untrimmed_coverage_strategy": interaction_plan.strategy,
-            "exhaustive_groups_scope": "untrimmed plan",
+            "exhaustive_groups_scope": "unfiltered plan",
             "requested_strength": options.permutations,
             "effective_strength": interaction_plan.strength,
             "factors": [list(path) for path in interaction_plan.factors],
@@ -377,7 +377,7 @@ def build_plan(
         LOGGER.info("Coverage strategy: %s", coverage["coverage_strategy"])
         if options.trim or options.trim_topology:
             LOGGER.info(
-                "Trim random=%d, topology=%d: %d non-default cases retained, %d omitted; "
+                "Filter random=%d, topology=%d: %d non-default cases retained, %d omitted; "
                 "defaults retained; "
                 "omitted cases may leave interactions and groups uncovered",
                 options.trim,

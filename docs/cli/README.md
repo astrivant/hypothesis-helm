@@ -587,8 +587,8 @@ usage: helm hypothesis test [-h] [--report [PATH]] [--pca-samples N]
                             [--fail [{info,warning,error}]]
                             [--max-examples MAX_EXAMPLES] [--time-limit DURATION]
                             [--paths | --exhaustive | --whole-chart |
-                            --permutations N] [--filter] [--trim-random N]
-                            [--trim-topology N] [--expand-failures]
+                            --permutations N] [--filter] [--filter-random N]
+                            [--filter-topology N] [--expand-failures]
                             [--prune-equivalent] [--match MATCH] [--collect-only]
                             [--max-cases MAX_CASES] [--max-candidates MAX_CANDIDATES]
                             [--exhaustive-threshold EXHAUSTIVE_THRESHOLD]
@@ -661,8 +661,7 @@ options:
   --whole-chart         sample whole-chart inputs
   --permutations N      cover valid N-way finite interactions; non-finite charts fall
                         back to path sampling
-  --trim-random, --trim N
-                        retain a seeded quarter of finite permutation cases per step;
+  --filter-random N     retain a seeded quarter of finite permutation cases per step;
                         default: 0
   --prune-equivalent    skip Helm only for proved output equivalence to a successful
                         render
@@ -770,11 +769,11 @@ options:
                         the config file; repeatable
 
 filtering:
-  Use --filter or the individual methods below; random trimming is independent.
+  Use --filter or the individual methods below; random filtering is independent.
 
-  --filter              enable --trim-topology 2 and --expand-failures
-  --trim-topology N     thin symbolic output/branch regions; retain representatives
-                        and unknowns; combines with --trim-random
+  --filter              enable --filter-topology 2 and --expand-failures
+  --filter-topology N   thin symbolic output/branch regions; retain representatives
+                        and unknowns; combines with --filter-random
   --expand-failures     test omitted members of failed symbolic regions within the
                         execution budget
 ~~~

@@ -447,18 +447,17 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     )
     filters = test.add_argument_group(
         "filtering",
-        "Use --filter or the individual methods below; random trimming is independent.",
+        "Use --filter or the individual methods below; random filtering is independent.",
     )
     filters.add_argument(
         "--filter",
         action=FilterAction,
         nargs=0,
         default=False,
-        help="enable --trim-topology 2 and --expand-failures",
+        help="enable --filter-topology 2 and --expand-failures",
     )
     test.add_argument(
-        "--trim-random",
-        "--trim",
+        "--filter-random",
         dest="trim",
         type=int,
         default=0,
@@ -466,12 +465,13 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="retain a seeded quarter of finite permutation cases per step; default: 0",
     )
     filters.add_argument(
-        "--trim-topology",
+        "--filter-topology",
+        dest="trim_topology",
         action=FilterAction,
         type=int,
         default=0,
         metavar="N",
-        help="thin symbolic output/branch regions; retain representatives and unknowns; combines with --trim-random",
+        help="thin symbolic output/branch regions; retain representatives and unknowns; combines with --filter-random",
     )
     filters.add_argument(
         "--expand-failures",
@@ -1028,12 +1028,12 @@ def main(argv: list[str] | None = None) -> int:
                 args.trim_topology = 2
                 args.expand_failures = True
             if args.trim < 0 or args.trim_topology < 0:
-                raise ValueError("--trim must be nonnegative")
+                raise ValueError("--filter-random and --filter-topology must be nonnegative")
             if args.expand_failures and (args.paths or args.whole_chart or args.exhaustive or args.match is not None or args.collect_only):
                 raise ValueError("--expand-failures requires finite permutation testing")
             if args.trim or args.trim_topology or args.expand_failures:
                 if args.paths or args.whole_chart or args.exhaustive:
-                    raise ValueError("--trim applies to finite --permutations planning only")
+                    raise ValueError("--filter-random and --filter-topology apply to finite --permutations planning only")
                 if args.permutations is None:
                     args.permutations = DEFAULT_PERMUTATIONS
             if args.prune_equivalent:

@@ -47,7 +47,7 @@ calibration. Neither filtered mode establishes exhaustive coverage. See the
 
 Run the exhaustive check manually on `main` just before tagging a service release.
 It checks the accumulated changes on the exact commit you intend to tag. Leave
-filtering, trimming and percentage sampling disabled. Explicit exhaustive mode runs
+filter presets, individual case filters and percentage sampling disabled. Explicit exhaustive mode runs
 one local chart at a time, with four concurrent Helm processes in this example, and does not support sharding; use a separate job from the
 [sharded CI examples](ci/README.md).
 

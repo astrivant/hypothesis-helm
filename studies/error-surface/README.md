@@ -42,11 +42,11 @@ Individual measurements (local run data) · Means and ranges (local run data) ·
 
 | Plot label | Filtering settings |
 | --- | --- |
-| default | All configurations, without trimming |
+| default | All configurations, without filtering |
 | exact-equivalence | `--prune-equivalent`; reuse renders and check every input's assertion |
-| random | `--trim-random 2` |
-| topology | `--trim-topology 2` |
-| combined | Both trim methods at 2 |
+| random | `--filter-random 2` |
+| topology | `--filter-topology 2` |
+| combined | Both filters at 2 |
 | filter | `--filter` |
 | filter-adaptive | `--filter-adaptive`, including its calibration fallback |
 | sample-random | `--sample-random 70`, with the default minimum |
