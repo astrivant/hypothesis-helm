@@ -70,6 +70,10 @@ def aggregate(inputs: list[Path], total: int, run_id: str, output: Path | None =
     if len(reports) != total:
         raise ValueError(f"Expected {total} shard reports, received {len(reports)}")
     reports.sort(key=lambda record: int(str(mapping(record.get("shard"))["index"])))
+    if any(record.get("report_kind") == "repository-shard-v1" for record in reports):
+        from hypothesis_helm.reporting.reports.repository_shards import aggregate_repository
+
+        return aggregate_repository(reports, total, run_id, output)
     output.parent.mkdir(parents=True, exist_ok=True)
     with ExitStack() as scope:
         publication = scope.enter_context((output.parent / f".{output.name}.lock").open("a"))

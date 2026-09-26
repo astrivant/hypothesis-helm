@@ -24,6 +24,7 @@ from hypothesis_helm.charts.repositories.cache import ChartCache
 from hypothesis_helm.charts.repositories.changes import comparison
 from hypothesis_helm.charts.repositories.registry import prepare_helm_source
 from hypothesis_helm.charts.repositories.repository import RepositorySource, local_provenance, remote_name
+from hypothesis_helm.charts.repositories.shards import chart_digest, publish_shard
 from hypothesis_helm.charts.testing.coverage import require_attempts
 from hypothesis_helm.charts.testing.paths import check_paths
 from hypothesis_helm.charts.testing.runner import check_chart
@@ -260,6 +261,7 @@ def _exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> di
             LOGGER.warning("sensitivity-first unavailable for %s: %s; using seeded random path traversal", path, filtering["reason"])
         result = check_paths(
             chart,
+            shard=getattr(args, "shard", None),
             budget=min(args.chart_timeout, max(0.000001, args.scan_deadline - time.monotonic()))
             if args.scan_deadline is not None
             else args.chart_timeout,
@@ -309,6 +311,7 @@ def _exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> di
         if args.scan_deadline is not None
         else args.chart_timeout,
         permutations=strength,
+        shard=getattr(args, "shard", None),
         sensitivity_order=getattr(args, "sensitivity_order", None),
         trim=getattr(args, "trim", 0),
         trim_topology=2 if filtering["applied"] else getattr(args, "trim_topology", 0),
@@ -432,7 +435,12 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
     timed_out = source.status in {"clone-timeout", "source-timeout", "scan-timeout"} or (
         source.status == "ready" and not discovery_complete
     )
-    output = args.artifact_dir.resolve() / f"{source.name}_{int(started)}"
+    shard = getattr(args, "shard", None)
+    output = (
+        args.artifact_dir.resolve() / "shards" / shard.name
+        if shard is not None
+        else args.artifact_dir.resolve() / f"{source.name}_{int(started)}"
+    )
     output.mkdir(parents=True, exist_ok=True)
     if source.remote:
         (output / "checkout.txt").write_text(source.diagnostic)
@@ -447,6 +455,8 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
         if record["status"] != "pending":
             continue
         path = root / str(record["chart"])
+        if shard is not None:
+            record["chart_fingerprint"] = chart_digest(path)
         artifacts = output / f"{index:04d}"
         record["artifacts"] = str(artifacts)
         tick = time.monotonic()
@@ -522,9 +532,12 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
                             coverage="not a standalone application",
                         )
                         continue
+                    if shard is not None:
+                        record["prepared_fingerprint"] = chart_digest(copy)
                     cache = ChartCache.prepare(copy, path, args, changes)
                     record["cache"] = {"key": cache.key, "reused": cache.reusable, "reason": cache.reason}
                     if cache.reusable:
+                        record.update(cache.cached_result)
                         record.update(
                             status="cached-pass",
                             result="CACHED PASS",
@@ -621,6 +634,8 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
             break
     attempts = sum(int(str(record.get("attempts") or 0)) for record in records)
     no_tests = attempts == 0 and not any(record["status"] == "cached-pass" for record in records)
+    if shard is not None and records and all(record["status"] == "empty-shard" for record in records):
+        no_tests = False
     if no_tests:
         LOGGER.error("No manifest test attempts were executed; this scan did not test any charts. See the recorded chart statuses.")
     for record in records:
@@ -754,6 +769,23 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
     )
     deduplicate_errors(report)
     trace_run(report, finished_epoch=time.time())
+    if shard is not None:
+        status = (
+            130
+            if interrupted
+            else 124
+            if timed_out
+            else 1
+            if source.status in {"clone-failed", "source-failed"}
+            or (len(records) == 1 and records[0]["status"] == "missing-values")
+            or any(item in counts for item in ("invalid-metadata", "baseline-failed", "failed", "error"))
+            else 0
+            if records and set(counts) <= {"passed", "cached-pass", "ignored", "findings", "empty-shard"}
+            else 2
+        )
+        publish_shard(report, args, output, status)
+        print_summary(report, output / "report.json")
+        return status
     (output / "scan.json").write_text(json.dumps(report, indent=2) + "\n")
     figure_status = None
     published: tuple[Path, ...] = ()

@@ -26,11 +26,13 @@ from hypothesis_helm.compiler.passes.rejections import RejectionPolicy
 from hypothesis_helm.compiler.passes.sampling import profile as sampling_profile
 from hypothesis_helm.exceptions.execution import ChartUnavailable, TimeLimitReached
 from hypothesis_helm.exceptions.rendering import RandomInputUnavailable, RenderFailure
+from hypothesis_helm.execution.planning.partition import Partition, digest
 from hypothesis_helm.execution.planning.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.planning.traversal import ALGORITHM, SELECTION_ORDER, order_paths, validate_strategy
 from hypothesis_helm.execution.runtime.budget import execution_timer
 from hypothesis_helm.findings.policy import RuleScope, chart_rules
 from hypothesis_helm.findings.severity import policy as finding_policy
+from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.console.logs import input_baseline
 from hypothesis_helm.reporting.console.progress import format_path
 from hypothesis_helm.rules import check, ignored, ignored_codes
@@ -108,6 +110,7 @@ def check_paths(
     kube_version: str | None = None,
     allow_empty: bool = False,
     jobs: int = 1,
+    shard: Shard | None = None,
 ) -> dict[str, object]:
     """
     Schedule each discovered path once after filtering, retaining partial coverage.
@@ -133,6 +136,7 @@ def check_paths(
         kube_version (str | None): Kubernetes capability version supplied to Helm.
         allow_empty (bool): Accept inputs that render no resources.
         jobs (int): Concurrent path workers sharing this chart's execution deadline.
+        shard (Shard | None): Partition the same retained path inventory across CI jobs.
 
     Returns:
         dict[str, object]: Visited, completed, incomplete, and remaining path evidence.
@@ -181,6 +185,9 @@ def check_paths(
             "analysis": sampling_analysis,
             "fallback": "path-property sampling has no measured calibration; additional sampling disabled",
         }
+    partition = Partition.paths(shard, [entry.path for entry in selected]) if shard is not None else None
+    if partition is not None:
+        selected = [entry for entry in selected if partition.owns(digest(list(entry.path)))]
     ordered = order_paths(selected, lambda entry: entry.path, strategy=traversal_strategy, seed=seed)
     planned_paths = [list(entry.path) for entry in ordered]
     planning_seconds = time.monotonic() - planning_started
@@ -188,6 +195,7 @@ def check_paths(
     (artifacts / "path-inventory.json").write_text(
         json.dumps(
             {
+                **({"work_partition": partition.report()} if partition is not None else {}),
                 "sampling": sampling_report,
                 "seed": seed,
                 "renderer_observations": chart.renderer_statistics,
@@ -202,6 +210,10 @@ def check_paths(
         + "\n"
     )
     LOGGER.info("Discovered %d unique value paths; %s traversal, seed %d", len(ordered), traversal_strategy, seed)
+    if partition is not None and not ordered:
+        empty = {"status": "empty-shard", "attempts": 0, "mode": "paths", "work_partition": partition.report()}
+        (artifacts / "report.json").write_text(json.dumps(empty, indent=2) + "\n")
+        return empty
     measured = FieldCoverage(inventory, chart.defaults)
     phases: list[dict[str, object]] = []
     active: ValuePath | None = None
@@ -444,6 +456,14 @@ def check_paths(
         },
         "scope": "One property per discovered path; multiple values and shrinking within a property; joint input coverage is incomplete",
     }
+    if partition is not None:
+        partition.visited = [digest(phase["path"]) for phase in phases]
+        partition.completed = [
+            digest(phase["path"])
+            for phase in phases
+            if phase["status"] in {"passed", "failed", "findings", "configuration-rejected", "ignored"} and not phase.get("stop_reason")
+        ]
+        result["work_partition"] = partition.report()
     execution_errors = [phase for phase in [baseline, *phases] if phase.get("error_kind") == "execution"]
     if execution_errors:
         result.update(error_kind="execution", error=execution_errors[0]["error"], coverage_complete=False)

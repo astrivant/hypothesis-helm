@@ -186,7 +186,19 @@ def main() -> int:
         if command == "scan" and env.get("HH_EXPORT_MINIMAL_VALUES") == "true":
             environment["HH_REMOTE_MINIMAL_VALUES"] = env.get("HH_MINIMAL_VALUES_FILENAME") or "values-minimal.yaml"
         rerun = env.get("HH_RERUN") or "auto"
-        if command in {"test", "run"}:
+        recursive = False
+        if command == "test":
+            from hypothesis_helm.charts.repositories.scan import discover_charts
+
+            local = Path(chart)
+            recursive = (
+                not (local / "Chart.yaml").is_file()
+                or not (local / "values.schema.json").is_file()
+                or any(environment.get(key) for key in ("HH_REPORT", "HH_CHART_TIMEOUT", "HH_SCAN_TIMEOUT", "HH_BASE_REF"))
+                or environment.get("HH_VALUES", "values.yaml") not in {"", "values.yaml"}
+                or len(discover_charts(local)) > 1
+            )
+        if command in {"test", "run"} and not recursive:
             rerun = select_rerun(
                 Path(chart),
                 incremental=incremental,
@@ -194,9 +206,8 @@ def main() -> int:
                 base_ref=env.get("HH_BASE_REF") or None,
                 report=results / "git-comparison.json",
             )
-        if incremental:
-            # The comparison has already been resolved here. Forwarding this setting would
-            # select recursive CLI execution, which cannot own a generated-suite shard.
+        if incremental and not recursive:
+            # Saved suites consume the resolved comparison here; recursive tests perform it per chart.
             environment.pop("HYPOTHESIS_HELM_BASE_REF", None)
             environment.pop("HH_BASE_REF", None)
         environment["HH_RERUN"] = rerun

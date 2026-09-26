@@ -43,6 +43,7 @@ from hypothesis_helm.environment import env
 from hypothesis_helm.exceptions.execution import ChartUnavailable, TimeLimitReached
 from hypothesis_helm.exceptions.rendering import RandomInputUnavailable, RenderFailure
 from hypothesis_helm.execution.planning import DEFAULT_PERMUTATIONS
+from hypothesis_helm.execution.planning.partition import Partition, digest
 from hypothesis_helm.execution.planning.sampling import DEFAULT_SAMPLING, Sampling
 from hypothesis_helm.execution.planning.sensitivity import SensitivityOrder, validate_order
 from hypothesis_helm.execution.planning.traversal import order_configurations, validate_strategy
@@ -51,6 +52,7 @@ from hypothesis_helm.execution.state.render_hashes import RenderHashes
 from hypothesis_helm.findings.policy import chart_rules
 from hypothesis_helm.findings.severity import attributes
 from hypothesis_helm.findings.severity import policy as finding_policy
+from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.console.logs import FindingLog, chart_name, input_baseline
 from hypothesis_helm.reporting.evidence.changes import compare
 from hypothesis_helm.reporting.evidence.checkpoints import save as save_checkpoint
@@ -89,6 +91,7 @@ def check_chart(
     artifact_dir: Path | None = None,
     exhaustive: bool = False,
     jobs: int = 1,
+    shard: Shard | None = None,
     max_cases: int = 10000,
     permutations: int | None = None,
     trim: int = 0,
@@ -134,6 +137,7 @@ def check_chart(
         artifact_dir (Path | None): Optional destination for failing values and report artifacts.
         exhaustive (bool): Whether to enumerate the entire supported finite input domain.
         jobs (int): Concurrent Helm processes for exhaustive execution; all verification stays on the coordinator.
+        shard (Shard | None): Partition finite configurations; failure regions stay with their owning shard.
         max_cases (int): Maximum exhaustive domain or interaction suite and factor size.
         permutations (int | None): Required finite interaction strength; sensitivity-first defaults to pairs when omitted.
         trim (int): Seeded quarter-retention steps applied after finite permutation planning.
@@ -280,6 +284,22 @@ def check_chart(
     expansion = plan.expansion
     expansion_values = plan.expansion_values
     expansion_positions = plan.expansion_positions
+    partition = None
+    if shard is not None:
+        if finite_values is None:
+            raise ValueError("sharded chart execution requires a finite plan or the path scheduler")
+        # Co-locate expansion regions so a failure cannot schedule another shard's inputs.
+        universe = expansion_values if expansion is not None else concatenate([{}], finite_values)
+        units = {
+            digest(value): expansion.membership.get(index, digest(value)) if expansion is not None else digest(value)
+            for index, value in enumerate(universe)
+        }
+        partition = Partition(shard, units, [digest({}), *(digest(value) for value in finite_values)])
+        finite_values = select(finite_values, [index for index, value in enumerate(finite_values) if partition.owns(digest(value))])
+        if expansion is not None:
+            expansion.groups = {key: members for key, members in expansion.groups.items() if shard.includes(key)}
+        if not partition.report()["selected"]:
+            return {"status": "empty-shard", "attempts": 0, "mode": "finite", "work_partition": partition.report()}
     coverage = plan.coverage
     if test_random_inputs:
         coverage["renderer_randomness"] = {
@@ -406,7 +426,33 @@ def check_chart(
         baseline_documents=baseline_documents,
         findings=findings,
     )
-    check = checks.check
+
+    def check(values: dict[str, object], *, force_render: bool = False, baseline: bool = False) -> bool:
+        """
+        Record assigned work while allowing a shared baseline as setup.
+
+        Args:
+            values (dict[str, object]): Planned configuration.
+            force_render (bool): Bypass equivalence pruning for expanded cases.
+            baseline (bool): Initialize the local rendering reference.
+
+        Returns:
+            bool: Whether the candidate completed its checks.
+        """
+        unit = digest(values)
+        owned = partition is not None and partition.owns(unit)
+        if owned and partition is not None:
+            partition.visited.append(unit)
+        try:
+            result = checks.check(values, force_render=force_render, baseline=baseline)
+        except (RenderFailure, AssertionError):
+            if owned and partition is not None:
+                partition.completed.append(unit)
+            raise
+        else:
+            if owned and partition is not None:
+                partition.completed.append(unit)
+            return result
 
     def checkpoint_failure(record: dict[str, object]) -> None:
         """
@@ -443,6 +489,9 @@ def check_chart(
         Returns:
             None: In-place additions preserve successful and failed execution counts separately.
         """
+        if partition is not None:
+            result["work_partition"] = partition.report()
+            result["coverage_complete"] = False
         if sensitivity is not None:
             result["sensitivity"] = sensitivity.report()
         result["ignored_rules"] = ignored_codes()

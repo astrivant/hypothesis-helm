@@ -736,10 +736,7 @@ def local_discovery(args: argparse.Namespace) -> bool:
         "--match": args.match is not None,
         "--collect-only": args.collect_only,
         "--dry-run": args.dry_run,
-        "--shard": args.shard is not None,
         "--disable-schema-caching": args.disable_schema_caching,
-        "--rerun": args.rerun != "auto",
-        "--run-id": args.run_id is not None,
     }
     recursive = (
         not (args.chart / "Chart.yaml").is_file()

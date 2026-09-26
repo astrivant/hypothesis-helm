@@ -7,6 +7,7 @@ import hashlib
 import json
 import logging
 import shutil
+import tempfile
 import time
 from pathlib import Path
 
@@ -14,7 +15,9 @@ from attrs import define, field
 
 from hypothesis_helm.charts.repositories.changes import chart_changed
 from hypothesis_helm.environment import env
+from hypothesis_helm.execution.planning.partition import digest as evidence_digest
 from hypothesis_helm.execution.state.cache import fingerprint, merge_outcomes, read_outcomes
+from hypothesis_helm.schemas.contracts import mapping
 
 __all__ = ("ChartCache", "RETENTION_SECONDS")
 
@@ -34,6 +37,7 @@ class ChartCache:
         baseline (dict[str, str]): Prior outcomes used for conflict-aware publication.
         reusable (bool): Whether an unchanged chart has a fresh completed success.
         reason (str): Human-readable explanation of the cache decision.
+        cached_result (dict[str, object]): Verified partition evidence restored with a cached success.
     """
 
     path: Path | None = None
@@ -41,6 +45,7 @@ class ChartCache:
     baseline: dict[str, str] = field(factory=dict)
     reusable: bool = False
     reason: str = "cache disabled"
+    cached_result: dict[str, object] = field(factory=dict)
 
     @classmethod
     def prepare(cls, chart: Path, original: Path, args: argparse.Namespace, changes: dict[str, object]) -> "ChartCache":
@@ -58,6 +63,8 @@ class ChartCache:
         """
         if getattr(args, "no_cache", False):
             return cls()
+        if getattr(args, "rerun", "auto") == "all":
+            return cls(reason="--rerun all requires fresh execution")
         if getattr(args, "export_suppressions", False) or any(
             getattr(args, name, None) is not None for name in ("export_minimal_values", "export_topological_graph")
         ):
@@ -79,6 +86,9 @@ class ChartCache:
             "debug",
             "verbose",
             "command",
+            "run_id",
+            "execution",
+            "invocation",
         }
         settings = json.dumps({key: value for key, value in vars(args).items() if key not in ignored}, sort_keys=True, default=str)
         try:
@@ -110,7 +120,21 @@ class ChartCache:
                 if changed
                 else "no matching completed success within 21 days"
             )
-            return cls(path, key, baseline, reusable, reason)
+            cached_result: dict[str, object] = {}
+            if reusable and getattr(args, "shard", None) is not None:
+                # A chart-level pass is insufficient: restore the exact owned work and its completion evidence.
+                try:
+                    saved = mapping(json.loads(path.with_suffix(".evidence.json").read_text()))
+                    cached_result = mapping(saved["result"])
+                    reusable = saved.get("checksum") == evidence_digest(cached_result) and bool(
+                        mapping(cached_result.get("work_partition", {})).get("complete")
+                    )
+                except (OSError, ValueError, KeyError):
+                    reusable = False
+                if not reusable:
+                    cached_result = {}
+                    reason = "cached success lacks verified shard completion evidence"
+            return cls(path, key, baseline, reusable, reason, cached_result)
         except (OSError, ValueError) as exc:
             return cls(reason=f"cache verification unavailable: {exc}")
 
@@ -134,8 +158,20 @@ class ChartCache:
         )
         # A timeout without a finding is incomplete coverage, not a reusable successful scan.
         tested = int(str(result.get("attempts") or 0)) > 0
+        if "work_partition" in result:
+            complete = complete and bool(mapping(result["work_partition"]).get("complete"))
         outcome = "passed" if result.get("status") == "passed" and complete and tested else "failed"
         try:
+            if outcome == "passed" and "work_partition" in result:
+                self.path.parent.mkdir(parents=True, exist_ok=True)
+                # Publish evidence first, then the outcome under the existing merge lock. Concurrent failures still win.
+                with tempfile.NamedTemporaryFile(mode="w", dir=self.path.parent, delete=False) as stream:
+                    staged = Path(stream.name)
+                    json.dump({"checksum": evidence_digest(result), "result": result}, stream)
+                try:
+                    staged.replace(self.path.with_suffix(".evidence.json"))
+                finally:
+                    staged.unlink(missing_ok=True)
             merge_outcomes(self.path, self.baseline, {self.key: outcome})
         except OSError as exc:
             LOGGER.warning("Could not save chart cache: %s", exc)
