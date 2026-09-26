@@ -667,7 +667,7 @@ jobs:
           PACKAGE_VERSION: ${{ steps.package-version.outputs.version }}
         run: |
           if [[ -z "$POETRY_PYPI_TOKEN_PYPI" ]]; then
-              echo '::error::Set PYPI_API_TOKEN in the pypi environment before publishing'
+              echo '::error::PYPI_API_TOKEN is unavailable. Grant this repository access to the organization secret, or set a repository/environment secret.'
               exit 1
           fi
           echo "Publishing hypothesis-helm $PACKAGE_VERSION to PyPI"

@@ -251,8 +251,12 @@ Archived run snapshots and third-party sources are excluded to preserve recorded
 
 ## Publishing to PyPI
 
-Create the GitHub environment `pypi` and add your PyPI API token as its `PYPI_API_TOKEN` secret.
+Create the GitHub environment `pypi`. Supply `PYPI_API_TOKEN` as an organization secret with access granted to this repository,
+or as a repository or environment secret.
 The publishing job uses this environment and follows its configured protection rules.
+An environment secret overrides a repository secret, which overrides an organization secret with the same name.
+If PyPI rejects a nonempty token with HTTP 403, check for an outdated override before replacing the organization token.
+The token must be issued by PyPI, authorize this project, and include its complete `pypi-` prefix.
 Tag the commit you want to release:
 
 ```sh
