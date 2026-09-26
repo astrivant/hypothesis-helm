@@ -40,6 +40,8 @@ def _validate_work(records: list[dict[str, object]]) -> None:
         coordinates = Shard(index, len(records))
         if (work.get("index"), work.get("total")) != (index, len(records)):
             raise ValueError("Chart partition coordinates disagree with its enclosing report")
+        if not isinstance(record.get("chart_fingerprint"), str) or not record["chart_fingerprint"]:
+            raise ValueError("Chart partition lacks its source content identity")
         units = mapping(work["units"])
         initial = [str(unit) for unit in sequence(work["initial"])]
         if len(initial) != len(set(initial)) or not set(initial) <= units.keys():
@@ -169,7 +171,17 @@ def aggregate_repository(reports: list[dict[str, object]], total: int, run_id: s
             raise ValueError("Cannot verify a repository shard with incomplete chart discovery")
         if not isinstance(report.get("settings_digest"), str):
             raise ValueError("Repository shard lacks its settings identity")
-        signatures.add(str(report["settings_digest"]))
+        signatures.add(
+            digest(
+                [
+                    report["settings_digest"],
+                    report.get("ignored_rules", []),
+                    report.get("finding_policy", {}),
+                    report.get("input_policy", {}),
+                    mapping(report.get("execution", {})).get("versions", {}),
+                ]
+            )
+        )
         charts = [mapping(chart) for chart in sequence(report["charts"])]
         names = [str(chart["chart"]) for chart in charts]
         if not names or len(names) != len(set(names)):
@@ -210,7 +222,9 @@ def aggregate_repository(reports: list[dict[str, object]], total: int, run_id: s
         "charts_discovered": len(combined),
         "discovery_complete": True,
         "unstarted_charts": sum(chart["status"] == "pending" for chart in combined),
-        "scan_status": "completed" if status in {0, 1} else "incomplete",
+        "scan_status": "completed"
+        if status in {0, 1} and all(chart["status"] in {"passed", "findings", "ignored", "failed", "baseline-failed"} for chart in combined)
+        else "incomplete",
         "counts": dict(Counter(str(chart["status"]) for chart in combined)),
         "exit_code": status,
         "attempts": sum(int(str(chart["attempts"])) for chart in combined),

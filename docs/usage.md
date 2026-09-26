@@ -19,6 +19,7 @@
 - [Adaptive parallel test execution](#adaptive-parallel-test-execution)
 - [Progress and interruption](#progress-and-interruption)
 - [Distributed sharding](#distributed-sharding)
+  - [Recursive directories](#recursive-directories)
 - [Values structure baselines](#values-structure-baselines)
 - [Persistent path results](#persistent-path-results)
 - [Kubernetes API conformity](#kubernetes-api-conformity)
@@ -64,7 +65,7 @@ individually and logs the reason.<sup>[\[1\]](#interaction-coverage)</sup>
 
 `--paths` explicitly selects the generated-suite workflow: it adds fields discovered
 in templates to the working input model, generates one Python test per values path, and executes the
-suite. Collection and distributed sharding also select this workflow. Recursive
+suite. Collection also selects this workflow. Recursive
 repository tests support `--jobs N` directly: charts run in sequence, with N workers
 sharing the current chart's path queue and timeout.
 `--max-examples` defaults to **10 per property** for `test` and `scan`.
@@ -576,7 +577,7 @@ helm hypothesis test ./chart --shard 1/3 --match image --collect-only
 helm hypothesis run generated-tests --shard 1/3 --artifact-dir .cache/hypothesis-helm/distributed
 ```
 
-The partition algorithm (`sha256-nodeid-v1`) hashes the UTF-8 pytest node ID
+For generated suites, the partition algorithm (`sha256-nodeid-v1`) hashes the UTF-8 pytest node ID
 relative to the suite root, then takes the result modulo TOTAL. It is independent
 of absolute checkout location, Python hash randomization, collection order, and
 worker scheduling. It runs after keyword selection. Different totals repartition
@@ -593,7 +594,7 @@ An empty overall selection, including a mistyped `--match`, still exits with
 pytest's no-tests status (5). Sharding is unavailable in the explicit
 `--whole-chart` and `--exhaustive` modes.
 
-`test` writes its generated suite and reports beneath
+Single-chart suite execution writes its generated suite and reports beneath
 `ARTIFACT_DIR/shards/INDEX-of-TOTAL/`. `run` reads the saved suite in place and
 writes reports beneath `SUITE/shards/INDEX-of-TOTAL/`, or under the supplied
 `--artifact-dir`. Each directory includes `shard.json` with the algorithm,
@@ -612,6 +613,40 @@ Auto concurrency uses each instance's available CPU count. Separate machines or
 CPU-limited containers provide independent resource budgets. On a shared host,
 set `--jobs N` per instance to avoid multiplying the automatic CPU budget.
 Custom fixtures must also avoid mutating shared files or external resources.
+
+### Recursive directories
+
+Point every shard at the same directory. Each discovers the same charts in the
+same order, filters each chart's input space, then tests only its assigned work:
+
+```sh
+# Run these on three separate CI jobs with the same checkout and run identifier.
+helm hypothesis test ./charts --shard 1/3 --jobs 2 --filter --seed 42 --run-id release-check --artifact-dir artifacts
+helm hypothesis test ./charts --shard 2/3 --jobs 2 --filter --seed 42 --run-id release-check --artifact-dir artifacts
+helm hypothesis test ./charts --shard 3/3 --jobs 2 --filter --seed 42 --run-id release-check --artifact-dir artifacts
+
+# After downloading all three artifacts into one directory:
+helm hypothesis aggregate artifacts --shards 3 --run-id release-check --output-dir docs/reports/release-check
+```
+
+Path testing assigns each retained values path to one shard. Finite testing
+assigns configurations; with failure expansion enabled, every configuration in
+a region stays on the same shard so expansion cannot duplicate another shard's
+work. This can produce uneven partitions. Baseline checks are local setup and
+may run on each active shard. Workers share their shard's chart timeout; shards
+advance independently, with no cross-runner barrier or work redistribution.
+
+Each shard writes `ARTIFACT_DIR/shards/INDEX-of-TOTAL/report.json` and `junit.xml`.
+An idle shard still publishes its inventory and exits successfully. Aggregation
+requires every shard, verifies chart content, settings and work ownership, and
+preserves failures and incomplete work in one report. Shard jobs retain raw
+reports; Markdown/PDF publication happens once during aggregation. Interrupted
+or missing shards cannot produce a successful final result.
+
+Cached recursive successes retain checksummed completion evidence for that
+shard's exact settings and inputs. An ordinary whole-chart cache entry cannot
+stand in for a shard's results. `--rerun all` forces fresh tests; changed charts
+and failed or incomplete outcomes are tested again.
 
 ## Values structure baselines
 

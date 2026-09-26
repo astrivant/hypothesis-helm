@@ -464,6 +464,8 @@ def check_paths(
             if phase["status"] in {"passed", "failed", "findings", "configuration-rejected", "ignored"} and not phase.get("stop_reason")
         ]
         result["work_partition"] = partition.report()
+        if not partition.report()["complete"] and result["status"] in {"passed", "findings", "ignored"}:
+            result["status"] = "incomplete"
     execution_errors = [phase for phase in [baseline, *phases] if phase.get("error_kind") == "execution"]
     if execution_errors:
         result.update(error_kind="execution", error=execution_errors[0]["error"], coverage_complete=False)

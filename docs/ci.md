@@ -166,8 +166,10 @@ accepted command, default and output. CLI restrictions still apply: an audit doe
 not accept execution budgets, remote scans do not support sharding, and filter
 presets cannot be mixed with their individual methods. Unsupported options fail
 rather than being silently ignored. `report`, custom `values`, dependency builds,
-and chart/scan timeouts select recursive execution, which requires `shard: none`;
-use `time-limit` with a generated single-chart suite.
+and chart/scan timeouts select recursive execution. Local recursive tests support
+sharding: each job discovers the same charts and tests its assigned work within
+each chart. Pass a common `run-id` and combine the uploaded results with
+`helm hypothesis aggregate`. Use `time-limit` with a generated single-chart suite.
 
 `exhaustive-group` accepts one comma-separated group per line. `ignore` accepts
 one finding code per line; `disable-codes` accepts comma-separated codes.

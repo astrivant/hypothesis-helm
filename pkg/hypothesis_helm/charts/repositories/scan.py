@@ -545,7 +545,7 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
                             coverage="reused completed tests with identical inputs and settings; no new tests executed",
                         )
                         continue
-                    if args.export_minimal_values is not None:
+                    if args.export_minimal_values is not None and (shard is None or shard.index == 1):
                         input_chart = load_input_chart(copy)
                         target = None
                         if args.export_minimal_values:
@@ -566,7 +566,7 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
                             build_dependencies=False,
                         )
                         record["input_inventory"] = mapping(record["minimal_values"])["input_inventory"]
-                    if args.export_topological_graph is not None:
+                    if args.export_topological_graph is not None and (shard is None or shard.index == 1):
                         target = None
                         if args.export_topological_graph:
                             filename = Path(args.export_topological_graph)

@@ -312,6 +312,14 @@ def check_chart(
             "random_space_exhaustive": False,
         }
     statistics = plan.statistics
+    if partition is not None and statistics is not None:
+        statistics.plan.values = finite_values or []
+        statistics.context["shard"] = {"index": partition.shard.index, "total": partition.shard.total}
+        LOGGER.info(
+            "Shard %s: %d assigned configurations; baseline checks may repeat as local setup",
+            partition.shard.name,
+            sum(partition.owns(unit) for unit in partition.initial),
+        )
     sensitivity: SensitivityOrder | None = None
     expansion_failures: list[dict[str, object]] = []
     expansion_checked = 0
