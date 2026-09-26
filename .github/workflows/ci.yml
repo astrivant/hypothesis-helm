@@ -38,8 +38,33 @@ defaults:
     shell: bash
 
 jobs:
+  go:
+    name: Go tests (${{ matrix.component }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - component: catalog extractors
+            module: pkg/hypothesis_helm_catalog/upstream
+          - component: Helm renderer
+            module: pkg/hypothesis_helm/compiler/assets/renderer
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: ${{ matrix.module }}/go.mod
+          cache-dependency-path: ${{ matrix.module }}/go.sum
+      - name: Test native Go code
+        env:
+          GO_MODULE: ${{ matrix.module }}
+        run: go -C "$GO_MODULE" test -v -timeout 10m ./...
+
   checks:
-    name: Lint, Go tests and parallel Python tests
+    name: Lint and parallel Python tests
     runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 30
     steps:
@@ -52,8 +77,6 @@ jobs:
         uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
-      - name: Check the Kubernetes and compiler source extractors
-        run: go -C pkg/hypothesis_helm_catalog/upstream test ./...
       - name: Cache the pinned random-input renderer
         uses: actions/cache@v5
         with:
@@ -278,7 +301,7 @@ jobs:
   refresh-prepare:
     name: Prepare shared inputs
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
-    needs: [checks, sharded-chart, aggregate, build, smoke]
+    needs: [go, checks, sharded-chart, aggregate, build, smoke]
     runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 60
     outputs:
@@ -421,7 +444,7 @@ jobs:
   publish:
     name: Publish verified distributions to PyPI
     if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
-    needs: [checks, sharded-chart, aggregate, build, smoke]
+    needs: [go, checks, sharded-chart, aggregate, build, smoke]
     environment: pypi
     runs-on: ubuntu-latest
     timeout-minutes: 10

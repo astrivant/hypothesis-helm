@@ -62,7 +62,7 @@ def test_release_requires_all_verification_and_matching_artifacts() -> None:
     assert "pull_request" in triggers
     jobs = {name: mapping(job) for name, job in mapping(release["jobs"]).items()}
     publish = jobs["publish"]
-    assert set(sequence(publish["needs"])) == {"checks", "sharded-chart", "aggregate", "build", "smoke"}
+    assert set(sequence(publish["needs"])) == {"go", "checks", "sharded-chart", "aggregate", "build", "smoke"}
     # No status override: GitHub's implicit success() still rejects failed or skipped prerequisites.
     assert publish["if"] == "${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}"
     assert publish["environment"] == "pypi"
@@ -95,11 +95,11 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         "default": False,
     }
     jobs = {name: mapping(job) for name, job in mapping(document["jobs"]).items()}
-    for name in ("checks", "sharded-chart", "build", "smoke"):
+    for name in ("go", "checks", "sharded-chart", "build", "smoke"):
         assert "needs" not in jobs[name] and "if" not in jobs[name]
     prepare = jobs["refresh-prepare"]
     assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
-    assert set(sequence(prepare["needs"])) == {"checks", "sharded-chart", "aggregate", "build", "smoke"}
+    assert set(sequence(prepare["needs"])) == {"go", "checks", "sharded-chart", "aggregate", "build", "smoke"}
     study = jobs["refresh-study"]
     assert study["needs"] == "refresh-prepare"
     assert mapping(study["strategy"])["fail-fast"] is False
@@ -131,6 +131,58 @@ def test_setup_receives_workflow_resolved_cache_policy() -> None:
             step = mapping(raw_step)
             if step.get("uses") in {"./.github/actions/setup-project", "./"}:
                 assert mapping(step["with"])["binary-cache"] == "${{ env.HH_BINARY_CACHE }}"
+
+
+def test_go_jobs_test_every_module_without_python_setup() -> None:
+    """
+    Start native tests independently of Python dependency resolution and use each module's Go version.
+
+    Returns:
+        None: Every Go module has an isolated test job with its own dependency cache.
+    """
+    job = mapping(mapping(workflows()["ci.yml"]["jobs"])["go"])
+    matrix = mapping(mapping(job["strategy"])["matrix"])
+    modules = {str(mapping(item)["module"]) for item in sequence(matrix["include"])}
+    assert modules == {str(path.parent.relative_to(ROOT)) for path in ROOT.glob("pkg/**/go.mod")}
+    steps = [mapping(step) for step in sequence(job["steps"])]
+    assert {str(step["uses"]).split("@")[0] for step in steps if "uses" in step} == {"actions/checkout", "actions/setup-go"}
+    setup = next(step for step in steps if str(step.get("uses", "")).startswith("actions/setup-go@"))
+    assert mapping(setup["with"])["go-version-file"] == "${{ matrix.module }}/go.mod"
+    assert mapping(setup["with"])["cache-dependency-path"] == "${{ matrix.module }}/go.sum"
+    test = next(step for step in steps if "run" in step)
+    assert mapping(test["env"])["GO_MODULE"] == "${{ matrix.module }}"
+    assert test["run"] == 'go -C "$GO_MODULE" test -v -timeout 10m ./...'
+
+
+def test_python_setup_reuses_locked_environment_without_resolving() -> None:
+    """
+    Cache the exact Python environment while always installing the current checkout's editable packages.
+
+    Returns:
+        None: Setup bounds installation, shows progress and invalidates caches when either package changes.
+    """
+    action = mapping(YAML(typ="safe").load((ROOT / ".github/actions/setup-project/action.yml").read_text()))
+    steps = [mapping(step) for step in sequence(mapping(action["runs"])["steps"])]
+    restore = next(step for step in steps if step.get("id") == "python-cache")
+    cache = mapping(restore["with"])
+    for coordinate in ("runner.os", "runner.arch", "steps.python.outputs.python-version", "poetry-2.1.3"):
+        assert coordinate in str(cache["key"])
+    for path in ("poetry.lock", "pyproject.toml", "pkg/hypothesis_helm_benchmarking/pyproject.toml"):
+        assert f"'{path}'" in str(cache["key"])
+    install = next(step for step in steps if "poetry install" in str(step.get("run", "")))
+    assert "if" not in install  # A cache hit must still refresh the editable project installs.
+    environment = mapping(install["env"])
+    assert environment["POETRY_KEYRING_ENABLED"] == environment["POETRY_INSTALLER_RE_RESOLVE"] == "false"
+    command = str(install["run"])
+    assert "poetry check --lock" in command
+    assert "timeout --signal=TERM --kill-after=30s 10m poetry install" in command
+    assert "--extras benchmarking --with dev --no-interaction --no-ansi -v" in command
+    save = next(step for step in steps if "python-cache.outputs.cache-hit" in str(step.get("if", "")))
+    assert mapping(save["with"])["path"] == cache["path"]
+    assert mapping(save["with"])["key"] == "${{ steps.python-cache.outputs.cache-primary-key }}"
+    assert steps.index(restore) < steps.index(install) < steps.index(save)
+    setup_go = next(step for step in steps if str(step.get("uses", "")).startswith("actions/setup-go@"))
+    assert mapping(setup_go["with"])["go-version-file"] == "pkg/hypothesis_helm/compiler/assets/renderer/go.mod"
 
 
 def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:

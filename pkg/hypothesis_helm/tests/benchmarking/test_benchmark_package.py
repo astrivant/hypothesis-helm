@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tomllib
 from email.parser import Parser
 from pathlib import Path
 from zipfile import ZipFile
@@ -17,6 +18,25 @@ from packaging.requirements import Requirement
 
 import hypothesis_helm
 from hypothesis_helm.tests import PROJECT_ROOT
+
+
+def test_benchmark_dependency_accepts_current_core_release() -> None:
+    """
+    Reject stale addon constraints before they can stall or fail installation of the benchmarking extra.
+
+    Returns:
+        None: Source metadata and the lock agree on a core requirement that accepts this release.
+    """
+    root = tomllib.loads((PROJECT_ROOT / "pyproject.toml").read_text())
+    addon = tomllib.loads((PROJECT_ROOT / "pkg/hypothesis_helm_benchmarking/pyproject.toml").read_text())
+    requirements = [Requirement(value) for value in addon["project"]["dependencies"]]
+    core = next(requirement for requirement in requirements if requirement.name == "hypothesis-helm")
+    assert core.specifier.contains(root["tool"]["poetry"]["version"], prereleases=True)
+    lock = tomllib.loads((PROJECT_ROOT / "poetry.lock").read_text())
+    package = next(package for package in lock["package"] if package["name"] == "hypothesis-helm-benchmarking")
+    assert Requirement(f"hypothesis-helm{package['dependencies']['hypothesis-helm']}").specifier == core.specifier
+    extra = Requirement(root["project"]["optional-dependencies"]["benchmarking"][0])
+    assert extra.specifier.contains(addon["project"]["version"], prereleases=True)
 
 
 @pytest.mark.integration
@@ -59,6 +79,7 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         ):
             assert declaration in entry_points.replace(" ", "")
         metadata = Parser().parsestr(archive.read(metadata_name).decode())
+        core_version = str(metadata["Version"])
         assert "benchmarking" in metadata.get_all("Provides-Extra", [])
         requirements = metadata.get_all("Requires-Dist", [])
         assert any(Requirement(line).name == "lupa" for line in requirements)
@@ -96,6 +117,8 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         metadata = Parser().parsestr(archive.read(metadata_name).decode())
         requirements = metadata.get_all("Requires-Dist", [])
         assert {"hypothesis-helm", "matplotlib", "numpy"} <= {Requirement(line).name for line in requirements}
+        core = next(Requirement(line) for line in requirements if Requirement(line).name == "hypothesis-helm")
+        assert core.specifier.contains(core_version, prereleases=True)
         entry_points = archive.read(metadata_name.replace("METADATA", "entry_points.txt")).decode()
         assert "hypothesis-helm-benchmark=hypothesis_helm_benchmarking.cli:main" in entry_points.replace(" ", "")
         assert not any(name.startswith("hypothesis_helm/") for name in archive.namelist())

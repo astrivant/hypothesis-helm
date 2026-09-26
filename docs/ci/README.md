@@ -180,6 +180,12 @@ matching `report-group`. Set `aggregate.package` to the same plugin revision use
 
 ## GitHub Actions
 
+The repository's [CI workflow](../../.github/workflows/ci.yml) runs native Go tests in independent jobs,
+without installing Python or the benchmarking extra. Each Go module selects its toolchain from `go.mod`.
+Python jobs cache their environment by Python version and package lock; installation still refreshes
+the checkout's editable packages on every run. It uses the locked dependency selections, prints verbose
+progress and stops after ten minutes if installation stalls.
+
 Our [CI chart validation jobs](../../.github/workflows/ci.yml) use incremental
 testing on PRs and `main`. It fetches full Git history and restores outcomes and manifest
 streams separately for each shard and Kubernetes version. Set the action's `incremental: 'true'`
