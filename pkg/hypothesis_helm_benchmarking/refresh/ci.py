@@ -24,7 +24,7 @@ def phase_operations(root: Path, phase: str, study: str | None = None) -> tuple[
 
     Args:
         root (Path): Shared relative workspace restored at the same path on each runner.
-        phase (str): Preparation, one study, or final verification and publication.
+        phase (str): Preparation, one study, graph publication, or full verification including repository scans.
         study (str | None): Required study identifier for a matrix job.
 
     Returns:
@@ -38,10 +38,20 @@ def phase_operations(root: Path, phase: str, study: str | None = None) -> tuple[
         selected = operations[: next(i for i, item in enumerate(operations) if item.name in STUDIES)]
     elif phase == "study" and study in STUDIES:
         selected = tuple(item for item in operations if item.name == study)
-    elif phase == "finish":
+    elif phase in {"graphs", "finish"}:
         selected = operations[next(i for i, item in enumerate(operations) if item.name == "measurements-finished") :]
+        if phase == "graphs":
+            # PR benchmarks publish studies without also spending hours scanning external repositories.
+            selected = selected[: next(i for i, item in enumerate(selected) if item.name == "diagrams-finished") + 1]
+            selected += (
+                Operation(
+                    "verify-benchmark-publication",
+                    (sys.executable, str(root / "verify-publication.py"), str(root), "--benchmarks-only"),
+                    ("diagrams-finished",),
+                ),
+            )
     else:
-        raise ValueError("Choose prepare, study with a declared --study, or finish")
+        raise ValueError("Choose prepare, study with a declared --study, graphs, or finish")
     names = {item.name for item in selected}
     return tuple(replace(item, requires=tuple(name for name in item.requires if name in names)) for item in selected)
 
@@ -77,7 +87,7 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
 
     Args:
         root (Path): Relative workspace path shared through workflow artifacts.
-        phase (str): Preparation, study or finish.
+        phase (str): Preparation, study, graph publication or full finish.
         study (str | None): Matrix study name.
         workers (int): Concurrent independent operations within this runner.
 
@@ -94,7 +104,7 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
         raise ValueError("Restore the prepared refresh artifact before running this phase")
     if phase == "study" and (root / "status.tsv").exists():
         raise ValueError("A matrix study requires a fresh copy of the prepared workspace")
-    if phase == "finish":
+    if phase in {"graphs", "finish"}:
         merge_statuses(root)
     directory = root if phase == "prepare" else root / "ci-jobs" / (study or phase)
     queue = OperationQueue(
@@ -122,7 +132,7 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
     if phase == "prepare":
         provenance_path = root / "provenance.json"
         provenance = json.loads(provenance_path.read_text())
-        provenance["execution"] = "Isolated CI study runners, verified aggregation and diagrams, then sequential repository tests"
+        provenance["execution"] = "Isolated CI study runners and verified diagrams; the full finish phase also runs repository tests"
         provenance["ci_run_id"] = env.get("GITHUB_RUN_ID")
         provenance["ci_run_attempt"] = env.get("GITHUB_RUN_ATTEMPT")
         provenance_path.write_text(json.dumps(provenance, indent=2) + "\n")

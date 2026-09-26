@@ -8,9 +8,13 @@ on:
   workflow_dispatch:
     inputs:
       refresh:
-        description: Run the full benchmark and report refresh after verification
+        description: Run required PR benchmarks and commit updated graphs after verification
         type: boolean
         default: false
+      pull-request:
+        description: Open PR number for refresh; select its head branch as the workflow ref
+        type: string
+        default: ''
       binary-cache:
         description: Reuse versioned binaries unless HH_BINARY_CACHE disables caching
         type: boolean
@@ -106,9 +110,10 @@ jobs:
       - name: Run this test shard across available CPUs
         env:
           SUITE_SHARD: ${{ matrix.shard }}/4
+          COVERAGE_FILE: .cache/tests/.coverage.${{ matrix.shard }}
         run: |
           bash scripts/project-run.sh pytest -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
-              -n auto --dist worksteal --junitxml=.cache/tests/pytest.xml
+              -n auto --dist worksteal --junitxml=.cache/tests/pytest.xml --cov --cov-config=pyproject.toml --cov-report=
       - name: Upload test results
         if: ${{ always() }}
         uses: actions/upload-artifact@v7
@@ -117,6 +122,92 @@ jobs:
           path: .cache/tests/
           include-hidden-files: true
           retention-days: 30
+
+  coverage:
+    name: Combine Python coverage
+    needs: python-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Install locked coverage tools
+        run: |
+          pip install poetry==2.1.3
+          poetry install --only dev --no-root --no-interaction
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: python-test-results-*
+          path: .cache/coverage-shards/
+      - name: Combine all four shards and export coverage
+        run: |
+          for shard in 1 2 3 4; do
+              test -s ".cache/coverage-shards/python-test-results-${shard}/.coverage.${shard}"
+          done
+          poetry run coverage combine .cache/coverage-shards/python-test-results-*/.coverage.*
+          poetry run coverage json -o coverage.json
+          poetry run coverage html -d .cache/coverage-html
+          poetry run coverage report >>"$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: python-coverage
+          path: |
+            coverage.json
+            .cache/coverage-html/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+  coverage-badge:
+    name: Publish coverage badge
+    needs: coverage
+    if: ${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: coverage-badge
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v8
+        with:
+          name: python-coverage
+      - name: Check whether the badge percentage changed
+        id: badge
+        run: |
+          previous="$RUNNER_TEMP/previous-coverage.svg"
+          if [[ -n "$(git ls-remote --heads origin refs/heads/gh-pages)" ]]; then
+              git fetch origin gh-pages
+              git show FETCH_HEAD:badges/coverage.svg >"$previous" || truncate -s 0 "$previous"
+          else
+              touch "$previous"
+          fi
+          python - "$previous" >>"$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          from xml.etree import ElementTree
+
+          percent = str(json.loads(Path("coverage.json").read_text())["totals"]["percent_covered_display"])
+          previous = Path(sys.argv[1]).read_text()
+          labels = set(ElementTree.fromstring(previous).itertext()) if previous else set()
+          print(f"changed={str(f'{percent}%' not in labels).lower()}")
+          PY
+      # v1.0.1 predates coverage.py support; pin the Python-capable action revision.
+      - uses: we-cli/coverage-badge-action@8a0b6ee05f6dd0f294089cbe7a848452a2b43eef
+        if: steps.badge.outputs.changed == 'true'
 
   sharded-chart:
     name: "Chart tests and Kubesec (Kubernetes ${{ matrix.kubernetes }}, shard ${{ matrix.shard }})"
@@ -323,10 +414,44 @@ jobs:
           include-hidden-files: true
           retention-days: 30
 
+  verification:
+    name: CI verification
+    if: ${{ always() }}
+    needs: [go, checks, python-tests, sharded-chart, aggregate, build, smoke]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every verification job to pass
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: jq -e 'all(.[]; .result == "success")' <<<"$RESULTS"
+
+  pr-benchmark-request:
+    name: Validate manual PR benchmark request
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+      statuses: write
+    outputs:
+      sha: ${{ steps.request.outputs.sha }}
+      base_sha: ${{ steps.request.outputs.base_sha }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Require the current head of an open PR
+        id: request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pull-request }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: bash .github/pr-benchmarks.sh validate
+
   refresh-prepare:
     name: Prepare shared inputs
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
-    needs: [go, checks, python-tests, sharded-chart, aggregate, build, smoke]
+    needs: [verification, pr-benchmark-request]
     runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 60
     outputs:
@@ -409,10 +534,16 @@ jobs:
           path: ${{ runner.temp }}/refresh-study-${{ matrix.study }}.tar.gz
           retention-days: 30
   refresh-finish:
-    name: Verify plots and scan chart repositories
-    needs: [refresh-prepare, refresh-study]
+    name: Verify and commit PR benchmark graphs
+    needs: [pr-benchmark-request, refresh-prepare, refresh-study]
     runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 360
+    permissions:
+      contents: write
+      pull-requests: read
+      actions: write
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
     env:
       ROOT: ${{ needs.refresh-prepare.outputs.root }}
     steps:
@@ -439,8 +570,16 @@ jobs:
           for archive in "$RUNNER_TEMP"/refresh-studies/*.tar.gz; do
               tar -xzf "$archive"
           done
-      - name: Verify measurements, publish diagrams, then test chart repositories
-        run: poetry run hypothesis-helm-refresh --ci-phase finish --root "$ROOT"
+      - name: Verify measurements and publish diagrams
+        run: poetry run hypothesis-helm-refresh --ci-phase graphs --root "$ROOT"
+      - name: Commit verified graphs and start checks on the new commit
+        id: commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pull-request }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          EXPECTED_BASE_SHA: ${{ needs.pr-benchmark-request.outputs.base_sha }}
+        run: bash .github/pr-benchmarks.sh commit
       - uses: actions/upload-artifact@v7
         if: ${{ always() }}
         with:
@@ -465,6 +604,31 @@ jobs:
           path: ${{ env.ROOT }}
           include-hidden-files: true
           retention-days: 30
+
+  pr-benchmark-result:
+    name: Record PR benchmark result
+    if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.refresh && needs.pr-benchmark-request.outputs.sha != '' }}
+    needs: [pr-benchmark-request, refresh-finish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      statuses: write
+    steps:
+      - name: Attach required status to the resulting PR commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ needs.refresh-finish.result }}
+          RESULT_SHA: ${{ needs.refresh-finish.outputs.sha || needs.pr-benchmark-request.outputs.sha }}
+        run: |
+          state=failure
+          description='Benchmarks failed, were cancelled, or became stale; inspect the manual run'
+          if [[ "$RESULT" == success ]]; then
+              state=success
+              description='Manual benchmarks passed; graphs are committed on this PR head'
+          fi
+          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$RESULT_SHA" \
+              -f state="$state" -f context='PR benchmark results' -f description="$description" \
+              -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
 
   publish:
     name: Publish verified distributions to PyPI

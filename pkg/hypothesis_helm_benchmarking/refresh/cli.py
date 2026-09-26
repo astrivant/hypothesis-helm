@@ -104,7 +104,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--workers", default="auto", help="concurrent independent refresh operations; auto uses available CPUs")
     parser.add_argument("--dry-run", action="store_true", help="print every operation and prerequisite without launching commands")
-    parser.add_argument("--ci-phase", choices=("prepare", "study", "finish"), help="run one artifact-connected GitHub refresh phase")
+    parser.add_argument(
+        "--ci-phase", choices=("prepare", "study", "graphs", "finish"), help="run one artifact-connected GitHub refresh phase"
+    )
     parser.add_argument("--root", type=Path, help="prepared CI workspace shared between jobs")
     parser.add_argument("--study", help="study assigned to this CI matrix job")
     args = parser.parse_args(argv)

@@ -320,11 +320,11 @@ ceilings, checks error-rate endpoints and intermediate cells across every method
 and checks chart replay and topology plots. These short runs verify the
 automation; their timings are not performance comparisons.
 
-For the complete hosted run, open **Actions > Benchmark and report refresh > Run workflow**.
-This dedicated manual workflow runs the full refresh and uploads measurements, plots,
-reports, and diagnostic logs for 30 days. It uses HTTPS for public submodules and
-leaves committing regenerated files to the reviewer. The workflow has a six-hour
-job limit; interrupted runs retain available artifacts and report incomplete status.
+Before merging a PR, open **Actions > CI > Run workflow**, select its head branch, enable **refresh**, and enter the PR number.
+The manual study matrix verifies and commits updated graphs and summaries to that branch, then starts CI on the graph commit.
+Measurements and diagnostic logs remain in artifacts for 30 days; raw LFS data is not committed.
+The [required PR benchmark gate](../development.md#github-ci) rejects stale runs. Each study has a six-hour job limit.
+Use the local full refresh command above when you also want fresh Bitnami and Prometheus scans.
 
 Render an exported compiler dependency graph with Matplotlib:
 

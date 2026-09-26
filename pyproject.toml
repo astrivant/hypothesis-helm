@@ -78,6 +78,7 @@ types-PyYAML = "^6.0"
 cogapp = ">=3.6,<4"
 numpy = ">=2,<3"
 pytest-xdist = ">=3.8,<4"
+pytest-cov = ">=7,<8"
 setuptools = ">=77"
 
 [tool.poetry.scripts]
@@ -103,6 +104,11 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = ["pkg/hypothesis_helm/tests"]
 markers = ["integration: requires Helm", "astrivant: optional neighboring Astrivant chart", "hypothesis_helm_path(path): schema path exercised by a generated test"]
+
+[tool.coverage.run]
+relative_files = true
+source = ["pkg/hypothesis_helm", "pkg/hypothesis_helm_catalog", "pkg/hypothesis_helm_benchmarking", "pkg/pipeline"]
+omit = ["*/tests/*", "*/assets/*"]
 
 [tool.ruff]
 line-length = 140

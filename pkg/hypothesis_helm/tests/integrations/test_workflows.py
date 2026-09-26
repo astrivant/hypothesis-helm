@@ -96,7 +96,7 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
     document = workflows()["ci.yml"]
     inputs = mapping(mapping(mapping(document["on"])["workflow_dispatch"])["inputs"])
     assert inputs["refresh"] == {
-        "description": "Run the full benchmark and report refresh after verification",
+        "description": "Run required PR benchmarks and commit updated graphs after verification",
         "type": "boolean",
         "default": False,
     }
@@ -105,15 +105,46 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         assert "needs" not in jobs[name] and "if" not in jobs[name]
     prepare = jobs["refresh-prepare"]
     assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
-    assert set(sequence(prepare["needs"])) == {"go", "checks", "python-tests", "sharded-chart", "aggregate", "build", "smoke"}
+    assert set(sequence(prepare["needs"])) == {"verification", "pr-benchmark-request"}
     study = jobs["refresh-study"]
     assert study["needs"] == "refresh-prepare"
     assert mapping(study["strategy"])["fail-fast"] is False
     assert "max-parallel" not in mapping(study["strategy"])
-    assert set(sequence(jobs["refresh-finish"]["needs"])) == {"refresh-prepare", "refresh-study"}
+    assert set(sequence(jobs["refresh-finish"]["needs"])) == {"pr-benchmark-request", "refresh-prepare", "refresh-study"}
     # Optional jobs cannot block the tag-only publisher.
     assert not set(sequence(jobs["publish"]["needs"])) & {"refresh-prepare", "refresh-study", "refresh-finish"}
     assert mapping(document["concurrency"])["cancel-in-progress"] == "${{ github.event_name == 'pull_request' }}"
+
+
+def test_pr_benchmarks_are_a_required_commit_bound_manual_gate() -> None:
+    """
+    Require an explicit PR benchmark status and fresh CI on the resulting graph commit.
+
+    Returns:
+        None: Skipped manual jobs cannot unlock merges and publication cannot bypass the benchmark matrix.
+    """
+    jobs = mapping(workflows()["ci.yml"]["jobs"])
+    verification = mapping(jobs["verification"])
+    assert verification["if"] == "${{ always() }}"
+    assert set(sequence(verification["needs"])) == {"go", "checks", "python-tests", "sharded-chart", "aggregate", "build", "smoke"}
+    request = mapping(jobs["pr-benchmark-request"])
+    assert request["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
+    finish = mapping(jobs["refresh-finish"])
+    steps = [mapping(step) for step in sequence(finish["steps"])]
+    assert any('--ci-phase graphs --root "$ROOT"' in str(step.get("run", "")) for step in steps)
+    assert not any("--ci-phase finish" in str(step.get("run", "")) for step in steps)
+    commit = next(step for step in steps if step.get("id") == "commit")
+    assert mapping(commit["env"])["EXPECTED_BASE_SHA"] == "${{ needs.pr-benchmark-request.outputs.base_sha }}"
+    result = mapping(jobs["pr-benchmark-result"])
+    assert "always()" in str(result["if"]) and "workflow_dispatch" in str(result["if"])
+    assert set(sequence(result["needs"])) == {"pr-benchmark-request", "refresh-finish"}
+    settings = mapping(YAML(typ="safe").load((ROOT / ".github/settings.yml").read_text()))
+    branch = mapping(sequence(settings["branches"])[0])
+    checks = mapping(mapping(branch["protection"])["required_status_checks"])
+    assert checks["strict"] is True
+    assert set(sequence(checks["contexts"])) == {"CI verification", "PR benchmark results"}
+    # Never reuse the custom status name for a conditionally skipped Actions job.
+    assert all(mapping(job)["name"] != "PR benchmark results" for job in jobs.values())
 
 
 def test_setup_receives_workflow_resolved_cache_policy() -> None:
@@ -212,6 +243,54 @@ def test_python_matrix_partitions_tests_and_artifacts() -> None:
     assert "matrix.shard" in str(mapping(upload["with"])["name"])
     assert "always()" in str(upload["if"])
     assert all("pre-commit" not in str(step.get("run", "")) for step in steps)
+
+
+def test_coverage_combines_every_shard_before_publishing() -> None:
+    """
+    Merge worker measurements instead of averaging percentages or publishing a single shard.
+
+    Returns:
+        None: All shard databases are required and coverage reports remain available on PRs.
+    """
+    document = workflows()["ci.yml"]
+    jobs = mapping(document["jobs"])
+    test_steps = [mapping(step) for step in sequence(mapping(jobs["python-tests"])["steps"])]
+    test = next(step for step in test_steps if "--suite-shard" in str(step.get("run", "")))
+    assert mapping(test["env"])["COVERAGE_FILE"] == ".cache/tests/.coverage.${{ matrix.shard }}"
+    assert "--cov --cov-config=pyproject.toml --cov-report=" in str(test["run"])
+    job = mapping(jobs["coverage"])
+    assert job["needs"] == "python-tests" and "if" not in job
+    steps = [mapping(step) for step in sequence(job["steps"])]
+    download = next(step for step in steps if str(step.get("uses", "")).startswith("actions/download-artifact@"))
+    assert mapping(download["with"])["pattern"] == "python-test-results-*"
+    assert "merge-multiple" not in mapping(download["with"])
+    combine = next(str(step["run"]) for step in steps if "coverage combine" in str(step.get("run", "")))
+    assert "for shard in 1 2 3 4" in combine and "test -s " in combine
+    assert "coverage combine .cache/coverage-shards/python-test-results-*/.coverage.*" in combine
+    assert "coverage json -o coverage.json" in combine
+    assert mapping(document["permissions"]) == {"contents": "read"}
+
+
+def test_coverage_badge_only_writes_on_successful_default_branch_pushes() -> None:
+    """
+    Keep badge updates out of PRs and releases, with one writer and a reviewed action revision.
+
+    Returns:
+        None: Only the badge job can publish its merged result and unchanged badges are skipped.
+    """
+    jobs = mapping(workflows()["ci.yml"]["jobs"])
+    job = mapping(jobs["coverage-badge"])
+    assert job["needs"] == "coverage"
+    assert (
+        job["if"] == "${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
+    )
+    assert mapping(job["permissions"]) == {"contents": "write"}
+    assert mapping(job["concurrency"])["group"] == "coverage-badge"
+    steps = [mapping(step) for step in sequence(job["steps"])]
+    action = next(step for step in steps if str(step.get("uses", "")).startswith("we-cli/coverage-badge-action@"))
+    assert action["uses"] == "we-cli/coverage-badge-action@8a0b6ee05f6dd0f294089cbe7a848452a2b43eef"
+    assert action["if"] == "steps.badge.outputs.changed == 'true'"
+    assert "coverage-badge" not in sequence(mapping(jobs["publish"])["needs"])
 
 
 def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:

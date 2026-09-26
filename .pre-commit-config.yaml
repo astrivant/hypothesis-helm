@@ -26,13 +26,13 @@ repos:
         entry: bash scripts/project-run.sh shfmt -w
         language: system
         types: [shell]
-        files: ^(scripts/|ansible/|pkg/hypothesis_helm/integrations/|pkg/hypothesis_helm_benchmarking/)
+        files: ^(\.github/|scripts/|ansible/|pkg/hypothesis_helm/integrations/|pkg/hypothesis_helm_benchmarking/)
       - id: shellcheck
         name: ShellCheck
         entry: shellcheck
         language: system
         types: [shell]
-        files: ^(scripts/|ansible/|pkg/hypothesis_helm/integrations/|pkg/hypothesis_helm_benchmarking/)
+        files: ^(\.github/|scripts/|ansible/|pkg/hypothesis_helm/integrations/|pkg/hypothesis_helm_benchmarking/)
       - id: ci-shell
         name: CI shell formatting and ShellCheck
         entry: bash scripts/project-run.sh hypothesis-helm-ci-shell --write

@@ -44,6 +44,23 @@ def test_ci_phases_partition_refresh() -> None:
     assert next(item for item in finish if item.name == "prometheus").requires == ("bitnami-finalize",)
 
 
+def test_pr_graph_phase_verifies_publication_without_repository_scans() -> None:
+    """
+    Preserve study, topology and publication checks while excluding fresh external repository scans.
+
+    Returns:
+        None: PR publication ends with checksum and link verification after summaries are updated.
+    """
+    operations = phase_operations(Path(".cache/refresh/refresh-1"), "graphs")
+    names = {item.name for item in operations}
+    assert {"verify-measurements", "verify-topologies", "publish", "update-benchmarks", "flamegraphs"} <= names
+    assert not {"bitnami", "prometheus", "bitnami-finalize", "prometheus-finalize"} & names
+    assert operations[-1].name == "verify-benchmark-publication"
+    assert operations[-1].requires == ("diagrams-finished",)
+    assert operations[-1].command[-1] == "--benchmarks-only"
+    assert all(set(item.requires) <= names for item in operations)
+
+
 @pytest.mark.parametrize("damage", [None, "missing", "failed", "duplicate", "unexpected", "mislabeled"])
 def test_merge_ci_statuses(tmp_path: Path, damage: str | None) -> None:
     """

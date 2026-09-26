@@ -2,10 +2,10 @@
 Verify refreshed artifacts, scan provenance, and local documentation links.
 """
 
+import argparse
 import hashlib
 import json
 import re
-import sys
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -14,7 +14,11 @@ from hypothesis_helm_benchmarking.reporting.publication import STUDIES, document
 __all__ = ()
 
 
-root = Path(sys.argv[1])
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("root", type=Path)
+parser.add_argument("--benchmarks-only", action="store_true", help="verify studies without requiring fresh repository scans")
+args = parser.parse_args()
+root = args.root
 benchmarks = Path("docs/benchmarking")
 checksums = json.loads((root / "sha256.json").read_text())
 documentation_edits = {}
@@ -59,7 +63,8 @@ for name, expected in sources.items():
     assert hashlib.sha256((root / "frozen-source" / name).read_bytes()).hexdigest() == expected, f"Measured application changed: {name}"
 
 scans = {}
-for name, directory in json.loads((root / "provenance.json").read_text())["repository_scans"].items():
+repositories = {} if args.benchmarks_only else json.loads((root / "provenance.json").read_text())["repository_scans"]
+for name, directory in repositories.items():
     run = Path(directory)
     verification = json.loads((run / "verification.json").read_text())
     assert verification["sampled_counterexamples_with_excluded_controls"] == 0
@@ -70,7 +75,9 @@ for name, directory in json.loads((root / "provenance.json").read_text())["repos
         assert hashlib.sha256(path.read_bytes()).hexdigest() == expected, path
     scans[name] = {"retained_files": len(ledger), **verification}
 
-documents = [Path("README.md"), Path("docs/reports/bitnami.md"), Path("docs/reports/prometheus.md")]
+documents = [Path("README.md")]
+if not args.benchmarks_only:
+    documents.extend([Path("docs/reports/bitnami.md"), Path("docs/reports/prometheus.md")])
 documents.append(benchmarks / "README.md")
 documents.extend(STUDIES.rglob("*.md"))
 links = 0

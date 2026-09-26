@@ -180,19 +180,43 @@ logs and artifacts. One [workflow file](../.github/workflows/ci.yml) owns PR che
 | Jobs | Purpose | When they run |
 | --- | --- | --- |
 | Code checks | Pre-commit hooks, Go tests and parallel Python tests. | PR updates, `main`, version tags and manual runs. |
+| Python coverage | Combine coverage from all four test shards and retain JSON and HTML reports. | After all Python shards pass. |
+| Coverage badge | Update the README badge on `gh-pages`. | Successful default-branch pushes only. |
 | Chart tests and aggregation | Validate schemas, run Kubesec and combine shard reports. | Every CI run. |
 | Package build | Build distributions and test the installed Helm plugin. Tags also verify the catalog. | Every CI run. |
 | Benchmark smoke tests | Check benchmark recipes and plot generation with short runs. | Every CI run. |
-| Full refresh | Run all studies, regenerate plots and scan the chart repositories. | Manual runs with `refresh=true`, after verification passes. |
+| PR benchmarks | Run all studies, verify plots and commit updated graphs and summaries to the PR branch. | Manually requested for an open PR, after verification passes. Required before merge. |
 | Publish to PyPI | Publish the verified versioned distributions using the `pypi` environment. | Pushed version tags, after every verification job passes. |
 
 Code checks, chart tests, package builds and smoke tests run in parallel within the same run.
-Full refresh and publishing have separate conditions; neither runs on an ordinary PR or branch push.
-To start the full refresh from the same entry point:
+The [coverage badge action](https://github.com/marketplace/actions/coverage-badge) publishes combined Python statement coverage,
+excluding tests and bundled assets. Go code and independently launched subprocesses are not measured by this badge.
+Download the `python-coverage` artifact for the HTML report. The badge publisher and manual graph publisher receive repository write permission;
+PRs and tags do not update the badge. The action creates `gh-pages` on its first run; the README uses its raw SVG URL,
+so enabling GitHub Pages is unnecessary. No extra token is required, but repository rules must allow the job to write `gh-pages`.
+Benchmark publication and PyPI publishing have separate conditions; neither runs automatically on a PR update.
+Just before merging, start the benchmark run on your PR's current head branch:
 
 ```sh
-gh workflow run ci.yml -f refresh=true
+gh workflow run ci.yml --ref my-pr-branch -f refresh=true -f pull-request=123
 ```
+
+In the Actions UI, choose **CI → Run workflow**, select the PR branch, enable `refresh`, and enter its PR number.
+The PR must be open, ready for review, target the default branch and belong to this repository. Fork contributors must first
+have a maintainer create a branch here. Runs on `main`, tags, closed PRs, or a stale head are rejected.
+
+The studies run in parallel, then the workflow verifies their graphs, checksums and documentation links. It commits only final
+Markdown, PNG, SVG and PDF publications under `studies/`, `docs/benchmarking/` and the root README. Raw data remains in the
+downloadable run artifacts. The local `hypothesis-helm-refresh` command still includes Bitnami and Prometheus scans;
+the PR benchmark gate stops after study publication.
+
+The required **PR benchmark results** status is attached to the graph commit, and CI is explicitly dispatched on that commit.
+If the generated publications are unchanged, no empty commit is created. **CI verification** must also pass before merging.
+Any later source commit requires a new manual benchmark run. A head or base change during benchmarking rejects publication
+instead of pushing stale graphs. Graph commits can dismiss earlier approvals under the existing review policy, so approve the final commit.
+
+[`.github/settings.yml`](../.github/settings.yml) declares both required checks with strict branch protection. The repository's
+Settings app must apply that file; editing it locally does not change GitHub's live protection. Administrators retain the existing bypass policy.
 
 The shared [project setup action](../.github/actions/setup-project/action.yml) installs the same tools for checks, builds and benchmarks.
 Every pull request update runs all configured pre-commit hooks against all files and tests the PR's head commit.

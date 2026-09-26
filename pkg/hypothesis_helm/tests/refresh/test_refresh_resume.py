@@ -224,12 +224,14 @@ def test_resume_preserves_partial_attempts_before_retry(tmp_path: Path, stage: s
         assert (root / relative / "complete.json").read_text() == "new evidence"
 
 
-def test_publication_distinguishes_readme_edits_from_changed_measurements(tmp_path: Path) -> None:
+@pytest.mark.parametrize("benchmarks_only", [False, True])
+def test_publication_distinguishes_readme_edits_from_changed_measurements(tmp_path: Path, benchmarks_only: bool) -> None:
     """
     Keep measured files immutable while recording later edits to published study explanations.
 
     Args:
         tmp_path (Path): Minimal repository and saved refresh evidence.
+        benchmarks_only (bool): Verify PR studies without requiring repository scan artifacts.
 
     Returns:
         None: Editorial changes pass only with the original retained evidence; data changes fail.
@@ -267,6 +269,11 @@ def test_publication_distinguishes_readme_edits_from_changed_measurements(tmp_pa
     (captures / "index.json").write_text(json.dumps({"worker_processes": 1, "incomplete_captures": 0, "figures": figures, "captures": 2}))
     recipe = files("hypothesis_helm_benchmarking.refresh").joinpath("recipes/verify-publication.py")
     command = [sys.executable, str(recipe), str(root)]
+    if benchmarks_only:
+        command.append("--benchmarks-only")
+        (root / "provenance.json").unlink()
+        for report in (tmp_path / "docs/reports").glob("*.md"):
+            report.unlink()
     subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, check=True)
     report = json.loads((root / "publication-verification.json").read_text())
     assert report["verified_benchmark_artifacts"] == 1

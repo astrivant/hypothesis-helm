@@ -17,6 +17,8 @@
 - [Citation](#citation)
 <!-- toc:end -->
 
+[![Python coverage](https://raw.githubusercontent.com/astrivant/hypothesis-helm/gh-pages/badges/coverage.svg)](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml)
+
 Test Helm charts with automatically generated `values.yaml` inputs. Built on Python's
 Hypothesis<sup>[\[1\]](https://github.com/HypothesisWorks/hypothesis/)</sup> testing framework, this tool
 generates inputs from declared or inferred types<sup>[\[2\]](docs/inputs/README.md#declared-and-inferred-types)</sup>,

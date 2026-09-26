@@ -76,7 +76,8 @@ original paths; use the latest completed journal when inspecting those archived 
 ## Parallel refresh on GitHub Actions
 
 Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml), select **Run workflow**,
-and enable **refresh**. Once code checks, chart validation, packaging and smoke tests pass, preparation rebuilds the pinned
+select the open PR's head branch, enable **refresh**, and enter its **pull-request** number.
+Once code checks, chart validation, packaging and smoke tests pass, preparation rebuilds the pinned
 dependencies, checks the generated project and snapshots its inputs once.
 GitHub runs each declared study on a separate runner, using the same source snapshot and parameters.
 The matrix comes from the Python study inventory, so adding a study also adds its CI job.
@@ -85,19 +86,24 @@ See [GitHub's matrix concurrency documentation](https://docs.github.com/en/actio
 
 Each study owns its output directory, status file and process journal. A failed study retains diagnostics without cancelling
 other studies. The final job requires every study to succeed, verifies the merged measurements, and publishes pages and plots
-under `studies/`, then runs Bitnami followed by Prometheus. Reports, studies, and the separate `refresh-resume-data` artifact
+under `studies/`, then commits final plots and summaries to the PR branch. The hosted PR run does not run new Bitnami or
+Prometheus scans. Studies and the separate `refresh-resume-data` artifact
 are retained for 30 days.
 Jobs default to `ubuntu-latest`. Set `HH_CI_RUNNER` to the label of an available larger Ubuntu x64 runner to use more cores.
 
 After pushing the workflow changes, launch it with:
 
 ```sh
-gh workflow run ci.yml -f refresh=true
+gh workflow run ci.yml --ref my-pr-branch -f refresh=true -f pull-request=123
 ```
 
 Local `bash scripts/project-run.sh hypothesis-helm-refresh` still runs timing studies sequentially on one machine to avoid CPU contention affecting
-measurements. Its `--workers` option controls independent operations within that machine; the GitHub matrix supplies separate
+measurements, followed by both repository scans. Its `--workers` option controls independent operations within that machine; the GitHub matrix supplies separate
 machines for concurrent studies. Each GitHub study job has a six-hour execution limit.
+
+The manual PR run is required before merge. Its status applies only to the measured commit and the graph-only commit it produces.
+A later source commit requires another manual run. The workflow rejects changed PR heads or bases before pushing,
+never force-pushes, and starts regular CI on its graph commit. See [the merge gate and repository settings](../development.md#github-ci).
 
 Sensitivity measures 48 input changes and all 1,128 pairs on the shared benchmark chart, with 64 structural components and a nine-minute budget.
 It retains the chart sources and mutation inputs, before publication and repository scans.
