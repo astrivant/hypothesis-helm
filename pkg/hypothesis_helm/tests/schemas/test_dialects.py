@@ -29,6 +29,36 @@ DRAFTS = (DRAFT4, DRAFT6, DRAFT7, DRAFT2019, DRAFT2020)
 
 
 @pytest.mark.parametrize("draft", [DRAFT7, DRAFT2019, DRAFT2020])
+@pytest.mark.parametrize(
+    "conditional",
+    [
+        {"if": {"minimum": 0}, "then": {"maximum": 1}, "else": {"minimum": -1}},
+        {"if": True, "then": False},
+        {"if": False, "else": False},
+        {"if": {"type": "integer"}},
+        {"then": False, "else": False},
+        {"if": {"type": "integer"}, "then": {"if": {"minimum": 0}, "then": {"maximum": 2}, "else": {"minimum": -2}}},
+    ],
+)
+def test_conditional_lowering_preserves_accepted_values(draft: str, conditional: dict[str, object]) -> None:
+    """
+    Compare branch rewrites with native validators, including absent branches and nonnumeric inputs.
+
+    Args:
+        draft (str): Original conditional-supporting schema dialect.
+        conditional (dict[str, object]): Conditional or ignored branch annotations.
+
+    Returns:
+        None: Lowering neither adds nor removes accepted values in the comparison population.
+    """
+    schema = {"$schema": draft, **conditional}
+    original = validators.validator_for(schema)(schema)
+    lowered = Draft7Validator(generation_view(schema))
+    for value in [*range(-3, 4), None, True, False, "text", [], {}]:
+        assert lowered.is_valid(value) == original.is_valid(value), value
+
+
+@pytest.mark.parametrize("draft", [DRAFT7, DRAFT2019, DRAFT2020])
 @pytest.mark.parametrize("branches", [{"then": False}, {"else": False}, {"then": False, "else": False}])
 def test_impossible_conditionals_do_not_poison_later_generation(draft: str, branches: dict[str, object]) -> None:
     """
