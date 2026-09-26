@@ -177,7 +177,8 @@ def test_repository_exports_basename_only(chart: Chart, tmp_path: Path, capsys: 
     nested = tmp_path / "nested"
     shutil.copytree(chart.path, nested, ignore=shutil.ignore_patterns("nested"))
     listing = tmp_path / "files.txt"
-    assert main(["export-minimal-values", str(chart.path), "--files-list", str(listing)]) == 0
+    # Keep diagnostics separate from the JSON export inventory consumed below.
+    assert main(["export-minimal-values", str(chart.path), "--files-list", str(listing), "--log-file", "/dev/stderr"]) == 0
     summary = json.loads(capsys.readouterr().out)
     assert summary["exported"] == 2
     assert set(listing.read_bytes().split(b"\0")[:-1]) == {
