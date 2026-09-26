@@ -7,7 +7,11 @@ if (($# == 0)); then
     exit 2
 fi
 if [[ -d .venv/bin ]]; then
-    executable="$(pwd)/.venv/bin/$1"
+    # Nested tools must resolve from this environment too (for example ci-shell invoking shfmt).
+    VIRTUAL_ENV="$(pwd)/.venv"
+    export VIRTUAL_ENV
+    export PATH="$VIRTUAL_ENV/bin:$PATH"
+    executable="$VIRTUAL_ENV/bin/$1"
     shift
     exec "$executable" "$@"
 fi
