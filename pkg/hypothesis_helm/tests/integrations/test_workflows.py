@@ -110,7 +110,12 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
     assert study["needs"] == "refresh-prepare"
     assert mapping(study["strategy"])["fail-fast"] is False
     assert "max-parallel" not in mapping(study["strategy"])
-    assert set(sequence(jobs["refresh-finish"]["needs"])) == {"pr-benchmark-request", "refresh-prepare", "refresh-study"}
+    assert set(sequence(jobs["refresh-finish"]["needs"])) == {
+        "pr-benchmark-request",
+        "refresh-prepare",
+        "refresh-study",
+        "refresh-error-surface-merge",
+    }
     # Optional jobs cannot block the tag-only publisher.
     assert not set(sequence(jobs["publish"]["needs"])) & {"refresh-prepare", "refresh-study", "refresh-finish"}
     assert mapping(document["concurrency"])["cancel-in-progress"] == "${{ github.event_name == 'pull_request' }}"
@@ -320,3 +325,22 @@ def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
     save = next(step for step in steps if str(step.get("uses", "")).startswith("actions/cache/save@"))
     assert "always()" in str(save["if"])
     assert mapping(save["with"])["path"] == settings["path"]
+
+
+def test_error_surface_has_eight_isolated_shards() -> None:
+    """
+    Partition the costly surface on free four-core runners and join before publishing.
+
+    Returns:
+        None: The study cannot publish until all eight shards have been verified.
+    """
+    jobs = mapping(workflows()["ci.yml"]["jobs"])
+    shard = mapping(jobs["refresh-error-surface"])
+    assert shard["runs-on"] == "ubuntu-latest"
+    strategy = mapping(shard["strategy"])
+    assert mapping(strategy["matrix"])["shard"] == list(range(8))
+    assert strategy["max-parallel"] == 8
+    assert strategy["fail-fast"] is False
+    merge = mapping(jobs["refresh-error-surface-merge"])
+    assert set(sequence(merge["needs"])) == {"refresh-prepare", "refresh-error-surface"}
+    assert "refresh-error-surface-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])

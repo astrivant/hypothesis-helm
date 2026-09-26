@@ -139,4 +139,4 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
         path = env.get("GITHUB_OUTPUT")
         if path:
             with Path(path).open("a") as output:
-                output.write(f"root={root}\nmatrix={json.dumps({'study': list(STUDIES)})}\n")
+                output.write(f"root={root}\nmatrix={json.dumps({'study': [name for name in STUDIES if name != 'error-surface']})}\n")

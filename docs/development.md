@@ -190,7 +190,7 @@ logs and artifacts. One [workflow file](../.github/workflows/ci.yml) owns PR che
 | Chart tests and aggregation | Validate schemas, run Kubesec and combine shard reports. | Every CI run. |
 | Package build | Build distributions and test the installed Helm plugin. Tags also verify the catalog. | Every CI run. |
 | Benchmark smoke tests | Check benchmark recipes and plot generation with short runs. | Every CI run. |
-| PR benchmarks | Run all studies, verify plots and commit updated graphs and summaries to the PR branch. | Manually requested for an open PR, after verification passes. Required before merge. |
+| PR benchmarks | Run studies independently, distribute the error surface across eight 4-core runners, verify plots and commit updated graphs and summaries to the PR branch. | Manually requested for an open PR, after verification passes. Required before merge. |
 | Publish to PyPI | Publish the verified versioned distributions using the `pypi` environment. | Pushed version tags, after every verification job passes. |
 
 Code checks, chart tests, package builds and smoke tests run in parallel within the same run.

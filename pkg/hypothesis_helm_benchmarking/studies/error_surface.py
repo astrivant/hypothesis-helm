@@ -106,12 +106,21 @@ def verify(document: dict[str, object]) -> None:
     metadata = mapping(document["metadata"])
     rows = [mapping(row) for row in sequence(document["rows"])]
     populations = mapping(document["populations"])
-    expected = {
-        (axis, value, rate, repeat, method)
+    groups = [
+        (axis, value, rate, repeat)
         for axis, settings in mapping(metadata["axes"]).items()
-        for value, rate, repeat, method in itertools.product(
-            sequence(settings), sequence(metadata["error_rates"]), range(int(str(metadata["repeats"]))), sequence(metadata["methods"])
+        for value, repeat, rate in itertools.product(
+            sequence(settings), range(int(str(metadata["repeats"]))), sequence(metadata["error_rates"])
         )
+    ]
+    shard_count = int(str(metadata.get("shard_count", 1)))
+    shard_index = int(str(metadata.get("shard_index", 0)))
+    assert shard_count > 0 and 0 <= shard_index < shard_count
+    expected = {
+        (*group, method)
+        for index, group in enumerate(groups)
+        if index % shard_count == shard_index
+        for method in sequence(metadata["methods"])
     }
     assert metadata["status"] == "complete"
     assert len(rows) == len(expected)
@@ -210,9 +219,28 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     )
     parser.add_argument("--time-limit", type=parse_time_limit, default=540)
     parser.add_argument("--helm", default="helm")
+    parser.add_argument("--shard-index", type=int, default=0, help="zero-based paired-measurement shard")
+    parser.add_argument("--shard-count", type=int, default=1)
+    parser.add_argument("--merge-shards", type=Path, nargs="+", help="verify and merge shard results before plotting")
     parser.add_argument("--plot-only", action="store_true")
     parser.add_argument("--symbolic-fit", action="store_true", help="also compare optional PySR fits with quadratics on held-out data")
     args = parser.parse_args(argv)
+    if args.shard_count < 1 or not 0 <= args.shard_index < args.shard_count:
+        parser.error("require a positive shard count and 0 <= shard-index < shard-count")
+    if args.merge_shards:
+        from hypothesis_helm_benchmarking.studies.surface_shards import merge
+
+        merged = merge(args.merge_shards)
+        if (args.output / "results.json").exists():
+            parser.error("choose a new output directory for merged results")
+        args.output.mkdir(parents=True, exist_ok=True)
+        save(args.output, merged)
+        plot(args.output, merged)
+        if args.symbolic_fit:
+            from hypothesis_helm_benchmarking.studies.symbolic_surface import main as symbolic_main
+
+            return symbolic_main(["--input", str(args.output / "results.json")])
+        return 0
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         if args.symbolic_fit:
@@ -271,6 +299,8 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             "time_limit_seconds": args.time_limit,
             "time_limit_scope": "execution per method; planning measured separately",
             "workers": 1,
+            "shard_count": args.shard_count,
+            "shard_index": args.shard_index,
             "assertion": "Rendered quantile must match the input-aware specification; selected inputs require a corrected value.",
             "cache": "Fresh per-method render hashes and compiler cache; no shared outcome cache; OS caches may remain warm.",
         },
@@ -279,6 +309,9 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     }
     metadata = mapping(document["metadata"])
     total_runs = sum(len(values) for values in axes.values()) * len(args.error_rates) * args.repeats * len(args.methods)
+    total_groups = total_runs // len(args.methods)
+    total_runs = len(range(args.shard_index, total_groups, args.shard_count)) * len(args.methods)
+    group_index = -1
     failed = False
     try:
         with BenchmarkProgress("Error-rate surfaces") as display:
@@ -302,6 +335,10 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                     reference = reference_space(chart, spec, 2**args.input_complexity)
                     for repeat in range(args.repeats):
                         for rate in args.error_rates:
+                            group_index += 1
+                            # Keep every method for a population together, including its randomized execution order.
+                            if group_index % args.shard_count != args.shard_index:
+                                continue
                             population = ErrorPopulation.build(tuple(sorted(chart.defaults)), rate, clustering, args.error_seed + repeat)
                             population_key = hashlib.sha256(configuration_key({"failed": sorted(population.failed)}).encode()).hexdigest()
                             populations[population_key] = sorted(population.failed)
@@ -370,15 +407,16 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     except KeyboardInterrupt:
         metadata["status"] = "interrupted"
         save(args.output, document)
-        if rows:
+        if rows and args.shard_count == 1:
             plot(args.output, document)
         return 130
     metadata["status"] = "failed" if failed else "complete"
     save(args.output, document)
     if not failed:
         verify(document)
-    plot(args.output, document)
-    if args.symbolic_fit and not failed:
+    if args.shard_count == 1:
+        plot(args.output, document)
+    if args.symbolic_fit and args.shard_count == 1 and not failed:
         from hypothesis_helm_benchmarking.studies.symbolic_surface import main as symbolic_main
 
         return symbolic_main(["--input", str(args.output / "results.json")])
