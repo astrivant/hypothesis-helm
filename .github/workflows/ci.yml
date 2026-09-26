@@ -609,9 +609,83 @@ jobs:
           name: refresh-study-error-surface
           path: ${{ runner.temp }}/refresh-study-error-surface.tar.gz
           retention-days: 30
+  refresh-stress:
+    name: "Stress progression (${{ matrix.shard }}/6)"
+    needs: refresh-prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    env:
+      ROOT: ${{ needs.refresh-prepare.outputs.root }}
+      SHARD: ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-prepared
+          path: ${{ runner.temp }}/refresh-input
+      - name: Restore prepared inputs
+        run: tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
+      - name: Measure paired stress shard
+        run: |
+          set -o pipefail
+          mkdir -p "$ROOT/stress-shards/$SHARD"
+          poetry run hypothesis-helm-benchmark stress --time-limit 9m \
+              --shard-index "$SHARD" --shard-count 6 --output "$ROOT/stress-shards/$SHARD" \
+              2>&1 | tee "$ROOT/stress-shards/$SHARD/run.log"
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: refresh-stress-${{ matrix.shard }}
+          path: ${{ env.ROOT }}/stress-shards/${{ matrix.shard }}/
+          include-hidden-files: true
+          retention-days: 30
+  refresh-stress-merge:
+    name: Verify and plot stress progression
+    needs: [refresh-prepare, refresh-stress]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      ROOT: ${{ needs.refresh-prepare.outputs.root }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-prepared
+          path: ${{ runner.temp }}/refresh-input
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: refresh-stress-*
+          path: ${{ runner.temp }}/stress-shards
+      - name: Merge verified measurements and generate plots
+        run: |
+          tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
+          poetry run hypothesis-helm-benchmark stress \
+              --merge-shards "$RUNNER_TEMP"/stress-shards/*/results.json \
+              --output "$ROOT/outputs/stress"
+          python "$ROOT/verify-measurements.py" "$ROOT" --study stress
+          mkdir -p "$ROOT/statuses"
+          printf 'stress\t0\n' >"$ROOT/statuses/stress.tsv"
+          tar -czf "$RUNNER_TEMP/refresh-study-stress.tar.gz" \
+              "$ROOT/outputs/stress" "$ROOT/statuses/stress.tsv"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: refresh-study-stress
+          path: ${{ runner.temp }}/refresh-study-stress.tar.gz
+          retention-days: 30
   refresh-finish:
     name: Verify and commit PR benchmark graphs
-    needs: [pr-benchmark-request, refresh-prepare, refresh-study, refresh-error-surface-merge]
+    needs: [pr-benchmark-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge]
     runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 360
     permissions:

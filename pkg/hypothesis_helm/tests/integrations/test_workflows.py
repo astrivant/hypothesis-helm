@@ -115,6 +115,7 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         "refresh-prepare",
         "refresh-study",
         "refresh-error-surface-merge",
+        "refresh-stress-merge",
     }
     # Optional jobs cannot block the tag-only publisher.
     assert not set(sequence(jobs["publish"]["needs"])) & {"refresh-prepare", "refresh-study", "refresh-finish"}
@@ -344,3 +345,22 @@ def test_error_surface_has_eight_isolated_shards() -> None:
     merge = mapping(jobs["refresh-error-surface-merge"])
     assert set(sequence(merge["needs"])) == {"refresh-prepare", "refresh-error-surface"}
     assert "refresh-error-surface-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])
+
+
+def test_stress_has_six_isolated_shards() -> None:
+    """
+    Keep stress comparisons on six free four-core runners before publication.
+
+    Returns:
+        None: Every shard is required and can finish independently of failed peers.
+    """
+    jobs = mapping(workflows()["ci.yml"]["jobs"])
+    shard = mapping(jobs["refresh-stress"])
+    assert shard["runs-on"] == "ubuntu-latest"
+    strategy = mapping(shard["strategy"])
+    assert mapping(strategy["matrix"])["shard"] == list(range(6))
+    assert strategy["max-parallel"] == 6
+    assert strategy["fail-fast"] is False
+    merge = mapping(jobs["refresh-stress-merge"])
+    assert set(sequence(merge["needs"])) == {"refresh-prepare", "refresh-stress"}
+    assert "refresh-stress-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])

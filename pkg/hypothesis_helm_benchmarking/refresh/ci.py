@@ -138,5 +138,6 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
         provenance_path.write_text(json.dumps(provenance, indent=2) + "\n")
         path = env.get("GITHUB_OUTPUT")
         if path:
+            matrix = {"study": [name for name in STUDIES if name not in {"error-surface", "stress"}]}
             with Path(path).open("a") as output:
-                output.write(f"root={root}\nmatrix={json.dumps({'study': [name for name in STUDIES if name != 'error-surface']})}\n")
+                output.write(f"root={root}\nmatrix={json.dumps(matrix)}\n")

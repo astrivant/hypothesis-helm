@@ -324,11 +324,12 @@ Before merging a PR, open **Actions > CI > Run workflow**, select its head branc
 The manual study matrix verifies and commits updated graphs and summaries to that branch, then starts CI on the graph commit.
 Measurements and diagnostic logs remain in artifacts for 30 days; raw LFS data is not committed.
 The [required PR benchmark gate](../development.md#github-ci) rejects stale runs. Each study job has a six-hour limit.
-The error-surface study runs separately across eight `ubuntu-latest` runners (4 vCPU / 16 GiB each in public repositories).
+The error-surface study runs across eight `ubuntu-latest` runners; stress runs across six (4 vCPU / 16 GiB each in public repositories).
 Every shard retains all methods for each assigned population, with the same seeds and method order as a serial run.
-One merge job rejects missing, duplicated or incompatible shards before generating the combined plots.
+Each study has its own merge job, which rejects missing, duplicated or incompatible shards before generating the combined plots.
+Stress assigns whole progression steps to shards and preserves the generated recipes alongside the merged measurements.
 Measurements run serially within each shard to avoid concurrent timings competing for the same CPU.
-GitHub's available concurrency controls when the eight jobs start; this does not guarantee an eightfold speedup.
+GitHub's available concurrency controls when the jobs start; runner count does not guarantee a proportional speedup.
 Use the local full refresh command above when you also want fresh Bitnami and Prometheus scans.
 
 Render an exported compiler dependency graph with Matplotlib:
