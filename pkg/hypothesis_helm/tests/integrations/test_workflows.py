@@ -76,6 +76,12 @@ def test_release_requires_all_verification_and_matching_artifacts() -> None:
     for steps in (build_steps, publish_steps):
         version = next(step for step in steps if step.get("id") == "package-version")
         assert "--tag" in str(version["run"])
+        stamp = next(step for step in steps if step.get("run") == 'poetry version "$PACKAGE_VERSION"')
+        assert mapping(stamp["env"])["PACKAGE_VERSION"] == "${{ steps.package-version.outputs.version }}"
+        distribution = next(
+            step for step in steps if str(step.get("run", "")).startswith("poetry build") or "poetry publish" in str(step.get("run", ""))
+        )
+        assert steps.index(version) < steps.index(stamp) < steps.index(distribution)
     catalog = next(step for step in build_steps if "hypothesis-helm-catalog --check" in str(step.get("run", "")))
     assert catalog["if"] == "startsWith(github.ref, 'refs/tags/')"
 

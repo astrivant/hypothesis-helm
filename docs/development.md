@@ -222,18 +222,20 @@ Archived run snapshots and third-party sources are excluded to preserve recorded
 
 Create the GitHub environment `pypi` and add your PyPI API token as its `PYPI_API_TOKEN` secret.
 The publishing job uses this environment and follows its configured protection rules.
-Set the version with `poetry version 0.1.0` and commit the updated `pyproject.toml` before tagging that commit:
+Tag the commit you want to release:
 
 ```sh
-git tag v0.1.0
-git push origin v0.1.0
+git tag v1.3.4
+git push origin v1.3.4
 ```
 
 Only a pushed version tag enables the publishing job in the [CI pipeline](../.github/workflows/ci.yml).
 Branch pushes, pull requests, and publishing a GitHub release do not upload to PyPI.
-CI checks that the tag matches the package version before building. Prerelease names normalize to Python's version format:
+The tag sets the release version. CI updates Poetry's version in its temporary checkout before building and publishing;
+you do not need a separate version-bump commit. Branch builds use the version declared in `pyproject.toml`.
+Prerelease names normalize to Python's version format:
 
-| Git tag | Package version (`poetry version ...`) |
+| Git tag | Built package version |
 | --- | --- |
 | `v1.3.0-alpha` | `1.3.0a0` |
 | `v1.3.0-alpha.1` | `1.3.0a1` |
@@ -242,7 +244,7 @@ CI checks that the tag matches the package version before building. Prerelease n
 | `v1.3.0` | `1.3.0` |
 
 Canonical tags such as `v1.3.0rc1` also work. An omitted prerelease number means zero.
-Set and commit the matching package version before pushing its tag; prerelease and final versions remain distinct.
+Prerelease and final versions remain distinct. The separately published benchmarking package keeps its own version.
 
 Poetry embeds that version in the wheel and source distribution. CI names the artifact
 `python-distributions-<version>`; the publishing job checks the version again and uploads that exact artifact

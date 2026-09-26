@@ -23,10 +23,12 @@ from hypothesis_helm.tests import PROJECT_ROOT
         ("1.3.0rc1", "v1.3.0rc1", "1.3.0rc1"),
         ("1.3.0-alpha.1", "v1.3.0-alpha.1", "1.3.0a1"),
         ("1.3.0-alpha.1", None, "1.3.0a1"),
-        ("1.3.0", "v1.3.0-rc.1", None),
-        ("1.3.0rc1", "v1.3.0", None),
-        ("1.3.0a1", "v1.3.0-alpha.2", None),
-        ("1.3.0", "v1.4.0", None),
+        ("1.3.0", "v1.3.0-rc.1", "1.3.0rc1"),
+        ("1.3.0rc1", "v1.3.0", "1.3.0"),
+        ("1.3.0a1", "v1.3.0-alpha.2", "1.3.0a2"),
+        ("1.3.0", "v1.4.0", "1.4.0"),
+        ("1.3.0", "v1.3.4", "1.3.4"),
+        ("1.3.0", None, "1.3.0"),
         ("1.3.0", "1.3.0", None),
         ("1.3.0", "v1.3", None),
         ("1.3.0", "v1.3.0-invalid", None),
@@ -35,7 +37,7 @@ from hypothesis_helm.tests import PROJECT_ROOT
 )
 def test_release_version(tmp_path: Path, package: str, tag: str | None, expected: str | None) -> None:
     """
-    Accept matching prereleases and prevent mismatched tags from emitting artifact metadata.
+    Use release tags as authoritative versions and reject unsupported tag syntax.
 
     Args:
         tmp_path (Path): Isolated project metadata and GitHub output file.
@@ -44,7 +46,7 @@ def test_release_version(tmp_path: Path, package: str, tag: str | None, expected
         expected (str | None): Canonical version, or None when validation must fail.
 
     Returns:
-        None: Only matching versions produce a reusable artifact identifier.
+        None: Valid tags override checkout versions; branches retain their declared version.
     """
     project = PROJECT_ROOT
     (tmp_path / "pyproject.toml").write_text(f'[tool.poetry]\nversion = "{package}"\n')

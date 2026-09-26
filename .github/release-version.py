@@ -1,5 +1,5 @@
 """
-Match release tags to Poetry's package version using Python prerelease normalization.
+Resolve release tags or branch metadata using Python prerelease normalization.
 
 Poetry installs packaging, so this check runs before installing the project itself.
 """
@@ -24,15 +24,14 @@ def release_version(package: str, tag: str | None) -> str:
         str: Normalized version used consistently for CI artifacts.
 
     Raises:
-        ValueError: The tag is unsupported or differs from the declared version.
+        ValueError: The tag is unsupported.
     """
-    version = Version(package)
-    if tag is not None:
-        if not re.fullmatch(r"v\d+\.\d+\.\d+(?:-(?:alpha|beta|rc)(?:[.-]?\d+)?|(?:a|b|rc)\d+)?", tag):
-            raise ValueError(f"Unsupported release tag: {tag}; use vX.Y.Z, vX.Y.Z-alpha.N, vX.Y.Z-beta.N or vX.Y.Z-rc.N")
-        if Version(tag[1:]) != version:
-            raise ValueError(f"Release tag {tag} does not match package version {version}")
-    return str(version)
+    if tag is None:
+        return str(Version(package))
+    if not re.fullmatch(r"v\d+\.\d+\.\d+(?:-(?:alpha|beta|rc)(?:[.-]?\d+)?|(?:a|b|rc)\d+)?", tag):
+        raise ValueError(f"Unsupported release tag: {tag}; use vX.Y.Z, vX.Y.Z-alpha.N, vX.Y.Z-beta.N or vX.Y.Z-rc.N")
+    # Release jobs stamp this version into their checkout before building or publishing.
+    return str(Version(tag[1:]))
 
 
 def main() -> None:
