@@ -634,7 +634,11 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
             break
     attempts = sum(int(str(record.get("attempts") or 0)) for record in records)
     no_tests = attempts == 0 and not any(record["status"] == "cached-pass" for record in records)
-    if shard is not None and records and all(record["status"] == "empty-shard" for record in records):
+    if (
+        shard is not None
+        and any(record["status"] == "empty-shard" for record in records)
+        and all(record["status"] in {"empty-shard", "skipped-library"} for record in records)
+    ):
         no_tests = False
     if no_tests:
         LOGGER.error("No manifest test attempts were executed; this scan did not test any charts. See the recorded chart statuses.")
@@ -780,7 +784,9 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
             or (len(records) == 1 and records[0]["status"] == "missing-values")
             or any(item in counts for item in ("invalid-metadata", "baseline-failed", "failed", "error"))
             else 0
-            if records and set(counts) <= {"passed", "cached-pass", "ignored", "findings", "empty-shard"}
+            if records
+            and set(counts) <= {"passed", "cached-pass", "ignored", "findings", "empty-shard", "skipped-library"}
+            and not no_tests
             else 2
         )
         publish_shard(report, args, output, status)

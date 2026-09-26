@@ -646,7 +646,9 @@ or missing shards cannot produce a successful final result.
 Cached recursive successes retain checksummed completion evidence for that
 shard's exact settings and inputs. An ordinary whole-chart cache entry cannot
 stand in for a shard's results. `--rerun all` forces fresh tests; changed charts
-and failed or incomplete outcomes are tested again.
+and failed or incomplete outcomes are tested again. Recursive manifest streaming
+(`-o json` or `-o yaml`, including the Action's Kubesec pipeline) renders fresh
+outputs; repository outcome entries do not contain replayable manifests.
 
 ## Values structure baselines
 

@@ -205,7 +205,7 @@ def aggregate_repository(reports: list[dict[str, object]], total: int, run_id: s
         combined.append(_combine_chart(records))
     codes = [int(str(report["exit_code"])) for report in reports]
     status = 130 if 130 in codes else 2 if any(code not in {0, 1} for code in codes) else 1 if 1 in codes else 0
-    if status == 0 and any(chart["status"] not in {"passed", "findings", "ignored"} for chart in combined):
+    if status == 0 and any(chart["status"] not in {"passed", "findings", "ignored", "skipped-library"} for chart in combined):
         raise ValueError("Successful repository shards do not establish successful chart execution")
     identity = digest(reports)
     first = reports[0]
@@ -223,7 +223,8 @@ def aggregate_repository(reports: list[dict[str, object]], total: int, run_id: s
         "discovery_complete": True,
         "unstarted_charts": sum(chart["status"] == "pending" for chart in combined),
         "scan_status": "completed"
-        if status in {0, 1} and all(chart["status"] in {"passed", "findings", "ignored", "failed", "baseline-failed"} for chart in combined)
+        if status in {0, 1}
+        and all(chart["status"] in {"passed", "findings", "ignored", "failed", "baseline-failed", "skipped-library"} for chart in combined)
         else "incomplete",
         "counts": dict(Counter(str(chart["status"]) for chart in combined)),
         "exit_code": status,

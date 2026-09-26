@@ -167,6 +167,9 @@ def repository_reports(tmp_path: Path) -> tuple[Path, list[dict[str, object]]]:
     root = tmp_path / "charts"
     make_chart(root / "first")
     make_chart(root / "nested/second", finite=True)
+    library = make_chart(root / "shared-library")
+    metadata = library.path / "Chart.yaml"
+    metadata.write_text(metadata.read_text() + "type: library\n")
     output = tmp_path / "artifacts"
     for index in range(1, 4):
         assert (
@@ -209,10 +212,13 @@ def test_recursive_cli_and_aggregation(repository_reports: tuple[Path, list[dict
         None: Offline aggregation is complete, portable and idempotent.
     """
     output, records = repository_reports
-    assert all([mapping(chart)["chart"] for chart in sequence(record["charts"])] == ["first", "nested/second"] for record in records)
+    assert all(
+        [mapping(chart)["chart"] for chart in sequence(record["charts"])] == ["first", "nested/second", "shared-library"]
+        for record in records
+    )
     assert aggregate([output], 3, "recursive", tmp_path / "final") == 0
     final = mapping(json.loads((tmp_path / "final/report.json").read_text()))
-    assert final["charts_discovered"] == 2 and final["counts"] == {"passed": 2}
+    assert final["charts_discovered"] == 3 and final["counts"] == {"passed": 2, "skipped-library": 1}
     assert aggregate([output], 3, "recursive", tmp_path / "final") == 0
     assert (tmp_path / "final/report.pdf").is_file()
 
@@ -276,3 +282,131 @@ def test_aggregation_rejects_invalid_evidence(tmp_path: Path, damage: str) -> No
     with pytest.raises(ValueError):
         aggregate([path], 3, "recursive", tmp_path / "final")
     assert not (tmp_path / "final").exists()
+
+
+def test_shard_cache_retains_verified_completion(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Reuse only this shard's completed inventory, preserving concurrent failures.
+
+    Args:
+        tmp_path (Path): Chart and cache roots.
+        monkeypatch (pytest.MonkeyPatch): Treat the fixture as unchanged in Git.
+
+    Returns:
+        None: Incomplete, different-shard and corrupt-evidence cache entries cannot suppress tests.
+    """
+    from hypothesis_helm.charts.repositories.cache import ChartCache
+
+    chart = make_chart(tmp_path / "chart")
+    monkeypatch.setattr("hypothesis_helm.charts.repositories.cache.chart_changed", lambda *args: False)
+    args = Namespace(seed=0, helm="/usr/bin/true", cache_dir=tmp_path / "cache", shard=Shard(1, 3), run_id="first")
+    partition = Partition.paths(args.shard, [("alpha",), ("beta",)])
+    # Include a path belonging to this shard even if the two-field fixture happened to miss it.
+    while not any(partition.owns(unit) for unit in partition.initial):
+        partition = Partition.paths(args.shard, [(str(index),) for index in range(len(partition.initial) + 1)])
+    partition.visited = [unit for unit in partition.initial if partition.owns(unit)]
+    partition.completed = partition.visited.copy()
+    result: dict[str, object] = {"status": "passed", "attempts": 1, "work_partition": partition.report()}
+    cold = ChartCache.prepare(chart.path, chart.path, args, {})
+    cold.publish(result)
+    args.run_id = "second"
+    warm = ChartCache.prepare(chart.path, chart.path, args, {})
+    assert warm.reusable and warm.cached_result["work_partition"] == result["work_partition"]
+    args.output_format = "json"
+    assert not ChartCache.prepare(chart.path, chart.path, args, {}).reusable
+    del args.output_format
+    args.shard = Shard(2, 3)
+    assert not ChartCache.prepare(chart.path, chart.path, args, {}).reusable
+    args.shard = Shard(1, 3)
+    assert warm.path is not None
+    evidence = warm.path.with_suffix(".evidence.json")
+    evidence.write_text("{}")
+    assert not ChartCache.prepare(chart.path, chart.path, args, {}).reusable
+    warm.publish(result)
+    first = ChartCache.prepare(chart.path, chart.path, args, {})
+    second = ChartCache.prepare(chart.path, chart.path, args, {})
+    first.publish({**result, "status": "interrupted"})
+    second.publish(result)
+    assert not ChartCache.prepare(chart.path, chart.path, args, {}).reusable
+
+
+def test_path_timeout_records_unfinished_owned_work(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Retain ownership when a chart deadline prevents completing a property.
+
+    Args:
+        tmp_path (Path): Input chart and report root.
+        monkeypatch (pytest.MonkeyPatch): Stop a path after one attempt.
+
+    Returns:
+        None: Assigned work is visited but never claimed complete after timeout.
+    """
+    chart = make_chart(tmp_path / "chart")
+    monkeypatch.setattr("hypothesis_helm.charts.testing.paths.render", lambda *args, **kwargs: [{"kind": "ConfigMap"}])
+    monkeypatch.setattr("hypothesis_helm.charts.testing.paths.check_chart", lambda *args, **kwargs: {"status": "time-limit", "attempts": 1})
+    shard = next(Shard(index, 3) for index in range(1, 4) if Shard(index, 3).includes(digest(["alpha"])))
+    result = check_paths(chart, budget=10, max_examples=2, seed=0, helm="helm", timeout=1, artifacts=tmp_path / "out", shard=shard)
+    work = mapping(result["work_partition"])
+    assert result["status"] == "time-limit" and work["visited"] and not work["complete"] and not work["completed"]
+
+
+def test_action_recursive_shard_uses_per_chart_comparison(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Exercise the Action's literal Bash command against recursive partitioned testing.
+
+    Args:
+        tmp_path (Path): Chart tree and Action artifact root.
+        monkeypatch (pytest.MonkeyPatch): Configure the Action's public inputs.
+
+    Returns:
+        None: The repository executor receives the Git base and publishes the expected shard report.
+    """
+    import os
+    import shutil
+    import sys
+
+    from hypothesis_helm.environment import refresh_env
+    from hypothesis_helm.integrations import github_action
+
+    native = shutil.which("helm")
+    assert native is not None
+    binary = tmp_path / "bin/helm"
+    binary.parent.mkdir()
+    # Route the plugin call to this checkout without changing the developer's installed Helm plugins.
+    binary.write_text(
+        dedent(f"""
+        #!{sys.executable}
+        import os
+        import sys
+        from hypothesis_helm.cli import main
+        if sys.argv[1:2] == ["hypothesis"]:
+            raise SystemExit(main(sys.argv[2:]))
+        os.execv({native!r}, [{native!r}, *sys.argv[1:]])
+        """).lstrip()
+    )
+    binary.chmod(0o755)
+    monkeypatch.setenv("PATH", str(binary.parent) + os.pathsep + os.environ["PATH"])
+    make_chart(tmp_path / "charts/first")
+    make_chart(tmp_path / "charts/second")
+    for name, value in {
+        "HH_CHART": str(tmp_path / "charts"),
+        "HH_SHARD": "1/3",
+        "HH_RUN_ID": "action-recursive",
+        "HH_ARTIFACT_DIR": str(tmp_path / "output"),
+        "HH_INCREMENTAL": "true",
+        "HH_BASE_REF": "HEAD~1",
+        "HH_BUILD_DEPENDENCIES": "false",
+        "HH_CACHE": "false",
+        "HH_MAX_EXAMPLES": "1",
+        "HH_JOBS": "2",
+        "HH_CHART_TIMEOUT": "30s",
+        "HH_VALIDATE_SCHEMAS": "false",
+    }.items():
+        monkeypatch.setenv(name, value)
+    refresh_env()
+    assert github_action.main() == 0
+    result = mapping(json.loads((tmp_path / "output/shards/1-of-3/report.json").read_text()))
+    assert result["report_kind"] == "repository-shard-v1" and result["run_id"] == "action-recursive"
+    assert mapping(result["shard"])["index"] == 1
+    assert len(sequence(result["charts"])) == 2
+    assert (tmp_path / "output/shards/1-of-3/junit.xml").exists()

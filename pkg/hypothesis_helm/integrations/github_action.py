@@ -187,7 +187,19 @@ def main() -> int:
             environment["HH_REMOTE_MINIMAL_VALUES"] = env.get("HH_MINIMAL_VALUES_FILENAME") or "values-minimal.yaml"
         rerun = env.get("HH_RERUN") or "auto"
         recursive = False
-        if command == "test":
+        suite_requested = any(
+            environment.get(key)
+            for key in (
+                "HH_PATHS",
+                "HH_WHOLE_CHART",
+                "HH_EXHAUSTIVE",
+                "HH_MATCH",
+                "HH_COLLECT_ONLY",
+                "HH_DRY_RUN",
+                "HH_DISABLE_SCHEMA_CACHING",
+            )
+        )
+        if command == "test" and not suite_requested:
             from hypothesis_helm.charts.repositories.scan import discover_charts
 
             local = Path(chart)
@@ -210,6 +222,10 @@ def main() -> int:
             # Saved suites consume the resolved comparison here; recursive tests perform it per chart.
             environment.pop("HYPOTHESIS_HELM_BASE_REF", None)
             environment.pop("HH_BASE_REF", None)
+        if recursive and shard is not None:
+            # Distributed jobs publish JSON/JUnit; the aggregate job owns the final Markdown/PDF.
+            for key in ("report-path", "pdf-path", "report-images"):
+                outputs.pop(key, None)
         environment["HH_RERUN"] = rerun
         outputs["effective-config-ready"] = "true"
         with captured.open("w") as stream:

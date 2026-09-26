@@ -63,6 +63,9 @@ class ChartCache:
         """
         if getattr(args, "no_cache", False):
             return cls()
+        if getattr(args, "output_format", None) is not None:
+            # Repository outcome entries contain completion evidence, not a replayable manifest stream.
+            return cls(reason="manifest streaming requires fresh chart execution")
         if getattr(args, "rerun", "auto") == "all":
             return cls(reason="--rerun all requires fresh execution")
         if getattr(args, "export_suppressions", False) or any(

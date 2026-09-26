@@ -209,7 +209,13 @@ def check_paths(
         )
         + "\n"
     )
-    LOGGER.info("Discovered %d unique value paths; %s traversal, seed %d", len(ordered), traversal_strategy, seed)
+    LOGGER.info(
+        "Discovered %d unique value paths; %d selected for this instance; %s traversal, seed %d",
+        len(unique),
+        len(ordered),
+        traversal_strategy,
+        seed,
+    )
     if partition is not None and not ordered:
         empty = {"status": "empty-shard", "attempts": 0, "mode": "paths", "work_partition": partition.report()}
         (artifacts / "report.json").write_text(json.dumps(empty, indent=2) + "\n")

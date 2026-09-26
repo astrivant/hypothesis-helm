@@ -447,7 +447,7 @@ def check_chart(
         Returns:
             bool: Whether the candidate completed its checks.
         """
-        unit = digest(values)
+        unit = digest(values) if partition is not None else ""
         owned = partition is not None and partition.owns(unit)
         if owned and partition is not None:
             partition.visited.append(unit)

@@ -383,6 +383,7 @@ def test_action_incremental_selection(
     Returns:
         None: Only unchanged charts with usable history request cached success reuse.
     """
+    monkeypatch.setenv("HH_PATHS", "true")
     monkeypatch.setenv("HH_CHART", str(tmp_path / "chart"))
     refresh_env()
     monkeypatch.setenv("HH_ARTIFACT_DIR", str(tmp_path / "results"))
