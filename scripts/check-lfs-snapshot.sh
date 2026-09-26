@@ -7,14 +7,18 @@ trap 'rm -rf "$snapshot_check"' EXIT
 git diff --cached --name-only --no-renames --diff-filter=ACMRTUXB -z >"$snapshot_check/paths"
 git check-attr --cached -z --stdin filter <"$snapshot_check/paths" >"$snapshot_check/attributes"
 blocked=0
-while IFS= read -r -d '' path && IFS= read -r -d '' attribute && IFS= read -r -d '' value; do
+mapfile -d '' -t attributes <"$snapshot_check/attributes"
+for ((index = 0; index < ${#attributes[@]}; index += 3)); do
+    path="${attributes[index]}"
+    attribute="${attributes[index + 1]}"
+    value="${attributes[index + 2]}"
     if [[ "$attribute" == filter && "$value" == lfs ]]; then
         blocked=$((blocked + 1))
         if ((blocked <= 10)); then
             printf 'Paused LFS update: %s\n' "$path" >&2
         fi
     fi
-done <"$snapshot_check/attributes"
+done
 if ((blocked)); then
     printf '\nRaw-data publication is paused: %s staged LFS paths.\n' "$blocked" >&2
     printf '%s\n' \

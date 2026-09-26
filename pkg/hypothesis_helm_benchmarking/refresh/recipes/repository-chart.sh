@@ -19,11 +19,12 @@ hypothesis-helm test "$chart" --chart-timeout 5m --filter --no-cache --jobs 6 --
 cat "$run_dir/jobs/$sequence.out"
 # The terminal summary identifies the saved evidence; it is not itself a JSON report.
 report=""
-while IFS= read -r line; do
+mapfile -t summary_lines <"$run_dir/jobs/$sequence.out"
+for line in "${summary_lines[@]}"; do
     case "$line" in
         'Results saved: '*) report="${line#Results saved: }" ;;
     esac
-done <"$run_dir/jobs/$sequence.out"
+done
 if [[ -z "$report" || ! -f "$report" ]]; then
     echo "No saved report for chart $chart; see $run_dir/jobs/$sequence.out and .err" >&2
     exit 2

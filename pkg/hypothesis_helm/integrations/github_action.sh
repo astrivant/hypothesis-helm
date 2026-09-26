@@ -2,11 +2,12 @@
 # Keep each executable invocation explicit; Python validates inputs, never builds shell source.
 set -euo pipefail
 
-# Repeatable groups are data, one group per line. Bash 3.2 works on macOS runners.
+# Repeatable groups are data, one group per line; the action prepares Bash 4.4+.
 exhaustive_groups=()
-while IFS= read -r group; do
+mapfile -t groups <<<"${HH_EXHAUSTIVE_GROUP:-}"
+for group in "${groups[@]}"; do
     if [[ -n "$group" ]]; then exhaustive_groups+=(--exhaustive-group "$group"); fi
-done <<<"${HH_EXHAUSTIVE_GROUP:-}"
+done
 
 case "$HH_COMMAND" in
     test)

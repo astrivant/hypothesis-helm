@@ -471,16 +471,17 @@ Enable API validation in the test command and pipe the manifest stream to Kubese
 ```bash
 set -o pipefail
 helm hypothesis test ./chart --filter --validate-schemas --schema-version 1.35.0 -o json |
-  (
-    status=0
-    while IFS= read -r manifest; do
-      printf '%s\n' "$manifest" | kubesec scan /dev/stdin || status=1
-    done
-    exit "$status"
-  )
+    (
+        status=0
+        while mapfile -t -n 1 manifests && ((${#manifests[@]})); do
+            printf '%s\n' "${manifests[0]}" | kubesec scan /dev/stdin || status=1
+        done
+        exit "$status"
+    )
 ```
 
-The per-line loop avoids requiring Kubesec to understand JSON Lines. Use this example with Kubesec-supported workloads;
+This Bash 4.4+ example reads one manifest at a time, without buffering the full scan or requiring Kubesec to understand JSON Lines.
+Use this example with Kubesec-supported workloads;
 the [CI wrapper](ci.md#optional-kubesec-scans) routes mixed bundles and parallelizes scans.
 Built-in API schema failures participate in Hypothesis shrinking. External Kubesec findings are not fed back into
 Hypothesis or recorded as pytest assertions. Configure any security score threshold separately from Kubesec's exit status.

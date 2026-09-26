@@ -196,3 +196,47 @@ def test_graph_push_does_not_overwrite_a_concurrent_commit(checkout: tuple[Path,
     assert git(remote, "rev-parse", "refs/heads/feature") == newer
     assert not (work / "outputs").exists()
     assert '"workflow", "run"' not in (work / "gh-calls.jsonl").read_text()
+
+
+def test_publication_preserves_nul_delimited_filenames(checkout: tuple[Path, Path, dict[str, str]]) -> None:
+    """
+    Preserve whitespace and newlines in filenames when reading publication paths with mapfile.
+
+    Args:
+        checkout (tuple[Path, Path, dict[str, str]]): Isolated Git and GitHub fixtures.
+
+    Returns:
+        None: The remote contains the exact original filename and content.
+    """
+    work, remote, environment = checkout
+    name = "studies/demo/space and\nnewline.svg"
+    (work / name).write_text("<svg />")
+    result = subprocess.run(["bash", str(SCRIPT), "commit"], cwd=work, env=environment, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    assert git(remote, "show", f"refs/heads/feature:{name}") == "<svg />"
+
+
+@pytest.mark.parametrize("raw_data", [False, True])
+def test_lfs_snapshot_reads_attribute_triples(checkout: tuple[Path, Path, dict[str, str]], raw_data: bool) -> None:
+    """
+    Check empty indexes and NUL-separated attribute records without splitting filenames.
+
+    Args:
+        checkout (tuple[Path, Path, dict[str, str]]): Isolated Git and GitHub fixtures.
+        raw_data (bool): Stage an LFS-protected filename containing a newline.
+
+    Returns:
+        None: Empty indexes pass and a raw-data update is rejected with the original path intact.
+    """
+    work, _, environment = checkout
+    name = "studies/demo/raw space\nand newline.json"
+    if raw_data:
+        (work / ".gitattributes").write_text("studies/**/*.json filter=lfs\n")
+        (work / name).write_text("{}")
+        git(work, "add", ".gitattributes", name)
+    result = subprocess.run(
+        ["bash", str(PROJECT_ROOT / "scripts/check-lfs-snapshot.sh")], cwd=work, env=environment, capture_output=True, text=True
+    )
+    assert result.returncode == int(raw_data), result.stderr
+    if raw_data:
+        assert f"Paused LFS update: {name}" in result.stderr

@@ -6,6 +6,8 @@ if (($# == 0)); then
     echo "Usage: bash scripts/project-run.sh COMMAND [ARGS...]" >&2
     exit 2
 fi
+# Nested shell tools use the modern Bash provisioned by setup-dev.sh on macOS.
+export PATH="$PWD/.cache/dev-tools/bin:$PATH"
 if [[ -d .venv/bin ]]; then
     # Nested tools must resolve from this environment too (for example ci-shell invoking shfmt).
     VIRTUAL_ENV="$(pwd)/.venv"

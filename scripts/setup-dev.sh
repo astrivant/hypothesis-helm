@@ -27,6 +27,16 @@ require_command() {
 }
 
 ##
+# Require a Bash executable with NUL-delimited mapfile support.
+# -> ret::status
+require_modern_bash() {
+    if ! bash -c '((BASH_VERSINFO[0] > 4 || (BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] >= 4)))'; then
+        echo 'Bash 4.4+ is required. Install a current Bash and put it on PATH.' >&2
+        return 1
+    fi
+}
+
+##
 # Install OS packages used by source checkout and parallel integration tests.
 # arg1::string -> ret::void
 install_system_packages() {
@@ -35,16 +45,17 @@ install_system_packages() {
 
     if [[ "$platform" == darwin ]]; then
         require_command brew
-        brew install git git-lfs parallel shellcheck
+        brew install bash git git-lfs parallel shellcheck
     elif command -v apt-get >/dev/null 2>&1; then
         if [[ "$EUID" != 0 ]]; then
             require_command sudo
             privilege=sudo
         fi
         $privilege apt-get update
-        $privilege apt-get install -y ca-certificates curl git git-lfs parallel shellcheck build-essential
+        $privilege apt-get install -y bash ca-certificates curl git git-lfs parallel shellcheck build-essential
     else
-        echo 'Install curl, git, git-lfs, GNU Parallel and ShellCheck with your Linux package manager, then rerun.' >&2
+        echo 'Install Bash 4.4+, curl, git, git-lfs, GNU Parallel and ShellCheck with your Linux package manager, then rerun.' >&2
+        require_command bash
         require_command curl
         require_command git
         require_command git-lfs
@@ -83,6 +94,7 @@ install_build_tools() {
     local go_version=1.25.0
     local helm_version=v4.3.0
     local archive expected
+    local -a checksums
 
     mkdir -p "$tool_root/downloads" "$tool_root/bin"
     if [[ ! -x "$tool_root/go/bin/go" ]]; then
@@ -104,7 +116,8 @@ PY
     if [[ ! -x "$tool_root/bin/helm" ]]; then
         archive="$tool_root/downloads/helm-${helm_version}-${platform}-${architecture}.tar.gz"
         curl -fsSL "https://get.helm.sh/${archive##*/}.sha256sum" -o "$archive.sha256sum"
-        read -r expected _ <"$archive.sha256sum"
+        mapfile -t checksums <"$archive.sha256sum"
+        expected="${checksums[0]%%[[:space:]]*}"
         curl -fsSL "https://get.helm.sh/${archive##*/}" -o "$archive"
         verify_archive "$archive" "$expected"
         tar -xzf "$archive" -C "$tool_root/downloads" "${platform}-${architecture}/helm"
@@ -172,9 +185,10 @@ main() {
     export PATH="$project_root/.venv/bin:$tool_root/bin:$tool_root/go/bin:$PATH"
 
     if [[ "$check_only" == true ]]; then
-        for argument in git git-lfs parallel go helm poetry pre-commit shfmt shellcheck python; do
+        for argument in bash git git-lfs parallel go helm poetry pre-commit shfmt shellcheck python; do
             require_command "$argument"
         done
+        require_modern_bash
         python -c 'import sys; assert sys.version_info >= (3, 13), "Python 3.13+ is required"'
         go version
         helm version --short
@@ -197,6 +211,15 @@ main() {
     esac
 
     install_system_packages "$platform"
+    if [[ "$platform" == darwin ]]; then
+        mkdir -p "$tool_root/bin"
+        ln -sf "$(brew --prefix bash)/bin/bash" "$tool_root/bin/bash"
+    fi
+    require_modern_bash
+    # Bootstrap can start in macOS's system Bash, but mapfile needs the installed modern interpreter.
+    if ((BASH_VERSINFO[0] < 4 || (BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] < 4))); then
+        exec bash "$project_root/scripts/setup-dev.sh" "$@"
+    fi
     install_python_tools "$tool_root"
     install_build_tools "$platform" "$architecture" "$tool_root"
 

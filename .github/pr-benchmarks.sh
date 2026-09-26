@@ -34,6 +34,7 @@ validate_pr() {
 # -> ret::void
 commit_graphs() {
     local paths path attribute changed
+    local -a publication_paths
 
     validate_pr
     [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
@@ -48,7 +49,8 @@ commit_graphs() {
     }
     paths=$(mktemp)
     # Explicit output roots and extensions keep code, caches and LFS datasets out of the commit.
-    while IFS= read -r -d '' path; do
+    mapfile -d '' -t publication_paths < <(git ls-files -z --modified --deleted --others --exclude-standard -- README.md studies/ docs/benchmarking/)
+    for path in "${publication_paths[@]}"; do
         case "$path" in
             *.md | *.png | *.svg | *.pdf)
                 attribute=$(git check-attr filter -- "$path")
@@ -57,7 +59,7 @@ commit_graphs() {
                 fi
                 ;;
         esac
-    done < <(git ls-files -z --modified --deleted --others --exclude-standard -- README.md studies/ docs/benchmarking/)
+    done
     if [[ -s "$paths" ]]; then
         git add -A --pathspec-from-file="$paths" --pathspec-file-nul
     fi

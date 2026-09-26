@@ -38,11 +38,13 @@ bash scripts/setup-dev.sh --check
 bash scripts/setup-dev.sh --schemas
 ```
 
-The setup script supports macOS with Homebrew and Debian/Ubuntu Linux with apt. It installs Git, Git LFS, GNU Parallel and ShellCheck;
+The setup script supports macOS with Homebrew and Debian/Ubuntu Linux with apt. It installs Bash, Git, Git LFS, GNU Parallel and ShellCheck;
 uses a pinned uv bootstrap to provision Python 3.13 and Poetry 2.1.3 locally; and installs checksum-verified Go 1.25.0 and Helm 4.3.0
 under `.cache/dev-tools/`. Python linting, formatting, typing and testing dependencies come from the Poetry lock.
 It creates `.venv` only when absent, installs the benchmarking extra and pre-commit hooks, and registers the Helm plugin.
 It prints the PATH command to use in your current shell. Other Linux distributions need their OS packages installed first.
+Shell scripts require Bash 4.4 or newer for NUL-delimited `mapfile`. On macOS, setup installs Homebrew Bash and exposes it
+under `.cache/dev-tools/bin`; the GitHub Action also prepares Homebrew Bash on macOS runners.
 
 Ordinary chart testing needs Python and Helm. Go is required only for rebuilding source-derived catalogs and compiler facts; GNU Parallel
 also supports optional Kubesec scanning. Kubesec itself is optional and is installed by the CI integrations when enabled.
@@ -67,6 +69,9 @@ after the YAML block's indentation. Write control flow on separate lines and
 keep interpolated CI inputs in `env`, then reference quoted shell variables.
 Use `pushd` and `popd` for temporary directory changes. New shell functions follow
 the description and typed-argument comments in [setup-dev.sh](../scripts/setup-dev.sh).
+Use `mapfile` to read shell input: `mapfile -t` for lines and `mapfile -d '' -t` for NUL-delimited paths.
+Iterate over the resulting quoted array instead of using a `while read` loop. For live streams, use `mapfile -n 1`
+and process that record immediately; do not buffer the entire scan before forwarding diagnostics or manifests.
 
 Pre-commit formats maintained `.sh` files and shell blocks in GitHub workflows,
 composite actions, and the GitLab/CircleCI examples. ShellCheck checks both forms;
@@ -194,6 +199,8 @@ excluding tests and bundled assets. Go code and independently launched subproces
 Download the `python-coverage` artifact for the HTML report. The badge publisher and manual graph publisher receive repository write permission;
 PRs and tags do not update the badge. The action creates `gh-pages` on its first run; the README uses its raw SVG URL,
 so enabling GitHub Pages is unnecessary. No extra token is required, but repository rules must allow the job to write `gh-pages`.
+Only the badge job uses `checkout@v5`: its credential format is compatible with the badge action's embedded `checkout@v3`.
+Upgrading that job to checkout v6 or later also requires updating the badge action's checkout, to avoid duplicate authorization headers.
 Benchmark publication and PyPI publishing have separate conditions; neither runs automatically on a PR update.
 Just before merging, start the benchmark run on your PR's current head branch:
 

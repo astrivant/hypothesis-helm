@@ -174,7 +174,9 @@ jobs:
       group: coverage-badge
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v7
+      # The badge action embeds checkout@v3, which cannot remove v6+ includeIf credentials.
+      # Keep both checkouts on the direct-header format to avoid duplicate Authorization headers.
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'

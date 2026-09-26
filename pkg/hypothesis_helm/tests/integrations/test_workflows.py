@@ -287,6 +287,9 @@ def test_coverage_badge_only_writes_on_successful_default_branch_pushes() -> Non
     assert mapping(job["permissions"]) == {"contents": "write"}
     assert mapping(job["concurrency"])["group"] == "coverage-badge"
     steps = [mapping(step) for step in sequence(job["steps"])]
+    # The nested v3 checkout only removes direct headers, not newer includeIf credentials.
+    checkout = next(step for step in steps if str(step.get("uses", "")).startswith("actions/checkout@"))
+    assert checkout["uses"] == "actions/checkout@v5"
     action = next(step for step in steps if str(step.get("uses", "")).startswith("we-cli/coverage-badge-action@"))
     assert action["uses"] == "we-cli/coverage-badge-action@8a0b6ee05f6dd0f294089cbe7a848452a2b43eef"
     assert action["if"] == "steps.badge.outputs.changed == 'true'"

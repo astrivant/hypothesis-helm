@@ -64,9 +64,12 @@ case "$stage" in
     bitnami | prometheus | bitnami-finalize | prometheus-finalize)
         repository="${stage%-finalize}"
         run_dir=""
-        while IFS=$'\t' read -r name directory; do
+        mapfile -t repositories <"$root/repositories.tsv"
+        for repository_entry in "${repositories[@]}"; do
+            name="${repository_entry%%$'\t'*}"
+            directory="${repository_entry#*$'\t'}"
             if [[ "$name" == "$repository" ]]; then run_dir="$directory"; fi
-        done <"$root/repositories.tsv"
+        done
         [[ -n "$run_dir" ]] || {
             echo "Missing repository inventory: $repository" >&2
             exit 2
