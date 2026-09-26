@@ -62,7 +62,7 @@ def test_release_requires_all_verification_and_matching_artifacts() -> None:
     assert "pull_request" in triggers
     jobs = {name: mapping(job) for name, job in mapping(release["jobs"]).items()}
     publish = jobs["publish"]
-    assert set(sequence(publish["needs"])) == {"go", "checks", "sharded-chart", "aggregate", "build", "smoke"}
+    assert set(sequence(publish["needs"])) == {"go", "checks", "python-tests", "sharded-chart", "aggregate", "build", "smoke"}
     # No status override: GitHub's implicit success() still rejects failed or skipped prerequisites.
     assert publish["if"] == "${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}"
     assert publish["environment"] == "pypi"
@@ -95,11 +95,11 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         "default": False,
     }
     jobs = {name: mapping(job) for name, job in mapping(document["jobs"]).items()}
-    for name in ("go", "checks", "sharded-chart", "build", "smoke"):
+    for name in ("go", "checks", "python-tests", "sharded-chart", "build", "smoke"):
         assert "needs" not in jobs[name] and "if" not in jobs[name]
     prepare = jobs["refresh-prepare"]
     assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
-    assert set(sequence(prepare["needs"])) == {"go", "checks", "sharded-chart", "aggregate", "build", "smoke"}
+    assert set(sequence(prepare["needs"])) == {"go", "checks", "python-tests", "sharded-chart", "aggregate", "build", "smoke"}
     study = jobs["refresh-study"]
     assert study["needs"] == "refresh-prepare"
     assert mapping(study["strategy"])["fail-fast"] is False
@@ -183,6 +183,29 @@ def test_python_setup_reuses_locked_environment_without_resolving() -> None:
     assert steps.index(restore) < steps.index(install) < steps.index(save)
     setup_go = next(step for step in steps if str(step.get("uses", "")).startswith("actions/setup-go@"))
     assert mapping(setup_go["with"])["go-version-file"] == "pkg/hypothesis_helm/compiler/assets/renderer/go.mod"
+
+
+def test_python_matrix_partitions_tests_and_artifacts() -> None:
+    """
+    Keep lint independent while every Python shard uses its runner's available CPUs.
+
+    Returns:
+        None: All shards run, retain distinct reports and participate in the release gate.
+    """
+    jobs = mapping(workflows()["ci.yml"]["jobs"])
+    job = mapping(jobs["python-tests"])
+    strategy = mapping(job["strategy"])
+    assert strategy["fail-fast"] is False
+    assert mapping(strategy["matrix"])["shard"] == [1, 2, 3, 4]
+    steps = [mapping(step) for step in sequence(job["steps"])]
+    test = next(step for step in steps if "--suite-shard" in str(step.get("run", "")))
+    assert mapping(test["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/4"
+    assert "-p hypothesis_helm.tests.sharding" in str(test["run"])
+    assert "-n auto --dist worksteal" in str(test["run"])
+    upload = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
+    assert "matrix.shard" in str(mapping(upload["with"])["name"])
+    assert "always()" in str(upload["if"])
+    assert all("pre-commit" not in str(step.get("run", "")) for step in steps)
 
 
 def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
