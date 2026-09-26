@@ -190,7 +190,7 @@ logs and artifacts. One [workflow file](../.github/workflows/ci.yml) owns PR che
 | Chart tests and aggregation | Validate schemas, run Kubesec and combine shard reports. | Every CI run. |
 | Package build | Build distributions and test the installed Helm plugin. Tags also verify the catalog. | Every CI run. |
 | Benchmark smoke tests | Check benchmark recipes and plot generation with short runs. | Every CI run. |
-| PR benchmarks | Run all studies, verify plots and commit updated graphs and summaries to the PR branch. | Manually requested for an open PR, after verification passes. Required before merge. |
+| PR benchmarks | Run studies independently, distribute error surface across eight and stress across six 4-core runners, verify plots and commit updated graphs and summaries to the PR branch. | Manually requested for an open PR, after verification passes. Required before merge. |
 | Publish to PyPI | Publish the verified versioned distributions using the `pypi` environment. | Pushed version tags, after every verification job passes. |
 
 Code checks, chart tests, package builds and smoke tests run in parallel within the same run.
@@ -251,8 +251,12 @@ Archived run snapshots and third-party sources are excluded to preserve recorded
 
 ## Publishing to PyPI
 
-Create the GitHub environment `pypi` and add your PyPI API token as its `PYPI_API_TOKEN` secret.
+Create the GitHub environment `pypi`. Supply `PYPI_API_TOKEN` as an organization secret with access granted to this repository,
+or as a repository or environment secret.
 The publishing job uses this environment and follows its configured protection rules.
+An environment secret overrides a repository secret, which overrides an organization secret with the same name.
+If PyPI rejects a nonempty token with HTTP 403, check for an outdated override before replacing the organization token.
+The token must be issued by PyPI, authorize this project, and include its complete `pypi-` prefix.
 Tag the commit you want to release:
 
 ```sh

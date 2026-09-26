@@ -20,6 +20,7 @@ from hypothesis_helm_benchmarking.studies.matrix import bundle_key, measure, ref
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.testing.rendering import render
 from hypothesis_helm.exceptions.execution import TimeLimitReached
+from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
 def test_error_population_control() -> None:
@@ -255,3 +256,71 @@ def test_invalid_output_grid(size: str) -> None:
 
     with pytest.raises(argparse.ArgumentTypeError):
         output_size(size)
+
+
+@pytest.mark.integration
+def test_surface_shards_match_serial_and_reject_incomplete(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Compare eight paired shards, including empty shards, against the serial experiment.
+
+    Args:
+        tmp_path (Path): Independent output ledgers.
+        monkeypatch (pytest.MonkeyPatch): Avoid plotting tiny measurements during the test.
+
+    Returns:
+        None: All cases and populations match; missing, duplicate and incompatible shards fail.
+    """
+    from hypothesis_helm_benchmarking.studies.surface_shards import merge
+
+    if not shutil.which("helm"):
+        pytest.skip("Helm is required")
+    monkeypatch.setattr("hypothesis_helm_benchmarking.reporting.error_surface.plot", lambda *args: None)
+    args = [
+        "--input-complexity",
+        "2",
+        "--axes",
+        "depth",
+        "--depths",
+        "0",
+        "1",
+        "--error-rates",
+        "0",
+        "100",
+        "--methods",
+        "default",
+        "filter",
+        "--repeats",
+        "1",
+    ]
+    serial = tmp_path / "serial"
+    assert main([*args, "--output", str(serial)]) == 0
+    paths = []
+    for index in range(8):
+        output = tmp_path / str(index)
+        assert main([*args, "--shard-count", "8", "--shard-index", str(index), "--output", str(output)]) == 0
+        paths.append(output / "results.json")
+    combined = merge(paths)
+    published = tmp_path / "merged"
+    assert main(["--merge-shards", *(str(path) for path in paths), "--output", str(published)]) == 0
+    assert json.loads((published / "results.json").read_text()) == combined
+    original = json.loads((serial / "results.json").read_text())
+    fields = ("axis", "axis_value", "error_percent", "repeat", "strategy", "order", "errors_detected", "population_sha256")
+    assert {tuple(row[key] for key in fields) for row in map(mapping, sequence(combined["rows"]))} == {
+        tuple(row[key] for key in fields) for row in original["rows"]
+    }
+    assert combined["populations"] == original["populations"]
+    with pytest.raises(ValueError, match="every error-surface shard"):
+        merge(paths[:-1])
+    with pytest.raises(ValueError, match="every error-surface shard"):
+        merge([*paths[:-1], paths[0]])
+    damaged = json.loads(paths[0].read_text())
+    original_shard = paths[0].read_text()
+    damaged["rows"].append(damaged["rows"][0])
+    paths[0].write_text(json.dumps(damaged))
+    with pytest.raises(AssertionError):
+        merge(paths)
+    damaged = json.loads(original_shard)
+    damaged["metadata"]["seed"] += 1
+    paths[0].write_text(json.dumps(damaged))
+    with pytest.raises(ValueError, match="metadata differs"):
+        merge(paths)
