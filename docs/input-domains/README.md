@@ -3,6 +3,7 @@
 <!-- toc:start -->
 **Table of contents**
 
+- [Generation and rejected candidates](#generation-and-rejected-candidates)
 - [Character sets](#character-sets)
 - [YAML parser backends](#yaml-parser-backends)
 - [Default destination catalog](#default-destination-catalog)
@@ -21,6 +22,20 @@
 Input domains control which values Hypothesis generates and shrinks. For example, a Secret reference can use a valid
 Secret name while its activation flag still varies. This avoids spending the test budget on `secretName: ">0"`, while
 keeping YAML validation enabled for the configurations that are tested.
+
+## Generation and rejected candidates
+
+The generator builds Hypothesis strategies from schema constraints: bounded numbers, enum choices, object properties
+and array items. It samples those strategies rather than enumerating every possible value and discarding invalid ones.
+The original schema still validates each candidate after character restrictions and other generation-only adaptations.
+Constraints that cannot be built directly may require rejection; excessive rejection remains a diagnostic, not a reason
+to disable Hypothesis's health checks globally.
+
+Before generation, conditional schemas are rewritten as `(condition AND then) OR (NOT condition AND else)`.
+This preserves the accepted inputs and avoids a `hypothesis-jsonschema` 0.23.1 bug: an impossible conditional such as
+`{"if": true, "then": false, "else": false}` can mutate the library's shared impossible-schema marker and corrupt later
+strategies in the same process. Regression tests cover impossible conditionals followed by ordinary object and tuple generation.
+This is a generator compatibility measure; it does not modify the chart's schema or suppress findings.
 
 ## Character sets
 

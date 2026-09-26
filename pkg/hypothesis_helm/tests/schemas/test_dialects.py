@@ -28,6 +28,49 @@ from hypothesis_helm.schemas.paths import dereference, enumerate_paths
 DRAFTS = (DRAFT4, DRAFT6, DRAFT7, DRAFT2019, DRAFT2020)
 
 
+@pytest.mark.parametrize("draft", [DRAFT7, DRAFT2019, DRAFT2020])
+@pytest.mark.parametrize("branches", [{"then": False}, {"else": False}, {"then": False, "else": False}])
+def test_impossible_conditionals_do_not_poison_later_generation(draft: str, branches: dict[str, object]) -> None:
+    """
+    Generate impossible conditionals before ordinary values to expose shared generator-state corruption.
+
+    Args:
+        draft (str): Original conditional-supporting schema dialect.
+        branches (dict[str, object]): Contradictory branch or pair of branches.
+
+    Returns:
+        None: Empty domains remain empty and later valid object and tuple domains remain usable.
+    """
+    impossible = {"$schema": draft, "if": "then" in branches, **branches}
+    assert schema_strategy(impossible).is_empty
+    schema: dict[str, object] = {
+        "$schema": DRAFT7,
+        "type": "object",
+        "required": ["rows"],
+        "additionalProperties": False,
+        "properties": {
+            "rows": {"type": "array", "items": [{"enum": ["a", "b"]}], "additionalItems": {"type": "boolean"}, "maxItems": 2},
+        },
+    }
+    validator = Draft7Validator(schema)
+
+    @settings(max_examples=12, deadline=None, derandomize=True)
+    @given(schema_strategy(schema))
+    def check(value: object) -> None:
+        """
+        Exercise object, tuple and Boolean generation after an impossible input domain.
+
+        Args:
+            value (object): Generated tuple container.
+
+        Returns:
+            None: Later schema generation is unaffected by the preceding empty domain.
+        """
+        assert validator.is_valid(value)
+
+    check()
+
+
 @pytest.mark.parametrize("draft", DRAFTS)
 def test_exclusive_bounds_keep_their_dialect(draft: str) -> None:
     """

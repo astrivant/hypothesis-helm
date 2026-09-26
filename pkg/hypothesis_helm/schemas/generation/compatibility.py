@@ -142,6 +142,16 @@ def generation_view(schema: dict[str, object], *, require_equivalent: bool = Fal
         if "if" in node and not exact_by_id.get(id(node["if"]), True):
             result.pop("if", None)
             _conjoin(result, {"anyOf": [result.pop("then", {}), result.pop("else", {})]})
+        if "if" in result:
+            condition = result.pop("if")
+            present = "then" in result or "else" in result
+            accepted = result.pop("then", {})
+            rejected = result.pop("else", {})
+            if present:
+                # (condition AND then) OR (NOT condition AND else) is equivalent.
+                # Lower it here: hypothesis-jsonschema 0.23.1 can mutate its shared
+                # FALSEY marker when an impossible conditional is canonicalized.
+                _conjoin(result, {"anyOf": [{"allOf": [condition, accepted]}, {"allOf": [{"not": condition}, rejected]}]})
         return result, exact
 
     converted, equivalent = lower(root, dialect(root))
