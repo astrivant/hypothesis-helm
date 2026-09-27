@@ -374,7 +374,10 @@ def check_paths(
                 )
         else:
             raise
-    for phase in phases:
+    # Startup failures belong to the queue, not to a claimed values path. Keep
+    # those diagnostics in the result without inventing visits or shard ownership.
+    path_phases = [phase for phase in phases if phase.get("kind") == "value-path"]
+    for phase in path_phases:
         observed = phase.get("field_coverage", {})
         if isinstance(observed, dict):
             measured.present.update(tuple(path) for path in observed.get("present_fields", []))
@@ -382,7 +385,8 @@ def check_paths(
     measured.refresh()
     failures = [phase for phase in phases if phase["status"] == "failed"]
     completed = sum(
-        phase["status"] in {"passed", "failed", "findings", "configuration-rejected"} and not phase.get("stop_reason") for phase in phases
+        phase["status"] in {"passed", "failed", "findings", "configuration-rejected"} and not phase.get("stop_reason")
+        for phase in path_phases
     )
     worker_errors = baseline["status"] == "error" or any(phase["status"] == "error" for phase in phases)
     generation_errors = any(phase["status"] == "generation-error" for phase in phases)
@@ -432,12 +436,12 @@ def check_paths(
         "traversal": {
             "discovered_paths": len(unique),
             "selected_paths": len(ordered),
-            "visited_paths": len(phases),
+            "visited_paths": len(path_phases),
             "completed_paths": completed,
-            "incomplete_paths": len(phases) - completed,
-            "remaining_paths": len(ordered) - len(phases),
-            "visited_order": [phase["path"] for phase in phases],
-            "remaining_order": planned_paths[len(phases) :],
+            "incomplete_paths": len(path_phases) - completed,
+            "remaining_paths": len(ordered) - len(path_phases),
+            "visited_order": [phase["path"] for phase in path_phases],
+            "remaining_order": planned_paths[len(path_phases) :],
             "sampled_out_paths": sampling_report["omitted"],
             "path_targets_complete": completed == len(unique) and baseline["status"] == "passed",
         },
@@ -463,10 +467,10 @@ def check_paths(
         "scope": "One property per discovered path; multiple values and shrinking within a property; joint input coverage is incomplete",
     }
     if partition is not None:
-        partition.visited = [digest(phase["path"]) for phase in phases]
+        partition.visited = [digest(phase["path"]) for phase in path_phases]
         partition.completed = [
             digest(phase["path"])
-            for phase in phases
+            for phase in path_phases
             if phase["status"] in {"passed", "failed", "findings", "configuration-rejected", "ignored"} and not phase.get("stop_reason")
         ]
         result["work_partition"] = partition.report()
