@@ -38,7 +38,7 @@ from hypothesis_helm.schemas.configuration.characters import SUITE_CHARACTER_SET
 from hypothesis_helm.schemas.configuration.selectors import SourceScope, source_identity
 from hypothesis_helm.schemas.contracts import json_value, mapping, sequence
 from hypothesis_helm.schemas.dialects import DRAFT2020, dialect
-from hypothesis_helm.schemas.generation.conditionals import fixed_branches
+from hypothesis_helm.schemas.generation.conditionals import bound_branches, fixed_branches
 from hypothesis_helm.schemas.generation.feasibility import compatible_binding
 from hypothesis_helm.schemas.generation.strategies import schema_strategy
 from hypothesis_helm.schemas.kubernetes.resources import SUITE_RESOURCE_SCHEMAS, SUITE_STRICT_SCHEMAS
@@ -301,7 +301,10 @@ def path_values(
             sequence(constrained.setdefault("allOf", [])).append(_constraint(binding, value, positional_keyword=keyword))
             # Keep alternative shapes in separate strategies. Conjoining them loses
             # valid cases; distributing nested disjunctions here wastes generation.
-            strategy = schema_strategy(constrained, generation_schema=fixed_branches(constrained), generation=domains.generation)
+            # A viable binding can still contradict individual anyOf/oneOf arms.
+            # Remove those arms before generation instead of drawing and rejecting them.
+            generating = fixed_branches(bound_branches(constrained, binding, value))
+            strategy = schema_strategy(constrained, generation_schema=generating, generation=domains.generation)
             if not strategy.is_empty:
                 strategies.append(strategy)
         values = mapping(data.draw(st.one_of(strategies), label="schema-valid context"))

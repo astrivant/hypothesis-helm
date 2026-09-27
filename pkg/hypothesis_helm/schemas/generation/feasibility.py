@@ -12,7 +12,14 @@ from hypothesis_helm.schemas.dialects import DRAFT4, DRAFT6, DRAFT7, DRAFT2020, 
 __all__ = ("compatible_binding",)
 
 
-def compatible_binding(schema: dict[str, object], path: tuple[str | int, ...], value: object) -> bool:
+def compatible_binding(
+    schema: dict[str, object],
+    path: tuple[str | int, ...],
+    value: object,
+    *,
+    root: dict[str, object] | None = None,
+    inherited: str | None = None,
+) -> bool:
     """
     Determine whether a binding avoids known structural contradictions.
 
@@ -20,11 +27,14 @@ def compatible_binding(schema: dict[str, object], path: tuple[str | int, ...], v
         schema (dict[str, object]): Complete schema defining the candidate's input space.
         path (tuple[str | int, ...]): Concrete binding; strings are keys and integers are array indices.
         value (object): Complete leaf value to place at that path.
+        root (dict[str, object] | None): Reference scope when checking a subschema.
+        inherited (str | None): Dialect inherited by that subschema.
 
     Returns:
         bool: False only for a proven conflict; True still requires complete-document validation.
     """
-    validator = validators.validator_for(schema)(schema)
+    reference_root = schema if root is None else root
+    validator = validators.validator_for(reference_root)(reference_root)
 
     def visit(raw: object, remaining: tuple[str | int, ...], version: str, seen: frozenset[tuple[int, tuple[str | int, ...]]]) -> bool:
         """
@@ -53,7 +63,7 @@ def compatible_binding(schema: dict[str, object], path: tuple[str | int, ...], v
             # A complete leaf can be validated exactly, including local references.
             return validator.evolve(schema={"$schema": version, **node}).is_valid(json_value(value))
         if "$ref" in node:
-            target, target_version = pointer_target(schema, node["$ref"])
+            target, target_version = pointer_target(reference_root, node["$ref"])
             if not visit(target, remaining, target_version, seen):
                 return False
             if version in (DRAFT4, DRAFT6, DRAFT7):
@@ -94,4 +104,4 @@ def compatible_binding(schema: dict[str, object], path: tuple[str | int, ...], v
         # the responsibility of the complete schema, never guessed from this path.
         return all(visit(child, tuple(tail), version, seen) for child in children)
 
-    return visit(schema, path, dialect(schema), frozenset())
+    return visit(schema, path, inherited or dialect(reference_root), frozenset())
