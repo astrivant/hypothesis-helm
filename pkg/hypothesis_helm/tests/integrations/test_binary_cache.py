@@ -64,6 +64,7 @@ def installer_commands(root: Path, provider: str) -> list[str]:
         ("gitlab", "Linux", "X64"),
         ("circleci", "Linux", "X64"),
         ("github-project", "Linux", "X64"),
+        ("github-project", "Linux", "ARM64"),
     ],
 )
 def test_binary_installers_reuse_exact_versions(tmp_path: Path, provider: str, platform: str, architecture: str) -> None:
@@ -150,14 +151,16 @@ def test_binary_installers_reuse_exact_versions(tmp_path: Path, provider: str, p
     first = execute()
     assert first.returncode == 0, first.stderr
     assert len(log.read_text().splitlines()) == count
-    if provider == "github":
+    if provider in {"github", "github-project"}:
         # A successful download alone cannot detect accidentally requesting the wrong architecture.
         release_platform = "linux" if platform == "Linux" else "darwin"
         release_architecture = "amd64" if architecture == "X64" else "arm64"
-        assert log.read_text().splitlines() == [
-            f"https://get.helm.sh/helm-v4.3.0-{release_platform}-{release_architecture}.tar.gz",
-            f"https://github.com/controlplaneio/kubesec/releases/download/v2.14.2/kubesec_{release_platform}_{release_architecture}.tar.gz",
-        ]
+        expected = [f"https://get.helm.sh/helm-v4.3.0-{release_platform}-{release_architecture}.tar.gz"]
+        if provider == "github":
+            expected.append(
+                f"https://github.com/controlplaneio/kubesec/releases/download/v2.14.2/kubesec_{release_platform}_{release_architecture}.tar.gz"
+            )
+        assert log.read_text().splitlines() == expected
     cached = [path for path in tmp_path.rglob("helm") if any(part in {"binaries", "hypothesis-helm-binaries"} for part in path.parts)]
     assert len(cached) == 1 and os.access(cached[0], os.X_OK)
     second = execute()
@@ -185,7 +188,7 @@ def test_binary_installers_reuse_exact_versions(tmp_path: Path, provider: str, p
     assert "helm-v4.3.2" in log.read_text().splitlines()[-1]
 
 
-@pytest.mark.parametrize("provider", ["github", "gitlab", "circleci"])
+@pytest.mark.parametrize("provider", ["github", "github-project", "gitlab", "circleci"])
 def test_binary_cache_keys_are_release_specific(provider: str) -> None:
     """
     Ensure restore and publication address the same versioned binary directories.
@@ -197,16 +200,24 @@ def test_binary_cache_keys_are_release_specific(provider: str) -> None:
         None: Every binary has a separate exact-version key and matching restore/save paths.
     """
     root = PROJECT_ROOT
-    filename = "action.yml" if provider == "github" else f"ci/{provider}.yml"
+    filename = {
+        "github": "action.yml",
+        "github-project": ".github/actions/setup-project/action.yml",
+        "gitlab": "ci/gitlab.yml",
+        "circleci": "ci/circleci.yml",
+    }[provider]
     document = mapping(YAML(typ="safe").load((root / filename).read_text()))
-    if provider == "github":
+    if provider in {"github", "github-project"}:
         assert mapping(mapping(document["inputs"])["binary-cache"])["default"] == "true"
         steps = [mapping(step) for step in sequence(mapping(document["runs"])["steps"])]
-        for tool in ("helm", "kubesec"):
+        for tool in ("helm", "kubesec") if provider == "github" else ("helm",):
             restore = next(step for step in steps if step.get("id") == f"{tool}-cache")
             metadata = mapping(restore["with"])
             key = str(metadata["key"])
-            assert all(marker in key for marker in (f"inputs.{tool}-version", "runner.os", "runner.arch"))
+            version = f"inputs.{tool}-version" if provider == "github" else "env.HELM_VERSION"
+            assert all(marker in key for marker in (version, "runner.os", "runner.arch"))
+            # Restore/save directories must select the same architecture as the installer.
+            assert "runner.arch == 'X64' && 'amd64' || 'arm64'" in str(metadata["path"])
             assert "restore-keys" not in metadata
             save = next(step for step in steps if step.get("uses") == "actions/cache/save@v5" and mapping(step["with"]).get("key") == key)
             assert save["with"] == restore["with"]

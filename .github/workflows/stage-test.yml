@@ -194,6 +194,7 @@ jobs:
 
   sharded-chart:
     name: "Chart tests and Kubesec (Kubernetes ${{ matrix.kubernetes }}, shard ${{ matrix.number }}/3)"
+    # The small example chart has too few paths per shard to use a large runner.
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:

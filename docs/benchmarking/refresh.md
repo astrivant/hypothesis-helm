@@ -89,7 +89,11 @@ Each study owns its output directory, status file and process journal. A failed 
 other studies. The final job requires every study to succeed, verifies the merged measurements, and publishes pages and plots
 under `studies/`, then commits final plots and summaries to the PR branch. The `refresh` option alone does not run new Bitnami or Prometheus scans; select their separate scan options to include them. Studies and the separate `refresh-resume-data` artifact
 are retained for 30 days.
-Jobs default to `ubuntu-latest`. Set `HH_CI_RUNNER` to the label of an available larger Ubuntu x64 runner to use more cores.
+Study measurements, merging, plot publication and smoke checks use standard `ubuntu-latest` runners.
+Individual measurements run serially, or with at most four local workers in the scaling study; more CI shards do not increase
+parallelism inside each runner. Preparation uses `large-arm64` because it runs the full test suite with one pytest worker per available CPU.
+The separate Bitnami and Prometheus scans also use `large-arm64`, with one path worker per available CPU when enough paths remain.
+Helm downloads, Python environments and native-build caches distinguish x64 from ARM64.
 
 After pushing the workflow changes, launch it with:
 

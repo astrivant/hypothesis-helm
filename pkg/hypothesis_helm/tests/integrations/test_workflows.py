@@ -130,6 +130,9 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
     jobs = all_jobs()
     for name in ("go", "checks", "python-tests", "sharded-chart", "build", "smoke"):
         assert "needs" not in jobs[name] and "if" not in jobs[name]
+    for name, job in jobs.items():
+        if name.startswith("refresh-") or name == "smoke":
+            assert job["runs-on"] == ("large-arm64" if name == "refresh-prepare" else "ubuntu-latest"), name
     prepare = jobs["refresh-prepare"]
     assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
     assert prepare["needs"] == "pr-benchmark-request"
@@ -337,6 +340,7 @@ def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
         None: Independent caches persist complete evidence and tags force new property tests.
     """
     job = all_jobs()["sharded-chart"]
+    assert job["runs-on"] == "ubuntu-latest"
     matrix = mapping(mapping(job["strategy"])["matrix"])
     assert matrix["include"] == [{"shard": index, "number": index + 1} for index in range(3)]
     assert "shard ${{ matrix.number }}/3" in str(job["name"])
@@ -360,7 +364,7 @@ def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
 
 def test_error_surface_has_eight_isolated_shards() -> None:
     """
-    Partition the costly surface on free four-core runners and join before publishing.
+    Partition the costly surface on standard runners and join before publishing.
 
     Returns:
         None: The study cannot publish until all eight shards have been verified.
@@ -382,7 +386,7 @@ def test_error_surface_has_eight_isolated_shards() -> None:
 
 def test_stress_has_six_isolated_shards() -> None:
     """
-    Keep stress comparisons on six free four-core runners before publication.
+    Keep stress comparisons on six standard runners before publication.
 
     Returns:
         None: Every shard is required and can finish independently of failed peers.

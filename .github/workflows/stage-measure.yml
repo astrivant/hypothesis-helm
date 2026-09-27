@@ -58,7 +58,8 @@ jobs:
     name: Prepare shared inputs
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
     needs: pr-benchmark-request
-    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    # scripts/check.sh runs the full suite with pytest-xdist's CPU-sized worker pool.
+    runs-on: large-arm64
     timeout-minutes: 60
     outputs:
       root: ${{ steps.prepare.outputs.root }}
@@ -106,7 +107,8 @@ jobs:
   refresh-study:
     name: "Study: ${{ matrix.study }}"
     needs: refresh-prepare
-    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    # Studies measure serial execution or at most four local workers.
+    runs-on: ubuntu-latest
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -327,7 +329,7 @@ jobs:
   refresh-finish:
     name: Verify and commit PR benchmark graphs
     needs: [pr-benchmark-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge]
-    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     timeout-minutes: 360
     permissions:
       contents: write
