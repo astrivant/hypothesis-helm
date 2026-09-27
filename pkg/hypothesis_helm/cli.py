@@ -47,6 +47,7 @@ from hypothesis_helm.reporting.reports.shards import aggregate
 from hypothesis_helm.rules import ENVIRONMENT as RULE_ENVIRONMENT
 from hypothesis_helm.rules import load_ignored, may_check
 from hypothesis_helm.schemas.configuration.policy import ENVIRONMENT as INPUT_ENVIRONMENT
+from hypothesis_helm.schemas.configuration.policy import FILE_ENVIRONMENT as INPUT_POLICY_FILE
 from hypothesis_helm.schemas.configuration.policy import load_policy
 from hypothesis_helm.schemas.configuration.selectors import SourceScope, chart_identity, source_identity
 from hypothesis_helm.schemas.contracts import mapping, sequence
@@ -845,6 +846,7 @@ def main(argv: list[str] | None = None) -> int:
     format_token = None
     previous_rules = env.get(RULE_ENVIRONMENT)
     previous_inputs = set_env(INPUT_ENVIRONMENT, None)
+    previous_input_file = set_env(INPUT_POLICY_FILE, None)
     previous_conformity = set_env(ENVIRONMENT, None)
     try:
         streaming = getattr(args, "output_format", None) in ("json", "yaml") and not getattr(args, "dry_run", False)
@@ -893,7 +895,12 @@ def main(argv: list[str] | None = None) -> int:
                     mapping(mapping(rule).get("findings", {})).get("fail_on") is not None
                     for rule in sequence(args.input_policy.get("input_constraints", []))
                 )
-            set_env(INPUT_ENVIRONMENT, json.dumps(args.input_policy, sort_keys=True))
+            # Keep expanded CRD schemas out of execve's per-string environment limit.
+            policy_directory = stack.enter_context(TemporaryDirectory(prefix="hypothesis-helm-policy-"))
+            policy_file = Path(policy_directory) / "policy.json"
+            policy_file.write_text(json.dumps(args.input_policy, sort_keys=True))
+            policy_file.chmod(0o600)
+            set_env(INPUT_POLICY_FILE, str(policy_file.resolve()))
             args.ignored_rules = load_ignored(args.config, args.ignore)
             set_env(RULE_ENVIRONMENT, json.dumps(args.ignored_rules))
             if args.ignored_rules:
@@ -1328,6 +1335,7 @@ def main(argv: list[str] | None = None) -> int:
     finally:
         set_env(RULE_ENVIRONMENT, None)
         set_env(INPUT_ENVIRONMENT, None)
+        set_env(INPUT_POLICY_FILE, previous_input_file)
         if previous_inputs is not None:
             set_env(INPUT_ENVIRONMENT, previous_inputs)
         if previous_rules is not None:

@@ -4,6 +4,7 @@ Verify the unified CI graph, setup contexts and release artifact handoff.
 
 from graphlib import TopologicalSorter
 
+import pytest
 from ruamel.yaml import YAML
 
 from hypothesis_helm.schemas.contracts import mapping, sequence
@@ -310,6 +311,9 @@ def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
         None: Independent caches persist complete evidence and tags force new property tests.
     """
     job = mapping(mapping(workflows()["ci.yml"]["jobs"])["sharded-chart"])
+    matrix = mapping(mapping(job["strategy"])["matrix"])
+    assert matrix["include"] == [{"shard": index, "number": index + 1} for index in range(3)]
+    assert "shard ${{ matrix.number }}/3" in str(job["name"])
     steps = [mapping(step) for step in sequence(job["steps"])]
     checkout = next(step for step in steps if str(step.get("uses", "")).startswith("actions/checkout@"))
     assert mapping(checkout["with"])["fetch-depth"] == 0
@@ -340,6 +344,9 @@ def test_error_surface_has_eight_isolated_shards() -> None:
     assert shard["runs-on"] == "ubuntu-latest"
     strategy = mapping(shard["strategy"])
     assert mapping(strategy["matrix"])["shard"] == list(range(8))
+    assert mapping(strategy["matrix"])["include"] == [{"shard": index, "number": index + 1} for index in range(8)]
+    assert "matrix.number" in str(shard["name"])
+    assert mapping(shard["env"])["SHARD"] == "${{ matrix.shard }}"
     assert strategy["max-parallel"] == 8
     assert strategy["fail-fast"] is False
     merge = mapping(jobs["refresh-error-surface-merge"])
@@ -359,8 +366,75 @@ def test_stress_has_six_isolated_shards() -> None:
     assert shard["runs-on"] == "ubuntu-latest"
     strategy = mapping(shard["strategy"])
     assert mapping(strategy["matrix"])["shard"] == list(range(6))
+    assert mapping(strategy["matrix"])["include"] == [{"shard": index, "number": index + 1} for index in range(6)]
+    assert "matrix.number" in str(shard["name"])
+    assert mapping(shard["env"])["SHARD"] == "${{ matrix.shard }}"
     assert strategy["max-parallel"] == 6
     assert strategy["fail-fast"] is False
     merge = mapping(jobs["refresh-stress-merge"])
     assert set(sequence(merge["needs"])) == {"refresh-prepare", "refresh-stress"}
     assert "refresh-stress-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])
+
+
+def test_sharded_study_verifiers_use_poetry_environment() -> None:
+    """
+    Run dependency-bearing verifiers in the same environment as the measured studies.
+
+    Returns:
+        None: Both merge jobs use the installed project dependencies instead of system Python.
+    """
+    jobs = mapping(workflows()["ci.yml"]["jobs"])
+    for study in ("stress", "error-surface"):
+        steps = [mapping(step) for step in sequence(mapping(jobs[f"refresh-{study}-merge"])["steps"])]
+        verification = next(str(step["run"]) for step in steps if "verify-measurements.py" in str(step.get("run", "")))
+        assert f'poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study {study}' in verification
+        assert not any(line.lstrip().startswith("python ") for line in verification.splitlines())
+
+
+@pytest.mark.parametrize("repository", ["bitnami", "prometheus"])
+def test_repository_scan_is_manual_with_fourteen_shards(repository: str) -> None:
+    """
+    Allow manually requested branch scans without starting them on ordinary pushes or PR events.
+
+    Args:
+        repository (str): Manually selected chart source.
+
+    Returns:
+        None: Fourteen isolated path partitions precede verified reports on the selected branch.
+    """
+    jobs = mapping(workflows()["ci.yml"]["jobs"])
+    scan = mapping(jobs[f"{repository}-scan"])
+    assert "workflow_dispatch" in str(scan["if"]) and "refs/heads/main" not in str(scan["if"])
+    assert scan["runs-on"] == "ubuntu-latest"
+    assert mapping(mapping(scan["strategy"])["matrix"])["shard"] == list(range(1, 15))
+    steps = [mapping(step) for step in sequence(scan["steps"])]
+    action = next(step for step in steps if step.get("uses") == "./")
+    settings = mapping(action["with"])
+    assert settings["jobs"] == "4" and settings["filter"] == "true"
+    assert settings["shard"] == "${{ matrix.shard }}/14"
+    directory = "bitnami-charts" if repository == "bitnami" else "prometheus-community-helm-charts"
+    assert settings["chart"] == f"third_party/{directory}"
+    assert settings["run-id"] == f"{repository}-${{{{ github.run_id }}}}-${{{{ github.run_attempt }}}}"
+    if repository == "prometheus":
+        restore = next(str(step["run"]) for step in steps if "submodule update" in str(step.get("run", "")))
+        assert "https://github.com/prometheus-community/helm-charts.git" in restore
+    publish = mapping(jobs[f"{repository}-publish"])
+    assert "workflow_dispatch" in str(publish["if"]) and "refs/heads/main" not in str(publish["if"])
+    assert mapping(publish["permissions"]) == {"contents": "write"}
+    dependencies = {f"{repository}-request", f"{repository}-scan"}
+    if repository == "prometheus":
+        dependencies.add("bitnami-publish")
+    assert set(sequence(publish["needs"])) == dependencies
+    assert "always()" in str(publish["if"])
+    publish_steps = [mapping(step) for step in sequence(publish["steps"])]
+    assert any(step.get("run") == f"bash .github/repository-report.sh {repository}" for step in publish_steps)
+    checkout = next(step for step in publish_steps if str(step.get("uses", "")).startswith("actions/checkout@"))
+    assert mapping(checkout["with"])["ref"] == "${{ github.ref_name }}"
+    request = mapping(jobs[f"{repository}-request"])
+    request_steps = [mapping(step) for step in sequence(request["steps"])]
+    guard = str(request_steps[0]["run"])
+    assert "refs/heads/*" in guard and "REFRESH_REQUESTED" not in guard
+    assert f"inputs.{repository}-scan" in str(request["if"])
+    inputs = mapping(mapping(mapping(workflows()["ci.yml"]["on"])["workflow_dispatch"])["inputs"])
+    assert mapping(inputs[f"{repository}-scan"])["default"] is False
+    assert f"{repository}-publish" not in sequence(mapping(jobs["publish"])["needs"])

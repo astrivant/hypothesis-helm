@@ -23,6 +23,7 @@ from hypothesis_helm.findings.generator import FindingGenerator
 from hypothesis_helm.findings.policy import RuleScope
 from hypothesis_helm.reporting.console.output import emit_manifest
 from hypothesis_helm.rules import check, effective_ignored_codes, ignored
+from hypothesis_helm.schemas.configuration.policy import inherited_policy
 from hypothesis_helm.schemas.contracts import (
     mapping,
     sequence,
@@ -268,7 +269,7 @@ def _render(
                 "conformity": env.get(ENVIRONMENT),
                 "timeout": timeout,
                 "ignored_rules": effective_ignored_codes(),
-                "input_policy": env.get("HYPOTHESIS_HELM_INPUT_POLICY", "{}"),
+                "input_policy": inherited_policy(),
                 "resource_schemas": resource_schemas(),
             },
             sort_keys=True,

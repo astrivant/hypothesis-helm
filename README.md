@@ -178,6 +178,7 @@ See the [production promotion guide](docs/ci/README.md#production-promotion) for
 
 ## Guides
 
+- [How schemas become tests](docs/input-domains/README.md#how-schemas-become-tests): input ranges, generated configurations and what the tests assert.
 - [Input domains](docs/input-domains/README.md): constrain generated values using destination schemas or chart-specific policies.
 
 Disable selected checks with [stable rule codes and an ignore file](docs/rules/README.md).

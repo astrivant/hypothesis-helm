@@ -3,6 +3,11 @@
 <!-- toc:start -->
 **Table of contents**
 
+- [How schemas become tests](#how-schemas-become-tests)
+  - [From constraints to allowed values](#from-constraints-to-allowed-values)
+  - [From a path to a test configuration](#from-a-path-to-a-test-configuration)
+  - [What the test actually asserts](#what-the-test-actually-asserts)
+  - [Sampling versus complete coverage](#sampling-versus-complete-coverage)
 - [Generation and rejected candidates](#generation-and-rejected-candidates)
 - [Character sets](#character-sets)
 - [YAML parser backends](#yaml-parser-backends)
@@ -22,6 +27,92 @@
 Input domains control which values Hypothesis generates and shrinks. For example, a Secret reference can use a valid
 Secret name while its activation flag still varies. This avoids spending the test budget on `secretName: ">0"`, while
 keeping YAML validation enabled for the configurations that are tested.
+
+## How schemas become tests
+
+A **schema property** is an input field, such as `service.port`. A **testing property** is a rule we check across
+many generated configurations. For example: "Valid chart inputs should render successfully and produce valid manifests."
+The schema defines which inputs are allowed; the testing property defines what must hold when Helm renders them.
+
+```mermaid
+flowchart TD
+    inputs["Values schema and supplied defaults"] --> domains["Allowed values for each input path"]
+    constraints["Configured constraints and supported compiler analysis"] --> domains
+    domains --> generate["Generate a candidate value"]
+    generate --> context["Place it in a schema-valid chart configuration"]
+    context --> render["Render with Helm"]
+    render --> checks["Check YAML, resource structure and configured API schemas"]
+    checks --> failure["On failure: shrink and record a reproducing input"]
+```
+
+### From constraints to allowed values
+
+For this schema fragment, `service.port` accepts integers from 1 through 65535, inclusive:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "properties": {
+        "port": {"type": "integer", "minimum": 1, "maximum": 65535}
+      },
+      "required": ["port"]
+    }
+  },
+  "required": ["service"]
+}
+```
+
+| Schema rule | Input domain |
+| --- | --- |
+| `type: boolean` | `true` or `false`. |
+| Integer with `minimum` / `maximum` | Whole numbers within those bounds; exclusive bounds exclude the endpoint. |
+| `enum` / `const` | The listed choices / one fixed value. |
+| String with `pattern`, `minLength`, `maxLength` | Strings satisfying the pattern and length bounds, subject to configured character rules. |
+| Array with `items`, `minItems`, `maxItems` | Lists with allowed elements and lengths. |
+| Object with `properties`, `required`, `additionalProperties` | Allowed fields, required presence and rules for extra keys. |
+| `allOf`, `anyOf`, `oneOf`, `if` / `then` / `else` | Constraints on complete configurations, including relationships between fields. |
+
+`hypothesis-jsonschema` converts these constraints into Hypothesis strategies: generators that can draw inputs and shrink
+failing examples. A field's default supplies a baseline, not its permitted range. Without a declaration, `replicas: 3`
+provides evidence of an integer but no minimum or maximum. Nulls and empty lists provide even less type information.
+See [declared and inferred types](../inputs/README.md#declared-and-inferred-types).
+
+Supported compiler analysis can establish additional constraints, including explicit template rejections and mappings
+from values to constrained Kubernetes fields. Unresolved mappings do not establish constraints. See
+[the destination catalog](#default-destination-catalog) and [chart-specific constraints](#chart-specific-constraints).
+
+### From a path to a test configuration
+
+A path such as `$.service.port` identifies the field to vary. We draw a candidate, insert it into the supplied defaults,
+and check the effective configuration against the input schema. Array paths also need a concrete element to vary.
+
+Changing one field can require changing others. If a value activates a branch with required sibling fields, generation
+can supply a compatible context. Dependency activation is considered too. A path test therefore does not promise that
+only one field changes; reports show the overrides used together. Saved suites expose these path tests as Hypothesis
+`@given` tests.<sup>[\[1\]](../usage.md#inspect-and-rerun-generated-suites)</sup>
+
+### What the test actually asserts
+
+Helm must render successfully, and the output must satisfy the configured checks: parseable YAML, valid resource
+structure, and Kubernetes API schemas when schema validation is enabled. Optional security checks are separate.
+The input schema does not invent application-specific assertions such as "changing this port must update exactly
+three resources." Such expectations need explicit assertions or an independent specification.
+
+A failure can be shrunk to a simpler reproducing input. It is evidence of a failure under the tested input contract;
+it may also expose an overly broad input schema or a tooling issue, rather than a confirmed chart defect.
+
+### Sampling versus complete coverage
+
+Ordinary Hypothesis execution samples the domain within the example and time budgets. It does not visit every integer
+or every string. Some candidates still require rejection after generation; see [generation and rejected candidates](#generation-and-rejected-candidates).
+
+For supported finite domains, `--permutations N` plans configurations covering feasible N-way interactions between input
+factors. This is interaction strength, not a requested count of test cases. Exhaustive testing requires a finite domain,
+an exhaustive plan and a completed run. Filters and timeouts affect achieved coverage; a passing sample is not proof
+that every configuration works.<sup>[\[2\]](../usage.md#interaction-coverage)</sup>
 
 ## Generation and rejected candidates
 

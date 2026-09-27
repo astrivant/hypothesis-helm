@@ -9,6 +9,7 @@
   - [Project checks](#project-checks)
 - [Plugin verification](#plugin-verification)
 - [GitHub CI](#github-ci)
+- [Manual repository scans](#manual-repository-scans)
 - [Documentation contents](#documentation-contents)
 - [Publishing to PyPI](#publishing-to-pypi)
 - [Pre-commit hook](#pre-commit-hook)
@@ -241,6 +242,32 @@ The saved suite's own code and conftest remain editable.
 
 Publishing and remote repository-setting changes are not automated by local checks.
 
+## Manual repository scans
+
+Start scans manually, selecting `main` or a PR head branch in the Actions UI or with `--ref`:
+
+```sh
+gh workflow run ci.yml --ref main -f bitnami-scan=true
+gh workflow run ci.yml --ref main -f prometheus-scan=true
+gh workflow run ci.yml --ref my-pr-branch -f prometheus-scan=true
+```
+
+Select either option, or both in one dispatch. Both selected scans run independently; their report commits publish sequentially.
+
+Use the PR's head branch name, not its number. The selected branch must contain the scan workflow.
+Scans never start automatically on PR events or ordinary pushes. They may run alongside a manually requested PR refresh.
+Fourteen `ubuntu-latest` runners (4 vCPU / 16 GiB each for this public repository) use the same pinned submodule
+for each selected repository. Prometheus uses HTTPS checkout without an SSH key.
+Each owns a distinct segment of every chart's values paths, with four local workers, `--filter`, seed 0 and ten examples per path.
+Testing allows five minutes per chart and five hours per shard; unfinished work stays visible in the report.
+
+One aggregation job verifies all fourteen reports, including empty partitions, before publishing Markdown, PDF and figures
+under `docs/reports/bitnami/` or `docs/reports/prometheus/`. On `main`, it updates the README links and commits only final reports and those links.
+On PR branches, it retains the final reports as downloadable Actions artifacts without committing them.
+Chart findings can be published; missing or incompatible shard evidence blocks publication. Raw measurements remain in Actions
+artifacts for 30 days. The push is never forced: concurrent changes or branch protections can reject it, leaving artifacts available.
+The job's `GITHUB_TOKEN` needs permission to push to `main`; it does not bypass branch protections.
+
 ## Documentation contents
 
 Run `hypothesis-helm-docs` from the checkout root after editing headings. It updates linked tables of contents in maintained
@@ -385,6 +412,11 @@ including an empty one, takes precedence. Each worker process has its own snapsh
 
 The catalog and optional benchmarking package use this same environment API. Tests that change the process environment explicitly
 refresh the snapshot, and test teardown restores it to prevent settings leaking between cases.
+
+Resolved input policies, including CRD schemas, are passed to workers through a private, temporary JSON file.
+Only its absolute path enters the subprocess environment, avoiding Linux's per-string execution limit.
+The command retains this snapshot until work completes and removes it during cleanup; a missing file fails rather than disabling validation.
+Caches and saved evidence use policy contents, not the temporary filename.
 
 ## Repository map
 

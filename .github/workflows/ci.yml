@@ -11,6 +11,14 @@ on:
         description: Run required PR benchmarks and commit updated graphs after verification
         type: boolean
         default: false
+      bitnami-scan:
+        description: Scan pinned Bitnami charts on 14 runners; commit reports only when run on main
+        type: boolean
+        default: false
+      prometheus-scan:
+        description: Scan pinned Prometheus charts on 14 runners; commit reports only when run on main
+        type: boolean
+        default: false
       pull-request:
         description: Open PR number for refresh; select its head branch as the workflow ref
         type: string
@@ -212,13 +220,20 @@ jobs:
         if: steps.badge.outputs.changed == 'true'
 
   sharded-chart:
-    name: "Chart tests and Kubesec (Kubernetes ${{ matrix.kubernetes }}, shard ${{ matrix.shard }})"
+    name: "Chart tests and Kubesec (Kubernetes ${{ matrix.kubernetes }}, shard ${{ matrix.number }}/3)"
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
         shard: [0, 1, 2]
+        include:
+          - shard: 0
+            number: 1
+          - shard: 1
+            number: 2
+          - shard: 2
+            number: 3
         kubernetes: ['1.34.0', '1.35.0']
     steps:
       - uses: actions/checkout@v7
@@ -536,7 +551,7 @@ jobs:
           path: ${{ runner.temp }}/refresh-study-${{ matrix.study }}.tar.gz
           retention-days: 30
   refresh-error-surface:
-    name: "Error surface (${{ matrix.shard }}/8)"
+    name: "Error surface (${{ matrix.number }}/8)"
     needs: refresh-prepare
     runs-on: ubuntu-latest
     timeout-minutes: 360
@@ -545,6 +560,24 @@ jobs:
       max-parallel: 8
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
+        # Fix for annoying off-by-one display in the GitHub UI. You'll find this elsewhere in this file as well.
+        include:
+          - shard: 0
+            number: 1
+          - shard: 1
+            number: 2
+          - shard: 2
+            number: 3
+          - shard: 3
+            number: 4
+          - shard: 4
+            number: 5
+          - shard: 5
+            number: 6
+          - shard: 6
+            number: 7
+          - shard: 7
+            number: 8
     env:
       ROOT: ${{ needs.refresh-prepare.outputs.root }}
       SHARD: ${{ matrix.shard }}
@@ -599,7 +632,7 @@ jobs:
           poetry run hypothesis-helm-benchmark error-surface \
               --merge-shards "$RUNNER_TEMP"/error-surface-shards/*/results.json \
               --output "$ROOT/outputs/error-surface"
-          python "$ROOT/verify-measurements.py" "$ROOT" --study error-surface
+          poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study error-surface
           mkdir -p "$ROOT/statuses"
           printf 'error-surface\t0\n' >"$ROOT/statuses/error-surface.tsv"
           tar -czf "$RUNNER_TEMP/refresh-study-error-surface.tar.gz" \
@@ -610,7 +643,7 @@ jobs:
           path: ${{ runner.temp }}/refresh-study-error-surface.tar.gz
           retention-days: 30
   refresh-stress:
-    name: "Stress progression (${{ matrix.shard }}/6)"
+    name: "Stress progression (${{ matrix.number }}/6)"
     needs: refresh-prepare
     runs-on: ubuntu-latest
     timeout-minutes: 360
@@ -619,6 +652,19 @@ jobs:
       max-parallel: 6
       matrix:
         shard: [0, 1, 2, 3, 4, 5]
+        include:
+          - shard: 0
+            number: 1
+          - shard: 1
+            number: 2
+          - shard: 2
+            number: 3
+          - shard: 3
+            number: 4
+          - shard: 4
+            number: 5
+          - shard: 5
+            number: 6
     env:
       ROOT: ${{ needs.refresh-prepare.outputs.root }}
       SHARD: ${{ matrix.shard }}
@@ -673,7 +719,7 @@ jobs:
           poetry run hypothesis-helm-benchmark stress \
               --merge-shards "$RUNNER_TEMP"/stress-shards/*/results.json \
               --output "$ROOT/outputs/stress"
-          python "$ROOT/verify-measurements.py" "$ROOT" --study stress
+          poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study stress
           mkdir -p "$ROOT/statuses"
           printf 'stress\t0\n' >"$ROOT/statuses/stress.tsv"
           tar -czf "$RUNNER_TEMP/refresh-study-stress.tar.gz" \
@@ -779,6 +825,183 @@ jobs:
           gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$RESULT_SHA" \
               -f state="$state" -f context='PR benchmark results' -f description="$description" \
               -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+  bitnami-request:
+    name: Validate manual Bitnami scan request
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.bitnami-scan }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require a branch for the manual scan
+        env:
+          REQUEST_REF: ${{ github.ref }}
+        run: |
+          if [[ "$REQUEST_REF" != refs/heads/* ]]; then
+              echo '::error::Bitnami scans must be dispatched on main or a PR head branch.'
+              exit 1
+          fi
+  bitnami-scan:
+    name: "Bitnami values (${{ matrix.shard }}/14)"
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.bitnami-scan }}
+    needs: [verification, bitnami-request]
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 14
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Restore the pinned Bitnami charts
+        run: git submodule update --init third_party/bitnami-charts
+      - name: Test this values partition
+        id: scan
+        continue-on-error: true
+        uses: ./
+        with:
+          chart: third_party/bitnami-charts
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+          command: test
+          filter: 'true'
+          jobs: '4'
+          chart-timeout: 5m
+          scan-timeout: 5h
+          max-examples: '10'
+          seed: '0'
+          cache: 'false'
+          disable-codes: HH2006
+          job-index: ${{ matrix.shard }}
+          shard: ${{ matrix.shard }}/14
+          run-id: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
+          artifact-dir: .cache/bitnami-scan
+          artifact-name: bitnami-scan
+      - name: Require saved shard evidence even when findings were found
+        env:
+          REPORT_DIR: ${{ steps.scan.outputs.report-dir }}
+        run: test -s "$REPORT_DIR/report.json"
+  bitnami-publish:
+    name: Aggregate Bitnami scan and publish reports
+    if: ${{ always() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.bitnami-scan && needs.bitnami-request.result == 'success' && needs.bitnami-scan.result != 'skipped' }}
+    needs: [bitnami-request, bitnami-scan]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: bitnami-scan-bitnami-scan-*
+          path: .cache/bitnami-shards
+      - name: Verify all fourteen partitions and publish final reports
+        env:
+          SCAN_RUN_ID: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
+        run: bash .github/repository-report.sh bitnami
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: bitnami-final-report
+          path: |
+            .cache/bitnami-final/
+            docs/reports/bitnami/
+          include-hidden-files: true
+          retention-days: 30
+
+  prometheus-request:
+    name: Validate manual Prometheus scan request
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.prometheus-scan }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require a branch for the manual scan
+        env:
+          REQUEST_REF: ${{ github.ref }}
+        run: |
+          if [[ "$REQUEST_REF" != refs/heads/* ]]; then
+              echo '::error::Prometheus scans must be dispatched on main or a PR head branch.'
+              exit 1
+          fi
+  prometheus-scan:
+    name: "Prometheus values (${{ matrix.shard }}/14)"
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.prometheus-scan }}
+    needs: [verification, prometheus-request]
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 14
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Restore the pinned Prometheus charts
+        run: |
+          git -c submodule.third_party/prometheus-community-helm-charts.url=https://github.com/prometheus-community/helm-charts.git \
+              submodule update --init third_party/prometheus-community-helm-charts
+      - name: Test this values partition
+        id: scan
+        continue-on-error: true
+        uses: ./
+        with:
+          chart: third_party/prometheus-community-helm-charts
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+          command: test
+          filter: 'true'
+          jobs: '4'
+          chart-timeout: 5m
+          scan-timeout: 5h
+          max-examples: '10'
+          seed: '0'
+          cache: 'false'
+          disable-codes: HH2006
+          job-index: ${{ matrix.shard }}
+          shard: ${{ matrix.shard }}/14
+          run-id: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
+          artifact-dir: .cache/prometheus-scan
+          artifact-name: prometheus-scan
+      - name: Require saved shard evidence even when findings were found
+        env:
+          REPORT_DIR: ${{ steps.scan.outputs.report-dir }}
+        run: test -s "$REPORT_DIR/report.json"
+  prometheus-publish:
+    name: Aggregate Prometheus scan and publish reports
+    if: ${{ always() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.prometheus-scan && needs.prometheus-request.result == 'success' && needs.prometheus-scan.result != 'skipped' }}
+    # Serialize report commits when both scans are requested; checkout the branch after Bitnami publishes.
+    needs: [prometheus-request, prometheus-scan, bitnami-publish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: prometheus-scan-prometheus-scan-*
+          path: .cache/prometheus-shards
+      - name: Verify all fourteen partitions and publish final reports
+        env:
+          SCAN_RUN_ID: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
+        run: bash .github/repository-report.sh prometheus
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: prometheus-final-report
+          path: |
+            .cache/prometheus-final/
+            docs/reports/prometheus/
+          include-hidden-files: true
+          retention-days: 30
 
   publish:
     name: Publish verified distributions to PyPI
