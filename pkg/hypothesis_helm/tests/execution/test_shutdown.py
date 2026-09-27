@@ -10,6 +10,8 @@ import subprocess
 import sys
 import threading
 import time
+from concurrent.futures import Future
+from concurrent.futures.process import BrokenProcessPool
 from pathlib import Path
 from textwrap import dedent
 from typing import cast
@@ -20,6 +22,7 @@ from hypothesis_helm_benchmarking.execution.runner import Job, measure
 
 from hypothesis_helm.charts.repositories.registry import HelmTransport
 from hypothesis_helm.charts.repositories.repository import run_git
+from hypothesis_helm.exceptions.execution import TimeLimitReached
 from hypothesis_helm.execution.runtime.processes import Processes, _signal_group
 from hypothesis_helm.execution.workers.parallel import run_parallel
 
@@ -669,6 +672,54 @@ def test_benchmark_pool_joins_after_replica_failure(tmp_path: Path, monkeypatch:
     assert (tmp_path / "replica-finished").exists()
 
 
+@pytest.mark.parametrize("stop", ["interrupt", "deadline", "crash"])
+@pytest.mark.parametrize("stage", ["waiting", "shutdown", "submission"])
+def test_benchmark_cancelled_pool_preserves_results(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, stop: str, stage: str) -> None:
+    """
+    Retain completed work when cancellation kills a replica before it can return.
+
+    Args:
+        tmp_path (Path): Unused chart path for the controlled pool.
+        monkeypatch (pytest.MonkeyPatch): Control signal and worker-exit ordering.
+        stop (str): Interruption, deadline, or an unexpected worker crash.
+        stage (str): Whether cancellation arrives while waiting, joining, or after a failed submission.
+
+    Returns:
+        None: Cancellation retains incomplete assignments; unexpected crashes propagate after joining.
+    """
+    completed: Future[dict[str, object]] = Future()
+    completed.set_result(
+        dict(
+            status="passed", assigned=2, remaining=0, attempted=2, completed=2, rendered=2, render_invocations=2, pruned=0, oracle_checks=2
+        )
+    )
+    broken: Future[dict[str, object]] = Future()
+    broken.set_exception(BrokenProcessPool("replica stopped during startup"))
+    pool = Mock()
+    pool.submit.side_effect = [completed, BrokenProcessPool("replica stopped during startup") if stage == "submission" else broken]
+    monkeypatch.setattr("hypothesis_helm_benchmarking.execution.runner.ProcessPoolExecutor", Mock(return_value=pool))
+    # Keep the successful future available even if the other replica dies before reporting.
+    if stop == "crash" or stage != "waiting":
+        monkeypatch.setattr("hypothesis_helm_benchmarking.execution.runner.as_completed", lambda futures: iter(futures))
+        if stop != "crash":
+            pool.shutdown.side_effect = KeyboardInterrupt if stop == "interrupt" else TimeLimitReached
+    else:
+        monkeypatch.setattr(
+            "hypothesis_helm_benchmarking.execution.runner.as_completed",
+            Mock(side_effect=KeyboardInterrupt if stop == "interrupt" else TimeLimitReached),
+        )
+    if stop == "crash":
+        with pytest.raises(BrokenProcessPool, match="replica stopped during startup"):
+            measure(tmp_path, 4, 2, False, seed=0, multiplicity=1, time_limit=5, helm="helm", shard=None)
+    else:
+        result = measure(tmp_path, 4, 2, False, seed=0, multiplicity=1, time_limit=5, helm="helm", shard=None)
+        assert result["status"] == ("interrupted" if stop == "interrupt" else "time-limit")
+        assert result["assigned"] == 4 and result["completed"] == result["remaining"] == 2
+        assert result["rendered"] == 2
+        assert len(cast(list[object], result["workers"])) == 2
+    pool.shutdown.assert_called_once_with(wait=True, cancel_futures=stop != "crash" and stage == "waiting")
+
+
 @pytest.mark.parametrize("interrupt_signal", [signal.SIGINT, signal.SIGTERM, signal.SIGALRM])
 def test_registration_finishes_before_cancellation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, interrupt_signal: int) -> None:
     """
@@ -716,10 +767,10 @@ def test_registration_finishes_before_cancellation(tmp_path: Path, monkeypatch: 
     assert signal.getsignal(interrupt_signal) == previous
 
 
-@pytest.mark.parametrize("stop", ["interrupt", "terminate", "deadline", "parallel-timeout"])
+@pytest.mark.parametrize("stop", ["interrupt", "terminate", "startup-terminate", "deadline", "parallel-timeout"])
 def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str) -> None:
     """
-    Cancel only the coordinator while replicas own renderer processes and descendants.
+    Verify active replica cancellation and timeouts that can expire during startup.
 
     Args:
         tmp_path (Path): Fake renderer, chart and retained shutdown evidence.
@@ -755,10 +806,30 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str)
     driver.write_text(
         dedent(
             """
-            import json
+            import json, os
             from pathlib import Path
+            import hypothesis_helm_benchmarking.execution.runner as runner
             from hypothesis_helm_benchmarking.execution.runner import measure
+
+            def hold_startup(cancel):
+                '''
+                Model a replica terminated before it installs its cancellation handler.
+
+                Args:
+                    cancel (Event): Coordinator's cancellation request.
+
+                Returns:
+                    None: The process exits without reporting a worker result.
+                '''
+                pending = Path(f'ready-{os.getpid()}.pending')
+                pending.write_text(json.dumps([os.getpid()]))
+                pending.replace(pending.with_suffix('.json'))
+                cancel.wait(30)
+                os._exit(17)
+
             if __name__ == '__main__':
+                if Path('startup-terminate').exists():
+                    runner.initialize = hold_startup
                 result = measure(Path('chart'), 12, 2, False, seed=0, multiplicity=8,
                                  time_limit=5 if Path('deadline').exists() else 30,
                                  helm=str(Path('helm').resolve()), shard=None)
@@ -766,8 +837,8 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str)
             """
         )
     )
-    if stop == "deadline":
-        (tmp_path / "deadline").touch()
+    if stop in {"deadline", "startup-terminate"}:
+        (tmp_path / stop).touch()
     command = [sys.executable, str(driver)]
     if stop == "parallel-timeout":
         command = [
@@ -776,7 +847,7 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str)
             "--jobs",
             "1",
             "--timeout",
-            "5",
+            "20",
             "--term-seq",
             "TERM,10000,KILL,1000",
             "--quote",
@@ -788,15 +859,16 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str)
     with (tmp_path / "log.txt").open("w") as log:
         parent = subprocess.Popen(command, cwd=tmp_path, stdout=log, stderr=log, start_new_session=True)
     try:
-        deadline = time.monotonic() + 20
+        deadline = time.monotonic() + 40
         while len(list(tmp_path.glob("ready-*.json"))) < 2 and time.monotonic() < deadline and parent.poll() is None:
             time.sleep(0.05)
-        ready = list(tmp_path.glob("ready-*.json"))
-        assert len(ready) == 2, (tmp_path / "log.txt").read_text()
-        owned = [pid for path in ready for pid in json.loads(path.read_text())]
-        if stop in {"interrupt", "terminate"}:
+        if stop in {"interrupt", "terminate", "startup-terminate"}:
+            # Signal tests prove cleanup of an established process tree, independent of startup speed.
+            assert len(list(tmp_path.glob("ready-*.json"))) == 2, (tmp_path / "log.txt").read_text()
             parent.send_signal(signal.SIGINT if stop == "interrupt" else signal.SIGTERM)
-        parent.wait(timeout=15)
+        # Deadline tests also cover an empty startup window. A timeout need not start two renderers.
+        parent.wait(timeout=35)
+        owned = [pid for path in tmp_path.glob("ready-*.json") for pid in json.loads(path.read_text())]
         assert parent.returncode == (1 if stop == "parallel-timeout" else 0), (tmp_path / "log.txt").read_text()
         report = json.loads((tmp_path / "result.json").read_text())
         assert report["status"] == ("time-limit" if stop == "deadline" else "interrupted")
@@ -806,6 +878,8 @@ def test_benchmark_cancellation_reaps_nested_replicas(tmp_path: Path, stop: str)
             with pytest.raises(ProcessLookupError):
                 os.kill(pid, 0)
     finally:
+        # Read even partial startup evidence when an assertion fails before normal collection.
+        owned = [pid for path in tmp_path.glob("ready-*.json") for pid in json.loads(path.read_text())]
         for pid in owned:
             try:
                 os.kill(pid, signal.SIGKILL)
