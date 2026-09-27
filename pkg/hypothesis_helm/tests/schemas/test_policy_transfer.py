@@ -21,13 +21,18 @@ def test_large_policy_survives_worker_exec(tmp_path: Path) -> None:
     Returns:
         None: A fresh process reads the complete schema and preserves validation.
     """
-    policy = {"resource_schemas": {"example/v1/Test": {"type": "integer", "minimum": 1, "description": "x" * 900_000}}}
+    policy = {
+        "compiler": {"max_call_depth": 32, "max_files": 4321, "max_steps": 23456},
+        "resource_schemas": {"example/v1/Test": {"type": "integer", "minimum": 1, "description": "x" * 900_000}},
+    }
     path = tmp_path / "policy.json"
     path.write_text(json.dumps(policy))
     assert inherited_policy({FILE_ENVIRONMENT: str(path)}) == policy
     code = (
         "from hypothesis_helm.schemas.configuration.policy import inherited_policy; "
         "from jsonschema import Draft7Validator; "
+        "from hypothesis_helm.compiler.limits import active_limits; "
+        "assert all(active_limits()[key] == value for key, value in inherited_policy()['compiler'].items()); "
         "s=inherited_policy()['resource_schemas']['example/v1/Test']; "
         "assert len(s['description']) == 900000; "
         "assert Draft7Validator(s).is_valid(1); assert not Draft7Validator(s).is_valid(0)"

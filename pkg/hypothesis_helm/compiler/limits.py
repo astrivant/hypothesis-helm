@@ -6,8 +6,6 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from hypothesis_helm.environment import env
-
 __all__ = ("DEFAULT_LIMITS", "LIMITS", "active_limits", "call_depth", "compiler_limits", "policy_limits")
 
 
@@ -117,10 +115,11 @@ def active_limits(chart: Path | None = None) -> dict[str, int]:
     Returns:
         dict[str, int]: Detached validated settings, also available in spawned workers.
     """
-    from hypothesis_helm.schemas.configuration.policy import ENVIRONMENT
+    from hypothesis_helm.schemas.configuration.policy import inherited_policy
     from hypothesis_helm.schemas.configuration.selectors import chart_identity, source_identity
 
-    serialized = env.get(ENVIRONMENT, "{}")
+    # Resolve both policy transports before caching; a file pointer must not mean default budgets.
+    serialized = json.dumps(inherited_policy(), sort_keys=True)
     return dict(
         policy_limits(serialized, chart_identity(chart), source_identity(chart)) if chart is not None else policy_limits(serialized)
     )

@@ -20,7 +20,7 @@ from hypothesis_helm.compiler.passes.rejections import matches_rejection
 from hypothesis_helm.environment import refresh_env
 from hypothesis_helm.exceptions.rendering import RenderFailure
 from hypothesis_helm.execution.state.cache import fingerprint
-from hypothesis_helm.schemas.configuration.policy import ENVIRONMENT, load_policy
+from hypothesis_helm.schemas.configuration.policy import ENVIRONMENT, FILE_ENVIRONMENT, load_policy
 from hypothesis_helm.tests.fixtures.cli import result_text
 
 
@@ -185,13 +185,15 @@ def test_compiler_option_removed(command: str) -> None:
     assert error.value.code == 2
 
 
-def test_policy_configuration_and_cache_identity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize("file_backed", [False, True])
+def test_policy_configuration_and_cache_identity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, file_backed: bool) -> None:
     """
     Freeze each chart's budget and prevent cache reuse after a configuration change.
 
     Args:
         tmp_path (Path): Config and chart directory.
         monkeypatch (pytest.MonkeyPatch): Apply resolved policies as the coordinator does.
+        file_backed (bool): Use immutable policy files or the legacy inline transport.
 
     Returns:
         None: Old models retain their budget, and newly built models use the updated configuration.
@@ -199,12 +201,28 @@ def test_policy_configuration_and_cache_identity(tmp_path: Path, monkeypatch: py
     config = tmp_path.parent / f"{tmp_path.name}-policy.yaml"
     config.write_text(yamlio.dump({"compiler": {"max_call_depth": 24}}))
     chart = helper_chart(tmp_path, 20)
-    monkeypatch.setenv(ENVIRONMENT, json.dumps(load_policy(config)))
+    if file_backed:
+        snapshot = tmp_path.parent / f"{tmp_path.name}-policy-24.json"
+        snapshot.write_text(json.dumps(load_policy(config)))
+        monkeypatch.setenv(FILE_ENVIRONMENT, str(snapshot))
+        # A conflicting legacy value cannot override the active file-backed policy.
+        monkeypatch.setenv(ENVIRONMENT, '{"compiler": {"max_call_depth": 1}}')
+    else:
+        monkeypatch.delenv(FILE_ENVIRONMENT, raising=False)
+        monkeypatch.setenv(ENVIRONMENT, json.dumps(load_policy(config)))
     refresh_env()
     original = Contracts.build(chart.path)
     previous = fingerprint(tmp_path, 0, None, "none")
     config.write_text(yamlio.dump({"compiler": {"max_call_depth": 32}}))
-    monkeypatch.setenv(ENVIRONMENT, json.dumps(load_policy(config)))
+    if file_backed:
+        snapshot = tmp_path.parent / f"{tmp_path.name}-policy-32.json"
+        snapshot.write_text(json.dumps(load_policy(config)))
+        monkeypatch.setenv(FILE_ENVIRONMENT, str(snapshot))
+        # A conflicting legacy value cannot override the active file-backed policy.
+        monkeypatch.setenv(ENVIRONMENT, '{"compiler": {"max_call_depth": 1}}')
+    else:
+        monkeypatch.delenv(FILE_ENVIRONMENT, raising=False)
+        monkeypatch.setenv(ENVIRONMENT, json.dumps(load_policy(config)))
     refresh_env()
     assert original.max_call_depth == 24
     assert Contracts.build(chart.path).max_call_depth == 32
