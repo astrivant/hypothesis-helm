@@ -67,7 +67,7 @@ def test_repository_publication_keeps_raw_data_local(tmp_path: Path, status: int
     result = subprocess.run(["bash", script, repository], cwd=project, env=environment, capture_output=True, text=True, timeout=20)
     assert result.returncode == (2 if status == 2 else 0), result.stderr
     arguments = (project / "aggregate-args.txt").read_text().splitlines()
-    assert arguments[arguments.index("--shards") + 1] == "40"
+    assert arguments[arguments.index("--shards") + 1] == "80"
     if status == 2:
         assert git(project, "rev-parse", "HEAD") == original
     elif ref != "refs/heads/main":

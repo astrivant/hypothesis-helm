@@ -4,11 +4,11 @@ repository="${1:?repository name}"
 case "$repository" in
     bitnami)
         title=Bitnami
-        shards=40
+        shards=80
         ;;
     prometheus)
         title=Prometheus
-        shards=40
+        shards=80
         ;;
     *)
         echo '::error::Unknown scan repository.'

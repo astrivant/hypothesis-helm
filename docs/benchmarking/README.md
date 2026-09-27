@@ -328,7 +328,7 @@ Study measurements, plot generation and smoke checks use standard `ubuntu-latest
 The error-surface study runs across eight runners; stress runs across six.
 Most measurements are serial within each runner; the scaling study uses at most four workers.
 Preparation and the separate repository scans also use standard `ubuntu-latest` runners.
-Bitnami and Prometheus each use 40 shards, with one path worker per available CPU; aggregation verifies all 40 reports before publication.
+Bitnami and Prometheus each use 80 shards, with one path worker per available CPU; aggregation verifies all 80 reports before publication.
 Every shard retains all methods for each assigned population, with the same seeds and method order as a serial run.
 Each study has its own merge job, which rejects missing, duplicated or incompatible shards before generating the combined plots.
 Stress assigns whole progression steps to shards and preserves the generated recipes alongside the merged measurements.

@@ -39,6 +39,23 @@ def all_jobs() -> dict[str, dict[str, object]]:
     return jobs
 
 
+def test_ci_uses_only_standard_public_repository_runners() -> None:
+    """
+    Keep repository workflows and the reference workflow off billable runner pools.
+
+    Returns:
+        None: Every executable job has a fixed standard label, with no variable override.
+    """
+    documents = workflows()
+    documents["ci/github.yml"] = mapping(YAML(typ="safe").load((ROOT / "ci/github.yml").read_text()))
+    for filename, document in documents.items():
+        for name, raw in mapping(document["jobs"]).items():
+            job = mapping(raw)
+            # Reusable workflow calls inherit the runner settings checked in their target file.
+            if "uses" not in job:
+                assert job["runs-on"] == "ubuntu-latest", (filename, name)
+
+
 def test_workflow_references_and_dependencies() -> None:
     """
     Keep one workflow entry point with valid local actions and acyclic job dependencies.
@@ -269,10 +286,11 @@ def test_python_matrix_partitions_tests_and_artifacts() -> None:
     job = mapping(jobs["python-tests"])
     strategy = mapping(job["strategy"])
     assert strategy["fail-fast"] is False
-    assert mapping(strategy["matrix"])["shard"] == [1, 2, 3, 4]
+    assert mapping(strategy["matrix"])["shard"] == list(range(1, 9))
+    assert job["name"] == "Python tests (${{ matrix.shard }}/8)"
     steps = [mapping(step) for step in sequence(job["steps"])]
     test = next(step for step in steps if "--suite-shard" in str(step.get("run", "")))
-    assert mapping(test["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/4"
+    assert mapping(test["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/8"
     assert "-p hypothesis_helm.tests.sharding" in str(test["run"])
     assert "-n auto --dist worksteal" in str(test["run"])
     upload = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
@@ -301,7 +319,7 @@ def test_coverage_combines_every_shard_before_publishing() -> None:
     assert mapping(download["with"])["pattern"] == "python-test-results-*"
     assert "merge-multiple" not in mapping(download["with"])
     combine = next(str(step["run"]) for step in steps if "coverage combine" in str(step.get("run", "")))
-    assert "for shard in 1 2 3 4" in combine and "test -s " in combine
+    assert "for shard in 1 2 3 4 5 6 7 8; do" in combine and "test -s " in combine
     assert "coverage combine .cache/coverage-shards/python-test-results-*/.coverage.*" in combine
     assert "coverage json -o coverage.json" in combine
     assert mapping(document["permissions"]) == {"contents": "read"}
@@ -421,7 +439,7 @@ def test_sharded_study_verifiers_use_poetry_environment() -> None:
         assert not any(line.lstrip().startswith("python ") for line in verification.splitlines())
 
 
-@pytest.mark.parametrize(("repository", "shards"), [("bitnami", 40), ("prometheus", 40)])
+@pytest.mark.parametrize(("repository", "shards"), [("bitnami", 80), ("prometheus", 80)])
 def test_repository_scan_is_manual_with_matching_shards(repository: str, shards: int) -> None:
     """
     Allow manually requested branch scans without starting them on ordinary pushes or PR events.

@@ -194,14 +194,14 @@ flowchart LR
 
 | Stage | Work inside it | Dependencies |
 | --- | --- | --- |
-| [Test](../.github/workflows/stage-test.yml) | Lint, two Go jobs, four Python shards, chart/Kubesec shards, coverage and benchmark smoke tests. | Starts immediately; independent jobs run concurrently. |
+| [Test](../.github/workflows/stage-test.yml) | Lint, two Go jobs, eight Python shards, chart/Kubesec shards, coverage and benchmark smoke tests. | Starts immediately; independent jobs run concurrently. |
 | [Build](../.github/workflows/stage-build.yml) | Versioned wheel/source distributions and installed Helm commands. Tags also check catalog consistency. | Starts alongside Test. |
 | CI verification | Required status that rejects failed, cancelled or skipped Test/Build stages. | Both stages must pass. |
 | [Benchmark / refresh / scan](../.github/workflows/stage-measure.yml) | Requested PR refresh, Bitnami scan and/or Prometheus scan. | Verification, then each workload's own preparation and aggregation. |
 | [Deploy](../.github/workflows/stage-deploy.yml) | Publish verified distributions using the `pypi` environment. | Verification and a pushed version tag; never waits for optional measurements. |
 
 Grouping adds no Test-to-Build dependency. Studies retain their parallel matrix, error surface has eight runners,
-stress has six, and each repository scan has fourteen. Selected repository scans and PR studies can run concurrently;
+stress has six, and each repository scan has eighty. Selected repository scans and PR studies can run concurrently;
 only report commits share an ordering to avoid competing pushes. Available runners still limit actual concurrency.
 The reusable workflows accept calls from `ci.yml`; they have no independent push or PR triggers.
 
@@ -238,10 +238,12 @@ Settings app must apply that file; editing it locally does not change GitHub's l
 
 The shared [project setup action](../.github/actions/setup-project/action.yml) installs the same tools for checks, builds and benchmarks.
 Every pull request update runs all configured pre-commit hooks against all files and tests the PR's head commit.
-Pytest uses all available CPUs. Jobs default to the standard `ubuntu-latest` runner so no custom runner setup is required.
-For an eight-core or larger Ubuntu x64 runner, configure it in GitHub and set `HH_CI_RUNNER` to its actual label.
-See [GitHub's runner labels](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job)
-and [larger runner setup](https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/manage-larger-runners).
+All jobs use standard `ubuntu-latest` runners, with 4 CPUs and 16 GB RAM for this public repository.
+Runner execution is free for public repositories; artifact and cache storage have separate allowances.
+See [GitHub's standard runner specifications](https://docs.github.com/en/actions/reference/runners/github-hosted-runners).
+Python tests use eight shards, each using all available CPUs. Scale work through job matrices; runner labels cannot be overridden by variables.
+GitHub Team defaults to 60 concurrent standard jobs across the organization, so excess shards wait for capacity.
+See [GitHub's concurrency and storage limits](https://docs.github.com/en/actions/reference/limits).
 JUnit results, distributions, and smoke outputs are retained as artifacts for 30 days, including after failures.
 The versioned binary cache is enabled by default; disable it with the manual `binary-cache` input
 or the repository variable `HH_BINARY_CACHE=false`. The workflow passes the resolved setting into the setup action.
@@ -266,12 +268,12 @@ Select either option, or both in one dispatch. Both selected scans run independe
 
 Use the PR's head branch name, not its number. The selected branch must contain the scan workflow.
 Scans never start automatically on PR events or ordinary pushes. They may run alongside a manually requested PR refresh.
-Fourteen `ubuntu-latest` runners (4 vCPU / 16 GiB each for this public repository) use the same pinned submodule
+Eighty `ubuntu-latest` runners (4 vCPU / 16 GiB each for this public repository) use the same pinned submodule
 for each selected repository. Prometheus uses HTTPS checkout without an SSH key.
 Each owns a distinct segment of every chart's values paths, with four local workers, `--filter`, seed 0 and ten examples per path.
 Testing allows five minutes per chart and five hours per shard; unfinished work stays visible in the report.
 
-One aggregation job verifies all fourteen reports, including empty partitions, before publishing Markdown, PDF and figures
+One aggregation job verifies all eighty reports, including empty partitions, before publishing Markdown, PDF and figures
 under `docs/reports/bitnami/` or `docs/reports/prometheus/`. On `main`, it updates the README links and commits only final reports and those links.
 On PR branches, it retains the final reports as downloadable Actions artifacts without committing them.
 Chart findings can be published; missing or incompatible shard evidence blocks publication. Raw measurements remain in Actions

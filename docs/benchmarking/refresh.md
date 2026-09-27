@@ -92,11 +92,11 @@ are retained for 30 days.
 Study measurements, merging, plot publication and smoke checks use standard `ubuntu-latest` runners.
 Individual measurements run serially, or with at most four local workers in the scaling study; more CI shards do not increase
 parallelism inside each runner. Preparation uses `ubuntu-latest` and runs the full test suite with one pytest worker per available CPU.
-The separate Bitnami and Prometheus scans each use 40 standard `ubuntu-latest` runners, with one path worker per available CPU
-when enough paths remain. Each runner tests a separate partition of every chart's values paths; aggregation requires all 40 shard reports.
+The separate Bitnami and Prometheus scans each use 80 standard `ubuntu-latest` runners, with one path worker per available CPU
+when enough paths remain. Each runner tests a separate partition of every chart's values paths; aggregation requires all 80 shard reports.
 Standard Linux runners provide 4 CPUs and 16 GB RAM for public repositories, where their execution is free.
 See [GitHub's standard runner specifications](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories).
-With all 40 shards active, each scan has 160 CPUs. Both scans together request 80 runners; GitHub's organization-wide concurrency limit
+With all 80 shards active, each scan has 320 CPUs. Both scans together request 160 runners; GitHub's organization-wide concurrency limit
 can queue some shards alongside other CI jobs. GitHub Team defaults to 60 simultaneous standard-runner jobs.
 See [GitHub's concurrency limits](https://docs.github.com/en/actions/reference/limits#job-concurrency-limits-for-github-hosted-runners).
 Helm downloads, Python environments and native-build caches distinguish x64 from ARM64.

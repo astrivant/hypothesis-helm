@@ -50,7 +50,7 @@ jobs:
 
   checks:
     name: Lint and generated references
-    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Check out source and Git LFS data
@@ -66,13 +66,13 @@ jobs:
         run: bash scripts/project-run.sh pre-commit run --all-files --show-diff-on-failure
 
   python-tests:
-    name: Python tests (${{ matrix.shard }}/4)
-    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    name: Python tests (${{ matrix.shard }}/8)
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
     steps:
       - uses: actions/checkout@v7
         with:
@@ -90,7 +90,7 @@ jobs:
         run: bash scripts/project-run.sh hypothesis-helm-renderer --build
       - name: Run this test shard across available CPUs
         env:
-          SUITE_SHARD: ${{ matrix.shard }}/4
+          SUITE_SHARD: ${{ matrix.shard }}/8
           COVERAGE_FILE: .cache/tests/.coverage.${{ matrix.shard }}
         run: |
           bash scripts/project-run.sh pytest -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
@@ -124,9 +124,9 @@ jobs:
         with:
           pattern: python-test-results-*
           path: .cache/coverage-shards/
-      - name: Combine all four shards and export coverage
+      - name: Combine all eight shards and export coverage
         run: |
-          for shard in 1 2 3 4; do
+          for shard in 1 2 3 4 5 6 7 8; do
               test -s ".cache/coverage-shards/python-test-results-${shard}/.coverage.${shard}"
           done
           poetry run coverage combine .cache/coverage-shards/python-test-results-*/.coverage.*
@@ -194,7 +194,7 @@ jobs:
 
   sharded-chart:
     name: "Chart tests and Kubesec (Kubernetes ${{ matrix.kubernetes }}, shard ${{ matrix.number }}/3)"
-    # The small example chart has too few paths per shard to use a large runner.
+    # Each small values partition uses the standard public-repository runner.
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
