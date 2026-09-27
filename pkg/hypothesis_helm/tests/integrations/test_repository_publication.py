@@ -44,6 +44,7 @@ def test_repository_publication_keeps_raw_data_local(tmp_path: Path, status: int
         #!/usr/bin/env bash
         set -eu
         if [[ "$2" == hypothesis-helm ]]; then
+            printf '%s\\n' "$@" >aggregate-args.txt
             exit {status}
         fi
         mkdir -p docs/reports/{repository}
@@ -65,6 +66,8 @@ def test_repository_publication_keeps_raw_data_local(tmp_path: Path, status: int
     script = str(PROJECT_ROOT / ".github/repository-report.sh")
     result = subprocess.run(["bash", script, repository], cwd=project, env=environment, capture_output=True, text=True, timeout=20)
     assert result.returncode == (2 if status == 2 else 0), result.stderr
+    arguments = (project / "aggregate-args.txt").read_text().splitlines()
+    assert arguments[arguments.index("--shards") + 1] == "10"
     if status == 2:
         assert git(project, "rev-parse", "HEAD") == original
     elif ref != "refs/heads/main":

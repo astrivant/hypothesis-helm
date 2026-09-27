@@ -2,8 +2,14 @@
 set -euo pipefail
 repository="${1:?repository name}"
 case "$repository" in
-    bitnami) title=Bitnami ;;
-    prometheus) title=Prometheus ;;
+    bitnami)
+        title=Bitnami
+        shards=10
+        ;;
+    prometheus)
+        title=Prometheus
+        shards=10
+        ;;
     *)
         echo '::error::Unknown scan repository.'
         exit 2
@@ -17,7 +23,7 @@ fi
 # Aggregate validates common settings, source identities and exclusive shard ownership.
 status=0
 poetry run hypothesis-helm aggregate ".cache/${repository}-shards"/*/report.json \
-    --shards 14 --run-id "${SCAN_RUN_ID:?scan identity}" --output-dir ".cache/${repository}-final" || status=$?
+    --shards "$shards" --run-id "${SCAN_RUN_ID:?scan identity}" --output-dir ".cache/${repository}-final" || status=$?
 if ((status != 0 && status != 1)); then
     echo "::error::${title} aggregation failed; reports will not be committed."
     exit "$status"

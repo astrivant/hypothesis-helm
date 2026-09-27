@@ -59,6 +59,7 @@ def installer_commands(root: Path, provider: str) -> list[str]:
     ("provider", "platform", "architecture"),
     [
         ("github", "Linux", "X64"),
+        ("github", "Linux", "ARM64"),
         ("github", "macOS", "ARM64"),
         ("gitlab", "Linux", "X64"),
         ("circleci", "Linux", "X64"),
@@ -149,6 +150,14 @@ def test_binary_installers_reuse_exact_versions(tmp_path: Path, provider: str, p
     first = execute()
     assert first.returncode == 0, first.stderr
     assert len(log.read_text().splitlines()) == count
+    if provider == "github":
+        # A successful download alone cannot detect accidentally requesting the wrong architecture.
+        release_platform = "linux" if platform == "Linux" else "darwin"
+        release_architecture = "amd64" if architecture == "X64" else "arm64"
+        assert log.read_text().splitlines() == [
+            f"https://get.helm.sh/helm-v4.3.0-{release_platform}-{release_architecture}.tar.gz",
+            f"https://github.com/controlplaneio/kubesec/releases/download/v2.14.2/kubesec_{release_platform}_{release_architecture}.tar.gz",
+        ]
     cached = [path for path in tmp_path.rglob("helm") if any(part in {"binaries", "hypothesis-helm-binaries"} for part in path.parts)]
     assert len(cached) == 1 and os.access(cached[0], os.X_OK)
     second = execute()

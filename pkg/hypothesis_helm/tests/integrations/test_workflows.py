@@ -417,27 +417,32 @@ def test_sharded_study_verifiers_use_poetry_environment() -> None:
         assert not any(line.lstrip().startswith("python ") for line in verification.splitlines())
 
 
-@pytest.mark.parametrize("repository", ["bitnami", "prometheus"])
-def test_repository_scan_is_manual_with_fourteen_shards(repository: str) -> None:
+@pytest.mark.parametrize(("repository", "shards"), [("bitnami", 10), ("prometheus", 10)])
+def test_repository_scan_is_manual_with_matching_shards(repository: str, shards: int) -> None:
     """
     Allow manually requested branch scans without starting them on ordinary pushes or PR events.
 
     Args:
         repository (str): Manually selected chart source.
+        shards (int): Expected number of values partitions for that repository.
 
     Returns:
-        None: Fourteen isolated path partitions precede verified reports on the selected branch.
+        None: The matrix, labels and CLI agree on the partition count before verified publication.
     """
     jobs = all_jobs()
     scan = mapping(jobs[f"{repository}-scan"])
     assert "workflow_dispatch" in str(scan["if"]) and "refs/heads/main" not in str(scan["if"])
-    assert scan["runs-on"] == "ubuntu-latest"
-    assert mapping(mapping(scan["strategy"])["matrix"])["shard"] == list(range(1, 15))
+    assert scan["runs-on"] == "large-arm64"
+    assert mapping(mapping(scan["strategy"])["matrix"])["shard"] == list(range(1, shards + 1))
+    assert mapping(scan["strategy"])["max-parallel"] == shards
+    assert f"${{{{ matrix.shard }}}}/{shards}" in str(scan["name"])
     steps = [mapping(step) for step in sequence(scan["steps"])]
     action = next(step for step in steps if step.get("uses") == "./")
     settings = mapping(action["with"])
-    assert settings["jobs"] == "4" and settings["filter"] == "true"
-    assert settings["shard"] == "${{ matrix.shard }}/14"
+    capacity = next(step for step in steps if step.get("id") == "capacity")
+    assert 'echo "jobs=$(nproc)" >>"$GITHUB_OUTPUT"' == capacity["run"]
+    assert settings["jobs"] == "${{ steps.capacity.outputs.jobs }}" and settings["filter"] == "true"
+    assert settings["shard"] == f"${{{{ matrix.shard }}}}/{shards}"
     directory = "bitnami-charts" if repository == "bitnami" else "prometheus-community-helm-charts"
     assert settings["chart"] == f"third_party/{directory}"
     assert settings["run-id"] == f"{repository}-${{{{ github.run_id }}}}-${{{{ github.run_attempt }}}}"

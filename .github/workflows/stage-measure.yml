@@ -436,20 +436,23 @@ jobs:
           fi
 
   bitnami-scan:
-    name: "Bitnami values (${{ matrix.shard }}/14)"
+    name: "Bitnami values (${{ matrix.shard }}/10)"
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.bitnami-scan }}
     needs: bitnami-request
-    runs-on: ubuntu-latest
+    runs-on: large-arm64
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      max-parallel: 14
+      max-parallel: 10
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - uses: actions/checkout@v7
       - name: Restore the pinned Bitnami charts
         run: git submodule update --init third_party/bitnami-charts
+      - name: Use one scan worker per available CPU
+        id: capacity
+        run: echo "jobs=$(nproc)" >>"$GITHUB_OUTPUT"
       - name: Test this values partition
         id: scan
         continue-on-error: true
@@ -459,7 +462,7 @@ jobs:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
           command: test
           filter: 'true'
-          jobs: '4'
+          jobs: ${{ steps.capacity.outputs.jobs }}
           chart-timeout: 5m
           scan-timeout: 5h
           max-examples: '10'
@@ -467,7 +470,7 @@ jobs:
           cache: 'false'
           disable-codes: HH2006
           job-index: ${{ matrix.shard }}
-          shard: ${{ matrix.shard }}/14
+          shard: ${{ matrix.shard }}/10
           run-id: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
           artifact-dir: .cache/bitnami-scan
           artifact-name: bitnami-scan
@@ -496,7 +499,7 @@ jobs:
         with:
           pattern: bitnami-scan-bitnami-scan-*
           path: .cache/bitnami-shards
-      - name: Verify all fourteen partitions and publish final reports
+      - name: Verify all ten partitions and publish final reports
         env:
           SCAN_RUN_ID: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
         run: bash .github/repository-report.sh bitnami
@@ -525,22 +528,25 @@ jobs:
           fi
 
   prometheus-scan:
-    name: "Prometheus values (${{ matrix.shard }}/14)"
+    name: "Prometheus values (${{ matrix.shard }}/10)"
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.prometheus-scan }}
     needs: prometheus-request
-    runs-on: ubuntu-latest
+    runs-on: large-arm64
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      max-parallel: 14
+      max-parallel: 10
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - uses: actions/checkout@v7
       - name: Restore the pinned Prometheus charts
         run: |
           git -c submodule.third_party/prometheus-community-helm-charts.url=https://github.com/prometheus-community/helm-charts.git \
               submodule update --init third_party/prometheus-community-helm-charts
+      - name: Use one scan worker per available CPU
+        id: capacity
+        run: echo "jobs=$(nproc)" >>"$GITHUB_OUTPUT"
       - name: Test this values partition
         id: scan
         continue-on-error: true
@@ -550,7 +556,7 @@ jobs:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
           command: test
           filter: 'true'
-          jobs: '4'
+          jobs: ${{ steps.capacity.outputs.jobs }}
           chart-timeout: 5m
           scan-timeout: 5h
           max-examples: '10'
@@ -558,7 +564,7 @@ jobs:
           cache: 'false'
           disable-codes: HH2006
           job-index: ${{ matrix.shard }}
-          shard: ${{ matrix.shard }}/14
+          shard: ${{ matrix.shard }}/10
           run-id: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
           artifact-dir: .cache/prometheus-scan
           artifact-name: prometheus-scan
@@ -588,7 +594,7 @@ jobs:
         with:
           pattern: prometheus-scan-prometheus-scan-*
           path: .cache/prometheus-shards
-      - name: Verify all fourteen partitions and publish final reports
+      - name: Verify all ten partitions and publish final reports
         env:
           SCAN_RUN_ID: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
         run: bash .github/repository-report.sh prometheus
