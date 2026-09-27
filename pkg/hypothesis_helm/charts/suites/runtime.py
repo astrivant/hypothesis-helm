@@ -231,7 +231,7 @@ def _concrete_path(
     generation: dict[str, object] | None = None,
 ) -> tuple[str | int, ...]:
     """
-    Check  concrete path.
+    Resolve wildcard entries using defaults and schema-defined container shapes.
 
     Args:
         path (tuple[str | int, ...]): Value path or chart location to inspect.
@@ -242,7 +242,7 @@ def _concrete_path(
         generation (dict[str, object] | None): Branch text settings for generated collection keys.
 
     Returns:
-        tuple[str | int, ...]: Result of the documented operation.
+        tuple[str | int, ...]: Concrete keys and array indices for a candidate that still requires full-schema validation.
     """
     from hypothesis import strategies as st
 
@@ -252,8 +252,16 @@ def _concrete_path(
     current: object = defaults
     for segment in path:
         if segment == "*":
-            nodes = _schema_nodes(schema, tuple(str(p) for p in concrete), schema)
-            if isinstance(current, list) or any(n.get("type") == "array" for n in nodes):
+            nodes = _schema_nodes(schema, tuple(str(p) for p in concrete), schema, include_conditionals=True)
+            # Nullable arrays and item-only applicators still describe array members.
+            # An unknown wildcard must not erase that structural evidence.
+            array = any(
+                "array" in ([n["type"]] if isinstance(n.get("type"), str) else sequence(n.get("type", [])))
+                or "items" in n
+                or "prefixItems" in n
+                for n in nodes
+            )
+            if isinstance(current, list) or array:
                 # A wildcard beside tuple positions describes the tail, not the prefix.
                 start = max(
                     (

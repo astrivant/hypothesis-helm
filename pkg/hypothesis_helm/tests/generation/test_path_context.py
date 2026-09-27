@@ -202,3 +202,149 @@ def test_generator_view_does_not_replace_authoritative_validation() -> None:
         assert value == [7]
 
     check()
+
+
+@pytest.mark.parametrize("array_type", ["array", ["array", "null"], None])
+@pytest.mark.parametrize("arm", ["then", "else"])
+def test_conditional_nested_array_paths_keep_indices(tmp_path: Path, array_type: object, arm: str) -> None:
+    """
+    Preserve nested array structure discovered inside a conditional destination schema.
+
+    Args:
+        tmp_path (Path): Chart directory; no Helm render is needed for candidate validation.
+        array_type (object): Explicit, nullable or keyword-only array declaration.
+        arm (str): Conditional arm containing the nested collection shape.
+
+    Returns:
+        None: Generated inputs contain actual arrays, required siblings and the exact requested leaf.
+    """
+    references: dict[str, object] = {
+        "maxItems": 1,
+        "items": {
+            "type": "object",
+            "required": ["configMapRef"],
+            "additionalProperties": False,
+            "properties": {
+                "configMapRef": {
+                    "type": "object",
+                    "required": ["name"],
+                    "additionalProperties": False,
+                    "properties": {"name": {"enum": ["settings"]}},
+                }
+            },
+        },
+    }
+    containers: dict[str, object] = {
+        "maxItems": 1,
+        "items": {
+            "type": "object",
+            "required": ["name", "envFrom"],
+            "additionalProperties": False,
+            "properties": {"name": {"enum": ["worker"]}, "envFrom": references},
+        },
+    }
+    if array_type is not None:
+        references["type"] = containers["type"] = array_type
+    schema: dict[str, object] = {
+        "type": "object",
+        "required": ["enabled", "extraPodSpec"],
+        "additionalProperties": False,
+        "properties": {"enabled": {"const": arm == "then"}, "extraPodSpec": {"type": "object"}},
+        "$defs": {"containers": containers},
+        "allOf": [
+            {
+                "if": {"properties": {"enabled": {"const": True}}},
+                arm: {"properties": {"extraPodSpec": {"properties": {"initContainers": {"$ref": "#/$defs/containers"}}}}},
+            }
+        ],
+    }
+    chart = Chart(tmp_path, schema, {"enabled": arm == "then", "extraPodSpec": {}})
+    chart.domains = InputDomains([], [], "conditional-arrays")
+    validator = validators.validator_for(schema)(schema)
+
+    @settings(max_examples=8, deadline=None, derandomize=True)
+    @given(st.data())
+    def check(data: st.DataObject) -> None:
+        """
+        Materialize the discovered leaf without replacing array items with synthetic map keys.
+
+        Args:
+            data (st.DataObject): Hypothesis context for parent generation and array positions.
+
+        Returns:
+            None: The complete result satisfies its guarded schema and preserves the selected path.
+        """
+        result = path_values(chart, ("extraPodSpec", "initContainers", "*", "envFrom", "*", "configMapRef", "name"), "settings", data)
+        assert validator.is_valid(json_value(result))
+        item = mapping(sequence(mapping(result["extraPodSpec"])["initContainers"])[0])
+        assert item["name"] == "worker"
+        reference = mapping(sequence(item["envFrom"])[0])
+        assert mapping(reference["configMapRef"])["name"] == "settings"
+
+    check()
+    assert chart.defaults == {"enabled": arm == "then", "extraPodSpec": {}}
+
+
+def test_conditional_shapes_are_not_unconditional_constraints() -> None:
+    """
+    Keep conditional generation hints out of static domain proofs.
+
+    Returns:
+        None: Normal lookups omit branch-only fields; generation explicitly opts into their shapes.
+    """
+    from hypothesis_helm.charts.model import _schema_nodes
+
+    schema: dict[str, object] = {
+        "if": {"properties": {"enabled": {"const": True}}},
+        "then": {"properties": {"rows": {"type": "array", "items": {"type": "string"}}}},
+    }
+    assert _schema_nodes(schema, ("rows",), schema) == []
+    assert _schema_nodes(schema, ("rows",), schema, include_conditionals=True) == [{"type": "array", "items": {"type": "string"}}]
+
+
+def test_map_wildcard_preserves_nested_array(tmp_path: Path) -> None:
+    """
+    Keep map keys distinct from array indices when both collection kinds share a path.
+
+    Args:
+        tmp_path (Path): Chart directory for the generated candidate.
+
+    Returns:
+        None: The outer collection remains a map and its nested collection remains an array.
+    """
+    schema: dict[str, object] = {
+        "type": "object",
+        "properties": {
+            "groups": {
+                "type": "object",
+                "additionalProperties": False,
+                "patternProperties": {
+                    "^team$": {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {"members": {"type": "array", "maxItems": 1, "items": {"enum": ["worker"]}}},
+                    }
+                },
+            }
+        },
+    }
+    chart = Chart(tmp_path, schema, {"groups": {}})
+    chart.domains = InputDomains([], [], "map-and-array")
+
+    @settings(max_examples=4, deadline=None, derandomize=True)
+    @given(st.data())
+    def check(data: st.DataObject) -> None:
+        """
+        Generate one keyed group containing the selected array member.
+
+        Args:
+            data (st.DataObject): Hypothesis context for concrete collection positions.
+
+        Returns:
+            None: Map and array wildcard resolution agree with the complete schema.
+        """
+        result = path_values(chart, ("groups", "*", "members", "*"), "worker", data)
+        assert result == {"groups": {"team": {"members": ["worker"]}}}
+        assert validators.validator_for(schema)(schema).is_valid(json_value(result))
+
+    check()
