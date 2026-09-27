@@ -182,7 +182,7 @@ def _schema_nodes(
     include_conditionals: bool = False,
 ) -> list[dict[str, object]]:
     """
-    Check  schema nodes.
+    Collect declarations for a path while retaining conditional shapes only on request.
 
     Args:
         schema (object): JSON Schema defining the accepted value domain.
@@ -194,7 +194,7 @@ def _schema_nodes(
         include_conditionals (bool): Include then/else shapes as generation hints, never unconditional constraints.
 
     Returns:
-        list[dict[str, object]]: Result of the documented operation.
+        list[dict[str, object]]: Applicable declarations or alternative shape hints; alternatives are not a conjunction.
     """
     if not isinstance(schema, dict):
         return []
@@ -233,14 +233,17 @@ def _schema_nodes(
         child = prefix[int(key)] if key != "*" and int(key) < len(prefix) else tail
         if isinstance(child, dict):
             found += _schema_nodes(child, tuple(rest), root, seen, version, include_conditionals=include_conditionals)
-    # Explicitly typed map entries count as documentation; open maps do not.
-    if isinstance(node.get("additionalProperties"), dict):
-        found += _schema_nodes(node["additionalProperties"], tuple(rest), root, seen, version, include_conditionals=include_conditionals)
     import re
 
+    matched = key in mapping(node.get("properties", {}))
     for pattern, branch in mapping(node.get("patternProperties", {})).items():
         if key == "*" or re.search(pattern, key):
+            matched = True
             found += _schema_nodes(branch, tuple(rest), root, seen, version, include_conditionals=include_conditionals)
+    # Additional properties exclude names matched in this same schema object.
+    # A wildcard still represents the unmatched region as well as pattern regions.
+    if (key == "*" or not matched) and isinstance(node.get("additionalProperties"), dict):
+        found += _schema_nodes(node["additionalProperties"], tuple(rest), root, seen, version, include_conditionals=include_conditionals)
     return found
 
 
