@@ -181,20 +181,30 @@ helm hypothesis run /tmp/generated-workload
 ## GitHub CI
 
 Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml) for all project jobs,
-logs and artifacts. One [workflow file](../.github/workflows/ci.yml) owns PR checks, branch builds, releases and manual refreshes.
+logs and artifacts. The [entry workflow](../.github/workflows/ci.yml) groups jobs into reusable stages in the same run.
+Expand a stage to inspect its parallel jobs, shards and logs.
 
-| Jobs | Purpose | When they run |
+```mermaid
+flowchart LR
+    test[Test] --> verified[CI verification]
+    build[Build] --> verified
+    verified --> measure["Benchmark / refresh / scan<br/>Manual request"]
+    verified --> deploy["Deploy<br/>Version tags only"]
+```
+
+| Stage | Work inside it | Dependencies |
 | --- | --- | --- |
-| Code checks | Pre-commit hooks, Go tests and parallel Python tests. | PR updates, `main`, version tags and manual runs. |
-| Python coverage | Combine coverage from all four test shards and retain JSON and HTML reports. | After all Python shards pass. |
-| Coverage badge | Update the README badge on `gh-pages`. | Successful default-branch pushes only. |
-| Chart tests and aggregation | Validate schemas, run Kubesec and combine shard reports. | Every CI run. |
-| Package build | Build distributions and test the installed Helm plugin. Tags also verify the catalog. | Every CI run. |
-| Benchmark smoke tests | Check benchmark recipes and plot generation with short runs. | Every CI run. |
-| PR benchmarks | Run studies independently, distribute error surface across eight and stress across six 4-core runners, verify plots and commit updated graphs and summaries to the PR branch. | Manually requested for an open PR, after verification passes. Required before merge. |
-| Publish to PyPI | Publish the verified versioned distributions using the `pypi` environment. | Pushed version tags, after every verification job passes. |
+| [Test](../.github/workflows/stage-test.yml) | Lint, two Go jobs, four Python shards, chart/Kubesec shards, coverage and benchmark smoke tests. | Starts immediately; independent jobs run concurrently. |
+| [Build](../.github/workflows/stage-build.yml) | Versioned wheel/source distributions and installed Helm commands. Tags also check catalog consistency. | Starts alongside Test. |
+| CI verification | Required status that rejects failed, cancelled or skipped Test/Build stages. | Both stages must pass. |
+| [Benchmark / refresh / scan](../.github/workflows/stage-measure.yml) | Requested PR refresh, Bitnami scan and/or Prometheus scan. | Verification, then each workload's own preparation and aggregation. |
+| [Deploy](../.github/workflows/stage-deploy.yml) | Publish verified distributions using the `pypi` environment. | Verification and a pushed version tag; never waits for optional measurements. |
 
-Code checks, chart tests, package builds and smoke tests run in parallel within the same run.
+Grouping adds no Test-to-Build dependency. Studies retain their parallel matrix, error surface has eight runners,
+stress has six, and each repository scan has fourteen. Selected repository scans and PR studies can run concurrently;
+only report commits share an ordering to avoid competing pushes. Available runners still limit actual concurrency.
+The reusable workflows accept calls from `ci.yml`; they have no independent push or PR triggers.
+
 The [coverage badge action](https://github.com/marketplace/actions/coverage-badge) publishes combined Python statement coverage,
 excluding tests and bundled assets. Go code and independently launched subprocesses are not measured by this badge.
 Download the `python-coverage` artifact for the HTML report. The badge publisher and manual graph publisher receive repository write permission;

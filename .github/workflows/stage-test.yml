@@ -1,0 +1,342 @@
+name: Test stage
+
+on:
+  workflow_call:
+    inputs:
+      binary-cache:
+        type: boolean
+        default: true
+      kubesec-score-minimum:
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+env:
+  HELM_VERSION: v4.3.0
+  POETRY_VIRTUALENVS_IN_PROJECT: 'true'
+  HH_BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' && (github.event_name != 'workflow_dispatch' || inputs.binary-cache) }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  go:
+    name: Go tests (${{ matrix.component }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - component: catalog extractors
+            module: pkg/hypothesis_helm_catalog/upstream
+          - component: Helm renderer
+            module: pkg/hypothesis_helm/compiler/assets/renderer
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: ${{ matrix.module }}/go.mod
+          cache-dependency-path: ${{ matrix.module }}/go.sum
+      - name: Test native Go code
+        env:
+          GO_MODULE: ${{ matrix.module }}
+        run: go -C "$GO_MODULE" test -v -timeout 10m ./...
+
+  checks:
+    name: Lint and generated references
+    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 30
+    steps:
+      - name: Check out source and Git LFS data
+        uses: actions/checkout@v7
+        with:
+          lfs: true
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Set up project tools
+        uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Run every pre-commit hook
+        run: bash scripts/project-run.sh pre-commit run --all-files --show-diff-on-failure
+
+  python-tests:
+    name: Python tests (${{ matrix.shard }}/4)
+    runs-on: ${{ vars.HH_CI_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Cache the pinned random-input renderer
+        uses: actions/cache@v5
+        with:
+          path: .cache/random-renderer/
+          key: hh-random-renderer-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pkg/hypothesis_helm/compiler/assets/renderer/*') }}
+      - name: Build the random-input renderer for native integration tests
+        run: bash scripts/project-run.sh hypothesis-helm-renderer --build
+      - name: Run this test shard across available CPUs
+        env:
+          SUITE_SHARD: ${{ matrix.shard }}/4
+          COVERAGE_FILE: .cache/tests/.coverage.${{ matrix.shard }}
+        run: |
+          bash scripts/project-run.sh pytest -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
+              -n auto --dist worksteal --junitxml=.cache/tests/pytest.xml --cov --cov-config=pyproject.toml --cov-report=
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: python-test-results-${{ matrix.shard }}
+          path: .cache/tests/
+          include-hidden-files: true
+          retention-days: 30
+
+  coverage:
+    name: Combine Python coverage
+    needs: python-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Install locked coverage tools
+        run: |
+          pip install poetry==2.1.3
+          poetry install --only dev --no-root --no-interaction
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: python-test-results-*
+          path: .cache/coverage-shards/
+      - name: Combine all four shards and export coverage
+        run: |
+          for shard in 1 2 3 4; do
+              test -s ".cache/coverage-shards/python-test-results-${shard}/.coverage.${shard}"
+          done
+          poetry run coverage combine .cache/coverage-shards/python-test-results-*/.coverage.*
+          poetry run coverage json -o coverage.json
+          poetry run coverage html -d .cache/coverage-html
+          poetry run coverage report >>"$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: python-coverage
+          path: |
+            coverage.json
+            .cache/coverage-html/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+  coverage-badge:
+    name: Publish coverage badge
+    needs: coverage
+    if: ${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: coverage-badge
+      cancel-in-progress: false
+    steps:
+      # The badge action embeds checkout@v3, which cannot remove v6+ includeIf credentials.
+      # Keep both checkouts on the direct-header format to avoid duplicate Authorization headers.
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v8
+        with:
+          name: python-coverage
+      - name: Check whether the badge percentage changed
+        id: badge
+        run: |
+          previous="$RUNNER_TEMP/previous-coverage.svg"
+          if [[ -n "$(git ls-remote --heads origin refs/heads/gh-pages)" ]]; then
+              git fetch origin gh-pages
+              git show FETCH_HEAD:badges/coverage.svg >"$previous" || truncate -s 0 "$previous"
+          else
+              touch "$previous"
+          fi
+          python - "$previous" >>"$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          from xml.etree import ElementTree
+
+          percent = str(json.loads(Path("coverage.json").read_text())["totals"]["percent_covered_display"])
+          previous = Path(sys.argv[1]).read_text()
+          labels = set(ElementTree.fromstring(previous).itertext()) if previous else set()
+          print(f"changed={str(f'{percent}%' not in labels).lower()}")
+          PY
+      # v1.0.1 predates coverage.py support; pin the Python-capable action revision.
+      - uses: we-cli/coverage-badge-action@8a0b6ee05f6dd0f294089cbe7a848452a2b43eef
+        if: steps.badge.outputs.changed == 'true'
+
+  sharded-chart:
+    name: "Chart tests and Kubesec (Kubernetes ${{ matrix.kubernetes }}, shard ${{ matrix.number }}/3)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+        include:
+          - shard: 0
+            number: 1
+          - shard: 1
+            number: 2
+          - shard: 2
+            number: 3
+        kubernetes: ['1.34.0', '1.35.0']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Restore chart outcomes and manifests
+        id: outcomes
+        uses: actions/cache/restore@v5
+        with:
+          path: .cache/hypothesis-helm/outcomes
+          key: chart-outcomes-v2-${{ runner.os }}-${{ runner.arch }}-${{ matrix.kubernetes }}-${{ matrix.shard }}-of-3-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            chart-outcomes-v2-${{ runner.os }}-${{ runner.arch }}-${{ matrix.kubernetes }}-${{ matrix.shard }}-of-3-
+      - uses: ./
+        id: hypothesis
+        with:
+          chart: examples/workload
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+          incremental: 'true'
+          cache-dir: .cache/hypothesis-helm/outcomes
+          rerun: ${{ startsWith(github.ref, 'refs/tags/') && 'all' || 'auto' }}
+          command: test
+          traversal-strategy: random
+          config-inline: |
+            hypothesis:
+              max_examples: 5
+              control_characters:
+                allow: []
+          schema-validation: 'true'
+          schema-version: ${{ matrix.kubernetes }}
+          kubesec: 'true'
+          kubesec-jobs: auto
+          kubesec-score-minimum: ${{ inputs.kubesec-score-minimum || vars.HH_KUBESEC_SCORE_MINIMUM || '0' }}
+          artifact-name: hypothesis-helm-${{ matrix.kubernetes }}
+          schema-cache-dir: schemas
+          job-index: ${{ matrix.shard }}
+          job-total: '3'
+          run-id: ${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.kubernetes }}
+      - name: Save chart outcomes and manifests
+        if: ${{ always() && steps.outcomes.outputs.cache-primary-key != '' }}
+        uses: actions/cache/save@v5
+        with:
+          path: .cache/hypothesis-helm/outcomes
+          key: ${{ steps.outcomes.outputs.cache-primary-key }}
+      - name: Check shard outputs
+        shell: bash
+        env:
+          REPORT: ${{ steps.hypothesis.outputs.junit-path }}
+          MANIFESTS: ${{ steps.hypothesis.outputs.manifest-path }}
+        run: |
+          test -f "$REPORT"
+          test -f "$MANIFESTS"
+
+  aggregate:
+    name: "Combine shard reports (Kubernetes ${{ matrix.kubernetes }})"
+    needs: sharded-chart
+    if: ${{ always() && needs.sharded-chart.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kubernetes: ['1.34.0', '1.35.0']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: pip install .
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: hypothesis-helm-${{ matrix.kubernetes }}-sharded-chart-*
+          path: downloaded
+      - uses: actions/download-artifact@v8
+        if: ${{ always() }}
+        with:
+          pattern: hypothesis-helm-${{ matrix.kubernetes }}-kubesec-sharded-chart-*
+          path: downloaded-security
+      - name: Write final report for this Kubernetes version
+        if: ${{ always() }}
+        env:
+          HH_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.kubernetes }}
+          HH_KUBESEC: 'true'
+          HH_SCHEMA_VERSION: ${{ matrix.kubernetes }}
+          HH_KUBESEC_SCORE_MINIMUM: ${{ inputs.kubesec-score-minimum || vars.HH_KUBESEC_SCORE_MINIMUM || '0' }}
+        run: |
+          aggregate_status=0
+          cat downloaded/*/report.json | hypothesis-helm aggregate \
+              --shards 3 --run-id "$HH_RUN_ID" --output-dir docs/reports/final || aggregate_status=$?
+          if [[ "${HH_KUBESEC:-false}" == "true" ]]; then
+              security_status=0
+              hypothesis-helm-kubesec downloaded-security --aggregate --shards 3 \
+                  --run-id "$HH_RUN_ID" --schema-version "$HH_SCHEMA_VERSION" \
+                  --score-minimum "$HH_KUBESEC_SCORE_MINIMUM" \
+                  --output docs/reports/final/kubesec || security_status=$?
+              if ((aggregate_status == 0)); then
+                  aggregate_status=$security_status
+              fi
+          fi
+          exit "$aggregate_status"
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: hypothesis-helm-final-${{ matrix.kubernetes }}
+          path: docs/reports/final/
+          if-no-files-found: error
+          retention-days: 30
+
+  smoke:
+    name: Check benchmark recipes and plot generation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source and Git LFS data
+        uses: actions/checkout@v7
+        with:
+          lfs: true
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Set up project tools
+        uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Exercise benchmark recipes and plots
+        run: bash scripts/project-run.sh hypothesis-helm-benchmark smoke
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: benchmark-smoke
+          path: .cache/benchmarks/smoke/
+          include-hidden-files: true
+          retention-days: 30

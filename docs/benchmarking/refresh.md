@@ -77,7 +77,8 @@ original paths; use the latest completed journal when inspecting those archived 
 
 Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml), select **Run workflow**,
 select the open PR's head branch, enable **refresh**, and enter its **pull-request** number.
-Once code checks, chart validation, packaging and smoke tests pass, preparation rebuilds the pinned
+The expandable [Benchmark / refresh / scan stage](../../.github/workflows/stage-measure.yml) contains the study matrices.
+Test and Build run concurrently; once both pass, preparation rebuilds the pinned
 dependencies, checks the generated project and snapshots its inputs once.
 GitHub runs each declared study on a separate runner, using the same source snapshot and parameters.
 The matrix comes from the Python study inventory, so adding a study also adds its CI job.
@@ -86,8 +87,7 @@ See [GitHub's matrix concurrency documentation](https://docs.github.com/en/actio
 
 Each study owns its output directory, status file and process journal. A failed study retains diagnostics without cancelling
 other studies. The final job requires every study to succeed, verifies the merged measurements, and publishes pages and plots
-under `studies/`, then commits final plots and summaries to the PR branch. The hosted PR run does not run new Bitnami or
-Prometheus scans. Studies and the separate `refresh-resume-data` artifact
+under `studies/`, then commits final plots and summaries to the PR branch. The `refresh` option alone does not run new Bitnami or Prometheus scans; select their separate scan options to include them. Studies and the separate `refresh-resume-data` artifact
 are retained for 30 days.
 Jobs default to `ubuntu-latest`. Set `HH_CI_RUNNER` to the label of an available larger Ubuntu x64 runner to use more cores.
 
