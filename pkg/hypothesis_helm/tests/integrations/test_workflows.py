@@ -132,7 +132,7 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         assert "needs" not in jobs[name] and "if" not in jobs[name]
     for name, job in jobs.items():
         if name.startswith("refresh-") or name == "smoke":
-            assert job["runs-on"] == ("large-arm64" if name == "refresh-prepare" else "ubuntu-latest"), name
+            assert job["runs-on"] == "ubuntu-latest", name
     prepare = jobs["refresh-prepare"]
     assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
     assert prepare["needs"] == "pr-benchmark-request"
@@ -421,7 +421,7 @@ def test_sharded_study_verifiers_use_poetry_environment() -> None:
         assert not any(line.lstrip().startswith("python ") for line in verification.splitlines())
 
 
-@pytest.mark.parametrize(("repository", "shards"), [("bitnami", 10), ("prometheus", 10)])
+@pytest.mark.parametrize(("repository", "shards"), [("bitnami", 40), ("prometheus", 40)])
 def test_repository_scan_is_manual_with_matching_shards(repository: str, shards: int) -> None:
     """
     Allow manually requested branch scans without starting them on ordinary pushes or PR events.
@@ -436,7 +436,7 @@ def test_repository_scan_is_manual_with_matching_shards(repository: str, shards:
     jobs = all_jobs()
     scan = mapping(jobs[f"{repository}-scan"])
     assert "workflow_dispatch" in str(scan["if"]) and "refs/heads/main" not in str(scan["if"])
-    assert scan["runs-on"] == "large-arm64"
+    assert scan["runs-on"] == "ubuntu-latest"
     assert mapping(mapping(scan["strategy"])["matrix"])["shard"] == list(range(1, shards + 1))
     assert mapping(scan["strategy"])["max-parallel"] == shards
     assert f"${{{{ matrix.shard }}}}/{shards}" in str(scan["name"])

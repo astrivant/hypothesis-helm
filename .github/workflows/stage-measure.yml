@@ -59,7 +59,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
     needs: pr-benchmark-request
     # scripts/check.sh runs the full suite with pytest-xdist's CPU-sized worker pool.
-    runs-on: large-arm64
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     outputs:
       root: ${{ steps.prepare.outputs.root }}
@@ -438,16 +438,19 @@ jobs:
           fi
 
   bitnami-scan:
-    name: "Bitnami values (${{ matrix.shard }}/10)"
+    name: "Bitnami values (${{ matrix.shard }}/40)"
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.bitnami-scan }}
     needs: bitnami-request
-    runs-on: large-arm64
+    runs-on: ubuntu-latest
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      max-parallel: 10
+      max-parallel: 40
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
     steps:
       - uses: actions/checkout@v7
       - name: Restore the pinned Bitnami charts
@@ -472,7 +475,7 @@ jobs:
           cache: 'false'
           disable-codes: HH2006
           job-index: ${{ matrix.shard }}
-          shard: ${{ matrix.shard }}/10
+          shard: ${{ matrix.shard }}/40
           run-id: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
           artifact-dir: .cache/bitnami-scan
           artifact-name: bitnami-scan
@@ -501,7 +504,7 @@ jobs:
         with:
           pattern: bitnami-scan-bitnami-scan-*
           path: .cache/bitnami-shards
-      - name: Verify all ten partitions and publish final reports
+      - name: Verify all forty partitions and publish final reports
         env:
           SCAN_RUN_ID: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
         run: bash .github/repository-report.sh bitnami
@@ -530,16 +533,19 @@ jobs:
           fi
 
   prometheus-scan:
-    name: "Prometheus values (${{ matrix.shard }}/10)"
+    name: "Prometheus values (${{ matrix.shard }}/40)"
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.prometheus-scan }}
     needs: prometheus-request
-    runs-on: large-arm64
+    runs-on: ubuntu-latest
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      max-parallel: 10
+      max-parallel: 40
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
     steps:
       - uses: actions/checkout@v7
       - name: Restore the pinned Prometheus charts
@@ -566,7 +572,7 @@ jobs:
           cache: 'false'
           disable-codes: HH2006
           job-index: ${{ matrix.shard }}
-          shard: ${{ matrix.shard }}/10
+          shard: ${{ matrix.shard }}/40
           run-id: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
           artifact-dir: .cache/prometheus-scan
           artifact-name: prometheus-scan
@@ -596,7 +602,7 @@ jobs:
         with:
           pattern: prometheus-scan-prometheus-scan-*
           path: .cache/prometheus-shards
-      - name: Verify all ten partitions and publish final reports
+      - name: Verify all forty partitions and publish final reports
         env:
           SCAN_RUN_ID: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
         run: bash .github/repository-report.sh prometheus
