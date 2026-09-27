@@ -31,7 +31,6 @@ def installer_commands(root: Path, provider: str) -> list[str]:
         "gitlab": "ci/gitlab.yml",
         "circleci": "ci/circleci.yml",
         "github-project": ".github/actions/setup-project/action.yml",
-        "circleci-project": ".circleci/config.yml",
     }[provider]
     document = mapping(YAML(typ="safe").load((root / filename).read_text()))
     if provider == "gitlab":
@@ -43,8 +42,7 @@ def installer_commands(root: Path, provider: str) -> list[str]:
             for step in steps
             if mapping(step).get("name") in {"Install Helm", "Install Helm 4", "Install Kubesec"}
         ]
-    job = {"circleci": "test-chart", "circleci-project": "test-python"}[provider]
-    steps = sequence(mapping(mapping(document["jobs"])[job])["steps"])
+    steps = sequence(mapping(mapping(document["jobs"])["test-chart"])["steps"])
     commands = []
     for step in steps:
         if not isinstance(step, dict):
@@ -64,7 +62,6 @@ def installer_commands(root: Path, provider: str) -> list[str]:
         ("github", "macOS", "ARM64"),
         ("gitlab", "Linux", "X64"),
         ("circleci", "Linux", "X64"),
-        ("circleci-project", "Linux", "X64"),
         ("github-project", "Linux", "X64"),
     ],
 )
@@ -148,7 +145,7 @@ def test_binary_installers_reuse_exact_versions(tmp_path: Path, provider: str, p
         script = "\n".join(commands).replace("/usr/local/bin/", str(installed) + "/")
         return subprocess.run(["bash", "-euo", "pipefail", "-c", script], cwd=tmp_path, env=environment, text=True, capture_output=True)
 
-    count = 1 if provider.endswith(("benchmark", "project")) else 2
+    count = 1 if provider == "github-project" else 2
     first = execute()
     assert first.returncode == 0, first.stderr
     assert len(log.read_text().splitlines()) == count
