@@ -320,7 +320,10 @@ ceilings, checks error-rate endpoints and intermediate cells across every method
 and checks chart replay and topology plots. These short runs verify the
 automation; their timings are not performance comparisons.
 
-Before merging a PR, open **Actions > CI > Run workflow**, select its head branch, enable **refresh**, and enter the PR number.
+To refresh `main`, open **Actions > CI > Run workflow**, select `main`, enable **refresh**, and leave the PR number empty.
+The workflow commits verified graphs and summaries directly to `main`, provided its head has not changed during measurement.
+Configure the protected-branch [publication token](../development.md#github-ci) before starting the run.
+Before merging a PR, select its head branch instead and enter the PR number.
 The manual study matrix verifies and commits updated graphs and summaries to that branch, then starts CI on the graph commit.
 Measurements and diagnostic logs remain in artifacts for 30 days; raw LFS data is not committed.
 The [required PR benchmark gate](../development.md#github-ci) rejects stale runs. Each study job has a six-hour limit.

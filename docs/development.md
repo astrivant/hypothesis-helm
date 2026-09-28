@@ -197,11 +197,11 @@ flowchart LR
 | [Test](../.github/workflows/stage-test.yml) | Lint, two Go jobs, eight Python shards, chart/Kubesec shards, coverage and benchmark smoke tests. | Starts immediately; independent jobs run concurrently. |
 | [Build](../.github/workflows/stage-build.yml) | Versioned wheel/source distributions and installed Helm commands. Tags also check catalog consistency. | Starts alongside Test. |
 | CI verification | Required status that rejects failed, cancelled or skipped Test/Build stages. | Both stages must pass. |
-| [Benchmark / refresh / scan](../.github/workflows/stage-measure.yml) | Requested PR refresh, Bitnami scan and/or Prometheus scan. | Verification, then each workload's own preparation and aggregation. |
+| [Benchmark / refresh / scan](../.github/workflows/stage-measure.yml) | Requested main or PR refresh, Bitnami scan and/or Prometheus scan. | Verification, then each workload's own preparation and aggregation. |
 | [Deploy](../.github/workflows/stage-deploy.yml) | Publish verified distributions using the `pypi` environment. | Verification and a pushed version tag; never waits for optional measurements. |
 
 Grouping adds no Test-to-Build dependency. Studies retain their parallel matrix, error surface has eight runners,
-stress has six, and each repository scan has eighty. Selected repository scans and PR studies can run concurrently;
+stress has six, and each repository scan has eighty. Selected repository scans and studies can run concurrently;
 only report commits share an ordering to avoid competing pushes. Available runners still limit actual concurrency.
 The reusable workflows accept calls from `ci.yml`; they have no independent push or PR triggers.
 
@@ -213,6 +213,24 @@ so enabling GitHub Pages is unnecessary. No extra token is required, but reposit
 Only the badge job uses `checkout@v5`: its credential format is compatible with the badge action's embedded `checkout@v3`.
 Upgrading that job to checkout v6 or later also requires updating the badge action's checkout, to avoid duplicate authorization headers.
 Benchmark publication and PyPI publishing have separate conditions; neither runs automatically on a PR update.
+To refresh benchmarks directly on `main`, leave `pull-request` empty:
+
+```sh
+gh workflow run ci.yml --ref main -f refresh=true
+```
+
+In the Actions UI, choose **CI → Run workflow**, select `main`, enable `refresh`, and leave the PR number blank.
+The workflow verifies the studies and commits final publications back to the measured branch. It rejects publication if
+`main` changes during the run; restart on the new head in that case. Main runs do not post the PR-only benchmark status.
+
+Protected `main` requires the repository secret `BENCHMARK_PUBLISH_TOKEN`: a dedicated token with repository contents
+write permission, owned by an administrator or another actor allowed to bypass the branch's required reviews and checks.
+The existing protection excludes administrators; ordinary `GITHUB_TOKEN` write permission does not grant that bypass.
+Configure the secret with `gh secret set BENCHMARK_PUBLISH_TOKEN --repo astrivant/hypothesis-helm`.
+The workflow checks that the secret exists before starting measurements and uses it only for the final main publication
+checkout. Its push starts normal CI. PR publication continues to use `GITHUB_TOKEN` and explicitly dispatches CI.
+No branch protection settings are changed by the workflow.
+
 Just before merging, start the benchmark run on your PR's current head branch:
 
 ```sh
@@ -221,14 +239,15 @@ gh workflow run ci.yml --ref my-pr-branch -f refresh=true -f pull-request=123
 
 In the Actions UI, choose **CI → Run workflow**, select the PR branch, enable `refresh`, and enter its PR number.
 The PR must be open, ready for review, target the default branch and belong to this repository. Fork contributors must first
-have a maintainer create a branch here. Runs on `main`, tags, closed PRs, or a stale head are rejected.
+have a maintainer create a branch here. A PR number on `main`, tags, closed PRs, and stale heads are rejected.
+Other branches require a PR number.
 
 The studies run in parallel, then the workflow verifies their graphs, checksums and documentation links. It commits only final
 Markdown, PNG, SVG and PDF publications under `studies/`, `docs/benchmarking/` and the root README. Raw data remains in the
 downloadable run artifacts. The local `hypothesis-helm-refresh` command still includes Bitnami and Prometheus scans;
-the PR benchmark gate stops after study publication.
+the manual benchmark refresh stops after study publication.
 
-The required **PR benchmark results** status is attached to the graph commit, and CI is explicitly dispatched on that commit.
+For PR runs, the required **PR benchmark results** status is attached to the graph commit, and CI is explicitly dispatched on that commit.
 If the generated publications are unchanged, no empty commit is created. **CI verification** must also pass before merging.
 Any later source commit requires a new manual benchmark run. A head or base change during benchmarking rejects publication
 instead of pushing stale graphs. Graph commits can dismiss earlier approvals under the existing review policy, so approve the final commit.

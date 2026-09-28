@@ -76,7 +76,9 @@ original paths; use the latest completed journal when inspecting those archived 
 ## Parallel refresh on GitHub Actions
 
 Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml), select **Run workflow**,
-select the open PR's head branch, enable **refresh**, and enter its **pull-request** number.
+select `main`, enable **refresh**, and leave **pull-request** empty to commit verified publications back to `main`.
+Configure the protected-branch [publication token](../development.md#github-ci) first. The run is rejected if the branch
+changes during measurement. For a PR, select the open PR's head branch and enter its **pull-request** number instead.
 The expandable [Benchmark / refresh / scan stage](../../.github/workflows/stage-measure.yml) contains the study matrices.
 Test and Build run concurrently; once both pass, preparation rebuilds the pinned
 dependencies, checks the generated project and snapshots its inputs once.
@@ -87,7 +89,7 @@ See [GitHub's matrix concurrency documentation](https://docs.github.com/en/actio
 
 Each study owns its output directory, status file and process journal. A failed study retains diagnostics without cancelling
 other studies. The final job requires every study to succeed, verifies the merged measurements, and publishes pages and plots
-under `studies/`, then commits final plots and summaries to the PR branch. The `refresh` option alone does not run new Bitnami or Prometheus scans; select their separate scan options to include them. Studies and the separate `refresh-resume-data` artifact
+under `studies/`, then commits final plots and summaries to the selected branch. The `refresh` option alone does not run new Bitnami or Prometheus scans; select their separate scan options to include them. Studies and the separate `refresh-resume-data` artifact
 are retained for 30 days.
 Study measurements, merging, plot publication and smoke checks use standard `ubuntu-latest` runners.
 Individual measurements run serially, or with at most four local workers in the scaling study; more CI shards do not increase
@@ -104,6 +106,7 @@ Helm downloads, Python environments and native-build caches distinguish x64 from
 After pushing the workflow changes, launch it with:
 
 ```sh
+gh workflow run ci.yml --ref main -f refresh=true
 gh workflow run ci.yml --ref my-pr-branch -f refresh=true -f pull-request=123
 ```
 

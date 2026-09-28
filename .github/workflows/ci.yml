@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       refresh:
-        description: Run required PR benchmarks and commit updated graphs after verification
+        description: Run benchmarks on main or a PR branch and commit updated graphs after verification
         type: boolean
         default: false
       bitnami-scan:
@@ -20,7 +20,7 @@ on:
         type: boolean
         default: false
       pull-request:
-        description: Open PR number for refresh; select its head branch as the workflow ref
+        description: Open PR number for refresh on its head branch; leave empty when running on main
         type: string
         default: ''
       binary-cache:
@@ -79,6 +79,8 @@ jobs:
       pull-requests: read
       statuses: write
       actions: write
+    secrets:
+      BENCHMARK_PUBLISH_TOKEN: ${{ secrets.BENCHMARK_PUBLISH_TOKEN }}
     with:
       binary-cache: ${{ inputs.binary-cache }}
       refresh: ${{ inputs.refresh }}

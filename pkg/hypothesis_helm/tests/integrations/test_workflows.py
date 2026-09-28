@@ -2,6 +2,7 @@
 Verify the unified CI graph, setup contexts and release artifact handoff.
 """
 
+import subprocess
 from graphlib import TopologicalSorter
 from pathlib import Path
 
@@ -140,7 +141,7 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
     document = workflows()["ci.yml"]
     inputs = mapping(mapping(mapping(document["on"])["workflow_dispatch"])["inputs"])
     assert inputs["refresh"] == {
-        "description": "Run required PR benchmarks and commit updated graphs after verification",
+        "description": "Run benchmarks on main or a PR branch and commit updated graphs after verification",
         "type": "boolean",
         "default": False,
     }
@@ -152,14 +153,14 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
             assert job["runs-on"] == "ubuntu-latest", name
     prepare = jobs["refresh-prepare"]
     assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
-    assert prepare["needs"] == "pr-benchmark-request"
+    assert prepare["needs"] == "refresh-request"
     assert jobs["measure-stage"]["needs"] == "verification"
     study = jobs["refresh-study"]
     assert study["needs"] == "refresh-prepare"
     assert mapping(study["strategy"])["fail-fast"] is False
     assert "max-parallel" not in mapping(study["strategy"])
     assert set(sequence(jobs["refresh-finish"]["needs"])) == {
-        "pr-benchmark-request",
+        "refresh-request",
         "refresh-prepare",
         "refresh-study",
         "refresh-error-surface-merge",
@@ -181,17 +182,18 @@ def test_pr_benchmarks_are_a_required_commit_bound_manual_gate() -> None:
     verification = mapping(jobs["verification"])
     assert verification["if"] == "${{ always() }}"
     assert set(sequence(verification["needs"])) == {"test-stage", "build-stage"}
-    request = mapping(jobs["pr-benchmark-request"])
+    request = mapping(jobs["refresh-request"])
     assert request["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
     finish = mapping(jobs["refresh-finish"])
     steps = [mapping(step) for step in sequence(finish["steps"])]
     assert any('--ci-phase graphs --root "$ROOT"' in str(step.get("run", "")) for step in steps)
     assert not any("--ci-phase finish" in str(step.get("run", "")) for step in steps)
     commit = next(step for step in steps if step.get("id") == "commit")
-    assert mapping(commit["env"])["EXPECTED_BASE_SHA"] == "${{ needs.pr-benchmark-request.outputs.base_sha }}"
+    assert mapping(commit["env"])["EXPECTED_BASE_SHA"] == "${{ needs.refresh-request.outputs.base_sha }}"
     result = mapping(jobs["pr-benchmark-result"])
     assert "always()" in str(result["if"]) and "workflow_dispatch" in str(result["if"])
-    assert set(sequence(result["needs"])) == {"pr-benchmark-request", "refresh-finish"}
+    assert "inputs.pull-request != ''" in str(result["if"])
+    assert set(sequence(result["needs"])) == {"refresh-request", "refresh-finish"}
     settings = mapping(YAML(typ="safe").load((ROOT / ".github/settings.yml").read_text()))
     branch = mapping(sequence(settings["branches"])[0])
     checks = mapping(mapping(branch["protection"])["required_status_checks"])
@@ -199,6 +201,42 @@ def test_pr_benchmarks_are_a_required_commit_bound_manual_gate() -> None:
     assert set(sequence(checks["contexts"])) == {"CI verification", "PR benchmark results"}
     # Never reuse the custom status name for a conditionally skipped Actions job.
     assert all(mapping(job)["name"] != "PR benchmark results" for job in jobs.values())
+
+
+@pytest.mark.parametrize("available", [False, True])
+def test_main_refresh_requires_publication_credentials_before_measurement(available: bool) -> None:
+    """
+    Fail before costly studies when protected main cannot accept their publication.
+
+    Args:
+        available (bool): Whether the dedicated publication secret has been configured.
+
+    Returns:
+        None: Main requires its dedicated credential while PR publishing retains the normal Actions token.
+    """
+    documents = workflows()
+    jobs = all_jobs()
+    caller_secrets = mapping(jobs["measure-stage"]["secrets"])
+    assert caller_secrets == {"BENCHMARK_PUBLISH_TOKEN": "${{ secrets.BENCHMARK_PUBLISH_TOKEN }}"}
+    declared = mapping(mapping(mapping(documents["stage-measure.yml"]["on"])["workflow_call"])["secrets"])
+    assert mapping(declared["BENCHMARK_PUBLISH_TOKEN"])["required"] is False
+    steps = [mapping(step) for step in sequence(jobs["refresh-request"]["steps"])]
+    preflight = steps[0]
+    assert preflight["if"] == (
+        "${{ inputs.pull-request == '' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
+    )
+    result = subprocess.run(
+        ["bash", "-e", "-c", str(preflight["run"])],
+        env={"PUBLISH_TOKEN_AVAILABLE": str(available).lower()},
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == (0 if available else 1), result.stderr
+    if not available:
+        assert "BENCHMARK_PUBLISH_TOKEN" in result.stdout
+    finish = [mapping(step) for step in sequence(jobs["refresh-finish"]["steps"])]
+    checkout = next(step for step in finish if str(step.get("uses", "")).startswith("actions/checkout@"))
+    assert mapping(checkout["with"])["token"] == "${{ inputs.pull-request == '' && secrets.BENCHMARK_PUBLISH_TOKEN || github.token }}"
 
 
 def test_setup_receives_workflow_resolved_cache_policy() -> None:

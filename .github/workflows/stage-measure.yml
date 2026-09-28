@@ -18,6 +18,10 @@ on:
       pull-request:
         type: string
         default: ''
+    secrets:
+      BENCHMARK_PUBLISH_TOKEN:
+        description: Token allowed to push benchmark publications directly to the protected default branch
+        required: false
 
 permissions:
   contents: read
@@ -32,8 +36,8 @@ defaults:
     shell: bash
 
 jobs:
-  pr-benchmark-request:
-    name: Validate manual PR benchmark request
+  refresh-request:
+    name: Validate manual benchmark request
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -45,8 +49,17 @@ jobs:
       sha: ${{ steps.request.outputs.sha }}
       base_sha: ${{ steps.request.outputs.base_sha }}
     steps:
+      - name: Require a publication token for the protected default branch
+        if: ${{ inputs.pull-request == '' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+        env:
+          PUBLISH_TOKEN_AVAILABLE: ${{ secrets.BENCHMARK_PUBLISH_TOKEN != '' }}
+        run: |
+          if [[ "$PUBLISH_TOKEN_AVAILABLE" != true ]]; then
+              echo '::error::Set the BENCHMARK_PUBLISH_TOKEN repository secret to a token allowed to bypass default-branch protection before running a refresh on that branch.'
+              exit 1
+          fi
       - uses: actions/checkout@v7
-      - name: Require the current head of an open PR
+      - name: Require the current default branch or an open PR head
         id: request
         env:
           GH_TOKEN: ${{ github.token }}
@@ -57,7 +70,7 @@ jobs:
   refresh-prepare:
     name: Prepare shared inputs
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
-    needs: pr-benchmark-request
+    needs: refresh-request
     # scripts/check.sh runs the full suite with pytest-xdist's CPU-sized worker pool.
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -327,8 +340,8 @@ jobs:
           retention-days: 30
 
   refresh-finish:
-    name: Verify and commit PR benchmark graphs
-    needs: [pr-benchmark-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge]
+    name: Verify and commit benchmark graphs
+    needs: [refresh-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge]
     runs-on: ubuntu-latest
     timeout-minutes: 360
     permissions:
@@ -343,6 +356,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           lfs: true
+          token: ${{ inputs.pull-request == '' && secrets.BENCHMARK_PUBLISH_TOKEN || github.token }}
       - uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
@@ -371,7 +385,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ inputs.pull-request }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-          EXPECTED_BASE_SHA: ${{ needs.pr-benchmark-request.outputs.base_sha }}
+          EXPECTED_BASE_SHA: ${{ needs.refresh-request.outputs.base_sha }}
         run: bash .github/pr-benchmarks.sh commit
       - uses: actions/upload-artifact@v7
         if: ${{ always() }}
@@ -400,8 +414,8 @@ jobs:
 
   pr-benchmark-result:
     name: Record PR benchmark result
-    if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.refresh && needs.pr-benchmark-request.outputs.sha != '' }}
-    needs: [pr-benchmark-request, refresh-finish]
+    if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.refresh && inputs.pull-request != '' && needs.refresh-request.outputs.sha != '' }}
+    needs: [refresh-request, refresh-finish]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -411,7 +425,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RESULT: ${{ needs.refresh-finish.result }}
-          RESULT_SHA: ${{ needs.refresh-finish.outputs.sha || needs.pr-benchmark-request.outputs.sha }}
+          RESULT_SHA: ${{ needs.refresh-finish.outputs.sha || needs.refresh-request.outputs.sha }}
         run: |
           state=failure
           description='Benchmarks failed, were cancelled, or became stale; inspect the manual run'
