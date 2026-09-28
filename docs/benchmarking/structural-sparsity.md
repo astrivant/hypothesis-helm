@@ -45,6 +45,18 @@ breadths 50, 200 and 800, depths 2, 8 and 24, all four placements, all seven mat
 and two paired repeats. The largest tree has 23,201 nodes but still only four variable fields.
 Use a fresh output directory for new measurements; `--plot-only` redraws existing results.
 
+CI divides the sweep across six jobs with `--shard-index 0..5 --shard-count 6`. Each breadth/depth/placement/repeat
+group belongs to one shard, keeping its strategy comparisons together. Shards retain measurements and replay recipes;
+a separate aggregation job requires all six, checks matching settings and complete measurements, and generates the
+combined JSON, CSV and plots before publication. The ordinary command still runs the entire study locally.
+
+```sh
+hypothesis-helm-benchmark structural-sparsity --shard-index 0 --shard-count 6 --output .cache/structural-shards/0
+# Run the other five indices into their own directories, then aggregate:
+hypothesis-helm-benchmark structural-sparsity --merge-shards .cache/structural-shards/*/results.json \
+  --output .cache/structural-merged
+```
+
 ```sh
 hypothesis-helm-benchmark structural-sparsity --breadths 50 200 --depths 2 8 --repeats 2 \
   --time-limit 30s --output .cache/benchmarks/structural-sparsity-quick

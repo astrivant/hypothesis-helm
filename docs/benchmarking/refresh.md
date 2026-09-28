@@ -82,9 +82,11 @@ changes during measurement. For a PR, select the open PR's head branch and enter
 The expandable [Benchmark / refresh / scan stage](../../.github/workflows/stage-measure.yml) contains the study matrices.
 Test and Build run concurrently; once both pass, preparation rebuilds the pinned
 dependencies, checks the generated project and snapshots its inputs once.
-GitHub runs each declared study on a separate runner, using the same source snapshot and parameters.
-The matrix comes from the Python study inventory, so adding a study also adds its CI job.
-There is no `max-parallel` setting: GitHub schedules as many jobs as the account's capacity and runner availability permit.
+GitHub runs studies using the same source snapshot and parameters. Error surface uses eight shards;
+stress and structural sparsity each use six. Each sharded study has a separate aggregation job that verifies all shards
+and generates its combined plots before publication. Structural sparsity keeps each case/repeat's strategy comparisons together.
+The remaining studies each use one runner, with their matrix drawn from the Python study inventory.
+That matrix has no `max-parallel` setting: GitHub schedules as many jobs as the account's capacity and runner availability permit.
 See [GitHub's matrix concurrency documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idstrategymax-parallel).
 
 Each study owns its output directory, status file and process journal. A failed study retains diagnostics without cancelling

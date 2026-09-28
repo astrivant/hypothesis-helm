@@ -165,6 +165,7 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         "refresh-study",
         "refresh-error-surface-merge",
         "refresh-stress-merge",
+        "refresh-structural-sparsity-merge",
     }
     # Optional jobs cannot block the tag-only publisher.
     assert jobs["deploy-stage"]["needs"] == "verification"
@@ -440,15 +441,19 @@ def test_error_surface_has_eight_isolated_shards() -> None:
     assert "refresh-error-surface-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])
 
 
-def test_stress_has_six_isolated_shards() -> None:
+@pytest.mark.parametrize("study", ["stress", "structural-sparsity"])
+def test_study_has_six_isolated_shards(study: str) -> None:
     """
-    Keep stress comparisons on six standard runners before publication.
+    Keep paired comparisons on six standard runners before publication.
+
+    Args:
+        study (str): Study distributed over six independent jobs.
 
     Returns:
         None: Every shard is required and can finish independently of failed peers.
     """
     jobs = all_jobs()
-    shard = mapping(jobs["refresh-stress"])
+    shard = mapping(jobs[f"refresh-{study}"])
     assert shard["runs-on"] == "ubuntu-latest"
     strategy = mapping(shard["strategy"])
     assert mapping(strategy["matrix"])["shard"] == list(range(6))
@@ -457,9 +462,12 @@ def test_stress_has_six_isolated_shards() -> None:
     assert mapping(shard["env"])["SHARD"] == "${{ matrix.shard }}"
     assert strategy["max-parallel"] == 6
     assert strategy["fail-fast"] is False
-    merge = mapping(jobs["refresh-stress-merge"])
-    assert set(sequence(merge["needs"])) == {"refresh-prepare", "refresh-stress"}
-    assert "refresh-stress-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])
+    steps = [mapping(step) for step in sequence(shard["steps"])]
+    measure = next(str(step["run"]) for step in steps if f"hypothesis-helm-benchmark {study}" in str(step.get("run", "")))
+    assert '--shard-index "$SHARD" --shard-count 6' in measure
+    merge = mapping(jobs[f"refresh-{study}-merge"])
+    assert set(sequence(merge["needs"])) == {"refresh-prepare", f"refresh-{study}"}
+    assert f"refresh-{study}-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])
 
 
 def test_sharded_study_verifiers_use_poetry_environment() -> None:
@@ -467,10 +475,10 @@ def test_sharded_study_verifiers_use_poetry_environment() -> None:
     Run dependency-bearing verifiers in the same environment as the measured studies.
 
     Returns:
-        None: Both merge jobs use the installed project dependencies instead of system Python.
+        None: Merge jobs use the installed project dependencies instead of system Python.
     """
     jobs = all_jobs()
-    for study in ("stress", "error-surface"):
+    for study in ("stress", "error-surface", "structural-sparsity"):
         steps = [mapping(step) for step in sequence(mapping(jobs[f"refresh-{study}-merge"])["steps"])]
         verification = next(str(step["run"]) for step in steps if "verify-measurements.py" in str(step.get("run", "")))
         assert f'poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study {study}' in verification

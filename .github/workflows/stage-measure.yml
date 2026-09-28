@@ -339,9 +339,98 @@ jobs:
           path: ${{ runner.temp }}/refresh-study-stress.tar.gz
           retention-days: 30
 
+  refresh-structural-sparsity:
+    name: "Structural sparsity (${{ matrix.number }}/6)"
+    needs: refresh-prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+        include:
+          - shard: 0
+            number: 1
+          - shard: 1
+            number: 2
+          - shard: 2
+            number: 3
+          - shard: 3
+            number: 4
+          - shard: 4
+            number: 5
+          - shard: 5
+            number: 6
+    env:
+      ROOT: ${{ needs.refresh-prepare.outputs.root }}
+      SHARD: ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-prepared
+          path: ${{ runner.temp }}/refresh-input
+      - name: Restore prepared inputs
+        run: tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
+      - name: Measure paired structural sparsity shard
+        run: |
+          set -o pipefail
+          mkdir -p "$ROOT/structural-sparsity-shards/$SHARD"
+          poetry run hypothesis-helm-benchmark structural-sparsity --time-limit 9m \
+              --shard-index "$SHARD" --shard-count 6 --output "$ROOT/structural-sparsity-shards/$SHARD" \
+              2>&1 | tee "$ROOT/structural-sparsity-shards/$SHARD/run.log"
+      - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
+        with:
+          name: refresh-structural-sparsity-${{ matrix.shard }}
+          path: ${{ env.ROOT }}/structural-sparsity-shards/${{ matrix.shard }}/
+          include-hidden-files: true
+          retention-days: 30
+
+  refresh-structural-sparsity-merge:
+    name: Verify and plot structural sparsity
+    needs: [refresh-prepare, refresh-structural-sparsity]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      ROOT: ${{ needs.refresh-prepare.outputs.root }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-prepared
+          path: ${{ runner.temp }}/refresh-input
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: refresh-structural-sparsity-*
+          path: ${{ runner.temp }}/structural-sparsity-shards
+      - name: Merge verified measurements and generate plots
+        run: |
+          tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
+          poetry run hypothesis-helm-benchmark structural-sparsity \
+              --merge-shards "$RUNNER_TEMP"/structural-sparsity-shards/*/results.json \
+              --output "$ROOT/outputs/structural-sparsity"
+          poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study structural-sparsity
+          mkdir -p "$ROOT/statuses"
+          printf 'structural-sparsity\t0\n' >"$ROOT/statuses/structural-sparsity.tsv"
+          tar -czf "$RUNNER_TEMP/refresh-study-structural-sparsity.tar.gz" \
+              "$ROOT/outputs/structural-sparsity" "$ROOT/statuses/structural-sparsity.tsv"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: refresh-study-structural-sparsity
+          path: ${{ runner.temp }}/refresh-study-structural-sparsity.tar.gz
+          retention-days: 30
+
   refresh-finish:
     name: Verify and commit benchmark graphs
-    needs: [refresh-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge]
+    needs: [refresh-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge, refresh-structural-sparsity-merge]
     runs-on: ubuntu-latest
     timeout-minutes: 360
     permissions:

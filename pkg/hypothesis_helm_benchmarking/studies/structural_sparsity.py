@@ -74,10 +74,21 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--time-limit", type=parse_time_limit, default=540)
     parser.add_argument("--helm", default="helm")
+    parser.add_argument("--shard-index", type=int, default=0, help="zero-based paired-measurement shard")
+    parser.add_argument("--shard-count", type=int, default=1)
+    parser.add_argument("--merge-shards", type=Path, nargs="+", help="verify and combine every shard before plotting")
     parser.add_argument("--plot-only", action="store_true")
     args = parser.parse_args(argv)
     from hypothesis_helm_benchmarking.reporting.structural_sparsity import plot
 
+    if args.shard_count < 1 or not 0 <= args.shard_index < args.shard_count:
+        parser.error("require a positive shard count and 0 <= shard-index < shard-count")
+    if args.merge_shards:
+        from hypothesis_helm_benchmarking.studies.structural_shards import merge
+
+        merged = merge(args.merge_shards, args.output)
+        plot(args.output, merged)
+        return 0
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
@@ -100,6 +111,8 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
         "methods": args.methods,
         "repeats": args.repeats,
         "seed": args.seed,
+        "shard_count": args.shard_count,
+        "shard_index": args.shard_index,
         "time_limit_seconds": args.time_limit,
         "status": "running",
         "time_limit_scope": "per method execution; generation, reference, discovery, planning and analysis excluded",
@@ -110,10 +123,14 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     }
     rows: list[dict[str, object]] = []
     document: dict[str, object] = {"metadata": metadata, "rows": rows}
-    total = len(args.breadths) * len(args.depths) * len(args.placements) * args.repeats * len(args.methods)
+    groups = len(args.breadths) * len(args.depths) * len(args.placements) * args.repeats
+    total = len(range(args.shard_index, groups, args.shard_count)) * len(args.methods)
     failed = False
     with BenchmarkProgress("Structural sparsity") as progress:
-        for breadth, depth, placement in itertools.product(args.breadths, args.depths, args.placements):
+        for index, (breadth, depth, placement) in enumerate(itertools.product(args.breadths, args.depths, args.placements)):
+            repeats = [repeat for repeat in range(args.repeats) if (index * args.repeats + repeat) % args.shard_count == args.shard_index]
+            if not repeats:
+                continue
             case = f"breadth-{breadth}-depth-{depth}-{placement}"
             logical = args.output / "charts" / case
             generate(logical, input_complexity=4, output_bins=2, workspace=workspace)
@@ -122,7 +139,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             spec = mapping(json.loads((path / "benchmark.json").read_text()))
             truth = reference(Chart.load(path), spec)
             settings = mapping(spec["structural_sparsity"])
-            for repeat in range(args.repeats):
+            for repeat in repeats:
                 methods = list(args.methods)
                 random.Random(f"{args.seed}:{breadth}:{depth}:{placement}:{repeat}").shuffle(methods)
                 for method in progress.track(iter(methods), total=total):
@@ -167,7 +184,10 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                     failed |= row["status"] not in {"passed", "time-limit"}
     metadata["status"] = "failed" if failed else "complete"
     save(args.output, document)
-    plot(args.output, document)
+    if not failed:
+        verify(document)
+    if args.shard_count == 1:
+        plot(args.output, document)
     return int(failed)
 
 
@@ -184,18 +204,27 @@ def verify(document: dict[str, object]) -> None:
     metadata = mapping(document["metadata"])
     assert metadata["status"] == "complete"
     rows = [mapping(row) for row in sequence(document["rows"])]
-    expected_cells = set(
-        itertools.product(
-            sequence(metadata["breadths"]),
-            sequence(metadata["depths"]),
-            sequence(metadata["placements"]),
-            sequence(metadata["methods"]),
-            range(int(str(metadata["repeats"]))),
-        )
+    shard_count = int(str(metadata.get("shard_count", 1)))
+    shard_index = int(str(metadata.get("shard_index", 0)))
+    assert shard_count > 0 and 0 <= shard_index < shard_count
+    groups = itertools.product(
+        sequence(metadata["breadths"]),
+        sequence(metadata["depths"]),
+        sequence(metadata["placements"]),
+        range(int(str(metadata["repeats"]))),
     )
+    expected_cells = {
+        (breadth, depth, placement, method, repeat)
+        for index, (breadth, depth, placement, repeat) in enumerate(groups)
+        if index % shard_count == shard_index
+        for method in sequence(metadata["methods"])
+    }
     assert len(rows) == len(expected_cells)
     assert {(row["breadth"], row["depth"], row["placement"], row["strategy"], row["repeat"]) for row in rows} == expected_cells
+    hashes: dict[tuple[object, ...], object] = {}
     for row in rows:
+        case = (row["breadth"], row["depth"], row["placement"])
+        assert hashes.setdefault(case, row["chart_sha256"]) == row["chart_sha256"]
         assert row["status"] in {"passed", "time-limit"} and row["error"] is None
         assert row["valid_domain"] == 16
         assert 0 <= int(str(row["erroneous_inputs_evaluated"])) <= 7

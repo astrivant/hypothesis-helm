@@ -61,6 +61,33 @@ def test_pr_graph_phase_verifies_publication_without_repository_scans() -> None:
     assert all(set(item.requires) <= names for item in operations)
 
 
+def test_preparation_excludes_sharded_studies_from_serial_matrix(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Schedule dedicated sharded studies only through their own workflow jobs.
+
+    Args:
+        tmp_path (Path): Prepared workspace and GitHub output file.
+        monkeypatch (pytest.MonkeyPatch): Skip preparation work while exercising real matrix publication.
+
+    Returns:
+        None: Every study runs through exactly one serial or sharded workflow path.
+    """
+    root = Path(".cache/refresh/refresh-1")
+    (tmp_path / root).mkdir(parents=True)
+    (tmp_path / root / "provenance.json").write_text("{}")
+    output = tmp_path / "github-output"
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    refresh_env()
+    monkeypatch.setattr("hypothesis_helm_benchmarking.refresh.ci.OperationQueue.run", lambda self: None)
+    run_phase(root, "prepare", None, 1)
+    values = dict(line.split("=", 1) for line in output.read_text().splitlines())
+    assert values["root"] == str(root)
+    assert json.loads(values["matrix"])["study"] == [
+        name for name in STUDIES if name not in {"error-surface", "stress", "structural-sparsity"}
+    ]
+
+
 @pytest.mark.parametrize("damage", [None, "missing", "failed", "duplicate", "unexpected", "mislabeled"])
 def test_merge_ci_statuses(tmp_path: Path, damage: str | None) -> None:
     """
