@@ -135,10 +135,10 @@ exits **130**, with an incomplete report and the available package inventory.
 
 ## Discovery and testing
 
-`test` and `scan` default to `--max-depth 0`: test each root chart without discovering nested charts as separate
-scan targets or traversing dependency-owned values. Repository folders do not count toward depth, and ordinary
-nested values in the current chart remain in scope. Use `--max-depth 1` for direct dependencies, `2` for their
-dependencies, and so on:
+`test` and `scan` default to `--max-depth inf`, preserving unlimited dependency traversal. Use `--max-depth 0` to
+test each root chart without discovering nested charts as separate scan targets or traversing dependency-owned
+values. Repository folders do not count toward depth, and ordinary nested values in the current chart remain in
+scope. Use `--max-depth 1` for direct dependencies, `2` for their dependencies, and so on:
 
 ```sh
 helm hypothesis test ./chart --max-depth 1

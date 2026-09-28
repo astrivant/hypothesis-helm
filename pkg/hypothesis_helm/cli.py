@@ -13,6 +13,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Literal
 
+from hypothesis_helm.charts.depth import parse_max_depth
 from hypothesis_helm.charts.inspection.audit import audit, audit_findings
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.repositories.scan import discover_charts, scan
@@ -392,10 +393,10 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     for command in (test, repository):
         command.add_argument(
             "--max-depth",
-            type=int,
-            default=0,
-            metavar="N",
-            help="dependency levels to traverse: 0 tests only each root chart (default), 1 includes direct dependencies",
+            type=parse_max_depth,
+            default=None,
+            metavar="N|inf",
+            help="dependency levels to traverse: inf is unlimited (default), 0 tests only each root chart, 1 includes direct dependencies",
         )
         command.add_argument(
             "--pca-samples",
@@ -802,8 +803,6 @@ def main(argv: list[str] | None = None) -> int:
             arguments[index] = "--fail=info"
     args = parser.parse_args(arguments)
     args.invocation = invocation
-    if getattr(args, "max_depth", 0) < 0:
-        parser.error("--max-depth must be nonnegative")
     if getattr(args, "pca_samples", 0) < 0:
         parser.error("--pca-samples must be nonnegative")
     if getattr(args, "max_mutations", None) is not None:

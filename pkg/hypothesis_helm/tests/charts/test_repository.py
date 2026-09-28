@@ -101,19 +101,20 @@ def test_remote_scan(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: py
     roots: list[Path] = []
     discover = scanner.discover_charts
 
-    def inspect(root: Path, *, deadline: float | None = None) -> list[dict[str, object]]:
+    def inspect(root: Path, *, deadline: float | None = None, max_depth: int | None = None) -> list[dict[str, object]]:
         """
         Record the checkout while exercising actual recursive discovery.
 
         Args:
             root (Path): Temporary Git working tree.
             deadline (float | None): Total scan deadline.
+            max_depth (int | None): Selected dependency traversal depth, or unrestricted traversal.
 
         Returns:
             list[dict[str, object]]: Discovered chart metadata.
         """
         roots.append(root)
-        return discover(root, deadline=deadline)
+        return discover(root, deadline=deadline, max_depth=max_depth)
 
     monkeypatch.setattr(scanner, "discover_charts", inspect)
     monkeypatch.setattr(scanner, "exercise_chart", lambda *args: {"status": "passed", "attempts": 3})

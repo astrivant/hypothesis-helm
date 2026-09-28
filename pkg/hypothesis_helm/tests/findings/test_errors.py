@@ -178,7 +178,10 @@ def test_distinct_dependency_errors(tmp_path: Path, difference: str) -> None:
     assert report["error_summary"] == {"unique_errors": 2, "occurrences": 2, "duplicates": 0}
 
 
-def test_scan_dependency_deduplication(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
+@pytest.mark.parametrize("depth", [None, 0, 1])
+def test_scan_dependency_deduplication(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], depth: int | None
+) -> None:
     """
     Deduplicate before temporary copies disappear and keep scanning every parent.
 
@@ -186,6 +189,7 @@ def test_scan_dependency_deduplication(tmp_path: Path, monkeypatch: pytest.Monke
         tmp_path (Path): Repository with repeated dependencies.
         monkeypatch (pytest.MonkeyPatch): Substitute the chart execution boundary.
         capsys (pytest.CaptureFixture[str]): Capture aggregate JSON.
+        depth (int | None): Selected dependency depth, or None to use the CLI default.
 
     Returns:
         None: JSON and human reports share one group without skipping affected charts.
@@ -218,6 +222,7 @@ def test_scan_dependency_deduplication(tmp_path: Path, monkeypatch: pytest.Monke
                 "--log-file",
                 "/dev/stderr",
                 str(tmp_path),
+                *(["--max-depth", str(depth)] if depth is not None else []),
                 "--helm",
                 "/usr/bin/true",
                 "--no-build-dependencies",
@@ -231,7 +236,7 @@ def test_scan_dependency_deduplication(tmp_path: Path, monkeypatch: pytest.Monke
     )
     report = json.loads(result_text(capsys.readouterr().out))
     assert calls == ["first", "second"]
-    assert report["counts"] == {"failed": 2, "skipped-library": 2}
+    assert report["counts"] == {"failed": 2, **({"skipped-library": 2} if depth != 0 else {})}
     assert report["error_summary"] == {"unique_errors": 1, "occurrences": 2, "duplicates": 1}
     assert (tmp_path / "summary.md").read_text().count("port must exceed 100") == 2
     saved = next((tmp_path / "artifacts").glob("*/scan.json"))

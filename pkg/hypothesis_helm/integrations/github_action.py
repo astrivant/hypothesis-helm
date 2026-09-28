@@ -10,6 +10,7 @@ from pathlib import Path
 
 from ruamel.yaml import YAML
 
+from hypothesis_helm.charts.depth import parse_max_depth
 from hypothesis_helm.environment import env, refresh_env, set_env
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.integrations.action_config import prepare_config
@@ -208,7 +209,7 @@ def main() -> int:
                 or not (local / "values.schema.json").is_file()
                 or any(environment.get(key) for key in ("HH_REPORT", "HH_CHART_TIMEOUT", "HH_SCAN_TIMEOUT", "HH_BASE_REF"))
                 or environment.get("HH_VALUES", "values.yaml") not in {"", "values.yaml"}
-                or len(discover_charts(local, max_depth=int(environment.get("HH_MAX_DEPTH") or "0"))) > 1
+                or len(discover_charts(local, max_depth=parse_max_depth(environment.get("HH_MAX_DEPTH") or "inf"))) > 1
             )
         if command in {"test", "run"} and not recursive:
             rerun = select_rerun(

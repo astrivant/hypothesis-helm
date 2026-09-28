@@ -63,21 +63,21 @@ LOGGER = logging.getLogger(__name__)
 VERSION = re.compile(r"^v?(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?(?:\.(0|[1-9]\d*))?(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 
 
-def discover_charts(root: Path, *, deadline: float | None = None, max_depth: int = 0) -> list[dict[str, object]]:
+def discover_charts(root: Path, *, deadline: float | None = None, max_depth: int | None = None) -> list[dict[str, object]]:
     """
     Discover metadata files without following directory symlinks.
 
     Args:
         root (Path): Repository or chart directory to inspect recursively.
         deadline (float | None): Optional monotonic scan deadline, preserving partial discovery.
-        max_depth (int): Dependency levels below each root chart; ordinary repository directories do not count.
+        max_depth (int | None): Dependency levels below each root chart, or None for all charts; ordinary directories do not count.
 
     Returns:
         list[dict[str, object]]: Deterministically ordered valid and invalid candidates.
     """
     if not root.is_dir():
         raise ValueError(f"Not a directory: {root}")
-    if type(max_depth) is not int or max_depth < 0:
+    if max_depth is not None and (type(max_depth) is not int or max_depth < 0):
         raise ValueError("max-depth must be a nonnegative integer")
     results: list[dict[str, object]] = []
     depths = {root: -1}
@@ -91,7 +91,7 @@ def discover_charts(root: Path, *, deadline: float | None = None, max_depth: int
                 children[:] = sorted(name for name in children if name not in {".git", ".venv", ".cache", "__pycache__"})
                 path = Path(directory)
                 depth = depths[path] + ("Chart.yaml" in files)
-                if depth >= max_depth:
+                if max_depth is not None and depth >= max_depth:
                     children.clear()
                 for child in children:
                     depths[path / child] = depth
@@ -476,7 +476,8 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
         defaults: dict[str, object] | None = None
         LOGGER.info("Chart %d/%d: %s", index + 1, len(records), record["chart"])
         try:
-            with capture, dependency_depth(max(0, args.max_depth - int(str(record.get("depth", 0))))), ExitStack() as scope:
+            remaining_depth = None if args.max_depth is None else max(0, args.max_depth - int(str(record.get("depth", 0))))
+            with capture, dependency_depth(remaining_depth), ExitStack() as scope:
                 if args.scan_deadline is not None:
                     remaining = args.scan_deadline - time.monotonic()
                     if remaining <= 0:

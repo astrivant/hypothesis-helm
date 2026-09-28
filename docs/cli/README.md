@@ -214,7 +214,7 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--no-cache] [--jobs JOBS] [--permutations PERMUTATIONS]
                             [--filter] [--fail [{info,warning,error}]] [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
-                            [--max-depth N] [--pca-samples N]
+                            [--max-depth N|inf] [--pca-samples N]
                             [--pca-timeout PCA_TIMEOUT] [--max-mutations N]
                             [--sensitivity-timeout SENSITIVITY_TIMEOUT]
                             [--filter-adaptive]
@@ -282,8 +282,8 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
-  --max-depth N         dependency levels to traverse: 0 tests only each root chart
-                        (default), 1 includes direct dependencies
+  --max-depth N|inf     dependency levels to traverse: inf is unlimited (default), 0
+                        tests only each root chart, 1 includes direct dependencies
   --pca-samples N       with --report, measure up to N reference configurations per
                         chart for output PCA; 0 disables it (default: 64)
   --pca-timeout PCA_TIMEOUT
@@ -606,8 +606,9 @@ options:
 <summary>helm hypothesis test</summary>
 
 ~~~text
-usage: helm hypothesis test [-h] [--report [PATH]] [--max-depth N] [--pca-samples N]
-                            [--pca-timeout PCA_TIMEOUT] [--max-mutations N]
+usage: helm hypothesis test [-h] [--report [PATH]] [--max-depth N|inf]
+                            [--pca-samples N] [--pca-timeout PCA_TIMEOUT]
+                            [--max-mutations N]
                             [--sensitivity-timeout SENSITIVITY_TIMEOUT]
                             [--values VALUES] [--chart-timeout CHART_TIMEOUT]
                             [--scan-timeout SCAN_TIMEOUT]
@@ -659,8 +660,8 @@ options:
   -h, --help            show this help message and exit
   --report [PATH]       write combined Markdown/PDF; default:
                         docs/reports/<dir>_<epoch>_report
-  --max-depth N         dependency levels to traverse: 0 tests only each root chart
-                        (default), 1 includes direct dependencies
+  --max-depth N|inf     dependency levels to traverse: inf is unlimited (default), 0
+                        tests only each root chart, 1 includes direct dependencies
   --pca-samples N       with --report, measure up to N reference configurations per
                         chart for output PCA; 0 disables it (default: 64)
   --pca-timeout PCA_TIMEOUT

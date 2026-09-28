@@ -236,12 +236,14 @@ def test_export_default_filename(
 
 
 @pytest.mark.parametrize("override", [False, True])
+@pytest.mark.parametrize("depth", [None, "inf", 0, 1])
 def test_scan_exports_each_chart(
     chart: Chart,
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
     override: bool,
+    depth: int | str | None,
 ) -> None:
     """
     Keep recursive exports separate with either generated or explicitly chosen filenames.
@@ -252,9 +254,10 @@ def test_scan_exports_each_chart(
         monkeypatch (pytest.MonkeyPatch): Replace chart execution only.
         capsys (pytest.CaptureFixture[str]): Capture the scan report.
         override (bool): Supply an explicit filename instead of using generated names.
+        depth (int | str | None): Selected dependency depth, or None to use the CLI default.
 
     Returns:
-        None: Both chart dumps remain independently inspectable.
+        None: Every in-scope chart has an independently inspectable dump.
     """
     nested = chart.path / "child"
     nested.mkdir()
@@ -278,6 +281,7 @@ def test_scan_exports_each_chart(
                 "--log-file",
                 "/dev/stderr",
                 str(chart.path),
+                *(["--max-depth", str(depth)] if depth is not None else []),
                 "--no-build-dependencies",
                 "--export-minimal-values",
                 *([str(output / "minimal.yaml")] if override else []),
@@ -290,10 +294,10 @@ def test_scan_exports_each_chart(
         == 0
     )
     report = json.loads(result_text(capsys.readouterr().out))
-    assert len(report["charts"]) == 2
+    assert len(report["charts"]) == (1 if depth == 0 else 2)
     if override:
         assert (output / "minimal.yaml").exists()
-        assert (output / "child/minimal.yaml").exists()
+        assert (output / "child/minimal.yaml").exists() is (depth != 0)
     for item in report["charts"]:
         exported = item["minimal_values"]
         target = Path(exported["yaml"])

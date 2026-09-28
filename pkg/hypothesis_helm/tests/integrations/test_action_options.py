@@ -63,6 +63,7 @@ def sample_option(action: argparse.Action) -> str:
     samples = {
         "shard": "none",
         "jobs": "2",
+        "max-depth": "inf",
         "ignore": "HH2006",
         "disable-codes": "HH2006,HH2003",
         "exhaustive-group": "$.a,$.b",
@@ -335,6 +336,51 @@ def test_action_routes_commands_and_streams(tmp_path: Path, monkeypatch: pytest.
 
 
 @pytest.mark.integration
+@pytest.mark.parametrize("depth", ["", "inf", "0", "1"])
+def test_action_selects_recursive_testing_by_depth(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, depth: str) -> None:
+    """
+    Apply the CLI's default and explicit depth limits before selecting incremental execution.
+
+    Args:
+        tmp_path (Path): Root chart containing a dependency.
+        monkeypatch (pytest.MonkeyPatch): Supply Action inputs and replace execution boundaries.
+        depth (str): Omitted, unrestricted, or finite dependency traversal input.
+
+    Returns:
+        None: Only root-only traversal uses the single-chart incremental selection path.
+    """
+    chart = tmp_path / "chart"
+    for path, name in ((chart, "root"), (chart / "charts/child", "child")):
+        path.mkdir(parents=True)
+        (path / "Chart.yaml").write_text(f"apiVersion: v2\nname: {name}\nversion: 1.0.0\n")
+        (path / "values.schema.json").write_text('{"type":"object"}')
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("HH_COMMAND", "test")
+    monkeypatch.setenv("HH_SOURCE", str(chart))
+    monkeypatch.setenv("HH_MAX_DEPTH", depth)
+    monkeypatch.setenv("HH_ARTIFACT_DIR", str(tmp_path / "artifacts"))
+    calls: list[Path] = []
+
+    def select(source: Path, **kwargs: object) -> str:
+        """
+        Record charts using single-chart rerun selection.
+
+        Args:
+            source (Path): Chart selected by the Action wrapper.
+            **kwargs (object): Incremental selection options.
+
+        Returns:
+            str: Unrestricted rerun selection for the execution stub.
+        """
+        calls.append(source)
+        return "all"
+
+    monkeypatch.setattr(github_action, "select_rerun", select)
+    monkeypatch.setattr(Processes, "run", lambda self, command, **kwargs: subprocess.CompletedProcess(command, 0))
+    assert github_action.main() == 0
+    assert calls == ([chart] if depth == "0" else [])
+
+
 def test_action_generates_and_executes_real_saved_suite(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Verify inline settings survive generation and execution through the actual CLI and Helm.
