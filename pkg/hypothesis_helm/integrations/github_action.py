@@ -208,7 +208,7 @@ def main() -> int:
                 or not (local / "values.schema.json").is_file()
                 or any(environment.get(key) for key in ("HH_REPORT", "HH_CHART_TIMEOUT", "HH_SCAN_TIMEOUT", "HH_BASE_REF"))
                 or environment.get("HH_VALUES", "values.yaml") not in {"", "values.yaml"}
-                or len(discover_charts(local)) > 1
+                or len(discover_charts(local, max_depth=int(environment.get("HH_MAX_DEPTH") or "0"))) > 1
             )
         if command in {"test", "run"} and not recursive:
             rerun = select_rerun(

@@ -229,6 +229,9 @@ inputs:
   traversal-strategy:
     description: seeded random (default), linear, root-first, leaf-first, or sensitivity-first (finite coverage defaults to pairs)
     default: ''
+  max-depth:
+    description: 'dependency levels to traverse; 0 tests each root chart only (default), 1 includes direct dependencies'
+    default: ''
   helm:
     description: helm
     default: ''
@@ -530,6 +533,7 @@ runs:
         HH_CHART_TIMEOUT: ${{ inputs.chart-timeout }}
         HH_SCAN_TIMEOUT: ${{ inputs.scan-timeout }}
         HH_BUILD_DEPENDENCIES: ${{ inputs.build-dependencies }}
+        HH_MAX_DEPTH: ${{ inputs.max-depth }}
         HH_FAIL: ${{ inputs.fail }}
         HH_TIME_LIMIT: ${{ inputs.time-limit }}
         HH_PATHS: ${{ inputs.paths }}

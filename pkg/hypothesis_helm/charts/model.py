@@ -141,9 +141,12 @@ class Chart:
             dict[str, object]: Restricted copy without modifying schema or defaults.
         """
         if schema is not None:
-            return self.input_domains().apply(schema)
+            result = self.input_domains().apply(schema)
+            return self.dependency_model.scope_schema(result) if self.dependency_model is not None else result
         if self.generated_schema is None:
             self.generated_schema = self.input_domains().apply(self.schema)
+            if self.dependency_model is not None:
+                self.generated_schema = self.dependency_model.scope_schema(self.generated_schema)
         return self.generated_schema
 
 

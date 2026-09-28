@@ -20,6 +20,7 @@ from hypothesis import strategies as st
 from hypothesis.strategies import DataObject
 from jsonschema import validators
 
+from hypothesis_helm.charts.depth import dependency_depth
 from hypothesis_helm.charts.model import Chart, merge_values
 from hypothesis_helm.charts.suites.bindings import path_bindings
 from hypothesis_helm.charts.testing.rendering import render
@@ -84,6 +85,7 @@ def prepared_chart(source: Path, generated: Path) -> Iterator[Chart]:
     provenance = mapping(json.loads(metadata.read_text())) if metadata.is_file() else {}
     with (
         SourceScope(str(provenance.get("source", source_identity(source)))),
+        dependency_depth(int(str(provenance["max_depth"])) if provenance.get("max_depth") is not None else None),
         ExitStack() as contracts,
         tempfile.TemporaryDirectory(prefix="hypothesis-helm-generated-") as directory,
     ):

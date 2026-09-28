@@ -12,6 +12,7 @@ done
 case "$HH_COMMAND" in
     test)
         exec helm hypothesis test "$HH_SOURCE" \
+            ${HH_MAX_DEPTH:+--max-depth "$HH_MAX_DEPTH"} \
             ${HH_REPORT:+--report "$HH_REPORT"} \
             ${HH_PCA_SAMPLES:+--pca-samples "$HH_PCA_SAMPLES"} \
             ${HH_PCA_TIMEOUT:+--pca-timeout "$HH_PCA_TIMEOUT"} \
@@ -84,6 +85,7 @@ case "$HH_COMMAND" in
         ;;
     scan)
         exec helm hypothesis scan "$HH_SOURCE" \
+            ${HH_MAX_DEPTH:+--max-depth "$HH_MAX_DEPTH"} \
             ${HH_HELM_REPOSITORY:+--helm-repository} \
             ${HH_CHART_VERSION:+--chart-version "$HH_CHART_VERSION"} \
             ${HH_CLONE_TIMEOUT:+--clone-timeout "$HH_CLONE_TIMEOUT"} \

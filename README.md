@@ -106,6 +106,8 @@ The same idea applies beyond quoting:
 | `scan SOURCE` | Testing charts fetched from remote repositories. | Fetches a Git repository, Helm repository/chart, public Helm index, or OCI chart, then discovers and tests its charts. Local paths use `test`. |
 
 `test` and `scan` infer input-generation strategies when a chart has no values schema.
+They default to `--max-depth 0`, keeping traversal within each root chart. Use `--max-depth 1` to include direct
+dependencies, or a larger value for deeper dependencies. Helm still renders the full chart with its dependencies.
 Recursive testing builds dependencies in isolated copies; single-chart suite controls
 use dependencies already available in the chart. `audit` also works without a schema. `--filter` restricts
 generation before traversal. Skipped charts and incomplete coverage remain explicit.
@@ -441,8 +443,8 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--no-cache] [--jobs JOBS] [--permutations PERMUTATIONS]
                             [--filter] [--fail [{info,warning,error}]] [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
-                            [--pca-samples N] [--pca-timeout PCA_TIMEOUT]
-                            [--max-mutations N]
+                            [--max-depth N] [--pca-samples N]
+                            [--pca-timeout PCA_TIMEOUT] [--max-mutations N]
                             [--sensitivity-timeout SENSITIVITY_TIMEOUT]
                             [--filter-adaptive]
                             [--sampling-calibration SAMPLING_CALIBRATION]
@@ -509,6 +511,8 @@ options:
   --seed SEED
   --build-dependencies, --no-build-dependencies
                         build locked dependencies in temporary chart copies
+  --max-depth N         dependency levels to traverse: 0 tests only each root chart
+                        (default), 1 includes direct dependencies
   --pca-samples N       with --report, measure up to N reference configurations per
                         chart for output PCA; 0 disables it (default: 64)
   --pca-timeout PCA_TIMEOUT
@@ -823,7 +827,7 @@ options:
 <summary>helm hypothesis test</summary>
 
 ~~~text
-usage: helm hypothesis test [-h] [--report [PATH]] [--pca-samples N]
+usage: helm hypothesis test [-h] [--report [PATH]] [--max-depth N] [--pca-samples N]
                             [--pca-timeout PCA_TIMEOUT] [--max-mutations N]
                             [--sensitivity-timeout SENSITIVITY_TIMEOUT]
                             [--values VALUES] [--chart-timeout CHART_TIMEOUT]
@@ -876,6 +880,8 @@ options:
   -h, --help            show this help message and exit
   --report [PATH]       write combined Markdown/PDF; default:
                         docs/reports/<dir>_<epoch>_report
+  --max-depth N         dependency levels to traverse: 0 tests only each root chart
+                        (default), 1 includes direct dependencies
   --pca-samples N       with --report, measure up to N reference configurations per
                         chart for output PCA; 0 disables it (default: 64)
   --pca-timeout PCA_TIMEOUT

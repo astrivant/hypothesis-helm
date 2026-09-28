@@ -73,6 +73,7 @@ def fingerprint(
         str: Content-addressed cache key, independent of absolute checkout paths.
     """
     digest = hashlib.sha256(repr((seed, match, shard, sys.version)).encode())
+    digest.update(env.get("HYPOTHESIS_HELM_MAX_DEPTH", "unrestricted").encode())
     digest.update(env.get("HYPOTHESIS_HELM_IGNORED_RULES", "[]").encode())
     digest.update(json.dumps(inherited_policy(), sort_keys=True).encode())
     from hypothesis_helm.compiler.randomness.toolchain import identity as renderer_identity

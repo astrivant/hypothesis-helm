@@ -18,6 +18,7 @@ from collections import Counter
 from contextlib import ExitStack
 from pathlib import Path
 
+from hypothesis_helm.charts.depth import dependency_depth
 from hypothesis_helm.charts.inspection.audit import audit_findings
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.repositories.cache import ChartCache
@@ -62,20 +63,24 @@ LOGGER = logging.getLogger(__name__)
 VERSION = re.compile(r"^v?(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?(?:\.(0|[1-9]\d*))?(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 
 
-def discover_charts(root: Path, *, deadline: float | None = None) -> list[dict[str, object]]:
+def discover_charts(root: Path, *, deadline: float | None = None, max_depth: int = 0) -> list[dict[str, object]]:
     """
     Discover metadata files without following directory symlinks.
 
     Args:
         root (Path): Repository or chart directory to inspect recursively.
         deadline (float | None): Optional monotonic scan deadline, preserving partial discovery.
+        max_depth (int): Dependency levels below each root chart; ordinary repository directories do not count.
 
     Returns:
         list[dict[str, object]]: Deterministically ordered valid and invalid candidates.
     """
     if not root.is_dir():
         raise ValueError(f"Not a directory: {root}")
+    if type(max_depth) is not int or max_depth < 0:
+        raise ValueError("max-depth must be a nonnegative integer")
     results: list[dict[str, object]] = []
+    depths = {root: -1}
     try:
         with ExitStack() as scope:
             if deadline is not None:
@@ -84,11 +89,17 @@ def discover_charts(root: Path, *, deadline: float | None = None) -> list[dict[s
                 if deadline is not None and time.monotonic() >= deadline:
                     break
                 children[:] = sorted(name for name in children if name not in {".git", ".venv", ".cache", "__pycache__"})
+                path = Path(directory)
+                depth = depths[path] + ("Chart.yaml" in files)
+                if depth >= max_depth:
+                    children.clear()
+                for child in children:
+                    depths[path / child] = depth
                 if "Chart.yaml" not in files:
                     continue
-                path = Path(directory)
                 record: dict[str, object] = {
                     "chart": str(path.relative_to(root)),
+                    "depth": depth,
                     "status": "pending",
                 }
                 try:
@@ -225,7 +236,7 @@ def _exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> di
     strength = args.permutations
     coverage_fallback: dict[str, object] = {}
     try:
-        factor_space(chart.schema, 10000)
+        factor_space(chart.generation_schema(), 10000)
     except NonFiniteSchema as exc:
         filtering["reason"] = f"Cannot enumerate the input domain: {exc}"
         unavailable_options = [
@@ -423,7 +434,7 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
     changes: dict[str, object] = (
         comparison(root, getattr(args, "base_ref", None)) if source.status == "ready" else {"status": "unavailable"}
     )
-    records = discover_charts(root, deadline=args.scan_deadline) if source.status == "ready" else []
+    records = discover_charts(root, deadline=args.scan_deadline, max_depth=args.max_depth) if source.status == "ready" else []
     if source.kind == "helm":
         for package in source.packages:
             matches = [record for record in records if str(record["chart"]).split("/")[0] == package["chart"]]
@@ -465,7 +476,7 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
         defaults: dict[str, object] | None = None
         LOGGER.info("Chart %d/%d: %s", index + 1, len(records), record["chart"])
         try:
-            with capture, ExitStack() as scope:
+            with capture, dependency_depth(max(0, args.max_depth - int(str(record.get("depth", 0))))), ExitStack() as scope:
                 if args.scan_deadline is not None:
                     remaining = args.scan_deadline - time.monotonic()
                     if remaining <= 0:
@@ -703,6 +714,7 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
             "ignored_rules": ignored_codes(),
             "input_policy": getattr(args, "input_policy", {}),
             "max_examples": args.max_examples,
+            "max_depth": args.max_depth,
             "jobs": getattr(args, "jobs", 1),
             "worker_model": "sequential charts, concurrent path properties",
             "filter": args.filter,

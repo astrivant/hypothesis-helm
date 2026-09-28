@@ -168,7 +168,7 @@ def check_paths(
         model = coalesce(chart)
     model.schema = chart.generation_schema(model.schema)
     model.paths = enumerate_paths(model.schema)
-    unique = {entry.path: entry for entry in model.paths}
+    unique = {entry.path: entry for entry in model.paths if inventory.dependencies.includes(entry.path)}
     if random_enabled(chart):
         # A root property samples renderer inputs even when the chart has no configurable values.
         unique[()] = ValuePath((), {"const": json_value(chart.defaults)}, "renderer-randomness")
@@ -200,6 +200,7 @@ def check_paths(
                 "seed": seed,
                 "renderer_observations": chart.renderer_statistics,
                 "traversal_strategy": traversal_strategy,
+                "max_depth": inventory.dependencies.max_depth,
                 "traversal_algorithm": ALGORITHM,
                 "eligible_paths": eligible_paths,
                 "paths": planned_paths,

@@ -266,6 +266,7 @@ def write_reports(
         "",
         f"Filtering: {settings.get('filter', 'not recorded')} | Seed: {settings.get('seed', 'not recorded')} | "
         f"Traversal: {settings.get('traversal_strategy', 'not recorded')}",
+        f"Maximum dependency depth: {settings.get('max_depth', 'not recorded')} (0: root charts only)",
         f"Chart timeout: {settings.get('chart_timeout_seconds', 'not recorded')} seconds | "
         f"Workers: {settings.get('workers', settings.get('jobs', 'not recorded'))}",
         "Complete settings are retained in the JSON report.",

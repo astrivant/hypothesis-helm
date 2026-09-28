@@ -14,12 +14,13 @@ from pathlib import Path, PurePosixPath
 from attrs import define, field
 from ruamel.yaml.error import YAMLError
 
+from hypothesis_helm.charts.depth import active_depth
 from hypothesis_helm.charts.inspection.templates import Reference, discover
 from hypothesis_helm.charts.values import yamlio
 from hypothesis_helm.compiler.asts.dependencies import Dependency
 from hypothesis_helm.compiler.asts.templates import Node, lower
 from hypothesis_helm.compiler.limits import active_limits
-from hypothesis_helm.schemas.contracts import configuration_key, mapping
+from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping, sequence
 
 __all__ = ("Dependencies", "assign", "fill_defaults", "lookup", "overlaps", "unpack")
 
@@ -150,6 +151,8 @@ class Dependencies:
         unavailable (int): Candidates whose activation context could not be constructed.
         baseline (dict[str, object]): Original root defaults for inventory reporting.
         limits (dict[str, int]): Compiler budgets captured for this dependency tree.
+        max_depth (int | None): Requested dependency traversal depth, independent of compiler budgets.
+        excluded (set[tuple[str, ...]]): Dependency namespaces just beyond the selected traversal depth.
     """
 
     nodes: list[Dependency] = field(factory=list)
@@ -158,6 +161,8 @@ class Dependencies:
     unavailable: int = 0
     baseline: dict[str, object] = field(factory=dict)
     limits: dict[str, int] = field(factory=active_limits, kw_only=True)
+    max_depth: int | None = field(factory=active_depth, kw_only=True)
+    excluded: set[tuple[str, ...]] = field(factory=set, kw_only=True)
 
     @classmethod
     def build(cls, chart: Path) -> Dependencies:
@@ -204,7 +209,8 @@ class Dependencies:
         if not isinstance(declared, list):
             self.diagnostics.append({"file": source + "Chart.yaml", "message": "Malformed dependency list"})
             return
-        if len(prefix) >= self.limits["max_dependency_depth"] and (declared or any((chart / "charts").glob("*"))):
+        at_boundary = self.max_depth is not None and len(prefix) >= self.max_depth
+        if not at_boundary and len(prefix) >= self.limits["max_dependency_depth"] and (declared or any((chart / "charts").glob("*"))):
             self.diagnostics.append(
                 {
                     "file": source + "Chart.yaml",
@@ -230,6 +236,13 @@ class Dependencies:
                 self.diagnostics.append({"file": source + "charts/" + child.name, "message": str(error)})
         requested = [mapping(item) for item in declared if isinstance(item, dict)]
         requested += [{"name": name} for name in available if not any(item.get("name") == name for item in requested)]
+        if at_boundary:
+            self.excluded.update(
+                (*prefix, alias)
+                for item in requested
+                if isinstance(alias := item.get("alias", item.get("name")), str) and alias and "/" not in alias
+            )
+            return
         for item in requested:
             if len(self.nodes) >= self.limits["max_dependencies"]:
                 self.diagnostics.append(
@@ -315,6 +328,49 @@ class Dependencies:
                 self.diagnostics.append({"file": source + "Chart.yaml", "path": list(path), "message": reason})
             if root is not None:
                 self._walk(root, path, child_source, temporary, ancestors | {chart.resolve()})
+
+    def includes(self, path: tuple[str | int, ...]) -> bool:
+        """
+        Decide whether a value belongs to the selected dependency traversal scope.
+
+        Args:
+            path (tuple[str | int, ...]): Root-relative input selector, including possible wildcards.
+
+        Returns:
+            bool: False inside a dependency namespace beyond the selected depth.
+        """
+        return not any(path[: len(prefix)] == prefix for prefix in self.excluded)
+
+    def scope_schema(self, schema: dict[str, object]) -> dict[str, object]:
+        """
+        Freeze excluded dependency inputs to their baseline without changing validation contracts.
+
+        Args:
+            schema (dict[str, object]): Generation schema for the selected chart.
+
+        Returns:
+            dict[str, object]: Generation-only restrictions preserving excluded values or their absence.
+        """
+        from hypothesis_helm.schemas.configuration.policy import intersect
+
+        result = copy.deepcopy(schema)
+        baseline = self.context(self.baseline, {})
+        for path in sorted(self.excluded):
+            parent = lookup(baseline, path[:-1])
+            key = path[-1]
+            current = result
+            for part in path[:-1]:
+                properties = mapping(current.setdefault("properties", {}))
+                current = mapping(properties.setdefault(part, {}))
+            properties = mapping(current.setdefault("properties", {}))
+            if isinstance(parent, dict) and key in parent:
+                frozen: dict[str, object] = {"enum": [json_value(parent[key])]}
+                original = properties.get(key, {})
+                properties[key] = intersect(original, frozen) if isinstance(original, dict) else {"allOf": [original, frozen]}
+                current["required"] = list(dict.fromkeys([*map(str, sequence(current.get("required", []))), key]))
+            else:
+                properties[key] = False
+        return result
 
     @property
     def references(self) -> list[Reference]:
@@ -469,6 +525,8 @@ class Dependencies:
         """
         states = self.states(defaults, {})
         return {
+            "max_depth": self.max_depth,
+            "excluded_namespaces": [list(path) for path in sorted(self.excluded)],
             "dependencies": [
                 {
                     "path": list(node.path),

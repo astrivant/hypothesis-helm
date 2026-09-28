@@ -391,6 +391,13 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     )
     for command in (test, repository):
         command.add_argument(
+            "--max-depth",
+            type=int,
+            default=0,
+            metavar="N",
+            help="dependency levels to traverse: 0 tests only each root chart (default), 1 includes direct dependencies",
+        )
+        command.add_argument(
             "--pca-samples",
             type=int,
             default=64,
@@ -750,7 +757,7 @@ def local_discovery(args: argparse.Namespace) -> bool:
         or (args.fail and not any(unsupported.values()))
         or args.base_ref is not None
         or bool(env.get("HYPOTHESIS_HELM_BASE_REF"))
-        or (not any(unsupported.values()) and len(discover_charts(args.chart)) > 1)
+        or (not any(unsupported.values()) and len(discover_charts(args.chart, max_depth=args.max_depth)) > 1)
     )
     finite_requested = args.filter or args.permutations is not None or args.traversal_strategy == "sensitivity-first"
     if finite_requested and not recursive and not any(unsupported.values()):
@@ -795,6 +802,8 @@ def main(argv: list[str] | None = None) -> int:
             arguments[index] = "--fail=info"
     args = parser.parse_args(arguments)
     args.invocation = invocation
+    if getattr(args, "max_depth", 0) < 0:
+        parser.error("--max-depth must be nonnegative")
     if getattr(args, "pca_samples", 0) < 0:
         parser.error("--pca-samples must be nonnegative")
     if getattr(args, "max_mutations", None) is not None:
@@ -849,6 +858,10 @@ def main(argv: list[str] | None = None) -> int:
     previous_input_file = set_env(INPUT_POLICY_FILE, None)
     previous_conformity = set_env(ENVIRONMENT, None)
     try:
+        if hasattr(args, "max_depth"):
+            from hypothesis_helm.charts.depth import dependency_depth
+
+            stack.enter_context(dependency_depth(args.max_depth))
         streaming = getattr(args, "output_format", None) in ("json", "yaml") and not getattr(args, "dry_run", False)
         if streaming:
             descriptor = os.dup(sys.stdout.fileno())

@@ -135,6 +135,21 @@ exits **130**, with an incomplete report and the available package inventory.
 
 ## Discovery and testing
 
+`test` and `scan` default to `--max-depth 0`: test each root chart without discovering nested charts as separate
+scan targets or traversing dependency-owned values. Repository folders do not count toward depth, and ordinary
+nested values in the current chart remain in scope. Use `--max-depth 1` for direct dependencies, `2` for their
+dependencies, and so on:
+
+```sh
+helm hypothesis test ./chart --max-depth 1
+helm hypothesis scan prometheus-community/prometheus --max-depth 2 --report
+```
+
+The same limit applies to aliased and packaged dependency inputs. Values beyond the boundary stay at their baseline
+(or remain absent) during generation; Helm still builds and renders dependencies normally. Saved suites retain the
+selected depth, and changing depth invalidates cached test results. The GitHub Action exposes the `max-depth` input.
+This traversal choice is separate from the compiler's `max_dependency_depth` safety budget.
+
 Local directories and schema-less charts use recursive testing automatically.
 Single schema-backed charts retain their finite and generated-suite modes. Use
 `--report`, `--chart-timeout`, `--scan-timeout`, `--values FILE`, or an explicit
@@ -184,7 +199,7 @@ and remaining paths.<sup>[\[2\]](../execution/README.md#value-path-traversal)</s
 For a chart whose domain cannot be finitely enumerated, scans warn and fall back to seeded random path
 testing, including when `--permutations N` is explicit. The report records the requested and effective strategies.
 
-Discovery also reads dependency conditions and tags from chart metadata, including
+Within the selected depth, discovery also reads dependency conditions and tags from chart metadata, including
 controls absent from `values.yaml`, and inspects installed child charts under their
 alias-qualified values paths. When testing a child setting, generation prioritizes
 an enabled context and keeps the original context eligible. It preserves the selected

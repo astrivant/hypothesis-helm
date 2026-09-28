@@ -108,6 +108,7 @@ for name, item in metadata["inputs"].items():
 | `sampling-calibration` | Empty | `test`, `scan` | override the packaged adaptive-sampling calibration JSON |
 | `sensitivity-order` | Empty | `test`, `scan` | maximum measured interaction order for sensitivity-first; 1..permutations, default: min(2, permutations) |
 | `traversal-strategy` | Empty | `test`, `scan`, `run` | seeded random (default), linear, root-first, leaf-first, or sensitivity-first (finite coverage defaults to pairs) |
+| `max-depth` | Empty | `test`, `scan` | dependency levels to traverse; 0 tests each root chart only (default), 1 includes direct dependencies |
 | `helm` | Empty | `test`, `scan` | helm |
 | `release` | Empty | `test` | release |
 | `namespace` | Empty | `test` | namespace |

@@ -127,6 +127,7 @@ class InputInventory:
         # this snapshot available to path generation, including in queue workers.
         chart.dependency_model = dependency_graph
         references.extend(dependency_graph.references)
+        references = [reference for reference in references if dependency_graph.includes(reference.path)]
         unresolved = [asdict(warning) for warning in warnings]
         unresolved.extend(dependency_graph.diagnostics)
         model = ValuesModel.from_schema(chart.schema)
@@ -142,6 +143,8 @@ class InputInventory:
             dynamic.add(())
         fields = []
         for path in sorted(defaults | declared | named):
+            if not dependency_graph.includes(path):
+                continue
             documented = path in declared or bool(_schema_nodes(chart.schema, path, chart.schema))
             fields.append(
                 InputField(

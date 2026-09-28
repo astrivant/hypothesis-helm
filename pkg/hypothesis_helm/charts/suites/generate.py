@@ -250,11 +250,13 @@ def coalesce(chart: Chart) -> Model:
     schema = copy.deepcopy(chart.schema)
     references, warnings = discover(chart.path, offline=True)
     dependencies = chart.dependency_model or Dependencies.build(chart.path)
+    chart.dependency_model = dependencies
     if dependencies.nodes:
         # Dependency merges can retain YAML comment positions from different files.
         # Copy their values directly instead of reparsing that mixed presentation.
         values = copy.deepcopy(dependencies.context(chart.defaults, {}))
     references.extend(dependencies.references)
+    references = [reference for reference in references if dependencies.includes(reference.path)]
     diagnostics = [asdict(w) for w in warnings]
     diagnostics.extend(dependencies.diagnostics)
     # Child defaults supply generation types without changing the original chart contract.
@@ -334,6 +336,8 @@ def coalesce(chart: Chart) -> Model:
         Returns:
             None: None. The operation completes through its documented side effects.
         """
+        if not dependencies.includes(path):
+            return
         nodes = _schema_nodes(schema, path, schema) if path else []
         if path and not nodes:
             _add_schema(schema, path, infer_schema(value))
@@ -364,7 +368,7 @@ def coalesce(chart: Chart) -> Model:
     for entry in paths:
         if any(entry.path[: len(p)] == p for p in inferred_paths):
             entry.origin = "inferred"
-    return Model(values, schema, paths, diagnostics)
+    return Model(values, schema, [entry for entry in paths if dependencies.includes(entry.path)], diagnostics)
 
 
 def strategy_source(schema: dict[str, object], *, generation: dict[str, object] | None = None, path: tuple[str | int, ...] = ()) -> str:
@@ -474,7 +478,7 @@ def generate_tests(
     input_inventory = InputInventory.build(chart)
     source_schema = model.schema
     model.schema = chart.generation_schema(model.schema)
-    model.paths = enumerate_paths(model.schema)
+    model.paths = [entry for entry in enumerate_paths(model.schema) if input_inventory.dependencies.includes(entry.path)]
     from hypothesis_helm.compiler.randomness.rendering import enabled as random_enabled
 
     if random_enabled(chart):
@@ -508,7 +512,15 @@ def generate_tests(
     (output / "paths.json").write_text(json.dumps(inventory, indent=2) + "\n")
     relative = os.path.relpath(chart.path, suite_location or output)
     (output / "chart-source.json").write_text(
-        json.dumps({"chart": relative, "source": source_identity(chart.path), "helm": (options or RenderOptions()).helm}) + "\n"
+        json.dumps(
+            {
+                "chart": relative,
+                "source": source_identity(chart.path),
+                "helm": (options or RenderOptions()).helm,
+                "max_depth": input_inventory.dependencies.max_depth,
+            }
+        )
+        + "\n"
     )
     lines = [
         '"""\nVerify generated chart value paths against their inferred contracts.\n"""',

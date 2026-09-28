@@ -88,7 +88,7 @@ def test_discovery(tmp_path: Path) -> None:
     nested.mkdir()
     (nested / "Chart.yaml").write_text("name: incomplete\n")
     (nested / "loop").symlink_to(tmp_path, target_is_directory=True)
-    found = discover_charts(tmp_path)
+    found = discover_charts(tmp_path, max_depth=1)
     assert [(chart["chart"], chart["status"]) for chart in found] == [
         (".", "pending"),
         ("nested", "invalid-metadata"),
