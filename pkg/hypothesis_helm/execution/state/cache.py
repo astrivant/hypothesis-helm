@@ -18,6 +18,7 @@ import pytest
 
 from hypothesis_helm.environment import env, set_env
 from hypothesis_helm.execution.state.manifests import ManifestStore
+from hypothesis_helm.schemas.configuration.policy import inherited_policy
 
 __all__ = (
     "fingerprint",
@@ -73,7 +74,7 @@ def fingerprint(
     """
     digest = hashlib.sha256(repr((seed, match, shard, sys.version)).encode())
     digest.update(env.get("HYPOTHESIS_HELM_IGNORED_RULES", "[]").encode())
-    digest.update(env.get("HYPOTHESIS_HELM_INPUT_POLICY", "{}").encode())
+    digest.update(json.dumps(inherited_policy(), sort_keys=True).encode())
     from hypothesis_helm.compiler.randomness.toolchain import identity as renderer_identity
 
     # Go assets can change native execution even when every Python file is unchanged.

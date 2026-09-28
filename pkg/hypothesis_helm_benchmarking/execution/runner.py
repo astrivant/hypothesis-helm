@@ -14,6 +14,7 @@ import sys
 import time
 from collections.abc import Sequence
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures.process import BrokenProcessPool
 from multiprocessing import get_context
 from pathlib import Path
 
@@ -354,25 +355,42 @@ def measure(
         with Termination():
             pool = ProcessPoolExecutor(max_workers=len(jobs), mp_context=context, initializer=initialize, initargs=(cancel,))
             futures = []
+            pool_failure = None
             try:
                 with DeferredSignals():
-                    futures = [pool.submit(execute_profiled_worker, job) for job in jobs]
+                    # Retain each accepted assignment if a later submission loses the pool.
+                    for job in jobs:
+                        futures.append(pool.submit(execute_profiled_worker, job))
                 with BenchmarkProgress("Benchmark: workers") as display:
                     for future in display.track(as_completed(futures), total=len(futures)):
                         future.result()
             except (KeyboardInterrupt, TimeLimitReached) as interruption:
                 cancellation_status = "time-limit" if isinstance(interruption, TimeLimitReached) else "interrupted"
                 cancel.set()
+            except BrokenProcessPool as failure:
+                # An external supervisor may terminate replicas before the coordinator.
+                # Finish shutdown before deciding whether this was cancellation or a crash.
+                pool_failure = failure
             finally:
                 try:
                     with DeferredSignals():
                         pool.shutdown(wait=True, cancel_futures=cancellation_status is not None)
                 except (KeyboardInterrupt, TimeLimitReached) as interruption:
                     cancellation_status = "time-limit" if isinstance(interruption, TimeLimitReached) else "interrupted"
-            for job, future in zip(jobs, futures, strict=True):
+            if pool_failure is not None and cancellation_status is None:
+                raise pool_failure
+            submitted = iter(futures)
+            for job in jobs:
+                returned = next(submitted, None)
                 try:
-                    result = None if future.cancelled() else future.result()
+                    result = None if returned is None or returned.cancelled() else returned.result()
                 except (KeyboardInterrupt, TimeLimitReached):
+                    result = None
+                except BrokenProcessPool:
+                    if cancellation_status is None:
+                        raise
+                    # A replica killed before its initializer cannot return counters.
+                    # Keep its entire assignment incomplete, alongside surviving results.
                     result = None
                 if result is None:
                     result = {

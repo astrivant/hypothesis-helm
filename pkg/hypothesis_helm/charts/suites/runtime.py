@@ -21,6 +21,7 @@ from hypothesis.strategies import DataObject
 from jsonschema import validators
 
 from hypothesis_helm.charts.model import Chart, merge_values
+from hypothesis_helm.charts.suites.bindings import path_bindings
 from hypothesis_helm.charts.testing.rendering import render
 from hypothesis_helm.charts.values import yamlio
 from hypothesis_helm.charts.values.parsers import SUITE_YAML_PARSER, validate_backend
@@ -37,6 +38,8 @@ from hypothesis_helm.schemas.configuration.characters import SUITE_CHARACTER_SET
 from hypothesis_helm.schemas.configuration.selectors import SourceScope, source_identity
 from hypothesis_helm.schemas.contracts import json_value, mapping, sequence
 from hypothesis_helm.schemas.dialects import DRAFT2020, dialect
+from hypothesis_helm.schemas.generation.conditionals import bound_branches, fixed_branches
+from hypothesis_helm.schemas.generation.feasibility import compatible_binding
 from hypothesis_helm.schemas.generation.strategies import schema_strategy
 from hypothesis_helm.schemas.kubernetes.resources import SUITE_RESOURCE_SCHEMAS, SUITE_STRICT_SCHEMAS
 
@@ -131,9 +134,6 @@ def _replace(
     path: tuple[str | int, ...],
     value: object,
     *,
-    schema: dict[str, object] | None = None,
-    data: DataObject | None = None,
-    generation: dict[str, object] | None = None,
     context_defaults: dict[str, object] | None = None,
 ) -> dict[str, object]:
     """
@@ -143,10 +143,6 @@ def _replace(
         values (dict[str, object]): Values document used as the rendering baseline.
         path (tuple[str | int, ...]): Value path or chart location to inspect.
         value (object): Candidate value supplied by the property strategy.
-        schema (dict[str, object] | None): JSON Schema defining the accepted value domain.
-        data (DataObject | None): Hypothesis draw context for dependent values and parent
-            containers.
-        generation (dict[str, object] | None): Branch text settings for generated sibling values.
         context_defaults (dict[str, object] | None): Installed child defaults available through Helm's map merging.
 
     Returns:
@@ -159,7 +155,7 @@ def _replace(
 
     def context(prefix: tuple[str | int, ...], next_segment: str | int) -> object:
         """
-        Generate required sibling values for a missing parent container.
+        Preserve installed array entries or create an empty parent container.
 
         Args:
             prefix (tuple[str | int, ...]): Resolved parent path for the current value.
@@ -175,18 +171,6 @@ def _replace(
         if isinstance(installed, list) and isinstance(next_segment, int):
             # Helm replaces arrays, so retain existing entries when changing a selected item.
             return copy.deepcopy(installed)
-        if data is not None and schema is not None:
-            from hypothesis_helm.charts.model import _schema_nodes
-
-            symbolic = tuple(str(p) for p in prefix)
-            nodes = _schema_nodes(schema, symbolic, schema)
-            if nodes:
-                fragment: dict[str, object] = {"allOf": nodes}
-                fragment["$schema"] = dialect(schema)
-                for key in ("$defs", "definitions"):
-                    if key in schema:
-                        fragment[key] = schema[key]
-                return data.draw(schema_strategy(fragment, generation=generation, path=prefix), label="missing parent context")
         return [] if isinstance(next_segment, int) else {}
 
     for i, segment in enumerate(path[:-1]):
@@ -221,68 +205,6 @@ def _replace(
     else:
         mapping(current)[str(final)] = copy.deepcopy(value)
     return result
-
-
-def _concrete_path(
-    path: tuple[str | int, ...],
-    defaults: dict[str, object],
-    schema: dict[str, object],
-    data: DataObject,
-    generation: dict[str, object] | None = None,
-) -> tuple[str | int, ...]:
-    """
-    Check  concrete path.
-
-    Args:
-        path (tuple[str | int, ...]): Value path or chart location to inspect.
-        defaults (dict[str, object]): Existing chart defaults that take precedence during
-            coalescing.
-        schema (dict[str, object]): JSON Schema defining the accepted value domain.
-        data (DataObject): Hypothesis draw context for dependent values and parent containers.
-        generation (dict[str, object] | None): Branch text settings for generated collection keys.
-
-    Returns:
-        tuple[str | int, ...]: Result of the documented operation.
-    """
-    from hypothesis import strategies as st
-
-    from hypothesis_helm.charts.model import _schema_nodes
-
-    concrete: list[str | int] = []
-    current: object = defaults
-    for segment in path:
-        if segment == "*":
-            nodes = _schema_nodes(schema, tuple(str(p) for p in concrete), schema)
-            if isinstance(current, list) or any(n.get("type") == "array" for n in nodes):
-                # A wildcard beside tuple positions describes the tail, not the prefix.
-                start = max(
-                    (
-                        len(sequence(n.get("prefixItems", n.get("items", []))))
-                        for n in nodes
-                        if isinstance(n.get("prefixItems", n.get("items", [])), list)
-                    ),
-                    default=0,
-                )
-                segment = (
-                    data.draw(st.integers(min_value=start, max_value=max(start, len(current) - 1)))
-                    if isinstance(current, list) and current
-                    else start
-                )
-            elif isinstance(current, dict) and current:
-                segment = data.draw(st.sampled_from(sorted(current)))
-            else:
-                patterns = [p for n in nodes for p in mapping(n.get("patternProperties", {}))]
-                segment = (
-                    str(data.draw(schema_strategy({"type": "string", "pattern": patterns[0]}, generation=generation, path=tuple(concrete))))
-                    if patterns
-                    else "__hypothesis_key__"
-                )
-        concrete.append(segment)
-        try:
-            current = current[segment] if isinstance(current, list) and isinstance(segment, int) else mapping(current)[str(segment)]
-        except (TypeError, KeyError, IndexError, ValueError):
-            current = None
-    return tuple(concrete)
 
 
 def _constraint(path: tuple[str | int, ...], value: object, *, positional_keyword: str = "items") -> dict[str, object]:
@@ -337,7 +259,11 @@ def path_values(
     domains = chart.input_domains()
     dependencies = chart.dependency_model
     baseline = dependencies.context(chart.defaults, {}) if dependencies is not None and dependencies.nodes else chart.defaults
-    path = _concrete_path(path, baseline, context_schema, data, domains.generation)
+    bindings = [
+        binding
+        for binding in path_bindings(path, baseline, context_schema, data, domains.generation)
+        if compatible_binding(context_schema, binding, value)
+    ]
     validator = validators.validator_for(chart.generation_schema())(chart.generation_schema())
 
     def effective(candidate: dict[str, object]) -> dict[str, object]:
@@ -354,20 +280,34 @@ def path_values(
             return merge_values(dependencies.context(chart.defaults, candidate), candidate)
         return merge_values(chart.defaults, candidate)
 
-    needs_context = False
-    try:
-        values = _replace(
-            chart.defaults, path, value, schema=context_schema, data=data, generation=domains.generation, context_defaults=baseline
-        )
-    except (TypeError, ValueError):
-        values = {}
-        needs_context = True
-    if needs_context or not validator.is_valid(json_value(effective(values))):
-        constrained = copy.deepcopy(context_schema)
-        keyword = "prefixItems" if dialect(context_schema) == DRAFT2020 else "items"
-        sequence(constrained.setdefault("allOf", [])).append(_constraint(path, value, positional_keyword=keyword))
-        # Retain definitions at the root so existing local references still resolve.
-        values = mapping(data.draw(schema_strategy(constrained, generation=domains.generation), label="schema-valid context"))
+    keyword = "prefixItems" if dialect(context_schema) == DRAFT2020 else "items"
+    candidates = []
+    for binding in bindings:
+        try:
+            # First preserve defaults. Missing required siblings are solved jointly
+            # below, rather than drawing an intersection of alternative parent types.
+            candidate = _replace(chart.defaults, binding, value, context_defaults=baseline)
+        except (TypeError, ValueError):
+            continue
+        if validator.is_valid(json_value(effective(candidate))):
+            candidates.append(binding)
+    if candidates:
+        selected = data.draw(st.sampled_from(candidates), label="baseline path")
+        values = _replace(chart.defaults, selected, value, context_defaults=baseline)
+    else:
+        strategies = []
+        for binding in bindings:
+            constrained = copy.deepcopy(context_schema)
+            sequence(constrained.setdefault("allOf", [])).append(_constraint(binding, value, positional_keyword=keyword))
+            # Keep alternative shapes in separate strategies. Conjoining them loses
+            # valid cases; distributing nested disjunctions here wastes generation.
+            # A viable binding can still contradict individual anyOf/oneOf arms.
+            # Remove those arms before generation instead of drawing and rejecting them.
+            generating = fixed_branches(bound_branches(constrained, binding, value))
+            strategy = schema_strategy(constrained, generation_schema=generating, generation=domains.generation)
+            if not strategy.is_empty:
+                strategies.append(strategy)
+        values = mapping(data.draw(st.one_of(strategies), label="schema-valid context"))
     assume(validator.is_valid(json_value(effective(values))))
     note(f"value path: {path!r}")
     note("values override:\n" + yamlio.dump(values))

@@ -44,7 +44,7 @@ def execute(context: dict[str, object], directory: Path, workers: int) -> list[d
         workers (int): Maximum worker count, capped by the number of available paths.
 
     Returns:
-        list[dict[str, object]]: Completed and interrupted path records in dispatch order.
+        list[dict[str, object]]: Claimed path records in dispatch order, followed by any queue-wide execution diagnostic.
     """
     installed = Path(sys.executable).with_name("hypothesis-helm-path-worker")
     binary = str(installed) if installed.is_file() else shutil.which("hypothesis-helm-path-worker")
@@ -161,6 +161,8 @@ def execute(context: dict[str, object], directory: Path, workers: int) -> list[d
         records.append(phase)
     unavailable = directory / "execution-error.json"
     if unavailable.is_file() and not any(record.get("error_kind") == "execution" for record in records):
+        # Another worker may stop during preparation, before owning any path.
+        # Preserve its error separately, even if cleanup interrupted the worker that first lost the source.
         records.append({**mapping(json.loads(unavailable.read_text())), "phase": "execution", "kind": "execution"})
     return records
 

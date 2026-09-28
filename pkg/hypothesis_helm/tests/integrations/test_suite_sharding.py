@@ -26,8 +26,8 @@ def test_suite_shards_cover_collection_once(tmp_path: Path) -> None:
     expected = {line for line in baseline.stdout.splitlines() if "::test_value[" in line}
     assert len(expected) == 32
     observed: set[str] = set()
-    for index in range(1, 5):
-        shard = [*command, "--suite-shard", f"{index}/4"]
+    for index in range(1, 9):
+        shard = [*command, "--suite-shard", f"{index}/8"]
         result = subprocess.run([*shard, "--collect-only"], cwd=tmp_path, capture_output=True, text=True, check=True, timeout=30)
         selected = {line for line in result.stdout.splitlines() if "::test_value[" in line}
         assert selected and not observed.intersection(selected)

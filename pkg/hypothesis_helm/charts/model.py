@@ -178,9 +178,11 @@ def _schema_nodes(
     root: dict[str, object],
     seen: frozenset[tuple[int, tuple[str, ...]]] = frozenset(),
     inherited: str | None = None,
+    *,
+    include_conditionals: bool = False,
 ) -> list[dict[str, object]]:
     """
-    Check  schema nodes.
+    Collect declarations for a path while retaining conditional shapes only on request.
 
     Args:
         schema (object): JSON Schema defining the accepted value domain.
@@ -189,9 +191,10 @@ def _schema_nodes(
         seen (frozenset[tuple[int, tuple[str, ...]]]): References already visited while resolving
             this schema.
         inherited (str | None): Dialect inherited through the selected schema path.
+        include_conditionals (bool): Include then/else shapes as generation hints, never unconditional constraints.
 
     Returns:
-        list[dict[str, object]]: Result of the documented operation.
+        list[dict[str, object]]: Applicable declarations or alternative shape hints; alternatives are not a conjunction.
     """
     if not isinstance(schema, dict):
         return []
@@ -204,32 +207,43 @@ def _schema_nodes(
     found = []
     if "$ref" in node:
         target, target_version = pointer_target(root, node["$ref"])
-        found += _schema_nodes(target, path, root, seen, target_version)
+        found += _schema_nodes(target, path, root, seen, target_version, include_conditionals=include_conditionals)
         if version in (DRAFT4, DRAFT6, DRAFT7):
             return found
     for keyword in ("allOf", "anyOf", "oneOf"):
         for branch in sequence(node.get(keyword, [])):
-            found += _schema_nodes(branch, path, root, seen, version)
+            found += _schema_nodes(branch, path, root, seen, version, include_conditionals=include_conditionals)
+    if include_conditionals and "if" in node:
+        # Discovery visits both arms. Their shapes can guide a candidate, but only
+        # full-document validation decides whether that branch actually applies.
+        for keyword in ("then", "else"):
+            if keyword in node:
+                found += _schema_nodes(node[keyword], path, root, seen, version, include_conditionals=True)
     if not path:
         return found + [schema]
     key, *rest = path
     if key in mapping(node.get("properties", {})):
-        found += _schema_nodes(mapping(node["properties"])[key], tuple(rest), root, seen, version)
+        found += _schema_nodes(
+            mapping(node["properties"])[key], tuple(rest), root, seen, version, include_conditionals=include_conditionals
+        )
     prefix = node.get("prefixItems", []) if version == DRAFT2020 else node.get("items", [])
     prefix = prefix if isinstance(prefix, list) else []
     tail = node.get("items") if version == DRAFT2020 or not prefix else node.get("additionalItems")
     if key == "*" or key.isdecimal():
         child = prefix[int(key)] if key != "*" and int(key) < len(prefix) else tail
         if isinstance(child, dict):
-            found += _schema_nodes(child, tuple(rest), root, seen, version)
-    # Explicitly typed map entries count as documentation; open maps do not.
-    if isinstance(node.get("additionalProperties"), dict):
-        found += _schema_nodes(node["additionalProperties"], tuple(rest), root, seen, version)
+            found += _schema_nodes(child, tuple(rest), root, seen, version, include_conditionals=include_conditionals)
     import re
 
+    matched = key in mapping(node.get("properties", {}))
     for pattern, branch in mapping(node.get("patternProperties", {})).items():
         if key == "*" or re.search(pattern, key):
-            found += _schema_nodes(branch, tuple(rest), root, seen, version)
+            matched = True
+            found += _schema_nodes(branch, tuple(rest), root, seen, version, include_conditionals=include_conditionals)
+    # Additional properties exclude names matched in this same schema object.
+    # A wildcard still represents the unmatched region as well as pattern regions.
+    if (key == "*" or not matched) and isinstance(node.get("additionalProperties"), dict):
+        found += _schema_nodes(node["additionalProperties"], tuple(rest), root, seen, version, include_conditionals=include_conditionals)
     return found
 
 

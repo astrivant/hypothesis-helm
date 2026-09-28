@@ -42,6 +42,7 @@ from hypothesis_helm.findings.suppressions import SuppressionCapture
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.console.output import MANIFEST_FD, manifest_format
 from hypothesis_helm.reporting.evidence.provenance import trace_run
+from hypothesis_helm.schemas.configuration.policy import inherited_policy
 from hypothesis_helm.schemas.configuration.selectors import chart_identity, source_identity
 
 __all__ = ("run_suite",)
@@ -323,7 +324,7 @@ def run_suite(
             **({"coverage_complete": False} if findings else {}),
             "suite": str(directory),
             "render_hashes": render_statistics,
-            "input_policy": json.loads(environment.get("HYPOTHESIS_HELM_INPUT_POLICY", "{}")),
+            "input_policy": inherited_policy(environment),
             "input_domains": json.loads((directory / "input-domains.json").read_text())
             if (directory / "input-domains.json").is_file()
             else {},

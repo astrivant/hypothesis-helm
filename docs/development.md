@@ -9,6 +9,7 @@
   - [Project checks](#project-checks)
 - [Plugin verification](#plugin-verification)
 - [GitHub CI](#github-ci)
+- [Manual repository scans](#manual-repository-scans)
 - [Documentation contents](#documentation-contents)
 - [Publishing to PyPI](#publishing-to-pypi)
 - [Pre-commit hook](#pre-commit-hook)
@@ -180,20 +181,30 @@ helm hypothesis run /tmp/generated-workload
 ## GitHub CI
 
 Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml) for all project jobs,
-logs and artifacts. One [workflow file](../.github/workflows/ci.yml) owns PR checks, branch builds, releases and manual refreshes.
+logs and artifacts. The [entry workflow](../.github/workflows/ci.yml) groups jobs into reusable stages in the same run.
+Expand a stage to inspect its parallel jobs, shards and logs.
 
-| Jobs | Purpose | When they run |
+```mermaid
+flowchart LR
+    test[Test] --> verified[CI verification]
+    build[Build] --> verified
+    verified --> measure["Benchmark / refresh / scan<br/>Manual request"]
+    verified --> deploy["Deploy<br/>Version tags only"]
+```
+
+| Stage | Work inside it | Dependencies |
 | --- | --- | --- |
-| Code checks | Pre-commit hooks, Go tests and parallel Python tests. | PR updates, `main`, version tags and manual runs. |
-| Python coverage | Combine coverage from all four test shards and retain JSON and HTML reports. | After all Python shards pass. |
-| Coverage badge | Update the README badge on `gh-pages`. | Successful default-branch pushes only. |
-| Chart tests and aggregation | Validate schemas, run Kubesec and combine shard reports. | Every CI run. |
-| Package build | Build distributions and test the installed Helm plugin. Tags also verify the catalog. | Every CI run. |
-| Benchmark smoke tests | Check benchmark recipes and plot generation with short runs. | Every CI run. |
-| PR benchmarks | Run all studies, verify plots and commit updated graphs and summaries to the PR branch. | Manually requested for an open PR, after verification passes. Required before merge. |
-| Publish to PyPI | Publish the verified versioned distributions using the `pypi` environment. | Pushed version tags, after every verification job passes. |
+| [Test](../.github/workflows/stage-test.yml) | Lint, two Go jobs, eight Python shards, chart/Kubesec shards, coverage and benchmark smoke tests. | Starts immediately; independent jobs run concurrently. |
+| [Build](../.github/workflows/stage-build.yml) | Versioned wheel/source distributions and installed Helm commands. Tags also check catalog consistency. | Starts alongside Test. |
+| CI verification | Required status that rejects failed, cancelled or skipped Test/Build stages. | Both stages must pass. |
+| [Benchmark / refresh / scan](../.github/workflows/stage-measure.yml) | Requested PR refresh, Bitnami scan and/or Prometheus scan. | Verification, then each workload's own preparation and aggregation. |
+| [Deploy](../.github/workflows/stage-deploy.yml) | Publish verified distributions using the `pypi` environment. | Verification and a pushed version tag; never waits for optional measurements. |
 
-Code checks, chart tests, package builds and smoke tests run in parallel within the same run.
+Grouping adds no Test-to-Build dependency. Studies retain their parallel matrix, error surface has eight runners,
+stress has six, and each repository scan has eighty. Selected repository scans and PR studies can run concurrently;
+only report commits share an ordering to avoid competing pushes. Available runners still limit actual concurrency.
+The reusable workflows accept calls from `ci.yml`; they have no independent push or PR triggers.
+
 The [coverage badge action](https://github.com/marketplace/actions/coverage-badge) publishes combined Python statement coverage,
 excluding tests and bundled assets. Go code and independently launched subprocesses are not measured by this badge.
 Download the `python-coverage` artifact for the HTML report. The badge publisher and manual graph publisher receive repository write permission;
@@ -227,10 +238,12 @@ Settings app must apply that file; editing it locally does not change GitHub's l
 
 The shared [project setup action](../.github/actions/setup-project/action.yml) installs the same tools for checks, builds and benchmarks.
 Every pull request update runs all configured pre-commit hooks against all files and tests the PR's head commit.
-Pytest uses all available CPUs. Jobs default to the standard `ubuntu-latest` runner so no custom runner setup is required.
-For an eight-core or larger Ubuntu x64 runner, configure it in GitHub and set `HH_CI_RUNNER` to its actual label.
-See [GitHub's runner labels](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job)
-and [larger runner setup](https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/manage-larger-runners).
+All jobs use standard `ubuntu-latest` runners, with 4 CPUs and 16 GB RAM for this public repository.
+Runner execution is free for public repositories; artifact and cache storage have separate allowances.
+See [GitHub's standard runner specifications](https://docs.github.com/en/actions/reference/runners/github-hosted-runners).
+Python tests use eight shards, each using all available CPUs. Scale work through job matrices; runner labels cannot be overridden by variables.
+GitHub Team defaults to 60 concurrent standard jobs across the organization, so excess shards wait for capacity.
+See [GitHub's concurrency and storage limits](https://docs.github.com/en/actions/reference/limits).
 JUnit results, distributions, and smoke outputs are retained as artifacts for 30 days, including after failures.
 The versioned binary cache is enabled by default; disable it with the manual `binary-cache` input
 or the repository variable `HH_BINARY_CACHE=false`. The workflow passes the resolved setting into the setup action.
@@ -240,6 +253,32 @@ interpreter, with unrelated pytest configuration and auto-loaded plugins disable
 The saved suite's own code and conftest remain editable.
 
 Publishing and remote repository-setting changes are not automated by local checks.
+
+## Manual repository scans
+
+Start scans manually, selecting `main` or a PR head branch in the Actions UI or with `--ref`:
+
+```sh
+gh workflow run ci.yml --ref main -f bitnami-scan=true
+gh workflow run ci.yml --ref main -f prometheus-scan=true
+gh workflow run ci.yml --ref my-pr-branch -f prometheus-scan=true
+```
+
+Select either option, or both in one dispatch. Both selected scans run independently; their report commits publish sequentially.
+
+Use the PR's head branch name, not its number. The selected branch must contain the scan workflow.
+Scans never start automatically on PR events or ordinary pushes. They may run alongside a manually requested PR refresh.
+Eighty `ubuntu-latest` runners (4 vCPU / 16 GiB each for this public repository) use the same pinned submodule
+for each selected repository. Prometheus uses HTTPS checkout without an SSH key.
+Each owns a distinct segment of every chart's values paths, with four local workers, `--filter`, seed 0 and ten examples per path.
+Testing allows five minutes per chart and five hours per shard; unfinished work stays visible in the report.
+
+One aggregation job verifies all eighty reports, including empty partitions, before publishing Markdown, PDF and figures
+under `docs/reports/bitnami/` or `docs/reports/prometheus/`. On `main`, it updates the README links and commits only final reports and those links.
+On PR branches, it retains the final reports as downloadable Actions artifacts without committing them.
+Chart findings can be published; missing or incompatible shard evidence blocks publication. Raw measurements remain in Actions
+artifacts for 30 days. The push is never forced: concurrent changes or branch protections can reject it, leaving artifacts available.
+The job's `GITHUB_TOKEN` needs permission to push to `main`; it does not bypass branch protections.
 
 ## Documentation contents
 
@@ -251,8 +290,12 @@ Archived run snapshots and third-party sources are excluded to preserve recorded
 
 ## Publishing to PyPI
 
-Create the GitHub environment `pypi` and add your PyPI API token as its `PYPI_API_TOKEN` secret.
+Create the GitHub environment `pypi`. Supply `PYPI_API_TOKEN` as an organization secret with access granted to this repository,
+or as a repository or environment secret.
 The publishing job uses this environment and follows its configured protection rules.
+An environment secret overrides a repository secret, which overrides an organization secret with the same name.
+If PyPI rejects a nonempty token with HTTP 403, check for an outdated override before replacing the organization token.
+The token must be issued by PyPI, authorize this project, and include its complete `pypi-` prefix.
 Tag the commit you want to release:
 
 ```sh
@@ -381,6 +424,11 @@ including an empty one, takes precedence. Each worker process has its own snapsh
 
 The catalog and optional benchmarking package use this same environment API. Tests that change the process environment explicitly
 refresh the snapshot, and test teardown restores it to prevent settings leaking between cases.
+
+Resolved input policies, including CRD schemas, are passed to workers through a private, temporary JSON file.
+Only its absolute path enters the subprocess environment, avoiding Linux's per-string execution limit.
+The command retains this snapshot until work completes and removes it during cleanup; a missing file fails rather than disabling validation.
+Caches and saved evidence use policy contents, not the temporary filename.
 
 ## Repository map
 

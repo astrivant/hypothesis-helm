@@ -174,6 +174,7 @@ def test_parallel_counters_sum_property_deltas(chart: Chart, tmp_path: Path, mon
         """
         return [
             {
+                "kind": "value-path",
                 "phase": str(index),
                 "path": mapping(item)["path"],
                 "worker_pid": 1 if index < 2 else 2,

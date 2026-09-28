@@ -42,6 +42,9 @@ A null default alone does not establish a type, and an empty list alone does not
 establish its item type. See [generated suites](../usage.md#inspect-and-rerun-generated-suites)
 for the generated artifacts and their review workflow.
 
+See [how schemas become tests](../input-domains/README.md#how-schemas-become-tests) for constraint-to-generator examples,
+path-specific test contexts and the assertions checked after rendering.
+
 ## Inventory values
 
 ```sh

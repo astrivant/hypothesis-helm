@@ -160,8 +160,19 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     parser.add_argument("--time-limit", type=parse_time_limit, default=540.0, help="execution ceiling per strategy and step (default: 9m)")
     parser.add_argument("--helm", default="helm")
     parser.add_argument("--generate-only", action="store_true", help="save the complete parameter progression without measuring")
+    parser.add_argument("--shard-index", type=int, default=0, help="zero-based progression shard")
+    parser.add_argument("--shard-count", type=int, default=1)
+    parser.add_argument("--merge-shards", type=Path, nargs="+", help="verify and combine every shard before plotting")
     parser.add_argument("--plot-only", action="store_true")
     args = parser.parse_args(argv)
+    if args.shard_count < 1 or not 0 <= args.shard_index < args.shard_count:
+        parser.error("require a positive shard count and 0 <= shard-index < shard-count")
+    if args.merge_shards:
+        from hypothesis_helm_benchmarking.studies.stress_shards import merge
+
+        merged = merge(args.merge_shards, args.output)
+        plot(args.output, merged)
+        return 0
     if args.plot_only:
         plot(args.output, mapping(json.loads((args.output / "results.json").read_text())))
         return 0
@@ -181,6 +192,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
     if helm is None and not args.generate_only:
         parser.error("Helm is required")
     args.output.mkdir(parents=True, exist_ok=True)
+    steps = progression(parameters.stress)[: args.steps]
     rows: list[dict[str, object]] = []
     document: dict[str, object] = {
         "metadata": {
@@ -196,10 +208,23 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             "fault_families": list(FAMILIES),
             "starting_parameters": asdict(parameters),
             "strategies": list(STRATEGIES),
+            "filter_level": args.trim_level,
+            "steps": len(steps),
+            "shard_index": args.shard_index,
+            "shard_count": args.shard_count,
+            "status": "running",
+            "generate_only": args.generate_only,
         },
         "rows": rows,
     }
-    for index, (name, settings) in enumerate(progression(parameters.stress)[: args.steps]):
+    from hypothesis_helm_benchmarking.studies.error_surface import save
+    from hypothesis_helm_benchmarking.studies.stress_shards import verify
+
+    save(args.output, document)
+    for index, (name, settings) in enumerate(steps):
+        # A progression step owns all strategy comparisons and one reusable fixture.
+        if index % args.shard_count != args.shard_index:
+            continue
         logical = args.output / "charts" / name
         spec = generate(logical, **asdict(evolve(parameters, stress=settings), recurse=False), workspace=workspace)
         if args.generate_only:
@@ -236,9 +261,15 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                 total_defects=len(FAMILIES) if settings.faults_enabled else 0,
             )
             rows.append(row)
-            (args.output / "results.json").write_text(json.dumps(document, indent=2) + "\n")
-            if row["status"] == "failed":
-                return 1
+            save(args.output, document)
+            if row["status"] not in {"passed", "time-limit"}:
+                mapping(document["metadata"])["status"] = "failed"
+                save(args.output, document)
+                return 130 if row["status"] == "interrupted" else 1
+    mapping(document["metadata"])["status"] = "complete"
+    save(args.output, document)
     if not args.generate_only:
-        plot(args.output, document)
+        verify(document)
+        if args.shard_count == 1:
+            plot(args.output, document)
     return 0

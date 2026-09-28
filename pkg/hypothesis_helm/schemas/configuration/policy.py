@@ -7,6 +7,7 @@ from __future__ import annotations
 import copy
 import json
 import re
+from functools import lru_cache
 from pathlib import Path
 
 from hypothesis_helm_catalog.profiles import schema as profile_schema
@@ -26,6 +27,7 @@ from hypothesis_helm.schemas.dialects import canonical, walk
 
 __all__ = (
     "ENVIRONMENT",
+    "FILE_ENVIRONMENT",
     "PROFILES",
     "check_schema",
     "configuration",
@@ -38,6 +40,7 @@ __all__ = (
 
 
 ENVIRONMENT = "HYPOTHESIS_HELM_INPUT_POLICY"
+FILE_ENVIRONMENT = "HYPOTHESIS_HELM_INPUT_POLICY_FILE"
 PROFILES: dict[str, dict[str, object]] = {
     "kubernetes-secret-name": profile_schema("dns1123-subdomain"),
     "kubernetes-configmap-name": profile_schema("dns1123-subdomain"),
@@ -241,14 +244,34 @@ def load_policy(
     }
 
 
-def inherited_policy() -> dict[str, object]:
+@lru_cache(maxsize=16)
+def _file_policy(path: str) -> dict[str, object]:
     """
-    Read the coordinator's resolved policy, shared by all workers and shards.
+    Read an immutable command-owned snapshot once per process.
+
+    Args:
+        path (str): Absolute policy snapshot path inherited by workers.
 
     Returns:
-        dict[str, object]: Immutable-by-convention JSON policy.
+        dict[str, object]: Complete resolved policy; missing or invalid files raise rather than disable validation.
     """
-    return mapping(json.loads(env.get(ENVIRONMENT, "{}")))
+    return mapping(json.loads(Path(path).read_text()))
+
+
+def inherited_policy(environment: dict[str, str] | None = None) -> dict[str, object]:
+    """
+    Load the full policy from its command-owned file or a legacy inline environment value.
+
+    Args:
+        environment (dict[str, str] | None): Explicit worker environment, or the central snapshot.
+
+    Returns:
+        dict[str, object]: Resolved constraints and schemas, independent of transport location.
+    """
+    source = env if environment is None else environment
+    if path := source.get(FILE_ENVIRONMENT):
+        return copy.deepcopy(_file_policy(path))
+    return mapping(json.loads(source.get(ENVIRONMENT, "{}")))
 
 
 def intersect(original: dict[str, object], restriction: dict[str, object]) -> dict[str, object]:

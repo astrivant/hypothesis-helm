@@ -20,7 +20,9 @@ from hypothesis_helm.charts.testing.paths import check_paths
 from hypothesis_helm.cli import argument_parser
 from hypothesis_helm.environment import refresh_env
 from hypothesis_helm.exceptions.execution import TimeLimitReached
+from hypothesis_helm.execution.planning.partition import digest
 from hypothesis_helm.execution.workers.path_queue import main as worker_main
+from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 
@@ -147,6 +149,107 @@ def test_missing_chart_stops_queue_without_counterexamples(tmp_path: Path, monke
         if "worker_pid" in item:
             with pytest.raises(ProcessLookupError):
                 os.kill(int(str(item["worker_pid"])), 0)
+
+
+@pytest.mark.parametrize("claimed_status", [None, "cancelled", "passed"])
+@pytest.mark.parametrize("shard", [None, Shard(1, 2)])
+def test_queue_error_preserves_path_accounting(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, claimed_status: str | None, shard: Shard | None
+) -> None:
+    """
+    Preserve a queue-wide error without treating worker startup as a visited values path.
+
+    Args:
+        tmp_path (Path): Chart and saved traversal report.
+        monkeypatch (pytest.MonkeyPatch): Return deterministic worker outcomes at the queue boundary.
+        claimed_status (str | None): One recovered path's outcome, or no claims before worker startup fails.
+        shard (Shard | None): Optional CI partition whose ownership evidence must remain valid.
+
+    Returns:
+        None: Diagnostics survive alongside accurate visited, completed and remaining path counts.
+    """
+    chart = fixture_chart(tmp_path)
+    monkeypatch.setattr("hypothesis_helm.charts.testing.paths.render", lambda *args, **kwargs: [{"kind": "ConfigMap"}])
+    planned: list[object] = []
+    error = "Chart source unavailable: prepared source was removed"
+
+    def failed_queue(context: dict[str, object], directory: Path, workers: int) -> list[dict[str, object]]:
+        """
+        Reproduce source loss before or after a claim independently of worker timing.
+
+        Args:
+            context (dict[str, object]): Ordered paths owned by this scan instance.
+            directory (Path): Reserved worker queue directory.
+            workers (int): Requested parallel workers.
+
+        Returns:
+            list[dict[str, object]]: Any claimed path followed by a pathless execution diagnostic.
+        """
+        planned.extend(mapping(item)["path"] for item in sequence(context["paths"]))
+        assert planned
+        records: list[dict[str, object]] = []
+        if claimed_status is not None:
+            records.append(
+                {
+                    "kind": "value-path",
+                    "phase": "claimed path",
+                    "path": planned[0],
+                    "status": claimed_status,
+                    "attempts": int(claimed_status == "passed"),
+                }
+            )
+        records.append(
+            {
+                "kind": "execution",
+                "phase": "execution",
+                "status": "error",
+                "error_kind": "execution",
+                "failure_type": "ChartUnavailable",
+                "error": error,
+                "attempts": 0,
+            }
+        )
+        return records
+
+    monkeypatch.setattr("hypothesis_helm.execution.workers.path_queue.execute", failed_queue)
+    result = check_paths(
+        chart,
+        budget=30,
+        max_examples=10,
+        seed=0,
+        helm="helm",
+        timeout=5,
+        artifacts=tmp_path / "results",
+        jobs=3,
+        filtering=False,
+        shard=shard,
+    )
+    visited = int(claimed_status is not None)
+    completed = int(claimed_status == "passed")
+    assert result["status"] == "error" and result["error_kind"] == "execution"
+    assert result["error"] == error and result["coverage_complete"] is False
+    assert mapping(result["baseline"])["status"] == "passed"
+    assert result["attempts"] == 1 + completed
+    traversal = mapping(result["traversal"])
+    assert traversal["selected_paths"] == len(planned)
+    assert traversal["visited_paths"] == visited
+    assert traversal["completed_paths"] == completed
+    assert traversal["incomplete_paths"] == visited - completed
+    assert traversal["remaining_paths"] == len(planned) - visited
+    assert traversal["visited_order"] == planned[:visited]
+    assert traversal["remaining_order"] == planned[visited:]
+    assert traversal["path_targets_complete"] is False
+    phases = sequence(result["phases"])
+    assert len(phases) == visited + 1
+    assert mapping(phases[-1])["error"] == error and "path" not in mapping(phases[-1])
+    assert not list((tmp_path / "results").rglob("observed-failure.json"))
+    if shard is not None:
+        partition = mapping(result["work_partition"])
+        assert partition["visited"] == [digest(path) for path in planned[:visited]]
+        assert partition["completed"] == [digest(path) for path in planned[:completed]]
+        assert partition["complete"] is False
+    saved = mapping(json.loads((tmp_path / "results/report.json").read_text()))
+    assert saved["status"] == "error" and saved["traversal"] == traversal
 
 
 @pytest.mark.parametrize("stop_signal", [signal.SIGALRM, signal.SIGINT, signal.SIGTERM])

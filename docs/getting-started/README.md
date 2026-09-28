@@ -33,6 +33,7 @@ and dependencies prepared in temporary copies. Reports go to `docs/reports/`; wo
 
 Charts without `values.schema.json` use [inferred types](../inputs/README.md#declared-and-inferred-types).
 Unbounded strings and open maps need sampling rather than full enumeration.
+See [how schemas become tests](../input-domains/README.md#how-schemas-become-tests) for how fields, ranges and test assertions connect.
 
 Use `scan` for a Git URL or an already configured Helm repository:
 

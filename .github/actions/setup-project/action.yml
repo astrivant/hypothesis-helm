@@ -56,14 +56,25 @@ runs:
       if: ${{ inputs.binary-cache == 'true' }}
       uses: actions/cache/restore@v5
       with:
-        path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
+        path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-${{ runner.arch == 'X64' && 'amd64' || 'arm64' }}
         key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
     - name: Install Helm 4
       env:
         BINARY_CACHE: ${{ inputs.binary-cache == 'true' }}
       run: |
         platform=linux
-        architecture=amd64
+        case "$RUNNER_ARCH" in
+            X64)
+                architecture=amd64
+                ;;
+            ARM64)
+                architecture=arm64
+                ;;
+            *)
+                echo "::error::Unsupported runner architecture: $RUNNER_ARCH"
+                exit 1
+                ;;
+        esac
         binary_root="$RUNNER_TEMP/hypothesis-helm-binaries"
         if [[ "$BINARY_CACHE" != "true" ]]; then
             binary_root="$(mktemp -d)"
@@ -84,7 +95,7 @@ runs:
       if: ${{ inputs.binary-cache == 'true' && steps.helm-cache.outputs.cache-hit != 'true' }}
       uses: actions/cache/save@v5
       with:
-        path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-amd64
+        path: ${{ runner.temp }}/hypothesis-helm-binaries/helm-${{ env.HELM_VERSION }}-linux-${{ runner.arch == 'X64' && 'amd64' || 'arm64' }}
         key: hh-binary-v1-${{ runner.os }}-${{ runner.arch }}-helm-${{ env.HELM_VERSION }}-exact
     - name: Use HTTPS for public submodules
       shell: bash
