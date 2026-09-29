@@ -67,16 +67,14 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: bash .github/pr-benchmarks.sh validate
 
-  refresh-prepare:
-    name: Prepare shared inputs
+  refresh-prepare-inputs:
+    name: Build shared inputs
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
     needs: refresh-request
-    # scripts/check.sh runs the full suite with pytest-xdist's CPU-sized worker pool.
     runs-on: ubuntu-latest
     timeout-minutes: 60
     outputs:
       root: ${{ steps.prepare.outputs.root }}
-      matrix: ${{ steps.prepare.outputs.matrix }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -92,12 +90,105 @@ jobs:
             .cache/compiler-builtins/
             .cache/random-renderer/
           key: refresh-dependencies-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pkg/hypothesis_helm_catalog/data/*.json', 'pkg/hypothesis_helm_catalog/builder.py', 'pkg/hypothesis_helm_catalog/sources.py', 'pkg/hypothesis_helm_catalog/upstream/*', 'pkg/hypothesis_helm/compiler/assets/renderer/*') }}
-      - name: Check project and prepare shared inputs
+      - name: Rebuild generated contracts and references
         id: prepare
-        run: poetry run hypothesis-helm-refresh --ci-phase prepare
-      - name: Package prepared workspace
+        run: poetry run hypothesis-helm-refresh --ci-phase prepare-inputs
+      - name: Package generated inputs for verification
         env:
           ROOT: ${{ steps.prepare.outputs.root }}
+        run: |
+          tar -czf "$RUNNER_TEMP/refresh-inputs.tar.gz" "$ROOT" \
+              pkg/hypothesis_helm/compiler/assets/builtin_inventory.json \
+              pkg/hypothesis_helm_catalog/data/input-domains.json \
+              README.md docs/cli/README.md docs/rules/README.md \
+              docs/input-domains/README.md docs/compiler/functions.md
+      - uses: actions/upload-artifact@v7
+        with:
+          name: refresh-inputs
+          path: ${{ runner.temp }}/refresh-inputs.tar.gz
+          retention-days: 30
+      - uses: actions/upload-artifact@v7
+        if: ${{ failure() }}
+        with:
+          name: refresh-inputs-diagnostics
+          path: .cache/refresh/
+          include-hidden-files: true
+          retention-days: 30
+
+  refresh-prepare-checks:
+    name: "Verify shared inputs (${{ matrix.shard }}/8)"
+    needs: refresh-prepare-inputs
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
+    env:
+      ROOT: ${{ needs.refresh-prepare-inputs.outputs.root }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-inputs
+          path: ${{ runner.temp }}/refresh-input
+      - name: Restore generated contracts and references
+        run: tar -xzf "$RUNNER_TEMP/refresh-input/refresh-inputs.tar.gz"
+      - name: Cache the pinned random-input renderer
+        uses: actions/cache@v5
+        with:
+          path: .cache/random-renderer/
+          key: hh-random-renderer-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pkg/hypothesis_helm/compiler/assets/renderer/*') }}
+      - name: Build the renderer for native integration tests
+        run: bash scripts/project-run.sh hypothesis-helm-renderer --build
+      - name: Check generated inputs and run this test shard
+        env:
+          SUITE_SHARD: ${{ matrix.shard }}/8
+        run: |
+          bash pkg/hypothesis_helm_benchmarking/refresh/recipes/operations.sh checks "$ROOT" \
+              -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
+              --junitxml=.cache/prepare-tests/pytest.xml
+      - name: Retain preparation test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: refresh-prepare-tests-${{ matrix.shard }}
+          path: .cache/prepare-tests/
+          include-hidden-files: true
+          retention-days: 30
+
+  refresh-prepare:
+    name: Prepare shared inputs
+    needs: [refresh-prepare-inputs, refresh-prepare-checks]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      root: ${{ steps.prepare.outputs.root }}
+      matrix: ${{ steps.prepare.outputs.matrix }}
+    env:
+      ROOT: ${{ needs.refresh-prepare-inputs.outputs.root }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: refresh-inputs
+          path: ${{ runner.temp }}/refresh-input
+      - name: Restore verified inputs
+        run: tar -xzf "$RUNNER_TEMP/refresh-input/refresh-inputs.tar.gz"
+      - name: Snapshot verified sources and prepare fixtures
+        id: prepare
+        run: poetry run hypothesis-helm-refresh --ci-phase prepare-finalize --root "$ROOT"
+      - name: Package prepared workspace
         run: |
           tar -czf "$RUNNER_TEMP/refresh-prepared.tar.gz" "$ROOT" \
               pkg/hypothesis_helm/compiler/assets/builtin_inventory.json \
@@ -550,7 +641,7 @@ jobs:
       fail-fast: false
       max-parallel: 80
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        shard: [ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
                 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
                 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
                 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
@@ -649,7 +740,7 @@ jobs:
       fail-fast: false
       max-parallel: 80
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        shard: [ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
                 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
                 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
                 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,

@@ -4,12 +4,14 @@ Verify distributed refresh barriers, isolated study logs and complete artifact a
 
 import json
 import os
+import sys
 from pathlib import Path
 from textwrap import dedent
 
 import pytest
 from hypothesis_helm_benchmarking.refresh.ci import merge_statuses, phase_operations, run_phase
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES, Refresh
+from pipeline import Operation
 
 from hypothesis_helm.environment import refresh_env
 from hypothesis_helm.tests import PROJECT_ROOT
@@ -59,6 +61,78 @@ def test_pr_graph_phase_verifies_publication_without_repository_scans() -> None:
     assert operations[-1].requires == ("diagrams-finished",)
     assert operations[-1].command[-1] == "--benchmarks-only"
     assert all(set(item.requires) <= names for item in operations)
+
+
+def test_split_preparation_preserves_all_operations() -> None:
+    """
+    Split source generation from initialization at the externally sharded check barrier.
+
+    Returns:
+        None: CI preserves the local preparation order and runs every operation exactly once.
+    """
+    root = Path(".cache/refresh/refresh-1")
+    full = phase_operations(root, "prepare")
+    inputs = phase_operations(root, "prepare-inputs")
+    finalize = phase_operations(root, "prepare-finalize")
+    assert [item.name for item in inputs] == ["compiler-builtins", "schema-catalog", "native-renderer", "dependency-docs"]
+    assert [item.name for item in finalize] == ["dependencies", "initialize", "prepare-fixtures"]
+    assert [item.name for item in full] == [*[item.name for item in inputs], "checks", *[item.name for item in finalize]]
+    for operations in (inputs, finalize):
+        assert not operations[0].requires
+        assert all(set(item.requires) <= {operation.name for operation in operations} for item in operations)
+
+
+def test_split_preparation_retains_journals(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Preserve both preparation journals while keeping initialization's workspace guard intact.
+
+    Args:
+        tmp_path (Path): Isolated checkout and generated inputs artifact.
+        monkeypatch (pytest.MonkeyPatch): Replace expensive recipes with a native initialization probe.
+
+    Returns:
+        None: Finalization requires restored input evidence and publishes study outputs afterward.
+    """
+    root = Path(".cache/refresh/refresh-1")
+    probe = tmp_path / "probe.py"
+    probe.write_text(
+        "import sys\nfrom pathlib import Path\n"
+        "root = Path(sys.argv[1])\n"
+        "assert {path.name for path in root.iterdir()} <= {'logs'}\n"
+        "if sys.argv[2] == 'prepare-finalize':\n"
+        "    (root / 'provenance.json').write_text('{}')\n"
+    )
+
+    def operations(directory: Path, phase: str, study: str | None = None) -> tuple[Operation, ...]:
+        """
+        Run a small native command at each real phase boundary.
+
+        Args:
+            directory (Path): Shared refresh root.
+            phase (str): Preparation phase under test.
+            study (str | None): Unused study selector.
+
+        Returns:
+            tuple[Operation, ...]: One probe preserving real queue and artifact behavior.
+        """
+        return (Operation(phase, (sys.executable, str(probe), str(directory), phase)),)
+
+    monkeypatch.chdir(tmp_path)
+    output = tmp_path / "github-output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    refresh_env()
+    monkeypatch.setattr("hypothesis_helm_benchmarking.refresh.ci.phase_operations", operations)
+    with pytest.raises(ValueError, match="generated inputs artifact"):
+        run_phase(root, "prepare-finalize", None, 1)
+    run_phase(root, "prepare-inputs", None, 1)
+    journal = root / "logs/prepare-inputs/operations.json"
+    previous = journal.read_bytes()
+    assert not (root / "provenance.json").exists()
+    assert f"root={root}\n" in output.read_text()
+    run_phase(root, "prepare-finalize", None, 1)
+    assert journal.read_bytes() == previous
+    assert (root / "logs/prepare-finalize/operations.json").is_file()
+    assert "ci_run_id" in json.loads((root / "provenance.json").read_text())
 
 
 def test_preparation_excludes_sharded_studies_from_serial_matrix(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

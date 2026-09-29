@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 import sys
+from dataclasses import replace
 from pathlib import Path
 from textwrap import dedent
 
@@ -46,7 +47,7 @@ def test_dependencies_gate_refresh_checks(tmp_path: Path, failure: str | None) -
     shutil.copy2(PROJECT_ROOT / recipe, tmp_path / recipe)
     scripts = tmp_path / "scripts"
     scripts.mkdir()
-    (scripts / "check.sh").write_text("#!/usr/bin/env bash\nexec refresh-checks\n")
+    (scripts / "check.sh").write_text('#!/usr/bin/env bash\nexec refresh-checks "$@"\n')
     binary = tmp_path / "bin"
     binary.mkdir()
     stub = dedent(
@@ -96,6 +97,8 @@ def test_dependencies_gate_refresh_checks(tmp_path: Path, failure: str | None) -
     root = tmp_path / "refresh"
     plan = Refresh(root).operations()
     operations = plan[: next(index + 1 for index, item in enumerate(plan) if item.name == "checks")]
+    shard_options = ("-p", "hypothesis_helm.tests.sharding", "--suite-shard", "3/8")
+    operations = tuple(replace(item, command=(*item.command, *shard_options)) if item.name == "checks" else item for item in operations)
     queue = OperationQueue(
         operations,
         workers=4,
@@ -112,10 +115,11 @@ def test_dependencies_gate_refresh_checks(tmp_path: Path, failure: str | None) -
     calls = [json.loads(line) for line in (tmp_path / "calls.jsonl").read_text().splitlines()]
     if failure:
         assert calls[-1] == failure
-        assert "refresh-checks" not in calls
+        assert not any(call.startswith("refresh-checks") for call in calls)
     else:
         assert calls.index("hypothesis-helm-builtins --check") < calls.index("hypothesis-helm-catalog --check")
         assert calls.index("hypothesis-helm-catalog --check") < calls.index("hypothesis-helm-renderer --build")
-        assert calls.index("hypothesis-helm-renderer --build") < calls.index("hypothesis-helm-docs") < calls.index("refresh-checks")
+        check_command = " ".join(("refresh-checks", *shard_options))
+        assert calls.index("hypothesis-helm-renderer --build") < calls.index("hypothesis-helm-docs") < calls.index(check_command)
         assert (tmp_path / "checks-completed").exists()
     assert not (root / "frozen-source").exists()

@@ -151,9 +151,10 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
     for name, job in jobs.items():
         if name.startswith("refresh-") or name == "smoke":
             assert job["runs-on"] == "ubuntu-latest", name
-    prepare = jobs["refresh-prepare"]
-    assert prepare["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
-    assert prepare["needs"] == "refresh-request"
+    inputs_job = jobs["refresh-prepare-inputs"]
+    assert inputs_job["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
+    assert inputs_job["needs"] == "refresh-request"
+    assert set(sequence(jobs["refresh-prepare"]["needs"])) == {"refresh-prepare-inputs", "refresh-prepare-checks"}
     assert jobs["measure-stage"]["needs"] == "verification"
     study = jobs["refresh-study"]
     assert study["needs"] == "refresh-prepare"
@@ -170,6 +171,49 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
     # Optional jobs cannot block the tag-only publisher.
     assert jobs["deploy-stage"]["needs"] == "verification"
     assert mapping(document["concurrency"])["cancel-in-progress"] == "${{ github.event_name == 'pull_request' }}"
+
+
+def test_preparation_shards_verify_the_rebuilt_snapshot_before_studies() -> None:
+    """
+    Test generated inputs on eight runners before publishing the shared study workspace.
+
+    Returns:
+        None: All shards restore one snapshot, build native coverage and gate every study.
+    """
+    jobs = all_jobs()
+    inputs = jobs["refresh-prepare-inputs"]
+    checks = jobs["refresh-prepare-checks"]
+    prepared = jobs["refresh-prepare"]
+    strategy = mapping(checks["strategy"])
+    assert mapping(strategy["matrix"])["shard"] == list(range(1, 9))
+    assert strategy["fail-fast"] is False
+    assert checks["needs"] == "refresh-prepare-inputs"
+    assert set(sequence(prepared["needs"])) == {"refresh-prepare-inputs", "refresh-prepare-checks"}
+    for job in (checks, prepared):
+        assert "if" not in job and "continue-on-error" not in job
+        steps = [mapping(step) for step in sequence(job["steps"])]
+        assert all("continue-on-error" not in step for step in steps)
+        download = next(step for step in steps if str(step.get("uses", "")).startswith("actions/download-artifact@"))
+        assert mapping(download["with"])["name"] == "refresh-inputs"
+    input_steps = [mapping(step) for step in sequence(inputs["steps"])]
+    assert any("--ci-phase prepare-inputs" in str(step.get("run", "")) for step in input_steps)
+    upload = next(step for step in input_steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
+    assert mapping(upload["with"])["name"] == "refresh-inputs"
+    steps = [mapping(step) for step in sequence(checks["steps"])]
+    restore = next(step for step in steps if "tar -xzf" in str(step.get("run", "")))
+    renderer = next(step for step in steps if "hypothesis-helm-renderer --build" in str(step.get("run", "")))
+    run = next(step for step in steps if "operations.sh checks" in str(step.get("run", "")))
+    assert steps.index(restore) < steps.index(renderer) < steps.index(run)
+    assert mapping(run["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/8"
+    assert '-p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD"' in str(run["run"])
+    assert "--junitxml=" in str(run["run"])
+    results = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
+    assert results["if"] == "${{ always() }}"
+    assert mapping(results["with"])["name"] == "refresh-prepare-tests-${{ matrix.shard }}"
+    final_steps = [mapping(step) for step in sequence(prepared["steps"])]
+    assert any('--ci-phase prepare-finalize --root "$ROOT"' in str(step.get("run", "")) for step in final_steps)
+    for name in ("refresh-study", "refresh-error-surface", "refresh-stress", "refresh-structural-sparsity"):
+        assert jobs[name]["needs"] == "refresh-prepare"
 
 
 def test_pr_benchmarks_are_a_required_commit_bound_manual_gate() -> None:

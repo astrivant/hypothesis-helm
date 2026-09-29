@@ -32,7 +32,7 @@ case "$stage" in
             echo 'Put Helm 4 on PATH before running the refresh.' >&2
             exit 2
         fi
-        bash scripts/check.sh
+        bash scripts/check.sh "${@:3}"
         ;;
     dependencies) git submodule update --init --recursive ;;
     initialize) python pkg/hypothesis_helm_benchmarking/refresh/recipes/initialize.py "$root" ;;

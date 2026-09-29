@@ -24,7 +24,7 @@ def phase_operations(root: Path, phase: str, study: str | None = None) -> tuple[
 
     Args:
         root (Path): Shared relative workspace restored at the same path on each runner.
-        phase (str): Preparation, one study, graph publication, or full verification including repository scans.
+        phase (str): Full or split preparation, one study, graph publication, or full verification including repository scans.
         study (str | None): Required study identifier for a matrix job.
 
     Returns:
@@ -34,8 +34,14 @@ def phase_operations(root: Path, phase: str, study: str | None = None) -> tuple[
         ValueError: The phase or study is unknown.
     """
     operations = Refresh(root).operations()
-    if phase == "prepare":
+    if phase in {"prepare", "prepare-inputs", "prepare-finalize"}:
         selected = operations[: next(i for i, item in enumerate(operations) if item.name in STUDIES)]
+        checks = next(i for i, item in enumerate(selected) if item.name == "checks")
+        if phase == "prepare-inputs":
+            selected = selected[:checks]
+        elif phase == "prepare-finalize":
+            # The workflow runs scripts/check.sh in shards between these two phases.
+            selected = selected[checks + 1 :]
     elif phase == "study" and study in STUDIES:
         selected = tuple(item for item in operations if item.name == study)
     elif phase in {"graphs", "finish"}:
@@ -51,7 +57,7 @@ def phase_operations(root: Path, phase: str, study: str | None = None) -> tuple[
                 ),
             )
     else:
-        raise ValueError("Choose prepare, study with a declared --study, graphs, or finish")
+        raise ValueError("Choose prepare, prepare-inputs, prepare-finalize, study with a declared --study, graphs, or finish")
     names = {item.name for item in selected}
     return tuple(replace(item, requires=tuple(name for name in item.requires if name in names)) for item in selected)
 
@@ -87,7 +93,7 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
 
     Args:
         root (Path): Relative workspace path shared through workflow artifacts.
-        phase (str): Preparation, study, graph publication or full finish.
+        phase (str): Full or split preparation, study, graph publication or full finish.
         study (str | None): Matrix study name.
         workers (int): Concurrent independent operations within this runner.
 
@@ -100,13 +106,18 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
     if root.is_absolute() or ".." in root.parts or root.parent != Path(".cache/refresh"):
         raise ValueError("CI workspace must be .cache/refresh/refresh-<epoch>")
     operations = phase_operations(root, phase, study)
-    if phase != "prepare" and not (root / "provenance.json").is_file():
+    if phase == "prepare-finalize" and not (root / "logs/prepare-inputs/operations.json").is_file():
+        raise ValueError("Restore the generated inputs artifact before finalizing preparation")
+    if phase not in {"prepare", "prepare-inputs", "prepare-finalize"} and not (root / "provenance.json").is_file():
         raise ValueError("Restore the prepared refresh artifact before running this phase")
     if phase == "study" and (root / "status.tsv").exists():
         raise ValueError("A matrix study requires a fresh copy of the prepared workspace")
     if phase in {"graphs", "finish"}:
         merge_statuses(root)
     directory = root if phase == "prepare" else root / "ci-jobs" / (study or phase)
+    if phase in {"prepare-inputs", "prepare-finalize"}:
+        # Initialization permits existing logs; keep both preparation journals without introducing study artifacts early.
+        directory = root / "logs" / phase
     queue = OperationQueue(
         operations,
         workers=workers,
@@ -129,13 +140,14 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
             log = directory / "logs" / f"{study}.log"
             if log.is_file():
                 shutil.copy2(log, root / "logs" / log.name)
-    if phase == "prepare":
+    if phase in {"prepare", "prepare-finalize"}:
         provenance_path = root / "provenance.json"
         provenance = json.loads(provenance_path.read_text())
         provenance["execution"] = "Isolated CI study runners and verified diagrams; the full finish phase also runs repository tests"
         provenance["ci_run_id"] = env.get("GITHUB_RUN_ID")
         provenance["ci_run_attempt"] = env.get("GITHUB_RUN_ATTEMPT")
         provenance_path.write_text(json.dumps(provenance, indent=2) + "\n")
+    if phase in {"prepare", "prepare-inputs", "prepare-finalize"}:
         path = env.get("GITHUB_OUTPUT")
         if path:
             matrix = {"study": [name for name in STUDIES if name not in {"error-surface", "stress", "structural-sparsity"}]}

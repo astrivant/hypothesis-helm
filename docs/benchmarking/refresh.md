@@ -80,8 +80,10 @@ select `main`, enable **refresh**, and leave **pull-request** empty to commit ve
 Configure the protected-branch [publication token](../development.md#github-ci) first. The run is rejected if the branch
 changes during measurement. For a PR, select the open PR's head branch and enter its **pull-request** number instead.
 The expandable [Benchmark / refresh / scan stage](../../.github/workflows/stage-measure.yml) contains the study matrices.
-Test and Build run concurrently; once both pass, preparation rebuilds the pinned
-dependencies, checks the generated project and snapshots its inputs once.
+Test and Build run concurrently; once both pass, preparation rebuilds the pinned dependencies and generated
+references once. Eight verification jobs restore that generated snapshot, run project checks and partition the Python
+suite using `--suite-shard 1/8` through `8/8`. Each shard retains its JUnit report, including on failure.
+The final preparation job waits for all eight, then snapshots the verified sources and publishes the shared study inputs.
 GitHub runs studies using the same source snapshot and parameters. Error surface uses eight shards;
 stress and structural sparsity each use six. Each sharded study has a separate aggregation job that verifies all shards
 and generates its combined plots before publication. Structural sparsity keeps each case/repeat's strategy comparisons together.
@@ -95,7 +97,8 @@ under `studies/`, then commits final plots and summaries to the selected branch.
 are retained for 30 days.
 Study measurements, merging, plot publication and smoke checks use standard `ubuntu-latest` runners.
 Individual measurements run serially, or with at most four local workers in the scaling study; more CI shards do not increase
-parallelism inside each runner. Preparation uses `ubuntu-latest` and runs the full test suite with one pytest worker per available CPU.
+parallelism inside each runner. Preparation verification uses eight `ubuntu-latest` runners, with one pytest worker per
+available CPU on each runner. Local preparation still runs the complete suite on one machine.
 The separate Bitnami and Prometheus scans each use 80 standard `ubuntu-latest` runners, with one path worker per available CPU
 when enough paths remain. Each runner tests a separate partition of every chart's values paths; aggregation requires all 80 shard reports.
 Standard Linux runners provide 4 CPUs and 16 GB RAM for public repositories, where their execution is free.
