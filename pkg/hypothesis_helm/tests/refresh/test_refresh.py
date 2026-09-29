@@ -337,6 +337,7 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                     "breadth": 4,
                     "depth": 1,
                     "placement": "near",
+                    "chart_sha256": "structural-sparsity-fixture",
                     "strategy": "default",
                     "repeat": 0,
                     "status": "passed",
