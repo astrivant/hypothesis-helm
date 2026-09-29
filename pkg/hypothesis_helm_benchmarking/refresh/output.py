@@ -1,5 +1,5 @@
 """
-Forward growing operation logs without pipes, reader threads, or unbounded buffering.
+Forward benchmark refresh logs without pipes, reader threads, or unbounded buffering.
 """
 
 import codecs

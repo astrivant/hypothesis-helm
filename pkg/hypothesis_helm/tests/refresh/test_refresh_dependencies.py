@@ -11,8 +11,8 @@ from pathlib import Path
 from textwrap import dedent
 
 import pytest
+from hypothesis_helm_benchmarking.refresh.operations import OperationQueue
 from hypothesis_helm_benchmarking.refresh.plan import Refresh
-from pipeline import OperationQueue
 
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.tests import PROJECT_ROOT

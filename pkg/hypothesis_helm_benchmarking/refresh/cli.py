@@ -17,8 +17,8 @@ from typing import Self
 from hypothesis_helm.environment import env, refresh_env
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.execution.runtime.signals import DeferredSignals, Termination
-from pipeline import OperationQueue
 
+from hypothesis_helm_benchmarking.refresh.operations import OperationQueue
 from hypothesis_helm_benchmarking.refresh.plan import Refresh, source_path
 
 __all__ = ("RefreshLock", "main")

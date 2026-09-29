@@ -33,7 +33,6 @@ classifiers = [
 ]
 packages = [
     {include = "hypothesis_helm", from = "pkg"},
-    {include = "pipeline", from = "pkg"},
     {include = "hypothesis_helm_catalog", from = "pkg"},
 ]
 include = [
@@ -88,7 +87,6 @@ hypothesis-helm-catalog = "hypothesis_helm_catalog.builder:main"
 hypothesis-helm-docs = "hypothesis_helm.reporting.documentation.contents:main"
 hypothesis-helm-sensitivity = "hypothesis_helm.analysis.cli:main"
 hypothesis-helm-report-figures = "hypothesis_helm.analysis.repository:main"
-pipeline-example = "pipeline.example:main"
 hypothesis-helm-path-worker = "hypothesis_helm.execution.workers.path_queue:main"
 hypothesis-helm = "hypothesis_helm.cli:main"
 hypothesis-helm-complexity = "hypothesis_helm.compiler.passes.complexity:main"
@@ -107,7 +105,7 @@ markers = ["integration: requires Helm", "astrivant: optional neighboring Astriv
 
 [tool.coverage.run]
 relative_files = true
-source = ["pkg/hypothesis_helm", "pkg/hypothesis_helm_catalog", "pkg/hypothesis_helm_benchmarking", "pkg/pipeline"]
+source = ["pkg/hypothesis_helm", "pkg/hypothesis_helm_catalog", "pkg/hypothesis_helm_benchmarking"]
 omit = ["*/tests/*", "*/assets/*"]
 
 [tool.ruff]

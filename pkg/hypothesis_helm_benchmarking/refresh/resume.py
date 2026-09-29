@@ -13,8 +13,8 @@ from hypothesis_helm.environment import env
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.execution.runtime.signals import DeferredSignals, Termination
 from hypothesis_helm.schemas.contracts import mapping, sequence
-from pipeline import Operation, OperationQueue
 
+from hypothesis_helm_benchmarking.refresh.operations import Operation, OperationQueue
 from hypothesis_helm_benchmarking.refresh.plan import PREPARATION, STUDIES, source_path
 
 __all__ = ("latest_journal", "remaining", "resume")

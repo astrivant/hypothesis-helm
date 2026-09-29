@@ -1,7 +1,5 @@
 """
-Make your own pipeline of executions that need to occur easily in your project.
-
-I will probably make this its own module at some point. It helps automate local runtime / benchmarking / graph regeneration.
+Run benchmark refresh commands with dependency ordering and process ownership.
 """
 
 import json
@@ -10,14 +8,13 @@ import time
 from collections.abc import Callable, Sequence
 from concurrent.futures import FIRST_COMPLETED, Future, ThreadPoolExecutor, wait
 from contextlib import AbstractContextManager, nullcontext
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from functools import partial
 from pathlib import Path
 from subprocess import CompletedProcess
 from typing import Protocol, TextIO
 
-from pipeline.output import OperationOutput
-from pipeline.workloads import Statistics
+from hypothesis_helm_benchmarking.refresh.output import OperationOutput
 
 __all__ = ("Operation", "OperationQueue", "ProcessOwner")
 
@@ -78,7 +75,6 @@ class Operation:
         exclusive (bool): Reserve the whole queue while this operation measures or publishes.
         allow_failure (bool): Retain nonzero exits for a required downstream verification operation.
         timeout (float | None): Optional command deadline, excluding owned-process cleanup.
-        statistics (Statistics): Declared progress and cost estimates; unknown by default.
     """
 
     name: str
@@ -87,7 +83,6 @@ class Operation:
     exclusive: bool = False
     allow_failure: bool = False
     timeout: float | None = None
-    statistics: Statistics = field(default_factory=Statistics)
 
 
 class OperationQueue:
@@ -203,7 +198,7 @@ class OperationQueue:
         with self.cancellation_scope():
             try:
                 with self.critical_scope():
-                    pool = ThreadPoolExecutor(max_workers=self.workers, thread_name_prefix="pipeline-worker")
+                    pool = ThreadPoolExecutor(max_workers=self.workers, thread_name_prefix="refresh-worker")
                 while pending or self.active:
                     exclusive = any(operation.exclusive for operation, _ in self.active.values())
                     for operation in tuple(pending):

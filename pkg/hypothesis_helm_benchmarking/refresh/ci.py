@@ -11,8 +11,8 @@ from pathlib import Path
 from hypothesis_helm.environment import env
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.execution.runtime.signals import DeferredSignals, Termination
-from pipeline import Operation, OperationQueue
 
+from hypothesis_helm_benchmarking.refresh.operations import Operation, OperationQueue
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES, Refresh, source_path
 
 __all__ = ("merge_statuses", "phase_operations", "run_phase")

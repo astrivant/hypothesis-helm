@@ -47,7 +47,6 @@ empty_repositories = dedent(
 hashes = {}
 packages = (
     Path("pkg/hypothesis_helm"),
-    Path("pkg/pipeline"),
     Path("pkg/hypothesis_helm_benchmarking"),
     Path("pkg/hypothesis_helm_catalog"),
 )

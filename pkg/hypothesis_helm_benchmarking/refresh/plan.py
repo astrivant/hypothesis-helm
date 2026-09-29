@@ -5,7 +5,8 @@ Declare the complete refresh inventory and its measurement and publication barri
 from pathlib import Path
 
 from attrs import frozen
-from pipeline import Operation
+
+from hypothesis_helm_benchmarking.refresh.operations import Operation
 
 __all__ = ("PREPARATION", "Refresh", "STUDIES", "source_path")
 
@@ -43,7 +44,7 @@ def source_path(project: Path) -> str:
         project (Path): Checkout root containing pkg/.
 
     Returns:
-        str: PYTHONPATH entries for the core, catalog, benchmarks, and pipeline.
+        str: PYTHONPATH entries for the core, catalog, and benchmarks.
     """
     return str(project / "pkg")
 

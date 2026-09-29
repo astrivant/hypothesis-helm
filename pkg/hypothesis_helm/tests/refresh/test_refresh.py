@@ -730,8 +730,8 @@ def test_refresh_scans_follow_published_diagrams(tmp_path: Path, failure: str | 
     """
     from textwrap import dedent
 
+    from hypothesis_helm_benchmarking.refresh.operations import OperationQueue
     from hypothesis_helm_benchmarking.refresh.plan import Refresh
-    from pipeline import OperationQueue
 
     from hypothesis_helm.execution.runtime.processes import Processes
 

@@ -12,8 +12,8 @@ from pathlib import Path
 from textwrap import dedent
 
 import pytest
+from hypothesis_helm_benchmarking.refresh.operations import Operation, OperationQueue
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES, Refresh
-from pipeline import Operation, OperationQueue
 
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.execution.runtime.signals import DeferredSignals, Termination
@@ -126,7 +126,7 @@ def test_independent_workers_overlap_and_exclusive_work_waits(tmp_path: Path) ->
     assert all(record["status"] == "completed" for record in records.values())
     assert float(str(records["timed"]["started_epoch"])) >= max(float(str(records[name]["finished_epoch"])) for name in ("a", "b"))
     assert len(json.loads((tmp_path / "operations.json").read_text())["operations"]) == 3
-    assert not any(thread.name.startswith("pipeline-worker") for thread in threading.enumerate())
+    assert not any(thread.name.startswith("refresh-worker") for thread in threading.enumerate())
 
 
 @pytest.mark.parametrize("mode", ["failure", "timeout"])
@@ -176,7 +176,7 @@ def test_failure_and_timeout_join_grandchildren(tmp_path: Path, mode: str) -> No
             os.kill(int(pid), 0)
     assert scheduler.records["publish"]["status"] == "blocked"
     assert not scheduler.owners
-    assert not any(thread.name.startswith("pipeline-worker") for thread in threading.enumerate())
+    assert not any(thread.name.startswith("refresh-worker") for thread in threading.enumerate())
 
 
 def test_cleanup_failure_does_not_skip_other_owners(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -229,7 +229,7 @@ def test_cleanup_failure_does_not_skip_other_owners(tmp_path: Path, monkeypatch:
         scheduler.run()
     assert len({id(owner) for owner in stopped}) == 2
     assert len(scheduler.owners) == 1
-    assert not any(thread.name.startswith("pipeline-worker") for thread in threading.enumerate())
+    assert not any(thread.name.startswith("refresh-worker") for thread in threading.enumerate())
 
 
 def test_empty_workflow_finishes_without_workers(tmp_path: Path) -> None:
@@ -258,11 +258,11 @@ def test_submission_failure_preserves_registered_owner(tmp_path: Path, monkeypat
     """
     from unittest.mock import Mock
 
-    import pipeline.operations
+    import hypothesis_helm_benchmarking.refresh.operations
 
     pool = Mock()
     pool.submit.side_effect = RuntimeError("cannot start worker")
-    monkeypatch.setattr(pipeline.operations, "ThreadPoolExecutor", Mock(return_value=pool))
+    monkeypatch.setattr(hypothesis_helm_benchmarking.refresh.operations, "ThreadPoolExecutor", Mock(return_value=pool))
     owner = Mock(spec=Processes)
     scheduler = queue([Operation("a", ("unused",))], tmp_path)
     scheduler.owner_factory = lambda: owner
@@ -320,7 +320,7 @@ def test_interrupt_joins_running_operations(tmp_path: Path, monkeypatch: pytest.
     assert len(stopped) == 2
     assert not scheduler.owners
     assert scheduler.records["publish"]["status"] == "blocked"
-    assert not any(thread.name.startswith("pipeline-worker") for thread in threading.enumerate())
+    assert not any(thread.name.startswith("refresh-worker") for thread in threading.enumerate())
 
 
 @pytest.mark.parametrize("exit_code", [0, 7])
@@ -400,7 +400,7 @@ def test_operation_output_retains_bytes_and_bounds_partial_lines(tmp_path: Path)
     Returns:
         None: Terminal decoding is incremental and pending output is bounded.
     """
-    from pipeline.output import OperationOutput
+    from hypothesis_helm_benchmarking.refresh.output import OperationOutput
 
     messages: list[str] = []
     path = tmp_path / "operation.log"
@@ -454,7 +454,7 @@ def test_logging_failure_still_joins_children(tmp_path: Path) -> None:
     assert "ready" in (tmp_path / "logs/child.log").read_text()
     assert not scheduler.outputs
     assert not scheduler.owners
-    assert not any(thread.name.startswith("pipeline-worker") for thread in threading.enumerate())
+    assert not any(thread.name.startswith("refresh-worker") for thread in threading.enumerate())
 
 
 @pytest.mark.skipif(shutil.which("parallel") is None, reason="requires GNU Parallel")

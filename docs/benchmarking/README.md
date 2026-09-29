@@ -273,9 +273,9 @@ including six path workers per chart in the repository tests.
 
 The [operation inventory](../../pkg/hypothesis_helm_benchmarking/refresh/plan.py) declares
 all declared studies, fresh profiling captures, diagrams, verification gates, repository
-reports, and documentation updates. The preserved local [Workgraph](../../pkg/pipeline) scheduler runs this inventory.
-The Helm-specific inventory and Bash commands ship in the benchmarking package. The separate [Reflow](https://github.com/astrivant/reflow) project
-continues scheduler development independently; existing benchmark runs retain the local implementation.
+reports, and documentation updates. The benchmarking package's
+[command queue](../../pkg/hypothesis_helm_benchmarking/refresh/operations.py) runs this inventory.
+The queue, inventory, and Bash commands ship together in the benchmarking package.
 
 Refresh workspaces live under `.cache/refresh/refresh-<epoch>/`. Each run keeps its
 `operations.json` journal, verification records, source snapshots and operation logs there.

@@ -13,7 +13,6 @@
 - [Shared exceptions](#shared-exceptions)
 - [Syntax trees and compiler passes](#syntax-trees-and-compiler-passes)
 - [Finite permutation planning](#finite-permutation-planning)
-- [Cooperative workload balancing](#cooperative-workload-balancing)
 <!-- toc:end -->
 
 [Documentation](../README.md) · [Project](../../README.md)
@@ -196,7 +195,7 @@ and imported directly from the module for their concern:
 | `hypothesis_helm.exceptions.schemas` | `NonFiniteSchema`, when exhaustive enumeration cannot be established. |
 | `hypothesis_helm.exceptions.execution` | `TimeLimitReached`, a cancellation signal outside ordinary `Exception` handlers. |
 
-Benchmarking imports these shared definitions. The catalog and pipeline currently define no custom
+Benchmarking imports these shared definitions. The catalog currently defines no custom
 exceptions. New package-specific exceptions belong in that package's own `exceptions/` directory;
 built-in and third-party exceptions retain their original definitions.
 
@@ -218,11 +217,3 @@ has already passed validation.
 See [execution and coverage](../execution/README.md), the
 [pruning contract](../safe-pruning.md), and the
 [introductory examples](../../README.md#examples-failures-hidden-by-defaults).
-
-## Cooperative workload balancing
-
-[The preserved local scheduler](../../pkg/pipeline/README.md) builds on workload contracts to update runtime estimates,
-reorder ready work, and request checkpoint/resume at safe boundaries. It logs graph mutations and scheduling decisions and
-can export Mermaid snapshots. Existing subprocess operations remain non-preemptible unless adapted to the cooperative contract.
-
-The separate [Reflow project](https://github.com/astrivant/reflow) evolves independently; refresh still uses the local scheduler.

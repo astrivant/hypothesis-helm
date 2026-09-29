@@ -10,7 +10,7 @@ import pytest
 from hypothesis_helm.tests import PACKAGES_ROOT
 
 PACKAGES = PACKAGES_ROOT
-PROJECT_PACKAGES = {"hypothesis_helm", "hypothesis_helm_catalog", "hypothesis_helm_benchmarking", "pipeline"}
+PROJECT_PACKAGES = {"hypothesis_helm", "hypothesis_helm_catalog", "hypothesis_helm_benchmarking"}
 
 
 def test_every_maintained_module_declares_owned_exports() -> None:
@@ -69,8 +69,8 @@ def test_every_maintained_module_declares_owned_exports() -> None:
         "hypothesis_helm.reporting.reports.links",
         "hypothesis_helm_catalog",
         "hypothesis_helm_catalog.sources",
-        "pipeline",
-        "pipeline.scheduler",
+        "hypothesis_helm_benchmarking.refresh.operations",
+        "hypothesis_helm_benchmarking.refresh.output",
     ],
 )
 def test_wildcard_import_exposes_only_the_declared_api(module_name: str) -> None:
@@ -97,15 +97,10 @@ def test_existing_package_facades_remain_available() -> None:
     Preserve the intentional root imports while tightening wildcard boundaries.
 
     Returns:
-        None: Public entry points and scheduler descriptors retain their original identity.
+        None: Public entry points retain their original identity.
     """
-    import pipeline
-    from pipeline.operations import Operation
-
     import hypothesis_helm
     from hypothesis_helm.charts.model import Chart
 
     assert set(hypothesis_helm.__all__) == {"Chart", "check_chart", "coalesce", "env", "generate_tests", "refresh_env", "set_env"}
     assert hypothesis_helm.Chart is Chart
-    assert pipeline.Operation is Operation
-    assert "Operation" in pipeline.__all__

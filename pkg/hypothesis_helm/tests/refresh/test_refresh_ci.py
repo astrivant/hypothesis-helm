@@ -10,8 +10,8 @@ from textwrap import dedent
 
 import pytest
 from hypothesis_helm_benchmarking.refresh.ci import merge_statuses, phase_operations, run_phase
+from hypothesis_helm_benchmarking.refresh.operations import Operation
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES, Refresh
-from pipeline import Operation
 
 from hypothesis_helm.environment import refresh_env
 from hypothesis_helm.tests import PROJECT_ROOT

@@ -16,7 +16,6 @@
 - [Package organization](#package-organization)
 - [Shared environment settings](#shared-environment-settings)
 - [Repository map](#repository-map)
-- [Preserved scheduler and separate Reflow project](#preserved-scheduler-and-separate-reflow-project)
 <!-- toc:end -->
 
 This document is for contributors modifying the framework. End-user chart testing
@@ -153,7 +152,6 @@ Unit and integration tests live under [`pkg/hypothesis_helm/tests`](../pkg/hypot
 | `integrations/` | CI workflows, Kubesec, installers, release tooling, and remote shards. |
 | `benchmarking/` | Synthetic fixtures, measurements, plots, and study publication. |
 | `refresh/` | Refresh orchestration, distributed runs, and resuming interrupted work. |
-| `pipeline/` | Work graphs, routing gates, scheduling, and process ownership. |
 | `package/` | Public exports, shared exceptions, and environment configuration. |
 
 Run one category by passing its directory to pytest:
@@ -460,7 +458,6 @@ Project folders and Python modules under `pkg/` use underscores, as in
 | [`pkg/hypothesis_helm/tests/`](../pkg/hypothesis_helm/tests) | Unit tests and real Helm integration tests. |
 | [`pkg/hypothesis_helm_benchmarking/`](../pkg/hypothesis_helm_benchmarking) | Independently packaged benchmark commands, studies, and refresh automation. |
 | [`pkg/hypothesis_helm_catalog/`](../pkg/hypothesis_helm_catalog) | Shipped input-domain catalog and its rebuild command. |
-| [`pkg/pipeline/`](../pkg/pipeline) | Shared work scheduling and balancing. |
 | [`examples/`](../examples) | Small charts and a checked-in generated workload suite. |
 | [`scripts/`](../scripts) | Project command runner, validation command and Helm plugin hooks. |
 | [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
@@ -468,16 +465,3 @@ Project folders and Python modules under `pkg/` use underscores, as in
 | [`.github/workflows/`](../.github/workflows/) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
 | [`.github/settings.yml`](../.github/settings.yml) | Declarative repository settings. |
 | [`docs/`](.) | Development setup, CLI behavior and testing limitations. |
-
-
-## Preserved scheduler and separate Reflow project
-
-The local `pkg/pipeline` package contains the scheduler retained from before the Reflow extraction.
-Hypothesis Helm's refresh code imports this local package. Its tests and graph documentation remain here.
-
-The independent [Reflow project](https://github.com/astrivant/reflow) lives at `../reflow`, with its own `reflow.graph` and
-`reflow.balance` packages. Development there does not change the local benchmark scheduler. Hypothesis Helm currently does
-not depend on that sibling project; switching refresh to Reflow should be a deliberate migration after the existing runs finish.
-
-Existing refresh workspaces retain their frozen sources, source hashes, logs and journals under `.cache/refresh/`.
-Restoring the local packages does not alter those snapshots or restart a running process.

@@ -7,7 +7,6 @@ from pathlib import Path
 
 import hypothesis_helm
 import hypothesis_helm_catalog
-import pipeline
 
 __all__ = ("code_digest",)
 
@@ -22,7 +21,7 @@ def code_digest() -> str:
     digest = hashlib.sha256()
     roots = [
         Path(__file__).resolve().parents[1],
-        *(Path(str(module.__file__)).parent for module in (hypothesis_helm, hypothesis_helm_catalog, pipeline)),
+        *(Path(str(module.__file__)).parent for module in (hypothesis_helm, hypothesis_helm_catalog)),
     ]
     for base in roots:
         for path in sorted(base.rglob("*")):
