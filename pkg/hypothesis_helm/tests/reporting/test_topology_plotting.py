@@ -22,7 +22,7 @@ def test_multigraph_invariants_and_exports(tmp_path: Path) -> None:
         tmp_path (Path): Destination for the graph figures and coordinate ledger.
 
     Returns:
-        None: Counts and directed rank ordering match the complete fixture graph.
+        None: Counts and ranks match the complete graph; published figures retain their title and reader question.
     """
     pytest.importorskip("matplotlib")
     graph: Graph = {
@@ -54,6 +54,10 @@ def test_multigraph_invariants_and_exports(tmp_path: Path) -> None:
     assert plot(graph, tmp_path, "Complete test graph") == metrics
     assert (tmp_path / "topology.png").stat().st_size > 1000
     assert (tmp_path / "topology.svg").stat().st_size > 1000
+    svg = (tmp_path / "topology.svg").read_text()
+    assert 'id="plot-question"' in svg
+    assert "Which values connect to template decisions and rendered fields?" in svg
+    assert "Complete test graph" in svg
     with (tmp_path / "positions.csv").open() as stream:
         assert len(list(csv.DictReader(stream))) == len(graph["nodes"])
 

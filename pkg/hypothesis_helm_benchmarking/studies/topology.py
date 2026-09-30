@@ -174,6 +174,8 @@ def plot(graph: Graph, output: Path, title: str) -> dict[str, object]:
     from matplotlib.collections import LineCollection
     from matplotlib.lines import Line2D
 
+    from hypothesis_helm_benchmarking.reporting.descriptions import describe
+
     metrics, positions = analyze(graph)
     output.mkdir(parents=True, exist_ok=True)
     # The figure is also embedded at half-page width; labels must survive that reduction.
@@ -244,7 +246,7 @@ def plot(graph: Graph, output: Path, title: str) -> dict[str, object]:
         ha="center",
         fontsize=12,
     )
-    figure.tight_layout(rect=(0, 0.34, 1, 0.95))
+    figure.tight_layout(rect=(0, 0.34, 1, describe(figure, "topology")))
     figure.savefig(output / "topology.png", dpi=170, facecolor="white")
     figure.savefig(output / "topology.svg", facecolor="white")
     plt.close(figure)
