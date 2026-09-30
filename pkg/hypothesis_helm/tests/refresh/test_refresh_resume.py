@@ -234,7 +234,7 @@ def test_publication_distinguishes_readme_edits_from_changed_measurements(tmp_pa
         benchmarks_only (bool): Verify PR studies without requiring repository scan artifacts.
 
     Returns:
-        None: Editorial changes pass only with the original retained evidence; data changes fail.
+        None: Comments are ignored, visible links resolve, and editorial changes preserve the original measured evidence.
     """
     root = tmp_path / "refresh"
     root.mkdir()
@@ -242,6 +242,26 @@ def test_publication_distinguishes_readme_edits_from_changed_measurements(tmp_pa
         path = tmp_path / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("Documentation\n")
+    readme = tmp_path / "README.md"
+    readme_content = dedent(
+        """
+        <!-- refresh:prometheus:start -->
+        <!--
+        [Unpublished report](docs/reports/unpublished.md)
+        ```
+        [Unpublished PDF](docs/reports/unpublished.pdf)
+        --> [After comment](docs/benchmarking/README.md)
+        <!-- refresh:prometheus:end -->
+        [Before inline comment](studies/pca/README.md) <!-- [Hidden](missing.md) --> [After inline comment](README.md)
+        ````markdown
+        <!--
+        ```
+        [Example](example-missing.md)
+        ````
+        [After code](docs/benchmarking/README.md)
+        """
+    )
+    readme.write_text(readme_content)
     study = tmp_path / "studies/pca"
     study.mkdir(parents=True)
     (study / "README.md").write_text("Original measured summary\n")
@@ -278,6 +298,13 @@ def test_publication_distinguishes_readme_edits_from_changed_measurements(tmp_pa
     report = json.loads((root / "publication-verification.json").read_text())
     assert report["verified_benchmark_artifacts"] == 1
     assert "studies/pca/README.md" in report["editorially_updated_readmes"]
+    assert report["local_documentation_links_checked"] == 5
+    for label in ("After comment", "Before inline comment", "After inline comment", "After code"):
+        broken = readme_content.replace(f"[{label}]", f"[{label}](visible-missing.md) [{label}]")
+        readme.write_text(broken)
+        failed = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True)
+        assert failed.returncode != 0 and "visible-missing.md" in failed.stderr
+    readme.write_text(readme_content)
     (study / "plot.png").write_text('{"measured": 999}\n')
     failed = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True)
     assert failed.returncode != 0 and "plot.png" in failed.stderr

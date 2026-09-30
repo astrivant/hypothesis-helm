@@ -82,12 +82,26 @@ documents.append(benchmarks / "README.md")
 documents.extend(STUDIES.rglob("*.md"))
 links = 0
 for document in documents:
-    fenced = False
+    fence = ""
+    comment = False
     for line in document.read_text().splitlines():
-        if line.lstrip().startswith(("```", "~~~")):
-            fenced = not fenced
+        if fence:
+            if re.fullmatch(r" {0,3}" + re.escape(fence[0]) + "{" + str(len(fence)) + r",}\s*", line):
+                fence = ""
             continue
-        if fenced:
+        # Unpublished summaries remain in HTML comments, including links to absent reports.
+        if comment:
+            if "-->" not in line:
+                continue
+            line = line.split("-->", 1)[1]
+            comment = False
+        line = re.sub(r"<!--.*?-->", "", line)
+        if "<!--" in line:
+            line = line.split("<!--", 1)[0]
+            comment = True
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
+        if marker:
+            fence = marker[1]
             continue
         for target in re.findall(r"\]\(([^)\n]+)\)", line):
             target = target.split(' "', 1)[0].strip("<>")
