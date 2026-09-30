@@ -6,11 +6,11 @@
 - [Sampling evidence matrix](#sampling-evidence-matrix)
 <!-- toc:end -->
 
-[Calibration](README.md)
+[Calibration](<README.md>)
 
-![Selection and known-bug recall](matching-matrix.png)
+![Selection and known-bug recall](<matching-matrix.png>)
 
-![Nearby profile variation](profile-variation.png)
+![Nearby profile variation](<profile-variation.png>)
 
 Nearby matching enabled: **False**; selected maximum relative coordinate change: **0**.
 The threshold is chosen from the same calibration study, not independent validation.

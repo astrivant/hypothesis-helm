@@ -6,14 +6,21 @@
 - [Performance and scaling](#performance-and-scaling)
 <!-- toc:end -->
 
-[Benchmarking](<../../docs/benchmarking/README.md#performance-and-scaling>)
+[Benchmarking](../../docs/benchmarking/README.md#performance-and-scaling)
 
-Recorded permutation throughput and worker scaling for the retained standard chart (local run data).
-See the raw measurements (local run data), CSV (local run data) and run log (local run data).
-[Reading variation bands](<../../docs/benchmarking/README.md#reading-variation-bands>) explains when repeat data supports standard deviations.
+Figures below show the measurements available for this run. Deadline-limited work remains incomplete.
+Progressive checkpoints share one growing run; unfinished targets are not independent timing observations.
+Strong scaling holds total inputs fixed; weak scaling holds inputs per worker fixed. Replicas are local worker processes.
 
-![Progressive runtime](progressive.png)
+Raw measurements (local run data) · CSV table (local run data)
+[Reading variation bands](../../docs/benchmarking/README.md#reading-variation-bands) explains when repeats support deviations.
 
-![Strong scaling](strong-scaling.png)
+![Progressive runtime and completed work](<progressive.png>)
 
-![Weak scaling](weak-scaling.png)
+![Observed output distribution](<output-distribution.png>)
+
+![Strong scaling](<strong-scaling.png>)
+
+![Weak scaling](<weak-scaling.png>)
+
+![Replica throughput and render skips](<replicas.png>)

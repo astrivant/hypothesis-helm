@@ -6,7 +6,7 @@
 - [Failure expansion](#failure-expansion)
 <!-- toc:end -->
 
-[Benchmarking](<../../docs/benchmarking/README.md>)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 Topology filtering previously exercised 47 of 51 erroneous inputs in three cases. The remaining four each produced the same complete manifests as a retained failing input. The 51 erroneous inputs occupied 43 singleton regions and four two-input regions. All distinct erroneous outputs were already covered.
 
@@ -19,11 +19,11 @@ helm hypothesis test ./chart --permutations 2 --filter-topology 2 \
 
 Expansion continues the initial selection after failures and schedules each omitted input at most once. The default CLI still stops at its first failure. Unsupported regions cannot be expanded automatically. An entirely missed failure region cannot trigger expansion.
 
-![Paired failure expansion matrix](failure-expansion.png)
+![Paired failure expansion matrix](<failure-expansion.png>)
 
 Cells below show **erroneous inputs found before → after expansion (extra executions)**. The figure also shows the exact percentage missed.
 
-| Structure | Unfiltered | Random | Topology | Both filters | --filter | --filter-adaptive |
+| Structure | Unfiltered | Random filter | Topology filter | Both filters | --filter | --filter-adaptive |
 |---|---|---|---|---|---|---|
 | constraints | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 2/25 (92.0% missed) → 2/25 (92.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) | 25/25 (0.0% missed) → 25/25 (0.0% missed) (+0) |
 | control-flow | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 5/51 (90.2% missed) → 5/51 (90.2% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) | 51/51 (0.0% missed) → 51/51 (0.0% missed) (+0) |
@@ -34,7 +34,7 @@ Cells below show **erroneous inputs found before → after expansion (extra exec
 
 **Distinct erroneous outputs covered, before → after:**
 
-| Structure | Unfiltered | Random | Topology | Both filters | --filter | --filter-adaptive |
+| Structure | Unfiltered | Random filter | Topology filter | Both filters | --filter | --filter-adaptive |
 |---|---|---|---|---|---|---|
 | constraints | 8/8 → 8/8 | 2/8 → 2/8 | 8/8 → 8/8 | 8/8 → 8/8 | 8/8 → 8/8 | 8/8 → 8/8 |
 | control-flow | 14/14 → 14/14 | 4/14 → 4/14 | 14/14 → 14/14 | 14/14 → 14/14 | 14/14 → 14/14 | 14/14 → 14/14 |

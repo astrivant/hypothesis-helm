@@ -6,7 +6,7 @@
 - [Failure clustering: measured counts](#failure-clustering-measured-counts)
 <!-- toc:end -->
 
-[Graphs and methodology](README.md)
+[Graphs and methodology](<README.md>)
 
 Compare rows with the same rate: the erroneous-input count and chart stay fixed while placement changes.
 Detected counts below are paired means followed by the observed range; they count inputs, not distinct bugs.

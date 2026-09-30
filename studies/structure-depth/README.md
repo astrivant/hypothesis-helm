@@ -7,13 +7,13 @@
 - [Measurement](#measurement)
 <!-- toc:end -->
 
-[Benchmarking](<../../docs/benchmarking/README.md>)
+[Benchmarking](../../docs/benchmarking/README.md)
 
-Only topology filter level varies. Random filtering stays at zero and failure expansion stays enabled.
+Only the topology filter level varies. Random filtering stays at zero and failure expansion stays enabled.
 
 Fixed settings: 10 inputs, four normal-quantile outputs, 5% erroneous valid inputs (rounded down), fault seed 1729, selection seed 2026, topology seed 2026. Mixed charts contain 12 components with shared sampled input wiring.
 
-![Structure depth sensitivity](structure-depth.png)
+![Structure depth sensitivity](<structure-depth.png>)
 
 Each cell below is **checks; erroneous inputs found / total (missed percentage)** after expansion.
 
@@ -30,7 +30,7 @@ Each cell below is **checks; erroneous inputs found / total (missed percentage)*
 
 ## Mixed fixtures
 
-Topology types are categorical, so weights describe their relative frequency. Requested probabilities and realized counts are both recorded. Types and wiring use a separate fixed seed. Components can share inputs; numeric boundary inputs are reserved so Boolean roles retain their declared types.
+Topology types are categorical, so weights describe their relative frequency rather than a normal distribution over arbitrarily ordered names. Requested probabilities and realized counts are both recorded. Types and wiring use a separate fixed seed. Components can share inputs; numeric boundary inputs are reserved so Boolean roles retain their declared types.
 
 | Fixture | Realized component counts |
 |---|---|

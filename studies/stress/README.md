@@ -8,7 +8,7 @@
 
 One parameter decreases by one at each step; seeds and defect triggers remain fixed.
 
-![Render cost and defect recall](topology-stress.png)
+![Render cost and defect recall](<topology-stress.png>)
 
 | Step | Parameter change | Strategy | Renders | Defects found / total | Erroneous inputs evaluated / total | Status |
 | --- | --- | --- | ---: | ---: | ---: | --- |
@@ -199,7 +199,7 @@ Case parameters (local run data) | Measurements (local run data)
 | 15-boundary-regions-3 | unmatched | 256 / 256 | 1 | 0 | chart complexity or topology is outside the measured calibration profiles |
 | 16-boundary-regions-2 | unmatched | 256 / 256 | 1 | 0 | chart complexity or topology is outside the measured calibration profiles |
 | 17-boundary-regions-1 | unmatched | 256 / 256 | 1 | 0 | chart complexity or topology is outside the measured calibration profiles |
-| 18-equivalent-inputs-3 | unmatched | 320 / 320 | 1 | 0 | chart complexity or topology is outside the measured calibration profiles |
+| 18-equivalent-inputs-3 | unmatched | 320 / 320 | 1 | 0 | complexity analysis time limit reached |
 | 19-equivalent-inputs-2 | unmatched | 512 / 512 | 1 | 0 | complexity analysis time limit reached |
 | 20-equivalent-inputs-1 | unmatched | 1024 / 1024 | 1 | 0 | complexity analysis time limit reached |
 | 21-equivalent-inputs-0 | unmatched | 2048 / 2048 | 1 | 0 | complexity analysis time limit reached |

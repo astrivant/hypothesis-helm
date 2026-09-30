@@ -20,7 +20,7 @@ r=0 means random traversal without profiling; r>0 uses the production sensitivit
 The chart, bugs and selected configurations remain fixed. The normal small-space enumeration rule is enabled;
 each fixture records its effective coverage strength, which may exceed p.
 
-![Fixed-chart sensitivity order sweep](sensitivity-order-sweep.png)
+![Fixed-chart sensitivity order sweep](<sensitivity-order-sweep.png>)
 
 ## Discovery across chart structures
 
@@ -28,7 +28,7 @@ Each row uses the shared benchmark chart with a different structural setting. Fi
 The left column counts joint configuration tests, including baseline and profiling tests. The right column shows bugs found
 at the first test reaching each number of distinct changed paths. It is not a one-path-per-test executor.
 
-![Traversal discovery by chart structure](ordering-discovery.png)
+![Traversal discovery by chart structure](<ordering-discovery.png>)
 
 ## Bug interaction orders
 
@@ -36,7 +36,7 @@ A one-path bug needs one Boolean condition; a three-path bug needs three conditi
 Bug placement is sampled independently of traversal priorities, then checked for reachability. The same bug population
 is used by every strategy and seed on a chart. Structure can make some triggers unreachable, so chart rows can differ.
 
-![Bug discovery by trigger order](ordering-bug-types.png)
+![Bug discovery by trigger order](<ordering-bug-types.png>)
 
 ## Measurements
 
@@ -116,5 +116,5 @@ bash scripts/project-run.sh hypothesis-helm-benchmark sensitivity-ordering --inp
 Redraw existing measurements without invoking Helm:
 
 ```bash
-bash scripts/project-run.sh hypothesis-helm-benchmark sensitivity-ordering --plot-only --output .cache/benchmarks/sensitivity-ordering
+hypothesis-helm-benchmark sensitivity-ordering --plot-only --output .cache/benchmarks/sensitivity-ordering
 ```

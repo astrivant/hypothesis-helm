@@ -13,7 +13,7 @@ Distance counts added and removed JSON path/value indicators. A changed value co
 Document and array order matter. These measurements describe observed changes; the compiler's equivalence contract governs pruning.
 Distances assume deterministic rendering with fixed chart dependencies, release, namespace and Kubernetes version.
 
-![Sensitivity, interaction and sequence measurements](sensitivity.png)
+![Sensitivity, interaction and sequence measurements](<sensitivity.png>)
 
 Measured 48 single mutations and 1128 pairs. The plots include every comparable measurement.
 Tables show up to 20 of the largest effects. Mutation IDs follow the order in mutations.json.

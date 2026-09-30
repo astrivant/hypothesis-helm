@@ -56,7 +56,7 @@
 </details>
 <!-- toc:end -->
 
-[Measurements](README.md) · [Model definition](<../../docs/benchmarking/response-surface.md>)
+[Measurements](<README.md>) · [Model definition](../../docs/benchmarking/response-surface.md)
 
 Quadratics fitted to collected cell means, separately for each method and response. Coefficients are not theoretical predictions.
 Only cells with every requested repeat completed enter the fit. Missing or timed-out cells remain blank.
@@ -70,289 +70,289 @@ Coefficients, bounds and diagnostics (local run data)
 
 ## clustering: default, Total runtime (seconds)
 
-RMSE: 1.065; R²: 0.622; cells: 143.
+RMSE: 0.6598; R²: 0.001; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-default-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-default-total-seconds.png>)
 
 ## clustering: default, Erroneous inputs missed
 
 RMSE: 0; R²: N/A (constant observations); cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-default-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-default-errors-missed.png>)
 
 ## clustering: exact-equivalence, Total runtime (seconds)
 
-RMSE: 0.1066; R²: 0.401; cells: 143.
+RMSE: 0.09483; R²: 0.002; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-exact-equivalence-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-exact-equivalence-total-seconds.png>)
 
 ## clustering: exact-equivalence, Erroneous inputs missed
 
 RMSE: 0; R²: N/A (constant observations); cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-exact-equivalence-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-exact-equivalence-errors-missed.png>)
 
 ## clustering: random, Total runtime (seconds)
 
-RMSE: 0.1033; R²: 0.465; cells: 143.
+RMSE: 0.04675; R²: 0.002; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-random-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-random-total-seconds.png>)
 
 ## clustering: random, Erroneous inputs missed
 
 RMSE: 0.4667; R²: 1.000; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-random-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-random-errors-missed.png>)
 
 ## clustering: topology, Total runtime (seconds)
 
-RMSE: 0.1073; R²: 0.490; cells: 143.
+RMSE: 0.04906; R²: 0.002; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-topology-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-topology-total-seconds.png>)
 
 ## clustering: topology, Erroneous inputs missed
 
 RMSE: 0.6966; R²: 1.000; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-topology-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-topology-errors-missed.png>)
 
 ## clustering: combined, Total runtime (seconds)
 
-RMSE: 0.03997; R²: 0.383; cells: 143.
+RMSE: 0.01934; R²: 0.003; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-combined-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-combined-total-seconds.png>)
 
 ## clustering: combined, Erroneous inputs missed
 
 RMSE: 0.4346; R²: 1.000; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-combined-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-combined-errors-missed.png>)
 
 ## clustering: filter, Total runtime (seconds)
 
-RMSE: 1.177; R²: 0.923; cells: 143.
+RMSE: 0.8046; R²: 0.942; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-filter-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-filter-total-seconds.png>)
 
 ## clustering: filter, Erroneous inputs missed
 
 RMSE: 5.492; R²: 0.423; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-filter-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-filter-errors-missed.png>)
 
 ## clustering: filter-adaptive, Total runtime (seconds)
 
-RMSE: 1.136; R²: 0.928; cells: 143.
+RMSE: 0.807; R²: 0.941; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-filter-adaptive-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-filter-adaptive-total-seconds.png>)
 
 ## clustering: filter-adaptive, Erroneous inputs missed
 
 RMSE: 5.492; R²: 0.423; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-filter-adaptive-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-filter-adaptive-errors-missed.png>)
 
 ## clustering: sample-random, Total runtime (seconds)
 
-RMSE: 0.7875; R²: 0.573; cells: 143.
+RMSE: 0.4675; R²: 0.002; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-sample-random-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-sample-random-total-seconds.png>)
 
 ## clustering: sample-random, Erroneous inputs missed
 
 RMSE: 0.7721; R²: 0.999; cells: 143.
 
-![Collected and fitted surfaces with residuals](quadratic-clustering-sample-random-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-clustering-sample-random-errors-missed.png>)
 
 ## depth: default, Total runtime (seconds)
 
-RMSE: 0.6345; R²: 0.711; cells: 78.
+RMSE: 0.5637; R²: 0.052; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-default-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-default-total-seconds.png>)
 
 ## depth: default, Erroneous inputs missed
 
 RMSE: 0; R²: N/A (constant observations); cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-default-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-default-errors-missed.png>)
 
 ## depth: exact-equivalence, Total runtime (seconds)
 
-RMSE: 0.1054; R²: 0.934; cells: 78.
+RMSE: 0.1049; R²: 0.816; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-exact-equivalence-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-exact-equivalence-total-seconds.png>)
 
 ## depth: exact-equivalence, Erroneous inputs missed
 
 RMSE: 0; R²: N/A (constant observations); cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-exact-equivalence-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-exact-equivalence-errors-missed.png>)
 
 ## depth: random, Total runtime (seconds)
 
-RMSE: 0.07558; R²: 0.625; cells: 78.
+RMSE: 0.04091; R²: 0.055; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-random-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-random-total-seconds.png>)
 
 ## depth: random, Erroneous inputs missed
 
 RMSE: 0.4334; R²: 1.000; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-random-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-random-errors-missed.png>)
 
 ## depth: topology, Total runtime (seconds)
 
-RMSE: 0.09381; R²: 0.908; cells: 78.
+RMSE: 0.05787; R²: 0.887; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-topology-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-topology-total-seconds.png>)
 
 ## depth: topology, Erroneous inputs missed
 
 RMSE: 0.9745; R²: 1.000; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-topology-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-topology-errors-missed.png>)
 
 ## depth: combined, Total runtime (seconds)
 
-RMSE: 0.07783; R²: 0.958; cells: 78.
+RMSE: 0.04048; R²: 0.975; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-combined-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-combined-total-seconds.png>)
 
 ## depth: combined, Erroneous inputs missed
 
 RMSE: 0.8124; R²: 1.000; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-combined-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-combined-errors-missed.png>)
 
 ## depth: filter, Total runtime (seconds)
 
-RMSE: 0.8283; R²: 0.956; cells: 78.
+RMSE: 0.6923; R²: 0.956; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-filter-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-filter-total-seconds.png>)
 
 ## depth: filter, Erroneous inputs missed
 
 RMSE: 7.686; R²: 0.785; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-filter-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-filter-errors-missed.png>)
 
 ## depth: filter-adaptive, Total runtime (seconds)
 
-RMSE: 0.7299; R²: 0.965; cells: 78.
+RMSE: 0.6888; R²: 0.956; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-filter-adaptive-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-filter-adaptive-total-seconds.png>)
 
 ## depth: filter-adaptive, Erroneous inputs missed
 
 RMSE: 7.686; R²: 0.785; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-filter-adaptive-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-filter-adaptive-errors-missed.png>)
 
 ## depth: sample-random, Total runtime (seconds)
 
-RMSE: 0.5172; R²: 0.703; cells: 78.
+RMSE: 0.3842; R²: 0.061; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-sample-random-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-sample-random-total-seconds.png>)
 
 ## depth: sample-random, Erroneous inputs missed
 
 RMSE: 1.164; R²: 0.998; cells: 78.
 
-![Collected and fitted surfaces with residuals](quadratic-depth-sample-random-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-depth-sample-random-errors-missed.png>)
 
 ## redundancy: default, Total runtime (seconds)
 
-RMSE: 1.069; R²: 0.298; cells: 104.
+RMSE: 0.5793; R²: 0.026; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-default-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-default-total-seconds.png>)
 
 ## redundancy: default, Erroneous inputs missed
 
 RMSE: 0; R²: N/A (constant observations); cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-default-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-default-errors-missed.png>)
 
 ## redundancy: exact-equivalence, Total runtime (seconds)
 
-RMSE: 0.7259; R²: 0.966; cells: 104.
+RMSE: 0.6966; R²: 0.953; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-exact-equivalence-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-exact-equivalence-total-seconds.png>)
 
 ## redundancy: exact-equivalence, Erroneous inputs missed
 
 RMSE: 0; R²: N/A (constant observations); cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-exact-equivalence-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-exact-equivalence-errors-missed.png>)
 
 ## redundancy: random, Total runtime (seconds)
 
-RMSE: 0.1039; R²: 0.179; cells: 104.
+RMSE: 0.04269; R²: 0.025; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-random-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-random-total-seconds.png>)
 
 ## redundancy: random, Erroneous inputs missed
 
 RMSE: 0.4334; R²: 1.000; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-random-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-random-errors-missed.png>)
 
 ## redundancy: topology, Total runtime (seconds)
 
-RMSE: 0.7775; R²: 0.957; cells: 104.
+RMSE: 0.6842; R²: 0.952; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-topology-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-topology-total-seconds.png>)
 
 ## redundancy: topology, Erroneous inputs missed
 
 RMSE: 16.86; R²: 0.951; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-topology-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-topology-errors-missed.png>)
 
 ## redundancy: combined, Total runtime (seconds)
 
-RMSE: 0.7163; R²: 0.967; cells: 104.
+RMSE: 0.6815; R²: 0.955; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-combined-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-combined-total-seconds.png>)
 
 ## redundancy: combined, Erroneous inputs missed
 
 RMSE: 16.13; R²: 0.958; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-combined-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-combined-errors-missed.png>)
 
 ## redundancy: filter, Total runtime (seconds)
 
-RMSE: 1.628; R²: 0.839; cells: 104.
+RMSE: 1.185; R²: 0.869; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-filter-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-filter-total-seconds.png>)
 
 ## redundancy: filter, Erroneous inputs missed
 
 RMSE: 10.88; R²: 0.650; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-filter-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-filter-errors-missed.png>)
 
 ## redundancy: filter-adaptive, Total runtime (seconds)
 
-RMSE: 1.612; R²: 0.843; cells: 104.
+RMSE: 1.194; R²: 0.871; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-filter-adaptive-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-filter-adaptive-total-seconds.png>)
 
 ## redundancy: filter-adaptive, Erroneous inputs missed
 
 RMSE: 10.88; R²: 0.650; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-filter-adaptive-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-filter-adaptive-errors-missed.png>)
 
 ## redundancy: sample-random, Total runtime (seconds)
 
-RMSE: 0.5901; R²: 0.322; cells: 104.
+RMSE: 0.4129; R²: 0.023; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-sample-random-total-seconds.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-sample-random-total-seconds.png>)
 
 ## redundancy: sample-random, Erroneous inputs missed
 
 RMSE: 1.164; R²: 0.998; cells: 104.
 
-![Collected and fitted surfaces with residuals](quadratic-redundancy-sample-random-errors-missed.png)
+![Collected and fitted surfaces with residuals](<quadratic-redundancy-sample-random-errors-missed.png>)
 

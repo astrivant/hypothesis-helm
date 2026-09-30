@@ -6,7 +6,7 @@
 - [Error rate and filtering](#error-rate-and-filtering)
 <!-- toc:end -->
 
-[Benchmarking](<../../docs/benchmarking/README.md>)
+[Benchmarking](../../docs/benchmarking/README.md)
 
 Measured axes in this run: depth, redundancy, clustering. The default refresh runs all three axes.
 
@@ -51,34 +51,34 @@ Individual measurements (local run data) · Means and ranges (local run data) ·
 | filter-adaptive | `--filter-adaptive`, including its calibration fallback |
 | sample-random | `--sample-random 70`, with the default minimum |
 
-![Total measured seconds by depth](depth-total-seconds.png)
+![Total measured seconds by depth](<depth-total-seconds.png>)
 
-![Helm renders by depth](depth-render-invocations.png)
+![Helm renders by depth](<depth-render-invocations.png>)
 
-![Erroneous inputs detected (%) by depth](depth-error-recall.png)
+![Erroneous inputs detected (%) by depth](<depth-error-recall.png>)
 
-![Additional inputs checked after failures by depth](depth-additional-executed.png)
+![Additional inputs checked after failures by depth](<depth-additional-executed.png>)
 
-![Total measured seconds by redundancy](redundancy-total-seconds.png)
+![Total measured seconds by redundancy](<redundancy-total-seconds.png>)
 
-![Helm renders by redundancy](redundancy-render-invocations.png)
+![Helm renders by redundancy](<redundancy-render-invocations.png>)
 
-![Erroneous inputs detected (%) by redundancy](redundancy-error-recall.png)
+![Erroneous inputs detected (%) by redundancy](<redundancy-error-recall.png>)
 
-![Additional inputs checked after failures by redundancy](redundancy-additional-executed.png)
+![Additional inputs checked after failures by redundancy](<redundancy-additional-executed.png>)
 
-![Total measured seconds by clustering](clustering-total-seconds.png)
+![Total measured seconds by clustering](<clustering-total-seconds.png>)
 
-![Helm renders by clustering](clustering-render-invocations.png)
+![Helm renders by clustering](<clustering-render-invocations.png>)
 
-![Erroneous inputs detected (%) by clustering](clustering-error-recall.png)
+![Erroneous inputs detected (%) by clustering](<clustering-error-recall.png>)
 
-![Additional inputs checked after failures by clustering](clustering-additional-executed.png)
+![Additional inputs checked after failures by clustering](<clustering-additional-executed.png>)
 
-[Compare clustering at a fixed error count](clustering-counts.md)
+[Compare clustering at a fixed error count](<clustering-counts.md>)
 
-![Measured clustering, independent of filter selection](clustering-observed.png)
+![Measured clustering, independent of filter selection](<clustering-observed.png>)
 
-[Fitted response surfaces: measurements, quadratic predictions and residuals](quadratic-fits.md)
+[Fitted response surfaces: measurements, quadratic predictions and residuals](<quadratic-fits.md>)
 
-![Failing inputs found, Helm renders and total runtime](errors-found-fast.png)
+![Failing inputs found, Helm renders and total runtime](<errors-found-fast.png>)

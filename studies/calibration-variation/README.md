@@ -11,9 +11,9 @@ Calibration uses generated charts. The same fixtures supply calibration and eval
 Every input was rendered with Helm and compared with an independent defect-trigger oracle.
 Floors include protected symbolic regions. Field coverage counts changed paths separately from configurations.
 Measured maximum output scores: **24, 40, 56, 60, 100, 108, 140, 180, 252**. Other scores are outside this calibration's range.
-[Comparison matrix and graphs](MATRIX.md) · [Proof obligations and tests](<../../docs/adaptive-filtering/TESTS.md>)
+[Comparison matrix and graphs](<MATRIX.md>) · [Proof obligations and tests](../../docs/adaptive-filtering/TESTS.md)
 
-![Measured sample floors and recall](calibration.png)
+![Measured sample floors and recall](<calibration.png>)
 
 | Case | Max complexity | Gate depth | Fields | Eligible | Protected | Case floor | Field floor | Seeds reaching 96% bug recall |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -74,7 +74,7 @@ Measured maximum output scores: **24, 40, 56, 60, 100, 108, 140, 180, 252**. Oth
 
 ## Breadth and depth sweep
 
-![Sample floors across output breadth and depth](complexity-sweep.png)
+![Sample floors across output breadth and depth](<complexity-sweep.png>)
 
 Sibling ConfigMap copies vary breadth; nested List envelopes vary output depth. Axis labels are measured tree dimensions.
 Each panel holds input count and defect-trigger depth fixed. Every shape uses the same paired defect placements and sampling seeds.

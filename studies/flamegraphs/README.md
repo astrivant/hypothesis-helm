@@ -3,16 +3,16 @@
 <!-- toc:start -->
 **Table of contents**
 
-- [coordinator-36025-ab7347375e8c7d1c603de5a78f29568b](#coordinator-36025-ab7347375e8c7d1c603de5a78f29568b)
-- [worker-36044-badfc76279a0d2bdf15d475e44a225c3](#worker-36044-badfc76279a0d2bdf15d475e44a225c3)
-- [worker-36046-7faf62365a98e1dfa9c593c7333b7075](#worker-36046-7faf62365a98e1dfa9c593c7333b7075)
-- [worker-36047-23900f1861e6b1193d08dc5836c29638](#worker-36047-23900f1861e6b1193d08dc5836c29638)
-- [worker-36052-01f54125d079f002a319a52b1f525bbc](#worker-36052-01f54125d079f002a319a52b1f525bbc)
-- [worker-36053-12109a221eb87bdba518034b731fa12b](#worker-36053-12109a221eb87bdba518034b731fa12b)
+- [coordinator-2898-39f57827d2ff4062be31a8e13164f9a3](#coordinator-2898-39f57827d2ff4062be31a8e13164f9a3)
+- [worker-2913-8800af5d480e4b9bc9eae9d6e050868a](#worker-2913-8800af5d480e4b9bc9eae9d6e050868a)
+- [worker-2927-33da242e64eff8b20eddaa7ef837a1ab](#worker-2927-33da242e64eff8b20eddaa7ef837a1ab)
+- [worker-2930-c1823184abb9de3696b0a4edd76950c7](#worker-2930-c1823184abb9de3696b0a4edd76950c7)
+- [worker-2954-cccc29b0bdbca0c694c439b1be7ecea8](#worker-2954-cccc29b0bdbca0c694c439b1be7ecea8)
+- [worker-2957-4cce21569aa6d89a2becbeab1c4bb59f](#worker-2957-4cce21569aa6d89a2becbeab1c4bb59f)
 - [workers-combined](#workers-combined)
 <!-- toc:end -->
 
-[Benchmarking](<../../docs/benchmarking/README.md#flame-graphs-across-worker-cores>)
+[Benchmarking](../../docs/benchmarking/README.md#flame-graphs-across-worker-cores)
 
 Fresh captures from a separate scaling run with four cases and one or two workers.
 Profiling adds overhead, so these captures do not contribute to the uninstrumented timing studies.
@@ -24,44 +24,44 @@ Captured 6 profiles across 5 worker processes.
 Recording limits and incomplete captures are reported in the capture index (local run data).
 Raw captures (local run data) retain the measured stacks for redrawing.
 
-## coordinator-36025-ab7347375e8c7d1c603de5a78f29568b
+## coordinator-2898-39f57827d2ff4062be31a8e13164f9a3
 
-![coordinator-36025-ab7347375e8c7d1c603de5a78f29568b](coordinator-36025-ab7347375e8c7d1c603de5a78f29568b.png)
+![coordinator-2898-39f57827d2ff4062be31a8e13164f9a3](<coordinator-2898-39f57827d2ff4062be31a8e13164f9a3.png>)
 
-[Open zoomable SVG](coordinator-36025-ab7347375e8c7d1c603de5a78f29568b.svg)
+[Open zoomable SVG](<coordinator-2898-39f57827d2ff4062be31a8e13164f9a3.svg>)
 
-## worker-36044-badfc76279a0d2bdf15d475e44a225c3
+## worker-2913-8800af5d480e4b9bc9eae9d6e050868a
 
-![worker-36044-badfc76279a0d2bdf15d475e44a225c3](worker-36044-badfc76279a0d2bdf15d475e44a225c3.png)
+![worker-2913-8800af5d480e4b9bc9eae9d6e050868a](<worker-2913-8800af5d480e4b9bc9eae9d6e050868a.png>)
 
-[Open zoomable SVG](worker-36044-badfc76279a0d2bdf15d475e44a225c3.svg)
+[Open zoomable SVG](<worker-2913-8800af5d480e4b9bc9eae9d6e050868a.svg>)
 
-## worker-36046-7faf62365a98e1dfa9c593c7333b7075
+## worker-2927-33da242e64eff8b20eddaa7ef837a1ab
 
-![worker-36046-7faf62365a98e1dfa9c593c7333b7075](worker-36046-7faf62365a98e1dfa9c593c7333b7075.png)
+![worker-2927-33da242e64eff8b20eddaa7ef837a1ab](<worker-2927-33da242e64eff8b20eddaa7ef837a1ab.png>)
 
-[Open zoomable SVG](worker-36046-7faf62365a98e1dfa9c593c7333b7075.svg)
+[Open zoomable SVG](<worker-2927-33da242e64eff8b20eddaa7ef837a1ab.svg>)
 
-## worker-36047-23900f1861e6b1193d08dc5836c29638
+## worker-2930-c1823184abb9de3696b0a4edd76950c7
 
-![worker-36047-23900f1861e6b1193d08dc5836c29638](worker-36047-23900f1861e6b1193d08dc5836c29638.png)
+![worker-2930-c1823184abb9de3696b0a4edd76950c7](<worker-2930-c1823184abb9de3696b0a4edd76950c7.png>)
 
-[Open zoomable SVG](worker-36047-23900f1861e6b1193d08dc5836c29638.svg)
+[Open zoomable SVG](<worker-2930-c1823184abb9de3696b0a4edd76950c7.svg>)
 
-## worker-36052-01f54125d079f002a319a52b1f525bbc
+## worker-2954-cccc29b0bdbca0c694c439b1be7ecea8
 
-![worker-36052-01f54125d079f002a319a52b1f525bbc](worker-36052-01f54125d079f002a319a52b1f525bbc.png)
+![worker-2954-cccc29b0bdbca0c694c439b1be7ecea8](<worker-2954-cccc29b0bdbca0c694c439b1be7ecea8.png>)
 
-[Open zoomable SVG](worker-36052-01f54125d079f002a319a52b1f525bbc.svg)
+[Open zoomable SVG](<worker-2954-cccc29b0bdbca0c694c439b1be7ecea8.svg>)
 
-## worker-36053-12109a221eb87bdba518034b731fa12b
+## worker-2957-4cce21569aa6d89a2becbeab1c4bb59f
 
-![worker-36053-12109a221eb87bdba518034b731fa12b](worker-36053-12109a221eb87bdba518034b731fa12b.png)
+![worker-2957-4cce21569aa6d89a2becbeab1c4bb59f](<worker-2957-4cce21569aa6d89a2becbeab1c4bb59f.png>)
 
-[Open zoomable SVG](worker-36053-12109a221eb87bdba518034b731fa12b.svg)
+[Open zoomable SVG](<worker-2957-4cce21569aa6d89a2becbeab1c4bb59f.svg>)
 
 ## workers-combined
 
-![workers-combined](workers-combined.png)
+![workers-combined](<workers-combined.png>)
 
-[Open zoomable SVG](workers-combined.svg)
+[Open zoomable SVG](<workers-combined.svg>)
