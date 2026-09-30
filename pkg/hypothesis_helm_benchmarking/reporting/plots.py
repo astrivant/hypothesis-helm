@@ -13,6 +13,7 @@ from statistics import NormalDist, mean
 from textwrap import fill
 
 from hypothesis_helm.environment import env, set_env
+from hypothesis_helm.reporting.documentation.contents import with_contents
 
 __all__ = ("COLORS", "Point", "finish", "groups", "measured_line", "numeric", "paired_ratios", "plot", "scaling_plots")
 
@@ -310,14 +311,14 @@ def scaling_plots(output: Path, points: list[Point], shard_total: int) -> None:
 
 def plot(output: Path, document: dict[str, object]) -> None:
     """
-    Generate README figures using only recorded measurements and declared reference curves.
+    Generate the performance study guide and figures from recorded measurements and declared reference curves.
 
     Args:
         output (Path): JSON and image artifact directory.
         document (dict[str, object]): Metadata plus raw benchmark measurements.
 
     Returns:
-        None: Available progressive, distribution and scaling figures are exported.
+        None: Available progressive, distribution and scaling figures are exported with a linked README.
     """
     output.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update(
@@ -458,3 +459,26 @@ def plot(output: Path, document: dict[str, object]) -> None:
             f"{spec['input_complexity']} inputs; {spec['output_bins']} quantile bins. "
             "Every received value is checked against an independent normal-quantile oracle.",
         )
+    lines = [
+        "# Performance and scaling",
+        "",
+        "[Benchmarking](../../docs/benchmarking/README.md#performance-and-scaling)",
+        "",
+        "Figures below show the measurements available for this run. Deadline-limited work remains incomplete.",
+        "Progressive checkpoints share one growing run; unfinished targets are not independent timing observations.",
+        "Strong scaling holds total inputs fixed; weak scaling holds inputs per worker fixed. Replicas are local worker processes.",
+        "",
+        "[Raw measurements](results.json) · [CSV table](results.csv)",
+        "[Reading variation bands](../../docs/benchmarking/README.md#reading-variation-bands) explains when repeats support deviations.",
+        "",
+    ]
+    for name, label in (
+        ("progressive", "Progressive runtime and completed work"),
+        ("output-distribution", "Observed output distribution"),
+        ("strong-scaling", "Strong scaling"),
+        ("weak-scaling", "Weak scaling"),
+        ("replicas", "Replica throughput and render skips"),
+    ):
+        if (output / f"{name}.png").is_file():
+            lines.extend([f"![{label}]({name}.png)", ""])
+    (output / "README.md").write_text(with_contents("\n".join(lines)))

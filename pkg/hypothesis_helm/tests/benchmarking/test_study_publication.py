@@ -3,9 +3,76 @@ Keep working data out of published studies and preserve usable document links.
 """
 
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 import pytest
 from hypothesis_helm_benchmarking.reporting.publication import STUDIES, publish_study
+
+from hypothesis_helm.reporting.reports.links import link_matches
+
+
+@pytest.mark.parametrize("suite", ["progressive", "scaling", "all"])
+def test_performance_publication_regenerates_its_readme(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, suite: str) -> None:
+    """
+    Keep the performance study browsable after replacing earlier published results.
+
+    Args:
+        tmp_path (Path): Isolated measurement and publication directories.
+        monkeypatch (pytest.MonkeyPatch): Resolve publication paths within the fixture.
+        suite (str): Available measurement families, including partial plot suites.
+
+    Returns:
+        None: The refreshed README links only available figures and retains raw measurements in the cache.
+    """
+    from hypothesis_helm_benchmarking.reporting.plots import plot
+    from hypothesis_helm_benchmarking.studies.performance import save
+
+    monkeypatch.chdir(tmp_path)
+    source = Path(".cache/refresh/run/outputs/performance")
+    destination = STUDIES / "performance"
+    destination.mkdir(parents=True)
+    (destination / "README.md").write_text("Earlier measured results\n")
+    guide = Path("docs/benchmarking/README.md")
+    guide.parent.mkdir(parents=True)
+    guide.write_text("# Benchmarking\n")
+    families = ["progressive"] if suite == "progressive" else ["strong", "weak"]
+    if suite == "all":
+        families.append("progressive")
+    document: dict[str, object] = {
+        "metadata": {"shard": None, "time_limit_seconds": 9},
+        "points": [
+            {
+                "shard": None,
+                "families": families,
+                "requested_permutations": count,
+                "replicas": 1,
+                "repeat": 0,
+                "pruning": pruning,
+                "status": "passed",
+                "completed": count,
+                "pruned": count // 2 if pruning else 0,
+                "rendered": count // 2 if pruning else count,
+                "elapsed_seconds": float(count),
+                "completed_per_second": 1.0,
+                "workers": [],
+            }
+            for count in (2, 4)
+            for pruning in (False, True)
+        ],
+    }
+    save(source, document)
+    plot(source, document)
+    published = publish_study(source, destination)
+    readme = destination / "README.md"
+    assert str(readme) in published
+    content = readme.read_text()
+    assert "# Performance and scaling" in content
+    assert "Earlier measured results" not in content
+    assert "local run data" in content
+    links = [unquote(urlsplit(match[2] or match[3]).path) for line in content.splitlines() for match in link_matches(line)]
+    assert all((readme.parent / target).exists() for target in links)
+    assert {target for target in links if target.endswith(".png")} == {path.name for path in source.glob("*.png")}
+    assert (source / "results.json").is_file() and not (destination / "results.json").exists()
 
 
 def test_publication_excludes_workspaces_and_replaces_stale_figures(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
