@@ -183,7 +183,8 @@ defines the six coefficients and explains where the approximation can fail.
 
 Optional [symbolic regression](response-surface.md#optional-symbolic-regression)
 compares PySR equations with quadratics on reserved cells and seeds, using retained measurements without rerunning Helm.
-See the [quick comparison](<../../studies/error-surface/symbolic/README.md>) for equations, validation scores and plots.
+Run `symbolic-surface` on retained measurements to generate equations, validation scores and plots.
+These optional reports are not produced by standard CI refreshes.
 
 ![Error rate and failure clustering](<../../studies/error-surface/clustering-error-recall.png>)
 
