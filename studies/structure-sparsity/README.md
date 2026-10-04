@@ -12,10 +12,10 @@ Each stage uses a smaller nested random subset of the same input prefix, fresh c
 
 | Stage | Inputs checked / assigned | Helm renders | Scalar coverage | Total variation | Maximum CDF error | Seconds |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 1,024 / 1,024 | 72 | 100.00% | 0.00000 | 0.00000 | 8.34 |
-| 2 | 256 / 256 | 59 | 100.00% | 0.01562 | 0.00781 | 3.89 |
-| 3 | 64 / 64 | 29 | 100.00% | 0.09375 | 0.09375 | 1.60 |
-| 4 | 16 / 16 | 11 | 100.00% | 0.31250 | 0.31250 | 0.63 |
+| 1 | 1,024 / 1,024 | 72 | 100.00% | 0.00000 | 0.00000 | 9.19 |
+| 2 | 256 / 256 | 59 | 100.00% | 0.01562 | 0.00781 | 4.00 |
+| 3 | 64 / 64 | 29 | 100.00% | 0.09375 | 0.09375 | 1.59 |
+| 4 | 16 / 16 | 11 | 100.00% | 0.31250 | 0.31250 | 0.59 |
 | 5 | 4 / 4 | 3 | 50.00% | 0.50000 | 0.50000 | 0.16 |
 
 | Stage | Categorical topology coverage | Categorical total variation |

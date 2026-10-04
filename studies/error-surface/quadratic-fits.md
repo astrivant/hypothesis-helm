@@ -70,7 +70,7 @@ Coefficients, bounds and diagnostics (local run data)
 
 ## clustering: default, Total runtime (seconds)
 
-RMSE: 0.6598; R²: 0.001; cells: 143.
+RMSE: 0.3413; R²: 0.008; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-default-total-seconds.png>)
 
@@ -82,7 +82,7 @@ RMSE: 0; R²: N/A (constant observations); cells: 143.
 
 ## clustering: exact-equivalence, Total runtime (seconds)
 
-RMSE: 0.09483; R²: 0.002; cells: 143.
+RMSE: 0.07076; R²: 0.001; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-exact-equivalence-total-seconds.png>)
 
@@ -94,7 +94,7 @@ RMSE: 0; R²: N/A (constant observations); cells: 143.
 
 ## clustering: random, Total runtime (seconds)
 
-RMSE: 0.04675; R²: 0.002; cells: 143.
+RMSE: 0.02612; R²: 0.006; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-random-total-seconds.png>)
 
@@ -106,7 +106,7 @@ RMSE: 0.4667; R²: 1.000; cells: 143.
 
 ## clustering: topology, Total runtime (seconds)
 
-RMSE: 0.04906; R²: 0.002; cells: 143.
+RMSE: 0.02695; R²: 0.008; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-topology-total-seconds.png>)
 
@@ -118,7 +118,7 @@ RMSE: 0.6966; R²: 1.000; cells: 143.
 
 ## clustering: combined, Total runtime (seconds)
 
-RMSE: 0.01934; R²: 0.003; cells: 143.
+RMSE: 0.01118; R²: 0.010; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-combined-total-seconds.png>)
 
@@ -130,7 +130,7 @@ RMSE: 0.4346; R²: 1.000; cells: 143.
 
 ## clustering: filter, Total runtime (seconds)
 
-RMSE: 0.8046; R²: 0.942; cells: 143.
+RMSE: 0.6424; R²: 0.960; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-filter-total-seconds.png>)
 
@@ -142,7 +142,7 @@ RMSE: 5.492; R²: 0.423; cells: 143.
 
 ## clustering: filter-adaptive, Total runtime (seconds)
 
-RMSE: 0.807; R²: 0.941; cells: 143.
+RMSE: 0.651; R²: 0.958; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-filter-adaptive-total-seconds.png>)
 
@@ -154,7 +154,7 @@ RMSE: 5.492; R²: 0.423; cells: 143.
 
 ## clustering: sample-random, Total runtime (seconds)
 
-RMSE: 0.4675; R²: 0.002; cells: 143.
+RMSE: 0.2439; R²: 0.004; cells: 143.
 
 ![Collected and fitted surfaces with residuals](<quadratic-clustering-sample-random-total-seconds.png>)
 
@@ -166,7 +166,7 @@ RMSE: 0.7721; R²: 0.999; cells: 143.
 
 ## depth: default, Total runtime (seconds)
 
-RMSE: 0.5637; R²: 0.052; cells: 78.
+RMSE: 0.3329; R²: 0.028; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-default-total-seconds.png>)
 
@@ -178,7 +178,7 @@ RMSE: 0; R²: N/A (constant observations); cells: 78.
 
 ## depth: exact-equivalence, Total runtime (seconds)
 
-RMSE: 0.1049; R²: 0.816; cells: 78.
+RMSE: 0.07867; R²: 0.888; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-exact-equivalence-total-seconds.png>)
 
@@ -190,7 +190,7 @@ RMSE: 0; R²: N/A (constant observations); cells: 78.
 
 ## depth: random, Total runtime (seconds)
 
-RMSE: 0.04091; R²: 0.055; cells: 78.
+RMSE: 0.02575; R²: 0.013; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-random-total-seconds.png>)
 
@@ -202,7 +202,7 @@ RMSE: 0.4334; R²: 1.000; cells: 78.
 
 ## depth: topology, Total runtime (seconds)
 
-RMSE: 0.05787; R²: 0.887; cells: 78.
+RMSE: 0.03892; R²: 0.942; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-topology-total-seconds.png>)
 
@@ -214,7 +214,7 @@ RMSE: 0.9745; R²: 1.000; cells: 78.
 
 ## depth: combined, Total runtime (seconds)
 
-RMSE: 0.04048; R²: 0.975; cells: 78.
+RMSE: 0.02559; R²: 0.989; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-combined-total-seconds.png>)
 
@@ -226,7 +226,7 @@ RMSE: 0.8124; R²: 1.000; cells: 78.
 
 ## depth: filter, Total runtime (seconds)
 
-RMSE: 0.6923; R²: 0.956; cells: 78.
+RMSE: 0.6079; R²: 0.962; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-filter-total-seconds.png>)
 
@@ -238,7 +238,7 @@ RMSE: 7.686; R²: 0.785; cells: 78.
 
 ## depth: filter-adaptive, Total runtime (seconds)
 
-RMSE: 0.6888; R²: 0.956; cells: 78.
+RMSE: 0.6196; R²: 0.960; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-filter-adaptive-total-seconds.png>)
 
@@ -250,7 +250,7 @@ RMSE: 7.686; R²: 0.785; cells: 78.
 
 ## depth: sample-random, Total runtime (seconds)
 
-RMSE: 0.3842; R²: 0.061; cells: 78.
+RMSE: 0.2524; R²: 0.035; cells: 78.
 
 ![Collected and fitted surfaces with residuals](<quadratic-depth-sample-random-total-seconds.png>)
 
@@ -262,7 +262,7 @@ RMSE: 1.164; R²: 0.998; cells: 78.
 
 ## redundancy: default, Total runtime (seconds)
 
-RMSE: 0.5793; R²: 0.026; cells: 104.
+RMSE: 0.3398; R²: 0.038; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-default-total-seconds.png>)
 
@@ -274,7 +274,7 @@ RMSE: 0; R²: N/A (constant observations); cells: 104.
 
 ## redundancy: exact-equivalence, Total runtime (seconds)
 
-RMSE: 0.6966; R²: 0.953; cells: 104.
+RMSE: 0.6272; R²: 0.958; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-exact-equivalence-total-seconds.png>)
 
@@ -286,7 +286,7 @@ RMSE: 0; R²: N/A (constant observations); cells: 104.
 
 ## redundancy: random, Total runtime (seconds)
 
-RMSE: 0.04269; R²: 0.025; cells: 104.
+RMSE: 0.02784; R²: 0.014; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-random-total-seconds.png>)
 
@@ -298,7 +298,7 @@ RMSE: 0.4334; R²: 1.000; cells: 104.
 
 ## redundancy: topology, Total runtime (seconds)
 
-RMSE: 0.6842; R²: 0.952; cells: 104.
+RMSE: 0.6192; R²: 0.956; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-topology-total-seconds.png>)
 
@@ -310,7 +310,7 @@ RMSE: 16.86; R²: 0.951; cells: 104.
 
 ## redundancy: combined, Total runtime (seconds)
 
-RMSE: 0.6815; R²: 0.955; cells: 104.
+RMSE: 0.6164; R²: 0.959; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-combined-total-seconds.png>)
 
@@ -322,7 +322,7 @@ RMSE: 16.13; R²: 0.958; cells: 104.
 
 ## redundancy: filter, Total runtime (seconds)
 
-RMSE: 1.185; R²: 0.869; cells: 104.
+RMSE: 1.079; R²: 0.879; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-filter-total-seconds.png>)
 
@@ -334,7 +334,7 @@ RMSE: 10.88; R²: 0.650; cells: 104.
 
 ## redundancy: filter-adaptive, Total runtime (seconds)
 
-RMSE: 1.194; R²: 0.871; cells: 104.
+RMSE: 1.11; R²: 0.876; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-filter-adaptive-total-seconds.png>)
 
@@ -346,7 +346,7 @@ RMSE: 10.88; R²: 0.650; cells: 104.
 
 ## redundancy: sample-random, Total runtime (seconds)
 
-RMSE: 0.4129; R²: 0.023; cells: 104.
+RMSE: 0.2417; R²: 0.052; cells: 104.
 
 ![Collected and fitted surfaces with residuals](<quadratic-redundancy-sample-random-total-seconds.png>)
 

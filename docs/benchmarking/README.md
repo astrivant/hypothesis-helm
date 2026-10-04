@@ -393,8 +393,8 @@ Use each command's `--help` for options.
 
 The figures below use local Python workers and the standard chart (local run data).
 <!-- refresh:performance:start -->
-With Helm `v4.3.0+gbec5b06`, pruning completed **88,628 checks with 256 renders**, compared
-with **12,562 checks** without pruning. Each run had a **9-minute budget**; 1 run was measured per method.
+With Helm `v4.3.0+gbec5b06`, pruning completed **128,835 checks with 256 renders**, compared
+with **16,937 checks** without pruning. Each run had a **9-minute budget**; 1 run was measured per method.
 <!-- refresh:performance:end -->
 Raw measurements (local run data), CSV (local run data), and
 [refresh provenance](refresh.md) include the host and run details.
