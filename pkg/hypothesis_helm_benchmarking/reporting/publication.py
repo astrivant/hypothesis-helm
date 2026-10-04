@@ -12,7 +12,7 @@ from urllib.parse import unquote, urlsplit
 
 from hypothesis_helm.reporting.reports.links import link_matches
 
-__all__ = ("FINAL_SUFFIXES", "STUDIES", "WORK_DIRECTORIES", "document_links", "final_files", "publish_study")
+__all__ = ("FINAL_SUFFIXES", "STUDIES", "WORK_DIRECTORIES", "document_links", "final_files", "publish_study", "verify_study")
 
 
 STUDIES = Path("studies")
@@ -107,6 +107,34 @@ def document_links(content: str, original: Path, destination: Path) -> str:
     return "\n".join(lines) + "\n"
 
 
+def verify_study(directory: Path, *, require_readme: bool = True) -> None:
+    """
+    Check study guides and figure pairs before expensive downstream work or publication.
+
+    Args:
+        directory (Path): Completed study output, excluding raw workspaces and charts.
+        require_readme (bool): Require the guide unless a later refresh recipe produces it.
+
+    Returns:
+        None: Every vector figure has a reader question and a matching raster image.
+
+    Raises:
+        ValueError: One or more publication artifacts are missing or incomplete.
+    """
+    problems = []
+    if require_readme and not (directory / "README.md").is_file():
+        problems.append("missing README.md")
+    for figure in final_files(directory):
+        if figure.suffix.lower() != ".svg":
+            continue
+        if 'id="plot-question"' not in figure.read_text():
+            problems.append(f"{figure.relative_to(directory)}: missing reader question")
+        if not figure.with_suffix(".png").is_file():
+            problems.append(f"{figure.relative_to(directory)}: missing PNG")
+    if problems:
+        raise ValueError(f"Incomplete study publication in {directory}:\n" + "\n".join(problems))
+
+
 def publish_study(source: Path, destination: Path) -> dict[str, str]:
     """
     Replace one study's published files with its finished documents and figures.
@@ -123,6 +151,7 @@ def publish_study(source: Path, destination: Path) -> dict[str, str]:
         raise ValueError(f"No final documents or plots to publish in {source}")
     if source.resolve() == destination.resolve() or source.resolve().is_relative_to(destination.resolve()):
         raise ValueError("Study measurements must be outside the final publication directory")
+    verify_study(source)
     # Only final documents and figures cross this boundary; raw data and worker state remain in the cache.
     expected = {path.relative_to(source) for path in sources}
     checksums = {}

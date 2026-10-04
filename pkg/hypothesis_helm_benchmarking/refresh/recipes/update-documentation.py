@@ -9,36 +9,11 @@ from pathlib import Path
 from statistics import mean
 
 from hypothesis_helm.reporting.documentation.contents import with_contents
+from hypothesis_helm.reporting.documentation.summaries import replace_summary, repository_summary
 from hypothesis_helm.reporting.reports.links import Publication
 from hypothesis_helm.reporting.reports.repository import write_reports
 
 __all__ = ()
-
-
-def replace_summary(text: str, name: str, replacement: str) -> str:
-    """
-    Replace one generated block while preserving surrounding editorial text.
-
-    Args:
-        text (str): Existing document.
-        name (str): Generated block identifier.
-        replacement (str): Newly measured summary.
-
-    Returns:
-        str: Document with only the selected block replaced.
-    """
-    start = f"<!-- refresh:{name}:start -->"
-    end = f"<!-- refresh:{name}:end -->"
-    if text.count(start) != 1 or text.count(end) != 1:
-        raise ValueError(f"Expected exactly one pair of {name} summary markers")
-    before, rest = text.split(start)
-    if end not in rest:
-        raise ValueError(f"Reversed {name} summary markers")
-    previous, after = rest.split(end)
-    # Keep unpublished case studies hidden until their surrounding comments are removed.
-    if previous.strip().startswith("<!--") and previous.strip().endswith("-->"):
-        replacement = f"<!--\n{replacement.strip()}\n-->"
-    return f"{before}{start}\n{replacement.strip()}\n{end}{after}"
 
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -77,18 +52,7 @@ if not args.benchmarks_only:
         verified = json.loads((run / "verification.json").read_text())
         assert verified["all_workers_finished"] and not verified["systemic_execution_failure"]
         report = json.loads(gzip.decompress((run / "scan.json.gz").read_bytes()))
-        settings = report["settings"]
-        attempts = sum(chart.get("attempts", 0) for chart in report["charts"])
-        policy = "`--filter-adaptive`" if settings.get("filter_adaptive") else "`--filter`" if settings["filter"] else "no filtering"
-        summary = (
-            f"We scanned **{len(report['charts']):,} {title} {'chart' if len(report['charts']) == 1 else 'charts'}**, "
-            f"recording **{attempts:,} test attempts**\n"
-            f"with {policy}, **{settings['workers']} path workers per chart**, "
-            f"and a **{settings['chart_timeout_seconds'] / 60:g}-minute budget per chart**.\n"
-            "The reports distinguish test failures, blocked checks and incomplete coverage; chart bugs require triage.\n\n"
-            f"Read the [scan results](docs/reports/{name}.md), download the\n"
-            f"[combined PDF](docs/reports/{name}.pdf)."
-        )
+        summary = repository_summary(report, title, Path("docs/reports") / name)
         content = replace_summary(content, name, summary)
         reports.append((name, report))
     updates[readme] = content

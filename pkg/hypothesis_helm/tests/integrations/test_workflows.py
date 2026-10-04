@@ -2,7 +2,12 @@
 Verify the unified CI graph, setup contexts and release artifact handoff.
 """
 
+from __future__ import annotations
+
+import json
+import os
 import subprocess
+import sys
 from graphlib import TopologicalSorter
 from pathlib import Path
 
@@ -563,14 +568,16 @@ def test_repository_scan_is_manual_with_matching_shards(repository: str, shards:
         assert "https://github.com/prometheus-community/helm-charts.git" in restore
     publish = mapping(jobs[f"{repository}-publish"])
     assert "workflow_dispatch" in str(publish["if"]) and "refs/heads/main" not in str(publish["if"])
-    assert mapping(publish["permissions"]) == {"contents": "write"}
-    dependencies = {f"{repository}-request", f"{repository}-scan"}
+    assert mapping(publish["permissions"]) == {"contents": "write", "actions": "write"}
+    dependencies = {f"{repository}-request", f"{repository}-scan", "refresh-finish"}
     if repository == "prometheus":
         dependencies.add("bitnami-publish")
     assert set(sequence(publish["needs"])) == dependencies
     assert "always()" in str(publish["if"])
     publish_steps = [mapping(step) for step in sequence(publish["steps"])]
-    assert any(step.get("run") == f"bash .github/repository-report.sh {repository}" for step in publish_steps)
+    publication = next(step for step in publish_steps if step.get("run") == f"bash .github/repository-report.sh {repository}")
+    assert mapping(publication["env"])["DEFAULT_BRANCH"] == "${{ github.event.repository.default_branch }}"
+    assert mapping(publication["env"])["GH_TOKEN"] == "${{ github.token }}"
     checkout = next(step for step in publish_steps if str(step.get("uses", "")).startswith("actions/checkout@"))
     assert mapping(checkout["with"])["ref"] == "${{ github.ref_name }}"
     request = mapping(jobs[f"{repository}-request"])
@@ -581,6 +588,107 @@ def test_repository_scan_is_manual_with_matching_shards(repository: str, shards:
     inputs = mapping(mapping(mapping(workflows()["ci.yml"]["on"])["workflow_dispatch"])["inputs"])
     assert mapping(inputs[f"{repository}-scan"])["default"] is False
     assert jobs["deploy-stage"]["needs"] == "verification"
+
+
+@pytest.mark.parametrize("repository", ["bitnami", "prometheus"])
+@pytest.mark.parametrize("available", [False, True])
+def test_scan_requires_publication_credentials_before_measurement(repository: str, available: bool) -> None:
+    """
+    Check protected-branch credentials before scheduling a repository scan.
+
+    Args:
+        repository (str): Requested chart repository.
+        available (bool): Whether the dedicated publication secret has been configured.
+
+    Returns:
+        None: The default branch requires its publication token; other branches use the Actions token.
+    """
+    jobs = all_jobs()
+    steps = [mapping(step) for step in sequence(jobs[f"{repository}-request"]["steps"])]
+    preflight = steps[1]
+    condition = "github.ref == format('refs/heads/{0}', github.event.repository.default_branch)"
+    assert preflight["if"] == "${{ " + condition + " }}"
+    assert mapping(preflight["env"])["PUBLISH_TOKEN_AVAILABLE"] == "${{ secrets.BENCHMARK_PUBLISH_TOKEN != '' }}"
+    result = subprocess.run(
+        ["bash", "-e", "-c", str(preflight["run"])],
+        env={"PUBLISH_TOKEN_AVAILABLE": str(available).lower()},
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == (0 if available else 1), result.stderr
+    if not available:
+        assert "BENCHMARK_PUBLISH_TOKEN" in result.stdout
+    publish = [mapping(step) for step in sequence(jobs[f"{repository}-publish"]["steps"])]
+    checkout = next(step for step in publish if str(step.get("uses", "")).startswith("actions/checkout@"))
+    assert mapping(checkout["with"])["token"] == "${{ " + condition + " && secrets.BENCHMARK_PUBLISH_TOKEN || github.token }}"
+
+
+@pytest.mark.parametrize(
+    ("ref", "response", "status"),
+    [("HEAD", "a" * 40, 0), ("tags/chart/1.2.3", "b" * 40, 0), ("c" * 40, "c" * 40, 0), ("missing", "", 1), ("HEAD", "null", 0)],
+)
+def test_bitnami_resolves_one_remote_commit(tmp_path: Path, ref: str, response: str, status: int) -> None:
+    """
+    Resolve upstream HEAD or a configured ref before handing one immutable commit to every scan shard.
+
+    Args:
+        tmp_path (Path): Isolated GitHub CLI stub and job output files.
+        ref (str): Configured remote reference.
+        response (str): Commit SHA returned by GitHub, or a malformed response.
+        status (int): GitHub API exit status.
+
+    Returns:
+        None: Valid refs produce one shared SHA; missing refs and malformed responses stop the request job.
+    """
+    document = workflows()["stage-measure.yml"]
+    assert mapping(document["env"])["BITNAMI_REMOTE_REF"] == "${{ vars.BITNAMI_REMOTE_REF || 'HEAD' }}"
+    jobs = all_jobs()
+    request = jobs["bitnami-request"]
+    assert mapping(request["outputs"])["sha"] == "${{ steps.source.outputs.sha }}"
+    steps = [mapping(step) for step in sequence(request["steps"])]
+    resolver = next(step for step in steps if step.get("id") == "source")
+    gh = tmp_path / "gh"
+    gh.write_text(
+        f"#!{sys.executable}\nimport json, sys\nfrom pathlib import Path\n"
+        "Path('calls.json').write_text(json.dumps(sys.argv[1:]))\n"
+        f"print({response!r})\nsys.exit({status})\n"
+    )
+    gh.chmod(0o755)
+    output = tmp_path / "output"
+    summary = tmp_path / "summary"
+    result = subprocess.run(
+        ["bash", "-eo", "pipefail", "-c", str(resolver["run"])],
+        cwd=tmp_path,
+        env={
+            **os.environ,
+            "PATH": f"{tmp_path}:{os.environ['PATH']}",
+            "BITNAMI_REMOTE_REF": ref,
+            "GITHUB_OUTPUT": str(output),
+            "GITHUB_STEP_SUMMARY": str(summary),
+        },
+        capture_output=True,
+        text=True,
+    )
+    if status or response == "null":
+        assert result.returncode != 0 and not output.exists(), result.stderr
+    else:
+        assert result.returncode == 0, result.stderr
+        assert output.read_text() == f"sha={response}\n"
+        assert ref in summary.read_text() and response in summary.read_text()
+    endpoint = "commits?per_page=1" if ref == "HEAD" else "commits/" + ref.replace("/", "%2F")
+    assert json.loads((tmp_path / "calls.json").read_text()) == [
+        "api",
+        f"repos/bitnami/charts/{endpoint}",
+        "--jq",
+        ".[0].sha" if ref == "HEAD" else ".sha",
+    ]
+    scan_steps = [mapping(step) for step in sequence(jobs["bitnami-scan"]["steps"])]
+    checkout = next(step for step in scan_steps if mapping(step.get("with", {})).get("repository") == "bitnami/charts")
+    assert mapping(checkout["with"])["ref"] == "${{ needs.bitnami-request.outputs.sha }}"
+    assert mapping(checkout["with"])["path"] == "third_party/bitnami-charts"
+    publish_steps = [mapping(step) for step in sequence(jobs["bitnami-publish"]["steps"])]
+    publish = next(step for step in publish_steps if step.get("run") == "bash .github/repository-report.sh bitnami")
+    assert mapping(publish["env"])["SCAN_SOURCE_SHA"] == "${{ needs.bitnami-request.outputs.sha }}"
 
 
 def test_stage_grouping_keeps_independent_work_parallel() -> None:

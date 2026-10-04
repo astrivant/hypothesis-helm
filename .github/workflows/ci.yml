@@ -12,11 +12,11 @@ on:
         type: boolean
         default: false
       bitnami-scan:
-        description: Scan pinned Bitnami charts on eighty standard runners; commit reports only when run on main
+        description: Scan Bitnami charts at BITNAMI_REMOTE_REF (default HEAD) and commit reports to the selected branch
         type: boolean
         default: false
       prometheus-scan:
-        description: Scan pinned Prometheus charts on eighty standard runners; commit reports only when run on main
+        description: Scan pinned Prometheus charts on eighty standard runners and commit reports to the selected branch
         type: boolean
         default: false
       pull-request:

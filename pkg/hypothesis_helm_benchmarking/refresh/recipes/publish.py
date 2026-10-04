@@ -10,7 +10,7 @@ from pathlib import Path
 
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES
 from hypothesis_helm_benchmarking.reporting.publication import STUDIES as PUBLISHED_STUDIES
-from hypothesis_helm_benchmarking.reporting.publication import publish_study
+from hypothesis_helm_benchmarking.reporting.publication import publish_study, verify_study
 
 __all__ = ()
 
@@ -25,7 +25,11 @@ assert (root / "topology-retry-finished-epoch.txt").exists()
 assert (root / "outputs/chart-topologies/verification.json").exists()
 assert (root / "outputs/chart-topologies/results.json").exists()
 checksums = {}
-for directory in sorted((root / "outputs").iterdir()):
+directories = sorted((root / "outputs").iterdir())
+# Check every study before replacing any previously published files.
+for directory in directories:
+    verify_study(directory)
+for directory in directories:
     checksums.update(publish_study(directory, PUBLISHED_STUDIES / directory.name))
 shutil.copytree(
     root / "parameters",

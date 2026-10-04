@@ -285,17 +285,30 @@ Select either option, or both in one dispatch. Both selected scans run independe
 
 Use the PR's head branch name, not its number. The selected branch must contain the scan workflow.
 Scans never start automatically on PR events or ordinary pushes. They may run alongside a manually requested PR refresh.
-Eighty `ubuntu-latest` runners (4 vCPU / 16 GiB each for this public repository) use the same pinned submodule
-for each selected repository. Prometheus uses HTTPS checkout without an SSH key.
+Eighty `ubuntu-latest` runners (4 vCPU / 16 GiB each for this public repository) use the same source commit
+for each selected repository. Bitnami resolves upstream HEAD once before starting its shards. Set the optional repository Actions
+variable `BITNAMI_REMOTE_REF` to a commit SHA, branch or tag to choose another revision; the workflow exposes it as
+`env.BITNAMI_REMOTE_REF`, defaulting to `HEAD`. The resolved SHA appears in the job summary, scan reports and root README.
+To repeat a scan at the recorded revision:
+
+```sh
+gh variable set BITNAMI_REMOTE_REF --repo astrivant/hypothesis-helm --body '<commit SHA>'
+gh workflow run ci.yml --ref main -f bitnami-scan=true
+```
+
+Delete the variable or set it to `HEAD` to resume scanning the latest upstream commit. The scan does not change the committed
+Bitnami submodule pin. Prometheus continues to use its pinned submodule with HTTPS checkout.
 Each owns a distinct segment of every chart's values paths, with four local workers, `--filter`, seed 0 and ten examples per path.
 Testing allows five minutes per chart and five hours per shard; unfinished work stays visible in the report.
 
-One aggregation job verifies all eighty reports, including empty partitions, before publishing Markdown, PDF and figures
-under `docs/reports/bitnami/` or `docs/reports/prometheus/`. On `main`, it updates the README links and commits only final reports and those links.
-On PR branches, it retains the final reports as downloadable Actions artifacts without committing them.
+One aggregation job verifies all eighty reports, including empty partitions, before publishing Markdown, PDF, figures and linked audit attachments
+under `docs/reports/bitnami/` or `docs/reports/prometheus/`. It updates the README links and commits final reports and those links
+back to the selected branch. The root README's marked case study is regenerated from the aggregate counts, scan settings and source commit.
+When refresh is also requested, report commits wait until refresh finishes.
 Chart findings can be published; missing or incompatible shard evidence blocks publication. Raw measurements remain in Actions
 artifacts for 30 days. The push is never forced: concurrent changes or branch protections can reject it, leaving artifacts available.
-The job's `GITHUB_TOKEN` needs permission to push to `main`; it does not bypass branch protections.
+The default branch uses `BENCHMARK_PUBLISH_TOKEN`, with the same permissions described above for refresh. A missing token rejects
+the request before starting the scan. Other branches use `GITHUB_TOKEN` and explicitly dispatch CI after committing the reports.
 
 ## Documentation contents
 

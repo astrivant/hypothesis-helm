@@ -20,7 +20,7 @@ on:
         default: ''
     secrets:
       BENCHMARK_PUBLISH_TOKEN:
-        description: Token allowed to push benchmark publications directly to the protected default branch
+        description: Token allowed to push benchmark publications and scan reports directly to the protected default branch
         required: false
 
 permissions:
@@ -30,6 +30,7 @@ env:
   HELM_VERSION: v4.3.0
   POETRY_VIRTUALENVS_IN_PROJECT: 'true'
   HH_BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' && (github.event_name != 'workflow_dispatch' || inputs.binary-cache) }}
+  BITNAMI_REMOTE_REF: ${{ vars.BITNAMI_REMOTE_REF || 'HEAD' }}
 
 defaults:
   run:
@@ -621,6 +622,8 @@ jobs:
     name: Validate manual Bitnami scan request
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.bitnami-scan }}
     runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.source.outputs.sha }}
     steps:
       - name: Require a branch for the manual scan
         env:
@@ -630,6 +633,32 @@ jobs:
               echo '::error::Bitnami scans must be dispatched on main or a PR head branch.'
               exit 1
           fi
+      - name: Require a publication token for the protected default branch
+        if: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+        env:
+          PUBLISH_TOKEN_AVAILABLE: ${{ secrets.BENCHMARK_PUBLISH_TOKEN != '' }}
+        run: |
+          if [[ "$PUBLISH_TOKEN_AVAILABLE" != true ]]; then
+              echo '::error::Set BENCHMARK_PUBLISH_TOKEN to a token allowed to bypass default-branch protection before running a scan on that branch.'
+              exit 1
+          fi
+      - name: Resolve the Bitnami source commit once for all shards
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "$BITNAMI_REMOTE_REF" == HEAD ]]; then
+              sha=$(gh api 'repos/bitnami/charts/commits?per_page=1' --jq '.[0].sha')
+          else
+              encoded_ref=$(jq -rn --arg ref "$BITNAMI_REMOTE_REF" '$ref | @uri')
+              sha=$(gh api "repos/bitnami/charts/commits/$encoded_ref" --jq '.sha')
+          fi
+          if [[ ! "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+              echo '::error::Bitnami ref did not resolve to a commit SHA.'
+              exit 1
+          fi
+          echo "sha=$sha" >>"$GITHUB_OUTPUT"
+          printf 'Bitnami source: %s resolved to %s\n' "$BITNAMI_REMOTE_REF" "$sha" >>"$GITHUB_STEP_SUMMARY"
 
   bitnami-scan:
     name: "Bitnami values (${{ matrix.shard }}/80)"
@@ -651,8 +680,13 @@ jobs:
                 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]
     steps:
       - uses: actions/checkout@v7
-      - name: Restore the pinned Bitnami charts
-        run: git submodule update --init third_party/bitnami-charts
+      - name: Check out the resolved Bitnami commit
+        uses: actions/checkout@v7
+        with:
+          repository: bitnami/charts
+          ref: ${{ needs.bitnami-request.outputs.sha }}
+          path: third_party/bitnami-charts
+          persist-credentials: false
       - name: Use one scan worker per available CPU
         id: capacity
         run: echo "jobs=$(nproc)" >>"$GITHUB_OUTPUT"
@@ -685,16 +719,19 @@ jobs:
   bitnami-publish:
     name: Aggregate Bitnami scan and publish reports
     if: ${{ always() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.bitnami-scan && needs.bitnami-request.result == 'success' && needs.bitnami-scan.result != 'skipped' }}
-    needs: [bitnami-request, bitnami-scan]
+    # Let refresh commit first when requested together, then check out the updated branch.
+    needs: [bitnami-request, bitnami-scan, refresh-finish]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
       contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 0
+          token: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && secrets.BENCHMARK_PUBLISH_TOKEN || github.token }}
       - uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
@@ -705,6 +742,9 @@ jobs:
       - name: Verify all eighty partitions and publish final reports
         env:
           SCAN_RUN_ID: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
+          SCAN_SOURCE_SHA: ${{ needs.bitnami-request.outputs.sha }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GH_TOKEN: ${{ github.token }}
         run: bash .github/repository-report.sh bitnami
       - uses: actions/upload-artifact@v7
         if: ${{ always() }}
@@ -727,6 +767,15 @@ jobs:
         run: |
           if [[ "$REQUEST_REF" != refs/heads/* ]]; then
               echo '::error::Prometheus scans must be dispatched on main or a PR head branch.'
+              exit 1
+          fi
+      - name: Require a publication token for the protected default branch
+        if: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+        env:
+          PUBLISH_TOKEN_AVAILABLE: ${{ secrets.BENCHMARK_PUBLISH_TOKEN != '' }}
+        run: |
+          if [[ "$PUBLISH_TOKEN_AVAILABLE" != true ]]; then
+              echo '::error::Set BENCHMARK_PUBLISH_TOKEN to a token allowed to bypass default-branch protection before running a scan on that branch.'
               exit 1
           fi
 
@@ -787,16 +836,18 @@ jobs:
     name: Aggregate Prometheus scan and publish reports
     if: ${{ always() && !cancelled() && github.event_name == 'workflow_dispatch' && inputs.prometheus-scan && needs.prometheus-request.result == 'success' && needs.prometheus-scan.result != 'skipped' }}
     # Serialize report commits when both scans are requested; checkout the branch after Bitnami publishes.
-    needs: [prometheus-request, prometheus-scan, bitnami-publish]
+    needs: [prometheus-request, prometheus-scan, bitnami-publish, refresh-finish]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
       contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 0
+          token: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && secrets.BENCHMARK_PUBLISH_TOKEN || github.token }}
       - uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
@@ -807,6 +858,8 @@ jobs:
       - name: Verify all eighty partitions and publish final reports
         env:
           SCAN_RUN_ID: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GH_TOKEN: ${{ github.token }}
         run: bash .github/repository-report.sh prometheus
       - uses: actions/upload-artifact@v7
         if: ${{ always() }}

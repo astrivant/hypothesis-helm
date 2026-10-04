@@ -19,6 +19,10 @@ if [[ "${GITHUB_EVENT_NAME:-}" != workflow_dispatch || "${GITHUB_REF:-}" != refs
     echo "::error::${title} publication is only allowed for manual branch runs."
     exit 2
 fi
+git diff --cached --quiet || {
+    echo '::error::Unexpected staged changes before scan publication.'
+    exit 2
+}
 
 # Aggregate validates common settings, source identities and exclusive shard ownership.
 status=0
@@ -32,13 +36,25 @@ fi
 # Publish a self-contained final report directory; raw shard data stays in Actions artifacts.
 poetry run python - "$repository" <<'PY'
 import json
+import os
 import sys
 from pathlib import Path
+from hypothesis_helm.reporting.documentation.summaries import replace_summary, repository_summary
 from hypothesis_helm.reporting.reports.repository import write_reports
+from hypothesis_helm.schemas.contracts import mapping, sequence
 
 repository = sys.argv[1]
-report = json.loads(Path(f'.cache/{repository}-final/report.json').read_text())
-write_reports(report, Path(f'docs/reports/{repository}/report'))
+report = mapping(json.loads(Path(f'.cache/{repository}-final/report.json').read_text()))
+expected = os.environ.get('SCAN_SOURCE_SHA')
+records = [report, *sequence(report.get('shards', []))]
+if expected and any(mapping(mapping(record).get('source', {})).get('revision') != expected for record in records):
+    raise ValueError('Aggregated scan source does not match the requested commit')
+stem = Path(f'docs/reports/{repository}/report')
+title = 'Bitnami' if repository == 'bitnami' else 'Prometheus Community'
+readme = Path('README.md')
+summary = replace_summary(readme.read_text(), repository, repository_summary(report, title, stem))
+write_reports(report, stem)
+readme.write_text(summary)
 for name in ('README.md', 'docs/README.md'):
     path = Path(name)
     text = path.read_text()
@@ -47,14 +63,10 @@ for name in ('README.md', 'docs/README.md'):
     path.write_text(text)
 PY
 
-# PR branches retain verified reports as Actions artifacts without updating main.
-if [[ "$GITHUB_REF" != refs/heads/main ]]; then
-    echo "${title} reports are ready for download; report commits are restricted to main."
-    exit 0
-fi
-
-# Only final human-readable reports are staged. No raw observations or unrelated edits.
-mapfile -d '' -t reports < <(find "docs/reports/${repository}" -type f \( -name '*.md' -o -name '*.pdf' -o -name '*.png' -o -name '*.svg' \) -print0)
+# Include the compact audit attachments linked by the final reports; raw observations stay in artifacts.
+mapfile -d '' -t reports < <(find "docs/reports/${repository}" -type f \
+    \( -name '*.md' -o -name '*.pdf' -o -name '*.png' -o -name '*.svg' \
+    -o -path "docs/reports/${repository}/report-data/*.audit.json.gz" \) -print0)
 git add -- README.md docs/README.md "${reports[@]}"
 if git diff --cached --quiet; then
     echo "${title} reports are unchanged."
@@ -64,4 +76,8 @@ git config user.name 'github-actions[bot]'
 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 git -c core.hooksPath=/dev/null commit -m "Update ${title} scan reports ($SCAN_RUN_ID)"
 # Never force-push over changes that arrived while the report was being prepared.
-git push origin HEAD:main
+git push origin "HEAD:$GITHUB_REF"
+if [[ "$GITHUB_REF" != "refs/heads/${DEFAULT_BRANCH:?default branch}" ]]; then
+    # Branch publication uses GITHUB_TOKEN, so start checks explicitly as refresh does.
+    gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref "${GITHUB_REF#refs/heads/}"
+fi

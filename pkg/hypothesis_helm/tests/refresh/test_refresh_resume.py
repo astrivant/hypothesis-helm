@@ -304,6 +304,9 @@ def test_publication_distinguishes_readme_edits_from_changed_measurements(tmp_pa
         readme.write_text(broken)
         failed = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True)
         assert failed.returncode != 0 and "visible-missing.md" in failed.stderr
+    readme.write_text(readme_content + "\n[First](first-missing.md) [Second](second-missing.md)\n")
+    failed = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True)
+    assert failed.returncode != 0 and "first-missing.md" in failed.stderr and "second-missing.md" in failed.stderr
     readme.write_text(readme_content)
     (study / "plot.png").write_text('{"measured": 999}\n')
     failed = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True)

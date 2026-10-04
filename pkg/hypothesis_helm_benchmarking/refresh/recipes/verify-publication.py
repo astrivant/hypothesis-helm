@@ -81,6 +81,7 @@ if not args.benchmarks_only:
 documents.append(benchmarks / "README.md")
 documents.extend(STUDIES.rglob("*.md"))
 links = 0
+missing_links = []
 for document in documents:
     fence = ""
     comment = False
@@ -109,8 +110,11 @@ for document in documents:
             if parsed.scheme or parsed.netloc or not parsed.path:
                 continue
             destination = document.parent / unquote(parsed.path)
-            assert destination.exists(), (document, target)
+            if not destination.exists():
+                missing_links.append(f"{document}: {target}")
             links += 1
+
+assert not missing_links, "Broken publication links:\n" + "\n".join(missing_links)
 
 result = {
     "verified_benchmark_artifacts": len(checksums) - len(documentation_edits),

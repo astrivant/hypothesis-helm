@@ -198,6 +198,8 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
         "parameters",
         "recipe",
         "plot",
+        "reader-question",
+        "study-guide",
         "sampling-reference",
         "sampling-inventory",
         "sensitivity-incomplete",
@@ -524,6 +526,12 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                     for extension in ("png", "svg"):
                         (directory / f"{axis}-{metric.replace('_', '-')}.{extension}").write_bytes(b"x" * 1001)
         (directory / "results.json").write_text(json.dumps(document))
+    for vector in (tmp_path / "outputs").rglob("*.svg"):
+        vector.write_text('<svg><g id="plot-question" />' + " " * 1001 + "</svg>")
+    if damage == "reader-question":
+        (tmp_path / "outputs/performance/topology-stress.svg").write_text("<svg />")
+    elif damage == "study-guide":
+        (tmp_path / "outputs/performance/README.md").unlink()
     result = subprocess.run(
         [
             sys.executable,
@@ -639,15 +647,17 @@ def test_topology_retries_include_recipe_files(tmp_path: Path) -> None:
     assert plots == [f"{records[3]['output']}/graph.json\t{records[3]['output']}\tsynthetic/plot"]
 
 
-def test_publish_groups_studies(tmp_path: Path) -> None:
+@pytest.mark.parametrize("incomplete", [False, True])
+def test_publish_groups_studies(tmp_path: Path, incomplete: bool) -> None:
     """
     Publish performance alongside other studies and keep the benchmark root clear.
 
     Args:
         tmp_path (Path): Isolated completed refresh and publication destination.
+        incomplete (bool): Omit a late study guide to verify that all publications are checked before replacement.
 
     Returns:
-        None: Published paths, retained recipes and checksums use the grouped layout.
+        None: Complete publications use the grouped layout; incomplete outputs preserve every earlier publication.
     """
     project = PROJECT_ROOT
     recipes = project / "pkg/hypothesis_helm_benchmarking/refresh/recipes"
@@ -695,6 +705,17 @@ def test_publish_groups_studies(tmp_path: Path) -> None:
         (output / "cases").mkdir()
         (output / "cases/log.md").write_text("worker diagnostic")
     (run / "outputs/chart-topologies/verification.json").write_text("{}")
+    if incomplete:
+        previous = tmp_path / "studies/bug-density/README.md"
+        previous.parent.mkdir(parents=True)
+        previous.write_text("Previous results")
+        (run / "outputs/structure-sparsity/README.md").unlink()
+        failed = subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, capture_output=True, text=True)
+        assert failed.returncode != 0 and "missing README.md" in failed.stderr
+        assert previous.read_text() == "Previous results"
+        assert not (tmp_path / "studies/bug-density/plot.png").exists()
+        assert not (run / "sha256.json").exists()
+        return
     subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, check=True, capture_output=True)
     published = tmp_path / "pkg/hypothesis_helm_benchmarking/assets"
     assert not (published / "results.json").exists()

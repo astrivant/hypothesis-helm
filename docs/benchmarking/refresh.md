@@ -101,6 +101,13 @@ parallelism inside each runner. Preparation verification uses eight `ubuntu-late
 available CPU on each runner. Local preparation still runs the complete suite on one machine.
 The separate Bitnami and Prometheus scans each use 80 standard `ubuntu-latest` runners, with one path worker per available CPU
 when enough paths remain. Each runner tests a separate partition of every chart's values paths; aggregation requires all 80 shard reports.
+Each scan commits its Markdown, PDF, report figures and linked audit attachments under `docs/reports/bitnami/` or `docs/reports/prometheus/`
+to the branch selected with `--ref`, even without `refresh=true`. Raw scan data remains in Actions artifacts.
+Scans on the default branch require the same `BENCHMARK_PUBLISH_TOKEN` as refresh; this is checked before starting the scan.
+Bitnami uses the latest upstream commit by default. Set the repository Actions variable `BITNAMI_REMOTE_REF` to pin a commit, branch or tag;
+all shards use one resolved SHA, recorded in the reports and refreshed README case study. See [repeatable repository scans](../development.md#manual-repository-scans).
+When combined with refresh, report publication waits for the refresh commit. Bitnami publishes before Prometheus when both are requested.
+Publication uses ordinary fast-forward pushes and starts CI on the resulting report commit.
 Standard Linux runners provide 4 CPUs and 16 GB RAM for public repositories, where their execution is free.
 See [GitHub's standard runner specifications](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories).
 With all 80 shards active, each scan has 320 CPUs. Both scans together request 160 runners; GitHub's organization-wide concurrency limit
@@ -113,6 +120,8 @@ After pushing the workflow changes, launch it with:
 ```sh
 gh workflow run ci.yml --ref main -f refresh=true
 gh workflow run ci.yml --ref my-pr-branch -f refresh=true -f pull-request=123
+gh workflow run ci.yml --ref main -f bitnami-scan=true
+gh workflow run ci.yml --ref my-pr-branch -f bitnami-scan=true
 ```
 
 Local `bash scripts/project-run.sh hypothesis-helm-refresh` still runs timing studies sequentially on one machine to avoid CPU contention affecting

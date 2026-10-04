@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 import pytest
-from hypothesis_helm_benchmarking.reporting.publication import STUDIES, publish_study
+from hypothesis_helm_benchmarking.reporting.publication import STUDIES, publish_study, verify_study
 
 from hypothesis_helm.reporting.reports.links import link_matches
 
@@ -140,3 +140,58 @@ def test_empty_or_overlapping_publication_preserves_existing_results(tmp_path: P
     with pytest.raises(ValueError, match="outside"):
         publish_study(destination, destination)
     assert report.read_text() == "Previous results"
+
+
+def test_incomplete_figures_are_reported_together_before_publication(tmp_path: Path) -> None:
+    """
+    Catch missing guides, unlabelled vectors and absent raster pairs before overwriting earlier results.
+
+    Args:
+        tmp_path (Path): Incomplete new study and previously published guide.
+
+    Returns:
+        None: One failure lists every broken artifact and leaves the previous publication intact.
+    """
+    source = tmp_path / "outputs/demo"
+    source.mkdir(parents=True)
+    (source / "plot.svg").write_text("<svg />")
+    nested = source / "nested"
+    nested.mkdir()
+    (nested / "detail.svg").write_text('<svg><g id="plot-question" /></svg>')
+    destination = tmp_path / "studies/demo"
+    destination.mkdir(parents=True)
+    (destination / "README.md").write_text("Previous results")
+    with pytest.raises(ValueError) as failure:
+        publish_study(source, destination)
+    message = str(failure.value)
+    assert "missing README.md" in message
+    assert "plot.svg: missing reader question" in message
+    assert "plot.svg: missing PNG" in message
+    assert "nested/detail.svg: missing PNG" in message
+    assert (destination / "README.md").read_text() == "Previous results"
+    assert not (destination / "plot.svg").exists()
+
+
+def test_measurement_can_defer_only_the_study_guide(tmp_path: Path) -> None:
+    """
+    Permit later table recipes to write the guide while checking figures immediately.
+
+    Args:
+        tmp_path (Path): Newly rendered figures and excluded raw workspaces.
+
+    Returns:
+        None: Deferred guides pass measurement checks but remain mandatory for publication.
+    """
+    (tmp_path / "plot.svg").write_text('<svg><g id="plot-question" /></svg>')
+    (tmp_path / "plot.png").write_bytes(b"raster")
+    # PCA intentionally publishes some detail plots only as PNGs.
+    (tmp_path / "detail.png").write_bytes(b"raster")
+    for name in ("cases", "runs"):
+        directory = tmp_path / name
+        directory.mkdir()
+        (directory / "raw.svg").write_text("<svg />")
+    verify_study(tmp_path, require_readme=False)
+    with pytest.raises(ValueError, match="missing README.md"):
+        verify_study(tmp_path)
+    (tmp_path / "README.md").write_text("# Results\n")
+    verify_study(tmp_path)
