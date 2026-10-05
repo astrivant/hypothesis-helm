@@ -663,7 +663,8 @@ def test_dependency_timing_accounting(
         chart.mkdir()
         (chart / "Chart.yaml").write_text(f"apiVersion: v2\nname: {name}\nversion: '1.0.0'\n")
         (chart / "values.yaml").write_text("{}\n")
-    clock = [time.monotonic()]
+    # Cross a floating-point precision boundary to reproduce clock subtraction round-off consistently.
+    clock = [127.3]
     monkeypatch.setattr(module, "time", SimpleNamespace(monotonic=lambda: clock[0], time=time.time))
     remaining = []
 
@@ -730,10 +731,12 @@ def test_dependency_timing_accounting(
     )
     report = json.loads(result_text(capsys.readouterr().out))
     assert code == {"passed": 0, "failed": 2, "timeout": 2, "interrupted": 130}[outcome]
-    assert report["dependency_preparation_seconds"] == (4 if outcome == "interrupted" else 8)
-    assert report["testing_seconds"] == (0.5 if outcome == "passed" else 0)
-    assert report["elapsed_seconds"] == report["dependency_preparation_seconds"] + report["testing_seconds"]
-    assert remaining == ([2, 1.75] if outcome == "passed" else [])
+    assert report["dependency_preparation_seconds"] == pytest.approx(4 if outcome == "interrupted" else 8, rel=0, abs=1e-12)
+    assert report["testing_seconds"] == pytest.approx(0.5 if outcome == "passed" else 0, rel=0, abs=1e-12)
+    assert report["elapsed_seconds"] == pytest.approx(
+        report["dependency_preparation_seconds"] + report["testing_seconds"], rel=0, abs=1e-12
+    )
+    assert remaining == pytest.approx([2, 1.75] if outcome == "passed" else [], rel=0, abs=1e-12)
     assert report["scan_status"] == ("interrupted" if outcome == "interrupted" else "completed" if outcome == "passed" else "not-tested")
 
 
