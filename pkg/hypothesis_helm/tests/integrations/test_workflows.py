@@ -562,6 +562,8 @@ def test_repository_scan_is_manual_with_matching_shards(repository: str, shards:
     assert settings["shard"] == f"${{{{ matrix.shard }}}}/{shards}"
     directory = "bitnami-charts" if repository == "bitnami" else "prometheus-community-helm-charts"
     assert settings["chart"] == f"third_party/{directory}"
+    if repository == "bitnami":
+        assert settings["max-depth"] == "2"
     assert settings["run-id"] == f"{repository}-${{{{ github.run_id }}}}-${{{{ github.run_attempt }}}}"
     if repository == "prometheus":
         restore = next(str(step["run"]) for step in steps if "submodule update" in str(step.get("run", "")))

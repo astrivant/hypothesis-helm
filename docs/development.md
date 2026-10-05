@@ -298,6 +298,7 @@ gh workflow run ci.yml --ref main -f bitnami-scan=true
 
 Delete the variable or set it to `HEAD` to resume scanning the latest upstream commit. The scan does not change the committed
 Bitnami submodule pin. Prometheus continues to use its pinned submodule with HTTPS checkout.
+Bitnami scans use `--max-depth 2`: each root chart plus two dependency levels, including the corresponding dependency-owned values.
 Each owns a distinct segment of every chart's values paths, with four local workers, `--filter`, seed 0 and ten examples per path.
 Testing allows five minutes per chart and five hours per shard; unfinished work stays visible in the report.
 

@@ -696,6 +696,7 @@ jobs:
         uses: ./
         with:
           chart: third_party/bitnami-charts
+          max-depth: '2'
           binary-cache: ${{ env.HH_BINARY_CACHE }}
           command: test
           filter: 'true'
