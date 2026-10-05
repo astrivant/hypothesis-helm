@@ -17,6 +17,7 @@ from hypothesis_helm.findings.severity import junit_attributes
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.evidence.errors import chart_errors
 from hypothesis_helm.reporting.evidence.provenance import finish_epoch
+from hypothesis_helm.reporting.evidence.transport import merge_payloads
 from hypothesis_helm.reporting.reports.repository import write_reports
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -34,15 +35,19 @@ def read_reports(inputs: list[Path]) -> list[dict[str, object]]:
         list[dict[str, object]]: Self-contained shard records, with no remote filesystem reads.
     """
     sources = [child for source in inputs for child in (sorted(source.glob("shards/*/report.json")) if source.is_dir() else [source])]
-    contents = [source.read_text() for source in sources] if inputs else [sys.stdin.read()]
+    contents = (source.read_text() for source in sources) if inputs else iter([sys.stdin.read()])
     result: list[dict[str, object]] = []
+    payloads: dict[str, object] = {}
     decoder = json.JSONDecoder()
     for content in contents:
         remaining = content.lstrip()
         while remaining:
             decoded, end = decoder.raw_decode(remaining)
             records = decoded if isinstance(decoded, list) else [decoded]
-            result.extend(mapping(record) for record in records)
+            for record in records:
+                report = mapping(record)
+                merge_payloads(mapping(report.get("aggregation_data", {})), payloads)
+                result.append(report)
             remaining = remaining[end:].lstrip()
     return result
 

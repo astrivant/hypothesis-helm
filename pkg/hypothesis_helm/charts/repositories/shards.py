@@ -1,4 +1,8 @@
-"""Publish portable recursive-shard evidence independently of disposable chart copies."""
+"""
+Publish portable recursive-shard evidence independently of disposable chart copies.
+"""
+
+from __future__ import annotations
 
 import argparse
 import hashlib
@@ -7,6 +11,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from hypothesis_helm.execution.planning.partition import digest
+from hypothesis_helm.reporting.evidence.transport import compact_report
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 __all__ = ("chart_digest", "publish_shard")
@@ -90,5 +95,10 @@ def publish_shard(report: dict[str, object], args: argparse.Namespace, output: P
     payload = ET.tostring(suite, encoding="unicode")
     report.update(junit_xml=payload, junit_sha256=hashlib.sha256(payload.encode()).hexdigest())
     (output / "junit.xml").write_text(payload + "\n")
-    (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
-    (output / "scan.json").write_text(json.dumps(report, indent=2) + "\n")
+    with (output / "aggregation.json").open("w") as stream:
+        json.dump(compact_report(report), stream, separators=(",", ":"))
+        stream.write("\n")
+    for name in ("report.json", "scan.json"):
+        with (output / name).open("w") as stream:
+            json.dump(report, stream, indent=2)
+            stream.write("\n")

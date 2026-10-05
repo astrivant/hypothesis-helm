@@ -565,6 +565,13 @@ def test_repository_scan_is_manual_with_matching_shards(repository: str, shards:
     if repository == "bitnami":
         assert settings["max-depth"] == "2"
     assert settings["run-id"] == f"{repository}-${{{{ github.run_id }}}}-${{{{ github.run_attempt }}}}"
+    evidence = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
+    assert evidence["if"] == "${{ always() && steps.scan.outputs.report-dir != '' }}"
+    upload = mapping(evidence["with"])
+    assert upload["name"] == f"{repository}-aggregation-${{{{ matrix.shard }}}}-of-{shards}"
+    assert upload["path"] == "${{ steps.scan.outputs.report-dir }}/aggregation.json"
+    assert upload["include-hidden-files"] is True
+    assert upload["if-no-files-found"] == "error"
     if repository == "prometheus":
         restore = next(str(step["run"]) for step in steps if "submodule update" in str(step.get("run", "")))
         assert "https://github.com/prometheus-community/helm-charts.git" in restore
@@ -577,6 +584,10 @@ def test_repository_scan_is_manual_with_matching_shards(repository: str, shards:
     assert set(sequence(publish["needs"])) == dependencies
     assert "always()" in str(publish["if"])
     publish_steps = [mapping(step) for step in sequence(publish["steps"])]
+    download = next(step for step in publish_steps if str(step.get("uses", "")).startswith("actions/download-artifact@"))
+    assert mapping(download["with"])["pattern"] == f"{repository}-aggregation-*-of-{shards}"
+    assert mapping(download["with"])["path"] == f".cache/{repository}-shards"
+    assert mapping(download["with"]).get("merge-multiple", False) is False
     publication = next(step for step in publish_steps if step.get("run") == f"bash .github/repository-report.sh {repository}")
     assert mapping(publication["env"])["DEFAULT_BRANCH"] == "${{ github.event.repository.default_branch }}"
     assert mapping(publication["env"])["GH_TOKEN"] == "${{ github.token }}"

@@ -45,6 +45,10 @@ def test_repository_publication_keeps_raw_data_local(tmp_path: Path, status: int
     (project / "README.md").write_text(initial_readme)
     (project / "docs").mkdir()
     (project / "docs/README.md").write_text(f"[Scan](reports/{repository}.md) [PDF](reports/{repository}.pdf)\n")
+    evidence = project / f".cache/{repository}-shards/{repository}-aggregation-1-of-80/aggregation.json"
+    evidence.parent.mkdir(parents=True)
+    evidence.write_text("{}")
+    evidence.with_name("report.json").write_text("Raw diagnostics must not be aggregated")
     report = project / f".cache/{repository}-final/report.json"
     report.parent.mkdir(parents=True)
     revision = "a" * 40
@@ -124,6 +128,7 @@ def test_repository_publication_keeps_raw_data_local(tmp_path: Path, status: int
     assert result.returncode == (2 if status == 2 else 0), result.stderr
     arguments = (project / "aggregate-args.txt").read_text().splitlines()
     assert arguments[arguments.index("--shards") + 1] == "80"
+    assert arguments[arguments.index("aggregate") + 1 : arguments.index("--shards")] == [str(evidence.relative_to(project))]
     if status == 2:
         assert git(project, "rev-parse", "HEAD") == original
         assert git(remote, "rev-parse", branch) == original

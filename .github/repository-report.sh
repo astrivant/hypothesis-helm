@@ -26,7 +26,7 @@ git diff --cached --quiet || {
 
 # Aggregate validates common settings, source identities and exclusive shard ownership.
 status=0
-poetry run hypothesis-helm aggregate ".cache/${repository}-shards"/*/report.json \
+poetry run hypothesis-helm aggregate ".cache/${repository}-shards"/*/aggregation.json \
     --shards "$shards" --run-id "${SCAN_RUN_ID:?scan identity}" --output-dir ".cache/${repository}-final" || status=$?
 if ((status != 0 && status != 1)); then
     echo "::error::${title} aggregation failed; reports will not be committed."

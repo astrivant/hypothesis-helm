@@ -12,18 +12,20 @@ from hypothesis_helm.execution.planning.partition import digest
 from hypothesis_helm.integrations.sharding import Shard
 from hypothesis_helm.reporting.evidence.errors import chart_errors, deduplicate_errors
 from hypothesis_helm.reporting.evidence.provenance import finish_epoch, trace_run
+from hypothesis_helm.reporting.evidence.transport import expand_inventory, merge_payloads
 from hypothesis_helm.reporting.reports.repository import write_reports
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 __all__ = ("aggregate_repository",)
 
 
-def _validate_work(records: list[dict[str, object]]) -> None:
+def _validate_work(records: list[dict[str, object]], payloads: dict[str, object]) -> None:
     """
     Verify common inventories, exclusive ownership and honest completion claims.
 
     Args:
         records (list[dict[str, object]]): The same chart's results in shard order.
+        payloads (dict[str, object]): Shared compressed inventories from compact scan artifacts.
 
     Returns:
         None: Invalid evidence raises before any final artifact is published.
@@ -36,7 +38,7 @@ def _validate_work(records: list[dict[str, object]]) -> None:
             if record["status"] in {"passed", "cached-pass", "empty-shard"}:
                 raise ValueError("Successful chart shard lacks its work partition")
             continue  # Failed preparation has no plan; its failure must survive aggregation.
-        work = mapping(raw)
+        work = expand_inventory(mapping(raw), payloads)
         coordinates = Shard(index, len(records))
         if (work.get("index"), work.get("total")) != (index, len(records)):
             raise ValueError("Chart partition coordinates disagree with its enclosing report")
@@ -162,6 +164,10 @@ def aggregate_repository(reports: list[dict[str, object]], total: int, run_id: s
     inventories: set[str] = set()
     charts_by_shard: list[list[dict[str, object]]] = []
     merged = ET.Element("testsuites")
+    payloads: dict[str, object] = {}
+    for report in reports:
+        merge_payloads(mapping(report.get("aggregation_data", {})), payloads)
+    reports = [{key: value for key, value in report.items() if key != "aggregation_data"} for report in reports]
     for index, report in enumerate(reports, 1):
         if report.get("report_kind") != "repository-shard-v1" or report.get("run_id") != run_id:
             raise ValueError("Cannot mix report formats or run identifiers")
@@ -201,13 +207,13 @@ def aggregate_repository(reports: list[dict[str, object]], total: int, run_id: s
             identities = {str(record[key]) for record in records if key in record}
             if len(identities) > 1:
                 raise ValueError(f"Shards tested different chart content: {records[0]['chart']}")
-        _validate_work(records)
+        _validate_work(records, payloads)
         combined.append(_combine_chart(records))
     codes = [int(str(report["exit_code"])) for report in reports]
     status = 130 if 130 in codes else 2 if any(code not in {0, 1} for code in codes) else 1 if 1 in codes else 0
     if status == 0 and any(chart["status"] not in {"passed", "findings", "ignored", "skipped-library"} for chart in combined):
         raise ValueError("Successful repository shards do not establish successful chart execution")
-    identity = digest(reports)
+    identity = digest([reports, payloads]) if payloads else digest(reports)
     first = reports[0]
     result: dict[str, object] = {
         "title": "Helm sharded repository results",
@@ -238,6 +244,8 @@ def aggregate_repository(reports: list[dict[str, object]], total: int, run_id: s
         ],
     }
     finished = max(finish_epoch(report) for report in reports)
+    if payloads:
+        result["aggregation_data"] = payloads
     result["elapsed_seconds"] = finished - float(str(result["started_epoch"]))
     deduplicate_errors(result)
     trace_run(result, finished_epoch=finished)

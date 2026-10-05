@@ -15,6 +15,7 @@ from hypothesis_helm.charts.testing.runner import check_chart
 from hypothesis_helm.cli import main
 from hypothesis_helm.execution.planning.partition import Partition, digest
 from hypothesis_helm.integrations.sharding import Shard
+from hypothesis_helm.reporting.evidence.transport import compact_report, expand_inventory
 from hypothesis_helm.reporting.reports.shards import aggregate
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -221,16 +222,40 @@ def test_recursive_cli_and_aggregation(repository_reports: tuple[Path, list[dict
     assert final["charts_discovered"] == 3 and final["counts"] == {"passed": 2, "skipped-library": 1}
     assert aggregate([output], 3, "recursive", tmp_path / "final") == 0
     assert (tmp_path / "final/report.pdf").is_file()
+    # Transport only the compact files; aggregation must not read the raw reports or chart copies.
+    transported = tmp_path / "transported"
+    transported.mkdir()
+    inputs = []
+    for index, path in enumerate(sorted(output.glob("shards/*/aggregation.json"))):
+        destination = transported / f"{index}.json"
+        destination.write_bytes(path.read_bytes())
+        inputs.append(destination)
+    assert aggregate(inputs, 3, "recursive", tmp_path / "compact-final") == 0
+    compact = mapping(json.loads((tmp_path / "compact-final/report.json").read_text()))
+    assert compact["counts"] == final["counts"] and compact["attempts"] == final["attempts"]
+    payloads = mapping(compact["aggregation_data"])
+    for raw, packed in zip(sequence(final["shards"]), sequence(compact["shards"]), strict=True):
+        assert "aggregation_data" not in mapping(packed)
+        for original, saved in zip(sequence(mapping(raw)["charts"]), sequence(mapping(packed)["charts"]), strict=True):
+            before, after = mapping(original), mapping(saved)
+            assert before["status"] == after["status"]
+            assert before.get("error_diagnostics") == after.get("error_diagnostics")
+            if "work_partition" in after:
+                work = expand_inventory(mapping(after["work_partition"]), payloads)
+                assert work == before["work_partition"]
+    assert aggregate(inputs, 3, "recursive", tmp_path / "compact-final") == 0
 
 
 @pytest.mark.parametrize("damage", ["missing", "run", "settings", "content", "overlap", "incomplete", "inventory"])
-def test_aggregation_rejects_invalid_evidence(tmp_path: Path, damage: str) -> None:
+@pytest.mark.parametrize("compact", [False, True])
+def test_aggregation_rejects_invalid_evidence(tmp_path: Path, damage: str, compact: bool) -> None:
     """
     Refuse mismatched or dishonest distributed evidence before writing final reports.
 
     Args:
         tmp_path (Path): Piped-style input report and publication root.
         damage (str): Independent evidence fault to inject.
+        compact (bool): Use compressed transport or the original raw report format.
 
     Returns:
         None: Each invalid input fails validation without publishing a final directory.
@@ -278,7 +303,7 @@ def test_aggregation_rejects_invalid_evidence(tmp_path: Path, damage: str) -> No
     chart["work_partition"] = work
     records[0]["charts"] = [chart]
     path = tmp_path / "inputs.json"
-    path.write_text(json.dumps(records))
+    path.write_text(json.dumps([compact_report(record) for record in records] if compact else records))
     with pytest.raises(ValueError):
         aggregate([path], 3, "recursive", tmp_path / "final")
     assert not (tmp_path / "final").exists()

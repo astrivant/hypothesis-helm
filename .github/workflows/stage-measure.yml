@@ -712,6 +712,16 @@ jobs:
           run-id: bitnami-${{ github.run_id }}-${{ github.run_attempt }}
           artifact-dir: .cache/bitnami-scan
           artifact-name: bitnami-scan
+      - name: Upload self-contained aggregation evidence
+        if: ${{ always() && steps.scan.outputs.report-dir != '' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: bitnami-aggregation-${{ matrix.shard }}-of-80
+          path: ${{ steps.scan.outputs.report-dir }}/aggregation.json
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 30
       - name: Require saved shard evidence even when findings were found
         env:
           REPORT_DIR: ${{ steps.scan.outputs.report-dir }}
@@ -738,7 +748,7 @@ jobs:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
       - uses: actions/download-artifact@v8
         with:
-          pattern: bitnami-scan-bitnami-scan-*
+          pattern: bitnami-aggregation-*-of-80
           path: .cache/bitnami-shards
       - name: Verify all eighty partitions and publish final reports
         env:
@@ -828,6 +838,16 @@ jobs:
           run-id: prometheus-${{ github.run_id }}-${{ github.run_attempt }}
           artifact-dir: .cache/prometheus-scan
           artifact-name: prometheus-scan
+      - name: Upload self-contained aggregation evidence
+        if: ${{ always() && steps.scan.outputs.report-dir != '' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: prometheus-aggregation-${{ matrix.shard }}-of-80
+          path: ${{ steps.scan.outputs.report-dir }}/aggregation.json
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 30
       - name: Require saved shard evidence even when findings were found
         env:
           REPORT_DIR: ${{ steps.scan.outputs.report-dir }}
@@ -854,7 +874,7 @@ jobs:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
       - uses: actions/download-artifact@v8
         with:
-          pattern: prometheus-scan-prometheus-scan-*
+          pattern: prometheus-aggregation-*-of-80
           path: .cache/prometheus-shards
       - name: Verify all eighty partitions and publish final reports
         env:

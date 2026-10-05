@@ -302,10 +302,15 @@ Bitnami scans use `--max-depth 2`: each root chart plus two dependency levels, i
 Each owns a distinct segment of every chart's values paths, with four local workers, `--filter`, seed 0 and ten examples per path.
 Testing allows five minutes per chart and five hours per shard; unfinished work stays visible in the report.
 
-One aggregation job verifies all eighty reports, including empty partitions, before publishing Markdown, PDF, figures and linked audit attachments
+One aggregation job downloads each shard's `aggregation.json` and verifies all eighty reports, including empty partitions,
+before publishing Markdown, PDF, figures and linked audit attachments
 under `docs/reports/bitnami/` or `docs/reports/prometheus/`. It updates the README links and commits final reports and those links
 back to the selected branch. The root README's marked case study is regenerated from the aggregate counts, scan settings and source commit.
 When refresh is also requested, report commits wait until refresh finishes.
+Raw diagnostic archives remain downloadable without being expanded on the publication runner.
+Aggregation evidence keeps findings and counters directly readable. Repeated input-domain analysis, input inventories and work
+inventories use SHA-256 references to lossless gzip/base64 JSON payloads in `aggregation_data`. The publisher shares identical
+payloads across shards and restores work inventories for the same ownership and completion checks used by raw reports.
 Chart findings can be published; missing or incompatible shard evidence blocks publication. Raw measurements remain in Actions
 artifacts for 30 days. The push is never forced: concurrent changes or branch protections can reject it, leaving artifacts available.
 The default branch uses `BENCHMARK_PUBLISH_TOKEN`, with the same permissions described above for refresh. A missing token rejects
