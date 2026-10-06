@@ -8,7 +8,7 @@
 
 [All chart topologies](<../../../../README.md>)
 
-Status: **rendered**. Source: `.cache/refresh/refresh-1791176138/outputs/structural-sparsity/cases/breadth-800-depth-24-split.yaml`.
+Status: **rendered**. Source: `.cache/refresh/refresh-1791255819/outputs/structural-sparsity/cases/breadth-800-depth-24-split.yaml`.
 Potential references identify inputs to investigate for causal effects on output.
 Baseline-unavailable graphs contain static evidence only.
 
