@@ -14,7 +14,7 @@ import pytest
 
 from hypothesis_helm.execution.planning.partition import Partition, digest
 from hypothesis_helm.integrations.sharding import Shard
-from hypothesis_helm.reporting.evidence.transport import compact_report, expand_inventory
+from hypothesis_helm.reporting.evidence.transport import compact_report, expand_inventory, expand_record
 from hypothesis_helm.reporting.reports.shards import read_reports
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
@@ -45,6 +45,10 @@ def test_compact_report_preserves_evidence(tmp_path: Path) -> None:
     compact = compact_report(report)
     assert report == previous
     payloads = mapping(compact["aggregation_data"])
+    assert compact_report(compact) == compact
+    assert expand_record(compact, payloads) == previous
+    incremental = compact_report({**report, "charts": [compact_report(chart)]})
+    assert incremental == compact
     assert len(payloads) == 3
     saved = mapping(sequence(compact["charts"])[0])
     assert expand_inventory(mapping(saved["work_partition"]), payloads) == work

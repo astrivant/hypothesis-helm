@@ -1,7 +1,12 @@
-"""Recursive CI partitions own disjoint work inside the same chart inventory."""
+"""
+Recursive CI partitions own disjoint work inside the same chart inventory.
+"""
+
+from __future__ import annotations
 
 import copy
 import json
+import weakref
 from argparse import Namespace
 from pathlib import Path
 from textwrap import dedent
@@ -244,6 +249,87 @@ def test_recursive_cli_and_aggregation(repository_reports: tuple[Path, list[dict
                 work = expand_inventory(mapping(after["work_partition"]), payloads)
                 assert work == before["work_partition"]
     assert aggregate(inputs, 3, "recursive", tmp_path / "compact-final") == 0
+
+
+def test_shard_releases_completed_chart_analysis(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Release expanded analysis before starting the next chart while preserving raw reports.
+
+    Args:
+        tmp_path (Path): Two independent charts and shard report destinations.
+        monkeypatch (pytest.MonkeyPatch): Replace chart execution with tracked analysis objects.
+
+    Returns:
+        None: Previous chart analysis is collectible and both raw reports retain its contents.
+    """
+
+    class Analysis(dict[str, object]):
+        """
+        Allow weak references to analysis mappings without retaining the mappings in the test.
+        """
+
+    retained: list[weakref.ReferenceType[Analysis]] = []
+
+    def exercise(path: Path, args: Namespace, artifacts: Path) -> dict[str, object]:
+        """
+        Check the preceding chart's lifetime before returning another analysis payload.
+
+        Args:
+            path (Path): Prepared chart directory.
+            args (Namespace): Effective shard options.
+            artifacts (Path): Chart diagnostic destination.
+
+        Returns:
+            dict[str, object]: Successful evidence with shared chart and phase analysis.
+        """
+        assert all(reference() is None for reference in retained), "Completed chart analysis is still retained"
+        domains = Analysis(identity="shared", constraints=[{"schema": {"enum": ["x" * 10_000]}}])
+        retained.append(weakref.ref(domains))
+        partition = Partition.paths(args.shard, [("alpha",)])
+        partition.visited = partition.initial.copy()
+        partition.completed = partition.initial.copy()
+        return {
+            "status": "passed",
+            "attempts": 1,
+            "input_domains": domains,
+            "work_partition": partition.report(),
+            "phases": [{"status": "passed", "input_domains": domains}],
+        }
+
+    root = tmp_path / "charts"
+    for name in ("first", "second"):
+        make_chart(root / name)
+    monkeypatch.setattr("hypothesis_helm.charts.repositories.scan.exercise_chart", exercise)
+    output = tmp_path / "artifacts"
+    assert (
+        main(
+            [
+                "test",
+                str(root),
+                "--shard",
+                "1/1",
+                "--run-id",
+                "memory",
+                "--helm",
+                "/usr/bin/true",
+                "--no-build-dependencies",
+                "--no-cache",
+                "--artifact-dir",
+                str(output),
+                "--log-file",
+                "/dev/stderr",
+            ]
+        )
+        == 0
+    )
+    assert len(retained) == 2 and all(reference() is None for reference in retained)
+    for name in ("report.json", "scan.json"):
+        report = mapping(json.loads((output / "shards/1-of-1" / name).read_text()))
+        assert "aggregation_data" not in report
+        charts = [mapping(chart) for chart in sequence(report["charts"])]
+        assert len(charts) == 2
+        assert all(mapping(chart["input_domains"])["constraints"] == [{"schema": {"enum": ["x" * 10_000]}}] for chart in charts)
+        assert all(mapping(sequence(chart["phases"])[0])["input_domains"] == chart["input_domains"] for chart in charts)
 
 
 @pytest.mark.parametrize("damage", ["missing", "run", "settings", "content", "overlap", "incomplete", "inventory"])

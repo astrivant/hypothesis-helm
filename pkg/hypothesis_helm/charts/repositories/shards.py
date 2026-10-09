@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from hypothesis_helm.execution.planning.partition import digest
-from hypothesis_helm.reporting.evidence.transport import compact_report
+from hypothesis_helm.reporting.evidence.transport import compact_report, expand_record
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 __all__ = ("chart_digest", "publish_shard")
@@ -95,10 +95,37 @@ def publish_shard(report: dict[str, object], args: argparse.Namespace, output: P
     payload = ET.tostring(suite, encoding="unicode")
     report.update(junit_xml=payload, junit_sha256=hashlib.sha256(payload.encode()).hexdigest())
     (output / "junit.xml").write_text(payload + "\n")
+    compact = compact_report(report)
     with (output / "aggregation.json").open("w") as stream:
-        json.dump(compact_report(report), stream, separators=(",", ":"))
+        json.dump(compact, stream, separators=(",", ":"))
         stream.write("\n")
     for name in ("report.json", "scan.json"):
-        with (output / name).open("w") as stream:
-            json.dump(report, stream, indent=2)
-            stream.write("\n")
+        _write_raw_report(compact, output / name)
+
+
+def _write_raw_report(report: dict[str, object], destination: Path) -> None:
+    """
+    Stream the original JSON format while expanding at most one chart at a time.
+
+    Args:
+        report (dict[str, object]): Compact repository evidence with one shared payload table.
+        destination (Path): Raw diagnostic file to replace.
+
+    Returns:
+        None: Every original chart field is serialized without retaining previous expanded charts.
+    """
+    payloads = mapping(report["aggregation_data"])
+    with destination.open("w") as stream:
+        stream.write('{"charts":[')
+        for index, chart in enumerate(sequence(report["charts"])):
+            if index:
+                stream.write(",")
+            json.dump(expand_record(mapping(chart), payloads), stream, indent=2)
+        stream.write("]")
+        for key, value in report.items():
+            if key not in {"charts", "aggregation_data"}:
+                stream.write(",")
+                json.dump(key, stream)
+                stream.write(":")
+                json.dump(value, stream, indent=2)
+        stream.write("}\n")

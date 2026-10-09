@@ -311,6 +311,8 @@ Raw diagnostic archives remain downloadable without being expanded on the public
 Aggregation evidence keeps findings and counters directly readable. Repeated input-domain analysis, input inventories and work
 inventories use SHA-256 references to lossless gzip/base64 JSON payloads in `aggregation_data`. The publisher shares identical
 payloads across shards and restores work inventories for the same ownership and completion checks used by raw reports.
+Each scan shard compacts completed chart analysis before starting its next chart. Raw JSON publication restores one chart at a time,
+so expanded analysis from the entire repository does not accumulate in the scanning process.
 Chart findings can be published; missing or incompatible shard evidence blocks publication. Raw measurements remain in Actions
 artifacts for 30 days. The push is never forced: concurrent changes or branch protections can reject it, leaving artifacts available.
 The default branch uses `BENCHMARK_PUBLISH_TOKEN`, with the same permissions described above for refresh. A missing token rejects

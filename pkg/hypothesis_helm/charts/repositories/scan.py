@@ -49,6 +49,7 @@ from hypothesis_helm.reporting.console.summary import print_summary
 from hypothesis_helm.reporting.evidence.errors import chart_errors, deduplicate_errors
 from hypothesis_helm.reporting.evidence.invocation import record_invocation
 from hypothesis_helm.reporting.evidence.provenance import trace_run
+from hypothesis_helm.reporting.evidence.transport import compact_report
 from hypothesis_helm.reporting.reports.links import web_url
 from hypothesis_helm.reporting.reports.repository import write_reports
 from hypothesis_helm.rules import ignored, ignored_codes, record_ignored
@@ -603,8 +604,9 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
                     result.pop("chart", None)
                     require_attempts(result)
                     record.update(result)
+                    del result
                     record["error_diagnostics"] = chart_errors(record, copy)
-                    if result.get("status") == "interrupted":
+                    if record.get("status") == "interrupted":
                         interrupted = True
                         break
         except TimeLimitReached:
@@ -640,6 +642,11 @@ def _scan_checkout(args: argparse.Namespace, source: RepositorySource, started: 
                 record.get("dependency_preparation_seconds", 0.0),
                 len(records) - index - 1,
             )
+            if shard is not None:
+                # Keep completed charts compact while subsequent charts and their workers run.
+                packed = compact_report(record)
+                record.clear()
+                record.update(packed)
         if record.get("fail_fast", args.fail) and record["status"] in {"baseline-failed", "failed", "error"}:
             failed_early = True
             LOGGER.info("Stopping scan after failure in %s (--fail)", record["chart"])
