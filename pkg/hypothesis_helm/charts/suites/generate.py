@@ -14,6 +14,7 @@ import re
 from pathlib import Path
 
 from attrs import asdict, define
+from jsonschema import validators
 from ruamel.yaml.comments import CommentedMap
 
 from hypothesis_helm.charts.inspection.templates import Action, Reference, discover, parse
@@ -236,7 +237,8 @@ def coalesce(chart: Chart) -> Model:
     """
     Merge missing template levers into a round-trip, in-memory values document.
 
-    Existing values and schema constraints win. Unknown values are explicit null
+    Existing values and schema constraints win; declared omissions in valid
+    supplied defaults stay absent. Unknown values are explicit null
     placeholders with unconstrained strategies and diagnostics, not invented types.
     The original chart files are never modified.
 
@@ -286,6 +288,7 @@ def coalesce(chart: Chart) -> Model:
                     control_schema = {"anyOf": [{"type": "boolean"}, infer_schema(supplied)]}
                 _add_schema(schema, control, control_schema)
     dependency_controls = {control for dependency in dependencies.nodes for control in dependency.controls}
+    valid_defaults = validators.validator_for(chart.schema)(chart.schema).is_valid(json_value(values))
     fallbacks = _fallbacks(chart, references)
     inferred_paths = set()
     for path in sorted({r.path for r in references if r.path}, key=lambda p: (len(p), p)):
@@ -301,6 +304,11 @@ def coalesce(chart: Chart) -> Model:
         found, value = _get(values, path)
         nodes = _schema_nodes(chart.schema, path, chart.schema)
         if not found and path in dependency_controls:
+            continue
+        # Omission is meaningful in valid declared configurations, including disabled branches.
+        # Keep their paths testable without inserting defaults or nulls into the baseline.
+        if not found and nodes and valid_defaults:
+            diagnostics.append({"path": list(path), "message": "declared optional value remains absent from valid supplied defaults"})
             continue
         if not found:
             candidates = [n["default"] for n in nodes if "default" in n]
