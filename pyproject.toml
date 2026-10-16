@@ -100,7 +100,7 @@ requires = ["poetry-core>=2.0,<3.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-testpaths = ["pkg/hypothesis_helm/tests"]
+testpaths = ["pkg/hypothesis_helm/tests", "tests"]
 markers = ["integration: requires Helm", "astrivant: optional neighboring Astrivant chart", "hypothesis_helm_path(path): schema path exercised by a generated test"]
 
 [tool.coverage.run]
