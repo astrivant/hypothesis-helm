@@ -163,7 +163,8 @@ class ValuesModel:
         for name in dict.fromkeys(name for value in objects for name in value):
             if name not in properties:
                 properties[name] = {"enum": [value[name] for value in objects if name in value]}
-        used = {"values_extra"}
+        # Reserve attrs' receiver and our extra-field storage before assigning aliases.
+        used = {"self", "values_extra"}
         for index, (name, schema) in enumerate(properties.items()):
             attribute = name
             if not name.isascii() or not name.isidentifier() or keyword.iskeyword(name) or name.startswith("_"):
