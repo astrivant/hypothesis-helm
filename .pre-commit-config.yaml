@@ -55,6 +55,12 @@ repos:
         types: [python]
         pass_filenames: false
         always_run: true
+      - id: release-mypy
+        name: Strict release tooling types
+        entry: env MYPYPATH=pkg:. bash scripts/project-run.sh mypy --strict --explicit-package-bases scripts/release tests/release
+        language: system
+        pass_filenames: false
+        files: ^(scripts/release|tests/release)/.*\.py$
       - id: cli-reference
         name: Generated CLI and finding references
         entry: bash scripts/project-run.sh cog --check README.md docs/ci/action.md docs/cli/README.md docs/rules/README.md docs/input-domains/README.md docs/compiler/functions.md

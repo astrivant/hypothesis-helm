@@ -713,14 +713,24 @@ def test_stage_grouping_keeps_independent_work_parallel() -> None:
     """
     documents = workflows()
     stages = mapping(documents["ci.yml"]["jobs"])
-    assert set(stages) == {"test-stage", "build-stage", "verification", "measure-stage", "deploy-stage"}
+    assert set(stages) == {"test-stage", "build-stage", "verification", "measure-stage", "deploy-stage", "release-verification"}
     for stage in ("test", "build"):
         job = mapping(stages[f"{stage}-stage"])
         assert "needs" not in job and "if" not in job
         assert job["uses"] == f"./.github/workflows/stage-{stage}.yml"
     tests = mapping(documents["stage-test.yml"]["jobs"])
-    assert set(tests) == {"go", "checks", "python-tests", "coverage", "coverage-badge", "sharded-chart", "aggregate", "smoke"}
-    for job_id in ("go", "checks", "python-tests", "sharded-chart", "smoke"):
+    assert set(tests) == {
+        "go",
+        "checks",
+        "python-tests",
+        "coverage",
+        "coverage-badge",
+        "sharded-chart",
+        "aggregate",
+        "smoke",
+        "release-tools",
+    }
+    for job_id in ("go", "checks", "python-tests", "sharded-chart", "smoke", "release-tools"):
         assert "needs" not in mapping(tests[job_id])
     for stage in ("measure", "deploy"):
         assert mapping(stages[f"{stage}-stage"])["needs"] == "verification"

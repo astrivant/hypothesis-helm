@@ -328,6 +328,10 @@ Archived run snapshots and third-party sources are excluded to preserve recorded
 
 ## Publishing to PyPI
 
+Tag pipelines also publish signed GitHub attachments and verify the downloaded release.
+See [verified releases](releases.md) for signing setup, artifact verification and interrupted-publication recovery.
+
+
 Create the GitHub environment `pypi`. Supply `PYPI_API_TOKEN` as an organization secret with access granted to this repository,
 or as a repository or environment secret.
 The publishing job uses this environment and follows its configured protection rules.
