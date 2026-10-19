@@ -201,3 +201,131 @@ def test_literal_repairs_preserve_the_target_and_its_ancestors() -> None:
     expected = [(("mode",), "enabled"), (("mode",), "disabled")]
     assert list(literal_repairs(errors, ("target",))) == expected
     assert list(literal_repairs(errors, ("target", "child"))) == expected
+
+
+def test_nested_conditional_context_does_not_expand_the_chart(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Solve conditional required siblings inside one new item without unrelated chart branches.
+
+    Args:
+        tmp_path (Path): Synthetic chart directory.
+        monkeypatch (pytest.MonkeyPatch): Guard against complete-chart fallback.
+
+    Returns:
+        None: Every target survives in a fully valid locally generated context.
+    """
+    service = {
+        "type": "object",
+        "required": ["direction", "graphs"],
+        "additionalProperties": False,
+        "properties": {
+            "direction": {"enum": ["in", "out"]},
+            "url": {"type": "string", "minLength": 1},
+            "endpoints": {"type": "array", "items": {"enum": ["api", "events"]}, "maxItems": 2},
+            "graphs": {
+                "type": "array",
+                "items": {"type": "object", "required": ["uid"], "properties": {"uid": {"type": "string"}}},
+            },
+        },
+        "if": {"properties": {"direction": {"const": "in"}}},
+        "then": {"required": ["endpoints"], "properties": {"endpoints": {"minItems": 1}}, "not": {"required": ["url"]}},
+        "else": {"required": ["url"], "properties": {"endpoints": {"maxItems": 0}}},
+    }
+    schema = {
+        "type": "object",
+        "properties": {
+            "services": {"type": "array", "items": service},
+            "unrelated": {
+                "type": "object",
+                "properties": {f"field{index}": {"anyOf": [{"type": "string"}, {"type": "integer"}]} for index in range(1000)},
+            },
+        },
+    }
+    defaults = {"services": [], "unrelated": {"field1": "keep"}}
+    chart = Chart(tmp_path, schema, defaults)
+    chart.domains = InputDomains([], [], "conditional-context")
+    original_schema, original_defaults = copy.deepcopy(schema), copy.deepcopy(defaults)
+
+    def no_general_solver(*args: object, **kwargs: object) -> dict[str, object]:
+        """
+        Reject complete-chart generation for a bounded conditional item.
+
+        Args:
+            *args (object): Unused fallback arguments.
+            **kwargs (object): Unused fallback options.
+
+        Returns:
+            dict[str, object]: Never returned; this case must solve locally.
+        """
+        raise AssertionError("conditional item must not invoke whole-chart solving")
+
+    monkeypatch.setattr(runtime, "bound_branches", no_general_solver)
+
+    @settings(max_examples=6, deadline=None, derandomize=True)
+    @given(st.text(max_size=8), st.data())
+    def check(uid: str, data: st.DataObject) -> None:
+        """
+        Preserve an arbitrary nested target while satisfying its enclosing object's conditions.
+
+        Args:
+            uid (str): Target string whose value may not change.
+            data (st.DataObject): Context generation draws.
+
+        Returns:
+            None: Complete validation, target preservation and input immutability hold.
+        """
+        result = runtime.path_values(chart, ("services", "*", "graphs", "*", "uid"), uid, data)
+        Draft202012Validator(schema).validate(result)
+        assert isinstance(result["services"], list)
+        assert result["services"][0]["graphs"][0]["uid"] == uid
+        assert result["unrelated"] == defaults["unrelated"]
+        assert schema == original_schema and defaults == original_defaults
+
+    check()
+
+
+def test_focused_context_declines_root_reference_and_size_expansion() -> None:
+    """
+    Keep unrestricted, reference-dependent and oversized scopes on the established fallback.
+
+    Returns:
+        None: Focused proposals do not expand unbounded contexts or detach references.
+    """
+    schema: dict[str, object] = {
+        "type": "object",
+        "properties": {"item": {"type": "object", "properties": {"target": {"type": "integer"}, "other": {"$ref": "#"}}}},
+    }
+    candidate = {"item": {"target": 1}}
+    assert context_proposal(schema, candidate, ("item", "target"), focus=()) is None
+    assert context_proposal(schema, candidate, ("item", "target"), focus=("item", "target")) is None
+    assert context_proposal(schema, candidate, ("item", "target"), focus=("item",)) is None
+    oversized: dict[str, object] = {
+        "type": "object",
+        "properties": {"item": {"type": "object", "description": "x" * 65537, "properties": {"target": {"type": "integer"}}}},
+    }
+    assert context_proposal(oversized, candidate, ("item", "target"), focus=("item",)) is None
+
+
+def test_focused_target_is_preserved_in_older_schema_dialects() -> None:
+    """
+    Use a target assertion understood by Draft 4 as well as later schema dialects.
+
+    Returns:
+        None: A focused child cannot silently ignore the protected value assertion.
+    """
+    for version in (
+        "http://json-schema.org/draft-04/schema#",
+        "http://json-schema.org/draft-07/schema#",
+        "https://json-schema.org/draft/2020-12/schema",
+    ):
+        schema: dict[str, object] = {
+            "$schema": version,
+            "type": "object",
+            "properties": {"item": {"type": "object", "properties": {"target": {"type": "integer"}}}},
+        }
+        proposal = context_proposal(schema, {"item": {"target": 5}}, ("item", "target"), focus=("item",))
+        assert proposal is not None
+        Draft202012Validator.check_schema(proposal)
+        validator = Draft202012Validator(proposal)
+        assert validator.is_valid({"item": {"target": 5}})
+        assert not validator.is_valid({"item": {"target": 0}})

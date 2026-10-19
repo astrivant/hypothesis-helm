@@ -5,22 +5,30 @@ Propose small required-field completions before solving the complete chart schem
 from __future__ import annotations
 
 import copy
+import json
 import re
 from collections.abc import Iterable, Iterator
 from typing import TYPE_CHECKING
 
 from hypothesis_helm.schemas.contracts import mapping, sequence
-from hypothesis_helm.schemas.dialects import DRAFT2020, dialect, resolve
+from hypothesis_helm.schemas.dialects import DRAFT2020, dialect, resolve, walk
 
 if TYPE_CHECKING:
     from jsonschema.exceptions import ValidationError
 
-__all__ = ("context_proposal", "literal_repairs")
+__all__ = ("context_proposal", "context_scopes", "literal_repairs")
 
 _MISSING = object()
+_LOCAL_SCHEMA_BYTES = 65536
 
 
-def context_proposal(schema: dict[str, object], candidate: dict[str, object], path: tuple[str | int, ...]) -> dict[str, object] | None:
+def context_proposal(
+    schema: dict[str, object],
+    candidate: dict[str, object],
+    path: tuple[str | int, ...],
+    *,
+    focus: tuple[str | int, ...] | None = None,
+) -> dict[str, object] | None:
     """
     Retain supplied siblings and generate only missing required values along a binding.
 
@@ -32,10 +40,13 @@ def context_proposal(schema: dict[str, object], candidate: dict[str, object], pa
         schema (dict[str, object]): Complete generation schema and reference scope.
         candidate (dict[str, object]): Baseline with the concrete target already inserted.
         path (tuple[str | int, ...]): Protected target whose value must remain unchanged.
+        focus (tuple[str | int, ...] | None): Invalid ancestor to solve locally while retaining its dependent constraints.
 
     Returns:
         dict[str, object] | None: Small generation schema, or None for unsupported recursive contexts.
     """
+    if focus is not None and (not focus or len(focus) >= len(path) or path[: len(focus)] != focus):
+        return None
 
     def visit(raw: object, current: object, remaining: tuple[str | int, ...] | None, seen: frozenset[int | str]) -> object:
         """
@@ -62,6 +73,33 @@ def context_proposal(schema: dict[str, object], candidate: dict[str, object], pa
         seen = seen | {marker}
         node = resolve(raw, schema)
         version = dialect(node, dialect(schema))
+
+        # Solve a small invalid ancestor with its own dependent constraints.
+        # References retain the general solver because detaching their scope
+        # would change meaning. Unrelated chart branches stay frozen below.
+        if focus is not None and remaining and len(path) - len(remaining) == len(focus):
+            if len(json.dumps(node).encode()) > _LOCAL_SCHEMA_BYTES or any(
+                {"$ref", "$dynamicRef", "$recursiveRef"} & child.keys() for child in walk(node)
+            ):
+                return None
+            target = current
+            for part in remaining:
+                if isinstance(part, int) and isinstance(target, list) and 0 <= part < len(target):
+                    target = target[part]
+                elif isinstance(part, str) and isinstance(target, dict) and part in target:
+                    target = target[part]
+                else:
+                    return None
+            constraint: dict[str, object] = {"enum": [copy.deepcopy(target)]}
+            for part in reversed(remaining):
+                if isinstance(part, int):
+                    if part < 0 or part > len(path):
+                        return None
+                    keyword = "prefixItems" if version == DRAFT2020 else "items"
+                    constraint = {"type": "array", "minItems": part + 1, keyword: [True] * part + [constraint]}
+                else:
+                    constraint = {"type": "object", "required": [part], "properties": {part: constraint}}
+            return {"$schema": version, "allOf": [copy.deepcopy(node), constraint]}
 
         # Alternatives retain separate shapes. Complete validation checks their
         # original exclusivity, guards and sibling constraints after the draw.
@@ -158,3 +196,28 @@ def literal_repairs(errors: Iterable[ValidationError], protected: tuple[str | in
         elif error.validator == "enum" and isinstance(error.validator_value, list):
             for value in error.validator_value:
                 yield path, value
+
+
+def context_scopes(errors: Iterable[ValidationError], protected: tuple[str | int, ...]) -> tuple[tuple[str | int, ...], ...]:
+    """
+    Select invalid non-root ancestors of a target, deepest first.
+
+    Args:
+        errors (Iterable[ValidationError]): Complete-document validation failures.
+        protected (tuple[str | int, ...]): Concrete target whose value remains fixed.
+
+    Returns:
+        tuple[tuple[str | int, ...], ...]: Distinct ancestor scopes suitable for bounded local proposals.
+    """
+    scopes: set[tuple[str | int, ...]] = set()
+    pending = list(errors)
+    while pending:
+        error = pending.pop()
+        pending.extend(error.context)
+        raw = tuple(error.absolute_path)
+        if not all(isinstance(part, (str, int)) for part in raw):
+            continue
+        path = tuple(part for part in raw if isinstance(part, (str, int)))
+        if path and len(path) < len(protected) and protected[: len(path)] == path:
+            scopes.add(path)
+    return tuple(sorted(scopes, key=lambda path: (-len(path), repr(path))))

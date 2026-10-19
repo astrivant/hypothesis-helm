@@ -40,7 +40,7 @@ from hypothesis_helm.schemas.configuration.selectors import SourceScope, source_
 from hypothesis_helm.schemas.contracts import json_value, mapping, sequence
 from hypothesis_helm.schemas.dialects import DRAFT2020, dialect
 from hypothesis_helm.schemas.generation.conditionals import bound_branches, fixed_branches
-from hypothesis_helm.schemas.generation.contexts import context_proposal, literal_repairs
+from hypothesis_helm.schemas.generation.contexts import context_proposal, context_scopes, literal_repairs
 from hypothesis_helm.schemas.generation.feasibility import compatible_binding
 from hypothesis_helm.schemas.generation.strategies import schema_strategy
 from hypothesis_helm.schemas.kubernetes.resources import SUITE_RESOURCE_SCHEMAS, SUITE_STRICT_SCHEMAS
@@ -344,6 +344,22 @@ def path_values(
                     note(f"value path: {path!r}")
                     note("values override:\n" + yamlio.dump(repaired))
                     return repaired
+
+            # Conditional required fields can need a complete local object,
+            # rather than independent literals. Keep the selected target fixed
+            # and validate the resulting whole document before accepting it.
+            for scope in context_scopes(errors, binding):
+                focused = context_proposal(context_schema, completed, binding, focus=scope)
+                if focused is None:
+                    continue
+                local_strategy = schema_strategy(focused, generation=domains.generation)
+                if local_strategy.is_empty:
+                    continue
+                local = mapping(data.draw(local_strategy, label="dependent local context"))
+                if validator.is_valid(json_value(effective(local))):
+                    note(f"value path: {path!r}")
+                    note("values override:\n" + yamlio.dump(local))
+                    return local
 
         strategies = []
         for binding in bindings:
