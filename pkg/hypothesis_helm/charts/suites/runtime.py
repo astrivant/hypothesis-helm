@@ -40,7 +40,7 @@ from hypothesis_helm.schemas.configuration.selectors import SourceScope, source_
 from hypothesis_helm.schemas.contracts import json_value, mapping, sequence
 from hypothesis_helm.schemas.dialects import DRAFT2020, dialect
 from hypothesis_helm.schemas.generation.conditionals import bound_branches, fixed_branches
-from hypothesis_helm.schemas.generation.contexts import context_proposal
+from hypothesis_helm.schemas.generation.contexts import context_proposal, literal_repairs
 from hypothesis_helm.schemas.generation.feasibility import compatible_binding
 from hypothesis_helm.schemas.generation.strategies import schema_strategy
 from hypothesis_helm.schemas.kubernetes.resources import SUITE_RESOURCE_SCHEMAS, SUITE_STRICT_SCHEMAS
@@ -312,10 +312,38 @@ def path_values(
             if strategy.is_empty:
                 continue
             completed = mapping(data.draw(strategy, label="required sibling context"))
-            if validator.is_valid(json_value(effective(completed))):
+            errors = list(validator.iter_errors(json_value(effective(completed))))
+            if not errors:
                 note(f"value path: {path!r}")
                 note("values override:\n" + yamlio.dump(completed))
                 return completed
+            # A new collection can require several declared literals together.
+            # Try one joint proposal and each individual repair, without an
+            # exponential search over branch combinations. Full validation owns
+            # acceptance; nonliteral or incompatible repairs retain the fallback.
+            repairs = list(literal_repairs(errors, binding))
+            joint_literals: dict[tuple[str | int, ...], object] = {}
+            for repair_path, literal in repairs:
+                joint_literals.setdefault(repair_path, literal)
+            joint = completed
+            try:
+                for repair_path, literal in joint_literals.items():
+                    joint = _replace(joint, repair_path, literal, context_defaults=baseline)
+            except (TypeError, ValueError):
+                joint = completed
+            if joint_literals and validator.is_valid(json_value(effective(joint))):
+                note(f"value path: {path!r}")
+                note("values override:\n" + yamlio.dump(joint))
+                return joint
+            for repair_path, literal in repairs:
+                try:
+                    repaired = _replace(completed, repair_path, literal, context_defaults=baseline)
+                except (TypeError, ValueError):
+                    continue
+                if validator.is_valid(json_value(effective(repaired))):
+                    note(f"value path: {path!r}")
+                    note("values override:\n" + yamlio.dump(repaired))
+                    return repaired
 
         strategies = []
         for binding in bindings:

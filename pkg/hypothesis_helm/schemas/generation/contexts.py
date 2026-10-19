@@ -6,11 +6,16 @@ from __future__ import annotations
 
 import copy
 import re
+from collections.abc import Iterable, Iterator
+from typing import TYPE_CHECKING
 
 from hypothesis_helm.schemas.contracts import mapping, sequence
 from hypothesis_helm.schemas.dialects import DRAFT2020, dialect, resolve
 
-__all__ = ("context_proposal",)
+if TYPE_CHECKING:
+    from jsonschema.exceptions import ValidationError
+
+__all__ = ("context_proposal", "literal_repairs")
 
 _MISSING = object()
 
@@ -120,3 +125,36 @@ def context_proposal(schema: dict[str, object], candidate: dict[str, object], pa
 
     proposed = visit(schema, candidate, path, frozenset())
     return {"$schema": DRAFT2020, **proposed} if isinstance(proposed, dict) else None
+
+
+def literal_repairs(errors: Iterable[ValidationError], protected: tuple[str | int, ...]) -> Iterator[tuple[tuple[str | int, ...], object]]:
+    """
+    Offer declared literal changes without modifying a protected target or its parents.
+
+    These proposals do not establish which Boolean branch applies. The complete
+    validator must accept each repaired document before it can be used.
+
+    Args:
+        errors (Iterable[ValidationError]): Errors from complete-document validation.
+        protected (tuple[str | int, ...]): Concrete target binding to preserve.
+
+    Yields:
+        tuple[tuple[str | int, ...], object]: Candidate path and declared literal, in validator order.
+    """
+    pending = list(reversed(list(errors)))
+    while pending:
+        error = pending.pop()
+        pending.extend(reversed(error.context))
+        raw_path = tuple(error.absolute_path)
+        if not all(isinstance(part, (str, int)) for part in raw_path):
+            continue
+        path = tuple(part for part in raw_path if isinstance(part, (str, int)))
+        # An ancestor replacement or a nested change would alter the requested
+        # value. Literal repairs are exclusively for independent context fields.
+        if not path or path[: len(protected)] == protected or protected[: len(path)] == path:
+            continue
+        if error.validator == "const":
+            yield path, error.validator_value
+        elif error.validator == "enum" and isinstance(error.validator_value, list):
+            for value in error.validator_value:
+                yield path, value

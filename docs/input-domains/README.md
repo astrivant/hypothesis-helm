@@ -93,7 +93,9 @@ Changing one field can require changing others. If a value activates a branch wi
 can supply a compatible context. Dependency activation is considered too. A path test therefore does not promise that
 only one field changes; reports show the overrides used together. New collection entries first receive a small proposal
 that preserves supplied siblings and fills missing required values. Every proposal is checked against the complete input
-schema. If that check fails or the context cannot be bounded, generation uses the general dependent-context solver.
+schema. If a new collection activates a literal guard, generation also tries the declared literals on independent
+context fields, both jointly and individually. Every repaired document still requires complete validation; incompatible
+branches, nonliteral constraints and unsupported contexts retain the general dependent-context solver.
 This avoids simplifying unrelated schema branches merely to fill a required sibling; it does not bypass cross-field
 constraints or limit the selected field's domain. Saved suites expose these path tests as Hypothesis
 `@given` tests.<sup>[\[1\]](../usage.md#inspect-and-rerun-generated-suites)</sup>

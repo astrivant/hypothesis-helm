@@ -12,7 +12,7 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.suites import runtime
-from hypothesis_helm.schemas.generation.contexts import context_proposal
+from hypothesis_helm.schemas.generation.contexts import context_proposal, literal_repairs
 from hypothesis_helm.schemas.generation.domains import InputDomains
 from jsonschema import Draft202012Validator
 
@@ -37,7 +37,11 @@ def test_required_siblings_do_not_solve_unrelated_schema(tmp_path: Path, monkeyp
     }
     schema: dict[str, object] = {
         "type": "object",
+        "if": {"properties": {"rules": {"minItems": 1}}},
+        "then": {"properties": {"enabled": {"const": True}, "mode": {"const": "managed"}}},
         "properties": {
+            "enabled": {"type": "boolean"},
+            "mode": {"enum": ["local", "managed"]},
             "unrelated": unrelated,
             "rules": {
                 "type": "array",
@@ -50,7 +54,7 @@ def test_required_siblings_do_not_solve_unrelated_schema(tmp_path: Path, monkeyp
             },
         },
     }
-    defaults: dict[str, object] = {"unrelated": {"field7": "kept"}, "rules": []}
+    defaults: dict[str, object] = {"mode": "local", "enabled": False, "unrelated": {"field7": "kept"}, "rules": []}
     chart = Chart(tmp_path, schema, defaults)
     chart.domains = InputDomains([], [], "required-context")
     original_schema, original_defaults = copy.deepcopy(schema), copy.deepcopy(defaults)
@@ -85,6 +89,8 @@ def test_required_siblings_do_not_solve_unrelated_schema(tmp_path: Path, monkeyp
         """
         result = runtime.path_values(chart, ("rules", "*", "weight"), weight, data)
         Draft202012Validator(schema).validate(result)
+        assert result["enabled"] is True
+        assert result["mode"] == "managed"
         assert result["unrelated"] == defaults["unrelated"]
         assert isinstance(result["rules"], list)
         assert result["rules"][0]["weight"] == weight
@@ -131,3 +137,67 @@ def test_missing_required_empty_array_has_a_valid_proposal() -> None:
     assert proposal is not None
     Draft202012Validator.check_schema(proposal)
     Draft202012Validator(proposal).validate({"target": 1, "items": []})
+
+
+def test_nonliteral_dependencies_retain_general_context_generation(tmp_path: Path) -> None:
+    """
+    Keep dependent-context solving when a minimum requires more than a literal repair.
+
+    Args:
+        tmp_path (Path): Synthetic chart directory.
+
+    Returns:
+        None: Generated capacity meets the dependent minimum without changing the target.
+    """
+    schema: dict[str, object] = {
+        "type": "object",
+        "required": ["capacity", "items"],
+        "additionalProperties": False,
+        "properties": {
+            "capacity": {"type": "integer", "minimum": 0, "maximum": 10},
+            "items": {"type": "array", "items": {"type": "integer"}, "maxItems": 1},
+        },
+        "if": {"properties": {"items": {"minItems": 1}}},
+        "then": {"properties": {"capacity": {"minimum": 5}}},
+    }
+    chart = Chart(tmp_path, schema, {"capacity": 0, "items": []})
+    chart.domains = InputDomains([], [], "general-context")
+
+    @settings(max_examples=3, deadline=None, derandomize=True)
+    @given(st.data())
+    def check(data: st.DataObject) -> None:
+        """
+        Exercise the retained general solver with an independent validator.
+
+        Args:
+            data (st.DataObject): Dependent strategy draw context.
+
+        Returns:
+            None: Complete schema and selected leaf remain valid.
+        """
+        result = runtime.path_values(chart, ("items", "*"), 42, data)
+        Draft202012Validator(schema).validate(result)
+        assert result["items"] == [42]
+        assert isinstance(result["capacity"], int) and result["capacity"] >= 5
+
+    check()
+
+
+def test_literal_repairs_preserve_the_target_and_its_ancestors() -> None:
+    """
+    Repair independent enum fields without changing target containers or their children.
+
+    Returns:
+        None: Literal suggestions contain only independent context fields.
+    """
+    schema: dict[str, object] = {
+        "type": "object",
+        "properties": {
+            "target": {"const": {"child": 7}, "properties": {"child": {"const": 7}}},
+            "mode": {"enum": ["enabled", "disabled"]},
+        },
+    }
+    errors = list(Draft202012Validator(schema).iter_errors({"target": {"child": 1}, "mode": "unknown"}))
+    expected = [(("mode",), "enabled"), (("mode",), "disabled")]
+    assert list(literal_repairs(errors, ("target",))) == expected
+    assert list(literal_repairs(errors, ("target", "child"))) == expected
