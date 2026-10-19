@@ -40,6 +40,7 @@ from hypothesis_helm.schemas.configuration.selectors import SourceScope, source_
 from hypothesis_helm.schemas.contracts import json_value, mapping, sequence
 from hypothesis_helm.schemas.dialects import DRAFT2020, dialect
 from hypothesis_helm.schemas.generation.conditionals import bound_branches, fixed_branches
+from hypothesis_helm.schemas.generation.contexts import context_proposal
 from hypothesis_helm.schemas.generation.feasibility import compatible_binding
 from hypothesis_helm.schemas.generation.strategies import schema_strategy
 from hypothesis_helm.schemas.kubernetes.resources import SUITE_RESOURCE_SCHEMAS, SUITE_STRICT_SCHEMAS
@@ -297,6 +298,25 @@ def path_values(
         selected = data.draw(st.sampled_from(candidates), label="baseline path")
         values = _replace(chart.defaults, selected, value, context_defaults=baseline)
     else:
+        # New array entries and map values often lack only required siblings.
+        # Try their small completion before canonicalizing every chart branch.
+        for binding in bindings:
+            try:
+                partial = _replace(chart.defaults, binding, value, context_defaults=baseline)
+            except (TypeError, ValueError):
+                continue
+            proposal = context_proposal(context_schema, partial, binding)
+            if proposal is None:
+                continue
+            strategy = schema_strategy(proposal, generation=domains.generation)
+            if strategy.is_empty:
+                continue
+            completed = mapping(data.draw(strategy, label="required sibling context"))
+            if validator.is_valid(json_value(effective(completed))):
+                note(f"value path: {path!r}")
+                note("values override:\n" + yamlio.dump(completed))
+                return completed
+
         strategies = []
         for binding in bindings:
             constrained = copy.deepcopy(context_schema)
