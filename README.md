@@ -236,7 +236,7 @@ Its dependency graphs are also in the [topology catalog](<studies/chart-topologi
 ## Development
 
 [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml): checks, chart validation, packaging,
-manual benchmark refreshes and tag-only PyPI releases in one run. See [CI controls](docs/development.md#github-ci).
+manual benchmark refreshes and tag-only [verified PyPI and GitHub releases](docs/releases.md) in one run. See [CI controls](docs/development.md#github-ci).
 
 See [dependency maintenance](docs/dependencies.md) for version pins, nested Go modules, source catalogs and upgrade checks.
 

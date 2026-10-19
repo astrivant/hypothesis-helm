@@ -351,25 +351,26 @@ class Dependencies:
         Returns:
             dict[str, object]: Generation-only restrictions preserving excluded values or their absence.
         """
-        from hypothesis_helm.schemas.configuration.policy import intersect
-
         result = copy.deepcopy(schema)
+        # Keep original reference targets unchanged. A sibling may reuse a dependency's
+        # property schema while carrying a different baseline or remaining in scope.
+        restrictions: dict[str, object] = {}
         baseline = self.context(self.baseline, {})
         for path in sorted(self.excluded):
             parent = lookup(baseline, path[:-1])
             key = path[-1]
-            current = result
+            current = restrictions
             for part in path[:-1]:
                 properties = mapping(current.setdefault("properties", {}))
                 current = mapping(properties.setdefault(part, {}))
             properties = mapping(current.setdefault("properties", {}))
             if isinstance(parent, dict) and key in parent:
-                frozen: dict[str, object] = {"enum": [json_value(parent[key])]}
-                original = properties.get(key, {})
-                properties[key] = intersect(original, frozen) if isinstance(original, dict) else {"allOf": [original, frozen]}
+                properties[key] = {"enum": [json_value(parent[key])]}
                 current["required"] = list(dict.fromkeys([*map(str, sequence(current.get("required", []))), key]))
             else:
                 properties[key] = False
+        if restrictions:
+            sequence(result.setdefault("allOf", [])).append(restrictions)
         return result
 
     @property
