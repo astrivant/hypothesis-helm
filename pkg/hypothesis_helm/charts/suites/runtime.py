@@ -40,6 +40,7 @@ from hypothesis_helm.schemas.configuration.selectors import SourceScope, source_
 from hypothesis_helm.schemas.contracts import json_value, mapping, sequence
 from hypothesis_helm.schemas.dialects import DRAFT2020, dialect
 from hypothesis_helm.schemas.generation.conditionals import bound_branches, fixed_branches
+from hypothesis_helm.schemas.generation.contexts import context_proposal, context_scopes, literal_repairs
 from hypothesis_helm.schemas.generation.feasibility import compatible_binding
 from hypothesis_helm.schemas.generation.strategies import schema_strategy
 from hypothesis_helm.schemas.kubernetes.resources import SUITE_RESOURCE_SCHEMAS, SUITE_STRICT_SCHEMAS
@@ -297,6 +298,69 @@ def path_values(
         selected = data.draw(st.sampled_from(candidates), label="baseline path")
         values = _replace(chart.defaults, selected, value, context_defaults=baseline)
     else:
+        # New array entries and map values often lack only required siblings.
+        # Try their small completion before canonicalizing every chart branch.
+        for binding in bindings:
+            try:
+                partial = _replace(chart.defaults, binding, value, context_defaults=baseline)
+            except (TypeError, ValueError):
+                continue
+            proposal = context_proposal(context_schema, partial, binding)
+            if proposal is None:
+                continue
+            strategy = schema_strategy(proposal, generation=domains.generation)
+            if strategy.is_empty:
+                continue
+            completed = mapping(data.draw(strategy, label="required sibling context"))
+            errors = list(validator.iter_errors(json_value(effective(completed))))
+            if not errors:
+                note(f"value path: {path!r}")
+                note("values override:\n" + yamlio.dump(completed))
+                return completed
+            # A new collection can require several declared literals together.
+            # Try one joint proposal and each individual repair, without an
+            # exponential search over branch combinations. Full validation owns
+            # acceptance; nonliteral or incompatible repairs retain the fallback.
+            repairs = list(literal_repairs(errors, binding))
+            joint_literals: dict[tuple[str | int, ...], object] = {}
+            for repair_path, literal in repairs:
+                joint_literals.setdefault(repair_path, literal)
+            joint = completed
+            try:
+                for repair_path, literal in joint_literals.items():
+                    joint = _replace(joint, repair_path, literal, context_defaults=baseline)
+            except (TypeError, ValueError):
+                joint = completed
+            if joint_literals and validator.is_valid(json_value(effective(joint))):
+                note(f"value path: {path!r}")
+                note("values override:\n" + yamlio.dump(joint))
+                return joint
+            for repair_path, literal in repairs:
+                try:
+                    repaired = _replace(completed, repair_path, literal, context_defaults=baseline)
+                except (TypeError, ValueError):
+                    continue
+                if validator.is_valid(json_value(effective(repaired))):
+                    note(f"value path: {path!r}")
+                    note("values override:\n" + yamlio.dump(repaired))
+                    return repaired
+
+            # Conditional required fields can need a complete local object,
+            # rather than independent literals. Keep the selected target fixed
+            # and validate the resulting whole document before accepting it.
+            for scope in context_scopes(errors, binding):
+                focused = context_proposal(context_schema, completed, binding, focus=scope)
+                if focused is None:
+                    continue
+                local_strategy = schema_strategy(focused, generation=domains.generation)
+                if local_strategy.is_empty:
+                    continue
+                local = mapping(data.draw(local_strategy, label="dependent local context"))
+                if validator.is_valid(json_value(effective(local))):
+                    note(f"value path: {path!r}")
+                    note("values override:\n" + yamlio.dump(local))
+                    return local
+
         strategies = []
         for binding in bindings:
             constrained = copy.deepcopy(context_schema)
