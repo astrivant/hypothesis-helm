@@ -1,0 +1,51 @@
+{
+  "hosts": [
+    {
+      "id": "github",
+      "provider": "github",
+      "url": "https://github.com"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "project",
+      "kind": "project",
+      "label": "hypothesis-helm",
+      "host": "github",
+      "path": "astrivant/hypothesis-helm",
+      "url": "https://github.com/astrivant/hypothesis-helm",
+      "settings": {
+        "visibility": "public",
+        "source": "https://api.github.com/repos/astrivant/hypothesis-helm",
+        "observed_at": "2026-11-01T16:51:10.231680+00:00",
+        "expires_at": "2026-11-01T18:51:10.231680+00:00"
+      }
+    },
+    {
+      "id": "feature",
+      "kind": "branch",
+      "label": "fix/helm-plugin-namespace",
+      "parent": "project",
+      "host": "github",
+      "url": "https://github.com/astrivant/hypothesis-helm/tree/fix/helm-plugin-namespace",
+      "work": "active"
+    },
+    {
+      "id": "main",
+      "kind": "branch",
+      "label": "main",
+      "parent": "project",
+      "host": "github",
+      "url": "https://github.com/astrivant/hypothesis-helm/tree/main"
+    }
+  ],
+  "links": [
+    {
+      "id": "base",
+      "source": "feature",
+      "target": "main",
+      "kind": "based_on",
+      "evidence": "https://github.com/astrivant/hypothesis-helm/tree/fix/helm-plugin-namespace"
+    }
+  ]
+}
