@@ -2,6 +2,8 @@
 Select safe manifest readers without changing round-trip values-file editing.
 """
 
+from __future__ import annotations
+
 from contextvars import ContextVar
 from importlib.metadata import version
 from typing import cast
@@ -13,6 +15,7 @@ from ruamel.yaml.error import YAMLError
 from ruamel.yaml.nodes import MappingNode as RuamelMappingNode
 from yaml.nodes import MappingNode
 
+from hypothesis_helm.charts.values.manifest_scalars import HelmFloatResolver
 from hypothesis_helm.exceptions.rendering import ManifestParseError
 
 __all__ = ("BACKENDS", "SUITE_YAML_PARSER", "identity", "load_all", "selected", "validate_backend")
@@ -151,6 +154,8 @@ def identity() -> dict[str, str]:
     implementation = (
         "SafeLoader+duplicate-check" if backend == "pyyaml" else str(YAML(typ="safe" if backend == "ruamel-safe" else "rt").Parser.__name__)
     )
+    if backend != "pyyaml":
+        implementation += "+helm-float-v1"
     return {"backend": backend, "version": version("PyYAML" if backend == "pyyaml" else "ruamel.yaml"), "implementation": implementation}
 
 
@@ -177,10 +182,11 @@ def load_all(text: str, *, backend: str | None = None) -> list[object]:
             reader = YAML(typ="safe")
             reader.allow_duplicate_keys = False
             reader.Constructor = ScalarSafeConstructor
+            reader.Resolver = HelmFloatResolver
         else:
             from hypothesis_helm.charts.values.yamlio import yaml
 
-            reader = yaml()
+            reader = yaml(manifest=True)
         return list(reader.load_all(text))
     except (YAMLError, pyyaml.YAMLError, ManifestParseError) as exc:
         raise ManifestParseError(f"{choice}: {exc}") from exc

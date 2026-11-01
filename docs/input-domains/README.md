@@ -184,7 +184,7 @@ yaml_parser: pyyaml
 
 | Backend | Manifest reader | When to use it |
 | --- | --- | --- |
-| `ruamel` | ruamel.yaml round-trip reader; the default | Keep the existing parsing behavior. |
+| `ruamel` | ruamel.yaml round-trip reader; the default | Use YAML 1.2 scalar types with finite-float handling matched to Helm. |
 | `ruamel-safe` | ruamel.yaml safe reader, using LibYAML when installed | Compare ruamel's safe and round-trip readers. |
 | `pyyaml` | PyYAML SafeLoader | Compare against an independent reader. |
 
@@ -195,8 +195,12 @@ round-trip reader so comments and anchors are preserved.
 
 Readers can disagree about both syntax and scalar types. For example, PyYAML treats an unquoted `on` as a boolean,
 whereas ruamel's default YAML 1.2 reader treats it as a string. Safe readers also reject unknown tags that the round-trip
-reader can preserve for subsequent JSON validation. A different result identifies a compatibility question; acceptance
-by one reader does not establish that Kubernetes accepts the manifest. Existing structural and optional API schema
+reader can preserve for subsequent JSON validation. PyYAML also leaves plain `1e-05` as a string, while the
+ruamel readers retain its numeric type. Both ruamel manifest readers preserve implicit overflowing tokens such as
+`1E400` as strings, matching [go-yaml's finite float resolution](https://github.com/go-yaml/yaml/blob/v2/resolve.go).
+This handling leaves quoted strings, explicit tags, and values-file round-trip readers unchanged. Named `.inf` and
+`.nan` scalars retain their YAML meaning and remain outside the JSON manifest domain. A different result identifies
+a compatibility question; acceptance by one reader does not establish that Kubernetes accepts the manifest. Existing structural and optional API schema
 validation still run after parsing. The implementation used by `ruamel-safe` depends on whether LibYAML is installed.
 
 Workers inherit the selection, reports record it in their input-domain metadata, and saved suites remember it.
