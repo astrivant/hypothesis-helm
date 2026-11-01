@@ -2,6 +2,8 @@
 Round-trip YAML I/O shared by chart loading, coalescing and generation.
 """
 
+from __future__ import annotations
+
 import json
 import re
 from io import StringIO
@@ -11,12 +13,17 @@ from ruamel.yaml.constructor import RoundTripConstructor
 from ruamel.yaml.nodes import ScalarNode
 from ruamel.yaml.representer import BaseRepresenter
 
+from hypothesis_helm.charts.values.manifest_scalars import HelmFloatResolver
+
 __all__ = ("dump", "json_for_helm", "load", "load_all", "yaml")
 
 
-def yaml() -> YAML:
+def yaml(*, manifest: bool = False) -> YAML:
     """
     Create a round-trip reader with Helm-compatible handling of bare equals signs.
+
+    Args:
+        manifest (bool): Resolve implicit overflowing manifest floats as strings, preserving values-file behavior.
 
     Returns:
         YAML: Independent reader/writer preserving quotes and rejecting duplicate keys.
@@ -25,6 +32,8 @@ def yaml() -> YAML:
     instance = YAML(typ="rt")
     instance.preserve_quotes = True
     instance.allow_duplicate_keys = False
+    if manifest:
+        instance.Resolver = HelmFloatResolver
     # ruamel tags a bare '=' with YAML's legacy value tag. Helm reads it as
     # a string. Copy the constructor table so other YAML instances are untouched.
     instance.constructor.yaml_constructors = {
