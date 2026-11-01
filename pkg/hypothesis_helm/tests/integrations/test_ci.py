@@ -14,8 +14,8 @@ from typing import TextIO
 
 import pytest
 
-from hypothesis_helm.cli import main
-from hypothesis_helm.environment import refresh_env
+from hypothesis_helm.cli import argument_parser, main
+from hypothesis_helm.environment import refresh_env, set_env
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.integrations import github_action
 from hypothesis_helm.integrations.sharding import Shard, resolve_shard
@@ -68,6 +68,7 @@ def test_action_plugin_installation(tmp_path: Path, working_entrypoint: bool) ->
             f"""
             #!/bin/sh
             printf '%s\\n' "$@"
+            printf 'HELM_NAMESPACE=%s\\n' "${{HELM_NAMESPACE-}}"
             exit {0 if working_entrypoint else 7}
             """
         ).lstrip()
@@ -82,6 +83,7 @@ def test_action_plugin_installation(tmp_path: Path, working_entrypoint: bool) ->
         GITHUB_OUTPUT=str(output),
         HELM_DATA_HOME=str(tmp_path / "unrelated-data"),
         HELM_PLUGINS=str(tmp_path / "unrelated-plugins"),
+        KUBECONFIG=str(tmp_path / "no-kubeconfig"),
     )
     result = subprocess.run(
         ["bash", "-euo", "pipefail", "-c", str(install["run"])],
@@ -120,6 +122,19 @@ def test_action_plugin_installation(tmp_path: Path, working_entrypoint: bool) ->
         assert result.returncode == 0, result.stdout + result.stderr
         assert result.stdout.splitlines()[0] == "schemas"
         assert ("--schema-offline" in result.stdout.splitlines()) == (offline == "true")
+
+    # Helm consumes its global flag; the plugin must read the exported native input instead.
+    namespace = subprocess.run(
+        [helm, "hypothesis", "test", "synthetic-chart", "--namespace", "plugin-ns"],
+        env=dict(environment, HELM_DATA_HOME=outputs["data"], HELM_PLUGINS=outputs["plugins"]),
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=20,
+    )
+    assert namespace.returncode == 0, namespace.stdout + namespace.stderr
+    assert "--namespace" not in namespace.stdout.splitlines()
+    assert "HELM_NAMESPACE=plugin-ns" in namespace.stdout.splitlines()
 
 
 @pytest.mark.parametrize(
@@ -775,3 +790,29 @@ def test_ci_aggregation_commands(tmp_path: Path, provider: str, outcome: str) ->
         report = json.loads((final / "report.json").read_text())
         assert report["properties"]["selected"] == report["properties"]["tests"] == 2
         assert len(report["shards"]) == 3
+
+
+@pytest.mark.parametrize(
+    ("namespace", "explicit", "expected"),
+    [(None, None, "default"), ("plugin-ns", None, "plugin-ns"), ("plugin-ns", "explicit-ns", "explicit-ns"), ("", None, "")],
+)
+def test_namespace_uses_helm_environment(namespace: str | None, explicit: str | None, expected: str) -> None:
+    """
+    Preserve Helm's consumed global flag while letting direct CLI arguments take precedence.
+
+    Args:
+        namespace (str | None): Native Helm namespace, including absent and explicitly empty values.
+        explicit (str | None): Direct CLI override when the command runs outside Helm's plugin parser.
+        expected (str): Namespace passed to the chart renderer.
+
+    Returns:
+        None: Native environment, explicit override and standalone fallback retain their distinct meanings.
+    """
+    previous = set_env("HELM_NAMESPACE", namespace)
+    try:
+        arguments = ["test", "synthetic-chart"]
+        if explicit is not None:
+            arguments.extend(["--namespace", explicit])
+        assert argument_parser().parse_args(arguments).namespace == expected
+    finally:
+        set_env("HELM_NAMESPACE", previous)

@@ -13,6 +13,12 @@
 or configuration default in effect. This reference is generated from `action.yml`
 and the CLI parser; regenerate it with `cog -r docs/ci/action.md`.
 
+The `namespace` input follows Helm's native plugin context through `HELM_NAMESPACE`.
+When calling the Python CLI directly, an explicit `--namespace` takes precedence;
+without either input the standalone default remains `default`. Helm removes its
+global namespace flag before launching plugins, as described in the
+[plugin flag contract](https://helm.sh/docs/topics/plugins/#a-note-on-flag-parsing).
+
 ## Inputs
 
 <!-- [[[cog

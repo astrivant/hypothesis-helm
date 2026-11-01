@@ -565,7 +565,8 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
     test.add_argument("--timeout", type=float, default=30)
     test.add_argument("--helm", default="helm")
     test.add_argument("--release", default="hypothesis")
-    test.add_argument("--namespace", default="default")
+    # Helm consumes the global flag before invoking plugins and exports its value through this native input.
+    test.add_argument("--namespace", default=env.get("HELM_NAMESPACE", "default"))
     test.add_argument("--kube-version")
     test.add_argument("--allow-empty", action="store_true")
     test.add_argument("--artifact-dir", type=Path, default=Path(".cache/hypothesis-helm/runs"))
