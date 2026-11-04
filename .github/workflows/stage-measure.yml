@@ -174,7 +174,7 @@ jobs:
         run: |
           bash pkg/hypothesis_helm_benchmarking/refresh/recipes/operations.sh checks "$ROOT" \
               -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
-              --junitxml=.cache/prepare-tests/pytest.xml
+              --ignore=tests/release --junitxml=.cache/prepare-tests/pytest.xml
       - name: Retain preparation test results
         if: ${{ always() }}
         uses: actions/upload-artifact@v7

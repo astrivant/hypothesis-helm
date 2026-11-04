@@ -20,10 +20,14 @@ def test_runner_isolates_provider_context(tmp_path: Path) -> None:
         None: The child receives the committed event and bounded diagnostics.
     """
     project = Path(__file__).resolve().parents[2]
+    frozen = tmp_path / "frozen"
+    frozen.mkdir()
+    (frozen / "frozen_marker.py").write_text("value = 'frozen'\n")
     case = tmp_path / "test_event.py"
     case.write_text(
-        "import json, os\n"
+        "import json, os, frozen_marker\n"
         "from pathlib import Path\n"
+        "from scripts.release.attest import fingerprint\n"
         "def test_event():\n"
         "    event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())\n"
         "    assert os.environ['GITHUB_EVENT_NAME'] == 'pull_request'\n"
@@ -31,8 +35,16 @@ def test_runner_isolates_provider_context(tmp_path: Path) -> None:
         "    assert event['pull_request']['base']['ref'] == 'main'\n"
         "    assert 'CIRCLECI' not in os.environ\n"
         "    assert 'GITHUB_TOKEN' not in os.environ and 'GH_TOKEN' not in os.environ\n"
+        "    assert callable(fingerprint)\n"
+        "    assert frozen_marker.value == 'frozen'\n"
     )
-    environment = {**os.environ, "CIRCLECI": "true", "GITHUB_TOKEN": "synthetic-token", "GH_TOKEN": "synthetic-token"}
+    environment = {
+        **os.environ,
+        "CIRCLECI": "true",
+        "GITHUB_TOKEN": "synthetic-token",
+        "GH_TOKEN": "synthetic-token",
+        "PYTHONPATH": str(frozen),
+    }
     result = subprocess.run(
         ["bash", "scripts/run-pr-tests.sh", "--debug", "-q", str(case)],
         cwd=project,

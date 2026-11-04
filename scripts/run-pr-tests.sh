@@ -29,4 +29,5 @@ printf '%s\n' 'INFO: Running pytest with the synthetic pull-request event' >&2
 if [[ $debug == true ]]; then
     printf '%s\n' 'DEBUG: Provider coordinates and authentication tokens were cleared' >&2
 fi
-exec bash scripts/project-run.sh pytest "$@"
+# Keep the checkout importable for release tooling while preserving PYTHONPATH for frozen inputs.
+exec bash scripts/project-run.sh python -m pytest "$@"

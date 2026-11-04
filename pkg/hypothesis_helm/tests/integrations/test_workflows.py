@@ -253,6 +253,10 @@ def test_preparation_shards_verify_the_rebuilt_snapshot_before_studies() -> None
     assert steps.index(restore) < steps.index(renderer) < steps.index(run)
     assert mapping(run["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/8"
     assert '-p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD"' in str(run["run"])
+    assert "--ignore=tests/release" in str(run["run"])
+    release_steps = [mapping(step) for step in sequence(jobs["release-tools"]["steps"])]
+    assert any("pytest tests/release" in str(step.get("run", "")) for step in release_steps)
+    assert jobs["measure-stage"]["needs"] == "verification"
     assert "--junitxml=" in str(run["run"])
     results = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
     assert results["if"] == "${{ always() }}"
