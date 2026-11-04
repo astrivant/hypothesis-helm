@@ -335,12 +335,19 @@ and checks chart replay and topology plots. These short runs verify the
 automation; their timings are not performance comparisons.
 
 To refresh `main`, open **Actions > CI > Run workflow**, select `main`, enable **refresh**, and leave the PR number empty.
-The workflow commits verified graphs and summaries directly to `main`, provided its head has not changed during measurement.
+Every refresh job checks out the immutable commit selected when the workflow starts.
+The workflow records that commit in `docs/benchmarking/benchmark-source.md` and
+publishes verified graphs and summaries to `main` when later branch changes leave
+the measured inputs unchanged and the generated files can be applied cleanly.
 Configure the protected-branch [publication token](../development.md#github-ci) before starting the run.
 Before merging a PR, select its head branch instead and enter the PR number.
-The manual study matrix verifies and commits updated graphs and summaries to that branch, then starts CI on the graph commit.
+The manual study matrix follows the same publication rules for the PR branch and starts CI on a published graph commit.
+If measured inputs changed, the branch was rewritten, or generated files conflict,
+the completed outputs remain in the `benchmark-refresh` and `refresh-resume-data`
+artifacts rather than overwriting newer work. The benchmark status applies to the
+original measured commit, not an untested newer source revision.
 Measurements and diagnostic logs remain in artifacts for 30 days; raw LFS data is not committed.
-The [required PR benchmark gate](../development.md#github-ci) rejects stale runs. Each study job has a six-hour limit.
+The [required PR benchmark gate](../development.md#github-ci) applies to the current PR head. Each study job has a six-hour limit.
 Study measurements, plot generation and smoke checks use standard `ubuntu-latest` runners.
 The error-surface study runs across eight runners; stress runs across six.
 Most measurements are serial within each runner; the scaling study uses at most four workers.
