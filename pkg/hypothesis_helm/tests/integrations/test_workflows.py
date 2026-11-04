@@ -285,7 +285,10 @@ def test_pr_benchmarks_are_a_required_commit_bound_manual_gate() -> None:
     assert any('--ci-phase graphs --root "$ROOT"' in str(step.get("run", "")) for step in steps)
     assert not any("--ci-phase finish" in str(step.get("run", "")) for step in steps)
     commit = next(step for step in steps if step.get("id") == "commit")
-    assert mapping(commit["env"])["EXPECTED_BASE_SHA"] == "${{ needs.refresh-request.outputs.base_sha }}"
+    assert "EXPECTED_BASE_SHA" not in mapping(commit["env"])
+    checkout = next(step for step in steps if str(step.get("uses", "")).startswith("actions/checkout@"))
+    assert mapping(checkout["with"])["ref"] == "${{ github.sha }}"
+    assert mapping(checkout["with"])["fetch-depth"] == 0
     result = mapping(jobs["pr-benchmark-result"])
     assert "always()" in str(result["if"]) and "workflow_dispatch" in str(result["if"])
     assert "inputs.pull-request != ''" in str(result["if"])
