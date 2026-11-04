@@ -259,6 +259,19 @@ From a checkout with Helm 4 and GNU Parallel on `PATH`:
 poetry install --extras benchmarking && poetry run hypothesis-helm-refresh
 ```
 
+For a GPU refresh, install the GPU extra and select the GPU backend:
+
+```bash
+poetry install --extras benchmarking --extras gpu
+poetry run hypothesis-helm-refresh --execution-backend gpu
+```
+
+This regenerates GPU-dependent measurements and their plots, including the
+quartic comparison derived from the same error-surface data. Shared studies and
+rendering remain on the host. Existing CPU comparison results stay in their own
+lane; run a separate CPU refresh to replace them. See the
+[backend guide](backends.md) for device requirements and receipt checks.
+
 The installed `hypothesis-helm-refresh` command owns the operation queue. Inspect
 the full plan without running tests or changing artifacts:
 

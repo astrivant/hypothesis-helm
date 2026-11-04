@@ -32,7 +32,7 @@ the complete inventory, execution boundary and receipt checks. Select a backend
 with `hypothesis-helm-refresh --execution-backend cpu-vector` or `gpu` after
 installing the matching locked extra. The default is `reference`. Saved operations
 retain the selected controls across recovery. GPU refresh requires a physical
-CUDA device; publication rejects fallback or mixed-backend measurements.
+CUDA or Metal device; publication rejects fallback or mixed-backend measurements.
 Raw measurements, generated charts, logs, profiles and verification records stay inside the refresh workspace under `.cache/refresh/`.
 Repository workers also use that workspace, under `repositories/`; they never write into the published report directory.
 Reusable chart definitions remain in the benchmarking package's `assets/fixture/`.

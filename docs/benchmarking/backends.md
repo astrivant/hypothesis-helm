@@ -31,8 +31,8 @@ poetry run hypothesis-helm-benchmark --execution-backend cpu-vector --backend-ve
     --output .cache/benchmarks/cpu/discovery-paired
 ```
 
-On Linux with a physical NVIDIA CUDA device and compatible driver, use the same
-inputs, seeds and limits:
+On Linux with a physical NVIDIA CUDA device and compatible driver, or macOS with
+an available Apple Metal device, use the same inputs, seeds and limits:
 
 ```sh
 poetry install --extras benchmarking --extras gpu --with dev
@@ -46,13 +46,21 @@ Place execution controls before the study command. The same options apply to
 Python oracle; `cpu-vector` and `gpu` execute the same integer predicate program.
 Compiled backends fail if unavailable unless `--backend-fallback reference` was
 explicitly requested. Fallback observations cannot be published as GPU results.
-CUDA simulation is rejected as evidence of physical GPU execution.
-The current Numba-CUDA release uses `numpy.row_stack`, which was removed in
-NumPy 2.5. Its maintained environment specifies NumPy below 2.5 and Numba below
-0.67, so the GPU extra selects Numba 0.66 on Python 3.13 and 3.14. Python 3.15
-retains the newer CPU backend but is outside this GPU combination's supported
-range. NVIDIA is developing [Numba-CUDA-MLIR](https://github.com/NVIDIA/numba-cuda-mlir)
-as its successor; migration requires physical-device verification.
+The GPU extra uses PyTorch 2.15 for Python 3.13 through 3.15. It selects CUDA
+when available, then Apple Metal. Linux CUDA requires a compatible NVIDIA driver
+for PyTorch's CUDA 13.2 wheel; PyTorch 2.15 requires macOS 15 or later for Metal.
+The Linux extra pins the native cuBLAS and NVRTC packages to the versions in the
+[CUDA 13.2.2 toolkit](https://pypi.org/project/cuda-toolkit/13.2.2/). GPU execution
+rejects Metal's optional CPU fallback. The CPU compiler
+retains its own NumPy compatibility constraints when the CPU extra is installed.
+The GPU backend evaluates the integer predicate graph with tensor operations;
+device choice and workload size affect launch and transfer costs, so measure the
+complete run before assuming a speedup. Receipts record `cuda` or `mps`, and a
+published study must contain completed work from one device type without fallback.
+The configured memory budget admits plan buffers, batch scratch and estimated
+tensor temporaries; PyTorch's allocator cache and other device users are outside
+that estimate. PyTorch out-of-memory errors during evaluation use the existing
+bounded batch-splitting path.
 
 `--backend-verify` compares every definitive compiled predicate with the host
 validator. Keep that check for correctness comparisons; its extra validation is

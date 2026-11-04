@@ -48,6 +48,7 @@ class AllocationLimited:
             None: Initializes fresh task-owned test state.
         """
         self.closed = False
+        self.device = "cuda"
         self.calls: list[tuple[int, ...]] = []
 
     def evaluate(self, ids: tuple[int, ...]) -> Batch:
@@ -153,6 +154,85 @@ def test_memory_admission_precedes_native_calls() -> None:
             engine.evaluate(tuple(range(8)))
     finally:
         engine.close()
+
+
+def test_gpu_memory_admission_reserves_tensor_temporaries() -> None:
+    """
+    Reject a GPU batch when its tensor working set exceeds the configured budget.
+
+    Returns:
+        None: Admission fails before the device adapter is invoked.
+    """
+    plan = evolve(program(), limits=Limits(memory_bytes=1024, batch_size=8))
+    engine = prepare(plan, "reference")
+    adapter = AllocationLimited(plan, "gpu")
+    engine.gpu = adapter
+    try:
+        with pytest.raises(MemoryError, match="configured host/device buffer budget"):
+            engine.evaluate(tuple(range(8)))
+        assert adapter.calls == []
+    finally:
+        engine.close()
+
+
+def test_metal_cpu_fallback_is_not_gpu_execution(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Reject Metal's CPU fallback before any device result can be reported as GPU work.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Override device discovery and the process snapshot.
+
+    Returns:
+        None: Fallback-enabled Metal initialization fails closed.
+    """
+    torch = pytest.importorskip("torch")
+    from hypothesis_helm.compiler.backends import gpu
+
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    monkeypatch.setattr(torch.backends.mps, "is_available", lambda: True)
+    monkeypatch.setitem(gpu.env, "PYTORCH_ENABLE_MPS_FALLBACK", "1")
+    with pytest.raises(BackendUnavailable, match="without CPU fallback"):
+        prepare(program(), "gpu")
+
+
+def test_tensor_allocation_failure_is_retryable(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Translate PyTorch allocation failures into the scheduler's bounded retry signal.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Inject a deterministic device allocation failure.
+
+    Returns:
+        None: The adapter reports memory pressure without exposing the native error payload.
+    """
+    torch = pytest.importorskip("torch")
+    from hypothesis_helm.compiler.backends import gpu
+
+    engine = object.__new__(gpu.TensorEngine)
+    engine.prepared = prepare(program(), "reference")
+    engine.device = "cpu"
+
+    def fail(*args: object, **kwargs: object) -> None:
+        """
+        Simulate device memory exhaustion without allocating device memory.
+
+        Args:
+            *args (object): Positional tensor arguments.
+            **kwargs (object): Named tensor arguments.
+
+        Returns:
+            None: This injection always raises.
+
+        Raises:
+            torch.OutOfMemoryError: Synthetic allocation failure.
+        """
+        raise torch.OutOfMemoryError("synthetic native detail")
+
+    monkeypatch.setattr(torch, "empty", fail)
+    with pytest.raises(MemoryError, match="GPU allocation failed") as error:
+        engine.evaluate((0,))
+    assert "synthetic native detail" not in str(error.value)
+    engine.prepared.close()
 
 
 @pytest.mark.parametrize("fault", ["plan", "fence", "sequence", "truncated", "reordered", "cancelled"])

@@ -96,7 +96,7 @@ def reconcile(*, check: bool = False) -> bool:
             "Retained results identify their original reference CPU implementation. "
             "Fresh compiled CPU runs use `--execution-backend cpu-vector`."
             if lane == "cpu"
-            else "Each study requires recorded physical CUDA execution. "
+            else "Each study requires recorded physical GPU execution. "
             "Unmeasured guides contain no copied CPU figures or inferred GPU results."
         )
         lines = [f"# {lane.upper()} studies", "", "[All studies](../README.md)", "", description, ""]

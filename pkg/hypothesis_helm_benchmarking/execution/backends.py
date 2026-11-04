@@ -161,10 +161,12 @@ def execute(command: str, arguments: list[str], workspace: FixtureWorkspace, inv
                 for key in ("physical_cases", "logical_cases", "committed_cases", "unknown_cases", "batches")
             }
             selected = ", ".join(sorted({str(plan["selected"]) for plan in plans})) or "none recorded"
+            devices = ", ".join(sorted({str(plan.get("device", "")) for plan in plans if plan.get("device")})) or "none recorded"
             lines = [
                 "# Backend execution evidence",
                 "",
                 f"Requested engine: `{workspace.backend.name}`. Observed engines: {selected}. Status: **{status}**.",
+                f"Observed device types: {devices}.",
                 "",
                 "Compiled work evaluates finite schema predicates. Helm rendering, template specialization, seeded selection, "
                 "failure callbacks and reporting remain on the host. No end-to-end GPU speedup is implied.",

@@ -154,7 +154,10 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int, backend: 
     if phase in {"prepare", "prepare-inputs", "prepare-finalize"}:
         path = env.get("GITHUB_OUTPUT")
         if path:
-            study_names = [name for name in STUDIES if name not in {"error-surface", "stress", "structural-sparsity"}]
+            # The quartic comparison consumes the merged error-surface measurements.
+            study_names = [
+                name for name in STUDIES if name not in {"error-surface", "error-surface-quartic", "stress", "structural-sparsity"}
+            ]
             dependent = {item.name for item in CATALOG if item.backend_dependent}
             matrix = {
                 "study": study_names,

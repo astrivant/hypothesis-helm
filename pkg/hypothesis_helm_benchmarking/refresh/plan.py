@@ -36,6 +36,7 @@ STUDIES = (
     "calibration-variation",
     "filtering",
     "error-surface",
+    "error-surface-quartic",
 )
 
 

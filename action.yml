@@ -6,7 +6,7 @@ branding:
   color: purple
 inputs:
   execution-backend:
-    description: 'Finite predicate engine: reference, cpu-vector, or gpu. GPU requires a Linux NVIDIA runner.'
+    description: 'Finite predicate engine: reference, cpu-vector, or gpu. GPU requires a physical CUDA or Apple Metal device.'
     default: reference
   backend-fallback:
     description: 'Unavailable or failed backend policy: error or reference.'

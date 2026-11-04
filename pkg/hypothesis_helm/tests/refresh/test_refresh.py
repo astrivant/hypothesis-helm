@@ -527,6 +527,15 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                     for extension in ("png", "svg"):
                         (directory / f"{axis}-{metric.replace('_', '-')}.{extension}").write_bytes(b"x" * 1001)
         (directory / "results.json").write_text(json.dumps(document))
+    quartic = tmp_path / "outputs/error-surface-quartic"
+    quartic.mkdir(parents=True)
+    source = tmp_path / "outputs/error-surface/results.json"
+    (quartic / "results.json").write_text(
+        json.dumps({"source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(), "fits": [{"status": "completed"}]})
+    )
+    (quartic / "README.md").write_text("# Synthetic comparison\n")
+    (quartic / "comparison-1.png").write_bytes(b"x" * 1001)
+    (quartic / "comparison-1.svg").write_text('<svg><g id="plot-question" />' + " " * 1001 + "</svg>")
     for vector in (tmp_path / "outputs").rglob("*.svg"):
         vector.write_text('<svg><g id="plot-question" />' + " " * 1001 + "</svg>")
     if damage == "reader-question":
@@ -686,6 +695,7 @@ def test_publish_groups_studies(tmp_path: Path, incomplete: bool) -> None:
         "calibration-variation",
         "filtering",
         "error-surface",
+        "error-surface-quartic",
     )
     (run / "status.tsv").write_text("".join(f"{name}\t0\n" for name in studies))
     (run / "started-epoch.txt").write_text("0")
@@ -1006,5 +1016,6 @@ def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str, monkeypat
         entry = getattr(module, "main", None) or module.run
         with pytest.raises(Parsed):
             entry(arguments[command_index + 1 :])
-    assert ("--symbolic-fit" in calls[-1]) == (symbolic == "true")
+    surface_arguments = calls[STUDIES.index("error-surface")]
+    assert ("--symbolic-fit" in surface_arguments) == (symbolic == "true")
     assert (root / "status.tsv").read_text().splitlines() == [f"{study}\t0" for study in STUDIES]

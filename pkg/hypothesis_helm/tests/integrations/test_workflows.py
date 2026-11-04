@@ -539,6 +539,14 @@ def test_error_surface_has_eight_isolated_shards() -> None:
     assert strategy["fail-fast"] is False
     merge = mapping(jobs["refresh-error-surface-merge"])
     assert set(sequence(merge["needs"])) == {"refresh-prepare", "refresh-error-surface"}
+    merge_step = next(
+        mapping(step) for step in sequence(merge["steps"]) if mapping(step).get("name") == "Merge verified measurements and generate plots"
+    )
+    command = str(merge_step["run"])
+    assert command.index("--merge-shards") < command.index("polynomial-surface") < command.index("--study error-surface-quartic")
+    assert '--execution-backend "$EXECUTION_BACKEND" polynomial-surface' in command
+    assert '"$ROOT/outputs/error-surface-quartic"' in command
+    assert '"$ROOT/statuses/error-surface-quartic.tsv"' in command
     assert "refresh-error-surface-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])
 
 

@@ -1,5 +1,5 @@
 """
-Evaluate total finite Boolean programs with the same integer kernel on CPU and CUDA.
+Evaluate total finite Boolean programs with an integer kernel on the CPU.
 """
 
 from __future__ import annotations

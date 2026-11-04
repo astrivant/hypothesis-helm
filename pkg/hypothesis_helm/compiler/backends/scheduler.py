@@ -67,6 +67,7 @@ class Report:
         requested (str): User-selected backend.
         selected (str): Effective compute route.
         plan_digest (str): Exact plan identity, when compilation succeeded.
+        device (str): Physical GPU kind, CPU or reference route, when initialized.
         physical_cases (int): Completed pure evaluations, including speculative extras.
         logical_cases (int): Candidates consumed by the ordered host coordinator.
         committed_cases (int): Accepted complete configurations; never completed renders.
@@ -81,6 +82,7 @@ class Report:
     requested: str
     selected: str
     plan_digest: str = ""
+    device: str = ""
     physical_cases: int = 0
     logical_cases: int = 0
     committed_cases: int = 0
@@ -104,6 +106,7 @@ class Report:
                 "requested",
                 "selected",
                 "plan_digest",
+                "device",
                 "physical_cases",
                 "logical_cases",
                 "committed_cases",
@@ -132,7 +135,7 @@ def _worker(connection: Connection[object, object], plan: Plan, backend: str) ->
     engine: Engine | None = None
     try:
         engine = prepare(plan, backend)
-        connection.send(("ready", plan.identity))
+        connection.send(("ready", plan.identity, engine.device))
         while True:
             packet = connection.recv()
             if packet is None:
@@ -170,7 +173,7 @@ class Worker:
 
     def __init__(self, plan: Plan, backend: str) -> None:
         """
-        Start one spawned worker without inheriting a parent CUDA context.
+        Start one spawned worker without inheriting a parent device context.
 
         Args:
             plan (Plan): Validated immutable program.
@@ -188,8 +191,16 @@ class Worker:
         child.close()
         try:
             ready = self.receive()
-            if ready != ("ready", plan.identity):
+            valid_devices = {"reference": {"reference"}, "cpu-vector": {"cpu"}, "gpu": {"cuda", "mps"}}
+            if (
+                not isinstance(ready, tuple)
+                or len(ready) != 3
+                or ready[:2] != ("ready", plan.identity)
+                or not isinstance(ready[2], str)
+                or ready[2] not in valid_devices[backend]
+            ):
                 raise BackendUnavailable("requested backend could not initialize")
+            self.device = ready[2]
         except BaseException:
             self.close()
             raise
@@ -306,6 +317,7 @@ class Scheduler:
         report.plan_digest = plan.identity
         try:
             self.worker = Worker(plan, options.name)
+            report.device = self.worker.device
         except BackendError:
             self.pool.shutdown(wait=True)
             if options.fallback != "reference":

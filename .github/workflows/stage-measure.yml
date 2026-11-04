@@ -358,10 +358,16 @@ jobs:
               --merge-shards "$RUNNER_TEMP"/error-surface-shards/*/results.json \
               --output "$ROOT/outputs/error-surface"
           poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study error-surface
+          # Fit only the merged source from this run and retain its backend evidence.
+          poetry run hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" polynomial-surface \
+              --input "$ROOT/outputs/error-surface/results.json" --output "$ROOT/outputs/error-surface-quartic"
+          poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study error-surface-quartic
           mkdir -p "$ROOT/statuses"
           printf 'error-surface\t0\n' >"$ROOT/statuses/error-surface.tsv"
+          printf 'error-surface-quartic\t0\n' >"$ROOT/statuses/error-surface-quartic.tsv"
           tar -czf "$RUNNER_TEMP/refresh-study-error-surface.tar.gz" \
-              "$ROOT/outputs/error-surface" "$ROOT/statuses/error-surface.tsv"
+              "$ROOT/outputs/error-surface" "$ROOT/outputs/error-surface-quartic" \
+              "$ROOT/statuses/error-surface.tsv" "$ROOT/statuses/error-surface-quartic.tsv"
       - uses: actions/upload-artifact@v7
         with:
           name: refresh-study-error-surface

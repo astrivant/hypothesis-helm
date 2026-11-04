@@ -53,7 +53,7 @@ jobs:
           python-version: '3.13'
       - name: Record physical device and driver
         run: nvidia-smi --query-gpu=name,driver_version,memory.total,compute_cap --format=csv
-      - name: Install locked CUDA compiler and toolkit
+      - name: Install locked GPU tensor runtime
         env:
           POETRY_VIRTUALENVS_IN_PROJECT: 'true'
           POETRY_INSTALLER_RE_RESOLVE: 'false'

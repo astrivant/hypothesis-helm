@@ -64,6 +64,11 @@ case "$study" in
             hypothesis-helm-benchmark "${backend[@]}" error-surface --output-size 11x13 --time-limit 9m --output "$root/outputs/error-surface"
         fi
         ;;
+    error-surface-quartic)
+        # Compare only the matching completed source measurements and inherit their backend receipt.
+        hypothesis-helm-benchmark "${backend[@]}" polynomial-surface --input "$root/outputs/error-surface/results.json" \
+            --output "$root/outputs/error-surface-quartic"
+        ;;
     *)
         echo "Unknown refresh study: $study" >&2
         exit 2

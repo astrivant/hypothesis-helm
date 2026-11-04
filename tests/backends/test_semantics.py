@@ -54,18 +54,18 @@ def schema_fixture() -> dict[str, object]:
     }
 
 
-def test_cuda_numpy_dependency_range() -> None:
+def test_gpu_dependency_range() -> None:
     """
-    Keep the selected CUDA compiler inside NVIDIA's supported NumPy range.
+    Keep the GPU extra independent of the CPU compiler's NumPy restriction.
 
     Returns:
-        None: Dependency markers retain compatible CUDA and Python 3.15 CPU versions.
+        None: GPU dependencies cover supported platforms and Python versions.
     """
     project = Path(__file__).resolve().parents[2] / "pyproject.toml"
     with project.open("rb") as stream:
         settings = tomllib.load(stream)["tool"]["poetry"]
     for requirements in (settings["dependencies"]["numpy"], settings["group"]["dev"]["dependencies"]["numpy"]):
-        for version, accepted, rejected in (("3.13", "2.4.6", "2.5.0"), ("3.14", "2.4.6", "2.5.0"), ("3.15", "2.5.3", "2.4.6")):
+        for version, accepted, rejected in (("3.13", "2.5.3", "2.6.0"), ("3.14", "2.5.3", "2.6.0"), ("3.15", "2.5.3", "2.4.6")):
             selected = [entry for entry in requirements if version in SpecifierSet(entry["python"])]
             assert len(selected) == 1
             allowed = SpecifierSet(selected[0]["version"])
@@ -76,15 +76,19 @@ def test_cuda_numpy_dependency_range() -> None:
         extras = tomllib.load(stream)["project"]["optional-dependencies"]
     cpu = [Requirement(value) for value in extras["cpu"]]
     gpu = [Requirement(value) for value in extras["gpu"]]
-    for version in ("3.13", "3.14"):
-        environment = {"python_version": version, "sys_platform": "linux"}
-        assert [str(item.specifier) for item in cpu if item.marker and item.marker.evaluate(environment)] == ["==0.66.0"]
+    for version in ("3.13", "3.14", "3.15"):
+        environment = {"python_version": version, "platform_system": "Linux"}
         assert {item.name: str(item.specifier) for item in gpu if item.marker and item.marker.evaluate(environment)} == {
-            "numba": "==0.66.0",
-            "numba-cuda": "==0.30.4",
+            "torch": "==2.15.0",
+            "nvidia-cublas": "==13.4.1.3",
+            "nvidia-cuda-nvrtc": "==13.2.86",
         }
-    environment = {"python_version": "3.15", "sys_platform": "linux"}
-    assert [str(item.specifier) for item in cpu if item.marker and item.marker.evaluate(environment)] == ["==0.68.1"]
+        environment["platform_system"] = "Darwin"
+        assert [item.name for item in gpu if item.marker and item.marker.evaluate(environment)] == ["torch"]
+    for version in ("3.13", "3.14", "3.15"):
+        environment = {"python_version": version, "sys_platform": "linux"}
+        assert [str(item.specifier) for item in cpu if item.marker and item.marker.evaluate(environment)] == ["==0.68.1"]
+    environment["python_version"] = "3.16"
     assert not [item for item in gpu if item.marker and item.marker.evaluate(environment)]
 
 
@@ -136,6 +140,64 @@ def test_native_matches_schema(native_backend: str) -> None:
         engine.close()
     assert schema == original
     assert compile_plan(schema, factor_space(schema)).encode() == plan.encode()
+
+
+@pytest.mark.parametrize("encoding", ["mixed-radix-i64", "dictionary-rows"])
+def test_native_three_state_graph(native_backend: str, encoding: str) -> None:
+    """
+    Compare every three-state input combination and each Boolean operator.
+
+    Args:
+        native_backend (str): Required engine under test.
+        encoding (str): Compact IDs or explicit dictionary rows.
+
+    Returns:
+        None: Every node agrees with the independent reference engine.
+    """
+    factors = tuple(Factor((str(index),), 3, digest(index)) for index in range(3))
+    nodes = (
+        *(Node(Opcode.LOOKUP, factor=index, table=tuple(State)) for index in range(3)),
+        Node(Opcode.AND, (0, 1, 2)),
+        Node(Opcode.OR, (0, 1, 2)),
+        Node(Opcode.NOT, (0,)),
+        Node(Opcode.ONE, (0, 1, 2)),
+        Node(Opcode.AND),
+        Node(Opcode.OR),
+        Node(Opcode.ONE),
+    )
+    rows = tuple(itertools.product(range(3), repeat=3))
+    ids = tuple(range(len(rows)))
+    for root in range(len(nodes)):
+        plan = Plan(digest("three-state"), factors, nodes, root, encoding=encoding)
+        reference = prepare(plan, "reference")
+        actual = prepare(plan, native_backend)
+        try:
+            choices = rows if encoding == "dictionary-rows" else ()
+            assert actual.evaluate(ids, choices).states == reference.evaluate(ids, choices).states
+        finally:
+            actual.close()
+            reference.close()
+
+
+def test_native_large_integer_assignments(native_backend: str) -> None:
+    """
+    Preserve exact mixed-radix decoding for assignment IDs above float precision.
+
+    Args:
+        native_backend (str): Required engine under test.
+
+    Returns:
+        None: Every selected table entry matches integer arithmetic on the host.
+    """
+    factors = (Factor(("leading",), 3, digest("leading")),) + tuple(Factor((str(index),), 32767, digest(index)) for index in range(4))
+    plan = Plan(digest("wide"), factors, (Node(Opcode.LOOKUP, factor=0, table=tuple(State)),), 0)
+    stride = 32767**4
+    ids = (0, stride - 1, stride, 2 * stride, 3 * stride - 1)
+    engine = prepare(plan, native_backend)
+    try:
+        assert engine.evaluate(ids).states == (State.FALSE, State.FALSE, State.TRUE, State.UNKNOWN, State.UNKNOWN)
+    finally:
+        engine.close()
 
 
 @pytest.mark.parametrize("threshold", [0, 10000])

@@ -43,7 +43,12 @@ class Batch:
 class Engine(Protocol):
     """
     Own preparation and compute buffers without chart, callback or coverage authority.
+
+    Attributes:
+        device (str): Observed device kind or host route.
     """
+
+    device: str
 
     def evaluate(self, ids: tuple[int, ...], choices: tuple[tuple[int, ...], ...] = ()) -> Batch:
         """
@@ -70,7 +75,7 @@ class Engine(Protocol):
 
 class Prepared:
     """
-    Share bounded packing and decoding between reference, CPU and CUDA adapters.
+    Share bounded packing and decoding between reference, CPU and GPU adapters.
     """
 
     def __init__(self, plan: Plan, backend: str) -> None:
@@ -86,6 +91,7 @@ class Prepared:
         self.plan = plan
         self.closed = False
         self.backend = backend
+        self.device = "cpu" if backend == "cpu-vector" else "reference"
         entries: list[int] = []
         rows: list[tuple[int, int, int, int]] = []
         for node in plan.nodes:
@@ -137,10 +143,11 @@ class Prepared:
                 raise BackendUnavailable("cpu-vector requires hypothesis-helm[cpu]") from exc
         elif backend == "gpu":
             try:
-                module = importlib.import_module("hypothesis_helm.compiler.backends.cuda")
-                self.gpu = module.CudaEngine(self)
+                module = importlib.import_module("hypothesis_helm.compiler.backends.gpu")
+                self.gpu = module.TensorEngine(self)
+                self.device = self.gpu.device
             except ImportError as exc:
-                raise BackendUnavailable("gpu requires hypothesis-helm[gpu] on Linux with an NVIDIA driver") from exc
+                raise BackendUnavailable("gpu requires hypothesis-helm[gpu] and a physical CUDA or Metal device") from exc
         elif backend != "reference":
             raise ValueError("execution backend must be reference, cpu-vector or gpu")
 
@@ -173,7 +180,9 @@ class Prepared:
                 raise InvalidPlan("invalid dictionary row width or choice index")
         elif choices:
             raise InvalidPlan("compact-ID plans do not accept dictionary rows")
-        required = self.plan_bytes * 2 + len(ids) * (len(self.nodes) + len(self.factors) + 2) * 8 * 2
+        # Tensor operations need temporary vectors in addition to graph scratch and input rows.
+        temporary_vectors = 16 if self.gpu is not None else 0
+        required = self.plan_bytes * 2 + len(ids) * (len(self.nodes) + len(self.factors) + 2 + temporary_vectors) * 8 * 2
         if required > self.plan.limits.memory_bytes:
             raise MemoryError("batch exceeds configured host/device buffer budget")
         if self.gpu is not None:

@@ -40,7 +40,7 @@ case "$stage" in
         date +%s >"$root/started-epoch.txt"
         python "$root/prepare-fixtures.py" "$root"
         ;;
-    performance | discovery | bug-density | sparsity | structure-sparsity | structural-sparsity | matrix | pca | expansion | structure-depth | nesting | stress | sampling | sensitivity | sensitivity-ordering | calibration-variation | filtering | error-surface)
+    performance | discovery | bug-density | sparsity | structure-sparsity | structural-sparsity | matrix | pca | expansion | structure-depth | nesting | stress | sampling | sensitivity | sensitivity-ordering | calibration-variation | filtering | error-surface | error-surface-quartic)
         bash "$root/studies.sh" "$stage" "$root" "${@:3}"
         ;;
     measurements-finished) date +%s >"$root/finished-epoch.txt" ;;

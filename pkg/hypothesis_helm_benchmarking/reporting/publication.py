@@ -206,6 +206,8 @@ def verify_publication(source: Path, destination: Path) -> None:
             if (
                 not plans
                 or any(plan["selected"] != "gpu" for plan in plans)
+                or any(plan.get("device") not in ("cuda", "mps") for plan in plans)
+                or len({plan.get("device") for plan in plans}) != 1
                 or sum(int(str(plan["physical_cases"])) for plan in plans) <= 0
             ):
                 raise ValueError("GPU publication requires actual device work without reference fallback")

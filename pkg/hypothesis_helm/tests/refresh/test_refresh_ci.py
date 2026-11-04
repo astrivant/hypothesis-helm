@@ -9,6 +9,7 @@ from pathlib import Path
 from textwrap import dedent
 
 import pytest
+from hypothesis_helm_benchmarking.catalog import CATALOG
 from hypothesis_helm_benchmarking.refresh.ci import merge_statuses, phase_operations, run_phase
 from hypothesis_helm_benchmarking.refresh.operations import Operation
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES, Refresh
@@ -139,13 +140,15 @@ def test_split_preparation_retains_journals(tmp_path: Path, monkeypatch: pytest.
     assert "ci_run_id" in json.loads((root / "provenance.json").read_text())
 
 
-def test_preparation_excludes_sharded_studies_from_serial_matrix(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize("backend", ["reference", "gpu"])
+def test_preparation_excludes_sharded_studies_from_serial_matrix(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, backend: str) -> None:
     """
     Schedule dedicated sharded studies only through their own workflow jobs.
 
     Args:
         tmp_path (Path): Prepared workspace and GitHub output file.
         monkeypatch (pytest.MonkeyPatch): Skip preparation work while exercising real matrix publication.
+        backend (str): Requested route for backend-dependent studies.
 
     Returns:
         None: Every study runs through exactly one serial or sharded workflow path.
@@ -158,12 +161,16 @@ def test_preparation_excludes_sharded_studies_from_serial_matrix(tmp_path: Path,
     monkeypatch.setenv("GITHUB_OUTPUT", str(output))
     refresh_env()
     monkeypatch.setattr("hypothesis_helm_benchmarking.refresh.ci.OperationQueue.run", lambda self: None)
-    run_phase(root, "prepare", None, 1)
+    run_phase(root, "prepare", None, 1, BackendOptions(backend))
     values = dict(line.split("=", 1) for line in output.read_text().splitlines())
     assert values["root"] == str(root)
-    assert json.loads(values["matrix"])["study"] == [
-        name for name in STUDIES if name not in {"error-surface", "stress", "structural-sparsity"}
+    matrix = json.loads(values["matrix"])
+    assert matrix["study"] == [
+        name for name in STUDIES if name not in {"error-surface", "error-surface-quartic", "stress", "structural-sparsity"}
     ]
+    assert {item["study"]: item["backend"] for item in matrix["include"]} == {
+        name: backend if name in {study.name for study in CATALOG if study.backend_dependent} else "reference" for name in matrix["study"]
+    }
 
 
 @pytest.mark.parametrize("damage", [None, "missing", "failed", "duplicate", "unexpected", "mislabeled"])

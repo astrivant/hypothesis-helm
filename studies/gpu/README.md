@@ -8,7 +8,7 @@
 
 [All studies](../README.md)
 
-Each study requires recorded physical CUDA execution. Unmeasured guides contain no copied CPU figures or inferred GPU results.
+Each study requires recorded physical GPU execution. Unmeasured guides contain no copied CPU figures or inferred GPU results.
 
 - [bug-density](bug-density/README.md)
 - [calibration-variation](calibration-variation/README.md)
