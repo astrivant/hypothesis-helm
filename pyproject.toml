@@ -46,7 +46,6 @@ include = [
     {path = "scripts", format = ["sdist"]},
     {path = "pkg/hypothesis_helm/compiler/assets/*.json", format = ["sdist", "wheel"]},
     {path = "pkg/hypothesis_helm/compiler/assets/renderer/*", format = ["sdist", "wheel"]},
-    {path = "pkg/hypothesis_helm/compiler/lua/*.lua", format = ["sdist", "wheel"]},
 ]
 
 [tool.poetry.urls]
@@ -68,7 +67,6 @@ deepdiff = ">=9.1,<10"
 reportlab = ">=4,<5"
 matplotlib = ">=3.10,<4"
 immutables = ">=0.21,<1"
-lupa = ">=2.6,<3"
 # The CPU compiler's own dependency constrains NumPy when the CPU extra is selected.
 numpy = [
     {version = ">=2,<2.6", python = "<3.15"},

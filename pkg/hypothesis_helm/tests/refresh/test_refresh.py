@@ -92,13 +92,13 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
     assert (tmp_path / ".cache/benchmarks/latest-refresh.txt").read_text().strip() == str(run_root)
     snapshot = tmp_path / run_root / "frozen-source"
     # Both native implementations and their module locks must survive transfer
-    # to another CI runner, along with the Lua pass and regenerated inventories.
+    # to another CI runner, along with the bound evaluator and regenerated inventories.
     for name in (
         "pkg/hypothesis_helm/compiler/assets/renderer/main.go",
         "pkg/hypothesis_helm/compiler/assets/renderer/go.mod",
         "pkg/hypothesis_helm/compiler/assets/renderer/go.sum",
         "pkg/hypothesis_helm/compiler/assets/builtin_inventory.json",
-        "pkg/hypothesis_helm/compiler/lua/bounds.lua",
+        "pkg/hypothesis_helm/compiler/bounds.py",
         "pkg/hypothesis_helm_catalog/upstream/main.go",
         "pkg/hypothesis_helm_catalog/upstream/helm.go",
         "pkg/hypothesis_helm_catalog/upstream/kubernetes.go",

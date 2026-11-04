@@ -54,7 +54,6 @@ sources = [
     *Path("pkg/hypothesis_helm_catalog/data").glob("*.json"),
     *Path("pkg/hypothesis_helm_benchmarking/assets").rglob("*"),
     *Path("pkg/hypothesis_helm/compiler/assets").rglob("*"),
-    *Path("pkg/hypothesis_helm/compiler/lua").glob("*.lua"),
     *Path("pkg/hypothesis_helm_catalog/upstream").glob("*.go"),
     Path("pkg/hypothesis_helm_catalog/upstream/go.mod"),
     Path("pkg/hypothesis_helm_catalog/upstream/go.sum"),
