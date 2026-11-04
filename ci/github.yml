@@ -5,11 +5,18 @@ on:
     branches: [main]
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      execution-backend:
+        description: Finite predicate backend
+        type: choice
+        options: [reference, cpu-vector, gpu]
+        default: reference
 permissions:
   contents: read
 jobs:
   chart:
-    runs-on: ubuntu-latest
+    # Standard public Linux: 4 vCPU, 16 GiB. GPU: configure HH_GPU_RUNNER for approved capacity.
+    runs-on: ${{ inputs.execution-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
     strategy:
       fail-fast: false
       matrix:
@@ -30,6 +37,10 @@ jobs:
         with:
           chart: ./chart
           command: test
+          execution-backend: ${{ inputs.execution-backend || 'reference' }}
+          backend-fallback: error
+          backend-batch-size: '256'
+          backend-memory-mib: '64'
           traversal-strategy: random
           config-inline: |
             hypothesis:

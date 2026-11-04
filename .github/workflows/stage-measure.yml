@@ -9,6 +9,9 @@ on:
       refresh:
         type: boolean
         default: false
+      benchmark-backend:
+        type: string
+        default: reference
       bitnami-scan:
         type: boolean
         default: false
@@ -27,6 +30,7 @@ permissions:
   contents: read
 
 env:
+  EXECUTION_BACKEND: ${{ inputs.benchmark-backend }}
   HELM_VERSION: v4.3.0
   POETRY_VIRTUALENVS_IN_PROJECT: 'true'
   HH_BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' && (github.event_name != 'workflow_dispatch' || inputs.binary-cache) }}
@@ -50,6 +54,23 @@ jobs:
       sha: ${{ steps.request.outputs.sha }}
       base_sha: ${{ steps.request.outputs.base_sha }}
     steps:
+      - name: Validate requested benchmark backend
+        env:
+          GPU_RUNNER: ${{ vars.HH_GPU_RUNNER }}
+        run: |
+          case "$EXECUTION_BACKEND" in
+              reference | cpu-vector) ;;
+              gpu)
+                  test -n "$GPU_RUNNER" || {
+                      echo '::error::Configure an authorized HH_GPU_RUNNER before requesting GPU studies.'
+                      exit 1
+                  }
+                  ;;
+              *)
+                  echo '::error::Unknown benchmark backend'
+                  exit 1
+                  ;;
+          esac
       - name: Require a publication token for the protected default branch
         if: ${{ inputs.pull-request == '' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
         env:
@@ -188,7 +209,7 @@ jobs:
         run: tar -xzf "$RUNNER_TEMP/refresh-input/refresh-inputs.tar.gz"
       - name: Snapshot verified sources and prepare fixtures
         id: prepare
-        run: poetry run hypothesis-helm-refresh --ci-phase prepare-finalize --root "$ROOT"
+        run: poetry run hypothesis-helm-refresh --ci-phase prepare-finalize --root "$ROOT" --execution-backend "$EXECUTION_BACKEND"
       - name: Package prepared workspace
         run: |
           tar -czf "$RUNNER_TEMP/refresh-prepared.tar.gz" "$ROOT" \
@@ -212,8 +233,9 @@ jobs:
   refresh-study:
     name: "Study: ${{ matrix.study }}"
     needs: refresh-prepare
-    # Studies measure serial execution or at most four local workers.
-    runs-on: ubuntu-latest
+    # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64 runner, 4 vCPU, 28 GiB RAM, 16 GiB T4.
+    # Shared studies stay on CPU even when GPU-dependent comparisons are requested.
+    runs-on: ${{ matrix.backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -222,11 +244,13 @@ jobs:
     env:
       ROOT: ${{ needs.refresh-prepare.outputs.root }}
       STUDY: ${{ matrix.study }}
+      EXECUTION_BACKEND: ${{ matrix.backend }}
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
+          execution-backend: ${{ matrix.backend }}
       - uses: actions/download-artifact@v8
         with:
           name: refresh-prepared
@@ -234,7 +258,7 @@ jobs:
       - name: Restore common source snapshot and inputs
         run: tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
       - name: Run isolated study
-        run: poetry run hypothesis-helm-refresh --ci-phase study --root "$ROOT" --study "$STUDY"
+        run: poetry run hypothesis-helm-refresh --ci-phase study --root "$ROOT" --study "$STUDY" --execution-backend "$EXECUTION_BACKEND"
       - name: Package study outputs and journal
         if: ${{ always() }}
         run: |
@@ -251,7 +275,8 @@ jobs:
   refresh-error-surface:
     name: "Error surface (${{ matrix.number }}/8)"
     needs: refresh-prepare
-    runs-on: ubuntu-latest
+    # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64, 4 vCPU, 28 GiB RAM, 16 GiB T4.
+    runs-on: ${{ inputs.benchmark-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -284,6 +309,7 @@ jobs:
       - uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
+          execution-backend: ${{ inputs.benchmark-backend }}
       - uses: actions/download-artifact@v8
         with:
           name: refresh-prepared
@@ -294,7 +320,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p "$ROOT/error-surface-shards/$SHARD"
-          poetry run hypothesis-helm-benchmark error-surface --output-size 11x13 --time-limit 9m \
+          poetry run hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" error-surface --output-size 11x13 --time-limit 9m \
               --shard-index "$SHARD" --shard-count 8 --output "$ROOT/error-surface-shards/$SHARD" \
               2>&1 | tee "$ROOT/error-surface-shards/$SHARD/run.log"
       - uses: actions/upload-artifact@v7
@@ -328,7 +354,7 @@ jobs:
       - name: Merge verified measurements and generate plots
         run: |
           tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
-          poetry run hypothesis-helm-benchmark error-surface \
+          poetry run hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" error-surface \
               --merge-shards "$RUNNER_TEMP"/error-surface-shards/*/results.json \
               --output "$ROOT/outputs/error-surface"
           poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study error-surface
@@ -345,7 +371,8 @@ jobs:
   refresh-stress:
     name: "Stress progression (${{ matrix.number }}/6)"
     needs: refresh-prepare
-    runs-on: ubuntu-latest
+    # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64, 4 vCPU, 28 GiB RAM, 16 GiB T4.
+    runs-on: ${{ inputs.benchmark-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -373,6 +400,7 @@ jobs:
       - uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
+          execution-backend: ${{ inputs.benchmark-backend }}
       - uses: actions/download-artifact@v8
         with:
           name: refresh-prepared
@@ -383,7 +411,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p "$ROOT/stress-shards/$SHARD"
-          poetry run hypothesis-helm-benchmark stress --time-limit 9m \
+          poetry run hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" stress --time-limit 9m \
               --shard-index "$SHARD" --shard-count 6 --output "$ROOT/stress-shards/$SHARD" \
               2>&1 | tee "$ROOT/stress-shards/$SHARD/run.log"
       - uses: actions/upload-artifact@v7
@@ -417,7 +445,7 @@ jobs:
       - name: Merge verified measurements and generate plots
         run: |
           tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
-          poetry run hypothesis-helm-benchmark stress \
+          poetry run hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" stress \
               --merge-shards "$RUNNER_TEMP"/stress-shards/*/results.json \
               --output "$ROOT/outputs/stress"
           poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study stress
@@ -434,7 +462,8 @@ jobs:
   refresh-structural-sparsity:
     name: "Structural sparsity (${{ matrix.number }}/6)"
     needs: refresh-prepare
-    runs-on: ubuntu-latest
+    # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64, 4 vCPU, 28 GiB RAM, 16 GiB T4.
+    runs-on: ${{ inputs.benchmark-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
     timeout-minutes: 360
     strategy:
       fail-fast: false
@@ -462,6 +491,7 @@ jobs:
       - uses: ./.github/actions/setup-project
         with:
           binary-cache: ${{ env.HH_BINARY_CACHE }}
+          execution-backend: ${{ inputs.benchmark-backend }}
       - uses: actions/download-artifact@v8
         with:
           name: refresh-prepared
@@ -472,7 +502,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p "$ROOT/structural-sparsity-shards/$SHARD"
-          poetry run hypothesis-helm-benchmark structural-sparsity --time-limit 9m \
+          poetry run hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" structural-sparsity --time-limit 9m \
               --shard-index "$SHARD" --shard-count 6 --output "$ROOT/structural-sparsity-shards/$SHARD" \
               2>&1 | tee "$ROOT/structural-sparsity-shards/$SHARD/run.log"
       - uses: actions/upload-artifact@v7
@@ -506,7 +536,7 @@ jobs:
       - name: Merge verified measurements and generate plots
         run: |
           tar -xzf "$RUNNER_TEMP/refresh-input/refresh-prepared.tar.gz"
-          poetry run hypothesis-helm-benchmark structural-sparsity \
+          poetry run hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" structural-sparsity \
               --merge-shards "$RUNNER_TEMP"/structural-sparsity-shards/*/results.json \
               --output "$ROOT/outputs/structural-sparsity"
           poetry run python "$ROOT/verify-measurements.py" "$ROOT" --study structural-sparsity

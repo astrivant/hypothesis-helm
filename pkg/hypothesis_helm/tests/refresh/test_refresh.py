@@ -13,6 +13,7 @@ from pathlib import Path
 
 import pytest
 from attrs import asdict
+from hypothesis_helm_benchmarking.catalog import publication_path
 from hypothesis_helm_benchmarking.charts.stress import Stress, progression
 from hypothesis_helm_benchmarking.charts.structures import STRUCTURES
 from hypothesis_helm_benchmarking.refresh.plan import source_path
@@ -706,14 +707,14 @@ def test_publish_groups_studies(tmp_path: Path, incomplete: bool) -> None:
         (output / "cases/log.md").write_text("worker diagnostic")
     (run / "outputs/chart-topologies/verification.json").write_text("{}")
     if incomplete:
-        previous = tmp_path / "studies/bug-density/README.md"
+        previous = tmp_path / "studies/cpu/bug-density/README.md"
         previous.parent.mkdir(parents=True)
         previous.write_text("Previous results")
         (run / "outputs/structure-sparsity/README.md").unlink()
         failed = subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, capture_output=True, text=True)
         assert failed.returncode != 0 and "missing README.md" in failed.stderr
         assert previous.read_text() == "Previous results"
-        assert not (tmp_path / "studies/bug-density/plot.png").exists()
+        assert not (tmp_path / "studies/cpu/bug-density/plot.png").exists()
         assert not (run / "sha256.json").exists()
         return
     subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, check=True, capture_output=True)
@@ -729,7 +730,7 @@ def test_publish_groups_studies(tmp_path: Path, incomplete: bool) -> None:
     assert not (tmp_path / "studies/chart-topologies/verification.json").exists()
     assert not (tmp_path / "docs/reports/studies").exists()
     for name in (*studies, "chart-topologies"):
-        directory = tmp_path / "studies" / name
+        directory = tmp_path / publication_path(name)
         assert {path.name for path in directory.iterdir()} == {"README.md", "plot.png"}
         assert "Raw measurements (local run data)" in (directory / "README.md").read_text()
         assert json.loads((run / "outputs" / name / "results.json").read_text()) == {"study": name}

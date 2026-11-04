@@ -73,3 +73,9 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+      - id: study-layout
+        name: Study inventory and backend publication layout
+        entry: bash scripts/project-run.sh hypothesis-helm-benchmark inventory --check-layout
+        language: system
+        pass_filenames: false
+        always_run: true

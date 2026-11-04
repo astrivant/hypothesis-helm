@@ -41,7 +41,7 @@ case "$stage" in
         python "$root/prepare-fixtures.py" "$root"
         ;;
     performance | discovery | bug-density | sparsity | structure-sparsity | structural-sparsity | matrix | pca | expansion | structure-depth | nesting | stress | sampling | sensitivity | sensitivity-ordering | calibration-variation | filtering | error-surface)
-        bash "$root/studies.sh" "$stage" "$root"
+        bash "$root/studies.sh" "$stage" "$root" "${@:3}"
         ;;
     measurements-finished) date +%s >"$root/finished-epoch.txt" ;;
     verify-measurements) python "$root/verify-measurements.py" "$root" ;;

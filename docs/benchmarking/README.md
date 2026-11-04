@@ -123,10 +123,10 @@ hypothesis-helm-benchmark generate \
 
 ### Complexity-informed sampling
 
-The [calibration study](<../../studies/calibration-variation/README.md>) compares 54 generated chart variants across 100 seeds each.
-Its [breadth × depth sweep](<../../studies/calibration-variation/README.md#breadth-and-depth-sweep>) measures nine output sizes
+The [calibration study](<../../studies/cpu/calibration-variation/README.md>) compares 54 generated chart variants across 100 seeds each.
+Its [breadth × depth sweep](<../../studies/cpu/calibration-variation/README.md#breadth-and-depth-sweep>) measures nine output sizes
 while holding the input count and defect triggers fixed within each panel.
-Its [matrix and graphs](<../../studies/calibration-variation/MATRIX.md>) show retained cases, known-bug discovery and nearby-profile fallback.
+Its [matrix and graphs](<../../studies/cpu/calibration-variation/MATRIX.md>) show retained cases, known-bug discovery and nearby-profile fallback.
 The [test matrix](../adaptive-filtering/TESTS.md) separates deterministic selector properties from empirical results.
 
 ```sh
@@ -135,7 +135,7 @@ hypothesis-helm-benchmark calibration --output .cache/benchmarks/calibration --t
 
 ### Filtering runtime
 
-The [filtering load test](<../../studies/filtering/README.md>) compares an unfiltered baseline, 70% random sampling, ordinary filtering and adaptive filtering.
+The [filtering load test](<../../studies/cpu/filtering/README.md>) compares an unfiltered baseline, 70% random sampling, ordinary filtering and adaptive filtering.
 It varies the finite input-space size and gate depth, using paired seeds and real Helm execution. Graphs separate planning from test execution;
 time-limited observations retain their unfinished counts. The [theoretical comparison](../adaptive-filtering/README.md#conditions-behind-the-comparison)
 states the conditions under which each bound and expected saving applies.
@@ -175,9 +175,9 @@ Explicit `--clustering` or `--error-rates` lists override the corresponding dime
 This controls measured settings, not image pixels; other structural axes keep their own depth/redundancy settings.
 With eight methods and three seeds, the clustering sweep runs `columns × rows × 24` measurements.
 
-[Results and interpretation](<../../studies/error-surface/README.md>)
+[Results and interpretation](<../../studies/cpu/error-surface/README.md>)
 
-[Fitted response surfaces](<../../studies/error-surface/quadratic-fits.md>) place quadratic predictions beside
+[Fitted response surfaces](<../../studies/cpu/error-surface/quadratic-fits.md>) place quadratic predictions beside
 the collected measurements and their residuals. The [model guide](response-surface.md)
 defines the six coefficients and explains where the approximation can fail.
 
@@ -186,7 +186,7 @@ compares PySR equations with quadratics on reserved cells and seeds, using retai
 Run `symbolic-surface` on retained measurements to generate equations, validation scores and plots.
 These optional reports are not produced by standard CI refreshes.
 
-![Error rate and failure clustering](<../../studies/error-surface/clustering-error-recall.png>)
+![Error rate and failure clustering](<../../studies/cpu/error-surface/clustering-error-recall.png>)
 
 ### Random sampling and defect discovery
 
@@ -443,14 +443,14 @@ first failing case for each fault. These discovery rates describe the seeded fix
 The recorded 5% fixture contains 261 faults: pairs found 136, triples found 208,
 and strength five found all 261.
 
-![Known bugs discovered as permutation strength increases](<../../studies/bug-density/bug-discovery.png>)
+![Known bugs discovered as permutation strength increases](<../../studies/cpu/bug-density/bug-discovery.png>)
 
-![Discovery rate by fault interaction order](<../../studies/bug-density/bug-order.png>)
+![Discovery rate by fault interaction order](<../../studies/cpu/bug-density/bug-order.png>)
 
 The separate [Sparsity and Stochasticity study](<../../studies/sparsity/README.md>) measures distribution
 coverage as the number of cases falls.
 
-[Structural sparsity](<../../studies/structural-sparsity/README.md>) holds the four variable fields and known failures fixed
+[Structural sparsity](<../../studies/cpu/structural-sparsity/README.md>) holds the four variable fields and known failures fixed
 while growing the surrounding values tree and moving those fields farther apart. Its plots compare loading time,
 compiler analysis, total runtime and missed errors for each filtering method.
 See [the study definition and commands](structural-sparsity.md).
@@ -487,7 +487,7 @@ error is assigned to unordered topology outcomes.
 
 ## Strategy matrix
 
-[Compare strategies across six structural cases](<../../studies/matrix/README.md>).
+[Compare strategies across six structural cases](<../../studies/cpu/matrix/README.md>).
 The matrix uses fully enumerable fixtures to measure exact outcome coverage,
 with a nine-minute execution ceiling for each independent run.
 The structural, stress, PCA, expansion and nesting comparisons include `--filter`
@@ -508,7 +508,7 @@ than assuming every parameter is Boolean.
 
 ## Output-space PCA
 
-[Before and after filtering, with 5% seeded errors](<../../studies/pca/README.md>).
+[Before and after filtering, with 5% seeded errors](<../../studies/cpu/pca/README.md>).
 Compare random filtering, topology filtering, and both across the six structural
 cases. Each category keeps fixed PCA axes and reports exact error recall and
 output coverage alongside the projection.
@@ -521,7 +521,7 @@ hypothesis-helm-benchmark pca \
 
 ## Failure expansion
 
-[Compare each strategy with and without `--expand-failures`](<../../studies/expansion/README.md>).
+[Compare each strategy with and without `--expand-failures`](<../../studies/cpu/expansion/README.md>).
 The paired matrix separates distinct erroneous outputs from erroneous inputs
 exercised, and records the additional physical renders.
 
@@ -534,12 +534,12 @@ hypothesis-helm-benchmark expansion \
 ## Topology distributions and filter level
 
 [Generate mixed chart structures](<../../studies/structure-mixtures/README.md>) with seeded category
-weights and shared input wiring. [Compare filter levels 0–5](<../../studies/structure-depth/README.md>)
+weights and shared input wiring. [Compare filter levels 0–5](<../../studies/cpu/structure-depth/README.md>)
 with random filtering disabled and failure expansion enabled.
 
 ## Chart nesting at permutation strength eight
 
-[Matrix and shared-frame PCA](<../../studies/nesting/README.md>) compare shallow (1), deep (5),
+[Matrix and shared-frame PCA](<../../studies/cpu/nesting/README.md>) compare shallow (1), deep (5),
 and seeded random nesting depths (1–5). `--permutations 8` stays fixed; each
 chart retains 12 topology components. Shared PCA axes make depth profiles
 comparable within each topology family.
@@ -572,13 +572,13 @@ To redraw a completed run's plots without repeating Helm measurements:
 bash scripts/project-run.sh hypothesis-helm-benchmark calibration --plot-only --output .cache/benchmarks/calibration-sweep-<epoch>
 ```
 
-[Quadratic versus quartic comparison](<../../studies/error-surface-quartic/polynomial-comparison/README.md>)
+[Quadratic versus quartic comparison](<../../studies/cpu/error-surface-quartic/polynomial-comparison/README.md>)
 uses identical training data and reports errors on reserved settings and repeats.
 See [how to compare a completed surface](response-surface.md#quadratic-versus-quartic-comparison).
 
 The refresh also runs the [mutation sensitivity diagnostic](<../../studies/sensitivity/README.md>), retaining its inputs, measurements and plots.
 
-The [sensitivity ordering study](<../../studies/sensitivity-ordering/README.md>) sweeps profiling order from zero through
+The [sensitivity ordering study](<../../studies/cpu/sensitivity-ordering/README.md>) sweeps profiling order from zero through
 `--permutations` on a fixed chart, then compares bug discovery by iteration across six chart structures and all traversal strategies.
 It can run independently of refresh:
 

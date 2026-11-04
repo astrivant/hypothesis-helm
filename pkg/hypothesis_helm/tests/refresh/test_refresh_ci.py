@@ -13,6 +13,7 @@ from hypothesis_helm_benchmarking.refresh.ci import merge_statuses, phase_operat
 from hypothesis_helm_benchmarking.refresh.operations import Operation
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES, Refresh
 
+from hypothesis_helm.compiler.backends.scheduler import DEFAULT_BACKEND, BackendOptions
 from hypothesis_helm.environment import refresh_env
 from hypothesis_helm.tests import PROJECT_ROOT
 
@@ -103,7 +104,9 @@ def test_split_preparation_retains_journals(tmp_path: Path, monkeypatch: pytest.
         "    (root / 'provenance.json').write_text('{}')\n"
     )
 
-    def operations(directory: Path, phase: str, study: str | None = None) -> tuple[Operation, ...]:
+    def operations(
+        directory: Path, phase: str, study: str | None = None, backend: BackendOptions = DEFAULT_BACKEND
+    ) -> tuple[Operation, ...]:
         """
         Run a small native command at each real phase boundary.
 
@@ -111,6 +114,7 @@ def test_split_preparation_retains_journals(tmp_path: Path, monkeypatch: pytest.
             directory (Path): Shared refresh root.
             phase (str): Preparation phase under test.
             study (str | None): Unused study selector.
+            backend (BackendOptions): Explicit backend forwarded by the coordinator.
 
         Returns:
             tuple[Operation, ...]: One probe preserving real queue and artifact behavior.

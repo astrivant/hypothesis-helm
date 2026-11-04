@@ -27,7 +27,7 @@ from hypothesis_helm.execution.runtime.budget import execution_timer, parse_time
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.execution.state.render_hashes import RenderHashes
 from hypothesis_helm.schemas.contracts import configuration_key, json_value, mapping, sequence
-from hypothesis_helm.schemas.generation.combinations import plan_interactions, trim_values
+from hypothesis_helm.schemas.generation.combinations import trim_values
 from hypothesis_helm.schemas.model import ValuesModel
 from jsonschema import validators
 
@@ -37,6 +37,7 @@ from hypothesis_helm_benchmarking.charts.fixture import FixtureWorkspace, chart_
 from hypothesis_helm_benchmarking.charts.generator import generate
 from hypothesis_helm_benchmarking.charts.structures import STRUCTURES, expected_manifests, valid_assignment
 from hypothesis_helm_benchmarking.charts.workload import source_digest
+from hypothesis_helm_benchmarking.execution.planning import plan as plan_interactions
 from hypothesis_helm_benchmarking.execution.profiling import profile_settings
 from hypothesis_helm_benchmarking.execution.provenance import code_digest
 from hypothesis_helm_benchmarking.reporting.progress import BenchmarkProgress
@@ -110,6 +111,7 @@ def measure(
     strength: int | None = None,
     failure_oracle: Callable[[dict[str, object], list[dict[str, object]]], bool] | None = None,
     manifest_oracle: Callable[[dict[str, object], dict[str, object]], list[dict[str, object]]] = expected_manifests,
+    workspace: FixtureWorkspace | None = None,
 ) -> dict[str, object]:
     """
     Plan afresh, apply production selectors, and validate every completed output against its oracle.
@@ -127,6 +129,7 @@ def measure(
         strength (int | None): Fixed interaction strength; otherwise use the field count.
         failure_oracle (Callable[[dict[str, object], list[dict[str, object]]], bool] | None): Optional input-aware property assertion.
         manifest_oracle (Callable[[dict[str, object], dict[str, object]], list[dict[str, object]]]): Independent expected manifest builder.
+        workspace (FixtureWorkspace | None): Explicit backend settings and measurement receipt owner.
 
     Returns:
         dict[str, object]: Measured row, including censored work and correctness evidence.
@@ -137,7 +140,7 @@ def measure(
     model = ValuesModel.from_schema(chart.schema)
     selection_strength = 2 if strength is None else strength
     strength = len(mapping(chart.schema["properties"])) if strength is None else strength
-    plan = plan_interactions(model, strength, max_cases=limit, max_candidates=limit)
+    plan = plan_interactions(model, strength, max_cases=limit, max_candidates=limit, workspace=workspace)
     baseline_key = configuration_key(chart.defaults)
     planned = {configuration_key(value): value for value in plan.values}
     planned[baseline_key] = chart.defaults
@@ -371,6 +374,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                 chart,
                 spec,
                 strategy,
+                workspace=workspace,
                 level=args.trim_level,
                 seed=args.seed,
                 limit=args.max_cases,

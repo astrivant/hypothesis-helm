@@ -28,10 +28,10 @@ to a small example you can reproduce. Filtering skips redundant renders, while o
 sampling techniques reduce the number of inputs tested so you can cover more charts within your
 time budget.
 
-[![Failing inputs found, Helm renders and runtime with exact-equivalence pruning](<studies/error-surface/errors-found-fast.png>)](<studies/error-surface/README.md>)
+[![Failing inputs found, Helm renders and runtime with exact-equivalence pruning](<studies/cpu/error-surface/errors-found-fast.png>)](<studies/cpu/error-surface/README.md>)
 
 Find failing inputs without rendering the same output over and over. With `--prune-equivalent`, every input still gets checked;
-equivalent configurations reuse a rendered manifest. [See the synthetic error study and its exploratory timings](<studies/error-surface/README.md>).
+equivalent configurations reuse a rendered manifest. [See the synthetic error study and its exploratory timings](<studies/cpu/error-surface/README.md>).
 
 - Audit templates, values schemas, and missing defaults.
 - Generate a minimal values schema.
@@ -275,12 +275,13 @@ cog.out(help_markdown(headings=False))
 
 ~~~text
 usage: helm hypothesis [-h] [--generate-config]
-                       {rules,replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas} ...
+                       {compile,rules,replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas} ...
 
 Audit and property-test Helm chart values.
 
 positional arguments:
-  {rules,replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
+  {compile,rules,replay-changes,aggregate,export-minimal-values,scan,generate,audit,run,test,schemas}
+    compile             export a bounded finite predicate plan
     rules               list classified chart findings and diagnostics
     replay-changes      verify and replay saved values or manifest changes
     aggregate           verify piped shard reports and write one final report
@@ -297,6 +298,24 @@ options:
   -h, --help            show this help message and exit
   --generate-config     print the default .hypothesis-helm.yaml template to stdout and
                         exit
+~~~
+
+</details>
+
+<details>
+<summary>helm hypothesis compile</summary>
+
+~~~text
+usage: helm hypothesis compile [-h] --emit-plan EMIT_PLAN [--max-cases MAX_CASES]
+                               chart
+
+positional arguments:
+  chart
+
+options:
+  -h, --help            show this help message and exit
+  --emit-plan EMIT_PLAN
+  --max-cases MAX_CASES
 ~~~
 
 </details>
@@ -440,9 +459,15 @@ usage: helm hypothesis scan [-h] [--helm-repository] [--chart-version CHART_VERS
                             [--values VALUES] [--timeout TIMEOUT]
                             [--chart-timeout CHART_TIMEOUT]
                             [--scan-timeout SCAN_TIMEOUT]
-                            [--max-examples MAX_EXAMPLES] [--cache-dir CACHE_DIR]
-                            [--no-cache] [--jobs JOBS] [--permutations PERMUTATIONS]
-                            [--filter] [--fail [{info,warning,error}]] [--seed SEED]
+                            [--max-examples MAX_EXAMPLES]
+                            [--execution-backend {reference,cpu-vector,gpu}]
+                            [--backend-fallback {error,reference}]
+                            [--backend-batch-size BACKEND_BATCH_SIZE]
+                            [--backend-memory-mib BACKEND_MEMORY_MIB]
+                            [--backend-timeout BACKEND_TIMEOUT] [--backend-verify]
+                            [--cache-dir CACHE_DIR] [--no-cache] [--jobs JOBS]
+                            [--permutations PERMUTATIONS] [--filter]
+                            [--fail [{info,warning,error}]] [--seed SEED]
                             [--build-dependencies | --no-build-dependencies]
                             [--max-depth N|inf] [--pca-samples N]
                             [--pca-timeout PCA_TIMEOUT] [--max-mutations N]
@@ -496,6 +521,19 @@ options:
                         scan budget excluding dependency preparation; default:
                         unlimited
   --max-examples MAX_EXAMPLES
+  --execution-backend {reference,cpu-vector,gpu}
+                        finite predicate engine; rendering and callbacks remain on the
+                        host
+  --backend-fallback {error,reference}
+                        explicit policy for unavailable or failed native backends
+  --backend-batch-size BACKEND_BATCH_SIZE
+                        maximum candidates per compiled batch (1..16384)
+  --backend-memory-mib BACKEND_MEMORY_MIB
+                        bounded host/device allocation budget per batch
+  --backend-timeout BACKEND_TIMEOUT
+                        deadline in seconds for compiler/worker requests
+  --backend-verify      differentially check compiled predicates against the host
+                        validator
   --cache-dir CACHE_DIR
                         completed chart-result cache; default: .cache/hypothesis-
                         helm/charts
@@ -836,12 +874,18 @@ usage: helm hypothesis test [-h] [--report [PATH]] [--max-depth N|inf]
                             [--scan-timeout SCAN_TIMEOUT]
                             [--build-dependencies | --no-build-dependencies]
                             [--fail [{info,warning,error}]]
-                            [--max-examples MAX_EXAMPLES] [--time-limit DURATION]
-                            [--paths | --exhaustive | --whole-chart |
-                            --permutations N] [--filter] [--filter-random N]
-                            [--filter-topology N] [--expand-failures]
-                            [--prune-equivalent] [--match MATCH] [--collect-only]
-                            [--max-cases MAX_CASES] [--max-candidates MAX_CANDIDATES]
+                            [--max-examples MAX_EXAMPLES]
+                            [--execution-backend {reference,cpu-vector,gpu}]
+                            [--backend-fallback {error,reference}]
+                            [--backend-batch-size BACKEND_BATCH_SIZE]
+                            [--backend-memory-mib BACKEND_MEMORY_MIB]
+                            [--backend-timeout BACKEND_TIMEOUT] [--backend-verify]
+                            [--time-limit DURATION] [--paths | --exhaustive |
+                            --whole-chart | --permutations N] [--filter]
+                            [--filter-random N] [--filter-topology N]
+                            [--expand-failures] [--prune-equivalent] [--match MATCH]
+                            [--collect-only] [--max-cases MAX_CASES]
+                            [--max-candidates MAX_CANDIDATES]
                             [--exhaustive-threshold EXHAUSTIVE_THRESHOLD]
                             [--exhaustive-group PATH,PATH] [--no-infer-groups]
                             [--max-group-cases MAX_GROUP_CASES] [--seed SEED]
@@ -906,6 +950,19 @@ options:
                         stop at this severity or higher and exit 1; bare flag: any
                         finding; lower findings remain reported
   --max-examples MAX_EXAMPLES
+  --execution-backend {reference,cpu-vector,gpu}
+                        finite predicate engine; rendering and callbacks remain on the
+                        host
+  --backend-fallback {error,reference}
+                        explicit policy for unavailable or failed native backends
+  --backend-batch-size BACKEND_BATCH_SIZE
+                        maximum candidates per compiled batch (1..16384)
+  --backend-memory-mib BACKEND_MEMORY_MIB
+                        bounded host/device allocation budget per batch
+  --backend-timeout BACKEND_TIMEOUT
+                        deadline in seconds for compiler/worker requests
+  --backend-verify      differentially check compiled predicates against the host
+                        validator
   --time-limit DURATION
                         whole-chart execution budget, e.g. 30s or 3m (default: 3m);
                         excludes planning

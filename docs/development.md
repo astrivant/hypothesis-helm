@@ -487,6 +487,6 @@ Project folders and Python modules under `pkg/` use underscores, as in
 | [`scripts/`](../scripts) | Project command runner, validation command and Helm plugin hooks. |
 | [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
 | [`plugin.yaml`](../plugin.yaml) | Installable Helm plugin manifest. |
-| [`.github/workflows/`](../.github/workflows/) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
+| [`.github/workflows/`](<../.github/workflows>) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
 | [`.github/settings.yml`](../.github/settings.yml) | Declarative repository settings. |
 | [`docs/`](.) | Development setup, CLI behavior and testing limitations. |
