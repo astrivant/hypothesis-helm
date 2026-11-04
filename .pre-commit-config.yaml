@@ -79,3 +79,9 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+      - id: work-graph-receipts
+        name: Work graph artifact freshness
+        entry: bash scripts/check-work-graphs.sh
+        language: system
+        pass_filenames: false
+        always_run: true

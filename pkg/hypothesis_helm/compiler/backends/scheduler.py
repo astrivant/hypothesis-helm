@@ -229,6 +229,16 @@ class Worker:
         fence, sequence = self.fence, self.sequence
         self.connection.send((fence, sequence, ids, choices))
         packet = self.receive()
+        # The child reports only a bounded exception class, never its payload.
+        if (
+            isinstance(packet, tuple)
+            and len(packet) == 2
+            and packet[0] == "failed"
+            and isinstance(packet[1], str)
+            and len(packet[1]) <= 64
+            and packet[1].isidentifier()
+        ):
+            raise BackendError(f"backend worker failed ({packet[1]})")
         if not isinstance(packet, tuple) or len(packet) != 5 or packet[1:4] != (self.plan.identity, fence, sequence):
             raise BackendError("backend returned an invalid, duplicate or stale receipt")
         if packet[0] == "oom":

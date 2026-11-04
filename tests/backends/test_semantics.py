@@ -7,7 +7,9 @@ from __future__ import annotations
 import copy
 import itertools
 import json
+import tomllib
 from collections.abc import Iterator
+from pathlib import Path
 
 import pytest
 from attrs import evolve
@@ -23,6 +25,8 @@ from hypothesis_helm.schemas.generation.combinations import plan_interactions
 from hypothesis_helm.schemas.generation.factors import factor_space
 from hypothesis_helm.schemas.generation.finite import enumerate_values
 from jsonschema import validators
+from packaging.requirements import Requirement
+from packaging.specifiers import SpecifierSet
 
 
 def schema_fixture() -> dict[str, object]:
@@ -48,6 +52,40 @@ def schema_fixture() -> dict[str, object]:
             {"not": {"required": ["name"], "properties": {"name": {"const": "a"}, "count": {"const": 2}}}},
         ],
     }
+
+
+def test_cuda_numpy_dependency_range() -> None:
+    """
+    Keep the selected CUDA compiler inside NVIDIA's supported NumPy range.
+
+    Returns:
+        None: Dependency markers retain compatible CUDA and Python 3.15 CPU versions.
+    """
+    project = Path(__file__).resolve().parents[2] / "pyproject.toml"
+    with project.open("rb") as stream:
+        settings = tomllib.load(stream)["tool"]["poetry"]
+    for requirements in (settings["dependencies"]["numpy"], settings["group"]["dev"]["dependencies"]["numpy"]):
+        for version, accepted, rejected in (("3.13", "2.4.6", "2.5.0"), ("3.14", "2.4.6", "2.5.0"), ("3.15", "2.5.3", "2.4.6")):
+            selected = [entry for entry in requirements if version in SpecifierSet(entry["python"])]
+            assert len(selected) == 1
+            allowed = SpecifierSet(selected[0]["version"])
+            assert accepted in allowed
+            assert rejected not in allowed
+
+    with project.open("rb") as stream:
+        extras = tomllib.load(stream)["project"]["optional-dependencies"]
+    cpu = [Requirement(value) for value in extras["cpu"]]
+    gpu = [Requirement(value) for value in extras["gpu"]]
+    for version in ("3.13", "3.14"):
+        environment = {"python_version": version, "sys_platform": "linux"}
+        assert [str(item.specifier) for item in cpu if item.marker and item.marker.evaluate(environment)] == ["==0.66.0"]
+        assert {item.name: str(item.specifier) for item in gpu if item.marker and item.marker.evaluate(environment)} == {
+            "numba": "==0.66.0",
+            "numba-cuda": "==0.30.4",
+        }
+    environment = {"python_version": "3.15", "sys_platform": "linux"}
+    assert [str(item.specifier) for item in cpu if item.marker and item.marker.evaluate(environment)] == ["==0.68.1"]
+    assert not [item for item in gpu if item.marker and item.marker.evaluate(environment)]
 
 
 def configurations(schema: dict[str, object]) -> Iterator[dict[str, object]]:
@@ -142,8 +180,11 @@ def test_exhaustive_plans_batch_without_changing_callbacks(native_backend: str, 
     assert list(actual.values) == list(expected.values)
     assert calls == expected_calls
     assert (actual.candidates, actual.interactions) == (expected.candidates, expected.interactions)
-    assert actual.backend_report["batches"] == (actual.candidates + 6) // 7
-    assert actual.backend_report["physical_cases"] == actual.candidates
+    if native_backend == "reference":
+        assert actual.backend_report["batches"] == actual.backend_report["physical_cases"] == 0
+    else:
+        assert actual.backend_report["batches"] == (actual.candidates + 6) // 7
+        assert actual.backend_report["physical_cases"] == actual.candidates
 
 
 def test_explicit_exhaustive_uses_concrete_case_backend(native_backend: str) -> None:
@@ -161,9 +202,12 @@ def test_explicit_exhaustive_uses_concrete_case_backend(native_backend: str) -> 
     report: dict[str, object] = {}
     actual = enumerate_values(schema, backend=BackendOptions(native_backend, verify=True), report=report)
     assert list(actual) == expected
-    assert report["selected"] == native_backend
-    assert int(str(report["physical_cases"])) > 0
-    assert report["committed_cases"] == len(expected)
+    if native_backend == "reference":
+        assert report == {}
+    else:
+        assert report["selected"] == native_backend
+        assert int(str(report["physical_cases"])) > 0
+        assert report["committed_cases"] == len(expected)
 
 
 @pytest.mark.parametrize("batch_size", [1, 7, 256])

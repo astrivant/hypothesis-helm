@@ -201,3 +201,29 @@ def test_receipt_fences(monkeypatch: pytest.MonkeyPatch, fault: str) -> None:
     finally:
         parent.close()
         child.close()
+
+
+def test_worker_reports_bounded_failure_type(monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Surface a worker's exception class without exposing exception messages or input data.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Replace only the trusted child response.
+
+    Returns:
+        None: A failed compilation is distinguishable from an invalid receipt.
+    """
+    worker = object.__new__(Worker)
+    worker.plan = program()
+    worker.fence = 0
+    worker.sequence = 0
+    worker.stopped = Event()
+    parent, child = scheduler.multiprocessing.get_context("spawn").Pipe()
+    worker.connection = parent
+    monkeypatch.setattr(worker, "receive", lambda: ("failed", "AttributeError"))
+    try:
+        with pytest.raises(BackendError, match=r"backend worker failed \(AttributeError\)"):
+            worker.evaluate((0,))
+    finally:
+        parent.close()
+        child.close()

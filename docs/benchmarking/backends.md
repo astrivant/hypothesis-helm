@@ -47,6 +47,12 @@ Python oracle; `cpu-vector` and `gpu` execute the same integer predicate program
 Compiled backends fail if unavailable unless `--backend-fallback reference` was
 explicitly requested. Fallback observations cannot be published as GPU results.
 CUDA simulation is rejected as evidence of physical GPU execution.
+The current Numba-CUDA release uses `numpy.row_stack`, which was removed in
+NumPy 2.5. Its maintained environment specifies NumPy below 2.5 and Numba below
+0.67, so the GPU extra selects Numba 0.66 on Python 3.13 and 3.14. Python 3.15
+retains the newer CPU backend but is outside this GPU combination's supported
+range. NVIDIA is developing [Numba-CUDA-MLIR](https://github.com/NVIDIA/numba-cuda-mlir)
+as its successor; migration requires physical-device verification.
 
 `--backend-verify` compares every definitive compiled predicate with the host
 validator. Keep that check for correctness comparisons; its extra validation is

@@ -430,6 +430,7 @@ def test_python_matrix_partitions_tests_and_artifacts() -> None:
     steps = [mapping(step) for step in sequence(job["steps"])]
     test = next(step for step in steps if "--suite-shard" in str(step.get("run", "")))
     assert mapping(test["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/8"
+    assert "bash scripts/run-pr-tests.sh" in str(test["run"])
     assert "-p hypothesis_helm.tests.sharding" in str(test["run"])
     assert "-n auto --dist worksteal" in str(test["run"])
     upload = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))

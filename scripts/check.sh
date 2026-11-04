@@ -16,4 +16,4 @@ bash scripts/project-run.sh pydoclint --config=pyproject.toml pkg
 bash scripts/project-run.sh cog --check README.md docs/ci/action.md docs/cli/README.md docs/rules/README.md docs/input-domains/README.md
 bash scripts/project-run.sh hypothesis-helm-docs --check
 # Keep these flags here so generated chart suites do not inherit another worker pool.
-bash scripts/project-run.sh pytest -n "${PYTEST_WORKERS:-auto}" --dist worksteal "$@"
+bash scripts/run-pr-tests.sh -n "${PYTEST_WORKERS:-auto}" --dist worksteal "$@"

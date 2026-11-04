@@ -93,7 +93,7 @@ jobs:
           SUITE_SHARD: ${{ matrix.shard }}/8
           COVERAGE_FILE: .cache/tests/.coverage.${{ matrix.shard }}
         run: |
-          bash scripts/project-run.sh pytest -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
+          bash scripts/run-pr-tests.sh -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
               --ignore=tests/release -n auto --dist worksteal --junitxml=.cache/tests/pytest.xml --cov --cov-config=pyproject.toml --cov-report=
       - name: Upload test results
         if: ${{ always() }}
