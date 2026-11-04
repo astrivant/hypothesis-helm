@@ -585,7 +585,7 @@ To redraw a completed run's plots without repeating Helm measurements:
 bash scripts/project-run.sh hypothesis-helm-benchmark calibration --plot-only --output .cache/benchmarks/calibration-sweep-<epoch>
 ```
 
-[Quadratic versus quartic comparison](<../../studies/cpu/error-surface-quartic/polynomial-comparison/README.md>)
+[Retained quadratic versus quartic comparison](<../../studies/historical/error-surface-quartic-5x5/README.md>)
 uses identical training data and reports errors on reserved settings and repeats.
 See [how to compare a completed surface](response-surface.md#quadratic-versus-quartic-comparison).
 

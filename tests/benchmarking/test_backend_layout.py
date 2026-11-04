@@ -7,6 +7,7 @@ from __future__ import annotations
 import hashlib
 import itertools
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -19,6 +20,42 @@ from hypothesis_helm_benchmarking.execution.backends import execute, prepare_arg
 from hypothesis_helm_benchmarking.refresh.plan import Refresh
 from hypothesis_helm_benchmarking.reporting.publication import document_links, publication_targets, publish_study
 from hypothesis_helm_benchmarking.studies.polynomial_surface import main as compare_surfaces
+
+
+def test_quartic_refresh_preserves_documented_historical_comparison(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """
+    Keep guide links valid when the current quartic study replaces its publication.
+
+    Args:
+        tmp_path (Path): Isolated publication and documentation tree.
+        monkeypatch (pytest.MonkeyPatch): Select the isolated project directory.
+
+    Returns:
+        None: Both guides still resolve the retained comparison after refresh.
+    """
+    project = Path(__file__).resolve().parents[2]
+    guides = ("README.md", "response-surface.md")
+    for name in guides:
+        destination = tmp_path / "docs/benchmarking" / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text((project / "docs/benchmarking" / name).read_text())
+    historical = tmp_path / "studies/historical/error-surface-quartic-5x5/README.md"
+    historical.parent.mkdir(parents=True)
+    historical.write_text((project / "studies/historical/error-surface-quartic-5x5/README.md").read_text())
+    source = tmp_path / "measurements/error-surface-quartic"
+    source.mkdir(parents=True)
+    (source / "README.md").write_text("# Refreshed comparison\n")
+    old = tmp_path / "studies/cpu/error-surface-quartic/polynomial-comparison/README.md"
+    old.parent.mkdir(parents=True)
+    old.write_text("# Replaced output\n")
+
+    monkeypatch.chdir(tmp_path)
+    publish_study(source, publication_path("error-surface-quartic"))
+    assert not old.exists()
+    for name in guides:
+        guide = Path("docs/benchmarking") / name
+        links = re.findall(r"\]\(<?([^)>]*error-surface-quartic-5x5/README\.md)>?\)", guide.read_text())
+        assert links and all((guide.parent / link).is_file() for link in links)
 
 
 @pytest.mark.parametrize("damage", [None, "source", "fit", "figure"])
