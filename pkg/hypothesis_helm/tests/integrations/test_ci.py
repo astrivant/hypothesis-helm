@@ -5,6 +5,7 @@ Verify CI index normalization, explicit overrides, and action invocation boundar
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -21,6 +22,25 @@ from hypothesis_helm.integrations import github_action
 from hypothesis_helm.integrations.sharding import Shard, resolve_shard
 from hypothesis_helm.schemas.contracts import mapping
 from hypothesis_helm.tests import PROJECT_ROOT
+
+
+def test_chart_shards_pin_python_patch_version() -> None:
+    """
+    Keep all chart shards on the same Python version for suite fingerprint aggregation.
+
+    Returns:
+        None: The chart action receives an exact Python patch version.
+    """
+    from ruamel.yaml import YAML
+
+    from hypothesis_helm.schemas.contracts import sequence
+
+    workflow = mapping(YAML(typ="safe").load((PROJECT_ROOT / ".github/workflows/stage-test.yml").read_text()))
+    job = mapping(mapping(workflow["jobs"])["sharded-chart"])
+    steps = [mapping(step) for step in sequence(job["steps"])]
+    action = next(step for step in steps if step.get("uses") == "./")
+    python_version = str(mapping(action["with"])["python-version"])
+    assert re.fullmatch(r"3\.\d+\.\d+", python_version)
 
 
 @pytest.mark.integration

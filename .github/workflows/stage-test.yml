@@ -226,6 +226,8 @@ jobs:
         id: hypothesis
         with:
           chart: examples/workload
+          # Suite fingerprints include the Python patch version, which can differ across runner images.
+          python-version: '3.13.18'
           binary-cache: ${{ env.HH_BINARY_CACHE }}
           incremental: 'true'
           cache-dir: .cache/hypothesis-helm/outcomes
