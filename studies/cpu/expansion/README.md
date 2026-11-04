@@ -6,8 +6,6 @@
 - [Failure expansion](#failure-expansion)
 <!-- toc:end -->
 
-These retained measurements used the reference CPU implementation. They have not been rerun with `cpu-vector`; moving this report did not create new observations.
-
 [Benchmarking](<../../../docs/benchmarking/README.md>)
 
 Topology filtering previously exercised 47 of 51 erroneous inputs in three cases. The remaining four each produced the same complete manifests as a retained failing input. The 51 erroneous inputs occupied 43 singleton regions and four two-input regions. All distinct erroneous outputs were already covered.
@@ -21,7 +19,7 @@ helm hypothesis test ./chart --permutations 2 --filter-topology 2 \
 
 Expansion continues the initial selection after failures and schedules each omitted input at most once. The default CLI still stops at its first failure. Unsupported regions cannot be expanded automatically. An entirely missed failure region cannot trigger expansion.
 
-![Paired failure expansion matrix](<failure-expansion.png>)
+![Paired failure expansion matrix](failure-expansion.png)
 
 Cells below show **erroneous inputs found before → after expansion (extra executions)**. The figure also shows the exact percentage missed.
 

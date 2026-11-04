@@ -6,8 +6,6 @@
 - [Structural sparsity: large charts with separated relevant fields](#structural-sparsity-large-charts-with-separated-relevant-fields)
 <!-- toc:end -->
 
-These retained measurements used the reference CPU implementation. They have not been rerun with `cpu-vector`; moving this report did not create new observations.
-
 Can filtering avoid irrelevant structure without missing interactions between distant values?
 
 Every case has four variable Boolean fields, 16 valid assignments, two pairwise defects and seven erroneous assignments.
@@ -33,13 +31,13 @@ Execution timeouts are per method and do not bound planning. Timed-out observati
 
 Measurements (local run data) · CSV (local run data) · Replayable chart recipes (local run data)
 
-![Input-to-resource graph](<structural-sparsity-connectivity.png>)
+![Input-to-resource graph](structural-sparsity-connectivity.png)
 
-![Total time (seconds)](<structural-sparsity-runtime.png>)
+![Total time (seconds)](structural-sparsity-runtime.png)
 
-![Values/schema loading (seconds)](<structural-sparsity-discovery.png>)
+![Values/schema loading (seconds)](structural-sparsity-discovery.png)
 
-![Compiler and selection analysis (seconds)](<structural-sparsity-analysis.png>)
+![Compiler and selection analysis (seconds)](structural-sparsity-analysis.png)
 
-![Erroneous inputs missed (out of 7)](<structural-sparsity-errors.png>)
+![Erroneous inputs missed (out of 7)](structural-sparsity-errors.png)
 

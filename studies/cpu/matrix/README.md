@@ -6,8 +6,6 @@
 - [Structural strategy matrix](#structural-strategy-matrix)
 <!-- toc:end -->
 
-These retained measurements used the reference CPU implementation. They have not been rerun with `cpu-vector`; moving this report did not create new observations.
-
 [Benchmarking](<../../../docs/benchmarking/README.md>)
 
 Helm `v4.3.0+gbec5b06`; 540s execution ceiling per run; filter level 2; seed 2026.
@@ -20,14 +18,14 @@ Cells show **outcome coverage / total seconds / Helm invocations**.
 
 | Structure | Default | Exact equivalence | Random filter | Topology filter | Both filters | --filter | --filter-adaptive |
 |---|---|---|---|---|---|---|---|
-| constraints | 100% / 18.2s / 512 | 100% / 18.8s / 512 | 100% / 1.4s / 33 | 100% / 18.5s / 512 | 100% / 18.7s / 512 | 100% / 18.5s / 512 | 100% / 18.7s / 512 |
-| control-flow | 100% / 38.1s / 1024 | 100% / 39.5s / 1024 | 100% / 2.6s / 65 | 100% / 38.2s / 1024 | 100% / 38.5s / 1024 | 100% / 38.0s / 1024 | 100% / 38.3s / 1024 |
-| dependencies | 100% / 38.8s / 1024 | 100% / 5.0s / 8 | 100% / 2.7s / 65 | 100% / 2.8s / 65 | 100% / 0.6s / 9 | 100% / 3.0s / 65 | 100% / 3.0s / 65 |
-| interactions | 100% / 36.9s / 1024 | 100% / 4.8s / 20 | 75% / 2.6s / 65 | 100% / 2.6s / 65 | 100% / 1.0s / 21 | 100% / 2.8s / 65 | 100% / 2.9s / 65 |
-| equivalence | 100% / 36.5s / 1024 | 100% / 4.2s / 4 | 100% / 2.6s / 65 | 100% / 2.6s / 65 | 100% / 0.5s / 5 | 100% / 2.7s / 65 | 100% / 2.8s / 65 |
-| boundaries | 100% / 55.5s / 1536 | 100% / 55.6s / 1536 | 100% / 3.9s / 97 | 100% / 55.2s / 1536 | 100% / 54.9s / 1536 | 100% / 55.6s / 1536 | 100% / 56.1s / 1536 |
+| constraints | 100% / 24.3s / 512 | 100% / 24.3s / 512 | 100% / 1.8s / 33 | 100% / 24.4s / 512 | 100% / 24.2s / 512 | 100% / 24.5s / 512 | 100% / 24.5s / 512 |
+| control-flow | 100% / 50.4s / 1024 | 100% / 52.3s / 1024 | 100% / 3.4s / 65 | 100% / 50.4s / 1024 | 100% / 50.2s / 1024 | 100% / 49.6s / 1024 | 100% / 50.9s / 1024 |
+| dependencies | 100% / 50.7s / 1024 | 100% / 5.4s / 8 | 100% / 3.4s / 65 | 100% / 3.5s / 65 | 100% / 0.8s / 9 | 100% / 3.7s / 65 | 100% / 3.8s / 65 |
+| interactions | 100% / 49.1s / 1024 | 100% / 5.3s / 20 | 75% / 3.3s / 65 | 100% / 3.4s / 65 | 100% / 1.3s / 21 | 100% / 3.6s / 65 | 100% / 3.6s / 65 |
+| equivalence | 100% / 48.6s / 1024 | 100% / 4.5s / 4 | 100% / 3.4s / 65 | 100% / 3.4s / 65 | 100% / 0.5s / 5 | 100% / 3.6s / 65 | 100% / 3.6s / 65 |
+| boundaries | 100% / 74.7s / 1536 | 100% / 73.8s / 1536 | 100% / 5.0s / 97 | 100% / 74.0s / 1536 | 100% / 73.8s / 1536 | 100% / 75.0s / 1536 | 100% / 74.0s / 1536 |
 
-![Measured strategy matrix](<strategy-matrix.png>)
+![Measured strategy matrix](strategy-matrix.png)
 
 Raw measurements (local run data) · CSV (local run data)
 

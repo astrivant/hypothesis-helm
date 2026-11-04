@@ -6,24 +6,22 @@
 - [Bug discovery by interaction strength](#bug-discovery-by-interaction-strength)
 <!-- toc:end -->
 
-These retained measurements used the reference CPU implementation. They have not been rerun with `cpu-vector`; moving this report did not create new observations.
-
 [Benchmarking](<../../../docs/benchmarking/README.md>)
 
 This fixed fixture contains 60 injected faults. The planner varies interaction strength from one to six, with automatic enumeration and inferred exhaustive groups disabled to isolate strength. Every selected input is rendered with Helm 4.
 
 | Strength | Inputs tested / planned | Faults found / total | Missed faults | Seconds | Status |
 | ---: | ---: | ---: | ---: | ---: | --- |
-| 1 | 9 / 9 | 23 / 60 | 37 | 0.45 | passed |
-| 2 | 37 / 37 | 40 / 60 | 20 | 1.70 | passed |
-| 3 | 93 / 93 | 54 / 60 | 6 | 4.31 | passed |
-| 4 | 163 / 163 | 59 / 60 | 1 | 7.52 | passed |
-| 5 | 219 / 219 | 60 / 60 | 0 | 10.17 | passed |
-| 6 | 247 / 247 | 60 / 60 | 0 | 11.42 | passed |
+| 1 | 9 / 9 | 23 / 60 | 37 | 0.58 | passed |
+| 2 | 37 / 37 | 40 / 60 | 20 | 2.19 | passed |
+| 3 | 93 / 93 | 54 / 60 | 6 | 5.49 | passed |
+| 4 | 163 / 163 | 59 / 60 | 1 | 9.66 | passed |
+| 5 | 219 / 219 | 60 / 60 | 0 | 13.00 | passed |
+| 6 | 247 / 247 | 60 / 60 | 0 | 14.59 | passed |
 
-![Known faults found](<bug-discovery.png>)
+![Known faults found](bug-discovery.png)
 
-![Discovery by fault order](<bug-order.png>)
+![Discovery by fault order](bug-order.png)
 
 JSON ledger (local run data) · CSV table (local run data) · Chart parameters (local run data)
 

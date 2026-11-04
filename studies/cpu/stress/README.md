@@ -6,11 +6,9 @@
 - [Topology stress progression](#topology-stress-progression)
 <!-- toc:end -->
 
-These retained measurements used the reference CPU implementation. They have not been rerun with `cpu-vector`; moving this report did not create new observations.
-
 One parameter decreases by one at each step; seeds and defect triggers remain fixed.
 
-![Render cost and defect recall](<topology-stress.png>)
+![Render cost and defect recall](topology-stress.png)
 
 | Step | Parameter change | Strategy | Renders | Defects found / total | Erroneous inputs evaluated / total | Status |
 | --- | --- | --- | ---: | ---: | ---: | --- |

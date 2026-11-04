@@ -6,26 +6,24 @@
 - [Output-space PCA](#output-space-pca)
 <!-- toc:end -->
 
-These retained measurements used the reference CPU implementation. They have not been rerun with `cpu-vector`; moving this report did not create new observations.
-
 [Benchmarking](<../../../docs/benchmarking/README.md>)
 
 Real Helm `v4.3.0+gbec5b06` renders. Errors occupy 5% of valid input assignments per category, rounded down; error seed 1729, selection seed 2026, filter level 2.
 
 Faults emit an incorrect status in an added ConfigMap. They are present before topology analysis. This is a synthetic error projection, not five percent of distinct software defects or arbitrary corruptions of Kubernetes fields.
 
-![PCA before and after filtering](<output-pca.png>)
+![PCA before and after filtering](output-pca.png)
 
 **Errors found / all erroneous inputs (percentage missed)**. Several erroneous inputs can produce the same output. Percentages are exact miss rates within this seeded fixture.
 
 | Structure | Before filtering | Random filter | Topology filter | Both filters | --filter | --filter-adaptive |
 |---|---:|---:|---:|---:|---:|---:|
-| [constraints](<constraints.png>) | 25/25 (0.0% missed) | 2/25 (92.0% missed) | 25/25 (0.0% missed) | 25/25 (0.0% missed) | 25/25 (0.0% missed) | 25/25 (0.0% missed) |
-| [control-flow](<control-flow.png>) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
-| [dependencies](<dependencies.png>) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 47/51 (7.8% missed) | 47/51 (7.8% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
-| [interactions](<interactions.png>) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 47/51 (7.8% missed) | 47/51 (7.8% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
-| [equivalence](<equivalence.png>) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 47/51 (7.8% missed) | 47/51 (7.8% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
-| [boundaries](<boundaries.png>) | 76/76 (0.0% missed) | 2/76 (97.4% missed) | 76/76 (0.0% missed) | 76/76 (0.0% missed) | 76/76 (0.0% missed) | 76/76 (0.0% missed) |
+| [constraints](constraints.png) | 25/25 (0.0% missed) | 2/25 (92.0% missed) | 25/25 (0.0% missed) | 25/25 (0.0% missed) | 25/25 (0.0% missed) | 25/25 (0.0% missed) |
+| [control-flow](control-flow.png) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
+| [dependencies](dependencies.png) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 47/51 (7.8% missed) | 47/51 (7.8% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
+| [interactions](interactions.png) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 47/51 (7.8% missed) | 47/51 (7.8% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
+| [equivalence](equivalence.png) | 51/51 (0.0% missed) | 5/51 (90.2% missed) | 47/51 (7.8% missed) | 47/51 (7.8% missed) | 51/51 (0.0% missed) | 51/51 (0.0% missed) |
+| [boundaries](boundaries.png) | 76/76 (0.0% missed) | 2/76 (97.4% missed) | 76/76 (0.0% missed) | 76/76 (0.0% missed) | 76/76 (0.0% missed) | 76/76 (0.0% missed) |
 
 PCA is fitted once per category to every valid input's output, including repeated outputs. Resource presence, numeric leaves and typed categorical leaves become standardized features; numeric strings remain categorical. Constant features are removed. Both axes and marker-size scale stay fixed after filtering. Axes are not comparable across categories.
 

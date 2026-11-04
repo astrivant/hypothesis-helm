@@ -7,8 +7,6 @@
 - [Recorded fixture depths](#recorded-fixture-depths)
 <!-- toc:end -->
 
-These retained measurements used the reference CPU implementation. They have not been rerun with `cpu-vector`; moving this report did not create new observations.
-
 [Benchmarking](<../../../docs/benchmarking/README.md>)
 
 **8 is permutation interaction strength, not component count.** This study holds
@@ -29,7 +27,7 @@ is actually exercised. Complete populations are rendered separately for ground t
 Expansion only revisits omitted members of that strength-eight plan.
 Strength eight describes the unfiltered plan; filtering can remove that coverage.
 
-![Policy matrix](<matrix.png>)
+![Policy matrix](matrix.png)
 
 ## Shared PCA frames
 
@@ -42,13 +40,13 @@ what the planner samples before filtering. The added error ConfigMap is
 included in the features.
 PCA can overlap distinct outputs and discards variance; labels report retained variance.
 
-![Supported mixtures before expansion](<pca-supported-unexpanded.png>)
+![Supported mixtures before expansion](pca-supported-unexpanded.png)
 
-![Supported mixtures after expansion](<pca-supported-expanded.png>)
+![Supported mixtures after expansion](pca-supported-expanded.png)
 
-![Uniform mixtures before expansion](<pca-uniform-unexpanded.png>)
+![Uniform mixtures before expansion](pca-uniform-unexpanded.png)
 
-![Uniform mixtures after expansion](<pca-uniform-expanded.png>)
+![Uniform mixtures after expansion](pca-uniform-expanded.png)
 
 ## Recorded fixture depths
 
