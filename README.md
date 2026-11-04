@@ -64,6 +64,22 @@ PYTHON=python3.13 helm plugin install .
 helm hypothesis --help
 ```
 
+The default `reference` backend evaluates finite schema predicates in Python. Two optional backends run the same predicate program:
+
+- `cpu-vector` uses NumPy arrays and a Numba-compiled CPU batch loop. It does not explicitly parallelize the loop or guarantee SIMD.
+- `gpu` uses PyTorch tensor operations on an NVIDIA CUDA or Apple Metal device.
+
+These backends run predicate evaluation; Helm rendering and callbacks stay on the host. To install the Helm plugin with an optional
+backend instead, set `HH_EXECUTION_BACKEND` when installing, then select it for a test:
+
+```sh
+HH_EXECUTION_BACKEND=cpu-vector PYTHON=python3.13 helm plugin install https://github.com/astrivant/hypothesis-helm
+helm hypothesis test ./chart --execution-backend cpu-vector
+```
+
+Use `gpu` in both places for GPU execution. See [CPU and GPU study execution](docs/benchmarking/backends.md) for requirements and
+verification. Runtime improvements depend on the workload.
+
 Then, if you want the optional benchmark tools, install them with pip:
 
 ```sh
