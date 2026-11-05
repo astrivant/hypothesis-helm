@@ -40,6 +40,12 @@ for name, item in metadata["inputs"].items():
 ]]] -->
 | Input | Default | Commands | Purpose |
 | --- | --- | --- | --- |
+| `execution-backend` | `reference` | `test`, `scan` | Finite predicate engine: reference, cpu-vector, or gpu. GPU requires a physical CUDA or Apple Metal device. |
+| `backend-fallback` | `error` | `test`, `scan` | Unavailable or failed backend policy: error or reference. |
+| `backend-batch-size` | `256` | `test`, `scan` | Maximum pure candidate evaluations per batch (1..16384). |
+| `backend-memory-mib` | `64` | `test`, `scan` | Bounded host/device allocation budget per batch in MiB. |
+| `backend-timeout` | `60` | `test`, `scan` | Maximum seconds for native compilation and each worker request. |
+| `backend-verify` | `false` | `test`, `scan` | Compare compiled predicates with authoritative CPU schema validation. |
 | `chart` | `.` | All five | Local chart or source relative to the workspace; source takes precedence when supplied. |
 | `export-minimal-values` | `false` | `test`, `scan`, `audit`, `generate` | Export deterministic concrete values beside each chart after testing (shard 1 only). |
 | `commit-minimal-values` | `false` | Action setup | Export example values and commit the YAML and verification proof files to the checked-out branch. |

@@ -8,11 +8,11 @@
 - [Empirical matrix](#empirical-matrix)
 <!-- toc:end -->
 
-[Policy](README.md) · [Measured matrix and graphs](<../../studies/calibration-variation/MATRIX.md>)
+[Policy](README.md) · [Measured matrix and graphs](<../../studies/cpu/calibration-variation/MATRIX.md>)
 
 These checks establish selector behavior. Omitted inputs may contain additional defects;
 the empirical matrix measures that effect on generated charts with known defects.
-The [load test](<../../studies/filtering/README.md>) separately measures runtime against input count and nested template conditions.
+The [load test](<../../studies/cpu/filtering/README.md>) separately measures runtime against input count and nested template conditions.
 
 ## Deterministic argument
 
