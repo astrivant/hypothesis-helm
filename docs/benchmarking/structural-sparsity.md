@@ -6,7 +6,7 @@
 - [Structural sparsity](#structural-sparsity)
 <!-- toc:end -->
 
-[Results and plots](<../../studies/cpu/structural-sparsity/README.md>) · [Benchmark guide](README.md)
+[Results and plots](<../../studies/structural-sparsity/README.md>) · [Benchmark guide](README.md)
 
 This extends the sparsity study in a different direction: enlarge the chart while keeping the
 parts that affect output small. It asks whether irrelevant structure adds discovery cost or

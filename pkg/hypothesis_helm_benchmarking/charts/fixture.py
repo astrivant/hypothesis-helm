@@ -13,7 +13,6 @@ from types import TracebackType
 
 from attrs import define, field
 from hypothesis_helm.charts.values import yamlio
-from hypothesis_helm.compiler.backends.scheduler import BackendOptions
 from hypothesis_helm.schemas.contracts import mapping
 
 __all__ = ("FixtureWorkspace", "case_path", "chart_path", "read_spec", "record_change")
@@ -107,15 +106,11 @@ class FixtureWorkspace:
         cases (set[Path]): Logical case locations registered by the generator.
         chart (Path): Only physical chart compiled during this invocation.
         current (Path | None): Logical identity of the currently compiled case.
-        backend (BackendOptions): Explicit finite-planning engine for this invocation.
-        backend_reports (list[dict[str, object]]): Completed planner receipts for backend provenance.
     """
 
     cases: set[Path] = field(factory=set)
     chart: Path = field(init=False)
     current: Path | None = None
-    backend: BackendOptions = field(factory=BackendOptions, kw_only=True)
-    backend_reports: list[dict[str, object]] = field(factory=list, init=False)
     _temporary: tempfile.TemporaryDirectory[str] | None = field(default=None, init=False)
 
     def __enter__(self) -> FixtureWorkspace:

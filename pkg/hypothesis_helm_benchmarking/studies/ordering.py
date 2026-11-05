@@ -19,6 +19,7 @@ from hypothesis_helm.exceptions.execution import TimeLimitReached
 from hypothesis_helm.execution.runtime.budget import execution_timer, parse_time_limit
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
+from hypothesis_helm.schemas.generation.combinations import plan_interactions
 
 from hypothesis_helm_benchmarking.charts.faults import Fault, write_faults
 from hypothesis_helm_benchmarking.charts.fixture import FixtureWorkspace
@@ -27,7 +28,6 @@ from hypothesis_helm_benchmarking.charts.ordering import nest_inputs
 from hypothesis_helm_benchmarking.charts.structures import STRUCTURES
 from hypothesis_helm_benchmarking.charts.workload import source_digest
 from hypothesis_helm_benchmarking.execution.ordering import Observation, methods, replay
-from hypothesis_helm_benchmarking.execution.planning import plan as plan_interactions
 from hypothesis_helm_benchmarking.execution.provenance import code_digest
 from hypothesis_helm_benchmarking.reporting.progress import BenchmarkProgress
 
@@ -192,7 +192,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             write_faults(logical, defects, workspace=workspace, symbolic=True)
             paths = nest_inputs(logical, workspace=workspace)
             chart = Chart.load(workspace.chart)
-            plan = plan_interactions(chart.schema, args.permutations, workspace=workspace)
+            plan = plan_interactions(chart.schema, args.permutations)
             baseline = configuration_key(chart.defaults)
             values = [chart.defaults, *(value for value in plan.values if configuration_key(value) != baseline)]
             bug_orders = {bug.name: len(bug.terms) for bug in defects}

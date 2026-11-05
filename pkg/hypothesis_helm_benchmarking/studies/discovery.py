@@ -16,6 +16,7 @@ from hypothesis_helm.exceptions.execution import TimeLimitReached
 from hypothesis_helm.execution.runtime.budget import execution_timer, parse_time_limit
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.schemas.contracts import mapping, sequence
+from hypothesis_helm.schemas.generation.combinations import plan_interactions
 
 from hypothesis_helm_benchmarking.charts.faults import Fault as Fault
 from hypothesis_helm_benchmarking.charts.faults import write_faults
@@ -23,7 +24,6 @@ from hypothesis_helm_benchmarking.charts.fixture import FixtureWorkspace
 from hypothesis_helm_benchmarking.charts.fixture import chart_path as resolve_chart
 from hypothesis_helm_benchmarking.charts.generator import generate
 from hypothesis_helm_benchmarking.charts.workload import source_digest
-from hypothesis_helm_benchmarking.execution.planning import plan as plan_interactions
 from hypothesis_helm_benchmarking.execution.profiling import profile_settings
 from hypothesis_helm_benchmarking.execution.provenance import code_digest
 from hypothesis_helm_benchmarking.reporting.plots import finish
@@ -211,7 +211,7 @@ def run(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = N
     }
     with BenchmarkProgress("Discovery: interaction strengths") as display:
         for strength in display.track(range(1, args.max_strength + 1)):
-            plan = plan_interactions(chart.schema, strength, exhaustive_threshold=0, workspace=workspace)
+            plan = plan_interactions(chart.schema, strength, exhaustive_threshold=0)
             print(f"--permutations {strength}: {len(plan.values)} distinct cases", flush=True)
             found: dict[str, object] = {}
             completed, status = 0, "passed"

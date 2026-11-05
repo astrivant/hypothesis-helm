@@ -28,8 +28,6 @@ for name, expected in checksums.items():
     actual = hashlib.sha256(path.read_bytes()).hexdigest()
     if actual != expected and path.name == "README.md":
         relative = path.relative_to(STUDIES)
-        if relative.parts[0] in {"cpu", "gpu"}:
-            relative = Path(*relative.parts[1:])
         measured = root / "outputs" / relative
         published_content = document_links(measured.read_text(), Path("studies") / relative, path)
         assert hashlib.sha256(published_content.encode()).hexdigest() == expected, measured

@@ -6,7 +6,7 @@
 - [Nesting-depth distributions](#nesting-depth-distributions)
 <!-- toc:end -->
 
-[Benchmarking](<../../docs/benchmarking/README.md>) · [Depth sweep](<../cpu/structure-depth/README.md>)
+[Benchmarking](<../../docs/benchmarking/README.md>) · [Depth sweep](../structure-depth/README.md)
 
 Generate multiple structural components distributed throughout one chart:
 
@@ -71,7 +71,7 @@ fixture settings. Constraints remain global; depths count added outer gates,
 not preexisting branches within a structural body. Omit both depth options to
 retain the original ungated mixture behavior.
 
-The [nesting matrix and shared-frame PCA](<../cpu/nesting/README.md>) hold
+The [nesting matrix and shared-frame PCA](../nesting/README.md) hold
 `--permutations 8` fixed while comparing shallow, deep, and mixed-depth charts.
 Permutation strength, component count, chart nesting depth, and filter depth are
 separate controls.

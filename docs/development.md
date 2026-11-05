@@ -130,24 +130,6 @@ poetry build
 The validation command runs Ruff lint/format, strict mypy, pydocstyle, pydoclint,
 the generated CLI reference check, and the package's pytest suite. Source and test docstrings follow Astrivant's
 Google-style convention. No type-checking exclusions weaken the source checks.
-Local checks and CI Python shards both run through `scripts/run-pr-tests.sh` with
-the committed synthetic pull-request event. The runner clears inherited provider
-coordinates and GitHub tokens for its child process; `--debug` adds bounded
-diagnostics on stderr.
-
-Work graphs with a `work.sha256` receipt are checked by pre-commit and CI. After
-reviewing a graph's source and regenerating its Markdown and Mermaid artifacts,
-refresh its receipt from the repository root:
-
-```sh
-work_dir=.github/review-evidence/example
-shasum -a 256 "$work_dir/work.json" "$work_dir/work.md" "$work_dir/work.mmd" > "$work_dir/work.sha256"
-bash scripts/check-work-graphs.sh --debug
-```
-
-The receipt detects changes to any of those three files. Validate regenerated
-artifacts with their exporter before refreshing it; hashes alone do not establish
-that the graph's relationships are correct.
 
 After changing CLI arguments, regenerate the [CLI reference](cli/README.md):
 
@@ -175,7 +157,7 @@ Unit and integration tests live under [`pkg/hypothesis_helm/tests`](../pkg/hypot
 Run one category by passing its directory to pytest:
 
 ```sh
-bash scripts/run-pr-tests.sh -n auto pkg/hypothesis_helm/tests/compiler
+bash scripts/project-run.sh pytest -n auto pkg/hypothesis_helm/tests/compiler
 ```
 
 The full test command still discovers every category. Shared chart fixtures stay in `tests/fixtures/`,
@@ -505,6 +487,6 @@ Project folders and Python modules under `pkg/` use underscores, as in
 | [`scripts/`](../scripts) | Project command runner, validation command and Helm plugin hooks. |
 | [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
 | [`plugin.yaml`](../plugin.yaml) | Installable Helm plugin manifest. |
-| [`.github/workflows/`](<../.github/workflows>) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
+| [`.github/workflows/`](../.github/workflows/) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
 | [`.github/settings.yml`](../.github/settings.yml) | Declarative repository settings. |
 | [`docs/`](.) | Development setup, CLI behavior and testing limitations. |

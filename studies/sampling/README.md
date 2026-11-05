@@ -10,7 +10,7 @@
 
 The shared stress chart has 1024 valid inputs and six known defect families. Every input was rendered with Helm; 500 seeded samples were evaluated at each size.
 
-![Sample size and defect recall](sampling-recall.png)
+![Sample size and defect recall](<sampling-recall.png>)
 
 | Random inputs + defaults | Retained | Mean defects found | 5th percentile recall | Seeds reaching 96% recall | Erroneous inputs tested |
 | ---: | ---: | ---: | ---: | ---: | ---: |

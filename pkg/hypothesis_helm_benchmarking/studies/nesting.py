@@ -12,11 +12,11 @@ from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.execution.runtime.budget import parse_time_limit
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, number, sequence
+from hypothesis_helm.schemas.generation.combinations import plan_interactions
 from hypothesis_helm.schemas.model import ValuesModel
 
 from hypothesis_helm_benchmarking.analysis.pca import project
 from hypothesis_helm_benchmarking.charts.fixture import FixtureWorkspace, chart_path
-from hypothesis_helm_benchmarking.execution.planning import plan as plan_interactions
 from hypothesis_helm_benchmarking.execution.profiling import profile_settings
 from hypothesis_helm_benchmarking.execution.provenance import code_digest
 from hypothesis_helm_benchmarking.studies.expansion import compare
@@ -28,9 +28,7 @@ __all__ = ("PROFILES", "main", "pooled_projection", "select_plan")
 PROFILES = {"shallow": {1: 1.0}, "deep": {5: 1.0}, "random": dict.fromkeys(range(1, 6), 1.0)}
 
 
-def select_plan(
-    chart: Chart, reference: dict[str, object], strength: int, level: int, seed: int, *, workspace: FixtureWorkspace | None = None
-) -> dict[str, object]:
+def select_plan(chart: Chart, reference: dict[str, object], strength: int, level: int, seed: int) -> dict[str, object]:
     """
     Restrict each policy and its expansion candidates to the actual interaction plan.
 
@@ -40,7 +38,6 @@ def select_plan(
         strength (int): Requested interaction strength without exhaustive promotion.
         level (int): Fixed random and topology filter level.
         seed (int): Fixed selection seed.
-        workspace (FixtureWorkspace | None): Explicit backend settings and measurement receipt owner.
 
     Returns:
         dict[str, object]: Reference with mapped selections and explicit planning statistics.
@@ -52,7 +49,7 @@ def select_plan(
         ValuesModel.from_schema(chart.schema),
         strength,
         exhaustive_threshold=0,
-        workspace=workspace,
+        exhaustive_groups=(),
         max_cases=8192,
         max_candidates=1000000,
     )
@@ -188,7 +185,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
             reference.update({"family": family, "profile": profile})
             if reference["status"] == "complete":
                 chart = Chart.load(chart_path(args.output / "charts" / name, workspace=workspace))
-                reference = select_plan(chart, reference, args.permutations, 2, 2026, workspace=workspace)
+                reference = select_plan(chart, reference, args.permutations, 2, 2026)
                 rows.extend(
                     compare(
                         chart,

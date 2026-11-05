@@ -8,7 +8,6 @@ import copy
 import math
 from collections.abc import Sequence
 from functools import partial
-from typing import TYPE_CHECKING
 
 from jsonschema import validators
 
@@ -17,15 +16,10 @@ from hypothesis_helm.schemas.contracts import json_value, mapping, number, seque
 from hypothesis_helm.schemas.dialects import DRAFT2020, active, canonical, dialect
 from hypothesis_helm.schemas.generation.replay import Replay, concatenate, select, transform
 
-if TYPE_CHECKING:
-    from hypothesis_helm.compiler.backends.scheduler import BackendOptions
-
 __all__ = ("enumerate_values", "product_at", "repeated_at")
 
 
-def enumerate_values(
-    schema: dict[str, object], limit: int = 1000, *, backend: BackendOptions | None = None, report: dict[str, object] | None = None
-) -> Sequence[dict[str, object]]:
+def enumerate_values(schema: dict[str, object], limit: int = 1000) -> Sequence[dict[str, object]]:
     """
     Enumerate a supported finite domain, or refuse rather than truncate it.
 
@@ -35,8 +29,6 @@ def enumerate_values(
     Args:
         schema (dict[str, object]): JSON Schema defining the accepted value domain.
         limit (int): Maximum candidate domain size allowed for exhaustive checking.
-        backend (BackendOptions | None): Optional compiled validation of the unchanged candidate stream.
-        report (dict[str, object] | None): Caller-owned destination for backend counters and fallback evidence.
 
     Returns:
         Sequence[dict[str, object]]: Valid configurations reconstructed from retained candidate positions.
@@ -140,44 +132,10 @@ def enumerate_values(
     candidates = domain(schema)
     validator = validators.validator_for(schema)(schema)
     positions = []
-    if backend is None or backend.name == "reference":
-        for index, value in enumerate(candidates):
-            if validator.is_valid(json_value(value)):
-                mapping(value)
-                positions.append(index)
-    else:
-        # Import lazily: factor dictionaries use this same enumerator on the host.
-        # The concrete-case adapter preserves order and sends unsupported cases
-        # back to the authoritative validator instead of changing the domain.
-        from hypothesis_helm.compiler.backends.model import State
-        from hypothesis_helm.compiler.backends.values import ValueEvaluator
-        from hypothesis_helm.exceptions.backends import BackendError
-
-        evaluator = ValueEvaluator(schema, backend)
-        try:
-            if evaluator.worker is None:
-                for index, value in enumerate(candidates):
-                    evaluator.report.logical_cases += 1
-                    evaluator.report.unknown_cases += 1
-                    if validator.is_valid(json_value(value)):
-                        mapping(value)
-                        positions.append(index)
-            else:
-                for index, value, state in evaluator.evaluate((index, mapping(value)) for index, value in enumerate(candidates)):
-                    if state == State.UNKNOWN or backend.verify:
-                        valid = validator.is_valid(json_value(value))
-                        if backend.verify and state != State.UNKNOWN and valid != (state == State.TRUE):
-                            evaluator.report.mismatches += 1
-                            raise BackendError(f"backend predicate mismatch at exhaustive candidate {index}")
-                    else:
-                        valid = state == State.TRUE
-                    if valid:
-                        positions.append(index)
-            evaluator.report.committed_cases = len(positions)
-        finally:
-            evaluator.close()
-            if report is not None:
-                report.update(evaluator.report.export())
+    for index, value in enumerate(candidates):
+        if validator.is_valid(json_value(value)):
+            mapping(value)
+            positions.append(index)
     values = transform(select(candidates, positions), mapping)
     if not values:
         raise NonFiniteSchema("schema has no valid inputs in its declared finite domain")

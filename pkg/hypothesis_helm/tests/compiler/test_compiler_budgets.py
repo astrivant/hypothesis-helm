@@ -27,7 +27,6 @@ from hypothesis_helm.exceptions.compiler import Unavailable, UnsupportedTransfor
 from hypothesis_helm.execution.state.cache import fingerprint
 from hypothesis_helm.findings.configuration import COMPLETE_EXAMPLE
 from hypothesis_helm.schemas.configuration.policy import ENVIRONMENT, load_policy
-from hypothesis_helm.schemas.contracts import mapping
 
 
 def configure(monkeypatch: pytest.MonkeyPatch, **limits: int) -> None:
@@ -136,38 +135,6 @@ def test_config_documentation_and_cache_identity(tmp_path: Path, monkeypatch: py
     detached = active_limits()
     detached["max_files"] = 999
     assert active_limits()["max_files"] == 2
-
-
-def test_legacy_bound_budget_alias(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """
-    Preserve global and chart-scoped settings using the former Lua budget name.
-
-    Args:
-        tmp_path (Path): Configuration and synthetic chart location.
-        monkeypatch (pytest.MonkeyPatch): Apply the loaded inherited policy.
-
-    Returns:
-        None: Both legacy and current inputs resolve to one canonical budget.
-    """
-    config = tmp_path / "config.yaml"
-    config.write_text(
-        yamlio.dump(
-            {
-                "compiler": {"max_lua_memory_bytes": 100},
-                "input_constraints": [{"charts": ["example"], "path": "$", "compiler": {"max_lua_memory_bytes": 10}}],
-            }
-        )
-    )
-    policy = load_policy(config)
-    assert mapping(policy["compiler"])["max_bound_memory_bytes"] == 100
-    monkeypatch.setenv(ENVIRONMENT, json.dumps(policy))
-    refresh_env()
-    chart = tmp_path / "example"
-    chart.mkdir()
-    (chart / "Chart.yaml").write_text("apiVersion: v2\nname: example\nversion: 1.0.0\n")
-    assert active_limits(chart)["max_bound_memory_bytes"] == 10
-    with pytest.raises(ValueError, match="multiple names"):
-        compiler_limits({"max_lua_memory_bytes": 1, "max_bound_memory_bytes": 1})
 
 
 @pytest.mark.parametrize("reader", ["context", "dependencies"])

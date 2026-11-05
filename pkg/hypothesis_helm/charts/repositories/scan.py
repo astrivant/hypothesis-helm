@@ -239,8 +239,6 @@ def _exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> di
     try:
         factor_space(chart.generation_schema(), 10000)
     except NonFiniteSchema as exc:
-        if getattr(args, "execution_backend", "reference") != "reference" and getattr(args, "backend_fallback", "error") != "reference":
-            raise ValueError("compiled backend requires a finite domain; use --backend-fallback reference to allow path testing") from exc
         filtering["reason"] = f"Cannot enumerate the input domain: {exc}"
         unavailable_options = [
             {"trim": "--filter-random", "trim_topology": "--filter-topology"}.get(option, "--" + option.replace("_", "-"))
@@ -308,11 +306,8 @@ def _exercise_chart(path: Path, args: argparse.Namespace, artifacts: Path) -> di
             "lint": "ignored" if baseline.returncode else "passed",
         }
     filtering["applied"] = args.filter and strength is not None
-    from hypothesis_helm.compiler.backends.cli import options as backend_options
-
     result = check_chart(
         chart,
-        backend=backend_options(args),
         max_examples=args.max_examples,
         random_seed=args.seed,
         traversal_strategy=args.traversal_strategy,

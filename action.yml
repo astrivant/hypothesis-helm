@@ -5,24 +5,6 @@ branding:
   icon: check-circle
   color: purple
 inputs:
-  execution-backend:
-    description: 'Finite predicate engine: reference, cpu-vector, or gpu. GPU requires a physical CUDA or Apple Metal device.'
-    default: reference
-  backend-fallback:
-    description: 'Unavailable or failed backend policy: error or reference.'
-    default: error
-  backend-batch-size:
-    description: 'Maximum pure candidate evaluations per batch (1..16384).'
-    default: '256'
-  backend-memory-mib:
-    description: 'Bounded host/device allocation budget per batch in MiB.'
-    default: '64'
-  backend-timeout:
-    description: 'Maximum seconds for native compilation and each worker request.'
-    default: '60'
-  backend-verify:
-    description: Compare compiled predicates with authoritative CPU schema validation.
-    default: 'false'
   chart:
     description: Local chart or source relative to the workspace; source takes precedence when supplied.
     default: .
@@ -439,7 +421,6 @@ runs:
       shell: bash
       env:
         ACTION_PATH: ${{ github.action_path }}
-        HH_EXECUTION_BACKEND: ${{ inputs.execution-backend }}
       run: |
         plugin_root="$(mktemp -d "$RUNNER_TEMP/hypothesis-helm.XXXXXX")"
         export HELM_DATA_HOME="$plugin_root"
@@ -541,12 +522,6 @@ runs:
         HYPOTHESIS_HELM_JOB_TOTAL: ${{ inputs.job-total }}
         HH_CHART: ${{ inputs.chart }}
         HH_COMMAND: ${{ inputs.command }}
-        HH_EXECUTION_BACKEND: ${{ inputs.execution-backend }}
-        HH_BACKEND_FALLBACK: ${{ inputs.backend-fallback }}
-        HH_BACKEND_BATCH_SIZE: ${{ inputs.backend-batch-size }}
-        HH_BACKEND_MEMORY_MIB: ${{ inputs.backend-memory-mib }}
-        HH_BACKEND_TIMEOUT: ${{ inputs.backend-timeout }}
-        HH_BACKEND_VERIFY: ${{ inputs.backend-verify }}
         HH_SOURCE: ${{ inputs.source }}
         HH_CONFIG_INLINE: ${{ inputs.config-inline }}
         HH_REPORT: ${{ inputs.report }}

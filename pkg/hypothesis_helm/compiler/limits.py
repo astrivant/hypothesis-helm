@@ -6,7 +6,7 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-__all__ = ("DEFAULT_LIMITS", "LIMITS", "active_limits", "call_depth", "canonical_limit", "compiler_limits", "policy_limits")
+__all__ = ("DEFAULT_LIMITS", "LIMITS", "active_limits", "call_depth", "compiler_limits", "policy_limits")
 
 
 # Resource budgets only. Language semantics, numeric precision and proof requirements
@@ -33,7 +33,7 @@ LIMITS: dict[str, tuple[int, str]] = {
     "max_output_nodes": (100000, "Manifest nodes inspected per complexity measurement."),
     "max_complexity_cases": (4096, "Template assignments and witnesses in a complexity search."),
     "max_complexity_seconds": (5, "Whole seconds allowed for a complexity search."),
-    "max_bound_memory_bytes": (64 * 1024 * 1024, "Estimated NumPy buffers per complexity analysis; exhaustion uses Python bounds."),
+    "max_lua_memory_bytes": (64 * 1024 * 1024, "Lua allocations per complexity analysis; exhaustion uses Python bounds."),
     "max_sampling_domain_values": (4096, "Values per factor when computing a sampling profile."),
     "max_fallbacks": (128, "Distinct incomplete-analysis diagnostics retained per chart."),
     "max_preimage_steps": (128, "Search steps when proposing inputs for a transformed allowlist."),
@@ -45,20 +45,6 @@ LIMITS: dict[str, tuple[int, str]] = {
     "max_repair_length": (16, "Largest proposed list length during rejection repair."),
 }
 DEFAULT_LIMITS = {name: default for name, (default, _) in LIMITS.items()}
-ALIASES = {"max_lua_memory_bytes": "max_bound_memory_bytes"}
-
-
-def canonical_limit(name: str) -> str:
-    """
-    Map a supported historical compiler setting to its canonical name.
-
-    Args:
-        name (str): Supplied compiler setting.
-
-    Returns:
-        str: Current setting name, or the unchanged unknown name for validation.
-    """
-    return ALIASES.get(name, name)
 
 
 def compiler_limits(raw: object) -> dict[str, int]:
@@ -73,19 +59,14 @@ def compiler_limits(raw: object) -> dict[str, int]:
     """
     if not isinstance(raw, dict):
         raise ValueError("compiler must be a mapping of analysis budgets")
-    unknown = set(raw) - DEFAULT_LIMITS.keys() - ALIASES.keys()
+    unknown = set(raw) - DEFAULT_LIMITS.keys()
     if unknown:
         raise ValueError("Unknown compiler setting(s): " + ", ".join(sorted(str(key) for key in unknown)))
     resolved = dict(DEFAULT_LIMITS)
-    seen: set[str] = set()
     for name, value in raw.items():
         if isinstance(value, bool) or not isinstance(value, int) or value < 1:
             raise ValueError(f"compiler.{name} must be a positive integer")
-        canonical = canonical_limit(name)
-        if canonical in seen:
-            raise ValueError(f"compiler.{canonical} cannot be set through multiple names")
-        seen.add(canonical)
-        resolved[canonical] = value
+        resolved[name] = value
     return resolved
 
 
@@ -117,11 +98,10 @@ def policy_limits(serialized: str, name: str | None = None, source: str | None =
             configured = mapping(rule["compiler"])
             validated = compiler_limits(configured)
             for key in configured:
-                canonical = canonical_limit(key)
-                value = validated[canonical]
-                if canonical in overrides and overrides[canonical] != value:
-                    raise ValueError(f"Conflicting compiler.{canonical} overrides for chart {name!r} from {source!r}")
-                overrides[canonical] = value
+                value = validated[key]
+                if key in overrides and overrides[key] != value:
+                    raise ValueError(f"Conflicting compiler.{key} overrides for chart {name!r} from {source!r}")
+                overrides[key] = value
     return tuple({**resolved, **overrides}.items())
 
 

@@ -4,27 +4,22 @@ Dispatch installed benchmark commands without depending on a source checkout.
 
 import argparse
 import importlib
-import logging
 import sys
 import tempfile
 from contextlib import nullcontext
 from pathlib import Path
 
-from hypothesis_helm.compiler.backends.cli import add_options
-from hypothesis_helm.compiler.backends.cli import options as backend_options
 from hypothesis_helm.environment import env, refresh_env, set_env
 from hypothesis_helm.execution.runtime.signals import Termination
 from hypothesis_helm.integrations.sharding import parse_shard_option, resolve_shard
 
 from hypothesis_helm_benchmarking.charts.fixture import FixtureWorkspace, chart_path
-from hypothesis_helm_benchmarking.execution.backends import execute, prepare_arguments
 from hypothesis_helm_benchmarking.execution.profiling import PROFILE_DIRECTORY, capture
 
 __all__ = ("COMMANDS", "main")
 
 
 COMMANDS = {
-    "inventory": "catalog",
     "smoke": "execution.shell",
     "shards": "execution.shell",
     "generate": "charts.generator",
@@ -67,17 +62,12 @@ def main(argv: list[str] | None = None) -> int:
         "--profile", type=Path, help="capture Python call stacks and flame graphs under this directory; place before COMMAND"
     )
     parser.add_argument("--parameters", type=Path, help="use a retained chart recipe with run, discovery, or sparsity")
-    add_options(parser)
-    parser.add_argument("--debug", action="store_true", help="include diagnostic logs on stderr")
     parser.add_argument("command", choices=COMMANDS)
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
-    logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
     try:
-        backend = backend_options(args)
         module = importlib.import_module(f"hypothesis_helm_benchmarking.{COMMANDS[args.command]}")
         arguments = [args.command, *args.arguments] if args.command in {"smoke", "shards"} else list(args.arguments)
-        arguments = prepare_arguments(args.command, arguments, backend)
         entry = getattr(module, "main", None) or module.run
 
         def invoke() -> int:
@@ -89,7 +79,7 @@ def main(argv: list[str] | None = None) -> int:
             """
             from hypothesis_helm_benchmarking.charts.generator import reproduce
 
-            with Termination(), nullcontext() if args.command == "generate" else FixtureWorkspace(backend=backend) as workspace:
+            with Termination(), nullcontext() if args.command == "generate" else FixtureWorkspace() as workspace:
                 if args.parameters is not None and "--plot-only" not in args.arguments:
                     if args.command not in {"run", "discovery", "sparsity"}:
                         parser.error("global --parameters applies to run, discovery, or sparsity")
@@ -97,7 +87,7 @@ def main(argv: list[str] | None = None) -> int:
                     settings.add_argument("--output", type=Path)
                     settings.add_argument("--chart", type=Path)
                     settings.add_argument("--shard", type=parse_shard_option, default="auto")
-                    options, _ = settings.parse_known_args(arguments)
+                    options, _ = settings.parse_known_args(args.arguments)
                     if options.chart is not None:
                         parser.error("choose either --parameters or --chart")
                     if options.output is None:
@@ -111,9 +101,7 @@ def main(argv: list[str] | None = None) -> int:
                     logical = destination / "chart"
                     reproduce(args.parameters, logical, workspace=workspace)
                     arguments.extend(["--chart", str(chart_path(logical, workspace=workspace))])
-                if workspace is None:
-                    return int(entry(arguments, workspace=workspace))
-                return execute(args.command, arguments, workspace, lambda: int(entry(arguments, workspace=workspace)))
+                return int(entry(arguments, workspace=workspace))
 
         if args.profile is not None:
             from hypothesis_helm_benchmarking.reporting.flamegraph import render_profiles

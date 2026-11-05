@@ -20,9 +20,6 @@ from hypothesis_helm.charts.repositories.scan import discover_charts, scan
 from hypothesis_helm.charts.suites.generate import generate_tests
 from hypothesis_helm.charts.suites.runtime import RenderOptions
 from hypothesis_helm.charts.testing.runner import check_chart
-from hypothesis_helm.compiler.backends.cli import add_options as add_backend_options
-from hypothesis_helm.compiler.backends.cli import export_plan
-from hypothesis_helm.compiler.backends.cli import options as backend_options
 from hypothesis_helm.compiler.passes.exports import export_repository
 from hypothesis_helm.compiler.passes.graph import export_graph
 from hypothesis_helm.compiler.passes.inputs import load_input_chart
@@ -199,10 +196,6 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         "--generate-config", action="store_true", help="print the default .hypothesis-helm.yaml template to stdout and exit"
     )
     commands = parser.add_subparsers(dest="command")
-    compiled = commands.add_parser("compile", help="export a bounded finite predicate plan")
-    compiled.add_argument("chart", type=Path)
-    compiled.add_argument("--emit-plan", type=Path, required=True)
-    compiled.add_argument("--max-cases", type=int, default=10000)
     rules = commands.add_parser(
         "rules",
         help="list classified chart findings and diagnostics",
@@ -305,7 +298,6 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="scan budget excluding dependency preparation; default: unlimited",
     )
     repository.add_argument("--max-examples", type=int, action=ExamplesAction, default=10)
-    add_backend_options(repository)
     repository.add_argument("--cache-dir", type=Path, help="completed chart-result cache; default: .cache/hypothesis-helm/charts")
     repository.add_argument("--no-cache", action="store_true", help="disable completed chart-result caching")
     repository.add_argument("--jobs", "-j", type=parse_jobs, default="auto", help="path workers per chart; auto: available CPUs")
@@ -449,7 +441,6 @@ def argument_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="stop at this severity or higher and exit 1; bare flag: any finding; lower findings remain reported",
     )
     test.add_argument("--max-examples", type=int, action=ExamplesAction, default=10)
-    add_backend_options(test)
     test.add_argument(
         "--time-limit",
         type=parse_time_limit,
@@ -867,17 +858,6 @@ def main(argv: list[str] | None = None) -> int:
     previous_input_file = set_env(INPUT_POLICY_FILE, None)
     previous_conformity = set_env(ENVIRONMENT, None)
     try:
-        if args.command == "compile":
-            handler = logging.StreamHandler(sys.stderr)
-            logger.addHandler(handler)
-            return export_plan(args)
-        if args.command in {"test", "scan"}:
-            selected_backend = backend_options(args)
-            if selected_backend.name != "reference" and getattr(args, "permutations", None) is None:
-                if any(getattr(args, mode, False) for mode in ("paths", "whole_chart")):
-                    raise ValueError("compiled backends require finite --permutations or --exhaustive planning")
-                if not getattr(args, "exhaustive", False):
-                    args.permutations = DEFAULT_PERMUTATIONS
         if hasattr(args, "max_depth"):
             from hypothesis_helm.charts.depth import dependency_depth
 
@@ -1291,7 +1271,6 @@ def main(argv: list[str] | None = None) -> int:
                 raise ValueError("--match and --collect-only apply to per-path tests only")
             report = check_chart(
                 chart,
-                backend=backend_options(args),
                 max_examples=args.max_examples,
                 random_seed=args.seed,
                 traversal_strategy=args.traversal_strategy,

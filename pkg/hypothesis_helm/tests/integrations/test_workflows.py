@@ -18,9 +18,6 @@ from hypothesis_helm.schemas.contracts import mapping, sequence
 from hypothesis_helm.tests import PROJECT_ROOT
 
 ROOT = PROJECT_ROOT
-STUDY_RUNNER = "${{ inputs.benchmark-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}"
-MATRIX_RUNNER = "${{ matrix.backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}"
-NATIVE_STUDIES = {"refresh-error-surface", "refresh-stress", "refresh-structural-sparsity"}
 
 
 def workflows() -> dict[str, dict[str, object]]:
@@ -48,12 +45,12 @@ def all_jobs() -> dict[str, dict[str, object]]:
     return jobs
 
 
-def test_ci_limits_paid_capacity_to_explicit_gpu_jobs() -> None:
+def test_ci_uses_only_standard_public_repository_runners() -> None:
     """
-    Keep ordinary checks on standard runners and bound the explicitly approved GPU routes.
+    Keep repository workflows and the reference workflow off billable runner pools.
 
     Returns:
-        None: Only the declared GPU checks and optional downstream GPU choice select paid capacity.
+        None: Every executable job has a fixed standard label, with no variable override.
     """
     documents = workflows()
     documents["ci/github.yml"] = mapping(YAML(typ="safe").load((ROOT / "ci/github.yml").read_text()))
@@ -62,45 +59,7 @@ def test_ci_limits_paid_capacity_to_explicit_gpu_jobs() -> None:
             job = mapping(raw)
             # Reusable workflow calls inherit the runner settings checked in their target file.
             if "uses" not in job:
-                if filename == "stage-backends.yml" and name == "gpu":
-                    assert job["runs-on"] == "${{ vars.HH_GPU_RUNNER }}"
-                    assert job["timeout-minutes"] == 15
-                    assert "head.repo.full_name == github.repository" in str(job["if"])
-                elif filename == "ci/github.yml" and name == "chart":
-                    assert job["runs-on"] == "${{ inputs.execution-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}"
-                elif filename == "stage-measure.yml" and name in NATIVE_STUDIES | {"refresh-study"}:
-                    assert job["runs-on"] == (MATRIX_RUNNER if name == "refresh-study" else STUDY_RUNNER)
-                    assert job["timeout-minutes"] == 360
-                    assert job["needs"] == "refresh-prepare"
-                else:
-                    assert job["runs-on"] in {"ubuntu-latest", "ubuntu-24.04"}, (filename, name)
-
-
-@pytest.mark.parametrize(
-    ("backend", "runner", "exit_code"),
-    [("reference", "", 0), ("cpu-vector", "", 0), ("gpu", "", 1), ("gpu", "synthetic-gpu", 0), ("unknown", "", 1)],
-)
-def test_refresh_backend_preflight(backend: str, runner: str, exit_code: int) -> None:
-    """
-    Reject unavailable GPU capacity or unknown backends before starting study jobs.
-
-    Args:
-        backend (str): Synthetic manual backend selection.
-        runner (str): Synthetic configured runner label, or missing configuration.
-        exit_code (int): Expected preflight outcome.
-
-    Returns:
-        None: The actual workflow guard accepts CPU routes and only configured GPU requests.
-    """
-    steps = [mapping(step) for step in sequence(all_jobs()["refresh-request"]["steps"])]
-    preflight = next(step for step in steps if "GPU_RUNNER" in mapping(step.get("env", {})))
-    result = subprocess.run(
-        ["bash", "-e", "-c", str(preflight["run"])],
-        env={"EXECUTION_BACKEND": backend, "GPU_RUNNER": runner},
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == exit_code, result.stderr
+                assert job["runs-on"] == "ubuntu-latest", (filename, name)
 
 
 def test_workflow_references_and_dependencies() -> None:
@@ -111,7 +70,7 @@ def test_workflow_references_and_dependencies() -> None:
         None: All jobs appear in one run and their prerequisites resolve.
     """
     documents = workflows()
-    assert set(documents) == {"ci.yml", "stage-test.yml", "stage-build.yml", "stage-measure.yml", "stage-deploy.yml", "stage-backends.yml"}
+    assert set(documents) == {"ci.yml", "stage-test.yml", "stage-build.yml", "stage-measure.yml", "stage-deploy.yml"}
     for filename, document in documents.items():
         if filename != "ci.yml":
             assert set(mapping(document["on"])) == {"workflow_call"}
@@ -128,7 +87,7 @@ def test_workflow_references_and_dependencies() -> None:
                 assert filename == "ci.yml"
                 called = Path(str(job["uses"]))
                 assert called.name in documents and (ROOT / called).is_file()
-                declared = mapping(mapping(mapping(documents[called.name]["on"])["workflow_call"]).get("inputs", {}))
+                declared = mapping(mapping(mapping(documents[called.name]["on"])["workflow_call"])["inputs"])
                 assert set(mapping(job.get("with", {}))) <= declared.keys()
             for raw_step in sequence(job.get("steps", [])):
                 action = str(mapping(raw_step).get("uses", ""))
@@ -196,8 +155,7 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         assert "needs" not in jobs[name] and "if" not in jobs[name]
     for name, job in jobs.items():
         if name.startswith("refresh-") or name == "smoke":
-            expected = MATRIX_RUNNER if name == "refresh-study" else STUDY_RUNNER if name in NATIVE_STUDIES else "ubuntu-latest"
-            assert job["runs-on"] == expected, name
+            assert job["runs-on"] == "ubuntu-latest", name
     inputs_job = jobs["refresh-prepare-inputs"]
     assert inputs_job["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
     assert inputs_job["needs"] == "refresh-request"
@@ -253,10 +211,6 @@ def test_preparation_shards_verify_the_rebuilt_snapshot_before_studies() -> None
     assert steps.index(restore) < steps.index(renderer) < steps.index(run)
     assert mapping(run["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/8"
     assert '-p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD"' in str(run["run"])
-    assert "--ignore=tests/release" in str(run["run"])
-    release_steps = [mapping(step) for step in sequence(jobs["release-tools"]["steps"])]
-    assert any("pytest tests/release" in str(step.get("run", "")) for step in release_steps)
-    assert jobs["measure-stage"]["needs"] == "verification"
     assert "--junitxml=" in str(run["run"])
     results = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
     assert results["if"] == "${{ always() }}"
@@ -277,7 +231,7 @@ def test_pr_benchmarks_are_a_required_commit_bound_manual_gate() -> None:
     jobs = all_jobs()
     verification = mapping(jobs["verification"])
     assert verification["if"] == "${{ always() }}"
-    assert set(sequence(verification["needs"])) == {"test-stage", "build-stage", "backend-stage"}
+    assert set(sequence(verification["needs"])) == {"test-stage", "build-stage"}
     request = mapping(jobs["refresh-request"])
     assert request["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}"
     finish = mapping(jobs["refresh-finish"])
@@ -285,10 +239,7 @@ def test_pr_benchmarks_are_a_required_commit_bound_manual_gate() -> None:
     assert any('--ci-phase graphs --root "$ROOT"' in str(step.get("run", "")) for step in steps)
     assert not any("--ci-phase finish" in str(step.get("run", "")) for step in steps)
     commit = next(step for step in steps if step.get("id") == "commit")
-    assert "EXPECTED_BASE_SHA" not in mapping(commit["env"])
-    checkout = next(step for step in steps if str(step.get("uses", "")).startswith("actions/checkout@"))
-    assert mapping(checkout["with"])["ref"] == "${{ github.sha }}"
-    assert mapping(checkout["with"])["fetch-depth"] == 0
+    assert mapping(commit["env"])["EXPECTED_BASE_SHA"] == "${{ needs.refresh-request.outputs.base_sha }}"
     result = mapping(jobs["pr-benchmark-result"])
     assert "always()" in str(result["if"]) and "workflow_dispatch" in str(result["if"])
     assert "inputs.pull-request != ''" in str(result["if"])
@@ -320,7 +271,7 @@ def test_main_refresh_requires_publication_credentials_before_measurement(availa
     declared = mapping(mapping(mapping(documents["stage-measure.yml"]["on"])["workflow_call"])["secrets"])
     assert mapping(declared["BENCHMARK_PUBLISH_TOKEN"])["required"] is False
     steps = [mapping(step) for step in sequence(jobs["refresh-request"]["steps"])]
-    preflight = next(step for step in steps if "PUBLISH_TOKEN_AVAILABLE" in mapping(step.get("env", {})))
+    preflight = steps[0]
     assert preflight["if"] == (
         "${{ inputs.pull-request == '' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}"
     )
@@ -392,14 +343,9 @@ def test_python_setup_reuses_locked_environment_without_resolving() -> None:
     steps = [mapping(step) for step in sequence(mapping(action["runs"])["steps"])]
     restore = next(step for step in steps if step.get("id") == "python-cache")
     cache = mapping(restore["with"])
-    for coordinate in ("runner.os", "runner.arch", "steps.python.outputs.python-version", "poetry-2.1.3", "inputs.execution-backend"):
+    for coordinate in ("runner.os", "runner.arch", "steps.python.outputs.python-version", "poetry-2.1.3"):
         assert coordinate in str(cache["key"])
-    for path in (
-        "poetry.lock",
-        "pyproject.toml",
-        "pkg/hypothesis_helm_benchmarking/pyproject.toml",
-        ".github/actions/setup-project/action.yml",
-    ):
+    for path in ("poetry.lock", "pyproject.toml", "pkg/hypothesis_helm_benchmarking/pyproject.toml"):
         assert f"'{path}'" in str(cache["key"])
     install = next(step for step in steps if "poetry install" in str(step.get("run", "")))
     assert "if" not in install  # A cache hit must still refresh the editable project installs.
@@ -408,11 +354,7 @@ def test_python_setup_reuses_locked_environment_without_resolving() -> None:
     command = str(install["run"])
     assert "poetry check --lock" in command
     assert "timeout --signal=TERM --kill-after=30s 10m poetry install" in command
-    assert "extras=(--extras benchmarking)" in command
-    assert '"${extras[@]}" --with dev --no-interaction --no-ansi -v' in command
-    assert "cpu-vector) extras+=(--extras cpu)" in command
-    assert "gpu) extras+=(--extras gpu)" in command
-    assert environment["EXECUTION_BACKEND"] == "${{ inputs.execution-backend }}"
+    assert "--extras benchmarking --with dev --no-interaction --no-ansi -v" in command
     save = next(step for step in steps if "python-cache.outputs.cache-hit" in str(step.get("if", "")))
     assert mapping(save["with"])["path"] == cache["path"]
     assert mapping(save["with"])["key"] == "${{ steps.python-cache.outputs.cache-primary-key }}"
@@ -437,7 +379,6 @@ def test_python_matrix_partitions_tests_and_artifacts() -> None:
     steps = [mapping(step) for step in sequence(job["steps"])]
     test = next(step for step in steps if "--suite-shard" in str(step.get("run", "")))
     assert mapping(test["env"])["SUITE_SHARD"] == "${{ matrix.shard }}/8"
-    assert "bash scripts/run-pr-tests.sh" in str(test["run"])
     assert "-p hypothesis_helm.tests.sharding" in str(test["run"])
     assert "-n auto --dist worksteal" in str(test["run"])
     upload = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-artifact@"))
@@ -529,14 +470,14 @@ def test_chart_workflow_restores_shard_caches_and_comparison_history() -> None:
 
 def test_error_surface_has_eight_isolated_shards() -> None:
     """
-    Partition the costly surface on its selected backend and join before publishing.
+    Partition the costly surface on standard runners and join before publishing.
 
     Returns:
         None: The study cannot publish until all eight shards have been verified.
     """
     jobs = all_jobs()
     shard = mapping(jobs["refresh-error-surface"])
-    assert shard["runs-on"] == STUDY_RUNNER
+    assert shard["runs-on"] == "ubuntu-latest"
     strategy = mapping(shard["strategy"])
     assert mapping(strategy["matrix"])["shard"] == list(range(8))
     assert mapping(strategy["matrix"])["include"] == [{"shard": index, "number": index + 1} for index in range(8)]
@@ -546,21 +487,13 @@ def test_error_surface_has_eight_isolated_shards() -> None:
     assert strategy["fail-fast"] is False
     merge = mapping(jobs["refresh-error-surface-merge"])
     assert set(sequence(merge["needs"])) == {"refresh-prepare", "refresh-error-surface"}
-    merge_step = next(
-        mapping(step) for step in sequence(merge["steps"]) if mapping(step).get("name") == "Merge verified measurements and generate plots"
-    )
-    command = str(merge_step["run"])
-    assert command.index("--merge-shards") < command.index("polynomial-surface") < command.index("--study error-surface-quartic")
-    assert '--execution-backend "$EXECUTION_BACKEND" polynomial-surface' in command
-    assert '"$ROOT/outputs/error-surface-quartic"' in command
-    assert '"$ROOT/statuses/error-surface-quartic.tsv"' in command
     assert "refresh-error-surface-merge" in sequence(mapping(jobs["refresh-finish"])["needs"])
 
 
 @pytest.mark.parametrize("study", ["stress", "structural-sparsity"])
 def test_study_has_six_isolated_shards(study: str) -> None:
     """
-    Keep paired comparisons on six runners of the selected backend before publication.
+    Keep paired comparisons on six standard runners before publication.
 
     Args:
         study (str): Study distributed over six independent jobs.
@@ -570,7 +503,7 @@ def test_study_has_six_isolated_shards(study: str) -> None:
     """
     jobs = all_jobs()
     shard = mapping(jobs[f"refresh-{study}"])
-    assert shard["runs-on"] == STUDY_RUNNER
+    assert shard["runs-on"] == "ubuntu-latest"
     strategy = mapping(shard["strategy"])
     assert mapping(strategy["matrix"])["shard"] == list(range(6))
     assert mapping(strategy["matrix"])["include"] == [{"shard": index, "number": index + 1} for index in range(6)]
@@ -579,8 +512,7 @@ def test_study_has_six_isolated_shards(study: str) -> None:
     assert strategy["max-parallel"] == 6
     assert strategy["fail-fast"] is False
     steps = [mapping(step) for step in sequence(shard["steps"])]
-    measure = next(str(step["run"]) for step in steps if "--shard-index" in str(step.get("run", "")))
-    assert f'hypothesis-helm-benchmark --execution-backend "$EXECUTION_BACKEND" {study}' in measure
+    measure = next(str(step["run"]) for step in steps if f"hypothesis-helm-benchmark {study}" in str(step.get("run", "")))
     assert '--shard-index "$SHARD" --shard-count 6' in measure
     merge = mapping(jobs[f"refresh-{study}-merge"])
     assert set(sequence(merge["needs"])) == {"refresh-prepare", f"refresh-{study}"}
@@ -781,20 +713,11 @@ def test_stage_grouping_keeps_independent_work_parallel() -> None:
     """
     documents = workflows()
     stages = mapping(documents["ci.yml"]["jobs"])
-    assert set(stages) == {
-        "test-stage",
-        "build-stage",
-        "backend-stage",
-        "verification",
-        "measure-stage",
-        "deploy-stage",
-        "release-verification",
-    }
+    assert set(stages) == {"test-stage", "build-stage", "verification", "measure-stage", "deploy-stage", "release-verification"}
     for stage in ("test", "build"):
         job = mapping(stages[f"{stage}-stage"])
         assert "needs" not in job and "if" not in job
         assert job["uses"] == f"./.github/workflows/stage-{stage}.yml"
-    assert stages["backend-stage"] == {"name": "Compiled backends", "uses": "./.github/workflows/stage-backends.yml"}
     tests = mapping(documents["stage-test.yml"]["jobs"])
     assert set(tests) == {
         "go",
@@ -816,7 +739,6 @@ def test_stage_grouping_keeps_independent_work_parallel() -> None:
     for option in ("refresh", "bitnami-scan", "prometheus-scan", "pull-request", "binary-cache"):
         assert mapping(measurement["with"])[option] == f"${{{{ inputs.{option} }}}}"
     verification = mapping(stages["verification"])
-    assert set(sequence(verification["needs"])) == {"test-stage", "build-stage", "backend-stage"}
     assert verification["name"] == "CI verification" and verification["if"] == "${{ always() }}"
     steps = [mapping(step) for step in sequence(verification["steps"])]
     assert '.result == "success"' in str(steps[0]["run"])

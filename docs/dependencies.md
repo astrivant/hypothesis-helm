@@ -151,7 +151,7 @@ Exercise the [symbolic fitting integration](../pkg/hypothesis_helm_benchmarking/
 When changing supported package versions, also review the core/add-on compatibility ranges in both manifests and the root extras.
 
 The Python package list includes Hypothesis and its schema generator, JSON Schema validation, both YAML parsers, attrs/cattrs,
-DeepDiff, Rich, ReportLab, Matplotlib, immutables and NumPy. NumPy and optional PySR also support benchmarking. Review the manifests
+DeepDiff, Rich, ReportLab, Matplotlib, immutables and Lupa. NumPy and optional PySR support benchmarking. Review the manifests
 for the complete constraints, including type stubs, test tools and both build backends.
 
 | Tool | Additional update locations |
@@ -204,7 +204,7 @@ dependency constraints. Python dependencies and external tools must already be i
 
 The GitHub refresh runs the same steps in its preparation job, caching `schemas/`, `.cache/compiler-builtins/` and
 `.cache/random-renderer/` by source/module pins, OS and architecture. Each study receives the prepared source snapshot, including
-both Go modules, the NumPy bound evaluator and generated catalogs. Dependency preparation is outside benchmark and chart-testing time budgets.
+both Go modules, the Lua pass and generated catalogs. Dependency preparation is outside benchmark and chart-testing time budgets.
 Inspect the steps without starting a run with `hypothesis-helm-refresh --dry-run`.
 
 Existing refresh journals retain their recorded operations and frozen sources; resuming one does not insert new preparation steps

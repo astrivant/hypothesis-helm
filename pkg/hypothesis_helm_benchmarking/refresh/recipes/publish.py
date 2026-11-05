@@ -9,7 +9,8 @@ import sys
 from pathlib import Path
 
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES
-from hypothesis_helm_benchmarking.reporting.publication import publication_targets, publish_study
+from hypothesis_helm_benchmarking.reporting.publication import STUDIES as PUBLISHED_STUDIES
+from hypothesis_helm_benchmarking.reporting.publication import publish_study, verify_study
 
 __all__ = ()
 
@@ -26,9 +27,10 @@ assert (root / "outputs/chart-topologies/results.json").exists()
 checksums = {}
 directories = sorted((root / "outputs").iterdir())
 # Check every study before replacing any previously published files.
-targets = publication_targets(directories)
-for directory, destination in targets.items():
-    checksums.update(publish_study(directory, destination))
+for directory in directories:
+    verify_study(directory)
+for directory in directories:
+    checksums.update(publish_study(directory, PUBLISHED_STUDIES / directory.name))
 shutil.copytree(
     root / "parameters",
     target / "pkg/hypothesis_helm_benchmarking/assets/fixture/parameters",

@@ -9,15 +9,10 @@ import itertools
 import math
 import random
 from collections.abc import Callable, Sequence
-from contextlib import closing
 
 from attrs import define, field
 from jsonschema import validators
 
-from hypothesis_helm.compiler.backends.lowering import compile_plan
-from hypothesis_helm.compiler.backends.model import State
-from hypothesis_helm.compiler.backends.scheduler import DEFAULT_BACKEND, BackendOptions, Report, Scheduler
-from hypothesis_helm.exceptions.backends import BackendError, InvalidPlan
 from hypothesis_helm.exceptions.schemas import NonFiniteSchema
 from hypothesis_helm.schemas.contracts import json_value
 from hypothesis_helm.schemas.generation.factors import factor_space
@@ -44,7 +39,6 @@ class InteractionPlan:
         group_reports (list[dict[str, object]]): Accepted and skipped group provenance.
         raw_cases (int): Selected assignments before effective-value deduplication.
         duplicate_cases_removed (int): Assignments already covered by another configuration.
-        backend_report (dict[str, object]): Pure compute, fallback and ordered selection evidence.
     """
 
     values: Sequence[dict[str, object]]
@@ -57,7 +51,6 @@ class InteractionPlan:
     group_reports: list[dict[str, object]] = field(factory=list)
     raw_cases: int = 0
     duplicate_cases_removed: int = 0
-    backend_report: dict[str, object] = field(factory=dict)
 
 
 def plan_interactions(
@@ -70,7 +63,6 @@ def plan_interactions(
     exhaustive_threshold: int = 10000,
     exhaustive_groups: tuple[ExhaustiveGroup, ...] = (),
     max_group_cases: int = 256,
-    backend: BackendOptions = DEFAULT_BACKEND,
 ) -> InteractionPlan:
     """
     Cover every feasible t-way assignment without materializing the Cartesian product.
@@ -89,7 +81,6 @@ def plan_interactions(
         exhaustive_threshold (int): Enumerate smaller Cartesian spaces; zero disables promotion.
         exhaustive_groups (tuple[ExhaustiveGroup, ...]): Required or inferred local groups.
         max_group_cases (int): Maximum Cartesian size of an inferred group.
-        backend (BackendOptions): Optional compiled predicate execution and failure policy.
 
     Returns:
         InteractionPlan: Complete coverage plan for the declared finite factors.
@@ -173,15 +164,11 @@ def plan_interactions(
         if reason is None and strategy != "exhaustive" and group not in groups:
             groups.append(group)
             inventory_size += size
-    uncovered = (
-        set()
-        if strategy == "exhaustive"
-        else {
-            tuple(zip(group, choices, strict=True))
-            for group in groups
-            for choices in itertools.product(*(range(len(domains[index])) for index in group))
-        }
-    )
+    uncovered = {
+        tuple(zip(group, choices, strict=True))
+        for group in groups
+        for choices in itertools.product(*(range(len(domains[index])) for index in group))
+    }
     assignments: list[int] = []
 
     def candidate_at(number: int) -> dict[str, object]:
@@ -208,93 +195,32 @@ def plan_interactions(
 
     covered = 0
     candidates = 0
-    report = Report(backend.name, backend.name)
-    scheduler = None
-    if backend.name != "reference":
-        try:
-            program = compile_plan(schema, space, limits=backend.limits)
-            scheduler = Scheduler(program, backend, report)
-        except InvalidPlan:
-            if backend.fallback != "reference":
-                raise
-            report.selected = "reference"
-            report.fallback_reasons["unsupported-plan"] = 1
     targets = iter(sorted(uncovered))
-
-    def consume(row: tuple[int, ...], number: int, state: State) -> bool:
-        """
-        Validate and commit one logical candidate in the reference order.
-
-        Args:
-            row (tuple[int, ...]): Current finite dictionary choices.
-            number (int): Compact assignment ID, or -1 for host reconstruction.
-            state (State): Pure schema predicate result; unknown requires host validation.
-
-        Returns:
-            bool: Whether a schema-valid, callback-accepted candidate was committed.
-        """
-        nonlocal candidates, covered
-        candidates += 1
-        report.logical_cases += 1
-        if candidates > max_candidates:
-            raise NonFiniteSchema("interaction completion search exceeds --max-candidates")
-        if number == -1:
+    while uncovered:
+        target = next(target for target in targets if target in uncovered)
+        fixed = dict(target)
+        choices = [[fixed[index]] if index in fixed else range(len(domain)) for index, domain in enumerate(domains)]
+        for row in itertools.product(*choices):
+            candidates += 1
+            if candidates > max_candidates:
+                raise NonFiniteSchema("interaction completion search exceeds --max-candidates")
             number = 0
             for domain, choice in zip(domains, row, strict=True):
                 number = number * len(domain) + choice
-        if state == State.FALSE and not backend.verify:
-            return False
-        candidate = candidate_at(number)
-        if state == State.UNKNOWN or backend.verify:
-            valid = validator.is_valid(json_value(candidate))
-            report.unknown_cases += int(state == State.UNKNOWN)
-            if backend.verify and state != State.UNKNOWN and valid != (state == State.TRUE):
-                report.mismatches += 1
-                raise BackendError(f"backend predicate mismatch at assignment {number}; plan {report.plan_digest}")
-        else:
-            valid = state == State.TRUE
-        if not valid or (accept is not None and not accept(candidate)):
-            return False
-        if len(assignments) >= max_cases:
-            raise NonFiniteSchema("interaction suite exceeds --max-cases")
-        assignments.append(number)
-        report.committed_cases += 1
-        if strategy == "exhaustive":
-            covered += 1
-        else:
+            candidate = candidate_at(number)
+            if not validator.is_valid(json_value(candidate)) or (accept is not None and not accept(candidate)):
+                continue
+            if len(assignments) >= max_cases:
+                raise NonFiniteSchema("interaction suite exceeds --max-cases")
+            assignments.append(number)
             for group in groups:
                 interaction = tuple((index, row[index]) for index in group)
                 if interaction in uncovered:
                     uncovered.remove(interaction)
                     covered += 1
-        return True
-
-    try:
-        # Full strength and threshold promotion share one contiguous batched pass.
-        # Giving every exhaustive target its own interval would launch one device
-        # request per candidate, defeating the same backend's bounded batching.
-        if strategy == "exhaustive":
-            rows = itertools.product(*(range(len(domain)) for domain in domains))
-            interval = scheduler.ordered(rows) if scheduler is not None else closing((row, -1, State.UNKNOWN) for row in rows)
-            with interval as evaluated:
-                for row, number, state in evaluated:
-                    consume(row, number, state)
-        while uncovered:
-            target = next(target for target in targets if target in uncovered)
-            fixed = dict(target)
-            choices = [[fixed[index]] if index in fixed else range(len(domain)) for index, domain in enumerate(domains)]
-            rows = itertools.product(*choices)
-            # Only pure speculative work runs ahead; budget accounting and callbacks stay serial.
-            interval = scheduler.ordered(rows) if scheduler is not None else closing((row, -1, State.UNKNOWN) for row in rows)
-            with interval as evaluated:
-                for row, number, state in evaluated:
-                    if consume(row, number, state):
-                        break
-                else:
-                    uncovered.remove(target)
-    finally:
-        if scheduler is not None:
-            scheduler.close()
+            break
+        else:
+            uncovered.remove(target)
     if not assignments:
         raise NonFiniteSchema("schema has no feasible configurations for permutations")
     values = Replay(len(assignments), lambda index: candidate_at(assignments[index]))
@@ -308,7 +234,6 @@ def plan_interactions(
         strategy,
         group_reports,
         raw_cases=len(values),
-        backend_report=report.export(),
     )
 
 

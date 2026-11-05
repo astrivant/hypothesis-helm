@@ -12,7 +12,6 @@ from pathlib import Path
 
 from hypothesis_helm.charts.model import Chart
 from hypothesis_helm.charts.testing.runner import check_chart
-from hypothesis_helm.compiler.backends.scheduler import DEFAULT_BACKEND
 from hypothesis_helm.execution.planning.sampling import Sampling
 from hypothesis_helm.execution.runtime.budget import parse_time_limit
 from hypothesis_helm.execution.runtime.processes import Processes
@@ -33,9 +32,7 @@ __all__ = ("METHODS", "main", "measure", "plot", "save")
 METHODS = ("baseline", "sample-random", "filter", "filter-adaptive")
 
 
-def measure(
-    chart: Chart, method: str, seed: int, limit: float, helm: str, *, workspace: FixtureWorkspace | None = None
-) -> tuple[dict[str, object], dict[str, object]]:
+def measure(chart: Chart, method: str, seed: int, limit: float, helm: str) -> tuple[dict[str, object], dict[str, object]]:
     """
     Run the real testing engine with the same options as each public flag.
 
@@ -45,7 +42,6 @@ def measure(
         seed (int): Paired traversal and selection seed.
         limit (float): Execution ceiling excluding planning, matching normal chart testing.
         helm (str): Helm executable.
-        workspace (FixtureWorkspace | None): Explicit backend settings and measurement receipt owner.
 
     Returns:
         tuple[dict[str, object], dict[str, object]]: Phase measurements and the complete native execution report.
@@ -56,7 +52,6 @@ def measure(
     started = time.perf_counter()
     report = check_chart(
         chart,
-        backend=workspace.backend if workspace is not None else DEFAULT_BACKEND,
         permutations=2,
         random_seed=seed,
         sampling=Sampling(70 if method == "sample-random" else 100, aggressive=method == "filter-adaptive"),
@@ -67,8 +62,6 @@ def measure(
         helm=helm,
     )
     wall = time.perf_counter() - started
-    if workspace is not None:
-        workspace.backend_reports.append(mapping(report["backend"]))
     sampling = mapping(report.get("sampling", {}))
     aggressive = mapping(sampling.get("aggressive", {}))
     analysis = mapping(aggressive.get("analysis", {}))
@@ -347,7 +340,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                 random.Random(f"{args.seed}:{inputs}:{depth}:{repeat}").shuffle(methods)
                 with BenchmarkProgress(f"{name}, repeat {repeat + 1}: filtering methods") as display:
                     for order, method in enumerate(display.track(methods)):
-                        row, report = measure(chart, method, args.seed + repeat, args.time_limit, args.helm, workspace=workspace)
+                        row, report = measure(chart, method, args.seed + repeat, args.time_limit, args.helm)
                         rows.append(
                             {
                                 "case": name,
