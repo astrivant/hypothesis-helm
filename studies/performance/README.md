@@ -15,12 +15,12 @@ Strong scaling holds total inputs fixed; weak scaling holds inputs per worker fi
 Raw measurements (local run data) · CSV table (local run data)
 [Reading variation bands](../../docs/benchmarking/README.md#reading-variation-bands) explains when repeats support deviations.
 
-![Progressive runtime and completed work](progressive.png)
+![Progressive runtime and completed work](<progressive.png>)
 
-![Observed output distribution](output-distribution.png)
+![Observed output distribution](<output-distribution.png>)
 
-![Strong scaling](strong-scaling.png)
+![Strong scaling](<strong-scaling.png>)
 
-![Weak scaling](weak-scaling.png)
+![Weak scaling](<weak-scaling.png>)
 
-![Replica throughput and render skips](replicas.png)
+![Replica throughput and render skips](<replicas.png>)

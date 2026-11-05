@@ -25,7 +25,7 @@ from hypothesis_helm.execution.runtime.budget import execution_timer, parse_time
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.reporting.documentation.contents import with_contents
 from hypothesis_helm.schemas.contracts import configuration_key, mapping, sequence
-from hypothesis_helm.schemas.generation.combinations import trim_values
+from hypothesis_helm.schemas.generation.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.model import ValuesModel
 
 from hypothesis_helm_benchmarking.charts.faults import Fault, write_faults
@@ -70,9 +70,7 @@ def verify_sweep(document: dict[str, object]) -> None:
             raise ValueError("calibration output shape does not match its declared sweep cell")
 
 
-def study(
-    chart: Chart, faults: list[Fault], trials: int, seed: int, helm: str, deadline: float, *, workspace: FixtureWorkspace | None = None
-) -> dict[str, object]:
+def study(chart: Chart, faults: list[Fault], trials: int, seed: int, helm: str, deadline: float) -> dict[str, object]:
     """
     Render one finite population and measure seeded selection at increasing sample sizes.
 
@@ -83,7 +81,6 @@ def study(
         seed (int): First repeatable sampling seed.
         helm (str): Real Helm executable.
         deadline (float): Shared monotonic study deadline.
-        workspace (FixtureWorkspace | None): Explicit backend settings and measurement receipt owner.
 
     Returns:
         dict[str, object]: Measured profile, sample floor, field floor and recall observations.
@@ -91,11 +88,7 @@ def study(
     analysis = profile(chart)
     if analysis["status"] != "supported":
         raise ValueError(f"calibration requires supported complexity: {analysis}")
-    from hypothesis_helm_benchmarking.execution.planning import plan as plan_interactions
-
-    plan = plan_interactions(
-        ValuesModel.from_schema(chart.schema), 2, max_cases=4096, max_candidates=4096, exhaustive_threshold=10000, workspace=workspace
-    )
+    plan = plan_interactions(ValuesModel.from_schema(chart.schema), 2, max_cases=4096, max_candidates=4096, exhaustive_threshold=10000)
     baseline = configuration_key(chart.defaults)
     values = [value for value in plan.values if configuration_key(value) != baseline]
     observed: dict[str, set[str]] = {}
@@ -382,7 +375,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                     faults = [Fault(f"bug{index}", dict.fromkeys(rng.sample(fields, depth), True)) for index in range(max(2, inputs // 2))]
                     write_faults(logical, faults, workspace=workspace, symbolic=True)
                     reshape_faults(logical, breadth, output_depth, workspace=workspace)
-                    result = study(chart, faults, args.trials, args.seed, args.helm, started + args.time_limit, workspace=workspace)
+                    result = study(chart, faults, args.trials, args.seed, args.helm, started + args.time_limit)
                     profiles.append({"case": name, "output_shape": {"copies": breadth, "wrappers": output_depth}, **result})
                     print(f"Calibrated {name}: cases >= {result['minimum_cases']}, fields >= {result['minimum_fields']}", flush=True)
     except TimeLimitReached:

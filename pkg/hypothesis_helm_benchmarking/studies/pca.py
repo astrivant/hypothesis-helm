@@ -19,7 +19,7 @@ from hypothesis_helm.exceptions.execution import TimeLimitReached
 from hypothesis_helm.execution.runtime.budget import execution_timer, parse_time_limit
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.schemas.contracts import configuration_key, mapping
-from hypothesis_helm.schemas.generation.combinations import trim_values
+from hypothesis_helm.schemas.generation.combinations import plan_interactions, trim_values
 from hypothesis_helm.schemas.model import ValuesModel
 
 from hypothesis_helm_benchmarking.analysis.pca import inject_errors, project
@@ -29,7 +29,6 @@ from hypothesis_helm_benchmarking.charts.fixture import FixtureWorkspace, chart_
 from hypothesis_helm_benchmarking.charts.generator import generate
 from hypothesis_helm_benchmarking.charts.structures import STRUCTURES, configmap, expected_manifests
 from hypothesis_helm_benchmarking.charts.workload import source_digest
-from hypothesis_helm_benchmarking.execution.planning import plan as plan_interactions
 from hypothesis_helm_benchmarking.execution.profiling import profile_settings
 from hypothesis_helm_benchmarking.execution.provenance import code_digest
 from hypothesis_helm_benchmarking.reporting.progress import BenchmarkProgress
@@ -166,7 +165,7 @@ def run_case(
     )
     chart = Chart.load(chart_path(path, workspace=workspace))
     truth, _ = reference_space(chart, spec, 8192)
-    plan = plan_interactions(ValuesModel.from_schema(chart.schema), complexity, max_cases=8192, max_candidates=8192, workspace=workspace)
+    plan = plan_interactions(ValuesModel.from_schema(chart.schema), complexity, max_cases=8192, max_candidates=8192)
     baseline = configuration_key(chart.defaults)
     values = [
         chart.defaults,

@@ -113,7 +113,7 @@ def test_publication_excludes_workspaces_and_replaces_stale_figures(tmp_path: Pa
     assert not (destination / "results.json").exists()
     assert (source / "results.json").read_text() == '{"measured": true}'
     document = (destination / "README.md").read_text()
-    assert "![Plot](plot.png)" in document
+    assert "![Plot](<plot.png>)" in document
     assert "Raw (local run data)" in document
     assert "[Guide](../../docs/benchmarking/README.md#runs)" in document
 

@@ -73,15 +73,3 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
-      - id: study-layout
-        name: Study inventory and backend publication layout
-        entry: bash scripts/project-run.sh hypothesis-helm-benchmark inventory --check-layout
-        language: system
-        pass_filenames: false
-        always_run: true
-      - id: work-graph-receipts
-        name: Work graph artifact freshness
-        entry: bash scripts/check-work-graphs.sh
-        language: system
-        pass_filenames: false
-        always_run: true

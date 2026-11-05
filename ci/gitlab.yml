@@ -1,10 +1,5 @@
 # Remote include: test every version/shard, then publish one verified report per version.
 variables:
-  # Override the job's runner tags/image for a Linux NVIDIA host before selecting gpu.
-  HH_EXECUTION_BACKEND: reference
-  HH_BACKEND_FALLBACK: error
-  HH_BACKEND_BATCH_SIZE: '256'
-  HH_BACKEND_MEMORY_MIB: '64'
   SHARD_TOTAL: "3"
   SAMPLE_RANDOM: "100"
   SAMPLE_MIN_CASES: "128"
@@ -100,10 +95,6 @@ helm-properties:
       test_status=0
       if [ "$KUBESEC_ENABLED" = "true" ]; then
           helm hypothesis test "$HELM_CHART" \
-              --execution-backend "$HH_EXECUTION_BACKEND" \
-              --backend-fallback "$HH_BACKEND_FALLBACK" \
-              --backend-batch-size "$HH_BACKEND_BATCH_SIZE" \
-              --backend-memory-mib "$HH_BACKEND_MEMORY_MIB" \
               --run-id "${CI_PIPELINE_ID}-${K8S_VERSION}" \
               --shard "$SHARD_INDEX/$SHARD_TOTAL" --jobs auto --max-examples 50 --seed 0 --rerun "$rerun" \
               --cache-dir "${HH_CACHE_DIR:-.cache/hypothesis-helm/outcomes}" ${disable_cache:+--no-cache} \
@@ -114,10 +105,6 @@ helm-properties:
               >"$HH_ARTIFACT_DIR/manifests.jsonl" || test_status=$?
       else
           helm hypothesis test "$HELM_CHART" \
-              --execution-backend "$HH_EXECUTION_BACKEND" \
-              --backend-fallback "$HH_BACKEND_FALLBACK" \
-              --backend-batch-size "$HH_BACKEND_BATCH_SIZE" \
-              --backend-memory-mib "$HH_BACKEND_MEMORY_MIB" \
               --run-id "${CI_PIPELINE_ID}-${K8S_VERSION}" \
               --shard "$SHARD_INDEX/$SHARD_TOTAL" --jobs auto --max-examples 50 --seed 0 --rerun "$rerun" \
               --cache-dir "${HH_CACHE_DIR:-.cache/hypothesis-helm/outcomes}" ${disable_cache:+--no-cache} \

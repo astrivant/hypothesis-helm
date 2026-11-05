@@ -21,19 +21,7 @@ SHARED = {
     "export-minimal-values",
     "minimal-values-timeout",
 }
-ACTION_DEFAULTS = {
-    "shard": "auto",
-    "jobs": "auto",
-    "rerun": "auto",
-    "cache": "true",
-    "disable-schema-caching": "false",
-    "execution-backend": "reference",
-    "backend-fallback": "error",
-    "backend-batch-size": "256",
-    "backend-memory-mib": "64",
-    "backend-timeout": "60",
-    "backend-verify": "false",
-}
+ACTION_DEFAULTS = {"shard": "auto", "jobs": "auto", "rerun": "auto", "cache": "true", "disable-schema-caching": "false"}
 
 
 def input_name(action: argparse.Action) -> str:

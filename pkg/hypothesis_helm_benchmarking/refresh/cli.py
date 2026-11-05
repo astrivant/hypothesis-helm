@@ -14,8 +14,6 @@ from pathlib import Path
 from types import TracebackType
 from typing import Self
 
-from hypothesis_helm.compiler.backends.cli import add_options
-from hypothesis_helm.compiler.backends.cli import options as backend_options
 from hypothesis_helm.environment import env, refresh_env
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.execution.runtime.signals import DeferredSignals, Termination
@@ -113,10 +111,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--root", type=Path, help="prepared CI workspace shared between jobs")
     parser.add_argument("--study", help="study assigned to this CI matrix job")
-    add_options(parser)
     args = parser.parse_args(argv)
     try:
-        backend = backend_options(args)
         workers = (os.process_cpu_count() or 1) if args.workers == "auto" else int(args.workers)
         if workers < 1:
             raise ValueError("workers must be a positive integer or auto")
@@ -137,19 +133,16 @@ def main(argv: list[str] | None = None) -> int:
             if args.dry_run:
                 print(
                     json.dumps(
-                        {
-                            "workers": workers,
-                            "operations": [asdict(item) for item in phase_operations(root, args.ci_phase, args.study, backend)],
-                        },
+                        {"workers": workers, "operations": [asdict(item) for item in phase_operations(root, args.ci_phase, args.study)]},
                         indent=2,
                     )
                 )
             else:
-                run_phase(root, args.ci_phase, args.study, workers, backend)
+                run_phase(root, args.ci_phase, args.study, workers)
             return 0
         if args.root or args.study:
             raise ValueError("--root and --study require --ci-phase")
-        operations = Refresh(root, backend).operations()
+        operations = Refresh(root).operations()
         if args.dry_run:
             print(json.dumps({"workers": workers, "operations": [asdict(item) for item in operations]}, indent=2))
             return 0

@@ -71,7 +71,7 @@ ignored:
 #   max_output_nodes: 100000  # Manifest nodes inspected per complexity measurement.
 #   max_complexity_cases: 4096  # Template assignments and witnesses in a complexity search.
 #   max_complexity_seconds: 5  # Whole seconds allowed for a complexity search.
-#   max_bound_memory_bytes: 67108864  # Estimated NumPy buffers per complexity analysis; exhaustion uses Python bounds.
+#   max_lua_memory_bytes: 67108864  # Lua allocations per complexity analysis; exhaustion uses Python bounds.
 #   max_sampling_domain_values: 4096  # Values per factor when computing a sampling profile.
 #   max_fallbacks: 128  # Distinct incomplete-analysis diagnostics retained per chart.
 #   max_preimage_steps: 128  # Search steps when proposing inputs for a transformed allowlist.

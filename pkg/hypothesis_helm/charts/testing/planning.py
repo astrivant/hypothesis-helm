@@ -12,7 +12,6 @@ from attrs import frozen
 from jsonschema import validators
 
 from hypothesis_helm.charts.model import Chart, merge_values
-from hypothesis_helm.compiler.backends.scheduler import BackendOptions
 from hypothesis_helm.compiler.passes.expansion import FailureExpansion
 from hypothesis_helm.compiler.passes.sampling import profile as sampling_profile
 from hypothesis_helm.compiler.passes.topology import trim_topology as topology_trim
@@ -67,7 +66,6 @@ class PlanningOptions:
         time_limit (float): Positive execution budget in seconds, excluding planning.
         prune_equivalent (bool): Skip Helm only with a successful exact-equivalence witness.
         properties (tuple[Callable[[list[dict[str, object]]], None], ...]): Additional assertions over rendered resources.
-        backend (BackendOptions): Pure finite predicate engine and explicit fallback policy.
     """
 
     random_seed: int = 0
@@ -95,7 +93,6 @@ class PlanningOptions:
     time_limit: float = 180.0
     prune_equivalent: bool = False
     properties: tuple[Callable[[list[dict[str, object]]], None], ...] = ()
-    backend: BackendOptions = BackendOptions()
 
 
 @frozen
@@ -249,14 +246,8 @@ def build_plan(
             exhaustive_threshold=options.exhaustive_threshold,
             exhaustive_groups=(*options.exhaustive_groups, *inferred),
             max_group_cases=options.max_group_cases,
-            backend=options.backend,
         )
-    exhaustive_backend: dict[str, object] = {}
-    finite_values = (
-        enumerate_values(chart.generation_schema(), options.max_cases, backend=options.backend, report=exhaustive_backend)
-        if options.exhaustive
-        else None
-    )
+    finite_values = enumerate_values(chart.generation_schema(), options.max_cases) if options.exhaustive else None
     finite_domain_size = len(finite_values) if finite_values is not None else None
     duplicate_cases_removed = 0
     if interaction_plan is not None:
@@ -313,7 +304,6 @@ def build_plan(
             fixed_names=bool(options.release and options.namespace),
         )
     coverage: dict[str, object] = {
-        "backend": exhaustive_backend,
         "sampling": sampling_report,
         "input_domains": chart.input_domains().report(),
         "input_inventory": inventory_report,
@@ -348,7 +338,6 @@ def build_plan(
             "planned_cases": len(interaction_plan.values),
             "valid_interactions": interaction_plan.interactions,
             "planning_candidates": interaction_plan.candidates,
-            "backend": interaction_plan.backend_report,
             "exhaustive_groups": interaction_plan.group_reports,
             "group_diagnostics": group_diagnostics,
             "coverage_complete": False,
@@ -422,7 +411,6 @@ def build_plan(
                     exhaustive_threshold=0,
                     exhaustive_groups=(*options.exhaustive_groups, *inferred),
                     max_group_cases=options.max_group_cases,
-                    backend=options.backend,
                 ),
                 lambda values: merge_values(chart.defaults, values),
                 pruning=options.prune_equivalent,

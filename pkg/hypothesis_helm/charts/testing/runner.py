@@ -31,7 +31,6 @@ from hypothesis_helm.charts.testing.rendering import render as render
 from hypothesis_helm.charts.testing.rendering import validate_resources as validate_resources
 from hypothesis_helm.charts.values import yamlio
 from hypothesis_helm.compiler.asts.contracts import Contracts
-from hypothesis_helm.compiler.backends.scheduler import DEFAULT_BACKEND, BackendOptions
 from hypothesis_helm.compiler.passes.inputs import FieldCoverage, InputInventory
 from hypothesis_helm.compiler.passes.pruning import Pruner
 from hypothesis_helm.compiler.passes.rejections import RejectionPolicy
@@ -115,7 +114,6 @@ def check_chart(
     rejection_policy: RejectionPolicy | None = None,
     protected_paths: tuple[tuple[str | int, ...], ...] = (),
     baseline_resources: Sequence[object] | None = None,
-    backend: BackendOptions = DEFAULT_BACKEND,
 ) -> dict[str, object]:
     """
     Check defaults then generated overrides, shrinking failing inputs.
@@ -165,14 +163,11 @@ def check_chart(
         rejection_policy (RejectionPolicy | None): Shared per-chart contract verification and counters.
         protected_paths (tuple[tuple[str | int, ...], ...]): Selected paths that dependent-field adjustments must preserve.
         baseline_resources (Sequence[object] | None): Already rendered defaults for comparison across path tests.
-        backend (BackendOptions): Optional compiled finite predicates and explicit failure policy.
 
     Returns:
         dict[str, object]: Resulting schema, values mapping, or structured report.
     """
     traversal_strategy = validate_strategy(traversal_strategy)
-    if backend.name != "reference" and permutations is None and not exhaustive:
-        raise ValueError("compiled backends require finite --permutations or --exhaustive planning")
     if traversal_strategy == "sensitivity-first" and permutations is None:
         permutations = DEFAULT_PERMUTATIONS
     sensitivity_order = validate_order(traversal_strategy, sensitivity_order, permutations)
@@ -247,7 +242,6 @@ def check_chart(
         chart,
         model,
         PlanningOptions(
-            backend=backend,
             random_seed=random_seed,
             traversal_strategy=traversal_strategy,
             sampling=sampling,

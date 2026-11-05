@@ -8,19 +8,17 @@ import sys
 from dataclasses import replace
 from pathlib import Path
 
-from hypothesis_helm.compiler.backends.scheduler import DEFAULT_BACKEND, BackendOptions
 from hypothesis_helm.environment import env
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm.execution.runtime.signals import DeferredSignals, Termination
 
-from hypothesis_helm_benchmarking.catalog import CATALOG
 from hypothesis_helm_benchmarking.refresh.operations import Operation, OperationQueue
 from hypothesis_helm_benchmarking.refresh.plan import STUDIES, Refresh, source_path
 
 __all__ = ("merge_statuses", "phase_operations", "run_phase")
 
 
-def phase_operations(root: Path, phase: str, study: str | None = None, backend: BackendOptions = DEFAULT_BACKEND) -> tuple[Operation, ...]:
+def phase_operations(root: Path, phase: str, study: str | None = None) -> tuple[Operation, ...]:
     """
     Select phase operations while preserving dependencies within each runner.
 
@@ -28,7 +26,6 @@ def phase_operations(root: Path, phase: str, study: str | None = None, backend: 
         root (Path): Shared relative workspace restored at the same path on each runner.
         phase (str): Full or split preparation, one study, graph publication, or full verification including repository scans.
         study (str | None): Required study identifier for a matrix job.
-        backend (BackendOptions): Explicit native selection for dependent studies.
 
     Returns:
         tuple[Operation, ...]: Operations with only external, workflow-enforced prerequisites removed.
@@ -36,7 +33,7 @@ def phase_operations(root: Path, phase: str, study: str | None = None, backend: 
     Raises:
         ValueError: The phase or study is unknown.
     """
-    operations = Refresh(root, backend).operations()
+    operations = Refresh(root).operations()
     if phase in {"prepare", "prepare-inputs", "prepare-finalize"}:
         selected = operations[: next(i for i, item in enumerate(operations) if item.name in STUDIES)]
         checks = next(i for i, item in enumerate(selected) if item.name == "checks")
@@ -90,7 +87,7 @@ def merge_statuses(root: Path) -> None:
     (root / "status.tsv").write_text("".join(records))
 
 
-def run_phase(root: Path, phase: str, study: str | None, workers: int, backend: BackendOptions = DEFAULT_BACKEND) -> None:
+def run_phase(root: Path, phase: str, study: str | None, workers: int) -> None:
     """
     Execute one CI phase with owned processes and separate journals for matrix jobs.
 
@@ -99,7 +96,6 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int, backend: 
         phase (str): Full or split preparation, study, graph publication or full finish.
         study (str | None): Matrix study name.
         workers (int): Concurrent independent operations within this runner.
-        backend (BackendOptions): Explicit native selection for dependent studies.
 
     Returns:
         None: Outputs remain under the prepared workspace for artifact transport.
@@ -109,7 +105,7 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int, backend: 
     """
     if root.is_absolute() or ".." in root.parts or root.parent != Path(".cache/refresh"):
         raise ValueError("CI workspace must be .cache/refresh/refresh-<epoch>")
-    operations = phase_operations(root, phase, study, backend)
+    operations = phase_operations(root, phase, study)
     if phase == "prepare-finalize" and not (root / "logs/prepare-inputs/operations.json").is_file():
         raise ValueError("Restore the generated inputs artifact before finalizing preparation")
     if phase not in {"prepare", "prepare-inputs", "prepare-finalize"} and not (root / "provenance.json").is_file():
@@ -154,14 +150,6 @@ def run_phase(root: Path, phase: str, study: str | None, workers: int, backend: 
     if phase in {"prepare", "prepare-inputs", "prepare-finalize"}:
         path = env.get("GITHUB_OUTPUT")
         if path:
-            # The quartic comparison consumes the merged error-surface measurements.
-            study_names = [
-                name for name in STUDIES if name not in {"error-surface", "error-surface-quartic", "stress", "structural-sparsity"}
-            ]
-            dependent = {item.name for item in CATALOG if item.backend_dependent}
-            matrix = {
-                "study": study_names,
-                "include": [{"study": name, "backend": backend.name if name in dependent else "reference"} for name in study_names],
-            }
+            matrix = {"study": [name for name in STUDIES if name not in {"error-surface", "stress", "structural-sparsity"}]}
             with Path(path).open("a") as output:
                 output.write(f"root={root}\nmatrix={json.dumps(matrix)}\n")

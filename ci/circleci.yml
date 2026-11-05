@@ -4,20 +4,6 @@ commands:
   test:
     description: Test chart values with an installed Helm plugin and automatic CI sharding.
     parameters:
-      execution-backend:
-        type: enum
-        enum: [reference, cpu-vector, gpu]
-        default: reference
-      backend-fallback:
-        type: enum
-        enum: [error, reference]
-        default: error
-      backend-batch-size:
-        type: integer
-        default: 256
-      backend-memory-mib:
-        type: integer
-        default: 64
       incremental:
         type: boolean
         default: true
@@ -83,10 +69,6 @@ commands:
       - run:
           name: Test Helm chart values
           environment:
-            HH_EXECUTION_BACKEND: << parameters.execution-backend >>
-            HH_BACKEND_FALLBACK: << parameters.backend-fallback >>
-            HH_BACKEND_BATCH_SIZE: << parameters.backend-batch-size >>
-            HH_BACKEND_MEMORY_MIB: << parameters.backend-memory-mib >>
             HH_INCREMENTAL: "<< parameters.incremental >>"
             HH_BASE_REF: << parameters.base-ref >>
             HH_RERUN: << parameters.rerun >>
@@ -119,10 +101,6 @@ commands:
             test_status=0
             if [[ "$HH_KUBESEC" == "true" ]]; then
                 helm hypothesis test "$HH_CHART" \
-                    --execution-backend "$HH_EXECUTION_BACKEND" \
-                    --backend-fallback "$HH_BACKEND_FALLBACK" \
-                    --backend-batch-size "$HH_BACKEND_BATCH_SIZE" \
-                    --backend-memory-mib "$HH_BACKEND_MEMORY_MIB" \
                     --jobs "$HH_JOBS" --max-examples "$HH_MAX_EXAMPLES" --seed "$HH_SEED" \
                     --sample-random "$HH_SAMPLE_RANDOM" --sample-min-cases "$HH_SAMPLE_MIN_CASES" \
                     --schema-version "$HH_SCHEMA_VERSION" --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
@@ -144,10 +122,6 @@ commands:
                 fi
             else
                 helm hypothesis test "$HH_CHART" \
-                    --execution-backend "$HH_EXECUTION_BACKEND" \
-                    --backend-fallback "$HH_BACKEND_FALLBACK" \
-                    --backend-batch-size "$HH_BACKEND_BATCH_SIZE" \
-                    --backend-memory-mib "$HH_BACKEND_MEMORY_MIB" \
                     --jobs "$HH_JOBS" --max-examples "$HH_MAX_EXAMPLES" --seed "$HH_SEED" \
                     --sample-random "$HH_SAMPLE_RANDOM" --sample-min-cases "$HH_SAMPLE_MIN_CASES" \
                     --schema-version "$HH_SCHEMA_VERSION" --schema-cache-dir "$HH_SCHEMA_CACHE_DIR" \
@@ -161,32 +135,10 @@ commands:
             if [[ "$HH_DEFER_FAILURE" != "true" ]]; then
                 exit "$test_status"
             fi
-executors:
-  cpu:
-    docker:
-      - image: cimg/python:3.13
-    resource_class: medium # 2 vCPU, 4 GiB RAM
 jobs:
   test-chart:
     description: Install Hypothesis Helm and test a chart with automatic sharding.
     parameters:
-      executor:
-        type: executor
-        default: cpu
-      execution-backend:
-        type: enum
-        enum: [reference, cpu-vector, gpu]
-        default: reference
-      backend-fallback:
-        type: enum
-        enum: [error, reference]
-        default: error
-      backend-batch-size:
-        type: integer
-        default: 256
-      backend-memory-mib:
-        type: integer
-        default: 64
       incremental:
         type: boolean
         default: true
@@ -263,7 +215,8 @@ jobs:
       report-group:
         type: string
         default: chart
-    executor: << parameters.executor >>
+    docker:
+      - image: cimg/python:3.13
     parallelism: << parameters.parallelism >>
     retention:
       caches: 15d
@@ -355,7 +308,6 @@ jobs:
       - run:
           name: Install Hypothesis Helm plugin
           environment:
-            HH_EXECUTION_BACKEND: << parameters.execution-backend >>
             HH_PLUGIN_PATH: << parameters.plugin-path >>
           command: PYTHON=python3.13 helm plugin install "$HH_PLUGIN_PATH"
       - run:
@@ -378,10 +330,6 @@ jobs:
           paths:
             - << parameters.schema-cache-dir >>
       - test:
-          execution-backend: << parameters.execution-backend >>
-          backend-fallback: << parameters.backend-fallback >>
-          backend-batch-size: << parameters.backend-batch-size >>
-          backend-memory-mib: << parameters.backend-memory-mib >>
           defer-failure: true
           incremental: << parameters.incremental >>
           base-ref: << parameters.base-ref >>

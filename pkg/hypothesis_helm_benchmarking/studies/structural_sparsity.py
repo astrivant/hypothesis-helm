@@ -150,7 +150,6 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                         chart,
                         spec,
                         method,
-                        workspace=workspace,
                         level=2,
                         seed=args.seed + repeat,
                         limit=10000,

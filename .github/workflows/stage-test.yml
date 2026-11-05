@@ -93,7 +93,7 @@ jobs:
           SUITE_SHARD: ${{ matrix.shard }}/8
           COVERAGE_FILE: .cache/tests/.coverage.${{ matrix.shard }}
         run: |
-          bash scripts/run-pr-tests.sh -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
+          bash scripts/project-run.sh pytest -p hypothesis_helm.tests.sharding --suite-shard "$SUITE_SHARD" \
               --ignore=tests/release -n auto --dist worksteal --junitxml=.cache/tests/pytest.xml --cov --cov-config=pyproject.toml --cov-report=
       - name: Upload test results
         if: ${{ always() }}
@@ -226,8 +226,6 @@ jobs:
         id: hypothesis
         with:
           chart: examples/workload
-          # Suite fingerprints include the Python patch version, which can differ across runner images.
-          python-version: '3.13.18'
           binary-cache: ${{ env.HH_BINARY_CACHE }}
           incremental: 'true'
           cache-dir: .cache/hypothesis-helm/outcomes

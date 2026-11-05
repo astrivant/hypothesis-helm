@@ -56,8 +56,6 @@ def checkout(tmp_path: Path, request: pytest.FixtureRequest) -> tuple[Path, Path
     git(remote, "init", "--bare")
     git(work, "init", "-b", branch)
     (work / "studies/demo").mkdir(parents=True)
-    (work / "docs/benchmarking").mkdir(parents=True)
-    (work / "docs/benchmarking/README.md").write_text("Benchmark documentation\n")
     (work / "README.md").write_text("Original summary\n")
     (work / "studies/demo/plot.png").write_bytes(b"old graph")
     (work / "studies/demo/data.json").write_text("{}")
@@ -105,10 +103,10 @@ def checkout(tmp_path: Path, request: pytest.FixtureRequest) -> tuple[Path, Path
     return work, remote, environment
 
 
-@pytest.mark.parametrize("damage", [None, "head", "fork", "closed", "draft", "main", "number"])
+@pytest.mark.parametrize("damage", [None, "head", "base", "fork", "closed", "draft", "main", "number"])
 def test_request_rejects_stale_or_ineligible_prs(checkout: tuple[Path, Path, dict[str, str]], damage: str | None) -> None:
     """
-    Bind permission to an open PR's exact head at the start of a run.
+    Bind permission to an open PR's exact head and, when supplied, its original base.
 
     Args:
         checkout (tuple[Path, Path, dict[str, str]]): Isolated Git and GitHub fixtures.
@@ -121,6 +119,8 @@ def test_request_rejects_stale_or_ineligible_prs(checkout: tuple[Path, Path, dic
     metadata = json.loads((work / "pr.json").read_text())
     if damage == "head":
         metadata["head"]["sha"] = "c" * 40
+    elif damage == "base":
+        environment["EXPECTED_BASE_SHA"] = "c" * 40
     elif damage == "fork":
         metadata["head"]["repo"]["full_name"] = "other/fork"
     elif damage == "closed":
@@ -155,7 +155,7 @@ def test_publication_commits_only_final_outputs_and_rechecks_ci(checkout: tuple[
         changed (bool): Whether the benchmark produced different final publications.
 
     Returns:
-        None: PR graphs start CI, main uses push CI, and provenance records the measured source.
+        None: PR graphs explicitly start CI; main uses push CI; unchanged outputs avoid empty commits.
     """
     work, remote, environment = checkout
     if changed:
@@ -167,11 +167,10 @@ def test_publication_commits_only_final_outputs_and_rechecks_ci(checkout: tuple[
     result = subprocess.run(["bash", str(SCRIPT), "commit"], cwd=work, env=environment, capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
     sha = git(remote, "rev-parse", environment["GITHUB_REF"])
-    assert sha != environment["GITHUB_SHA"]
-    assert (work / "outputs").read_text() == f"sha={sha}\npublication=branch\n"
-    assert environment["GITHUB_SHA"] in git(remote, "show", f"{sha}:docs/benchmarking/benchmark-source.md")
+    assert (sha != environment["GITHUB_SHA"]) is changed
+    assert (work / "outputs").read_text() == f"sha={sha}\n"
     calls = (work / "gh-calls.jsonl").read_text() if (work / "gh-calls.jsonl").exists() else ""
-    dispatch_ci = bool(environment["PR_NUMBER"])
+    dispatch_ci = changed and bool(environment["PR_NUMBER"])
     assert ('"workflow", "run", "ci.yml"' in calls) is dispatch_ci
     assert git(remote, "show", f"{sha}:studies/demo/data.json") == "{}"
     if dispatch_ci:
@@ -184,22 +183,24 @@ def test_publication_commits_only_final_outputs_and_rechecks_ci(checkout: tuple[
             "--ref",
             environment["GITHUB_REF"].removeprefix("refs/heads/"),
         ]
-    expected = {"docs/benchmarking/benchmark-source.md"}
     if changed:
-        expected.update({"README.md", "studies/demo/new.svg", "studies/demo/plot.png"})
-    assert set(git(remote, "diff-tree", "--no-commit-id", "--name-only", "-r", sha).splitlines()) == expected
+        assert set(git(work, "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").splitlines()) == {
+            "README.md",
+            "studies/demo/new.svg",
+            "studies/demo/plot.png",
+        }
 
 
 @pytest.mark.parametrize("checkout", ["feature", "main"], indirect=True)
-def test_graph_push_preserves_a_concurrent_commit(checkout: tuple[Path, Path, dict[str, str]]) -> None:
+def test_graph_push_does_not_overwrite_a_concurrent_commit(checkout: tuple[Path, Path, dict[str, str]]) -> None:
     """
-    Publish on a descendant when a concurrent commit leaves measured inputs unchanged.
+    Reject a push even when GitHub metadata has not yet reflected a concurrent branch update.
 
     Args:
         checkout (tuple[Path, Path, dict[str, str]]): Isolated Git and GitHub fixtures.
 
     Returns:
-        None: The newer remote commit survives and the published graph retains its measured source.
+        None: The newer remote commit survives and no successful result or follow-up CI is emitted.
     """
     work, remote, environment = checkout
     git(work, "commit", "--allow-empty", "-m", "Concurrent edit")
@@ -208,11 +209,11 @@ def test_graph_push_preserves_a_concurrent_commit(checkout: tuple[Path, Path, di
     git(work, "reset", "--hard", environment["GITHUB_SHA"])
     (work / "studies/demo/plot.png").write_bytes(b"new graph")
     result = subprocess.run(["bash", str(SCRIPT), "commit"], cwd=work, env=environment, capture_output=True, text=True)
-    assert result.returncode == 0, result.stderr
-    published = git(remote, "rev-parse", environment["GITHUB_REF"])
-    git(remote, "merge-base", "--is-ancestor", newer, published)
-    assert (work / "outputs").read_text() == f"sha={published}\npublication=branch\n"
-    assert environment["GITHUB_SHA"] in git(remote, "show", f"{published}:docs/benchmarking/benchmark-source.md")
+    assert result.returncode != 0
+    assert git(remote, "rev-parse", environment["GITHUB_REF"]) == newer
+    assert not (work / "outputs").exists()
+    if (work / "gh-calls.jsonl").exists():
+        assert '"workflow", "run"' not in (work / "gh-calls.jsonl").read_text()
 
 
 @pytest.mark.parametrize("checkout", ["main"], indirect=True)

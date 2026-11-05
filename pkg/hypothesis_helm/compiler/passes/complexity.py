@@ -21,9 +21,9 @@ from hypothesis_helm.charts.testing.rendering import validate_resources
 from hypothesis_helm.charts.values import yamlio
 from hypothesis_helm.compiler.asts.conditions import condition_path
 from hypothesis_helm.compiler.asts.templates import Node, specialize, value_path, walk
-from hypothesis_helm.compiler.bounds import BoundEvaluator
 from hypothesis_helm.compiler.complexity import maximum_score, output_profile
 from hypothesis_helm.compiler.limits import active_limits
+from hypothesis_helm.compiler.lua.bounds import BoundEvaluator
 from hypothesis_helm.compiler.passes.pruning import Pruner, safe_values
 from hypothesis_helm.environment import refresh_env
 from hypothesis_helm.exceptions.rendering import ManifestParseError, RenderFailure
@@ -333,7 +333,7 @@ def measure(chart: Chart, *, max_cases: int | None = None, time_limit: float | N
         order = sorted(range(len(sizes)), key=lambda index: (-use_counts[index], -control_uses[index], space.paths[index]))
         result["factor_order"] = [list(space.paths[index]) for index in order]
         result["unused_factors"] = [list(space.paths[index]) for index, count in enumerate(use_counts) if not count]
-        bounds = BoundEvaluator(components, max_memory_bytes=limits["max_bound_memory_bytes"])
+        bounds = BoundEvaluator(components, max_memory_bytes=limits["max_lua_memory_bytes"])
         pending: list[tuple[dict[int, int], int]] = [({}, bounds({}))]
         while pending:
             budget()
