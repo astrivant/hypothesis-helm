@@ -1,0 +1,70 @@
+name: Compiled backend verification
+
+on:
+  workflow_call: {}
+
+permissions:
+  contents: read
+
+jobs:
+  cpu:
+    name: Linux CPU differential tests
+    # Public Linux x64 standard runner: 4 vCPU, 16 GiB RAM.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - name: Install locked CPU compiler
+        env:
+          POETRY_VIRTUALENVS_IN_PROJECT: 'true'
+          POETRY_INSTALLER_RE_RESOLVE: 'false'
+        run: |
+          python -m pip install poetry==2.1.3
+          poetry install --extras cpu --with dev --no-interaction
+      - name: Compare compiled CPU results with the reference oracle
+        run: poetry run pytest tests/backends --native-backend cpu-vector --junitxml=.cache/backends/cpu.xml
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: ${{ always() }}
+        with:
+          name: backend-cpu-results
+          path: .cache/backends/
+          retention-days: 2
+
+  gpu:
+    name: Linux T4 differential tests
+    # Explicitly approved ephemeral Linux x64 runner: 4 vCPU, 28 GiB RAM, 16 GiB T4.
+    # Forks retain CPU verification; only repository-owned revisions consume paid GPU capacity.
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ${{ vars.HH_GPU_RUNNER }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - name: Record physical device and driver
+        run: nvidia-smi --query-gpu=name,driver_version,memory.total,compute_cap --format=csv
+      - name: Install locked GPU tensor runtime
+        env:
+          POETRY_VIRTUALENVS_IN_PROJECT: 'true'
+          POETRY_INSTALLER_RE_RESOLVE: 'false'
+        run: |
+          python -m pip install poetry==2.1.3
+          poetry install --extras gpu --with dev --no-interaction
+      - name: Require real-device differential and failure tests
+        run: poetry run pytest tests/backends --native-backend gpu --junitxml=.cache/backends/gpu.xml
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: ${{ always() }}
+        with:
+          name: backend-gpu-results
+          path: .cache/backends/
+          retention-days: 2

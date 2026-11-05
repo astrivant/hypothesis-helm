@@ -811,7 +811,7 @@ by default. Ordinary chart tests load the bundled JSON and need neither Go nor
 network access. Tagged release builds verify the inventory before packaging.
 
 Both catalog commands build the same Go package under
-[`hypothesis_helm_catalog/upstream`](../../pkg/hypothesis_helm_catalog/upstream/):
+[`hypothesis_helm_catalog/upstream`](<../../pkg/hypothesis_helm_catalog/upstream>):
 `main.go` handles command dispatch and shared utilities, `helm.go` analyzes Helm,
 Sprig and Go template functions, and `kubernetes.go` extracts API constraints and
 checks their boundary cases against Kubernetes validators. The first build caches

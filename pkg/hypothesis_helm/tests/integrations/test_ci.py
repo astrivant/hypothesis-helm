@@ -5,6 +5,7 @@ Verify CI index normalization, explicit overrides, and action invocation boundar
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -21,6 +22,25 @@ from hypothesis_helm.integrations import github_action
 from hypothesis_helm.integrations.sharding import Shard, resolve_shard
 from hypothesis_helm.schemas.contracts import mapping
 from hypothesis_helm.tests import PROJECT_ROOT
+
+
+def test_chart_shards_pin_python_patch_version() -> None:
+    """
+    Keep all chart shards on the same Python version for suite fingerprint aggregation.
+
+    Returns:
+        None: The chart action receives an exact Python patch version.
+    """
+    from ruamel.yaml import YAML
+
+    from hypothesis_helm.schemas.contracts import sequence
+
+    workflow = mapping(YAML(typ="safe").load((PROJECT_ROOT / ".github/workflows/stage-test.yml").read_text()))
+    job = mapping(mapping(workflow["jobs"])["sharded-chart"])
+    steps = [mapping(step) for step in sequence(job["steps"])]
+    action = next(step for step in steps if step.get("uses") == "./")
+    python_version = str(mapping(action["with"])["python-version"])
+    assert re.fullmatch(r"3\.\d+\.\d+", python_version)
 
 
 @pytest.mark.integration
@@ -459,7 +479,8 @@ def test_action_incremental_selection(
 @pytest.mark.parametrize(("provider", "defer_failure"), [("gitlab", False), ("circleci", False), ("circleci", True)])
 @pytest.mark.parametrize("security", [False, True])
 @pytest.mark.parametrize("helm_status", [0, 1])
-def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, security: bool, helm_status: int) -> None:
+@pytest.mark.parametrize("backend", ["reference", "cpu-vector", "gpu"])
+def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, security: bool, helm_status: int, backend: str) -> None:
     """
     Exercise published job scripts with literal paths, shard routing and validator failures.
 
@@ -469,6 +490,7 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, 
         defer_failure (bool): Persist CircleCI workspace evidence before failing the job.
         security (bool): Whether workload security routing is enabled.
         helm_status (int): Simulated Helm success or failure.
+        backend (str): Explicit provider input passed through to the Helm command.
 
     Returns:
         None: Scripts select the right validators and retain Helm failure precedence.
@@ -482,9 +504,19 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, 
     if provider == "gitlab":
         commands = sequence(mapping(document["helm-properties"])["script"])
         script = "\n".join(str(command) for command in commands)
+        variables = mapping(document["variables"])
+        controls = {name: str(variables[name]) for name in ("HH_BACKEND_FALLBACK", "HH_BACKEND_BATCH_SIZE", "HH_BACKEND_MEMORY_MIB")}
     else:
-        steps = sequence(mapping(mapping(document["commands"])["test"])["steps"])
+        command_definition = mapping(mapping(document["commands"])["test"])
+        steps = sequence(command_definition["steps"])
         script = str(mapping(mapping(steps[0])["run"])["command"])
+        parameters = mapping(command_definition["parameters"])
+        controls = {
+            "HH_BACKEND_FALLBACK": str(mapping(parameters["backend-fallback"])["default"]),
+            "HH_BACKEND_BATCH_SIZE": str(mapping(parameters["backend-batch-size"])["default"]),
+            "HH_BACKEND_MEMORY_MIB": str(mapping(parameters["backend-memory-mib"])["default"]),
+        }
+    assert controls == {"HH_BACKEND_FALLBACK": "error", "HH_BACKEND_BATCH_SIZE": "256", "HH_BACKEND_MEMORY_MIB": "64"}
     plugins = tmp_path / "plugin root"
     scanner = plugins / "hypothesis/.plugin-venv/bin/hypothesis-helm-kubesec"
     scanner.parent.mkdir(parents=True)
@@ -520,6 +552,7 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, 
     chart = "$(touch unexpected); chart with spaces"
     environment = {
         **os.environ,
+        **controls,
         "PATH": str(tmp_path) + os.pathsep + os.environ["PATH"],
         "FAKE_PLUGINS": str(plugins),
         "FAKE_HELM_STATUS": str(helm_status),
@@ -542,6 +575,7 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, 
         "CIRCLE_NODE_TOTAL": "3",
         "HH_JOBS": "auto",
         "HH_MAX_EXAMPLES": "50",
+        "HH_EXECUTION_BACKEND": backend,
         "HH_SEED": "0",
         "SAMPLE_RANDOM": "70",
         "SAMPLE_MIN_CASES": "32",
@@ -569,6 +603,10 @@ def test_remote_ci_commands(tmp_path: Path, provider: str, defer_failure: bool, 
     calls = [json.loads(line) for line in capture.read_text().splitlines()]
     command = calls[0]
     assert command[:4] == ["helm", "hypothesis", "test", chart]
+    assert command[command.index("--execution-backend") + 1] == backend
+    assert command[command.index("--backend-fallback") + 1] == controls["HH_BACKEND_FALLBACK"]
+    assert command[command.index("--backend-batch-size") + 1] == controls["HH_BACKEND_BATCH_SIZE"]
+    assert command[command.index("--backend-memory-mib") + 1] == controls["HH_BACKEND_MEMORY_MIB"]
     assert command[command.index("--sample-random") + 1] == "70"
     assert command[command.index("--sample-min-cases") + 1] == "32"
     assert ("--validate-schemas" in command) is (not security)

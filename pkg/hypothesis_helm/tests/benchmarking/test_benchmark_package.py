@@ -82,8 +82,10 @@ def test_benchmark_wheel(tmp_path: Path) -> None:
         core_version = str(metadata["Version"])
         assert "benchmarking" in metadata.get_all("Provides-Extra", [])
         requirements = metadata.get_all("Requires-Dist", [])
-        assert any(Requirement(line).name == "lupa" for line in requirements)
-        assert "hypothesis_helm/compiler/lua/bounds.lua" in archive.namelist()
+        assert any(Requirement(line).name == "numpy" for line in requirements)
+        assert not any(Requirement(line).name == "lupa" for line in requirements)
+        assert "hypothesis_helm/compiler/bounds.py" in archive.namelist()
+        assert not any(name.startswith("hypothesis_helm/compiler/lua/") for name in archive.namelist())
         assert "hypothesis_helm/compiler/assets/builtin_inventory.json" in archive.namelist()
         for filename in ("main.go", "go.mod", "go.sum"):
             assert f"hypothesis_helm/compiler/assets/renderer/{filename}" in archive.namelist()

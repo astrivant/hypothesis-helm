@@ -4,6 +4,9 @@ inputs:
   binary-cache:
     description: Reuse the versioned Helm binary; the calling workflow resolves its cache policy
     default: 'true'
+  execution-backend:
+    description: Optional locked compiled backend dependencies, reference, cpu-vector or gpu
+    default: reference
 runs:
   using: composite
   steps:
@@ -27,16 +30,27 @@ runs:
         path: |
           .venv
           ~/.cache/pypoetry/artifacts
-        key: hh-python-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.python.outputs.python-version }}-poetry-2.1.3-${{ hashFiles('poetry.lock', 'pyproject.toml', 'pkg/hypothesis_helm_benchmarking/pyproject.toml') }}
+        key: hh-python-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.python.outputs.python-version }}-${{ inputs.execution-backend }}-poetry-2.1.3-${{ hashFiles('poetry.lock', 'pyproject.toml', 'pkg/hypothesis_helm_benchmarking/pyproject.toml', '.github/actions/setup-project/action.yml') }}
     - name: Install project and development dependencies
       env:
         POETRY_KEYRING_ENABLED: 'false'
         # Lock format 2.1 already records groups and markers; installation need not solve them again.
         POETRY_INSTALLER_RE_RESOLVE: 'false'
         POETRY_VIRTUALENVS_IN_PROJECT: 'true'
+        EXECUTION_BACKEND: ${{ inputs.execution-backend }}
       run: |
         poetry check --lock
-        timeout --signal=TERM --kill-after=30s 10m poetry install --extras benchmarking --with dev --no-interaction --no-ansi -v
+        extras=(--extras benchmarking)
+        case "$EXECUTION_BACKEND" in
+            reference) ;;
+            cpu-vector) extras+=(--extras cpu) ;;
+            gpu) extras+=(--extras gpu) ;;
+            *)
+                echo '::error::Unknown execution backend'
+                exit 1
+                ;;
+        esac
+        timeout --signal=TERM --kill-after=30s 10m poetry install "${extras[@]}" --with dev --no-interaction --no-ansi -v
       shell: bash
     - name: Save Python environment and package downloads
       if: ${{ steps.python-cache.outputs.cache-hit != 'true' }}

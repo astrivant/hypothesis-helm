@@ -3,6 +3,7 @@ Validate completed study ledgers before publication.
 """
 
 import argparse
+import hashlib
 import json
 from collections import Counter
 from pathlib import Path
@@ -32,6 +33,19 @@ summary = {}
 for study in (args.study,) if args.study else STUDIES:
     directory = root / "outputs" / study
     result = json.loads((directory / "results.json").read_text())
+    if study == "error-surface-quartic":
+        # The derived comparison must bind to this refresh's exact measured source.
+        source = root / "outputs/error-surface/results.json"
+        assert result["source_sha256"] == hashlib.sha256(source.read_bytes()).hexdigest(), study
+        fits = result["fits"]
+        assert fits and all(fit["status"] == "completed" for fit in fits), study
+        verify_study(directory)
+        figures = list(directory.glob("*.png"))
+        vectors = list(directory.glob("*.svg"))
+        assert len(figures) == len(vectors) == len(fits), study
+        assert all(figure.stat().st_size > 1000 for figure in (*figures, *vectors)), study
+        summary[study] = {"fits": len(fits), "figures": len(figures), "vector_figures": len(vectors)}
+        continue
     metadata = result["metadata"]
     if "code_sha256" in metadata:
         assert metadata["code_sha256"] == expected, study
