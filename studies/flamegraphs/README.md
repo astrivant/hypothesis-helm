@@ -3,12 +3,12 @@
 <!-- toc:start -->
 **Table of contents**
 
-- [coordinator-3179-8bcff977636fd3d5c7142f418d3eed10](#coordinator-3179-8bcff977636fd3d5c7142f418d3eed10)
-- [worker-3194-79d668766dcbf8dfffa475430b53c2ec](#worker-3194-79d668766dcbf8dfffa475430b53c2ec)
-- [worker-3208-bb2d12e2e2459dec5a330f45f72216a4](#worker-3208-bb2d12e2e2459dec5a330f45f72216a4)
-- [worker-3211-de896d92083ce11923058461022c2c45](#worker-3211-de896d92083ce11923058461022c2c45)
-- [worker-3236-19e1cd396bd65ccf48e7810bf66a7748](#worker-3236-19e1cd396bd65ccf48e7810bf66a7748)
-- [worker-3239-a5a15145c022e114c70336a9171df8a1](#worker-3239-a5a15145c022e114c70336a9171df8a1)
+- [coordinator-2995-784710bcc7f215d7b330a28f8cc46cd5](#coordinator-2995-784710bcc7f215d7b330a28f8cc46cd5)
+- [worker-3011-c88285ee576cc4d3e29c9e220882aa47](#worker-3011-c88285ee576cc4d3e29c9e220882aa47)
+- [worker-3025-27f7323bedf227eb5fdd39eb2d704805](#worker-3025-27f7323bedf227eb5fdd39eb2d704805)
+- [worker-3028-8af8cd0e8d9a2aa388324622051fcf26](#worker-3028-8af8cd0e8d9a2aa388324622051fcf26)
+- [worker-3053-cdb84facb7544822f6c112e1a4442ec3](#worker-3053-cdb84facb7544822f6c112e1a4442ec3)
+- [worker-3056-98355ba335278ace8883c67c9e54d197](#worker-3056-98355ba335278ace8883c67c9e54d197)
 - [workers-combined](#workers-combined)
 <!-- toc:end -->
 
@@ -24,44 +24,44 @@ Captured 6 profiles across 5 worker processes.
 Recording limits and incomplete captures are reported in the capture index (local run data).
 Raw captures (local run data) retain the measured stacks for redrawing.
 
-## coordinator-3179-8bcff977636fd3d5c7142f418d3eed10
+## coordinator-2995-784710bcc7f215d7b330a28f8cc46cd5
 
-![coordinator-3179-8bcff977636fd3d5c7142f418d3eed10](<coordinator-3179-8bcff977636fd3d5c7142f418d3eed10.png>)
+![coordinator-2995-784710bcc7f215d7b330a28f8cc46cd5](coordinator-2995-784710bcc7f215d7b330a28f8cc46cd5.png)
 
-[Open zoomable SVG](<coordinator-3179-8bcff977636fd3d5c7142f418d3eed10.svg>)
+[Open zoomable SVG](coordinator-2995-784710bcc7f215d7b330a28f8cc46cd5.svg)
 
-## worker-3194-79d668766dcbf8dfffa475430b53c2ec
+## worker-3011-c88285ee576cc4d3e29c9e220882aa47
 
-![worker-3194-79d668766dcbf8dfffa475430b53c2ec](<worker-3194-79d668766dcbf8dfffa475430b53c2ec.png>)
+![worker-3011-c88285ee576cc4d3e29c9e220882aa47](worker-3011-c88285ee576cc4d3e29c9e220882aa47.png)
 
-[Open zoomable SVG](<worker-3194-79d668766dcbf8dfffa475430b53c2ec.svg>)
+[Open zoomable SVG](worker-3011-c88285ee576cc4d3e29c9e220882aa47.svg)
 
-## worker-3208-bb2d12e2e2459dec5a330f45f72216a4
+## worker-3025-27f7323bedf227eb5fdd39eb2d704805
 
-![worker-3208-bb2d12e2e2459dec5a330f45f72216a4](<worker-3208-bb2d12e2e2459dec5a330f45f72216a4.png>)
+![worker-3025-27f7323bedf227eb5fdd39eb2d704805](worker-3025-27f7323bedf227eb5fdd39eb2d704805.png)
 
-[Open zoomable SVG](<worker-3208-bb2d12e2e2459dec5a330f45f72216a4.svg>)
+[Open zoomable SVG](worker-3025-27f7323bedf227eb5fdd39eb2d704805.svg)
 
-## worker-3211-de896d92083ce11923058461022c2c45
+## worker-3028-8af8cd0e8d9a2aa388324622051fcf26
 
-![worker-3211-de896d92083ce11923058461022c2c45](<worker-3211-de896d92083ce11923058461022c2c45.png>)
+![worker-3028-8af8cd0e8d9a2aa388324622051fcf26](worker-3028-8af8cd0e8d9a2aa388324622051fcf26.png)
 
-[Open zoomable SVG](<worker-3211-de896d92083ce11923058461022c2c45.svg>)
+[Open zoomable SVG](worker-3028-8af8cd0e8d9a2aa388324622051fcf26.svg)
 
-## worker-3236-19e1cd396bd65ccf48e7810bf66a7748
+## worker-3053-cdb84facb7544822f6c112e1a4442ec3
 
-![worker-3236-19e1cd396bd65ccf48e7810bf66a7748](<worker-3236-19e1cd396bd65ccf48e7810bf66a7748.png>)
+![worker-3053-cdb84facb7544822f6c112e1a4442ec3](worker-3053-cdb84facb7544822f6c112e1a4442ec3.png)
 
-[Open zoomable SVG](<worker-3236-19e1cd396bd65ccf48e7810bf66a7748.svg>)
+[Open zoomable SVG](worker-3053-cdb84facb7544822f6c112e1a4442ec3.svg)
 
-## worker-3239-a5a15145c022e114c70336a9171df8a1
+## worker-3056-98355ba335278ace8883c67c9e54d197
 
-![worker-3239-a5a15145c022e114c70336a9171df8a1](<worker-3239-a5a15145c022e114c70336a9171df8a1.png>)
+![worker-3056-98355ba335278ace8883c67c9e54d197](worker-3056-98355ba335278ace8883c67c9e54d197.png)
 
-[Open zoomable SVG](<worker-3239-a5a15145c022e114c70336a9171df8a1.svg>)
+[Open zoomable SVG](worker-3056-98355ba335278ace8883c67c9e54d197.svg)
 
 ## workers-combined
 
-![workers-combined](<workers-combined.png>)
+![workers-combined](workers-combined.png)
 
-[Open zoomable SVG](<workers-combined.svg>)
+[Open zoomable SVG](workers-combined.svg)

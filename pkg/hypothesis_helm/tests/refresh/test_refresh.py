@@ -13,6 +13,7 @@ from pathlib import Path
 
 import pytest
 from attrs import asdict
+from hypothesis_helm_benchmarking.catalog import publication_path
 from hypothesis_helm_benchmarking.charts.stress import Stress, progression
 from hypothesis_helm_benchmarking.charts.structures import STRUCTURES
 from hypothesis_helm_benchmarking.refresh.plan import source_path
@@ -91,13 +92,13 @@ def test_refresh_repository_recipe(tmp_path: Path) -> None:
     assert (tmp_path / ".cache/benchmarks/latest-refresh.txt").read_text().strip() == str(run_root)
     snapshot = tmp_path / run_root / "frozen-source"
     # Both native implementations and their module locks must survive transfer
-    # to another CI runner, along with the Lua pass and regenerated inventories.
+    # to another CI runner, along with the bound evaluator and regenerated inventories.
     for name in (
         "pkg/hypothesis_helm/compiler/assets/renderer/main.go",
         "pkg/hypothesis_helm/compiler/assets/renderer/go.mod",
         "pkg/hypothesis_helm/compiler/assets/renderer/go.sum",
         "pkg/hypothesis_helm/compiler/assets/builtin_inventory.json",
-        "pkg/hypothesis_helm/compiler/lua/bounds.lua",
+        "pkg/hypothesis_helm/compiler/bounds.py",
         "pkg/hypothesis_helm_catalog/upstream/main.go",
         "pkg/hypothesis_helm_catalog/upstream/helm.go",
         "pkg/hypothesis_helm_catalog/upstream/kubernetes.go",
@@ -526,6 +527,15 @@ def test_refresh_requires_complete_stress_matrix(tmp_path: Path, damage: str | N
                     for extension in ("png", "svg"):
                         (directory / f"{axis}-{metric.replace('_', '-')}.{extension}").write_bytes(b"x" * 1001)
         (directory / "results.json").write_text(json.dumps(document))
+    quartic = tmp_path / "outputs/error-surface-quartic"
+    quartic.mkdir(parents=True)
+    source = tmp_path / "outputs/error-surface/results.json"
+    (quartic / "results.json").write_text(
+        json.dumps({"source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(), "fits": [{"status": "completed"}]})
+    )
+    (quartic / "README.md").write_text("# Synthetic comparison\n")
+    (quartic / "comparison-1.png").write_bytes(b"x" * 1001)
+    (quartic / "comparison-1.svg").write_text('<svg><g id="plot-question" />' + " " * 1001 + "</svg>")
     for vector in (tmp_path / "outputs").rglob("*.svg"):
         vector.write_text('<svg><g id="plot-question" />' + " " * 1001 + "</svg>")
     if damage == "reader-question":
@@ -685,6 +695,7 @@ def test_publish_groups_studies(tmp_path: Path, incomplete: bool) -> None:
         "calibration-variation",
         "filtering",
         "error-surface",
+        "error-surface-quartic",
     )
     (run / "status.tsv").write_text("".join(f"{name}\t0\n" for name in studies))
     (run / "started-epoch.txt").write_text("0")
@@ -706,14 +717,14 @@ def test_publish_groups_studies(tmp_path: Path, incomplete: bool) -> None:
         (output / "cases/log.md").write_text("worker diagnostic")
     (run / "outputs/chart-topologies/verification.json").write_text("{}")
     if incomplete:
-        previous = tmp_path / "studies/bug-density/README.md"
+        previous = tmp_path / "studies/cpu/bug-density/README.md"
         previous.parent.mkdir(parents=True)
         previous.write_text("Previous results")
         (run / "outputs/structure-sparsity/README.md").unlink()
         failed = subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, capture_output=True, text=True)
         assert failed.returncode != 0 and "missing README.md" in failed.stderr
         assert previous.read_text() == "Previous results"
-        assert not (tmp_path / "studies/bug-density/plot.png").exists()
+        assert not (tmp_path / "studies/cpu/bug-density/plot.png").exists()
         assert not (run / "sha256.json").exists()
         return
     subprocess.run([sys.executable, str(recipes / "publish.py"), str(run)], cwd=tmp_path, check=True, capture_output=True)
@@ -729,7 +740,7 @@ def test_publish_groups_studies(tmp_path: Path, incomplete: bool) -> None:
     assert not (tmp_path / "studies/chart-topologies/verification.json").exists()
     assert not (tmp_path / "docs/reports/studies").exists()
     for name in (*studies, "chart-topologies"):
-        directory = tmp_path / "studies" / name
+        directory = tmp_path / publication_path(name)
         assert {path.name for path in directory.iterdir()} == {"README.md", "plot.png"}
         assert "Raw measurements (local run data)" in (directory / "README.md").read_text()
         assert json.loads((run / "outputs" / name / "results.json").read_text()) == {"study": name}
@@ -1005,5 +1016,6 @@ def test_refresh_dispatches_all_studies(tmp_path: Path, symbolic: str, monkeypat
         entry = getattr(module, "main", None) or module.run
         with pytest.raises(Parsed):
             entry(arguments[command_index + 1 :])
-    assert ("--symbolic-fit" in calls[-1]) == (symbolic == "true")
+    surface_arguments = calls[STUDIES.index("error-surface")]
+    assert ("--symbolic-fit" in surface_arguments) == (symbolic == "true")
     assert (root / "status.tsv").read_text().splitlines() == [f"{study}\t0" for study in STUDIES]

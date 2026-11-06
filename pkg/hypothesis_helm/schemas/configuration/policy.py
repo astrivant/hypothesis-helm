@@ -15,7 +15,7 @@ from jsonschema import validators
 
 from hypothesis_helm.charts.values import yamlio
 from hypothesis_helm.charts.values.parsers import validate_backend
-from hypothesis_helm.compiler.limits import compiler_limits
+from hypothesis_helm.compiler.limits import canonical_limit, compiler_limits
 from hypothesis_helm.environment import env
 from hypothesis_helm.findings.catalog import CATALOG
 from hypothesis_helm.findings.severity import validate as validate_findings
@@ -181,7 +181,7 @@ def load_policy(
             if path != "$":
                 raise ValueError("Chart compiler overrides require path: $; compiler budgets cannot vary by values branch")
             validated = compiler_limits(rule["compiler"])
-            compiler = {"compiler": {key: validated[key] for key in mapping(rule["compiler"])}}
+            compiler = {"compiler": {canonical_limit(key): validated[canonical_limit(key)] for key in mapping(rule["compiler"])}}
         controls: dict[str, object] = {}
         if "findings" in rule:
             controls["findings"] = validate_findings(rule["findings"], partial=True)

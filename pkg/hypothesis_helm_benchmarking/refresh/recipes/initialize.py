@@ -16,7 +16,6 @@ from hypothesis_helm.charts.repositories.scan import discover_charts
 from hypothesis_helm.execution.planning.traversal import SELECTION_ORDER
 from hypothesis_helm.execution.runtime.processes import Processes
 from hypothesis_helm_benchmarking.execution.provenance import code_digest
-from hypothesis_helm_benchmarking.refresh.plan import STUDIES
 
 __all__ = ()
 
@@ -55,7 +54,6 @@ sources = [
     *Path("pkg/hypothesis_helm_catalog/data").glob("*.json"),
     *Path("pkg/hypothesis_helm_benchmarking/assets").rglob("*"),
     *Path("pkg/hypothesis_helm/compiler/assets").rglob("*"),
-    *Path("pkg/hypothesis_helm/compiler/lua").glob("*.lua"),
     *Path("pkg/hypothesis_helm_catalog/upstream").glob("*.go"),
     Path("pkg/hypothesis_helm_catalog/upstream/go.mod"),
     Path("pkg/hypothesis_helm_catalog/upstream/go.sum"),
@@ -147,8 +145,7 @@ provenance = {
 published = Path(".")
 ledger = {
     str(path.relative_to(published)): hashlib.sha256(path.read_bytes()).hexdigest()
-    for study in (*STUDIES, "chart-topologies", "flamegraphs")
-    for path in sorted((published / "studies" / study).rglob("*"))
+    for path in sorted((published / "studies").rglob("*"))
     if path.is_file() and path.name != "verification.json"
 }
 (root / "previous-artifact-inventory.json").write_text(json.dumps(list(ledger), indent=2) + "\n")
