@@ -1,11 +1,5 @@
 # Backend execution evidence
 
-<!-- toc:start -->
-**Table of contents**
-
-- [Backend execution evidence](#backend-execution-evidence)
-<!-- toc:end -->
-
 Requested engine: `reference`. Observed engines: reference. Status: **complete**.
 Observed device types: none recorded.
 

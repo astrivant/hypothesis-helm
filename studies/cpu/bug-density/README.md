@@ -12,12 +12,12 @@ This fixed fixture contains 261 injected faults. The planner varies interaction 
 
 | Strength | Inputs tested / planned | Faults found / total | Missed faults | Seconds | Status |
 | ---: | ---: | ---: | ---: | ---: | --- |
-| 1 | 9 / 9 | 64 / 261 | 197 | 0.51 | passed |
-| 2 | 37 / 37 | 136 / 261 | 125 | 1.82 | passed |
-| 3 | 93 / 93 | 208 / 261 | 53 | 4.51 | passed |
-| 4 | 163 / 163 | 250 / 261 | 11 | 7.92 | passed |
-| 5 | 219 / 219 | 261 / 261 | 0 | 10.68 | passed |
-| 6 | 247 / 247 | 261 / 261 | 0 | 12.36 | passed |
+| 1 | 9 / 9 | 64 / 261 | 197 | 0.73 | passed |
+| 2 | 37 / 37 | 136 / 261 | 125 | 2.69 | passed |
+| 3 | 93 / 93 | 208 / 261 | 53 | 6.71 | passed |
+| 4 | 163 / 163 | 250 / 261 | 11 | 11.92 | passed |
+| 5 | 219 / 219 | 261 / 261 | 0 | 16.25 | passed |
+| 6 | 247 / 247 | 261 / 261 | 0 | 17.90 | passed |
 
 ![Known faults found](bug-discovery.png)
 
