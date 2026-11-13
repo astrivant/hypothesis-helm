@@ -1,3 +1,3 @@
 """
-Verify CI workflows, security gates, installers, and local or remote shards.
+Verify CI workflows, security gates, installers, and application shards.
 """

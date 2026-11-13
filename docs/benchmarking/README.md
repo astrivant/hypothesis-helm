@@ -349,7 +349,11 @@ artifacts rather than overwriting newer work. The benchmark status applies to th
 original measured commit, not an untested newer source revision.
 Measurements and diagnostic logs remain in artifacts for 30 days; raw LFS data is not committed.
 The [required PR benchmark gate](../development.md#github-ci) applies to the current PR head. Each study job has a six-hour limit.
-Study measurements, plot generation and smoke checks use standard `ubuntu-latest` runners.
+Standard hosted CPU runners handle shared studies, plotting and smoke checks.
+Backend-dependent studies use a standard CPU runner or the configured T4 runner
+according to `benchmark-backend`. The [matched comparison](backend-comparison.md)
+runs all three backends with one frozen manifest. GitHub Actions owns benchmark
+fanout and collection; the former Terraform/Ansible VM executor is retired.
 The error-surface study runs across eight runners; stress runs across six.
 Most measurements are serial within each runner; the scaling study uses at most four workers.
 Preparation and the separate repository scans also use standard `ubuntu-latest` runners.

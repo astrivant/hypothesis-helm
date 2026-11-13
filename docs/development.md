@@ -181,7 +181,7 @@ Unit and integration tests live under [`pkg/hypothesis_helm/tests`](../pkg/hypot
 | `findings/` | Finding codes, severity thresholds, suppressions, and fail-fast behavior. |
 | `reporting/` | Aggregation, diagnostics, links, provenance, and diagrams. |
 | `schemas/` | Source-derived catalogs, Kubernetes and CRD schemas, and YAML parsers. |
-| `integrations/` | CI workflows, Kubesec, installers, release tooling, and remote shards. |
+| `integrations/` | CI workflows, Kubesec, installers, release tooling, and application shards. |
 | `benchmarking/` | Synthetic fixtures, measurements, plots, and study publication. |
 | `refresh/` | Refresh orchestration, distributed runs, and resuming interrupted work. |
 | `package/` | Public exports, shared exceptions, and environment configuration. |

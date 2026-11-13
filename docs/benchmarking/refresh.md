@@ -82,6 +82,17 @@ original paths; use the latest completed journal when inspecting those archived 
 
 ## Parallel refresh on GitHub Actions
 
+The maintained benchmark executor is GitHub Actions. The former `terraform/`
+worker fleet and `ansible/` executor are retired. Workflow checkouts and same-run
+artifacts replace source snapshots copied over SSH; matrices replace VM replicas;
+aggregation and publication jobs replace operator collection. This repository no
+longer requires a GCP project, Terraform or Ansible to run benchmarks.
+
+Historical configuration and ignored state remain separate from this source
+cleanup. Removing the executor does not destroy resources created from an older
+checkout; any such fleet needs its original state and a separately reviewed teardown.
+
+
 Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml), select **Run workflow**,
 select `main`, enable **refresh**, and leave **pull-request** empty to commit verified publications back to `main`.
 Configure the protected-branch [publication token](../development.md#github-ci) first. The run is rejected if the branch
@@ -130,10 +141,14 @@ Helm downloads, Python environments and native-build caches distinguish x64 from
 After pushing the workflow changes, launch it with:
 
 ```sh
-gh workflow run ci.yml --ref main -f refresh=true
-gh workflow run ci.yml --ref my-pr-branch -f refresh=true -f pull-request=123
-gh workflow run ci.yml --ref main -f bitnami-scan=true
-gh workflow run ci.yml --ref my-pr-branch -f bitnami-scan=true
+gh workflow run ci.yml --repo astrivant/hypothesis-helm --ref main \
+    -f refresh=true -f benchmark-backend=reference
+gh workflow run ci.yml --repo astrivant/hypothesis-helm \
+    --ref revert-16-revert-15-feat/compiled-backends \
+    -f refresh=true -f benchmark-backend=gpu -f pull-request=17
+gh workflow run ci.yml --repo astrivant/hypothesis-helm --ref main -f bitnami-scan=true
+gh workflow run ci.yml --repo astrivant/hypothesis-helm \
+    --ref revert-16-revert-15-feat/compiled-backends -f bitnami-scan=true -f pull-request=17
 ```
 
 Local `bash scripts/project-run.sh hypothesis-helm-refresh` still runs timing studies sequentially on one machine to avoid CPU contention affecting
