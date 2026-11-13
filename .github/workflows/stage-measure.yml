@@ -91,8 +91,17 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: bash .github/pr-benchmarks.sh validate
 
+  refresh-comparison:
+    name: Matched backend comparison
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh && inputs.benchmark-backend == 'gpu' }}
+    needs: refresh-request
+    uses: ./.github/workflows/stage-backend-comparison.yml
+    with:
+      source: ${{ github.sha }}
+      binary-cache: ${{ inputs.binary-cache }}
+
   refresh-prepare-inputs:
-    name: Build shared inputs
+    name: Build shared inputs / CPU x64
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh }}
     needs: refresh-request
     runs-on: ubuntu-latest
@@ -141,7 +150,7 @@ jobs:
           retention-days: 30
 
   refresh-prepare-checks:
-    name: "Verify shared inputs (${{ matrix.shard }}/8)"
+    name: "Verify shared inputs (${{ matrix.shard }}/8) / CPU x64"
     needs: refresh-prepare-inputs
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -189,7 +198,7 @@ jobs:
           retention-days: 30
 
   refresh-prepare:
-    name: Prepare shared inputs
+    name: Prepare shared inputs / CPU x64
     needs: [refresh-prepare-inputs, refresh-prepare-checks]
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -236,7 +245,7 @@ jobs:
           retention-days: 30
 
   refresh-study:
-    name: "Study: ${{ matrix.study }}"
+    name: "Study: ${{ matrix.study }} / ${{ matrix.backend }} / ${{ matrix.backend == 'gpu' && 'NVIDIA T4' || 'CPU x64' }}"
     needs: refresh-prepare
     # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64 runner, 4 vCPU, 28 GiB RAM, 16 GiB T4.
     # Shared studies stay on CPU even when GPU-dependent comparisons are requested.
@@ -280,7 +289,7 @@ jobs:
           retention-days: 30
 
   refresh-error-surface:
-    name: "Error surface (${{ matrix.number }}/8)"
+    name: "Error surface (${{ matrix.number }}/8) / ${{ inputs.benchmark-backend }} / ${{ inputs.benchmark-backend == 'gpu' && 'NVIDIA T4' || 'CPU x64' }}"
     needs: refresh-prepare
     # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64, 4 vCPU, 28 GiB RAM, 16 GiB T4.
     runs-on: ${{ inputs.benchmark-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
@@ -341,7 +350,7 @@ jobs:
           retention-days: 30
 
   refresh-error-surface-merge:
-    name: Verify and plot error surface
+    name: Verify and plot error surface / CPU x64
     needs: [refresh-prepare, refresh-error-surface]
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -386,7 +395,7 @@ jobs:
           retention-days: 30
 
   refresh-stress:
-    name: "Stress progression (${{ matrix.number }}/6)"
+    name: "Stress progression (${{ matrix.number }}/6) / ${{ inputs.benchmark-backend }} / ${{ inputs.benchmark-backend == 'gpu' && 'NVIDIA T4' || 'CPU x64' }}"
     needs: refresh-prepare
     # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64, 4 vCPU, 28 GiB RAM, 16 GiB T4.
     runs-on: ${{ inputs.benchmark-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
@@ -442,7 +451,7 @@ jobs:
           retention-days: 30
 
   refresh-stress-merge:
-    name: Verify and plot stress progression
+    name: Verify and plot stress progression / CPU x64
     needs: [refresh-prepare, refresh-stress]
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -481,7 +490,7 @@ jobs:
           retention-days: 30
 
   refresh-structural-sparsity:
-    name: "Structural sparsity (${{ matrix.number }}/6)"
+    name: "Structural sparsity (${{ matrix.number }}/6) / ${{ inputs.benchmark-backend }} / ${{ inputs.benchmark-backend == 'gpu' && 'NVIDIA T4' || 'CPU x64' }}"
     needs: refresh-prepare
     # CPU: 4 vCPU, 16 GiB RAM. GPU: configured Linux x64, 4 vCPU, 28 GiB RAM, 16 GiB T4.
     runs-on: ${{ inputs.benchmark-backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
@@ -537,7 +546,7 @@ jobs:
           retention-days: 30
 
   refresh-structural-sparsity-merge:
-    name: Verify and plot structural sparsity
+    name: Verify and plot structural sparsity / CPU x64
     needs: [refresh-prepare, refresh-structural-sparsity]
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -576,8 +585,18 @@ jobs:
           retention-days: 30
 
   refresh-finish:
-    name: Verify and commit benchmark graphs
-    needs: [refresh-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge, refresh-structural-sparsity-merge]
+    name: Verify and commit benchmark graphs / CPU x64
+    if: >-
+      ${{ !cancelled()
+          && needs.refresh-request.result == 'success'
+          && needs.refresh-prepare.result == 'success'
+          && needs.refresh-study.result == 'success'
+          && needs.refresh-error-surface-merge.result == 'success'
+          && needs.refresh-stress-merge.result == 'success'
+          && needs.refresh-structural-sparsity-merge.result == 'success'
+          && (needs.refresh-comparison.result == 'success'
+              || (inputs.benchmark-backend != 'gpu' && needs.refresh-comparison.result == 'skipped')) }}
+    needs: [refresh-request, refresh-prepare, refresh-study, refresh-error-surface-merge, refresh-stress-merge, refresh-structural-sparsity-merge, refresh-comparison]
     runs-on: ubuntu-latest
     timeout-minutes: 360
     permissions:
@@ -618,6 +637,11 @@ jobs:
           done
       - name: Verify measurements and publish diagrams
         run: poetry run hypothesis-helm-refresh --ci-phase graphs --root "$ROOT"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        if: ${{ inputs.benchmark-backend == 'gpu' }}
+        with:
+          name: backend-comparison-plots
+          path: studies/backend-comparison
       - name: Commit verified graphs and start checks on the new commit
         id: commit
         env:

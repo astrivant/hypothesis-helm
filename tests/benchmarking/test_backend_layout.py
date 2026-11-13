@@ -164,7 +164,7 @@ def test_inventory_routes_only_backend_dependent_work() -> None:
     Returns:
         None: Every study has one shared destination or two distinct backend lanes.
     """
-    assert len(CATALOG) == len({study.name for study in CATALOG}) == 23
+    assert len(CATALOG) == len({study.name for study in CATALOG}) == 24
     for study in CATALOG:
         cpu = publication_path(study.name, "cpu-vector")
         gpu = publication_path(study.name, "gpu")

@@ -22,6 +22,7 @@
 - [Topology distributions and filter level](#topology-distributions-and-filter-level)
 - [Chart nesting at permutation strength eight](#chart-nesting-at-permutation-strength-eight)
 - [Sweep chart breadth and depth](#sweep-chart-breadth-and-depth)
+- [Matched backend comparison](#matched-backend-comparison)
 <!-- toc:end -->
 
 [Documentation](../README.md) · [Project](../../README.md)
@@ -605,3 +606,7 @@ It can run independently of refresh:
 ```bash
 bash scripts/project-run.sh hypothesis-helm-benchmark sensitivity-ordering --inputs 8 --permutations 3 --repeats 5 --time-limit 9m
 ```
+
+## Matched backend comparison
+
+GPU CI refreshes also run matched reference, compiled CPU and GPU lanes. See the [comparison guide](backend-comparison.md) for execution, timing scope and retained measurements.

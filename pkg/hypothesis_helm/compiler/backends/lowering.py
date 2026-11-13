@@ -9,6 +9,7 @@ from collections.abc import Callable
 
 from jsonschema import validators
 
+from hypothesis_helm.compiler.backends.folding import fold
 from hypothesis_helm.compiler.backends.model import DEFAULT_LIMITS, Factor, Limits, Node, Opcode, Plan, State, digest
 from hypothesis_helm.exceptions.backends import InvalidPlan
 from hypothesis_helm.schemas.contracts import json_value
@@ -49,8 +50,14 @@ def compile_plan(
     """
     started = clock()
     nodes: list[Node] = []
+    constants: dict[State, int] = {}
     fallbacks: list[str] = []
     indices = {path: index for index, path in enumerate(space.paths)}
+    # Index real factor descendants once rather than scanning all factors per object.
+    children_by_parent: dict[tuple[str, ...], set[str]] = {}
+    for path in space.paths:
+        for offset, name in enumerate(path):
+            children_by_parent.setdefault(path[:offset], set()).add(name)
     validator = validators.validator_for(schema)(schema)
     entries = 0
 
@@ -65,11 +72,26 @@ def compile_plan(
             int: Stable topological node index.
         """
         nonlocal entries
-        entries += len(node.operands) + len(node.table)
-        if len(nodes) >= limits.nodes or entries > limits.edges or clock() - started > limits.timeout:
-            raise InvalidPlan("plan compilation exceeded its node, entry or time budget")
+        if clock() - started > limits.timeout:
+            raise InvalidPlan("plan compilation exceeded its time budget")
+        simplified = fold(node, nodes)
+        if isinstance(simplified, int):
+            return simplified
+        node = simplified
+        if node.op == Opcode.CONSTANT and node.table[0] in constants:
+            return constants[node.table[0]]
+        count = len(node.operands) + len(node.table)
+        if len(nodes) >= limits.nodes:
+            raise InvalidPlan("plan compilation exceeded its node budget")
+        if entries + count > limits.edges:
+            raise InvalidPlan("plan compilation exceeded its entry budget")
+        entries += count
         nodes.append(node)
-        return len(nodes) - 1
+        index = len(nodes) - 1
+        if node.op == Opcode.CONSTANT:
+            # Shared constants retain their first witness; unknown source pointers stay in fallbacks.
+            constants[node.table[0]] = index
+        return index
 
     def constant(state: State, source: str) -> int:
         """
@@ -192,7 +214,7 @@ def compile_plan(
                 # A fragment can narrow properties relative to the enclosing declaration.
                 declared = fragment.get("properties", {})
                 names = set(declared) if isinstance(declared, dict) else set()
-                children = {item[len(path)] for item in space.paths if item[: len(path)] == path and len(item) > len(path)}
+                children = children_by_parent.get(path, set()).copy()
                 skeleton: object = space.skeleton
                 for name in path:
                     skeleton = skeleton.get(name) if isinstance(skeleton, dict) else None

@@ -7,6 +7,8 @@ license = "GPL-3.0-only"
 readme = "README.md"
 requires-python = ">=3.13,<4.0"
 dependencies = [
+    "attrs>=25.3,<26",
+    "cattrs>=25.3,<27",
     "hypothesis-helm>=1.3.0,<3.0.0",
     "matplotlib>=3.10,<4",
     "numpy>=2,<3",
@@ -28,6 +30,7 @@ packages = [
     "hypothesis_helm_benchmarking",
     "hypothesis_helm_benchmarking.analysis",
     "hypothesis_helm_benchmarking.charts",
+    "hypothesis_helm_benchmarking.comparison",
     "hypothesis_helm_benchmarking.execution",
     "hypothesis_helm_benchmarking.refresh",
     "hypothesis_helm_benchmarking.reporting",

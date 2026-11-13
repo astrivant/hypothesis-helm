@@ -37,6 +37,12 @@ class Study:
 
 
 CATALOG = (
+    Study(
+        "backend-comparison",
+        "backend-comparison",
+        False,
+        "Matched reference, compiled CPU and GPU worker measurements with one shared manifest and comparison report.",
+    ),
     Study("bug-density", "discovery", True, "Finite interaction planning and defect recall at increasing strengths."),
     Study("calibration-variation", "calibration", True, "Finite population planning before calibration and selection."),
     Study("chart-topologies", "topology", False, "Template graph export and baseline Helm renders, without finite predicate planning."),

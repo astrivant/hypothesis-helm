@@ -206,3 +206,31 @@ def test_every_refresh_checkout_uses_the_immutable_event_commit() -> None:
     finish = jobs["refresh-finish"]
     checkout = next(step for step in finish["steps"] if step.get("uses", "").startswith("actions/checkout@"))
     assert checkout["with"]["fetch-depth"] == 0
+
+
+def test_publication_retains_only_allowlisted_comparison_data(
+    benchmark_repository: tuple[Path, Path, Path, str, dict[str, str]],
+) -> None:
+    """
+    Publish compact matched measurements with plots without widening general JSON publication.
+
+    Args:
+        benchmark_repository (tuple[Path, Path, Path, str, dict[str, str]]): Isolated source and synthetic remote.
+
+    Returns:
+        None: The two exact comparison data paths publish; unrelated raw JSON remains local.
+    """
+    checkout, writer, remote, _, environment = benchmark_repository
+    comparison = checkout / "studies/backend-comparison"
+    comparison.mkdir()
+    for name in ("workload.json", "measurements.json", "unreviewed.json"):
+        (comparison / name).write_text('{"synthetic": true}\n')
+    (comparison / "README.md").write_text("# Synthetic comparison\n")
+    (comparison / "comparison.svg").write_text("<svg />\n")
+    result = publication(checkout, writer, environment, "README.md", "# Project\n\nUpdated introduction.\n")
+    assert result.returncode == 0, result.stdout + result.stderr
+    published = git(remote, environment, "ls-tree", "-r", "--name-only", "refs/heads/feature")
+    assert "studies/backend-comparison/workload.json" in published
+    assert "studies/backend-comparison/measurements.json" in published
+    assert "studies/backend-comparison/comparison.svg" in published
+    assert "unreviewed.json" not in published

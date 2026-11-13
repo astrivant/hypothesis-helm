@@ -8,6 +8,7 @@
 - [Receipts, replay and publication](#receipts-replay-and-publication)
 - [Run GPU studies from a pull request](#run-gpu-studies-from-a-pull-request)
 - [Maintain the inventory](#maintain-the-inventory)
+- [Sparse schema compilation](#sparse-schema-compilation)
 <!-- toc:end -->
 
 Backend-dependent studies publish under `studies/cpu/<study>/` and
@@ -162,3 +163,18 @@ guides. It refuses a collision with an existing CPU directory and preserves
 existing GPU publications. `--check-layout` performs no writes. Update the
 classification when an implemented execution path changes, then regenerate and
 review the layout.
+
+## Sparse schema compilation
+
+Known constants are folded before graph-budget admission, and equal constants
+share one node. The compiler preserves three-state semantics, including unknown
+host work and repeated `oneOf` operands. Shared constant nodes retain their first
+source witness; unsupported-source pointers remain in the fallback inventory.
+Factor-child lookup uses a prefix index rather than rescanning all factor paths
+for every object. Node, entry, depth, memory and deadline limits remain enforced;
+compilation errors identify the particular exhausted budget.
+
+The native acceptance suite includes the depth-24 structural-sparsity case that
+previously failed compilation, plus its largest default breadth of 800. Both
+must compile within the default bounds and agree with the independent JSON Schema
+oracle on all sixteen configurations.

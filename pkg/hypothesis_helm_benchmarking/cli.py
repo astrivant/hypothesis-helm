@@ -25,6 +25,7 @@ __all__ = ("COMMANDS", "main")
 
 COMMANDS = {
     "inventory": "catalog",
+    "backend-comparison": "comparison.cli",
     "smoke": "execution.shell",
     "shards": "execution.shell",
     "generate": "charts.generator",

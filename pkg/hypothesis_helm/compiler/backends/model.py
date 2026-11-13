@@ -108,7 +108,7 @@ class Node:
         operands (tuple[int, ...]): Earlier node indices.
         factor (int): Factor index for a lookup, otherwise -1.
         table (tuple[State, ...]): Exact per-choice truth values or one constant.
-        source (str): JSON Pointer into the schema for diagnostics.
+        source (str): JSON Pointer for diagnostics; shared constants retain their first source witness.
     """
 
     op: Opcode

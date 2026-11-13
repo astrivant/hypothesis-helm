@@ -68,7 +68,8 @@ def reconcile(*, check: bool = False) -> bool:
         "[Benchmarking guide](../docs/benchmarking/README.md) | [CPU studies](cpu/README.md) | [GPU studies](gpu/README.md)",
         "",
         "The inventory follows the executed code paths. Backend-dependent studies have separate CPU and GPU destinations. "
-        "Shared studies do not invoke finite predicate planning. Existing figures retain their recorded measurements; "
+        "Shared studies have one publication destination. The matched backend comparison invokes all three planners; "
+        "other shared studies do not invoke finite predicate planning. Existing figures retain their recorded measurements; "
         "an unmeasured GPU guide is not evidence of a GPU run.",
         "",
         "Run `hypothesis-helm-benchmark inventory` for the machine-readable inventory and classification reasons.",
