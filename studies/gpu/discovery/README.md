@@ -1,21 +1,28 @@
-# discovery: GPU study
+# Bug discovery by interaction strength
 
 <!-- toc:start -->
 **Table of contents**
 
-- [discovery: GPU study](#discovery-gpu-study)
+- [Bug discovery by interaction strength](#bug-discovery-by-interaction-strength)
 <!-- toc:end -->
 
-**Status: not measured on a GPU.**
+[Benchmarking](<../../../docs/benchmarking/README.md>)
 
-Finite interaction planning and defect recall at increasing strengths.
+This fixed fixture contains 60 injected faults. The planner varies interaction strength from one to six, with automatic enumeration and inferred exhaustive groups disabled to isolate strength. Every selected input is rendered with Helm 4.
 
-[CPU study](../../cpu/discovery/README.md) | [Backend contract](../../../docs/benchmarking/backends.md)
+| Strength | Inputs tested / planned | Faults found / total | Missed faults | Seconds | Status |
+| ---: | ---: | ---: | ---: | ---: | --- |
+| 1 | 9 / 9 | 23 / 60 | 37 | 0.46 | passed |
+| 2 | 37 / 37 | 40 / 60 | 20 | 1.74 | passed |
+| 3 | 93 / 93 | 54 / 60 | 6 | 4.38 | passed |
+| 4 | 163 / 163 | 59 / 60 | 1 | 7.79 | passed |
+| 5 | 219 / 219 | 60 / 60 | 0 | 10.28 | passed |
+| 6 | 247 / 247 | 60 / 60 | 0 | 11.53 | passed |
 
-Use Linux with a physical NVIDIA CUDA device, its driver, Helm 4 and the locked GPU/benchmarking dependencies. From the repository root:
+![Known faults found](bug-discovery.png)
 
-```sh
-hypothesis-helm-benchmark --execution-backend gpu discovery --output .cache/benchmarks/gpu/discovery
-```
+![Discovery by fault order](bug-order.png)
 
-Use the matching CPU parameters and seeds for a paired comparison. A successful run retains backend receipts with the actual engine, native work, host fallbacks and measurement hashes. Publishing requires those receipts; CPU measurements cannot populate this directory as GPU observations.
+JSON ledger (local run data) · CSV table (local run data) · Chart parameters (local run data)
+
+These are distinct injected faults; several input assignments can trigger the same fault. Rates describe this seeded fixture, not expected bug recall for an arbitrary chart.

@@ -6,4 +6,4 @@
 - [Benchmark source](#benchmark-source)
 <!-- toc:end -->
 
-Measurements in this refresh used source commit e1c049e12c746ea0b4dbdb92347ea436ebfa14e8.
+Measurements in this refresh used source commit e2fb6bc9f8cfe17a92d4b6f3d3546a7ceaff25cd.

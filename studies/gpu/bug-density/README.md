@@ -1,21 +1,28 @@
-# bug-density: GPU study
+# Bug discovery by interaction strength
 
 <!-- toc:start -->
 **Table of contents**
 
-- [bug-density: GPU study](#bug-density-gpu-study)
+- [Bug discovery by interaction strength](#bug-discovery-by-interaction-strength)
 <!-- toc:end -->
 
-**Status: not measured on a GPU.**
+[Benchmarking](<../../../docs/benchmarking/README.md>)
 
-Finite interaction planning and defect recall at increasing strengths.
+This fixed fixture contains 261 injected faults. The planner varies interaction strength from one to six, with automatic enumeration and inferred exhaustive groups disabled to isolate strength. Every selected input is rendered with Helm 4.
 
-[CPU study](../../cpu/bug-density/README.md) | [Backend contract](../../../docs/benchmarking/backends.md)
+| Strength | Inputs tested / planned | Faults found / total | Missed faults | Seconds | Status |
+| ---: | ---: | ---: | ---: | ---: | --- |
+| 1 | 9 / 9 | 64 / 261 | 197 | 0.78 | passed |
+| 2 | 37 / 37 | 136 / 261 | 125 | 2.90 | passed |
+| 3 | 93 / 93 | 208 / 261 | 53 | 7.18 | passed |
+| 4 | 163 / 163 | 250 / 261 | 11 | 12.70 | passed |
+| 5 | 219 / 219 | 261 / 261 | 0 | 16.96 | passed |
+| 6 | 247 / 247 | 261 / 261 | 0 | 19.19 | passed |
 
-Use Linux with a physical NVIDIA CUDA device, its driver, Helm 4 and the locked GPU/benchmarking dependencies. From the repository root:
+![Known faults found](bug-discovery.png)
 
-```sh
-hypothesis-helm-benchmark --execution-backend gpu discovery --input-complexity 8 --max-strength 6 --bug-percent 5 --seed 2026 --time-limit 9m --output .cache/benchmarks/gpu/bug-density
-```
+![Discovery by fault order](bug-order.png)
 
-Use the matching CPU parameters and seeds for a paired comparison. A successful run retains backend receipts with the actual engine, native work, host fallbacks and measurement hashes. Publishing requires those receipts; CPU measurements cannot populate this directory as GPU observations.
+JSON ledger (local run data) · CSV table (local run data) · Chart parameters (local run data)
+
+These are distinct injected faults; several input assignments can trigger the same fault. Rates describe this seeded fixture, not expected bug recall for an arbitrary chart.
