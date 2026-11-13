@@ -16,6 +16,7 @@ permissions:
 env:
   HELM_VERSION: v4.3.0
   POETRY_VIRTUALENVS_IN_PROJECT: 'true'
+  HH_BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' && (github.event_name != 'workflow_dispatch' || inputs.binary-cache) }}
 
 defaults:
   run:
@@ -34,7 +35,7 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup-project
         with:
-          binary-cache: ${{ inputs.binary-cache }}
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
       - name: Freeze source, seed, limits, candidate order and repetitions
         env:
           SOURCE: ${{ inputs.source }}
@@ -75,7 +76,7 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup-project
         with:
-          binary-cache: ${{ inputs.binary-cache }}
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
           execution-backend: ${{ matrix.backend }}
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
@@ -113,7 +114,7 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup-project
         with:
-          binary-cache: ${{ inputs.binary-cache }}
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: backend-comparison-inputs

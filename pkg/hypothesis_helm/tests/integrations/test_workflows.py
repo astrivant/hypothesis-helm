@@ -72,6 +72,17 @@ def test_ci_limits_paid_capacity_to_explicit_gpu_jobs() -> None:
                     assert job["runs-on"] == (MATRIX_RUNNER if name == "refresh-study" else STUDY_RUNNER)
                     assert job["timeout-minutes"] == 360
                     assert job["needs"] == "refresh-prepare"
+                elif filename == "stage-backend-comparison.yml" and name == "measure":
+                    assert job["runs-on"] == MATRIX_RUNNER
+                    assert job["timeout-minutes"] == 20
+                    assert job["needs"] == "prepare"
+                    strategy = mapping(job["strategy"])
+                    assert strategy["fail-fast"] is False
+                    assert {str(mapping(lane)["backend"]) for lane in sequence(mapping(strategy["matrix"])["include"])} == {
+                        "reference",
+                        "cpu-vector",
+                        "gpu",
+                    }
                 else:
                     assert job["runs-on"] in {"ubuntu-latest", "ubuntu-24.04"}, (filename, name)
 
@@ -111,7 +122,16 @@ def test_workflow_references_and_dependencies() -> None:
         None: All jobs appear in one run and their prerequisites resolve.
     """
     documents = workflows()
-    assert set(documents) == {"ci.yml", "stage-test.yml", "stage-build.yml", "stage-measure.yml", "stage-deploy.yml", "stage-backends.yml"}
+    assert set(documents) == {
+        "ci.yml",
+        "stage-test.yml",
+        "stage-build.yml",
+        "stage-measure.yml",
+        "stage-deploy.yml",
+        "stage-backends.yml",
+        "stage-backend-comparison.yml",
+    }
+    workflow_dependencies: dict[str, set[str]] = {name: set() for name in documents}
     for filename, document in documents.items():
         if filename != "ci.yml":
             assert set(mapping(document["on"])) == {"workflow_call"}
@@ -125,8 +145,9 @@ def test_workflow_references_and_dependencies() -> None:
             dependencies[job_id] = {needs} if isinstance(needs, str) else {str(item) for item in sequence(needs)}
             assert dependencies[job_id] <= jobs.keys(), (filename, job_id, dependencies[job_id])
             if "uses" in job:
-                assert filename == "ci.yml"
                 called = Path(str(job["uses"]))
+                assert called.parent.as_posix() == ".github/workflows"
+                workflow_dependencies[filename].add(called.name)
                 assert called.name in documents and (ROOT / called).is_file()
                 declared = mapping(mapping(mapping(documents[called.name]["on"])["workflow_call"]).get("inputs", {}))
                 assert set(mapping(job.get("with", {}))) <= declared.keys()
@@ -135,6 +156,13 @@ def test_workflow_references_and_dependencies() -> None:
                 if action.startswith("./"):
                     assert (ROOT / action / "action.yml").is_file(), action
         assert set(TopologicalSorter(dependencies).static_order()) == jobs.keys()
+    assert set(TopologicalSorter(workflow_dependencies).static_order()) == documents.keys()
+    reachable, pending = set(), {"ci.yml"}
+    while pending:
+        name = pending.pop()
+        reachable.add(name)
+        pending.update(workflow_dependencies[name] - reachable)
+    assert reachable == documents.keys()
 
 
 def test_release_requires_all_verification_and_matching_artifacts() -> None:
@@ -195,7 +223,11 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
     for name in ("go", "checks", "python-tests", "sharded-chart", "build", "smoke"):
         assert "needs" not in jobs[name] and "if" not in jobs[name]
     for name, job in jobs.items():
-        if name.startswith("refresh-") or name == "smoke":
+        if name == "refresh-comparison":
+            assert job["uses"] == "./.github/workflows/stage-backend-comparison.yml"
+            assert job["needs"] == "refresh-request"
+            assert job["if"] == "${{ github.event_name == 'workflow_dispatch' && inputs.refresh && inputs.benchmark-backend == 'gpu' }}"
+        elif name.startswith("refresh-") or name == "smoke":
             expected = MATRIX_RUNNER if name == "refresh-study" else STUDY_RUNNER if name in NATIVE_STUDIES else "ubuntu-latest"
             assert job["runs-on"] == expected, name
     inputs_job = jobs["refresh-prepare-inputs"]
@@ -214,6 +246,7 @@ def test_refresh_is_optional_and_retains_matrix_barriers() -> None:
         "refresh-error-surface-merge",
         "refresh-stress-merge",
         "refresh-structural-sparsity-merge",
+        "refresh-comparison",
     }
     # Optional jobs cannot block the tag-only publisher.
     assert jobs["deploy-stage"]["needs"] == "verification"

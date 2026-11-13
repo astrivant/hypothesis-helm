@@ -1,3 +1,4 @@
+default_install_hook_types: [pre-commit, pre-push]
 default_language_version:
   python: python3.13
 repos:
@@ -15,6 +16,18 @@ repos:
         files: ^(pkg|scripts)/.*\.py$
   - repo: local
     hooks:
+      - id: ci-contracts
+        name: Workflow, package and publication contracts
+        entry: >-
+          bash scripts/run-pr-tests.sh -q
+          pkg/hypothesis_helm/tests/integrations/test_workflows.py
+          pkg/hypothesis_helm/tests/package/test_exports.py
+          tests/integrations/test_backend_comparison_workflow.py
+          tests/integrations/test_benchmark_publication.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit, pre-push]
       - id: lfs-snapshot
         name: Preserve published raw-data snapshot
         entry: bash scripts/check-lfs-snapshot.sh
