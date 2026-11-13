@@ -13,6 +13,7 @@ from pathlib import Path
 
 from attrs import asdict
 from hypothesis_helm.compiler.backends.scheduler import BackendOptions
+from hypothesis_helm.reporting.documentation.contents import with_contents
 from hypothesis_helm.schemas.contracts import mapping, sequence
 
 from hypothesis_helm_benchmarking.catalog import CATALOG
@@ -180,5 +181,6 @@ def execute(command: str, arguments: list[str], workspace: FixtureWorkspace, inv
                 "[Exact run receipt](backend.json)",
                 "",
             ]
-            (output / "BACKEND.md").write_text("\n".join(lines))
+            # Receipt pages are published directly, so they must already satisfy documentation checks.
+            (output / "BACKEND.md").write_text(with_contents("\n".join(lines)))
             LOGGER.info("Recorded study=%s status=%s planner_calls=%d", command, status, len(plans))

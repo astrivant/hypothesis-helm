@@ -101,7 +101,10 @@ commit_graphs() {
         exit 1
     }
     # The generated reports describe the measured commit even if publication occurs on a later branch head.
-    printf '# Benchmark source\n\nMeasurements in this refresh used source commit %s.\n' "$GITHUB_SHA" >docs/benchmarking/benchmark-source.md
+    # Keep this fixed, single-heading page canonical before the generated-only commit starts CI.
+    printf '%s\n' '# Benchmark source' '' '<!-- toc:start -->' '**Table of contents**' '' \
+        '- [Benchmark source](#benchmark-source)' '<!-- toc:end -->' '' \
+        "Measurements in this refresh used source commit $GITHUB_SHA." >docs/benchmarking/benchmark-source.md
     paths=$(mktemp)
     # Explicit output roots and extensions keep code, caches and LFS datasets out of the commit.
     mapfile -d '' -t publication_paths < <(git ls-files -z --modified --deleted --others --exclude-standard -- README.md studies/ docs/benchmarking/)

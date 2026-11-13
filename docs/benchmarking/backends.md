@@ -6,6 +6,7 @@
 - [Run a paired study](#run-a-paired-study)
 - [Where flag-controlled work runs](#where-flag-controlled-work-runs)
 - [Receipts, replay and publication](#receipts-replay-and-publication)
+- [Run GPU studies from a pull request](#run-gpu-studies-from-a-pull-request)
 - [Maintain the inventory](#maintain-the-inventory)
 <!-- toc:end -->
 
@@ -125,6 +126,24 @@ their host execution and shared destination. A full refresh includes its existin
 preparation, publication and repository-scan work; remove `--dry-run` only when
 that full operation is intended. GPU execution requires an already provisioned
 and authorized device; these commands do not create infrastructure.
+
+## Run GPU studies from a pull request
+
+After the PR pipeline passes, select the reviewed PR number and resolve its branch
+without relying on the current working directory:
+
+```sh
+PR_NUMBER=17
+PR_BRANCH="$(gh pr view "$PR_NUMBER" --repo astrivant/hypothesis-helm --json headRefName --jq .headRefName)"
+gh workflow run ci.yml --repo astrivant/hypothesis-helm --ref "$PR_BRANCH" \
+    -f refresh=true -f benchmark-backend=gpu -f pull-request="$PR_NUMBER"
+```
+
+Replace `PR_NUMBER` when reviewing a different PR. This executes the full refresh
+on the configured `HH_GPU_RUNNER`, including paid GPU work. It does not provision
+a device. Keep CPU and GPU study receipts separate, and link the completed run in
+the PR. A green differential test establishes correctness for its exercised cases;
+GPU study timings are needed before drawing performance conclusions.
 
 ## Maintain the inventory
 

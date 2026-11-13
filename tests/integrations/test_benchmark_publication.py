@@ -11,6 +11,7 @@ from pathlib import Path
 
 import pytest
 import yaml
+from hypothesis_helm.reporting.documentation.contents import with_contents
 
 
 def git(root: Path, environment: dict[str, str], *arguments: str) -> str:
@@ -150,7 +151,10 @@ def test_documentation_only_advance_preserves_newer_work(
     assert f"sha={pushed}\n" in output
     assert git(remote, environment, "show", f"{pushed}:README.md") == "# Project\n\nNewer introduction."
     assert git(remote, environment, "show", f"{pushed}:studies/report.md") == "Measured report."
-    assert source in git(remote, environment, "show", f"{pushed}:docs/benchmarking/benchmark-source.md")
+    provenance = git(remote, environment, "show", f"{pushed}:docs/benchmarking/benchmark-source.md") + "\n"
+    assert source in provenance
+    assert provenance == with_contents(provenance)
+    assert provenance.count("<!-- toc:start -->") == 1
     git(remote, environment, "merge-base", "--is-ancestor", git(writer, environment, "rev-parse", "HEAD"), pushed)
 
 

@@ -14,6 +14,7 @@ from pathlib import Path
 
 import pytest
 from hypothesis_helm.compiler.backends.scheduler import BackendOptions, Report
+from hypothesis_helm.reporting.documentation.contents import with_contents
 from hypothesis_helm_benchmarking.catalog import CATALOG, publication_path
 from hypothesis_helm_benchmarking.charts.fixture import FixtureWorkspace
 from hypothesis_helm_benchmarking.execution.backends import execute, prepare_arguments, read_evidence
@@ -348,3 +349,35 @@ def test_native_replay_cannot_relabel_historical_data(tmp_path: Path) -> None:
     arguments: list[str] = []
     assert prepare_arguments("matrix", arguments, workspace.backend) == ["--output", ".cache/benchmarks/gpu/matrix"]
     assert arguments == []
+
+
+@pytest.mark.parametrize("status", [0, 1])
+def test_backend_receipt_markdown_is_ready_for_documentation_checks(tmp_path: Path, status: int) -> None:
+    """
+    Normalize receipt documentation before publishing successful or failed measurements.
+
+    Args:
+        tmp_path (Path): Isolated study output directory.
+        status (int): Study exit status retained by the receipt writer.
+
+    Returns:
+        None: Each generated backend page already satisfies the canonical contents formatter.
+    """
+    workspace = FixtureWorkspace(backend=BackendOptions("reference"))
+
+    def measure() -> int:
+        """
+        Retain synthetic measurements without starting a native backend.
+
+        Returns:
+            int: Requested synthetic study exit status.
+        """
+        (tmp_path / "results.json").write_text("{}\n")
+        return status
+
+    assert execute("matrix", ["--output", str(tmp_path)], workspace, measure) == status
+    document = (tmp_path / "BACKEND.md").read_text()
+    assert document == with_contents(document)
+    assert document.count("<!-- toc:start -->") == 1
+    expected = "complete" if status == 0 else "incomplete"
+    assert f"Status: **{expected}**" in document
