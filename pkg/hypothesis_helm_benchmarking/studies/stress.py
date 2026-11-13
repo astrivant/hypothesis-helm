@@ -246,6 +246,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                 chart,
                 spec,
                 strategy,
+                workspace=workspace,
                 level=args.trim_level,
                 seed=args.seed,
                 limit=4096,

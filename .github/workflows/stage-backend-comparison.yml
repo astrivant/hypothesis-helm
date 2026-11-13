@@ -1,0 +1,142 @@
+name: Matched backend performance
+
+on:
+  workflow_call:
+    inputs:
+      source:
+        type: string
+        required: true
+      binary-cache:
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  HELM_VERSION: v4.3.0
+  POETRY_VIRTUALENVS_IN_PROJECT: 'true'
+  HH_BINARY_CACHE: ${{ vars.HH_BINARY_CACHE != 'false' && (github.event_name != 'workflow_dispatch' || inputs.binary-cache) }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  prepare:
+    name: Freeze matched inputs / CPU x64
+    # Public Linux x64 standard runner: 4 vCPU, 16 GiB RAM.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - name: Freeze source, seed, limits, candidate order and repetitions
+        env:
+          SOURCE: ${{ inputs.source }}
+        run: |
+          poetry run hypothesis-helm-benchmark backend-comparison prepare \
+              --source "$SOURCE" --run "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" \
+              --output .cache/backend-comparison/workload.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: backend-comparison-inputs
+          path: .cache/backend-comparison/workload.json
+          if-no-files-found: error
+          retention-days: 30
+
+  measure:
+    name: "Matched ${{ matrix.backend }} / ${{ matrix.hardware }}"
+    needs: prepare
+    # CPU: 4 vCPU, 16 GiB RAM. Configured GPU: 4 vCPU, 28 GiB RAM, 16 GiB NVIDIA T4.
+    runs-on: ${{ matrix.backend == 'gpu' && vars.HH_GPU_RUNNER || 'ubuntu-24.04' }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - backend: reference
+            hardware: CPU x64
+            device: reference
+          - backend: cpu-vector
+            hardware: CPU x64
+            device: cpu
+          - backend: gpu
+            hardware: NVIDIA T4
+            device: cuda
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+          execution-backend: ${{ matrix.backend }}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: backend-comparison-inputs
+          path: .cache/backend-comparison
+      - name: Measure cold start and steady repeats against the independent oracle
+        env:
+          SOURCE: ${{ inputs.source }}
+          BACKEND: ${{ matrix.backend }}
+          DEVICE: ${{ matrix.device }}
+        run: |
+          poetry run hypothesis-helm-benchmark backend-comparison measure \
+              --input .cache/backend-comparison/workload.json \
+              --source "$SOURCE" --run "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" \
+              --backend "$BACKEND" --require-device "$DEVICE" \
+              --output ".cache/backend-comparison/$BACKEND.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: ${{ always() }}
+        with:
+          name: backend-comparison-lane-${{ matrix.backend }}
+          path: .cache/backend-comparison/${{ matrix.backend }}.json
+          if-no-files-found: error
+          retention-days: 30
+
+  report:
+    name: Verify and plot matched backends / CPU x64
+    needs: measure
+    # Public Linux x64 standard runner: 4 vCPU, 16 GiB RAM.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
+        with:
+          binary-cache: ${{ env.HH_BINARY_CACHE }}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: backend-comparison-inputs
+          path: .cache/backend-comparison
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          pattern: backend-comparison-lane-*
+          merge-multiple: true
+          path: .cache/backend-comparison
+      - name: Reject missing or incomparable lanes before rendering plots
+        env:
+          SOURCE: ${{ inputs.source }}
+        run: |
+          poetry run hypothesis-helm-benchmark backend-comparison report \
+              --input .cache/backend-comparison/workload.json \
+              --source "$SOURCE" --run "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT" \
+              --lanes .cache/backend-comparison/reference.json \
+              .cache/backend-comparison/cpu-vector.json .cache/backend-comparison/gpu.json \
+              --output studies/backend-comparison
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: backend-comparison-plots
+          path: studies/backend-comparison/
+          if-no-files-found: error
+          retention-days: 30

@@ -14,7 +14,7 @@
   - [Memory-backed schemas](#memory-backed-schemas)
 - [Minimal values in CI](#minimal-values-in-ci)
 - [Optional percentage sampling](#optional-percentage-sampling)
-- [Remote VM shards](#remote-vm-shards)
+- [Actions benchmark runners](#actions-benchmark-runners)
 <!-- toc:end -->
 
 [Documentation](../README.md) · [Project](../../README.md)
@@ -421,7 +421,15 @@ they used the same policy and population.
 The [sampling guide](../execution/README.md#percentage-sampling) explains selection
 units, protected cases and the factors that determine bug discovery.
 
-## Remote VM shards
+## Actions benchmark runners
 
-Use the [Terraform and Ansible worker setup](../../ansible/README.md) to run generated-suite path shards on private GCP VMs,
-collect every worker's artifacts locally, and build one verified aggregate report.
+Hypothesis Helm uses GitHub Actions job matrices for its own chart shards and
+benchmark studies. Runner selection, immutable inputs, complete shard aggregation
+and plot publication are declared in the [workflow stages](../../.github/workflows).
+CPU studies use standard hosted runners; GPU studies use the configured
+`HH_GPU_RUNNER`. These workflows replace the retired Terraform/Ansible VM fleet.
+
+See [parallel benchmark refresh](../benchmarking/refresh.md#parallel-refresh-on-github-actions)
+for the entrypoints and [matched CPU/GPU comparisons](../benchmarking/backend-comparison.md)
+for the hardware and measurement contract. Local application sharding remains
+available through `hypothesis-helm run --shard` and `hypothesis-helm aggregate`.

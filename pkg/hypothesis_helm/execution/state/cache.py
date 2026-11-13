@@ -100,7 +100,7 @@ def fingerprint(
     files = sorted(directory.glob("*.py")) + [
         directory / name for name in ("values.coalesced.yaml", "values.inferred.schema.json", "chart-source.json", "input-domains.json")
     ]
-    for package in ("hypothesis", "hypothesis-jsonschema", "jsonschema", "ruamel.yaml", "PyYAML", "pytest", "lupa"):
+    for package in ("hypothesis", "hypothesis-jsonschema", "jsonschema", "ruamel.yaml", "PyYAML", "pytest", "numpy"):
         digest.update(f"{package}={version(package)}".encode())
     source = directory / "chart-source.json"
     if source.exists():
@@ -116,7 +116,6 @@ def fingerprint(
     # Invalidate outcomes for changes anywhere in the core package, beyond execution/state.
     package_root = Path(__file__).resolve().parents[2]
     files += sorted(file for file in package_root.rglob("*.py") if "tests" not in file.relative_to(package_root).parts)
-    files += sorted((package_root / "compiler" / "lua").glob("*.lua"))
     for file in files:
         if file.is_file():
             digest.update(file.name.encode())

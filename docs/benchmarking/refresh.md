@@ -26,6 +26,13 @@ The complete, unprefixed output is also saved in `logs/<operation>.log`. Reposit
 their JSON results in separate files. CI uses the same live output without progress bars.
 
 Final chart scan reports are published under `docs/reports/`; benchmark studies and plots live in top-level `studies/`.
+Backend-dependent publications use `studies/cpu/<study>/` or `studies/gpu/<study>/`;
+shared studies keep `studies/<study>/`. The [backend guide](backends.md) describes
+the complete inventory, execution boundary and receipt checks. Select a backend
+with `hypothesis-helm-refresh --execution-backend cpu-vector` or `gpu` after
+installing the matching locked extra. The default is `reference`. Saved operations
+retain the selected controls across recovery. GPU refresh requires a physical
+CUDA or Metal device; publication rejects fallback or mixed-backend measurements.
 Raw measurements, generated charts, logs, profiles and verification records stay inside the refresh workspace under `.cache/refresh/`.
 Repository workers also use that workspace, under `repositories/`; they never write into the published report directory.
 Reusable chart definitions remain in the benchmarking package's `assets/fixture/`.
@@ -75,6 +82,17 @@ original paths; use the latest completed journal when inspecting those archived 
 
 ## Parallel refresh on GitHub Actions
 
+The maintained benchmark executor is GitHub Actions. The former `terraform/`
+worker fleet and `ansible/` executor are retired. Workflow checkouts and same-run
+artifacts replace source snapshots copied over SSH; matrices replace VM replicas;
+aggregation and publication jobs replace operator collection. This repository no
+longer requires a GCP project, Terraform or Ansible to run benchmarks.
+
+Historical configuration and ignored state remain separate from this source
+cleanup. Removing the executor does not destroy resources created from an older
+checkout; any such fleet needs its original state and a separately reviewed teardown.
+
+
 Open the [CI pipeline](https://github.com/astrivant/hypothesis-helm/actions/workflows/ci.yml), select **Run workflow**,
 select `main`, enable **refresh**, and leave **pull-request** empty to commit verified publications back to `main`.
 Configure the protected-branch [publication token](../development.md#github-ci) first. The run is rejected if the branch
@@ -95,7 +113,12 @@ Each study owns its output directory, status file and process journal. A failed 
 other studies. The final job requires every study to succeed, verifies the merged measurements, and publishes pages and plots
 under `studies/`, then commits final plots and summaries to the selected branch. The `refresh` option alone does not run new Bitnami or Prometheus scans; select their separate scan options to include them. Studies and the separate `refresh-resume-data` artifact
 are retained for 30 days.
-Study measurements, merging, plot publication and smoke checks use standard `ubuntu-latest` runners.
+Select **benchmark-backend** in the manual workflow to run dependent studies with
+`reference`, `cpu-vector` or `gpu`. GPU studies use the configured `HH_GPU_RUNNER`;
+shared studies, merges and publication keep their CPU runners. Runner capacity
+must already be provisioned and authorized. The workflow does not provision it.
+Native environments are cached separately by backend and install the matching
+locked dependencies. Every shard and merge uses the same backend settings.
 Individual measurements run serially, or with at most four local workers in the scaling study; more CI shards do not increase
 parallelism inside each runner. Preparation verification uses eight `ubuntu-latest` runners, with one pytest worker per
 available CPU on each runner. Local preparation still runs the complete suite on one machine.
@@ -118,10 +141,14 @@ Helm downloads, Python environments and native-build caches distinguish x64 from
 After pushing the workflow changes, launch it with:
 
 ```sh
-gh workflow run ci.yml --ref main -f refresh=true
-gh workflow run ci.yml --ref my-pr-branch -f refresh=true -f pull-request=123
-gh workflow run ci.yml --ref main -f bitnami-scan=true
-gh workflow run ci.yml --ref my-pr-branch -f bitnami-scan=true
+gh workflow run ci.yml --repo astrivant/hypothesis-helm --ref main \
+    -f refresh=true -f benchmark-backend=reference
+gh workflow run ci.yml --repo astrivant/hypothesis-helm \
+    --ref revert-16-revert-15-feat/compiled-backends \
+    -f refresh=true -f benchmark-backend=gpu -f pull-request=17
+gh workflow run ci.yml --repo astrivant/hypothesis-helm --ref main -f bitnami-scan=true
+gh workflow run ci.yml --repo astrivant/hypothesis-helm \
+    --ref revert-16-revert-15-feat/compiled-backends -f bitnami-scan=true -f pull-request=17
 ```
 
 Local `bash scripts/project-run.sh hypothesis-helm-refresh` still runs timing studies sequentially on one machine to avoid CPU contention affecting

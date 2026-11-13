@@ -9,7 +9,7 @@
   - [Changing the shared catalog Go module](#changing-the-shared-catalog-go-module)
 - [Kubernetes schemas and input domains](#kubernetes-schemas-and-input-domains)
 - [Python packages and developer tools](#python-packages-and-developer-tools)
-- [CI, remote workers and chart snapshots](#ci-remote-workers-and-chart-snapshots)
+- [CI and chart snapshots](#ci-and-chart-snapshots)
 - [Repository refresh integration](#repository-refresh-integration)
 - [Checks before release](#checks-before-release)
 <!-- toc:end -->
@@ -36,8 +36,6 @@ Run the commands below from the repository root, with the [development tools](de
 | Local and CI tools | [setup-dev.sh](../scripts/setup-dev.sh), [setup-project action](../.github/actions/setup-project/action.yml), [pre-commit config](../.pre-commit-config.yaml) | Go, Helm, Poetry, uv, Python and lint tools; publishing also installs Poetry. |
 | Consumer CI and optional Kubesec | [Root action](../action.yml), [GitHub](../ci/github.yml), [GitLab](../ci/gitlab.yml), [CircleCI](../ci/circleci.yml) | Helm/Kubesec downloads, Python images, schema versions and versioned cache keys. |
 | GitHub Actions | [CI stages](../.github/workflows), [setup-project action](../.github/actions/setup-project/action.yml), [root action](../action.yml), [GitHub example](../ci/github.yml) | Every `uses: owner/action@version` reference is independent of Poetry and Go. |
-| Remote workers | [Ansible requirements](../ansible/requirements.txt), [collections](../ansible/requirements.yml), [worker defaults](../ansible/roles/compute_worker/defaults/main.yml) | Ansible Core, Google Cloud collection, worker Helm/Poetry versions and Debian image assumptions. |
-| Infrastructure providers | [Compute versions](../terraform/modules/compute/versions.tf), [shards versions](../terraform/shards/versions.tf) | Terraform minimum and Google provider constraint; each directory has its own `.terraform.lock.hcl`. |
 | Real-chart study inputs | [.gitmodules](../.gitmodules) and the committed submodule revisions | Bitnami and Prometheus chart snapshots; chart dependencies belong to each chart's `Chart.yaml` and `Chart.lock`. |
 
 Transitive Python and Go dependencies belong to their lockfiles and module manifests; do not duplicate their full lists here.
@@ -71,8 +69,8 @@ uses `GOTOOLCHAIN=local`; raising that module's Go requirement also requires an 
    [randomness/model.py](../pkg/hypothesis_helm/compiler/randomness/model.py), and the coverage record in
    [testing/runner.py](../pkg/hypothesis_helm/charts/testing/runner.py). Review the Go and Python random alphabets and replay tests
    when Sprig's random functions change. Preserve explicit rejection of incompatible replay artifacts.
-5. Align the Helm CLI defaults in `scripts/setup-dev.sh`, `action.yml`, `ci/`, `.github/workflows/` and
-   `ansible/roles/compute_worker/defaults/main.yml`. Update version assertions and the pinned source links in the compiler docs.
+5. Align the Helm CLI defaults in `scripts/setup-dev.sh`, `action.yml`, `ci/` and `.github/workflows/`.
+   Update version assertions and the pinned source links in the compiler docs.
 
 After reviewing the manifests and source lock:
 
@@ -151,13 +149,13 @@ Exercise the [symbolic fitting integration](../pkg/hypothesis_helm_benchmarking/
 When changing supported package versions, also review the core/add-on compatibility ranges in both manifests and the root extras.
 
 The Python package list includes Hypothesis and its schema generator, JSON Schema validation, both YAML parsers, attrs/cattrs,
-DeepDiff, Rich, ReportLab, Matplotlib, immutables and Lupa. NumPy and optional PySR support benchmarking. Review the manifests
+DeepDiff, Rich, ReportLab, Matplotlib, immutables and NumPy. NumPy and optional PySR also support benchmarking. Review the manifests
 for the complete constraints, including type stubs, test tools and both build backends.
 
 | Tool | Additional update locations |
 | --- | --- |
 | Python | `.python-version`; both package manifests; root Ruff/mypy settings; `.pre-commit-config.yaml`; setup script; root action, GitHub setup/publishing, and `ci/` images. |
-| Poetry | `scripts/setup-dev.sh`, `.github/actions/setup-project/action.yml`, `.github/workflows/stage-*.yml`, Ansible worker defaults. Local/CI currently use `2.1.3`; workers use `2.2.1`. |
+| Poetry | `scripts/setup-dev.sh`, `.github/actions/setup-project/action.yml` and `.github/workflows/stage-*.yml`. Local/CI currently use `2.1.3`. |
 | uv bootstrap | `uv_version` in `scripts/setup-dev.sh` (currently `0.8.17`). |
 | Go launcher | `go_version` in `scripts/setup-dev.sh`, `go-version` in the setup action, both Go modules and toolchain diagnostics. |
 | pydocstyle / pydoclint | Root development dependencies **and** their isolated `rev` pins in `.pre-commit-config.yaml`. |
@@ -165,9 +163,9 @@ for the complete constraints, including type stubs, test tools and both build ba
 
 Git, Git LFS, GNU Parallel, ShellCheck and the host build tools are installed through Homebrew/apt, without project version locks.
 Those are platform prerequisites to check when changing supported systems. Helm archives are checksum-verified by the developer
-bootstrap; CI and Ansible have their own installation paths, so review them too.
+bootstrap; review the separate CI installation path too.
 
-## CI, remote workers and chart snapshots
+## CI and chart snapshots
 
 Kubesec's default is `v2.14.2` in the root action and GitLab/CircleCI examples. When changing it, check the download filename,
 [JSON result reader](../pkg/hypothesis_helm/integrations/kubesec.py), score thresholds and integration tests. Schema validation is
@@ -176,11 +174,6 @@ handled by this project's schema cache; there is no kubeconform binary dependenc
 Review action references throughout `.github/`, `action.yml` and `ci/github.yml` together. Also review floating runner images
 (`ubuntu-latest`) and Python container tags in the CI examples. Binary cache keys include version, OS and architecture;
 schema caches include the selected Kubernetes version. A version update must select a corresponding cache entry.
-
-Remote workers have separate [Ansible](../ansible/README.md) and [Terraform](../terraform/README.md) setup. Update Ansible Core
-and collection requirements together with worker tool defaults. Terraform's two `versions.tf` files constrain the Google provider;
-review both lockfiles after `terraform init -upgrade`. The default Debian 13 image family and the worker OS assertions must agree.
-The Google Cloud CLI is an operator prerequisite, not a Poetry dependency.
 
 Bitnami and Prometheus are Git submodules. Their committed revisions determine the chart input snapshot, independently of library
 upgrades. A chart dependency update changes study inputs; record that revision with new results and preserve existing run provenance.
@@ -204,7 +197,7 @@ dependency constraints. Python dependencies and external tools must already be i
 
 The GitHub refresh runs the same steps in its preparation job, caching `schemas/`, `.cache/compiler-builtins/` and
 `.cache/random-renderer/` by source/module pins, OS and architecture. Each study receives the prepared source snapshot, including
-both Go modules, the Lua pass and generated catalogs. Dependency preparation is outside benchmark and chart-testing time budgets.
+both Go modules, the NumPy bound evaluator and generated catalogs. Dependency preparation is outside benchmark and chart-testing time budgets.
 Inspect the steps without starting a run with `hypothesis-helm-refresh --dry-run`.
 
 Existing refresh journals retain their recorded operations and frozen sources; resuming one does not insert new preparation steps
@@ -231,7 +224,7 @@ results. For example, when reviewing Helm `4.3.0`:
 ```sh
 rg -n --hidden --glob '!**/.git/**' --glob '!**/.venv/**' --glob '!**/.cache/**' \
     --glob '!third_party/**' --glob '!schemas/**' --glob '!docs/reports/**' --glob '!studies/**' \
-    '4\.3\.0' pkg scripts .github ci ansible terraform docs README.md pyproject.toml action.yml .pre-commit-config.yaml
+    '4\.3\.0' pkg scripts .github ci docs README.md pyproject.toml action.yml .pre-commit-config.yaml
 ```
 
 Keep new pins discoverable here, and update baseline versions in this guide as part of their upgrade.

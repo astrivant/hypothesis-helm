@@ -41,7 +41,7 @@ bash scripts/setup-dev.sh --schemas
 The setup script supports macOS with Homebrew and Debian/Ubuntu Linux with apt. It installs Bash, Git, Git LFS, GNU Parallel and ShellCheck;
 uses a pinned uv bootstrap to provision Python 3.13 and Poetry 2.1.3 locally; and installs checksum-verified Go 1.25.0 and Helm 4.3.0
 under `.cache/dev-tools/`. Python linting, formatting, typing and testing dependencies come from the Poetry lock.
-It creates `.venv` only when absent, installs the benchmarking extra and pre-commit hooks, and registers the Helm plugin.
+It creates `.venv` only when absent, installs the benchmarking extra and pre-commit/pre-push hooks, and registers the Helm plugin.
 It prints the PATH command to use in your current shell. Other Linux distributions need their OS packages installed first.
 Shell scripts require Bash 4.4 or newer for NUL-delimited `mapfile`. On macOS, setup installs Homebrew Bash and exposes it
 under `.cache/dev-tools/bin`; the GitHub Action also prepares Homebrew Bash on macOS runners.
@@ -130,6 +130,38 @@ poetry build
 The validation command runs Ruff lint/format, strict mypy, pydocstyle, pydoclint,
 the generated CLI reference check, and the package's pytest suite. Source and test docstrings follow Astrivant's
 Google-style convention. No type-checking exclusions weaken the source checks.
+The `ci-contracts` hook runs the workflow graph, package export and benchmark
+publication contracts before each commit and push. CI's existing lint job invokes
+the same hook. Install both hook stages from the project root after updating:
+
+```sh
+bash scripts/project-run.sh pre-commit install
+bash scripts/project-run.sh pre-commit run ci-contracts --all-files
+bash scripts/project-run.sh pre-commit run ci-contracts --hook-stage pre-push --all-files
+```
+
+Installation preserves existing Git hooks in migration mode, including a Git LFS
+upload hook when present. The checks use synthetic PR inputs and local Git
+fixtures; they do not dispatch hosted jobs or benchmarks.
+
+Local checks and CI Python shards both run through `scripts/run-pr-tests.sh` with
+the committed synthetic pull-request event. The runner clears inherited provider
+coordinates and GitHub tokens for its child process; `--debug` adds bounded
+diagnostics on stderr.
+
+Work graphs with a `work.sha256` receipt are checked by pre-commit and CI. After
+reviewing a graph's source and regenerating its Markdown and Mermaid artifacts,
+refresh its receipt from the repository root:
+
+```sh
+work_dir=.github/review-evidence/example
+shasum -a 256 "$work_dir/work.json" "$work_dir/work.md" "$work_dir/work.mmd" > "$work_dir/work.sha256"
+bash scripts/check-work-graphs.sh --debug
+```
+
+The receipt detects changes to any of those three files. Validate regenerated
+artifacts with their exporter before refreshing it; hashes alone do not establish
+that the graph's relationships are correct.
 
 After changing CLI arguments, regenerate the [CLI reference](cli/README.md):
 
@@ -149,7 +181,7 @@ Unit and integration tests live under [`pkg/hypothesis_helm/tests`](../pkg/hypot
 | `findings/` | Finding codes, severity thresholds, suppressions, and fail-fast behavior. |
 | `reporting/` | Aggregation, diagnostics, links, provenance, and diagrams. |
 | `schemas/` | Source-derived catalogs, Kubernetes and CRD schemas, and YAML parsers. |
-| `integrations/` | CI workflows, Kubesec, installers, release tooling, and remote shards. |
+| `integrations/` | CI workflows, Kubesec, installers, release tooling, and application shards. |
 | `benchmarking/` | Synthetic fixtures, measurements, plots, and study publication. |
 | `refresh/` | Refresh orchestration, distributed runs, and resuming interrupted work. |
 | `package/` | Public exports, shared exceptions, and environment configuration. |
@@ -157,7 +189,7 @@ Unit and integration tests live under [`pkg/hypothesis_helm/tests`](../pkg/hypot
 Run one category by passing its directory to pytest:
 
 ```sh
-bash scripts/project-run.sh pytest -n auto pkg/hypothesis_helm/tests/compiler
+bash scripts/run-pr-tests.sh -n auto pkg/hypothesis_helm/tests/compiler
 ```
 
 The full test command still discovers every category. Shared chart fixtures stay in `tests/fixtures/`,
@@ -241,8 +273,9 @@ have a maintainer create a branch here. A PR number on `main`, tags, closed PRs,
 Other branches require a PR number.
 
 The studies run in parallel, then the workflow verifies their graphs, checksums and documentation links. It commits only final
-Markdown, PNG, SVG and PDF publications under `studies/`, `docs/benchmarking/` and the root README. Raw data remains in the
-downloadable run artifacts. The local `hypothesis-helm-refresh` command still includes Bitnami and Prometheus scans;
+Markdown, PNG, SVG and PDF publications under `studies/`, `docs/benchmarking/` and the root README. The matched backend
+comparison also commits its two allowlisted files, `studies/backend-comparison/workload.json` and
+`studies/backend-comparison/measurements.json`. Other raw data remains in downloadable run artifacts. The local `hypothesis-helm-refresh` command still includes Bitnami and Prometheus scans;
 the manual benchmark refresh stops after study publication.
 
 For PR runs, the required **PR benchmark results** status is attached to the graph commit, and CI is explicitly dispatched on that commit.
@@ -255,10 +288,13 @@ Settings app must apply that file; editing it locally does not change GitHub's l
 
 The shared [project setup action](../.github/actions/setup-project/action.yml) installs the same tools for checks, builds and benchmarks.
 Every pull request update runs all configured pre-commit hooks against all files and tests the PR's head commit.
-All jobs use standard `ubuntu-latest` runners, with 4 CPUs and 16 GB RAM for this public repository.
-Runner execution is free for public repositories; artifact and cache storage have separate allowances.
+Routine checks use standard Linux x64 runners with 4 CPUs and 16 GiB RAM for this public repository.
+Native GPU checks and GPU-selected benchmark work use the explicitly configured `HH_GPU_RUNNER`, currently
+4 vCPU, 28 GiB host RAM and a 16 GiB NVIDIA T4. Standard public runner execution is free; GPU execution is billed,
+and artifact/cache storage has separate allowances.
 See [GitHub's standard runner specifications](https://docs.github.com/en/actions/reference/runners/github-hosted-runners).
-Python tests use eight shards, each using all available CPUs. Scale work through job matrices; runner labels cannot be overridden by variables.
+Python tests use eight shards, each using all available CPUs. Scale routine work through job matrices;
+only the declared GPU jobs use the configured GPU runner label.
 GitHub Team defaults to 60 concurrent standard jobs across the organization, so excess shards wait for capacity.
 See [GitHub's concurrency and storage limits](https://docs.github.com/en/actions/reference/limits).
 JUnit results, distributions, and smoke outputs are retained as artifacts for 30 days, including after failures.
@@ -487,6 +523,6 @@ Project folders and Python modules under `pkg/` use underscores, as in
 | [`scripts/`](../scripts) | Project command runner, validation command and Helm plugin hooks. |
 | [`action.yml`](../action.yml) | GitHub Action with automatic CI sharding and artifact uploads. |
 | [`plugin.yaml`](../plugin.yaml) | Installable Helm plugin manifest. |
-| [`.github/workflows/`](../.github/workflows/) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
+| [`.github/workflows/`](<../.github/workflows>) | One CI workflow containing checks, chart validation, package verification, benchmarks, refresh and publication. |
 | [`.github/settings.yml`](../.github/settings.yml) | Declarative repository settings. |
 | [`docs/`](.) | Development setup, CLI behavior and testing limitations. |

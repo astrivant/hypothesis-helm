@@ -33,9 +33,9 @@ def test_random_renderer_source_invalidates_cache(tmp_path: Path, monkeypatch: p
     assert fingerprint(tmp_path, 0, None, "none") != before
 
 
-def test_lua_implementation_invalidates_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_numpy_bound_implementation_invalidates_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
-    Invalidate compiler-derived successes when the bundled kernel or Lupa version changes.
+    Invalidate compiler-derived successes when the bound implementation or NumPy version changes.
 
     Args:
         tmp_path (Path): Isolated implementation and suite paths.
@@ -50,15 +50,15 @@ def test_lua_implementation_invalidates_cache(tmp_path: Path, monkeypatch: pytes
     source = package / "execution" / "state" / "cache.py"
     source.parent.mkdir(parents=True)
     source.write_text("# unchanged Python implementation\n")
-    script = package / "compiler" / "lua" / "bounds.lua"
+    script = package / "compiler" / "bounds.py"
     script.parent.mkdir(parents=True)
-    script.write_text("return 1\n")
+    script.write_text("VALUE = 1\n")
     monkeypatch.setattr(cache, "__file__", str(source))
     before = fingerprint(tmp_path, 0, None, "none")
-    script.write_text("return 2\n")
+    script.write_text("VALUE = 2\n")
     after_source = fingerprint(tmp_path, 0, None, "none")
     assert after_source != before
-    monkeypatch.setattr(cache, "version", lambda name: "changed" if name == "lupa" else version(name))
+    monkeypatch.setattr(cache, "version", lambda name: "changed" if name == "numpy" else version(name))
     assert fingerprint(tmp_path, 0, None, "none") != after_source
 
 

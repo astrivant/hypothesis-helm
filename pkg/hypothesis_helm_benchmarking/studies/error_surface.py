@@ -349,6 +349,7 @@ def main(argv: list[str] | None = None, *, workspace: FixtureWorkspace | None = 
                                     chart,
                                     spec,
                                     method,
+                                    workspace=workspace,
                                     level=args.trim_level,
                                     seed=args.seed + repeat,
                                     limit=2**args.input_complexity,

@@ -29,6 +29,12 @@ case "$HH_COMMAND" in
             ${HH_EXHAUSTIVE:+--exhaustive} \
             ${HH_WHOLE_CHART:+--whole-chart} \
             ${HH_PERMUTATIONS:+--permutations "$HH_PERMUTATIONS"} \
+            ${HH_EXECUTION_BACKEND:+--execution-backend "$HH_EXECUTION_BACKEND"} \
+            ${HH_BACKEND_FALLBACK:+--backend-fallback "$HH_BACKEND_FALLBACK"} \
+            ${HH_BACKEND_BATCH_SIZE:+--backend-batch-size "$HH_BACKEND_BATCH_SIZE"} \
+            ${HH_BACKEND_MEMORY_MIB:+--backend-memory-mib "$HH_BACKEND_MEMORY_MIB"} \
+            ${HH_BACKEND_TIMEOUT:+--backend-timeout "$HH_BACKEND_TIMEOUT"} \
+            ${HH_BACKEND_VERIFY:+--backend-verify} \
             ${HH_FILTER:+--filter} \
             ${HH_FILTER_RANDOM:+--filter-random "$HH_FILTER_RANDOM"} \
             ${HH_FILTER_TOPOLOGY:+--filter-topology "$HH_FILTER_TOPOLOGY"} \
@@ -101,6 +107,12 @@ case "$HH_COMMAND" in
             ${HH_NO_CACHE:+--no-cache} \
             ${HH_JOBS:+--jobs "$HH_JOBS"} \
             ${HH_PERMUTATIONS:+--permutations "$HH_PERMUTATIONS"} \
+            ${HH_EXECUTION_BACKEND:+--execution-backend "$HH_EXECUTION_BACKEND"} \
+            ${HH_BACKEND_FALLBACK:+--backend-fallback "$HH_BACKEND_FALLBACK"} \
+            ${HH_BACKEND_BATCH_SIZE:+--backend-batch-size "$HH_BACKEND_BATCH_SIZE"} \
+            ${HH_BACKEND_MEMORY_MIB:+--backend-memory-mib "$HH_BACKEND_MEMORY_MIB"} \
+            ${HH_BACKEND_TIMEOUT:+--backend-timeout "$HH_BACKEND_TIMEOUT"} \
+            ${HH_BACKEND_VERIFY:+--backend-verify} \
             ${HH_FILTER:+--filter} \
             ${HH_FAIL:+--fail "$HH_FAIL"} \
             ${HH_SEED:+--seed "$HH_SEED"} \

@@ -5,7 +5,10 @@ Declare the complete refresh inventory and its measurement and publication barri
 from pathlib import Path
 
 from attrs import frozen
+from hypothesis_helm.compiler.backends.cli import arguments as backend_arguments
+from hypothesis_helm.compiler.backends.scheduler import DEFAULT_BACKEND, BackendOptions
 
+from hypothesis_helm_benchmarking.catalog import CATALOG
 from hypothesis_helm_benchmarking.refresh.operations import Operation
 
 __all__ = ("PREPARATION", "Refresh", "STUDIES", "source_path")
@@ -33,6 +36,7 @@ STUDIES = (
     "calibration-variation",
     "filtering",
     "error-surface",
+    "error-surface-quartic",
 )
 
 
@@ -56,9 +60,11 @@ class Refresh:
 
     Attributes:
         root (Path): New run directory relative to the project checkout.
+        backend (BackendOptions): Explicit settings retained in backend-dependent study operations.
     """
 
     root: Path
+    backend: BackendOptions = DEFAULT_BACKEND
 
     def operations(self) -> tuple[Operation, ...]:
         """
@@ -87,7 +93,8 @@ class Refresh:
                 if name in PREPARATION
                 else self.root / "operations.sh"
             )
-            operations.append(Operation(name, ("bash", str(recipe), name, str(self.root)), requires, exclusive, allow_failure))
+            options = backend_arguments(self.backend) if any(item.name == name and item.backend_dependent for item in CATALOG) else ()
+            operations.append(Operation(name, ("bash", str(recipe), name, str(self.root), *options), requires, exclusive, allow_failure))
 
         # Prepare generated contracts and the optional renderer before tests can
         # consume stale assets or skip native coverage on a fresh checkout.

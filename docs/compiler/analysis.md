@@ -463,32 +463,23 @@ This is **branch-and-bound**: a bound can rule out many assignments without
 visiting each one. It does not assume that enabling every Boolean independently
 produces the largest valid chart.
 
-Repeated upper-bound calculations run through [Lupa](https://github.com/scoder/lupa) using the bundled
-[`compiler/lua/bounds.lua`](../../pkg/hypothesis_helm/compiler/lua/bounds.lua) script and Lua 5.4 integer arithmetic.
-The first bound uses Python, avoiding runtime setup when the search finishes immediately. If more bounds are needed,
-numeric component tables are copied once into a runtime owned by that analysis. Later calls pass only the partial assignment.
-The script computes the same component maxima and summed depth counts as the Python reference; it does not interpret Helm templates.
+Repeated upper-bound calculations use [NumPy](https://numpy.org/doc/stable/reference/generated/numpy.ufunc.reduceat.html)
+to reduce compatible rows by component. The first bound uses Python, avoiding array preparation when the search finishes
+immediately. For subsequent queries, the analysis packs valid cases once, then filters their factor choices and computes
+component maxima in grouped operations. This calculation does not interpret Helm templates.
 
-Conversion overflow, integer addition/multiplication overflow, Lua errors or allocation exhaustion switch the remaining
-calculations to Python's unbounded integers. Cancellation still propagates. The default `compiler.max_lua_memory_bytes`
-is 67,108,864 (64 MiB of Lua allocations per analysis), with the same global and per-chart overrides as other compiler budgets.
-This is separate from Python's component-table memory. Audit complexity results record the actual backend and fallback reason
-under `bound_backend`. Cache fingerprints include both the Lua source and Lupa version.
+Before using signed 64-bit arrays, the unrestricted Python bound establishes that all nonnegative sums and products fit.
+Values outside that domain, an estimated buffer budget violation, or an allocation failure leave Python's unbounded
+integers authoritative. Cancellation still propagates. `compiler.max_bound_memory_bytes` defaults to 67,108,864
+(64 MiB) for estimated NumPy buffers per analysis; Python component tables and allocator overhead are separate. The
+previous `compiler.max_lua_memory_bytes` setting remains accepted as an alias. Do not supply both names in the same
+configuration block. Global and per-chart overrides use the same budget rules as other compiler settings.
 
-A local microbenchmark with Lupa 2.8 and Python 3.13 on macOS ARM64 compared 127 bound queries over tables with 64 cases per
-component and eight output levels. These are medians of seven runs, alternating execution order; Lua times include runtime
-setup, table conversion and its first Python query. They measure this calculation, not complete chart-scan runtime.
-
-| Components | Python | Lua | Speedup |
-| ---: | ---: | ---: | ---: |
-| 1 | 7.4 ms | 2.3 ms | 3.2x |
-| 8 | 52.9 ms | 12.8 ms | 4.1x |
-| 32 | 233.5 ms | 52.7 ms | 4.4x |
-| 64 | 468.4 ms | 98.4 ms | 4.8x |
-
-Generated differential tests compare repeated native bounds with the Python reference, while independent exhaustive tests
-check that partial bounds never underestimate reachable scores. Complete chart searches check identical maxima, witnesses
-and search counts with Lua enabled and with its memory budget deliberately exhausted.
+Audit results record the actual engine, query counts and fallback reason under `bound_backend`. Cache fingerprints
+include the Python implementation and NumPy version. Generated differential tests compare repeated bounds with the
+Python reference, and independent exhaustive tests check that partial bounds never underestimate reachable scores.
+Complete chart searches check identical maxima, witnesses and search counts with NumPy enabled and with its buffer
+budget deliberately exhausted. Performance depends on component shape, number of queries and preparation costs.
 
 Complete component tables and a completed search establish `compiled-maximum`
 within the supported model. Unsupported operations or an exhausted budget produce
