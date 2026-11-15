@@ -48,6 +48,8 @@ case "$stage" in
     profile)
         hypothesis-helm-benchmark --parameters "$root/parameters/standard.yaml" --profile "$root/profiles" run \
             --suite scaling --scaling-counts 4 --replicas 1,2 --time-limit 30s --shard none --output "$root/profile-run"
+        hypothesis-helm-benchmark "${@:3}" --profile "$root/profiles" filtering \
+            --inputs 6 --depths 1 --repeats 1 --time-limit 30s --output "$root/profile-filtering"
         ;;
     flamegraphs) python "$root/publish-flamegraphs.py" "$root" ;;
     discovery-tables) python "$root/discovery-tables.py" "$root" ;;

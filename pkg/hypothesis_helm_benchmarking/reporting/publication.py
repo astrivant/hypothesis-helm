@@ -65,7 +65,7 @@ def final_files(directory: Path) -> Iterator[Path]:
         directory (Path): One study's output directory.
 
     Yields:
-        Path: Final documents and images; measurements, fixtures and worker state are excluded.
+        Path: Final documents, images and the exact compact resource rankings; raw measurements and worker state are excluded.
     """
     for parent, directories, filenames in os.walk(directory):
         base = Path(parent)
@@ -75,7 +75,8 @@ def final_files(directory: Path) -> Iterator[Path]:
         directories[:] = sorted(name for name in directories if name not in WORK_DIRECTORIES and not name.startswith("."))
         for name in sorted(filenames):
             path = base / name
-            if path.suffix.lower() in FINAL_SUFFIXES and not path.is_symlink():
+            compact_resources = directory.name == "flamegraphs" and path.relative_to(directory).as_posix() == "resources/rankings.json"
+            if (path.suffix.lower() in FINAL_SUFFIXES or compact_resources) and not path.is_symlink():
                 yield path
 
 
@@ -254,7 +255,7 @@ def publish_study(source: Path, destination: Path) -> dict[str, str]:
     """
     verify_publication(source, destination)
     sources = tuple(final_files(source))
-    # Only final documents and figures cross this boundary; raw data and worker state remain in the cache.
+    # Final documents, figures and allowlisted compact resource rankings cross this boundary; raw captures remain in the cache.
     expected = {path.relative_to(source) for path in sources}
     checksums = {}
     for path in sources:

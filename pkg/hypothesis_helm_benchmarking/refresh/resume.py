@@ -59,7 +59,7 @@ def _retain_attempts(root: Path, directory: Path, operations: tuple[Operation, .
     for operation in operations:
         paths = [root / "outputs" / operation.name] if operation.name in (*STUDIES, "flamegraphs") else []
         if operation.name == "profile":
-            paths = [root / "profiles", root / "profile-run"]
+            paths = [root / "profiles", root / "profile-run", root / "profile-filtering"]
         for path in paths:
             if path.exists():
                 target = directory / "prior-attempts" / path.relative_to(root)

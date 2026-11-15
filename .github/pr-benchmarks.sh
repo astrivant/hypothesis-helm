@@ -110,7 +110,7 @@ commit_graphs() {
     mapfile -d '' -t publication_paths < <(git ls-files -z --modified --deleted --others --exclude-standard -- README.md studies/ docs/benchmarking/)
     for path in "${publication_paths[@]}"; do
         case "$path" in
-            *.md | *.png | *.svg | *.pdf | studies/backend-comparison/workload.json | studies/backend-comparison/measurements.json)
+            *.md | *.png | *.svg | *.pdf | studies/backend-comparison/workload.json | studies/backend-comparison/measurements.json | studies/flamegraphs/resources/rankings.json)
                 attribute=$(git check-attr filter -- "$path")
                 if [[ "$attribute" != *': filter: lfs' ]]; then
                     printf '%s\0' "$path" >>"$paths"

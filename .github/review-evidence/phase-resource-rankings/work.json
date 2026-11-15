@@ -1,0 +1,117 @@
+{
+  "hosts": [
+    {
+      "id": "github",
+      "provider": "github",
+      "url": "https://github.com"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "project",
+      "kind": "project",
+      "label": "hypothesis-helm",
+      "parent": null,
+      "host": "github",
+      "url": "https://github.com/astrivant/hypothesis-helm",
+      "path": "astrivant/hypothesis-helm",
+      "number": null,
+      "revision": "",
+      "state": "",
+      "draft": false,
+      "work": "untracked",
+      "present": true,
+      "updated_at": "",
+      "source": "",
+      "origin_project": "",
+      "settings": null
+    },
+    {
+      "id": "main",
+      "kind": "branch",
+      "label": "main",
+      "parent": "project",
+      "host": "github",
+      "url": "https://github.com/astrivant/hypothesis-helm/tree/main",
+      "path": "",
+      "number": null,
+      "revision": "ffe33656179b441cf54512b4d528f100751aed37",
+      "state": "",
+      "draft": false,
+      "work": "untracked",
+      "present": true,
+      "updated_at": "",
+      "source": "",
+      "origin_project": "",
+      "settings": null
+    },
+    {
+      "id": "branch",
+      "kind": "branch",
+      "label": "feat/phase-resource-rankings",
+      "parent": "project",
+      "host": "github",
+      "url": "https://github.com/astrivant/hypothesis-helm/tree/feat/phase-resource-rankings",
+      "path": "",
+      "number": null,
+      "revision": "28765b64a341f38b3b48b90b8ceef852ec466d42",
+      "state": "",
+      "draft": false,
+      "work": "active",
+      "present": true,
+      "updated_at": "",
+      "source": "",
+      "origin_project": "",
+      "settings": null
+    },
+    {
+      "id": "predecessor",
+      "kind": "review",
+      "label": "Compiled backends and benchmark execution",
+      "parent": "project",
+      "host": "github",
+      "url": "https://github.com/astrivant/hypothesis-helm/pull/17",
+      "path": "",
+      "number": 17,
+      "revision": "eb36958911f90bce2288bd1bc7181fa5568acc57",
+      "state": "merged",
+      "draft": false,
+      "work": "untracked",
+      "present": true,
+      "updated_at": "",
+      "source": "",
+      "origin_project": "",
+      "settings": null
+    }
+  ],
+  "links": [
+    {
+      "id": "base",
+      "source": "branch",
+      "target": "main",
+      "kind": "based_on",
+      "evidence": "https://github.com/astrivant/hypothesis-helm/tree/feat/phase-resource-rankings",
+      "active": true,
+      "source_revision": "28765b64a341f38b3b48b90b8ceef852ec466d42",
+      "target_revision": "ffe33656179b441cf54512b4d528f100751aed37"
+    },
+    {
+      "id": "continuity",
+      "source": "branch",
+      "target": "predecessor",
+      "kind": "correlates",
+      "evidence": "https://github.com/astrivant/hypothesis-helm/pull/17",
+      "active": true,
+      "source_revision": "",
+      "target_revision": ""
+    }
+  ],
+  "scans": [],
+  "evidence": [],
+  "version": 1,
+  "sight": {
+    "contexts": [],
+    "resources": [],
+    "observations": []
+  }
+}

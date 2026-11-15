@@ -18,6 +18,7 @@ from attrs import define, field, frozen
 
 from hypothesis_helm.compiler.backends.engine import Batch, Engine, prepare
 from hypothesis_helm.compiler.backends.model import Limits, Plan, State
+from hypothesis_helm.environment import env
 from hypothesis_helm.exceptions.backends import BackendError, BackendUnavailable
 
 __all__ = ("DEFAULT_BACKEND", "BackendOptions", "Report", "Scheduler", "Worker")
@@ -166,6 +167,29 @@ def _worker(connection: Connection[object, object], plan: Plan, backend: str) ->
         connection.close()
 
 
+def _profiled_worker(connection: Connection[object, object], plan: Plan, backend: str) -> None:
+    """
+    Capture the native worker itself only when benchmark profiling was explicitly enabled.
+
+    Args:
+        connection (Connection[object, object]): Owned worker protocol channel.
+        plan (Plan): Parent-validated immutable program.
+        backend (str): Requested native engine.
+
+    Returns:
+        None: Normal runs do not import or require the optional benchmark package.
+    """
+    directory = env.get("HYPOTHESIS_HELM_BENCHMARK_PROFILE_DIR")
+    if not directory:
+        _worker(connection, plan, backend)
+        return
+    from pathlib import Path
+
+    from hypothesis_helm_benchmarking.execution.profiling import capture
+
+    capture(lambda: _worker(connection, plan, backend), Path(directory), "backend", {"backend": backend, "plan": plan.identity})
+
+
 class Worker:
     """
     Enforce request deadlines and fence stale results from a single native worker.
@@ -186,7 +210,7 @@ class Worker:
         self.stopped = Event()
         context = multiprocessing.get_context("spawn")
         self.connection, child = context.Pipe()
-        self.process = context.Process(target=_worker, args=(child, plan, backend), name="hypothesis-helm-backend")
+        self.process = context.Process(target=_profiled_worker, args=(child, plan, backend), name="hypothesis-helm-backend")
         self.process.start()
         child.close()
         try:
