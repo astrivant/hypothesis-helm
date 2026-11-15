@@ -65,7 +65,9 @@ def main(argv: list[str] | None = None) -> int:
     refresh_env()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--profile", type=Path, help="capture Python call stacks and flame graphs under this directory; place before COMMAND"
+        "--profile",
+        type=Path,
+        help="capture call stacks, phase resource rankings and flame graphs under this directory; place before COMMAND",
     )
     parser.add_argument("--parameters", type=Path, help="use a retained chart recipe with run, discovery, or sparsity")
     add_options(parser)

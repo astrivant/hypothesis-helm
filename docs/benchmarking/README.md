@@ -1,7 +1,8 @@
 # Benchmarking
 
 <!-- toc:start -->
-**Table of contents**
+<details>
+<summary>Table of contents</summary>
 
 - [Install and run](#install-and-run)
   - [Reading variation bands](#reading-variation-bands)
@@ -11,6 +12,7 @@
   - [Error rates and failure placement](#error-rates-and-failure-placement)
   - [Random sampling and defect discovery](#random-sampling-and-defect-discovery)
   - [Flame graphs across worker cores](#flame-graphs-across-worker-cores)
+  - [Phase resource rankings](#phase-resource-rankings)
   - [Reproduce the full project run](#reproduce-the-full-project-run)
 - [Local shard wrapper](#local-shard-wrapper)
   - [Performance and scaling](#performance-and-scaling)
@@ -23,6 +25,8 @@
 - [Chart nesting at permutation strength eight](#chart-nesting-at-permutation-strength-eight)
 - [Sweep chart breadth and depth](#sweep-chart-breadth-and-depth)
 - [Matched backend comparison](#matched-backend-comparison)
+
+</details>
 <!-- toc:end -->
 
 [Documentation](../README.md) · [Project](../../README.md)
@@ -251,6 +255,18 @@ hypothesis-helm-benchmark flamegraph .cache/benchmarks/profiles/profile-EXAMPLE 
 Display limits hide small or deep frames in the drawing while preserving the raw
 captures. Only fully written capture files are read; a forcibly killed process
 may leave no capture.
+
+### Phase resource rankings
+
+Every new `--profile DIRECTORY` capture also writes independent resource rankings
+under `profile-*/flamegraphs/resources/`. Open `README.md` for ranked tables and
+PNG/SVG panels, or use `rankings.json` for exact recorded amounts and coverage.
+The [measurement contract](phase-resources.md) defines phases, units, ownership,
+sampling and unavailable metrics. Historical captures remain explicitly unmeasured.
+
+Refreshes profile both a small rendering/scaling workload and a separate finite
+filtering workload using the selected backend. These instrumented observations
+are published with the flame graphs and never replace the ordinary timing data.
 
 ### Reproduce the full project run
 

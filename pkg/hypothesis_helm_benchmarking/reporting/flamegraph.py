@@ -166,14 +166,14 @@ def render_profiles(source: Path, output: Path, *, max_depth: int = 30, min_perc
         raise ValueError("Depth must be positive and minimum percentage must be in [0, 100)")
     groups: dict[str, list[dict[str, object]]] = {}
     workers = []
-    files = sorted([*source.glob("coordinator-*.json"), *source.glob("worker-*.json")])
+    files = sorted([*source.glob("coordinator-*.json"), *source.glob("worker-*.json"), *source.glob("backend-*.json")])
     truncated = 0
     incomplete = 0
     worker_identities = set()
     for path in files:
         document = mapping(json.loads(path.read_text()))
         role = document["role"]
-        if role not in {"coordinator", "worker"}:
+        if role not in {"coordinator", "worker", "backend"}:
             raise ValueError(f"Unknown profile role in {path}")
         pid = int(str(document["pid"]))
         identity = str(document.get("process_id", path.stem))
@@ -207,6 +207,9 @@ def render_profiles(source: Path, output: Path, *, max_depth: int = 30, min_perc
         "scope": "Completed captures only; worker time is summed across overlapping processes, not elapsed runtime",
         "figures": figures,
     }
+    from hypothesis_helm_benchmarking.reporting.resources import render_resources
+
+    summary["resources"] = render_resources(files, output / "resources")
     (output / "index.json").write_text(json.dumps(summary, indent=2) + "\n")
     return summary
 

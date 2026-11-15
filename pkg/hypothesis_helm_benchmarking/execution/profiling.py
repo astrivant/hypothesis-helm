@@ -17,6 +17,9 @@ from typing import TypeVar
 from attrs import asdict, define
 from hypothesis_helm.environment import env
 
+from hypothesis_helm_benchmarking.execution.device import DeviceInterval
+from hypothesis_helm_benchmarking.execution.resources import Resources, phase_for
+
 __all__ = ("Frame", "PROFILE_DIRECTORY", "StackProfiler", "capture", "profile_settings")
 
 
@@ -55,6 +58,8 @@ class StackProfiler:
         timer: Callable[[], float] = time.perf_counter,
         max_nodes: int = 25000,
         max_depth: int = 128,
+        resources: Resources | None = None,
+        measure_device: bool = False,
     ) -> None:
         """
         Initialize a bounded calling-context tree for one executing thread.
@@ -64,6 +69,8 @@ class StackProfiler:
             timer (Callable[[], float]): Monotonic wall clock, injectable for verification.
             max_nodes (int): Maximum retained tree nodes, including the root.
             max_depth (int): Maximum retained Python stack depth.
+            resources (Resources | None): Optional owning process resource collector.
+            measure_device (bool): Measure CUDA only in the exclusively owned native worker.
 
         """
         if max_nodes < 1 or max_depth < 1:
@@ -79,6 +86,11 @@ class StackProfiler:
         self.active = 0
         self.truncated_events = 0
         self.started = self.last = timer()
+        self.resources = resources
+        self.measure_device = measure_device
+        self.phases = {id(boundary): "Other and orchestration"}
+        self.device_intervals: dict[int, DeviceInterval] = {}
+        self.device_errors: set[str] = set()
 
     def event(self, frame: FrameType, event: str, arg: object) -> None:
         """
@@ -122,6 +134,28 @@ class StackProfiler:
             self.contexts.pop(id(frame), None)
             self.collapsed.discard(id(frame))
             self.active = parent
+        if self.resources is not None:
+            inherited = self.phases.get(id(frame.f_back), "Other and orchestration")
+            if event == "call":
+                phase = phase_for(frame.f_code.co_filename, frame.f_code.co_qualname, inherited)
+                self.phases[id(frame)] = phase
+                self.resources.transition(phase)
+                if self.measure_device and frame.f_code.co_qualname == "TensorEngine.evaluate":
+                    try:
+                        interval = DeviceInterval.current(str(getattr(frame.f_locals.get("self"), "device", "")))
+                        if interval is not None:
+                            self.device_intervals[id(frame)] = interval
+                    except RuntimeError as exc:
+                        self.device_errors.add(type(exc).__name__)
+            else:
+                interval = self.device_intervals.pop(id(frame), None)
+                if interval is not None:
+                    try:
+                        self.resources.gpu(*interval.finish())
+                    except RuntimeError as exc:
+                        self.device_errors.add(type(exc).__name__)
+                self.phases.pop(id(frame), None)
+                self.resources.transition(inherited)
         self.last = self.timer()
 
     def finish(self, *, include_tail: bool = True) -> dict[str, object]:
@@ -166,7 +200,9 @@ def capture(  # noqa: UP047 - pinned pydocstyle 6 cannot parse PEP 695 function 
         raise RuntimeError("A Python profiler is already active in this thread")
     directory.mkdir(parents=True, exist_ok=True)
     target = directory / f"{role}-{os.getpid()}-{uuid.uuid4().hex}.json"
-    profiler = StackProfiler(sys._getframe())
+    resources = Resources()
+    profiler = StackProfiler(sys._getframe(), resources=resources, measure_device=role == "backend")
+    resources.start()
     status = "returned"
     sys.setprofile(profiler.event)
     try:
@@ -177,6 +213,9 @@ def capture(  # noqa: UP047 - pinned pydocstyle 6 cannot parse PEP 695 function 
     finally:
         complete = sys.getprofile() == profiler.event
         sys.setprofile(None)
+        stacks = profiler.finish(include_tail=complete)
+        usage = resources.finish()
+        usage["device_errors"] = sorted(profiler.device_errors)
         document = {
             "format": "hypothesis-helm-profile-v1",
             "profiler": "sys.setprofile",
@@ -188,7 +227,8 @@ def capture(  # noqa: UP047 - pinned pydocstyle 6 cannot parse PEP 695 function 
             "status": status,
             "capture_complete": complete,
             "metadata": metadata or {},
-            **profiler.finish(include_tail=complete),
+            "resources": usage,
+            **stacks,
         }
         temporary = target.with_suffix(".tmp")
         temporary.write_text(json.dumps(document, indent=2) + "\n")

@@ -218,7 +218,7 @@ def test_publication_retains_only_allowlisted_comparison_data(
         benchmark_repository (tuple[Path, Path, Path, str, dict[str, str]]): Isolated source and synthetic remote.
 
     Returns:
-        None: The two exact comparison data paths publish; unrelated raw JSON remains local.
+        None: The exact comparison and resource data paths publish; unrelated raw JSON remains local.
     """
     checkout, writer, remote, _, environment = benchmark_repository
     comparison = checkout / "studies/backend-comparison"
@@ -227,10 +227,15 @@ def test_publication_retains_only_allowlisted_comparison_data(
         (comparison / name).write_text('{"synthetic": true}\n')
     (comparison / "README.md").write_text("# Synthetic comparison\n")
     (comparison / "comparison.svg").write_text("<svg />\n")
+    resources = checkout / "studies/flamegraphs/resources"
+    resources.mkdir(parents=True)
+    (resources / "rankings.json").write_text('{"synthetic": true}\n')
+    (resources / "unreviewed.json").write_text("{}\n")
     result = publication(checkout, writer, environment, "README.md", "# Project\n\nUpdated introduction.\n")
     assert result.returncode == 0, result.stdout + result.stderr
     published = git(remote, environment, "ls-tree", "-r", "--name-only", "refs/heads/feature")
     assert "studies/backend-comparison/workload.json" in published
     assert "studies/backend-comparison/measurements.json" in published
     assert "studies/backend-comparison/comparison.svg" in published
+    assert "studies/flamegraphs/resources/rankings.json" in published
     assert "unreviewed.json" not in published
